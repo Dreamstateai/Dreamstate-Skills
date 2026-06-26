@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/trydreamstate/dreamstate-skills/schemas/playbook.schema.json",
+  "title": "Dreamstate playbook frontmatter",
+  "description": "YAML frontmatter contract for every file in playbooks/. The build validates each playbook against this and fails CI on a violation.",
+  "type": "object",
+  "required": ["name", "description", "platforms", "min_mcp_version", "domain", "tools_used"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^dreamstate-[a-z0-9-]+$",
+      "description": "Kebab-case skill id, prefixed dreamstate-. Becomes the slash-command / skill name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 1024,
+      "description": "Triggering description. Says what it does AND when to use it. A little pushy on purpose, since agents under-trigger skills."
+    },
+    "platforms": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["claude", "cursor", "codex"] },
+      "description": "Which agent clients this playbook installs into."
+    },
+    "min_mcp_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Minimum Dreamstate MCP version whose tools this playbook needs. Pinned against src/catalog.json."
+    },
+    "domain": {
+      "enum": ["connect", "outreach", "seo", "social", "email"],
+      "description": "Primary domain, used for grouping in the index and the install picker."
+    },
+    "tools_used": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z_]+$" },
+      "description": "Every MCP tool this playbook instructs the agent to call. The contract test asserts each exists in src/catalog.json. The prompt scope-filter shows the playbook only if the key's scopes cover the union of these tools' scopes."
+    },
+    "tier": {
+      "enum": ["capability", "composite", "playbook"],
+      "default": "playbook",
+      "description": "capability = thin single-tool helper; composite = a few tools; playbook = end-to-end outcome."
+    }
+  }
+}

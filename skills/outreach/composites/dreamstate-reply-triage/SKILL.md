@@ -1,0 +1,64 @@
+---
+name: dreamstate-reply-triage
+description: "Work the LinkedIn inbox for an outreach campaign: read open conversations, classify each reply by intent, draft and send the right response, and set pipeline status / assignment so nothing slips. Use whenever the user says 'check my replies', 'who responded', 'work my inbox', 'follow up with interested leads', or wants to triage outreach responses. You cannot read or send LinkedIn DMs yourself; Dreamstate does, under per-account caps."
+---
+
+# Dreamstate Reply Triage
+
+Replies are where outreach turns into pipeline, and where most of it leaks. The job
+here is to read every open thread, decide what each one actually is, respond well, and
+record the state so the team (or future-you) can trust the inbox. You supply the read
+of intent and the reply voice; Dreamstate moves the messages and holds the status.
+
+Run `/dreamstate-connect` first if unsure. You need a healthy LinkedIn account that
+owns the threads.
+
+## Step 1: Find the live conversations
+
+List campaigns with `outreach_campaigns` and pick the one the user means (or all
+active). Use `outreach_list_contacts` to find contacts with replies / open threads,
+and `outreach_get_contact` for the thread context (`conversation_urn`, last messages).
+Get the sending `account_id` from `content_list_accounts` — `outreach_send_reply`
+requires the account that owns the thread.
+
+## Step 2: Classify each reply by intent
+
+For every open thread, read the prospect's actual words and put it in one bucket. Do
+not keyword-match; read for meaning:
+
+- **Interested** — wants to talk, asks a question, says "tell me more".
+- **Not now / later** — open but timing is wrong.
+- **Referral** — points you to someone else.
+- **Objection** — pushback you can answer (price, fit, "we use X").
+- **Not interested** — a clear no.
+- **Auto / OOO** — out-of-office or autoresponder, not a human reply.
+
+State the bucket and your one-line reasoning to the user before you act on the hot
+ones. This is the judgment the engine cannot do.
+
+## Step 3: Respond, set status, assign
+
+For each thread, take the action that matches the intent:
+
+- **Interested / Objection / Referral**: draft a short, specific reply and send it with
+  `outreach_send_reply` (`account_id`, `thread_id` = the `conversation_urn`, `body`,
+  and a unique `client_request_id`). It enforces the per-account daily DM cap before
+  sending; at cap it returns `status: "blocked"` and sends nothing — tell the user and
+  queue the rest for tomorrow rather than forcing it.
+- **Interested**: also set `outreach_set_thread_status` to the pipeline status the
+  user uses for hot leads, and `outreach_assign_thread` to the right workspace member
+  so a human owns the follow-through.
+- **Not now / Not interested**: set the matching status so they drop out of the active
+  view. Do not argue with a no.
+- **Auto / OOO**: `outreach_mark_thread_read` and move on; no reply.
+
+Before sending any reply, show the user the draft for at least the first few threads so
+they can calibrate your voice. These go out as them.
+
+## Step 4: Close the loop
+
+Tell the user what you did: counts per bucket, how many replies you sent, how many were
+blocked by the daily cap, and which threads are now assigned to whom. Pull
+`outreach_analytics` (`metric: "overview"`) so they see reply and acceptance rate in
+context. If interested-rate is high but demos are low, the gap is your reply quality or
+the handoff, not the top of funnel.

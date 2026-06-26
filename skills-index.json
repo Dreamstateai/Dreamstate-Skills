@@ -1,0 +1,258 @@
+{
+  "generated_from": "playbooks/",
+  "mcp_version": "1.0.0",
+  "skills": [
+    {
+      "slug": "dreamstate-ai-visibility",
+      "category": "playbooks",
+      "tags": [
+        "seo"
+      ],
+      "domain": "seo",
+      "tier": "playbook",
+      "path": "skills/seo/playbooks/dreamstate-ai-visibility",
+      "description": "Audit and improve how a brand shows up in AI search (ChatGPT, Perplexity, Gemini, AI Overviews) using Dreamstate's visibility data, then close the gaps by generating and publishing blog content. Use whenever the user asks about AI visibility, GEO, generative engine optimization, 'do AI assistants cite us', AI search ranking, citation gaps, share of voice in AI answers, or AI-referral traffic. You cannot run the probes or publish content yourself; Dreamstate does both.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "visibility_overview",
+        "visibility_citations",
+        "visibility_ai_traffic",
+        "visibility_refresh",
+        "content_create_blog",
+        "content_generate_blog",
+        "content_get_blog",
+        "content_publish_blog"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
+        "content:write",
+        "visibility:read",
+        "visibility:write"
+      ],
+      "requires_skills": [
+        "dreamstate-connect"
+      ]
+    },
+    {
+      "slug": "dreamstate-connect",
+      "category": "composites",
+      "tags": [
+        "connect"
+      ],
+      "domain": "connect",
+      "tier": "composite",
+      "path": "skills/core/composites/dreamstate-connect",
+      "description": "Connect this agent to Dreamstate and verify it can act. Use this FIRST, before any other dreamstate-* skill, and any time a Dreamstate tool call fails with an auth or 'not connected' error. It checks the MCP connection, walks the OAuth sign-in if needed, lists which tools are available, and confirms the workspace and connected LinkedIn/X accounts so later playbooks don't fail halfway through.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "ping",
+        "content_list_accounts",
+        "outreach_lists"
+      ],
+      "required_scopes": [
+        "content:read",
+        "outreach:read"
+      ],
+      "requires_skills": []
+    },
+    {
+      "slug": "dreamstate-enrich-list",
+      "category": "composites",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "composite",
+      "path": "skills/outreach/composites/dreamstate-enrich-list",
+      "description": "Take a list of leads and enrich + score it in Dreamstate's data table without launching a campaign. Use whenever the user wants to 'enrich these leads', 'clean up my list', add firmographics, score contacts against an ICP, or prep a list before outreach. A focused building block: source/enrich/score only, no sending. You cannot enrich data yourself; Dreamstate calls the providers under a daily spend cap.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_lists",
+        "outreach_create_list",
+        "outreach_find_leads",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "outreach_enrich_contact",
+        "outreach_get_campaign_table",
+        "outreach_add_column",
+        "outreach_set_cell",
+        "content_list_accounts"
+      ],
+      "required_scopes": [
+        "content:read",
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "dreamstate-connect"
+      ]
+    },
+    {
+      "slug": "dreamstate-multichannel",
+      "category": "playbooks",
+      "tags": [
+        "email"
+      ],
+      "domain": "email",
+      "tier": "playbook",
+      "path": "skills/outreach/playbooks/dreamstate-multichannel",
+      "description": "Run a combined LinkedIn + content motion against one audience through Dreamstate: warm the target list with social/blog content while a LinkedIn sequence reaches them directly, so prospects see the brand in more than one place. Use whenever the user wants multi-channel outreach, to 'warm up' an audience before DMing, to coordinate content with outbound, or an account-based play. Orchestrates the outreach and content engines together; you cannot post or send yourself.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_create_list",
+        "outreach_find_leads",
+        "outreach_enrich_contact",
+        "outreach_create_campaign",
+        "outreach_configure_targeting",
+        "outreach_enroll",
+        "outreach_activate_campaign",
+        "content_generate_post",
+        "content_schedule_post",
+        "content_list_accounts",
+        "outreach_analytics"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
+        "content:write",
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "dreamstate-connect"
+      ]
+    },
+    {
+      "slug": "dreamstate-outbound",
+      "category": "playbooks",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "playbook",
+      "path": "skills/outreach/playbooks/dreamstate-outbound",
+      "description": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, enrich and score them against an ICP, draft personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants to do cold outreach, prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. You cannot touch LinkedIn yourself, so this skill routes every real action through Dreamstate, which sends at scale within deliverability limits.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_find_leads",
+        "outreach_create_list",
+        "outreach_lists",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "outreach_enrich_contact",
+        "outreach_create_campaign",
+        "outreach_configure_targeting",
+        "outreach_get_sequence",
+        "outreach_get_step_options",
+        "outreach_add_step",
+        "outreach_validate_sequence",
+        "outreach_draft_message",
+        "outreach_add_column",
+        "outreach_set_cell",
+        "outreach_enroll",
+        "outreach_activate_campaign",
+        "content_list_accounts",
+        "outreach_analytics"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "dreamstate-connect"
+      ]
+    },
+    {
+      "slug": "dreamstate-reply-triage",
+      "category": "composites",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "composite",
+      "path": "skills/outreach/composites/dreamstate-reply-triage",
+      "description": "Work the LinkedIn inbox for an outreach campaign: read open conversations, classify each reply by intent, draft and send the right response, and set pipeline status / assignment so nothing slips. Use whenever the user says 'check my replies', 'who responded', 'work my inbox', 'follow up with interested leads', or wants to triage outreach responses. You cannot read or send LinkedIn DMs yourself; Dreamstate does, under per-account caps.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_campaigns",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "content_list_accounts",
+        "outreach_send_reply",
+        "outreach_set_thread_status",
+        "outreach_assign_thread",
+        "outreach_mark_thread_read",
+        "outreach_analytics"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "dreamstate-connect"
+      ]
+    },
+    {
+      "slug": "dreamstate-social-calendar",
+      "category": "playbooks",
+      "tags": [
+        "social"
+      ],
+      "domain": "social",
+      "tier": "playbook",
+      "path": "skills/social/playbooks/dreamstate-social-calendar",
+      "description": "Plan, draft, and schedule a batch of LinkedIn and X posts through Dreamstate. Use whenever the user wants to 'plan content', 'schedule posts', build a social calendar, fill their content pipeline, batch a week of posts, or keep their LinkedIn/X active. You cannot post to social yourself; Dreamstate generates drafts and publishes/schedules them through the user's connected accounts under per-account daily caps.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "content_list_accounts",
+        "content_generate_post",
+        "content_get_post",
+        "content_list_posts",
+        "content_schedule_post",
+        "content_publish_post",
+        "content_post_analytics"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
+        "content:write"
+      ],
+      "requires_skills": [
+        "dreamstate-connect"
+      ]
+    }
+  ]
+}

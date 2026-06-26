@@ -1,0 +1,51 @@
+{
+  "name": "dreamstate",
+  "version": "0.1.0",
+  "description": "Give your coding agent hands. Install agent skills that drive Dreamstate to do real outreach, SEO/GEO, and social at scale.",
+  "type": "module",
+  "bin": {
+    "dreamstate": "bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "skills-index.json",
+    "playbooks",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/build.mjs --check"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "cursor",
+    "codex",
+    "agent-skills",
+    "outreach",
+    "seo",
+    "geo",
+    "social-media",
+    "gtm",
+    "dreamstate"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Dreamstateai/Dreamstate-Skills",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dreamstateai/Dreamstate-Skills.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "gradient-string": "^2.0.2",
+    "picocolors": "^1.0.1",
+    "smol-toml": "^1.3.0"
+  }
+}
