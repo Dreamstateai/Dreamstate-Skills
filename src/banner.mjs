@@ -40,6 +40,6 @@ export function printConnectedFooter({ workspace, skillCount, agent }) {
   if (workspace) process.stdout.write(`  ${ok} ${pc.bold('connected')}        workspace ${pc.cyan(workspace)}\n`);
   process.stdout.write(`  ${ok} ${pc.bold('skills installed')} ${pc.cyan(String(skillCount))} into ${pc.cyan(agent)}\n`);
   process.stdout.write(
-    '\n' + pc.dim('  next: open your agent and run ') + pc.bold('/dreamstate-connect') + pc.dim(' to sign in.') + '\n\n',
+    '\n' + pc.dim('  next: open your agent and run ') + pc.bold('/connect') + pc.dim(' to sign in.') + '\n\n',
   );
 }

@@ -1,8 +1,8 @@
 # Dreamstate Skills
 
 **Give your coding agent hands.** Claude, Cursor, and Codex can already think and
-write. They can't post to LinkedIn, enrich a lead, send a connection request, or run
-an AI-visibility probe. Connect Dreamstate and they can.
+write. They can't post to LinkedIn, enrich a lead, build a lead table, send a
+connection request, or run an AI-visibility probe. Connect Dreamstate and they can.
 
 This is an open-source library of agent skills (playbooks) that drive the
 [Dreamstate](https://trydreamstate.com) engine to do real outreach, SEO/GEO, and
@@ -10,39 +10,61 @@ social-media work at scale, with the actual sending paced under per-account safe
 caps you can't bypass.
 
 ```bash
-npx dreamstate install
+npm install dreamstate-skills      # or: npx dreamstate-skills install
 ```
 
 > **Requires a Dreamstate account.** The skills are MIT-licensed and free; the
 > execution runs through your Dreamstate workspace. One connect, one bill, batteries
 > included — no separate Apollo / Hunter / Instantly keys to wire up.
 
-## What you get
+## The outbound pipeline (and the rest)
 
-One install drops these playbooks into your agent and connects it to the Dreamstate
-MCP server. Then you just ask:
+The outreach skills are a pipeline of stages, modeled on how a SDR team actually
+works. Each stage is a skill you can run on its own, or chain through `/outbound`.
+The agent builds a **Clay-style table in Dreamstate** — one row per person, the
+columns you want — and each stage reads and writes that table.
 
-| Skill | Ask it for | Drives |
-|-------|-----------|--------|
-| `/dreamstate-connect` | "connect to dreamstate", "is this working" | health check + OAuth sign-in |
-| `/dreamstate-outbound` | "run a LinkedIn campaign", "book demos", "prospect X" | source → enrich → score → sequence → launch |
-| `/dreamstate-reply-triage` | "check my replies", "work my inbox" | classify + respond + set pipeline status |
-| `/dreamstate-enrich-list` | "enrich these leads", "score my list" | firmographics + ICP scoring (no sending) |
-| `/dreamstate-social-calendar` | "plan my content", "schedule a week of posts" | generate + schedule LinkedIn/X posts |
-| `/dreamstate-ai-visibility` | "do AI assistants cite us", "GEO audit" | visibility probe → gap analysis → publish content |
-| `/dreamstate-multichannel` | "warm up this audience", "ABM play" | content + outreach against one list |
+```
+/signal-scraper  →  /enrich-list  →  /lead-prioritizer  →  /hook-writer  →  /sequence-builder  →  /outbound
+   source rows       build table        score vs ICP         write openers      build cadence        enroll + launch
+                     + firmographics     (icp_fit column)     (opener column)    (validated graph)    (capped sends)
+```
+
+| Skill | Ask it for | Stage / role |
+|-------|-----------|--------------|
+| `/connect` | "connect to dreamstate", "is this working" | health check + OAuth sign-in (run first) |
+| `/signal-scraper` | "find leads", "who's hiring / raised", "source a list" | source rows into a list by buying signal |
+| `/enrich-list` | "enrich these leads", "build a lead table", "map my CSV" | build the Clay table + firmographics |
+| `/lead-prioritizer` | "score my leads", "prioritize this list", "tier them" | ICP score + reason, written per row |
+| `/hook-writer` | "personalized openers", "first lines", "icebreakers" | one opener per row, saved to a column |
+| `/sequence-builder` | "build the sequence", "design the cadence" | wire + validate the campaign step graph |
+| `/outbound` | "run a campaign", "book demos", "prospect X" | orchestrate the whole pipeline + launch |
+| `/reply-classifier` | "classify my replies", "triage who responded" | label inbox by intent + set status (no send) |
+| `/reply-triage` | "check my replies", "work my inbox" | classify + respond + assign (sends, capped) |
+| `/social-calendar` | "plan my content", "schedule a week of posts" | generate + schedule LinkedIn/X posts |
+| `/ai-visibility` | "do AI assistants cite us", "GEO audit" | visibility probe → gap analysis → publish |
+| `/multichannel` | "warm up this audience", "ABM play" | content + outreach against one list |
+
+## Bring your own ICP and data
+
+- **ICP:** copy [`config/icp.example.json`](config/icp.example.json) to `icp.json` and
+  edit it. The scoring and copy skills read it; without it, the agent just asks you.
+- **Your leads:** point the agent at a CSV or paste. See
+  [`references/input-columns.md`](references/input-columns.md) for how your columns map
+  onto a Dreamstate row. Only a name is required; everything else is enriched or a
+  custom column.
 
 ## How it works
 
 ```
-  npx dreamstate install              your agent (Claude / Cursor / Codex)
+  npx dreamstate-skills install        your agent (Claude / Cursor / Codex)
         │                                    │
         │ writes MCP config + skills         │ first tool call → sign in (OAuth)
         ▼                                    ▼
   .mcp.json / mcp.json / config.toml  ──►  mcp.trydreamstate.com
         │                                    │
         ▼                                    ▼
-  /dreamstate-* skills on disk         48 tools: outreach_* · content_* · visibility_*
+  skills on disk                       48 tools: outreach_* · content_* · visibility_*
                                        (sends paced under per-account caps)
 ```
 
@@ -54,12 +76,14 @@ MCP server. Then you just ask:
   playbooks also appear as native MCP prompts; Cursor and Codex use the installed
   skill files.)
 
-## Install for a specific agent
+## Install
 
 ```bash
-npx dreamstate install --claude
-npx dreamstate install --cursor
-npx dreamstate install --codex
+npx dreamstate-skills install            # pick the agent interactively
+npx dreamstate-skills install --claude
+npx dreamstate-skills install --cursor
+npx dreamstate-skills install --codex
+npx dreamstate-skills install outbound   # install just one skill
 ```
 
 Re-running is safe — it merges into your existing MCP config (never clobbering other
@@ -73,9 +97,11 @@ skills/<cat>/<tier>/   Generated, committed skill tree (goose-skills layout):
   <slug>/SKILL.md         the playbook the agent runs
   <slug>/skill.meta.json  slug, category, tags, installation, tools_used, scopes
 skills-index.json      Generated catalog the install CLI reads
+config/icp.example.json  Copy to icp.json — the ICP the scoring/copy skills read
+references/            Browsable docs (e.g. input-columns.md: your CSV → a Dreamstate row)
 src/catalog.json       Pinned snapshot of Dreamstate MCP tools + the scope each needs
 scripts/build.mjs      playbooks/ -> skills/ + skills-index.json + dist/ MCP prompts
-bin/cli.mjs            npx dreamstate install
+bin/cli.mjs            npx dreamstate-skills install
 dist/                  MCP-prompt artifacts the Dreamstate server vendors
 ```
 

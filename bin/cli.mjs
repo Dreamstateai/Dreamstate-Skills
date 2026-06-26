@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// npx dreamstate install [--claude|--cursor|--codex]
+// npx dreamstate-skills install [slug] [--claude|--cursor|--codex]
 //
 // Writes the Dreamstate MCP connection for the chosen agent and copies the
 // skills onto disk. It never asks for or stores an API key — sign-in happens in
@@ -41,7 +41,7 @@ async function main() {
   printBanner();
 
   if (cmd !== 'install') {
-    console.log(pc.dim(`  unknown command "${cmd}". Try: `) + pc.bold('npx dreamstate install') + '\n');
+    console.log(pc.dim(`  unknown command "${cmd}". Try: `) + pc.bold('npx dreamstate-skills install') + '\n');
     process.exit(1);
   }
 
@@ -53,7 +53,7 @@ async function main() {
   if (slug) {
     skills = skills.filter((s) => s.slug === slug);
     if (skills.length === 0) {
-      console.error(pc.red(`  no skill named "${slug}". Run \`npx dreamstate install\` to install all.`));
+      console.error(pc.red(`  no skill named "${slug}". Run \`npx dreamstate-skills install\` to install all.`));
       process.exit(1);
     }
   }

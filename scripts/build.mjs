@@ -77,7 +77,7 @@ function validate(meta, file) {
   for (const k of REQUIRED_KEYS) {
     if (!(k in meta)) throw new Error(`${file}: missing required frontmatter key '${k}'`);
   }
-  if (!/^dreamstate-[a-z0-9-]+$/.test(meta.name)) throw new Error(`${file}: name '${meta.name}' must match dreamstate-<kebab>`);
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(meta.name)) throw new Error(`${file}: name '${meta.name}' must be kebab-case (e.g. 'outbound', 'reply-triage')`);
   if (typeof meta.description !== 'string' || meta.description.length < 40) throw new Error(`${file}: description must be a string >= 40 chars`);
   if (!Array.isArray(meta.platforms) || meta.platforms.some((p) => !VALID_PLATFORMS.includes(p))) throw new Error(`${file}: platforms must be a subset of ${VALID_PLATFORMS.join(', ')}`);
   if (!VALID_DOMAINS.includes(meta.domain)) throw new Error(`${file}: domain '${meta.domain}' not in ${VALID_DOMAINS.join(', ')}`);
@@ -101,7 +101,7 @@ function requiredScopes(meta) {
 }
 
 function titleCase(name) {
-  return name.replace(/^dreamstate-/, '').split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+  return name.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 }
 
 // --- Build ------------------------------------------------------------------
@@ -125,7 +125,7 @@ function build() {
     const relDir = `skills/${cat}/${tierDir}/${meta.name}`;
 
     // Every playbook (except connect itself) assumes a live connection.
-    const requires = meta.name === 'dreamstate-connect' ? [] : ['dreamstate-connect'];
+    const requires = meta.name === 'connect' ? [] : ['connect'];
 
     // 1. SKILL.md (Claude reads natively; the CLI copies it for cursor/codex).
     artifacts[`${relDir}/SKILL.md`] = `---\nname: ${meta.name}\ndescription: ${JSON.stringify(meta.description)}\n---\n\n${body}`;
@@ -136,7 +136,7 @@ function build() {
       category: tierDir,
       tags: [meta.domain],
       installation: {
-        base_command: `npx dreamstate install ${meta.name}`,
+        base_command: `npx dreamstate-skills install ${meta.name}`,
         supports: meta.platforms,
       },
       requires_skills: requires,

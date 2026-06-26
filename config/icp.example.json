@@ -1,0 +1,57 @@
+{
+  "$comment": "Copy to icp.json and edit. The outreach skills (lead-prioritizer, hook-writer, outbound, multichannel) read this to score and personalize. If no icp.json is present, the agent will ask you for these in the chat. Nothing here is sent anywhere by itself; it is the rubric the agent reasons with.",
+
+  "product": {
+    "name": "Your product",
+    "one_liner": "One sentence: what you sell and who it's for.",
+    "value_props": [
+      "Prop 1: the outcome you create and why it matters",
+      "Prop 2: second benefit",
+      "Prop 3: third benefit"
+    ],
+    "proof": [
+      "Customer A: the result they got",
+      "Customer B: the result they got"
+    ]
+  },
+
+  "icp": {
+    "titles": ["Head of Growth", "VP Marketing", "Founder"],
+    "seniority": ["head", "vp", "c_level", "founder"],
+    "industries": ["SaaS", "Fintech", "Healthcare Tech"],
+    "company_size": { "min": 50, "max": 500 },
+    "geographies": ["United States", "Canada", "United Kingdom"],
+    "why_now_signals": ["raised funding", "hiring for the role you serve", "switched tools"],
+    "disqualifiers": ["agencies", "students", "competitors", "outside target regions"]
+  },
+
+  "scoring": {
+    "$comment": "How lead-prioritizer turns ICP into a score. Use any scale you like; keep it consistent.",
+    "scale": "1-5",
+    "weights": {
+      "title_fit": 0.35,
+      "company_size_fit": 0.2,
+      "industry_fit": 0.2,
+      "why_now_signal": 0.25
+    },
+    "tiers": {
+      "TIER_1": ">= 4.5",
+      "TIER_2": "3.5 - 4.4",
+      "TIER_3": "2.5 - 3.4",
+      "TIER_4": "< 2.5 (skip)"
+    }
+  },
+
+  "voice": {
+    "$comment": "How hook-writer should sound. Short and human beats clever and long.",
+    "register": "direct, warm, first-person",
+    "max_opener_chars": 240,
+    "common_objections": ["we already have a solution", "too expensive", "not a priority right now"]
+  },
+
+  "sender": {
+    "name": "Your Name",
+    "title": "Your Title",
+    "company": "Your Company"
+  }
+}

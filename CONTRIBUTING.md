@@ -8,7 +8,7 @@ index from it. You never edit `dist/` by hand.
 
 ```markdown
 ---
-name: dreamstate-<kebab>          # slash-command name, must start with dreamstate-
+name: <kebab>                     # slash-command name, kebab-case (e.g. outbound, reply-triage)
 description: "What it does AND when to trigger. >= 40 chars, a little pushy."
 platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"

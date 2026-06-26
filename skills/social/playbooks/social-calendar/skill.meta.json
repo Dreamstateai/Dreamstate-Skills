@@ -1,0 +1,37 @@
+{
+  "slug": "social-calendar",
+  "category": "playbooks",
+  "tags": [
+    "social"
+  ],
+  "installation": {
+    "base_command": "npx dreamstate-skills install social-calendar",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "connect"
+  ],
+  "description": "Plan, draft, and schedule a batch of LinkedIn and X posts through Dreamstate. Use whenever the user wants to 'plan content', 'schedule posts', build a social calendar, fill their content pipeline, batch a week of posts, or keep their LinkedIn/X active. You cannot post to social yourself; Dreamstate generates drafts and publishes/schedules them through the user's connected accounts under per-account daily caps.",
+  "domain": "social",
+  "tier": "playbook",
+  "min_mcp_version": "1.0.0",
+  "tools_used": [
+    "content_list_accounts",
+    "content_generate_post",
+    "content_get_post",
+    "content_list_posts",
+    "content_schedule_post",
+    "content_publish_post",
+    "content_post_analytics"
+  ],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "content:write"
+  ],
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

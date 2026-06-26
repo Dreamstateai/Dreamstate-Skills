@@ -3,14 +3,14 @@
   "mcp_version": "1.0.0",
   "skills": [
     {
-      "slug": "dreamstate-ai-visibility",
+      "slug": "ai-visibility",
       "category": "playbooks",
       "tags": [
         "seo"
       ],
       "domain": "seo",
       "tier": "playbook",
-      "path": "skills/seo/playbooks/dreamstate-ai-visibility",
+      "path": "skills/seo/playbooks/ai-visibility",
       "description": "Audit and improve how a brand shows up in AI search (ChatGPT, Perplexity, Gemini, AI Overviews) using Dreamstate's visibility data, then close the gaps by generating and publishing blog content. Use whenever the user asks about AI visibility, GEO, generative engine optimization, 'do AI assistants cite us', AI search ranking, citation gaps, share of voice in AI answers, or AI-referral traffic. You cannot run the probes or publish content yourself; Dreamstate does both.",
       "platforms": [
         "claude",
@@ -35,19 +35,19 @@
         "visibility:write"
       ],
       "requires_skills": [
-        "dreamstate-connect"
+        "connect"
       ]
     },
     {
-      "slug": "dreamstate-connect",
+      "slug": "connect",
       "category": "composites",
       "tags": [
         "connect"
       ],
       "domain": "connect",
       "tier": "composite",
-      "path": "skills/core/composites/dreamstate-connect",
-      "description": "Connect this agent to Dreamstate and verify it can act. Use this FIRST, before any other dreamstate-* skill, and any time a Dreamstate tool call fails with an auth or 'not connected' error. It checks the MCP connection, walks the OAuth sign-in if needed, lists which tools are available, and confirms the workspace and connected LinkedIn/X accounts so later playbooks don't fail halfway through.",
+      "path": "skills/core/composites/connect",
+      "description": "Connect this agent to Dreamstate and verify it can act. Use this FIRST, before any other Dreamstate skill, and any time a Dreamstate tool call fails with an auth or 'not connected' error. It checks the MCP connection, walks the OAuth sign-in if needed, lists which tools are available, and confirms the workspace and connected LinkedIn/X accounts so later playbooks don't fail halfway through.",
       "platforms": [
         "claude",
         "cursor",
@@ -65,15 +65,15 @@
       "requires_skills": []
     },
     {
-      "slug": "dreamstate-enrich-list",
+      "slug": "enrich-list",
       "category": "composites",
       "tags": [
         "outreach"
       ],
       "domain": "outreach",
       "tier": "composite",
-      "path": "skills/outreach/composites/dreamstate-enrich-list",
-      "description": "Take a list of leads and enrich + score it in Dreamstate's data table without launching a campaign. Use whenever the user wants to 'enrich these leads', 'clean up my list', add firmographics, score contacts against an ICP, or prep a list before outreach. A focused building block: source/enrich/score only, no sending. You cannot enrich data yourself; Dreamstate calls the providers under a daily spend cap.",
+      "path": "skills/outreach/composites/enrich-list",
+      "description": "Build a Clay-style table in Dreamstate: one row per person, the columns you want, enriched with firmographics. Use whenever the user wants to 'enrich these leads', 'build a lead table', 'clean up my list', add firmographics, map an uploaded CSV into Dreamstate, or prep a list before outreach. Stage 2 of the pipeline: it shapes the table and fills it, no scoring or sending. You cannot enrich data yourself; Dreamstate calls the providers under a daily spend cap.",
       "platforms": [
         "claude",
         "cursor",
@@ -88,6 +88,7 @@
         "outreach_enrich_contact",
         "outreach_get_campaign_table",
         "outreach_add_column",
+        "outreach_edit_column",
         "outreach_set_cell",
         "content_list_accounts"
       ],
@@ -97,18 +98,82 @@
         "outreach:write"
       ],
       "requires_skills": [
-        "dreamstate-connect"
+        "connect"
       ]
     },
     {
-      "slug": "dreamstate-multichannel",
+      "slug": "hook-writer",
+      "category": "composites",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "composite",
+      "path": "skills/outreach/composites/hook-writer",
+      "description": "Write a personalized opening line for each row in a Dreamstate list and save it back as a column, ready to drop into a sequence. Use whenever the user wants 'personalized openers', 'first lines', 'icebreakers', to personalize a campaign at scale, or to draft the hook for each lead. Stage 4 of the pipeline: it crafts copy per row, it does not send. You bring the voice and the angle; Dreamstate drafts against the contact's real data and stores the result.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_lists",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "outreach_get_campaign_table",
+        "outreach_get_step_options",
+        "outreach_draft_message",
+        "outreach_add_column",
+        "outreach_set_cell"
+      ],
+      "required_scopes": [
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "lead-prioritizer",
+      "category": "composites",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "composite",
+      "path": "skills/outreach/composites/lead-prioritizer",
+      "description": "Score and tier the rows in a Dreamstate list against an ICP, and write the scores back as columns so the list sorts by who to reach first. Use whenever the user wants to 'score my leads', 'prioritize this list', rank by fit, tier prospects, or decide who to enroll first. Stage 3 of the pipeline: pure judgment over an already-enriched table, no sourcing or sending. Scoring is yours to do; Dreamstate stores it on each row.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_lists",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "outreach_get_campaign_table",
+        "outreach_add_column",
+        "outreach_set_cell"
+      ],
+      "required_scopes": [
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "multichannel",
       "category": "playbooks",
       "tags": [
-        "email"
+        "outreach"
       ],
-      "domain": "email",
+      "domain": "outreach",
       "tier": "playbook",
-      "path": "skills/outreach/playbooks/dreamstate-multichannel",
+      "path": "skills/outreach/playbooks/multichannel",
       "description": "Run a combined LinkedIn + content motion against one audience through Dreamstate: warm the target list with social/blog content while a LinkedIn sequence reaches them directly, so prospects see the brand in more than one place. Use whenever the user wants multi-channel outreach, to 'warm up' an audience before DMing, to coordinate content with outbound, or an account-based play. Orchestrates the outreach and content engines together; you cannot post or send yourself.",
       "platforms": [
         "claude",
@@ -136,19 +201,19 @@
         "outreach:write"
       ],
       "requires_skills": [
-        "dreamstate-connect"
+        "connect"
       ]
     },
     {
-      "slug": "dreamstate-outbound",
+      "slug": "outbound",
       "category": "playbooks",
       "tags": [
         "outreach"
       ],
       "domain": "outreach",
       "tier": "playbook",
-      "path": "skills/outreach/playbooks/dreamstate-outbound",
-      "description": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, enrich and score them against an ICP, draft personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants to do cold outreach, prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. You cannot touch LinkedIn yourself, so this skill routes every real action through Dreamstate, which sends at scale within deliverability limits.",
+      "path": "skills/outreach/playbooks/outbound",
+      "description": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.",
       "platforms": [
         "claude",
         "cursor",
@@ -161,6 +226,9 @@
         "outreach_list_contacts",
         "outreach_get_contact",
         "outreach_enrich_contact",
+        "outreach_get_campaign_table",
+        "outreach_add_column",
+        "outreach_set_cell",
         "outreach_create_campaign",
         "outreach_configure_targeting",
         "outreach_get_sequence",
@@ -168,8 +236,6 @@
         "outreach_add_step",
         "outreach_validate_sequence",
         "outreach_draft_message",
-        "outreach_add_column",
-        "outreach_set_cell",
         "outreach_enroll",
         "outreach_activate_campaign",
         "content_list_accounts",
@@ -182,19 +248,50 @@
         "outreach:write"
       ],
       "requires_skills": [
-        "dreamstate-connect"
+        "connect"
       ]
     },
     {
-      "slug": "dreamstate-reply-triage",
+      "slug": "reply-classifier",
+      "category": "capabilities",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "capability",
+      "path": "skills/outreach/capabilities/reply-classifier",
+      "description": "Read the open reply threads on a Dreamstate campaign and classify each by intent (interested, not now, referral, objection, not interested, auto/OOO), with a recommended next action, and set pipeline status. Use whenever the user wants to 'classify my replies', 'triage who responded', sort the inbox by intent, or label responses, without sending anything yet. The classify-and-label half of reply handling; pair with /reply-triage to actually respond. You read intent; Dreamstate holds the threads and statuses.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_campaigns",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "outreach_set_thread_status",
+        "outreach_mark_thread_read",
+        "outreach_analytics"
+      ],
+      "required_scopes": [
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "reply-triage",
       "category": "composites",
       "tags": [
         "outreach"
       ],
       "domain": "outreach",
       "tier": "composite",
-      "path": "skills/outreach/composites/dreamstate-reply-triage",
-      "description": "Work the LinkedIn inbox for an outreach campaign: read open conversations, classify each reply by intent, draft and send the right response, and set pipeline status / assignment so nothing slips. Use whenever the user says 'check my replies', 'who responded', 'work my inbox', 'follow up with interested leads', or wants to triage outreach responses. You cannot read or send LinkedIn DMs yourself; Dreamstate does, under per-account caps.",
+      "path": "skills/outreach/composites/reply-triage",
+      "description": "Work the LinkedIn inbox for an outreach campaign end to end: read open conversations, classify each reply by intent, draft and send the right response, and set pipeline status / assignment so nothing slips. Use whenever the user says 'check my replies', 'who responded', 'work my inbox', 'follow up with interested leads', or wants to triage and respond to outreach. You cannot read or send LinkedIn DMs yourself; Dreamstate does, under per-account caps.",
       "platforms": [
         "claude",
         "cursor",
@@ -218,18 +315,85 @@
         "outreach:write"
       ],
       "requires_skills": [
-        "dreamstate-connect"
+        "connect"
       ]
     },
     {
-      "slug": "dreamstate-social-calendar",
+      "slug": "sequence-builder",
+      "category": "composites",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "composite",
+      "path": "skills/outreach/composites/sequence-builder",
+      "description": "Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_campaigns",
+        "outreach_create_campaign",
+        "outreach_configure_targeting",
+        "outreach_get_step_options",
+        "outreach_get_sequence",
+        "outreach_add_step",
+        "outreach_edit_step",
+        "outreach_remove_step",
+        "outreach_validate_sequence",
+        "outreach_list_signal_types"
+      ],
+      "required_scopes": [
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "signal-scraper",
+      "category": "capabilities",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "capability",
+      "path": "skills/outreach/capabilities/signal-scraper",
+      "description": "Find in-market leads by buying signal and pull them into a Dreamstate list, one row per person. Use whenever the user wants to 'find leads', 'who's hiring / raised / switched tools', source a list from a LinkedIn search or signal, or fill the top of the funnel. This is stage 1 of the outbound pipeline: it only sources rows into the table, it does not enrich, score, or send. You cannot search LinkedIn yourself; Dreamstate runs the search through a connected account.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_list_signal_types",
+        "outreach_find_leads",
+        "outreach_create_list",
+        "outreach_lists",
+        "outreach_list_contacts",
+        "content_list_accounts"
+      ],
+      "required_scopes": [
+        "content:read",
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "social-calendar",
       "category": "playbooks",
       "tags": [
         "social"
       ],
       "domain": "social",
       "tier": "playbook",
-      "path": "skills/social/playbooks/dreamstate-social-calendar",
+      "path": "skills/social/playbooks/social-calendar",
       "description": "Plan, draft, and schedule a batch of LinkedIn and X posts through Dreamstate. Use whenever the user wants to 'plan content', 'schedule posts', build a social calendar, fill their content pipeline, batch a week of posts, or keep their LinkedIn/X active. You cannot post to social yourself; Dreamstate generates drafts and publishes/schedules them through the user's connected accounts under per-account daily caps.",
       "platforms": [
         "claude",
@@ -251,7 +415,7 @@
         "content:write"
       ],
       "requires_skills": [
-        "dreamstate-connect"
+        "connect"
       ]
     }
   ]
