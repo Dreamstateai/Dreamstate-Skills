@@ -1,8 +1,9 @@
 name: Release
 
-# Publishes the `dreamstate` CLI to npm on a version tag (e.g. v0.1.0).
-# Requires the NPM_TOKEN secret. dist/ is built fresh so a published package can
-# never ship stale skills.
+# Publishes the `dreamstate-skills` CLI to npm on a version tag (e.g. v0.1.0).
+# Requires the NPM_TOKEN secret. The skills tree is built fresh and `prepublishOnly`
+# compiles the TypeScript to lib/, so a published package can never ship stale
+# skills or uncompiled source.
 
 on:
   push:

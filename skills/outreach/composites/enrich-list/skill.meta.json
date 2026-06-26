@@ -29,6 +29,7 @@
     "outreach_get_campaign_table",
     "outreach_add_column",
     "outreach_edit_column",
+    "outreach_delete_column",
     "outreach_set_cell",
     "content_list_accounts"
   ],

@@ -14,6 +14,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      # Type-check + compile the TypeScript installer/build tooling to lib/.
+      - run: npm run compile
       # Contract: every playbook's tools exist in the catalog, frontmatter valid.
       - run: npm run build
       # Determinism: committed dist/ must match what the playbooks generate.

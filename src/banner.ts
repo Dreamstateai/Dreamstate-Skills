@@ -5,7 +5,7 @@
 import gradient from 'gradient-string';
 import pc from 'picocolors';
 
-const GLYPHS = {
+const GLYPHS: Record<string, string[]> = {
   D: ['████ ', '█   █', '█   █', '█   █', '████ '],
   R: ['████ ', '█   █', '████ ', '█  █ ', '█   █'],
   E: ['█████', '█    ', '███  ', '█    ', '█████'],
@@ -16,7 +16,7 @@ const GLYPHS = {
   ' ': ['   ', '   ', '   ', '   ', '   '],
 };
 
-function wordmark(text) {
+function wordmark(text: string): string {
   const rows = ['', '', '', '', ''];
   for (const ch of text.toUpperCase()) {
     const glyph = GLYPHS[ch] || GLYPHS[' '];
@@ -28,13 +28,21 @@ function wordmark(text) {
 // Cyan -> sky -> indigo, matching the Dreamstate cold palette.
 const dreamGradient = gradient(['#7df9ff', '#56b4ff', '#5d6dff']);
 
-export function printBanner() {
+export function printBanner(): void {
   const art = wordmark('DREAMSTATE');
   process.stdout.write('\n' + dreamGradient.multiline(art) + '\n');
   process.stdout.write(pc.dim('  give your agent hands · outreach · seo · social · run at scale') + '\n\n');
 }
 
-export function printConnectedFooter({ workspace, skillCount, agent }) {
+export function printConnectedFooter({
+  workspace,
+  skillCount,
+  agent,
+}: {
+  workspace?: string;
+  skillCount: number;
+  agent: string;
+}): void {
   const ok = pc.green('✓');
   process.stdout.write('\n');
   if (workspace) process.stdout.write(`  ${ok} ${pc.bold('connected')}        workspace ${pc.cyan(workspace)}\n`);

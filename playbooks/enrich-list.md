@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [outreach_lists, outreach_create_list, outreach_find_leads, outreach_list_contacts, outreach_get_contact, outreach_enrich_contact, outreach_get_campaign_table, outreach_add_column, outreach_edit_column, outreach_set_cell, content_list_accounts]
+tools_used: [outreach_lists, outreach_create_list, outreach_find_leads, outreach_list_contacts, outreach_get_contact, outreach_enrich_contact, outreach_get_campaign_table, outreach_add_column, outreach_edit_column, outreach_delete_column, outreach_set_cell, content_list_accounts]
 ---
 
 # Enrich List
@@ -40,7 +40,8 @@ with `outreach_add_column` and reuse it for every row:
 
 - `kind: "freeform"` for text/number values you or the user write (e.g.
   `key: "persona"`, `key: "account_tier"`, `key: "notes"`).
-- Rename or retype later with `outreach_edit_column` rather than piling on duplicates.
+- Rename or retype later with `outreach_edit_column` rather than piling on duplicates, and
+  `outreach_delete_column` to clear out a stray or experimental column so the table stays clean.
 
 Keep the schema tight and intentional: a column exists because a later stage reads it
 (`/lead-prioritizer` writes `icp_fit`, `/hook-writer` writes `opener`). Don't add columns

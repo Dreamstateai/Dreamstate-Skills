@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parse as parseToml } from 'smol-toml';
-import { mergeJsonMcp, mergeTomlMcp, MCP_URL, SERVER_NAME } from '../src/config-writers.mjs';
+import { mergeJsonMcp, mergeTomlMcp, MCP_URL, SERVER_NAME } from '../src/config-writers.js';
 
 // The whole point of these mergers: add the dreamstate server WITHOUT corrupting
 // whatever MCP setup the user already has, and stay a no-op when re-run.
@@ -39,7 +39,7 @@ test('JSON merge: refuses a non-object root (e.g. an array)', () => {
 });
 
 test('TOML merge: writes a fresh config from nothing', () => {
-  const doc = parseToml(mergeTomlMcp(null));
+  const doc = parseToml(mergeTomlMcp(null)) as any;
   assert.equal(doc.mcp_servers[SERVER_NAME].url, MCP_URL);
 });
 
@@ -52,7 +52,7 @@ test('TOML merge: preserves existing tables and unrelated mcp servers', () => {
     'args = ["server.js"]',
     '',
   ].join('\n');
-  const doc = parseToml(mergeTomlMcp(existing));
+  const doc = parseToml(mergeTomlMcp(existing)) as any;
   assert.equal(doc.model, 'o4', 'top-level key survives');
   assert.equal(doc.mcp_servers.other.command, 'node', 'sibling mcp server survives');
   assert.equal(doc.mcp_servers[SERVER_NAME].url, MCP_URL, 'dreamstate added');

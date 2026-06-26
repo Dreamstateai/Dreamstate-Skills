@@ -35,7 +35,8 @@ with `outreach_add_column` and reuse it for every row:
 
 - `kind: "freeform"` for text/number values you or the user write (e.g.
   `key: "persona"`, `key: "account_tier"`, `key: "notes"`).
-- Rename or retype later with `outreach_edit_column` rather than piling on duplicates.
+- Rename or retype later with `outreach_edit_column` rather than piling on duplicates, and
+  `outreach_delete_column` to clear out a stray or experimental column so the table stays clean.
 
 Keep the schema tight and intentional: a column exists because a later stage reads it
 (`/lead-prioritizer` writes `icp_fit`, `/hook-writer` writes `opener`). Don't add columns

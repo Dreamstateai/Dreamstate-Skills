@@ -11,17 +11,28 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
-import { printBanner, printConnectedFooter } from '../src/banner.mjs';
-import { clients } from '../src/config-writers.mjs';
+import { printBanner, printConnectedFooter } from './banner.js';
+import { clients, type ClientConfig } from './config-writers.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const INDEX_PATH = join(ROOT, 'skills-index.json');
 
-function parseArgs(argv) {
+interface IndexedSkill {
+  slug: string;
+  path: string;
+}
+
+interface ParsedArgs {
+  cmd: string;
+  agent: string | null;
+  slug: string | null;
+}
+
+function parseArgs(argv: string[]): ParsedArgs {
   const positionals = argv.slice(2).filter((a) => !a.startsWith('-'));
   const cmd = positionals[0] || 'install';
   const slug = positionals[1] || null; // optional: install just one skill
-  let agent = null;
+  let agent: string | null = null;
   for (const a of argv.slice(2)) {
     const m = a.match(/^--(claude|cursor|codex)$/);
     if (m) agent = m[1];
@@ -29,14 +40,14 @@ function parseArgs(argv) {
   return { cmd, agent, slug };
 }
 
-function detectInstalled(reg) {
+function detectInstalled(reg: Record<string, ClientConfig>): string[] {
   // An agent is "present" if its config file or its parent dir exists.
   return Object.entries(reg)
     .filter(([, c]) => existsSync(c.configPath) || existsSync(dirname(c.configPath)))
     .map(([k]) => k);
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { cmd, agent: agentFlag, slug } = parseArgs(process.argv);
   printBanner();
 
@@ -49,7 +60,7 @@ async function main() {
     console.error(pc.red('  skills-index.json is missing. Run `npm run build` first (maintainers) or reinstall the package.'));
     process.exit(1);
   }
-  let skills = JSON.parse(readFileSync(INDEX_PATH, 'utf8')).skills;
+  let skills: IndexedSkill[] = JSON.parse(readFileSync(INDEX_PATH, 'utf8')).skills;
   if (slug) {
     skills = skills.filter((s) => s.slug === slug);
     if (skills.length === 0) {
@@ -76,7 +87,7 @@ async function main() {
       p.cancel('Cancelled.');
       process.exit(0);
     }
-    agent = picked;
+    agent = picked as string;
   }
 
   const client = reg[agent];
@@ -98,7 +109,7 @@ async function main() {
     s.stop(`MCP config written → ${pc.dim(client.configPath)}`);
   } catch (err) {
     s.stop(pc.red('Failed to write MCP config'));
-    console.error('  ' + err.message);
+    console.error('  ' + (err as Error).message);
     console.error(pc.dim('  Your original config was not changed.'));
     process.exit(1);
   }
@@ -119,14 +130,14 @@ async function main() {
     s.stop(`Installed ${count} skill${count === 1 ? '' : 's'}`);
   } catch (err) {
     s.stop(pc.red('Failed to install skills'));
-    console.error('  ' + err.message);
+    console.error('  ' + (err as Error).message);
     process.exit(1);
   }
 
   printConnectedFooter({ skillCount: count, agent: client.label });
 }
 
-main().catch((err) => {
-  console.error(pc.red('  install failed: ') + err.message);
+main().catch((err: unknown) => {
+  console.error(pc.red('  install failed: ') + (err as Error).message);
   process.exit(1);
 });

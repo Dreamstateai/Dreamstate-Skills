@@ -39,6 +39,70 @@
       ]
     },
     {
+      "slug": "blog-writer",
+      "category": "playbooks",
+      "tags": [
+        "seo"
+      ],
+      "domain": "seo",
+      "tier": "playbook",
+      "path": "skills/seo/playbooks/blog-writer",
+      "description": "Write and publish a blog post on a given topic through Dreamstate: draft it, AI-generate the full article, review, and publish to the public blog or a destination. Use whenever the user wants to 'write a blog post', 'publish an article', 'add to our blog', or turn a topic into long-form content. Distinct from /ai-visibility (which picks topics from GEO citation gaps); this one writes the post the user already has in mind. You cannot publish yourself; Dreamstate generates and publishes.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "content_list_blog",
+        "content_create_blog",
+        "content_generate_blog",
+        "content_get_blog",
+        "content_publish_blog"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
+        "content:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "campaign-optimizer",
+      "category": "playbooks",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "playbook",
+      "path": "skills/outreach/playbooks/campaign-optimizer",
+      "description": "Diagnose and tune a running outreach campaign: read its analytics, find what's underperforming, and act, pause weak campaigns, fix sequence steps, re-status stuck threads. Use whenever the user asks 'why isn't my campaign working', 'improve my reply rate', 'my outreach is flat', wants to optimize, pause, or audit a live campaign. The lever for a launched campaign is rarely volume; it's the opener, the targeting, or the cadence. You read the data and decide; Dreamstate makes the change under its caps.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "outreach_campaigns",
+        "outreach_analytics",
+        "outreach_get_campaign_table",
+        "outreach_get_sequence",
+        "outreach_get_step_options",
+        "outreach_edit_step",
+        "outreach_pause_campaign",
+        "outreach_set_thread_status"
+      ],
+      "required_scopes": [
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
       "slug": "connect",
       "category": "composites",
       "tags": [
@@ -89,6 +153,7 @@
         "outreach_get_campaign_table",
         "outreach_add_column",
         "outreach_edit_column",
+        "outreach_delete_column",
         "outreach_set_cell",
         "content_list_accounts"
       ],
@@ -197,6 +262,43 @@
         "actions",
         "content:read",
         "content:write",
+        "outreach:read",
+        "outreach:write"
+      ],
+      "requires_skills": [
+        "connect"
+      ]
+    },
+    {
+      "slug": "network-grow",
+      "category": "composites",
+      "tags": [
+        "outreach"
+      ],
+      "domain": "outreach",
+      "tier": "composite",
+      "path": "skills/outreach/composites/network-grow",
+      "description": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps.",
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "tools_used": [
+        "content_list_accounts",
+        "outreach_lists",
+        "outreach_create_list",
+        "outreach_find_leads",
+        "outreach_list_contacts",
+        "outreach_get_contact",
+        "outreach_enrich_contact",
+        "outreach_create_campaign",
+        "outreach_draft_message",
+        "outreach_send_connection"
+      ],
+      "required_scopes": [
+        "actions",
+        "content:read",
         "outreach:read",
         "outreach:write"
       ],
