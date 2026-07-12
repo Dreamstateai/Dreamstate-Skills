@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "slug": "reply-classifier",
+  "name": "Reply Classifier",
+  "short_description": "Read the open reply threads on a Dreamstate campaign and classify each by intent (interested, not now, referral, objection, not interested, auto/OOO), with a recommended next action, and set pipeline status. Use whenever the user wants to 'classify my replies', 'triage who responded', sort the inbox by intent, or label responses, without sending anything yet. The classify-and-label half of reply handling; pair with /reply-triage to actually respond. You read intent; Dreamstate holds the threads and statuses.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [
+    "intent:outreach.get_contact",
+    "intent:outreach.list_campaigns",
+    "intent:outreach.list_contacts"
+  ],
+  "mcp_tools": [
+    "outreach_campaigns",
+    "outreach_list_contacts",
+    "outreach_get_contact",
+    "outreach_set_thread_status",
+    "outreach_mark_thread_read",
+    "outreach_analytics"
+  ],
+  "run_intents": [
+    "outreach.get_contact",
+    "outreach.list_campaigns",
+    "outreach.list_contacts"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:read",
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/reply-classifier/SKILL.md",
+  "install_command": "dreamstate skills install reply-classifier",
+  "recommended_rank": 11,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate playbook."
+    }
+  ]
+}

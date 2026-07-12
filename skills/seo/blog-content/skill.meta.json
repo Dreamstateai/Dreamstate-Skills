@@ -1,0 +1,37 @@
+{
+  "slug": "blog-content",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install blog-content",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Plan, generate, review, and publish useful long-form content through Dreamstate.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "content_create_blog",
+    "content_generate_blog",
+    "content_get_blog",
+    "content_publish_blog"
+  ],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "content:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

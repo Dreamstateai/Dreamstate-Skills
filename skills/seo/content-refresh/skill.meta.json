@@ -1,0 +1,28 @@
+{
+  "slug": "content-refresh",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install content-refresh",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Update an existing page from changed facts, decayed coverage, search intent, and performance evidence.",
+  "domain": "seo",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "doctor",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install doctor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Diagnose authentication, workspace, scope, billing, provider, and connected-account readiness.",
+  "domain": "core",
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "tools_used": [
+    "ping",
+    "dreamstate_tools_search",
+    "content_list_accounts"
+  ],
+  "required_scopes": [
+    "content:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

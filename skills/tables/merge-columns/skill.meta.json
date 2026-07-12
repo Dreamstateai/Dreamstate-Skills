@@ -1,0 +1,32 @@
+{
+  "slug": "merge-columns",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install merge-columns",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Combine provider outputs into one canonical field while preserving raw evidence and precedence.",
+  "domain": "tables",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "outreach_add_column"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

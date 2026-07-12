@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "ai-traffic-analysis",
+  "name": "Ai Traffic Analysis",
+  "short_description": "Separate AI-referred traffic evidence from crawler activity and unattributed assumptions.",
+  "domain": "seo",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:visibility.ai_traffic"
+  ],
+  "mcp_tools": [
+    "visibility_ai_traffic"
+  ],
+  "run_intents": [
+    "visibility.ai_traffic"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "visibility:read"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/seo/ai-traffic-analysis/SKILL.md",
+  "install_command": "dreamstate skills install ai-traffic-analysis",
+  "recommended_rank": 143,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

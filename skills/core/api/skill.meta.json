@@ -1,0 +1,34 @@
+{
+  "slug": "api",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install api",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Call Dreamstate API resources and typed run intents with idempotency and async result checks.",
+  "domain": "core",
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "tools_used": [
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
+  ],
+  "required_scopes": [
+    "outreach:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

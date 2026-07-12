@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "analyze-competitor-rankings",
+  "name": "Analyze Competitor Rankings",
+  "short_description": "Compare ranking coverage and page intent without treating correlation as strategy.",
+  "domain": "seo",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:seo.competitor_ranks"
+  ],
+  "mcp_tools": [
+    "seo_competitor_ranks"
+  ],
+  "run_intents": [
+    "seo.competitor_ranks"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "visibility:read"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/seo/analyze-competitor-rankings/SKILL.md",
+  "install_command": "dreamstate skills install analyze-competitor-rankings",
+  "recommended_rank": 140,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

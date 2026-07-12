@@ -1,0 +1,34 @@
+{
+  "slug": "track-keyword-rankings",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install track-keyword-rankings",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Track keyword movement with stable locations, devices, dates, and comparable snapshots.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "seo_keyword_tracking",
+    "seo_rank_overview"
+  ],
+  "required_scopes": [
+    "visibility:read",
+    "visibility:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

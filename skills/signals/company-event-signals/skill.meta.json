@@ -1,0 +1,32 @@
+{
+  "slug": "company-event-signals",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install company-event-signals",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Monitor launches, expansions, acquisitions, leadership changes, and other company events.",
+  "domain": "signals",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "dreamstate_tools_run"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

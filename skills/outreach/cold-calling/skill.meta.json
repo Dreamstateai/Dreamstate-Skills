@@ -1,0 +1,28 @@
+{
+  "slug": "cold-calling",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install cold-calling",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Plan consent-aware cold calling, research, scripts, objection handling, logging, and stop requirements.",
+  "domain": "outreach",
+  "execution_mode": "planned",
+  "maturity": "experimental",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

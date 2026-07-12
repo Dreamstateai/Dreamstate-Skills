@@ -1,0 +1,36 @@
+{
+  "slug": "blog-writer",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install blog-writer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Write and publish a blog post on a given topic through Dreamstate: draft it, AI-generate the full article, review, and publish to the public blog or a destination. Use whenever the user wants to 'write a blog post', 'publish an article', 'add to our blog', or turn a topic into long-form content. Distinct from /ai-visibility (which picks topics from GEO citation gaps); this one writes the post the user already has in mind. You cannot publish yourself; Dreamstate generates and publishes.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "tools_used": [
+    "content_list_blog",
+    "content_create_blog",
+    "content_generate_blog",
+    "content_get_blog",
+    "content_publish_blog"
+  ],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "content:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

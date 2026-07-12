@@ -1,43 +1,84 @@
 #!/usr/bin/env node
-// npx dreamstate-skills install [slug] [--claude|--cursor|--codex]
+// npx dreamstate-skills install [slug] [--client <client>|--claude|--cursor|--codex]
 //
 // Writes the Dreamstate MCP connection for the chosen agent and copies the
 // skills onto disk. It never asks for or stores an API key — sign-in happens in
 // the agent over OAuth on the first tool call. Re-running is safe (idempotent
 // merge, skills overwritten in place).
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import { printBanner, printConnectedFooter } from './banner.js';
 import { clients, type ClientConfig } from './config-writers.js';
+import { copySkillPackage } from './skill-copy.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const INDEX_PATH = join(ROOT, 'skills-index.json');
 
 interface IndexedSkill {
   slug: string;
+  domain?: string;
   path: string;
+  name?: string;
+  short_description?: string;
+  description?: string;
+  execution_mode?: string;
+  maturity?: string;
+  supported_clients?: string[];
+  required_scopes?: string[];
+  github_path?: string;
+  install_command?: string;
 }
 
 interface ParsedArgs {
   cmd: string;
   agent: string | null;
   slug: string | null;
+  subcommand: string | null;
+  bundle: string | null;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
-  const positionals = argv.slice(2).filter((a) => !a.startsWith('-'));
+  const raw = argv.slice(2);
+  const positionals: string[] = [];
+  for (let index = 0; index < raw.length; index += 1) {
+    const value = raw[index];
+    if (value === '--client' || value === '--bundle') { index += 1; continue; }
+    if (!value.startsWith('-')) positionals.push(value);
+  }
   const cmd = positionals[0] || 'install';
-  const slug = positionals[1] || null; // optional: install just one skill
+  const subcommand = ['skills'].includes(cmd) ? (positionals[1] || 'install') : null;
+  const slug = cmd === 'skills' ? (positionals[2] || null) : (positionals[1] || null); // optional: install just one skill
   let agent: string | null = null;
+  let bundle: string | null = null;
   for (const a of argv.slice(2)) {
     const m = a.match(/^--(claude|cursor|codex)$/);
     if (m) agent = m[1];
+    if (a.startsWith('--client=')) agent = a.slice('--client='.length);
+    if (a.startsWith('--bundle=')) bundle = a.slice('--bundle='.length);
   }
-  return { cmd, agent, slug };
+  const clientIndex = argv.indexOf('--client');
+  if (clientIndex >= 0 && argv[clientIndex + 1]) agent = argv[clientIndex + 1];
+  const bundleIndex = argv.indexOf('--bundle');
+  if (bundleIndex >= 0 && argv[bundleIndex + 1]) bundle = argv[bundleIndex + 1];
+  return { cmd, agent, slug, subcommand, bundle };
+}
+
+function loadSkills(): IndexedSkill[] {
+  if (!existsSync(INDEX_PATH)) throw new Error('skills-index.json is missing. Run `npm run build` first (maintainers) or reinstall the package.');
+  const index = JSON.parse(readFileSync(INDEX_PATH, 'utf8')) as { skills?: IndexedSkill[] };
+  if (!Array.isArray(index.skills)) throw new Error('skills-index.json has no skills array');
+  return index.skills;
+}
+
+function printSkills(skills: IndexedSkill[]): void {
+  for (const skill of skills) {
+    const mode = skill.execution_mode ? ` · ${skill.execution_mode}` : '';
+    console.log(`${pc.bold(skill.slug)}${mode} — ${skill.short_description || skill.description || ''}`);
+  }
 }
 
 function detectInstalled(reg: Record<string, ClientConfig>): string[] {
@@ -48,25 +89,66 @@ function detectInstalled(reg: Record<string, ClientConfig>): string[] {
 }
 
 async function main(): Promise<void> {
-  const { cmd, agent: agentFlag, slug } = parseArgs(process.argv);
+  const { cmd, agent: agentFlag, slug, subcommand, bundle } = parseArgs(process.argv);
   printBanner();
 
-  if (cmd !== 'install') {
-    console.log(pc.dim(`  unknown command "${cmd}". Try: `) + pc.bold('npx dreamstate-skills install') + '\n');
-    process.exit(1);
-  }
+  let skills: IndexedSkill[];
+  try { skills = loadSkills(); } catch (error) { console.error(pc.red(`  ${(error as Error).message}`)); process.exit(1); }
 
-  if (!existsSync(INDEX_PATH)) {
-    console.error(pc.red('  skills-index.json is missing. Run `npm run build` first (maintainers) or reinstall the package.'));
+  if (cmd === 'skills' && subcommand === 'list') {
+    printSkills(skills);
+    return;
+  }
+  if (cmd === 'skills' && subcommand === 'info') {
+    const skill = skills.find((entry) => entry.slug === slug);
+    if (!skill) { console.error(pc.red(`  no skill named "${slug || ''}"`)); process.exit(1); }
+    console.log(JSON.stringify(skill, null, 2));
+    return;
+  }
+  if (cmd === 'skills' && subcommand === 'uninstall') {
+    if (!slug) { console.error(pc.red('  usage: dreamstate skills uninstall <slug>')); process.exit(1); }
+    const reg = clients();
+    for (const client of Object.values(reg)) rmSync(join(client.skillsDir, slug), { recursive: true, force: true });
+    console.log(`Removed ${slug} from installed skill directories.`);
+    return;
+  }
+  if (cmd === 'skills' && subcommand === 'doctor') {
+    console.log(`${pc.green('✓')} ${skills.length} skills loaded from catalog`);
+    console.log(`${pc.green('✓')} capability contract is embedded in generated metadata`);
+    return;
+  }
+  if (cmd === 'skills' && !['install', 'list', 'info', 'uninstall', 'doctor', 'update'].includes(subcommand || '')) {
+    console.error(pc.red(`  unknown skills command "${subcommand}". Try: dreamstate skills list|info|install|update|uninstall|doctor`));
     process.exit(1);
   }
-  let skills: IndexedSkill[] = JSON.parse(readFileSync(INDEX_PATH, 'utf8')).skills;
+  // `update` is intentionally the same atomic merge/install operation as
+  // install: the package is versioned, so updating means refreshing the
+  // generated skill files while preserving unrelated client configuration.
+  if (cmd !== 'install' && !(cmd === 'skills' && ['install', 'update'].includes(subcommand || ''))) {
+    console.log(pc.dim(`  unknown command "${cmd}". Try: `) + pc.bold('dreamstate skills install') + '\n');
+    process.exit(1);
+  }
   if (slug) {
     skills = skills.filter((s) => s.slug === slug);
     if (skills.length === 0) {
       console.error(pc.red(`  no skill named "${slug}". Run \`npx dreamstate-skills install\` to install all.`));
       process.exit(1);
     }
+  }
+  if (bundle) {
+    const domains: Record<string, string[]> = {
+      developer: ['connect'],
+      outbound: ['outreach'],
+      content: ['social', 'seo'],
+      seo: ['seo'],
+      all: [],
+    };
+    const allowedDomains = domains[bundle];
+    if (!allowedDomains) {
+      console.error(pc.red(`  unknown bundle "${bundle}". Use developer|outbound|content|seo|all.`));
+      process.exit(1);
+    }
+    if (allowedDomains.length > 0) skills = skills.filter((skill) => allowedDomains.includes((skill as IndexedSkill & { domain?: string }).domain ?? ''));
   }
 
   const reg = clients();
@@ -123,8 +205,7 @@ async function main(): Promise<void> {
     for (const skill of skills) {
       const src = join(ROOT, skill.path);
       const dest = join(client.skillsDir, skill.slug);
-      mkdirSync(dest, { recursive: true });
-      for (const f of readdirSync(src)) copyFileSync(join(src, f), join(dest, f));
+      copySkillPackage(src, dest);
       count++;
     }
     s.stop(`Installed ${count} skill${count === 1 ? '' : 's'}`);

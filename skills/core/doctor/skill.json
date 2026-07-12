@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "slug": "doctor",
+  "name": "Doctor",
+  "short_description": "Diagnose authentication, workspace, scope, billing, provider, and connected-account readiness.",
+  "domain": "core",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.list_accounts"
+  ],
+  "mcp_tools": [
+    "ping",
+    "dreamstate_tools_search",
+    "content_list_accounts"
+  ],
+  "run_intents": [
+    "content.list_accounts"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "content:read"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/core/doctor/SKILL.md",
+  "install_command": "dreamstate skills install doctor",
+  "recommended_rank": 3,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

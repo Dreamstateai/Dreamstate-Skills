@@ -1,0 +1,33 @@
+{
+  "slug": "setup",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install setup",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [],
+  "description": "Install Dreamstate skills, authenticate the client, and verify the connection end to end.",
+  "domain": "core",
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "tools_used": [
+    "ping",
+    "content_list_accounts",
+    "outreach_lists"
+  ],
+  "required_scopes": [
+    "content:read",
+    "outreach:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

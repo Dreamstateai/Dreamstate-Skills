@@ -1,0 +1,32 @@
+{
+  "slug": "multi-signal-scoring",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install multi-signal-scoring",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Combine several weak signals into an explainable score without double-counting correlated evidence.",
+  "domain": "signals",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "dreamstate_tools_run"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

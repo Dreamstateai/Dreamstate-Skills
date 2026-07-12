@@ -1,0 +1,41 @@
+{
+  "slug": "ai-visibility",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install ai-visibility",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Audit and improve how a brand shows up in AI search (ChatGPT, Perplexity, Gemini, AI Overviews) using Dreamstate's visibility data, then close the gaps by generating and publishing blog content. Use whenever the user asks about AI visibility, GEO, generative engine optimization, 'do AI assistants cite us', AI search ranking, citation gaps, share of voice in AI answers, or AI-referral traffic. You cannot run the probes or publish content yourself; Dreamstate does both.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "tools_used": [
+    "visibility_overview",
+    "visibility_citations",
+    "visibility_ai_traffic",
+    "visibility_refresh",
+    "content_create_blog",
+    "content_generate_blog",
+    "content_get_blog",
+    "content_publish_blog"
+  ],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "content:write",
+    "visibility:read",
+    "visibility:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "linkedin-post",
+  "category": "Content",
+  "tags": [
+    "social"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install linkedin-post",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Write a LinkedIn post with a clear idea, useful development, and platform-appropriate formatting.",
+  "domain": "social",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "content_generate_post"
+  ],
+  "required_scopes": [
+    "content:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

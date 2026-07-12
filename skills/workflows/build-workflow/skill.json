@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "slug": "build-workflow",
+  "name": "Build Workflow",
+  "short_description": "Design a workflow graph with explicit inputs, branches, retries, approvals, and final outputs.",
+  "domain": "workflows",
+  "category": "Workflows",
+  "tags": [
+    "workflows"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "resource:workflows.write"
+  ],
+  "mcp_tools": [
+    "workflow_apply"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [
+    "workflows:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/workflows/build-workflow/SKILL.md",
+  "install_command": "dreamstate skills install build-workflow",
+  "recommended_rank": 70,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

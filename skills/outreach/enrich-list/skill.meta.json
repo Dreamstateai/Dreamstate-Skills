@@ -1,0 +1,43 @@
+{
+  "slug": "enrich-list",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install enrich-list",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Build a Clay-style table in Dreamstate: one row per person, the columns you want, enriched with firmographics. Use whenever the user wants to 'enrich these leads', 'build a lead table', 'clean up my list', add firmographics, map an uploaded CSV into Dreamstate, or prep a list before outreach. Stage 2 of the pipeline: it shapes the table and fills it, no scoring or sending. You cannot enrich data yourself; Dreamstate calls the providers under a daily spend cap.",
+  "domain": "outreach",
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "tools_used": [
+    "outreach_lists",
+    "outreach_create_list",
+    "outreach_find_leads",
+    "outreach_list_contacts",
+    "outreach_get_contact",
+    "outreach_enrich_contact",
+    "outreach_get_campaign_table",
+    "outreach_add_column",
+    "outreach_edit_column",
+    "outreach_delete_column",
+    "outreach_set_cell",
+    "content_list_accounts"
+  ],
+  "required_scopes": [
+    "content:read",
+    "outreach:read",
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

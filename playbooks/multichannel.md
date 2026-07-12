@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
-tools_used: [outreach_create_list, outreach_find_leads, outreach_enrich_contact, outreach_create_campaign, outreach_configure_targeting, outreach_enroll, outreach_activate_campaign, content_generate_post, content_schedule_post, content_list_accounts, outreach_analytics]
+tools_used: [outreach_create_list, outreach_find_leads, outreach_enrich_contact, outreach_create_campaign, outreach_apply_template, outreach_enroll, outreach_activate_campaign, content_generate_post, content_schedule_post, content_list_accounts, outreach_analytics]
 ---
 
 # Multichannel
@@ -39,7 +39,7 @@ people, so the ICP is shared. Source and enrich the list: `outreach_create_list`
 
 ## Step 2: Direct motion (LinkedIn sequence)
 
-Run the core of `/outbound`: `outreach_create_campaign` -> `outreach_configure_targeting`
+Run the core of `/outbound`: `outreach_create_campaign` -> `outreach_apply_template`
 -> build and validate the sequence -> `outreach_enroll` -> `outreach_activate_campaign`. If
 the full outbound skill is installed, defer to it for the sequence detail rather than
 duplicating steps here.

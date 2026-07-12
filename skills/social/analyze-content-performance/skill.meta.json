@@ -1,0 +1,32 @@
+{
+  "slug": "analyze-content-performance",
+  "category": "Content",
+  "tags": [
+    "social"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install analyze-content-performance",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Interpret content performance using reach, engagement quality, conversion, and context.",
+  "domain": "social",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "content_post_analytics"
+  ],
+  "required_scopes": [
+    "content:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

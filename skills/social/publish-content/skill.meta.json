@@ -1,0 +1,32 @@
+{
+  "slug": "publish-content",
+  "category": "Content",
+  "tags": [
+    "social"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install publish-content",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Publish approved social content and verify the durable platform post and URL.",
+  "domain": "social",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "content_publish_post"
+  ],
+  "required_scopes": [
+    "actions"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

@@ -1,0 +1,38 @@
+{
+  "slug": "hook-writer",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install hook-writer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Write a personalized opening line for each row in a Dreamstate list and save it back as a column, ready to drop into a sequence. Use whenever the user wants 'personalized openers', 'first lines', 'icebreakers', to personalize a campaign at scale, or to draft the hook for each lead. Stage 4 of the pipeline: it crafts copy per row, it does not send. You bring the voice and the angle; Dreamstate drafts against the contact's real data and stores the result.",
+  "domain": "outreach",
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "tools_used": [
+    "outreach_lists",
+    "outreach_list_contacts",
+    "outreach_get_contact",
+    "outreach_get_campaign_table",
+    "outreach_get_step_options",
+    "outreach_draft_message",
+    "outreach_add_column",
+    "outreach_set_cell"
+  ],
+  "required_scopes": [
+    "outreach:read",
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

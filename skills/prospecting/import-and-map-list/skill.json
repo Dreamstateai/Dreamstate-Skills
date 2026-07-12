@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "slug": "import-and-map-list",
+  "name": "Import And Map List",
+  "short_description": "Import an external list and map fields into stable Dreamstate columns without data loss.",
+  "domain": "prospecting",
+  "category": "Prospecting",
+  "tags": [
+    "prospecting"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:outreach.add_to_list",
+    "intent:outreach.upsert_contact"
+  ],
+  "mcp_tools": [
+    "outreach_bulk_upsert_contacts",
+    "outreach_upsert_contact",
+    "outreach_add_to_list"
+  ],
+  "run_intents": [
+    "outreach.add_to_list",
+    "outreach.upsert_contact"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/prospecting/import-and-map-list/SKILL.md",
+  "install_command": "dreamstate skills install import-and-map-list",
+  "recommended_rank": 20,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

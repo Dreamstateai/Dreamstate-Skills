@@ -1,0 +1,32 @@
+{
+  "slug": "analyze-competitor-rankings",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install analyze-competitor-rankings",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Compare ranking coverage and page intent without treating correlation as strategy.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "seo_competitor_ranks"
+  ],
+  "required_scopes": [
+    "visibility:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

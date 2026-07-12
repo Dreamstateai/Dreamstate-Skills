@@ -1,0 +1,36 @@
+{
+  "slug": "webhooks",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install webhooks",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Design and operate signed Dreamstate webhook subscriptions with replay-safe event handling.",
+  "domain": "core",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "webhooks_create",
+    "webhooks_list",
+    "webhooks_test_delivery",
+    "webhooks_delete"
+  ],
+  "required_scopes": [
+    "actions",
+    "outreach:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

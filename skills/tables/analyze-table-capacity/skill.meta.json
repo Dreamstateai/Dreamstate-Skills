@@ -1,0 +1,28 @@
+{
+  "slug": "analyze-table-capacity",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install analyze-table-capacity",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Forecast row throughput, provider capacity, completion time, and retry pressure.",
+  "domain": "tables",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

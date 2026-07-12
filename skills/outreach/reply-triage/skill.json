@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "slug": "reply-triage",
+  "name": "Reply Triage",
+  "short_description": "Work the LinkedIn inbox for an outreach campaign end to end: read open conversations, classify each reply by intent, draft and send the right response, and set pipeline status / assignment so nothing slips. Use whenever the user says 'check my replies', 'who responded', 'work my inbox', 'follow up with interested leads', or wants to triage and respond to outreach. You cannot read or send LinkedIn DMs yourself; Dreamstate does, under per-account caps.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.list_accounts",
+    "intent:outreach.get_contact",
+    "intent:outreach.list_campaigns",
+    "intent:outreach.list_contacts",
+    "intent:outreach.send_reply"
+  ],
+  "mcp_tools": [
+    "outreach_campaigns",
+    "outreach_list_contacts",
+    "outreach_get_contact",
+    "content_list_accounts",
+    "outreach_send_reply",
+    "outreach_set_thread_status",
+    "outreach_assign_thread",
+    "outreach_mark_thread_read",
+    "outreach_analytics"
+  ],
+  "run_intents": [
+    "content.list_accounts",
+    "outreach.get_contact",
+    "outreach.list_campaigns",
+    "outreach.list_contacts",
+    "outreach.send_reply"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "outreach:read",
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/reply-triage/SKILL.md",
+  "install_command": "dreamstate skills install reply-triage",
+  "recommended_rank": 12,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate playbook."
+    }
+  ]
+}

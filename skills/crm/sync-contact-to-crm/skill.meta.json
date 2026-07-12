@@ -1,0 +1,32 @@
+{
+  "slug": "sync-contact-to-crm",
+  "category": "CRM & RevOps",
+  "tags": [
+    "crm"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install sync-contact-to-crm",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Synchronize a qualified contact with identity matching, field precedence, and retry safety.",
+  "domain": "crm",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "crm_sync"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

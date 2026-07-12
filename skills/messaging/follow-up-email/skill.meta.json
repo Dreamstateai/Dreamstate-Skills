@@ -1,0 +1,28 @@
+{
+  "slug": "follow-up-email",
+  "category": "Messaging",
+  "tags": [
+    "messaging"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install follow-up-email",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Write a follow-up that adds new value instead of restating the first message.",
+  "domain": "messaging",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

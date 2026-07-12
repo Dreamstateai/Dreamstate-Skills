@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "analyze-table",
+  "name": "Analyze Table",
+  "short_description": "Reconstruct a table dataflow and explain sources, dependencies, conditions, actions, and risk.",
+  "domain": "tables",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/tables/analyze-table/SKILL.md",
+  "install_command": "dreamstate skills install analyze-table",
+  "recommended_rank": 68,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

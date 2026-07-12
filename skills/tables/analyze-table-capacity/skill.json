@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "analyze-table-capacity",
+  "name": "Analyze Table Capacity",
+  "short_description": "Forecast row throughput, provider capacity, completion time, and retry pressure.",
+  "domain": "tables",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/tables/analyze-table-capacity/SKILL.md",
+  "install_command": "dreamstate skills install analyze-table-capacity",
+  "recommended_rank": 65,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "hiring-signals",
+  "name": "Hiring Signals",
+  "short_description": "Use hiring activity to infer changing priorities while preserving role and timing evidence.",
+  "domain": "signals",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "column:predictleads_jobs"
+  ],
+  "mcp_tools": [
+    "dreamstate_tools_run"
+  ],
+  "run_intents": [
+    "outreach.table.add_column"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/signals/hiring-signals/SKILL.md",
+  "install_command": "dreamstate skills install hiring-signals",
+  "recommended_rank": 39,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

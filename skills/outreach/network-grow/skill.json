@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "slug": "network-grow",
+  "name": "Network Grow",
+  "short_description": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.list_accounts",
+    "intent:outreach.create_campaign",
+    "intent:outreach.create_list",
+    "intent:outreach.draft_opener",
+    "intent:outreach.enrich_contact",
+    "intent:outreach.find_leads",
+    "intent:outreach.get_contact",
+    "intent:outreach.list_contacts",
+    "intent:outreach.list_lists",
+    "intent:outreach.send_connection"
+  ],
+  "mcp_tools": [
+    "content_list_accounts",
+    "outreach_lists",
+    "outreach_create_list",
+    "outreach_find_leads",
+    "outreach_list_contacts",
+    "outreach_get_contact",
+    "outreach_enrich_contact",
+    "outreach_create_campaign",
+    "outreach_draft_message",
+    "outreach_send_connection"
+  ],
+  "run_intents": [
+    "content.list_accounts",
+    "outreach.create_campaign",
+    "outreach.create_list",
+    "outreach.draft_opener",
+    "outreach.enrich_contact",
+    "outreach.find_leads",
+    "outreach.get_contact",
+    "outreach.list_contacts",
+    "outreach.list_lists",
+    "outreach.send_connection"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "outreach:read",
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/network-grow/SKILL.md",
+  "install_command": "dreamstate skills install network-grow",
+  "recommended_rank": 9,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate playbook."
+    }
+  ]
+}
