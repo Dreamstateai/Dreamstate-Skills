@@ -1,0 +1,34 @@
+{
+  "slug": "import-and-map-list",
+  "category": "Prospecting",
+  "tags": [
+    "prospecting"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install import-and-map-list",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Import an external list and map fields into stable Dreamstate columns without data loss.",
+  "domain": "prospecting",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "outreach_bulk_upsert_contacts",
+    "outreach_upsert_contact",
+    "outreach_add_to_list"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "refresh-visibility-measurement",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install refresh-visibility-measurement",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Refresh visibility measurements with the same prompts, providers, locale, and methodology.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "visibility_refresh"
+  ],
+  "required_scopes": [
+    "visibility:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

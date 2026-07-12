@@ -1,0 +1,28 @@
+{
+  "slug": "validate-list",
+  "category": "Prospecting",
+  "tags": [
+    "prospecting"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install validate-list",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Audit list completeness, contactability, fit, freshness, and exclusion compliance before launch.",
+  "domain": "prospecting",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

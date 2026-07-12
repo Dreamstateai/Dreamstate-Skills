@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "revive-closed-lost",
+  "name": "Revive Closed Lost",
+  "short_description": "Revisit closed-lost opportunities only when fresh evidence creates a materially different reason.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/revive-closed-lost/SKILL.md",
+  "install_command": "dreamstate skills install revive-closed-lost",
+  "recommended_rank": 98,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

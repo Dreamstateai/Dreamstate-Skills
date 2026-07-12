@@ -1,0 +1,32 @@
+{
+  "slug": "build-workflow",
+  "category": "Workflows",
+  "tags": [
+    "workflows"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install build-workflow",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Design a workflow graph with explicit inputs, branches, retries, approvals, and final outputs.",
+  "domain": "workflows",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "workflow_apply"
+  ],
+  "required_scopes": [
+    "workflows:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

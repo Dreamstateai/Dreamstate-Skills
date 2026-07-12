@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "champion-tracking",
+  "name": "Champion Tracking",
+  "short_description": "Track champion movement and relationship continuity across accounts without treating every move as intent.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/champion-tracking/SKILL.md",
+  "install_command": "dreamstate skills install champion-tracking",
+  "recommended_rank": 110,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "job-change-signals",
+  "name": "Job Change Signals",
+  "short_description": "Detect relevant job changes and distinguish new-role timing from routine profile updates.",
+  "domain": "signals",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/signals/job-change-signals/SKILL.md",
+  "install_command": "dreamstate skills install job-change-signals",
+  "recommended_rank": 40,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

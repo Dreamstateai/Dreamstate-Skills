@@ -1,0 +1,35 @@
+{
+  "slug": "workflow-triggers",
+  "category": "Workflows",
+  "tags": [
+    "workflows"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install workflow-triggers",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Choose and configure schedule, event, webhook, and manual workflow triggers safely.",
+  "domain": "workflows",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "workflow_triggers",
+    "workflow_trigger_create",
+    "workflow_trigger_delete"
+  ],
+  "required_scopes": [
+    "workflows:read",
+    "workflows:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

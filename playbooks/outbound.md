@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
-tools_used: [outreach_find_leads, outreach_create_list, outreach_lists, outreach_list_contacts, outreach_get_contact, outreach_enrich_contact, outreach_get_campaign_table, outreach_add_column, outreach_set_cell, outreach_create_campaign, outreach_configure_targeting, outreach_get_sequence, outreach_get_step_options, outreach_add_step, outreach_validate_sequence, outreach_draft_message, outreach_enroll, outreach_activate_campaign, content_list_accounts, outreach_analytics]
+tools_used: [outreach_find_leads, outreach_create_list, outreach_lists, outreach_list_contacts, outreach_get_contact, outreach_enrich_contact, outreach_get_campaign_table, outreach_add_column, outreach_set_cell, outreach_create_campaign, outreach_apply_template, outreach_get_sequence, outreach_get_step_options, outreach_add_step, outreach_validate_sequence, outreach_draft_message, outreach_enroll, outreach_activate_campaign, content_list_accounts, outreach_analytics]
 ---
 
 # Outbound
@@ -73,7 +73,7 @@ For the top tier, draft a personalized opener with `outreach_draft_message` (an 
 ## Step 5: Build and validate the sequence (→ /sequence-builder)
 
 Create the campaign (`outreach_create_campaign`, bound to the list), configure targeting
-(`outreach_configure_targeting`), and wire the steps with `outreach_add_step`, threading
+(`outreach_apply_template`), and wire the steps with `outreach_add_step`, threading
 the `graph_version` from `outreach_get_sequence` forward and retrying on
 `graph_version_conflict`. A solid cold cadence: connection_request → wait → DM (opener) →
 wait → DM (follow-up). Run `outreach_validate_sequence` and fix anything it flags.

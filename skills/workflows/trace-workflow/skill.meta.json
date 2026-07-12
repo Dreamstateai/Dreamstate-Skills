@@ -1,0 +1,33 @@
+{
+  "slug": "trace-workflow",
+  "category": "Workflows",
+  "tags": [
+    "workflows"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install trace-workflow",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Trace a workflow run across nodes, branches, tool calls, outputs, retries, and failures.",
+  "domain": "workflows",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "workflow_trace",
+    "workflow_runs"
+  ],
+  "required_scopes": [
+    "workflows:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

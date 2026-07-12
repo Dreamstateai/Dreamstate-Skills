@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "slug": "setup",
+  "name": "Setup",
+  "short_description": "Install Dreamstate skills, authenticate the client, and verify the connection end to end.",
+  "domain": "core",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.list_accounts",
+    "intent:outreach.list_lists"
+  ],
+  "mcp_tools": [
+    "ping",
+    "content_list_accounts",
+    "outreach_lists"
+  ],
+  "run_intents": [
+    "content.list_accounts",
+    "outreach.list_lists"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "content:read",
+    "outreach:read"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/core/setup/SKILL.md",
+  "install_command": "dreamstate skills install setup",
+  "recommended_rank": 2,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

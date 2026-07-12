@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "n8n-interoperability",
+  "name": "N8n Interoperability",
+  "short_description": "Connect n8n to Dreamstate through generic API and webhook contracts without managing n8n itself.",
+  "domain": "automation",
+  "category": "Automation",
+  "tags": [
+    "automation"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/automation/n8n-interoperability/SKILL.md",
+  "install_command": "dreamstate skills install n8n-interoperability",
+  "recommended_rank": 175,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

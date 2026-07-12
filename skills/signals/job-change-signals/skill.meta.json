@@ -1,0 +1,28 @@
+{
+  "slug": "job-change-signals",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install job-change-signals",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Detect relevant job changes and distinguish new-role timing from routine profile updates.",
+  "domain": "signals",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

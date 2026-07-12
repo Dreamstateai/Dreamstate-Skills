@@ -1,0 +1,42 @@
+{
+  "slug": "network-grow",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install network-grow",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps.",
+  "domain": "outreach",
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "tools_used": [
+    "content_list_accounts",
+    "outreach_lists",
+    "outreach_create_list",
+    "outreach_find_leads",
+    "outreach_list_contacts",
+    "outreach_get_contact",
+    "outreach_enrich_contact",
+    "outreach_create_campaign",
+    "outreach_draft_message",
+    "outreach_send_connection"
+  ],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "outreach:read",
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

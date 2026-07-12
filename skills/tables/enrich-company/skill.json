@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "enrich-company",
+  "name": "Enrich Company",
+  "short_description": "Enrich company rows through the smallest provider set that can satisfy the required fields.",
+  "domain": "tables",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:outreach.enrich_contact"
+  ],
+  "mcp_tools": [
+    "outreach_enrich_contact"
+  ],
+  "run_intents": [
+    "outreach.enrich_contact"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/tables/enrich-company/SKILL.md",
+  "install_command": "dreamstate skills install enrich-company",
+  "recommended_rank": 54,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

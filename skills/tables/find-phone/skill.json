@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "slug": "find-phone",
+  "name": "Find Phone",
+  "short_description": "Find business phone data through compliant providers and preserve source and confidence metadata.",
+  "domain": "tables",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "column:phone_find",
+    "intent:outreach.find_phone"
+  ],
+  "mcp_tools": [
+    "dreamstate_tools_run"
+  ],
+  "run_intents": [
+    "outreach.find_phone",
+    "outreach.table.add_column"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/tables/find-phone/SKILL.md",
+  "install_command": "dreamstate skills install find-phone",
+  "recommended_rank": 57,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "cold-calling",
+  "name": "Cold Calling",
+  "short_description": "Plan consent-aware cold calling, research, scripts, objection handling, logging, and stop requirements.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "planned",
+  "maturity": "experimental",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/cold-calling/SKILL.md",
+  "install_command": "dreamstate skills install cold-calling",
+  "recommended_rank": 111,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

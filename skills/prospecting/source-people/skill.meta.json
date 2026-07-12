@@ -1,0 +1,32 @@
+{
+  "slug": "source-people",
+  "category": "Prospecting",
+  "tags": [
+    "prospecting"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install source-people",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Find relevant people inside target accounts using role, seniority, and function constraints.",
+  "domain": "prospecting",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "outreach_find_leads"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

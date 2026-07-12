@@ -1,0 +1,33 @@
+{
+  "slug": "build-table",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install build-table",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Create a reactive table with a clear row entity, stable identifiers, and declared outputs.",
+  "domain": "tables",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "outreach_create_list",
+    "outreach_add_column"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

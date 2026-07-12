@@ -1,0 +1,28 @@
+{
+  "slug": "technical-seo-audit",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install technical-seo-audit",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Prioritize crawl, indexation, rendering, metadata, and performance issues by observable impact.",
+  "domain": "seo",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

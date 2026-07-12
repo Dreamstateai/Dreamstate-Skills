@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "slug": "find-and-verify-email",
+  "name": "Find And Verify Email",
+  "short_description": "Find and verify work emails through a cost-aware waterfall with confidence labels.",
+  "domain": "tables",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "column:email_find",
+    "intent:outreach.find_email"
+  ],
+  "mcp_tools": [
+    "dreamstate_tools_run"
+  ],
+  "run_intents": [
+    "outreach.find_email",
+    "outreach.table.add_column"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/tables/find-and-verify-email/SKILL.md",
+  "install_command": "dreamstate skills install find-and-verify-email",
+  "recommended_rank": 56,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "ai-visibility-audit",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install ai-visibility-audit",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Measure brand visibility across AI answers and identify defensible improvement opportunities.",
+  "domain": "seo",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "visibility_overview"
+  ],
+  "required_scopes": [
+    "visibility:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

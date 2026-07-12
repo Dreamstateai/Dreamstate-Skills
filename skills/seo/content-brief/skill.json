@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "content-brief",
+  "name": "Content Brief",
+  "short_description": "Create a research-backed content brief with audience, intent, evidence, structure, and differentiation.",
+  "domain": "seo",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/seo/content-brief/SKILL.md",
+  "install_command": "dreamstate skills install content-brief",
+  "recommended_rank": 145,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

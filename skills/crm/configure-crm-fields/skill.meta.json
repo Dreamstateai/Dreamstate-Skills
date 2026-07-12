@@ -1,0 +1,28 @@
+{
+  "slug": "configure-crm-fields",
+  "category": "CRM & RevOps",
+  "tags": [
+    "crm"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install configure-crm-fields",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Design CRM fields with clear ownership, types, allowed values, and lifecycle semantics.",
+  "domain": "crm",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

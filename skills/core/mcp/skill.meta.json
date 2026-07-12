@@ -1,0 +1,28 @@
+{
+  "slug": "mcp",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install mcp",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Discover and use Dreamstate MCP tools with explicit scopes, approvals, and durable verification.",
+  "domain": "core",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

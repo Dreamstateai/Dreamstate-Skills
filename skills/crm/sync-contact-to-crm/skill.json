@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "slug": "sync-contact-to-crm",
+  "name": "Sync Contact To Crm",
+  "short_description": "Synchronize a qualified contact with identity matching, field precedence, and retry safety.",
+  "domain": "crm",
+  "category": "CRM & RevOps",
+  "tags": [
+    "crm"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [],
+  "mcp_tools": [
+    "crm_sync"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/crm/sync-contact-to-crm/SKILL.md",
+  "install_command": "dreamstate skills install sync-contact-to-crm",
+  "recommended_rank": 154,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

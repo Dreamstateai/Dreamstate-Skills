@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "slug": "company-event-signals",
+  "name": "Company Event Signals",
+  "short_description": "Monitor launches, expansions, acquisitions, leadership changes, and other company events.",
+  "domain": "signals",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "column:predictleads_news",
+    "source:predictleads_funding"
+  ],
+  "mcp_tools": [
+    "dreamstate_tools_run"
+  ],
+  "run_intents": [
+    "outreach.table.add_column"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/signals/company-event-signals/SKILL.md",
+  "install_command": "dreamstate skills install company-event-signals",
+  "recommended_rank": 42,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

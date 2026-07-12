@@ -1,0 +1,34 @@
+{
+  "slug": "add-source-column",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install add-source-column",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Add a provider-backed source column with validated inputs and inspectable provenance.",
+  "domain": "tables",
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "tools_used": [
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "outreach_add_column"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

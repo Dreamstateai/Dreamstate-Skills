@@ -1,0 +1,28 @@
+{
+  "slug": "linkedin-ads-measurement",
+  "category": "Advertising",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install linkedin-ads-measurement",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Define LinkedIn ad measurement, attribution boundaries, conversion events, and decision windows.",
+  "domain": "ads",
+  "execution_mode": "planned",
+  "maturity": "experimental",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "sender-health",
+  "name": "Sender Health",
+  "short_description": "Assess connected-account readiness, pacing pressure, failures, and recovery needs before sending.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/sender-health/SKILL.md",
+  "install_command": "dreamstate skills install sender-health",
+  "recommended_rank": 93,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "classify-replies",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install classify-replies",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Classify reply intent from conversation context and preserve uncertainty for human review.",
+  "domain": "outreach",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

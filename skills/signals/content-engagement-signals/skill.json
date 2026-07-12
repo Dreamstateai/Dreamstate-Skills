@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "slug": "content-engagement-signals",
+  "name": "Content Engagement Signals",
+  "short_description": "Turn verified social and content engagement into timely, context-aware follow-up.",
+  "domain": "signals",
+  "category": "Signals",
+  "tags": [
+    "signals"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "function:account_engagement_scoring"
+  ],
+  "mcp_tools": [
+    "dreamstate_tools_run"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/signals/content-engagement-signals/SKILL.md",
+  "install_command": "dreamstate skills install content-engagement-signals",
+  "recommended_rank": 43,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "slug": "dreamstate",
+  "name": "Dreamstate",
+  "short_description": "Route a growth task to the safest Dreamstate primitive before any data is changed.",
+  "domain": "core",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [],
+  "mcp_tools": [
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/core/dreamstate/SKILL.md",
+  "install_command": "dreamstate skills install dreamstate",
+  "recommended_rank": 1,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "slug": "ai-visibility",
+  "name": "Ai Visibility",
+  "short_description": "Audit and improve how a brand shows up in AI search (ChatGPT, Perplexity, Gemini, AI Overviews) using Dreamstate's visibility data, then close the gaps by generating and publishing blog content. Use whenever the user asks about AI visibility, GEO, generative engine optimization, 'do AI assistants cite us', AI search ranking, citation gaps, share of voice in AI answers, or AI-referral traffic. You cannot run the probes or publish content yourself; Dreamstate does both.",
+  "domain": "seo",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.create_blog",
+    "intent:content.generate_blog",
+    "intent:content.get_blog",
+    "intent:content.publish_blog",
+    "intent:visibility.ai_traffic",
+    "intent:visibility.citations",
+    "intent:visibility.overview",
+    "intent:visibility.refresh"
+  ],
+  "mcp_tools": [
+    "visibility_overview",
+    "visibility_citations",
+    "visibility_ai_traffic",
+    "visibility_refresh",
+    "content_create_blog",
+    "content_generate_blog",
+    "content_get_blog",
+    "content_publish_blog"
+  ],
+  "run_intents": [
+    "content.create_blog",
+    "content.generate_blog",
+    "content.get_blog",
+    "content.publish_blog",
+    "visibility.ai_traffic",
+    "visibility.citations",
+    "visibility.overview",
+    "visibility.refresh"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "content:write",
+    "visibility:read",
+    "visibility:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/seo/ai-visibility/SKILL.md",
+  "install_command": "dreamstate skills install ai-visibility",
+  "recommended_rank": 1,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate playbook."
+    }
+  ]
+}

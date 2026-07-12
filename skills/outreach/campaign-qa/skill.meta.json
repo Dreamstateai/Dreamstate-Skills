@@ -1,0 +1,28 @@
+{
+  "slug": "campaign-qa",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install campaign-qa",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Audit audience, exclusions, senders, variables, links, pacing, and stop rules before activation.",
+  "domain": "outreach",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

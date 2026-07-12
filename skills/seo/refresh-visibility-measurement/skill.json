@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "refresh-visibility-measurement",
+  "name": "Refresh Visibility Measurement",
+  "short_description": "Refresh visibility measurements with the same prompts, providers, locale, and methodology.",
+  "domain": "seo",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:visibility.refresh"
+  ],
+  "mcp_tools": [
+    "visibility_refresh"
+  ],
+  "run_intents": [
+    "visibility.refresh"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "visibility:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/seo/refresh-visibility-measurement/SKILL.md",
+  "install_command": "dreamstate skills install refresh-visibility-measurement",
+  "recommended_rank": 144,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

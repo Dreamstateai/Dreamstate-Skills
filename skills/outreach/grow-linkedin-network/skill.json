@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "slug": "grow-linkedin-network",
+  "name": "Grow Linkedin Network",
+  "short_description": "Build a relevant LinkedIn network with fit checks, safe pacing, and reply-aware follow-up.",
+  "domain": "outreach",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [],
+  "capability_ids": [],
+  "mcp_tools": [],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/outreach/grow-linkedin-network/SKILL.md",
+  "install_command": "dreamstate skills install grow-linkedin-network",
+  "recommended_rank": 88,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "slug": "webhooks",
+  "name": "Webhooks",
+  "short_description": "Design and operate signed Dreamstate webhook subscriptions with replay-safe event handling.",
+  "domain": "core",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "event:campaign.activated",
+    "event:campaign.paused",
+    "event:connection.accepted",
+    "event:contact.created",
+    "event:content.scheduled",
+    "event:enrichment.completed",
+    "event:lead.sourced",
+    "event:post.failed",
+    "event:post.published",
+    "event:reply.received",
+    "event:run.completed",
+    "event:run.failed",
+    "event:run.started",
+    "event:seo.rank.changed",
+    "event:sequence.step.sent",
+    "event:table.column.completed",
+    "event:usage.ceiling_reached",
+    "event:usage.overage_started",
+    "event:usage.threshold_reached",
+    "resource:webhooks",
+    "resource:webhooks.write"
+  ],
+  "mcp_tools": [
+    "webhooks_create",
+    "webhooks_list",
+    "webhooks_test_delivery",
+    "webhooks_delete"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [
+    "actions",
+    "outreach:read"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/core/webhooks/SKILL.md",
+  "install_command": "dreamstate skills install webhooks",
+  "recommended_rank": 9,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

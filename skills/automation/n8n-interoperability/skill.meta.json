@@ -1,0 +1,28 @@
+{
+  "slug": "n8n-interoperability",
+  "category": "Automation",
+  "tags": [
+    "automation"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install n8n-interoperability",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Connect n8n to Dreamstate through generic API and webhook contracts without managing n8n itself.",
+  "domain": "automation",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

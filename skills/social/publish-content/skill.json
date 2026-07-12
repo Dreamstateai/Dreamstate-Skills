@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "publish-content",
+  "name": "Publish Content",
+  "short_description": "Publish approved social content and verify the durable platform post and URL.",
+  "domain": "social",
+  "category": "Content",
+  "tags": [
+    "social"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.publish_post"
+  ],
+  "mcp_tools": [
+    "content_publish_post"
+  ],
+  "run_intents": [
+    "content.publish_post"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "actions"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/social/publish-content/SKILL.md",
+  "install_command": "dreamstate skills install publish-content",
+  "recommended_rank": 132,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

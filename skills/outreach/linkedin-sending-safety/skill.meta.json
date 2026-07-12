@@ -1,0 +1,28 @@
+{
+  "slug": "linkedin-sending-safety",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install linkedin-sending-safety",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Operate LinkedIn sending within account health, pacing, acceptance, reply, and restriction signals.",
+  "domain": "outreach",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

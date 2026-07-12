@@ -1,0 +1,28 @@
+{
+  "slug": "audit-log",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install audit-log",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Trace workspace changes through durable audit records and explain who changed what and when.",
+  "domain": "core",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "find-phone",
+  "category": "Tables & enrichment",
+  "tags": [
+    "tables"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install find-phone",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Find business phone data through compliant providers and preserve source and confidence metadata.",
+  "domain": "tables",
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "tools_used": [
+    "dreamstate_tools_run"
+  ],
+  "required_scopes": [
+    "outreach:write"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

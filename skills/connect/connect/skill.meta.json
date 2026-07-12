@@ -1,0 +1,31 @@
+{
+  "slug": "connect",
+  "category": "Core",
+  "tags": [
+    "connect"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install connect",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [],
+  "description": "Connect this agent to Dreamstate and verify it can act. Use this FIRST, before any other Dreamstate skill, and any time a Dreamstate tool call fails with an auth or 'not connected' error. It checks the MCP connection, walks the OAuth sign-in if needed, lists which tools are available, and confirms the workspace and connected LinkedIn/X accounts so later playbooks don't fail halfway through.",
+  "domain": "connect",
+  "execution_mode": "executable",
+  "maturity": "stable",
+  "tools_used": [
+    "ping",
+    "content_list_accounts",
+    "outreach_lists"
+  ],
+  "required_scopes": [
+    "content:read",
+    "outreach:read"
+  ],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

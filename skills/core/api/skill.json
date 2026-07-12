@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "api",
+  "name": "Api",
+  "short_description": "Call Dreamstate API resources and typed run intents with idempotency and async result checks.",
+  "domain": "core",
+  "category": "Core",
+  "tags": [
+    "core"
+  ],
+  "execution_mode": "guided-execution",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "resource:runs"
+  ],
+  "mcp_tools": [
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [
+    "outreach:read"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/core/api/SKILL.md",
+  "install_command": "dreamstate skills install api",
+  "recommended_rank": 6,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

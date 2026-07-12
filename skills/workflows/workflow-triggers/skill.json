@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "slug": "workflow-triggers",
+  "name": "Workflow Triggers",
+  "short_description": "Choose and configure schedule, event, webhook, and manual workflow triggers safely.",
+  "domain": "workflows",
+  "category": "Workflows",
+  "tags": [
+    "workflows"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "resource:workflow-triggers",
+    "resource:workflow-triggers.write",
+    "workflow_trigger:analytics",
+    "workflow_trigger:linkedin_signal",
+    "workflow_trigger:webhook"
+  ],
+  "mcp_tools": [
+    "workflow_triggers",
+    "workflow_trigger_create",
+    "workflow_trigger_delete"
+  ],
+  "run_intents": [],
+  "resources": [],
+  "required_scopes": [
+    "workflows:read",
+    "workflows:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/workflows/workflow-triggers/SKILL.md",
+  "install_command": "dreamstate skills install workflow-triggers",
+  "recommended_rank": 75,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

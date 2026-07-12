@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "slug": "x-post",
+  "name": "X Post",
+  "short_description": "Write a concise X post or thread that preserves the core argument without empty compression.",
+  "domain": "social",
+  "category": "Content",
+  "tags": [
+    "social"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.generate_post"
+  ],
+  "mcp_tools": [
+    "content_generate_post"
+  ],
+  "run_intents": [
+    "content.generate_post"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "content:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/social/x-post/SKILL.md",
+  "install_command": "dreamstate skills install x-post",
+  "recommended_rank": 126,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "slug": "blog-content",
+  "name": "Blog Content",
+  "short_description": "Plan, generate, review, and publish useful long-form content through Dreamstate.",
+  "domain": "seo",
+  "category": "SEO & AI visibility",
+  "tags": [
+    "seo"
+  ],
+  "execution_mode": "executable",
+  "maturity": "beta",
+  "supported_clients": [
+    "claude",
+    "cursor",
+    "codex",
+    "gemini",
+    "opencode"
+  ],
+  "related_skills": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
+  "capability_ids": [
+    "intent:content.create_blog",
+    "intent:content.generate_blog",
+    "intent:content.get_blog",
+    "intent:content.publish_blog"
+  ],
+  "mcp_tools": [
+    "content_create_blog",
+    "content_generate_blog",
+    "content_get_blog",
+    "content_publish_blog"
+  ],
+  "run_intents": [
+    "content.create_blog",
+    "content.generate_blog",
+    "content.get_blog",
+    "content.publish_blog"
+  ],
+  "resources": [],
+  "required_scopes": [
+    "actions",
+    "content:read",
+    "content:write"
+  ],
+  "minimum_api_version": "v1",
+  "verified_capability_hash": "4d027b564e10a434",
+  "last_verified_at": "2026-07-12",
+  "github_path": "skills/seo/blog-content/SKILL.md",
+  "install_command": "dreamstate skills install blog-content",
+  "recommended_rank": 137,
+  "updated_at": "2026-07-12",
+  "provenance": [
+    {
+      "kind": "dreamstate-runtime",
+      "note": "Validated against dreamstate-capabilities-v1"
+    },
+    {
+      "kind": "original",
+      "note": "Independently authored Dreamstate skill."
+    }
+  ]
+}

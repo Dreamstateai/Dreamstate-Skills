@@ -1,0 +1,28 @@
+{
+  "slug": "build-linkedin-sequence",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install build-linkedin-sequence",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Build a LinkedIn sequence with connection-state rules, pacing, stop conditions, and approvals.",
+  "domain": "outreach",
+  "execution_mode": "knowledge",
+  "maturity": "beta",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}

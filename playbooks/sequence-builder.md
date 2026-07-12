@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [outreach_campaigns, outreach_create_campaign, outreach_configure_targeting, outreach_get_step_options, outreach_get_sequence, outreach_add_step, outreach_edit_step, outreach_remove_step, outreach_validate_sequence, outreach_list_signal_types]
+tools_used: [outreach_campaigns, outreach_create_campaign, outreach_apply_template, outreach_get_step_options, outreach_get_sequence, outreach_add_step, outreach_edit_step, outreach_remove_step, outreach_validate_sequence, outreach_list_signal_types]
 ---
 
 # Sequence Builder
@@ -28,7 +28,7 @@ Find an existing campaign with `outreach_campaigns`, or create one with
 - `intent_signals` — signal-triggered enrollment; list options with
   `outreach_list_signal_types` first.
 
-Set targeting with `outreach_configure_targeting`. For `intent_signals` you MUST read
+Apply the chosen campaign template with `outreach_apply_template`. For `intent_signals` you MUST read
 `outreach_get_sequence` first for the current `graph_version`, then pass `signal_config`
 with that exact version (it is a compare-and-set; a stale value returns
 `graph_version_conflict`, so re-read and retry).

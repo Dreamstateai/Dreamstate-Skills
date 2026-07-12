@@ -1,0 +1,28 @@
+{
+  "slug": "build-email-sequence",
+  "category": "Outreach",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "dreamstate skills install build-email-sequence",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex",
+      "gemini",
+      "opencode"
+    ]
+  },
+  "requires_skills": [
+    "setup"
+  ],
+  "description": "Build an email sequence with deliverability constraints, reply stops, and honest personalization.",
+  "domain": "outreach",
+  "execution_mode": "planned",
+  "maturity": "experimental",
+  "tools_used": [],
+  "required_scopes": [],
+  "capability_hash": "4d027b564e10a434",
+  "mcp_url": "https://mcp.trydreamstate.com/mcp"
+}
