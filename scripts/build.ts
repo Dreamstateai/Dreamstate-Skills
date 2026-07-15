@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { SKILL_BLUEPRINTS, type SkillBlueprint } from '../src/skillBlueprints.ts';
 import { buildArchitectArtifacts } from './architect-build.ts';
+import { validateCapabilityManifestExport } from './sync-capability-manifest.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PLAYBOOKS_DIR = join(ROOT, 'playbooks');
@@ -67,10 +68,10 @@ function stripScalar(value: string): string { const trimmed = value.trim(); retu
 function strings(meta: Meta, key: string, fallback: string[] = []): string[] { const value = meta[key]; return Array.isArray(value) ? value : typeof value === 'string' && value ? [value] : fallback }
 function scalar(meta: Meta, key: string, fallback = ''): string { const value = meta[key]; return typeof value === 'string' ? value : fallback }
 function titleCase(slug: string): string { return slug.split('-').map((word) => `${word[0].toUpperCase()}${word.slice(1)}`).join(' ') }
-function loadCapabilityManifest(): CapabilityManifest {
-  if (!existsSync(CAPABILITY_PATH)) throw new Error('contracts/capability-manifest.json is missing');
-  if (!lstatSync(CAPABILITY_PATH).isFile()) throw new Error('contracts/capability-manifest.json must be a regular file');
-  return JSON.parse(readFileSync(CAPABILITY_PATH, 'utf8')) as CapabilityManifest;
+export function loadCapabilityManifest(path = CAPABILITY_PATH): CapabilityManifest {
+  if (!existsSync(path)) throw new Error('contracts/capability-manifest.json is missing');
+  if (!lstatSync(path).isFile()) throw new Error('contracts/capability-manifest.json must be a regular file');
+  return validateCapabilityManifestExport(JSON.parse(readFileSync(path, 'utf8'))) as unknown as CapabilityManifest;
 }
 
 function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest, rank: number): SkillManifest {
@@ -223,8 +224,8 @@ function skillFromBlueprint(blueprint: SkillBlueprint, capabilityManifest: Capab
 }
 function validateRelations(skills: SkillManifest[]): void { const slugs = new Set(skills.map((skill) => skill.slug)); if (slugs.size !== skills.length) throw new Error('duplicate skill slug'); for (const skill of skills) for (const related of skill.related_skills) if (!slugs.has(related)) throw new Error(`${skill.slug}: unknown related skill ${related}`) }
 
-export function build(): Record<string, string> {
-  const capabilityManifest = loadCapabilityManifest();
+export function build(options: { capabilityPath?: string } = {}): Record<string, string> {
+  const capabilityManifest = loadCapabilityManifest(options.capabilityPath);
   const authored = readdirSync(PLAYBOOKS_DIR).filter((file) => file.endsWith('.md')).sort().map((file, index) => skillFromPlaybook(file, capabilityManifest, index + 1));
   const authoredBySlug = new Map(authored.map((skill) => [skill.slug, skill]));
   const skills = SKILL_BLUEPRINTS.map((blueprint, index) => authoredBySlug.get(blueprint.slug) ?? skillFromBlueprint(blueprint, capabilityManifest, index + 1));

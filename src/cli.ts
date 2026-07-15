@@ -42,6 +42,9 @@ interface ParsedArgs {
   bundle: string | null;
 }
 
+const GOVERNED_ADAPTER_CLIENTS = new Set(['claude', 'codex']);
+const SAFE_GENERIC_EXECUTION_MODES = new Set(['knowledge', 'planned']);
+
 function parseArgs(argv: string[]): ParsedArgs {
   const raw = argv.slice(2);
   const positionals: string[] = [];
@@ -209,9 +212,24 @@ async function main(): Promise<void> {
     console.error(pc.red(`  ${(error as Error).message}`));
     process.exit(1);
   }
+  const unsafeGenericSlugs = GOVERNED_ADAPTER_CLIENTS.has(agent)
+    ? skills
+      .filter((skill) => !SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''))
+      .map((skill) => skill.slug)
+    : [];
+  const unsafeRequestedGeneric = slug && GOVERNED_ADAPTER_CLIENTS.has(agent)
+    ? skills.find((skill) => skill.slug === slug && !SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''))
+    : undefined;
+  if (GOVERNED_ADAPTER_CLIENTS.has(agent)) {
+    skills = skills.filter((skill) => SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''));
+  }
   if (slug) {
     skills = [...skills.filter((skill) => skill.slug === slug), ...adapterSkills.filter((skill) => skill.slug === slug)];
     if (skills.length === 0) {
+      if (unsafeRequestedGeneric) {
+        console.error(pc.red(`  skill "${slug}" is not available as a direct generic package for governed ${client.label} installs. Use a generated governed adapter instead.`));
+        process.exit(1);
+      }
       console.error(pc.red(`  no skill named "${slug}" for ${client.label}. Run \`npx dreamstate-skills install\` to install all.`));
       process.exit(1);
     }
@@ -253,6 +271,11 @@ async function main(): Promise<void> {
   let count = 0;
   try {
     mkdirSync(client.skillsDir, { recursive: true });
+    if (!slug) {
+      for (const unsafeSlug of unsafeGenericSlugs) {
+        rmSync(join(client.skillsDir, unsafeSlug), { recursive: true, force: true });
+      }
+    }
     for (const skill of skills) {
       const src = join(ROOT, skill.path);
       const dest = join(client.skillsDir, skill.slug);

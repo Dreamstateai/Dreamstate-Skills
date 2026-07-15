@@ -1,10 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { build, writeArtifacts, checkArtifacts } from '../scripts/build.js';
 import { buildArchitectArtifacts } from '../scripts/architect-build.js';
+import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-manifest.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
@@ -16,6 +18,35 @@ const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 
 test('build succeeds: all playbooks valid and every tool exists in the catalog', () => {
   const artifacts = build();
   assert.ok(Object.keys(artifacts).length > 0, 'expected generated artifacts');
+});
+
+test('ordinary build rejects stale digests, duplicate registry entries, and broken tool references', () => {
+  const root = mkdtempSync(join(tmpdir(), 'dreamstate-build-manifest-'));
+  const path = join(root, 'capabilities.json');
+  const write = (value: Record<string, unknown>) => writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
+  const signed = (overrides: Record<string, unknown>) => {
+    const value = structuredClone({ ...catalog, ...overrides });
+    delete value.manifest_digest;
+    value.manifest_digest = canonicalCapabilityManifestDigest(value);
+    return value;
+  };
+  try {
+    write({ ...catalog, capability_hash: 'f'.repeat(16) });
+    assert.throws(() => build({ capabilityPath: path }), /manifest digest mismatch/i);
+
+    write(signed({
+      capabilities: [...catalog.capabilities, catalog.capabilities[0]],
+      counts: { ...catalog.counts, capabilities: catalog.counts.capabilities + 1 },
+    }));
+    assert.throws(() => build({ capabilityPath: path }), /duplicate capability id/i);
+
+    const capabilities = structuredClone(catalog.capabilities);
+    capabilities[0].mcp_tools = ['not_a_registered_tool'];
+    write(signed({ capabilities }));
+    assert.throws(() => build({ capabilityPath: path }), /unknown MCP tool/i);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test('--check passes immediately after a build (generated tree is deterministic)', () => {

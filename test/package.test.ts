@@ -1,11 +1,18 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = join(import.meta.dirname, '..');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+test('release tests use Node 18-compatible ESM directory resolution', () => {
+  for (const file of ['cli-install.test.ts', 'package.test.ts', 'sync-capability-manifest.test.ts']) {
+    assert.doesNotMatch(readFileSync(join(ROOT, 'test', file), 'utf8'), /import\.meta\.dirname/);
+  }
+});
 
 function run(command: string, args: string[], cwd: string, env = process.env) {
   const result = spawnSync(command, args, { cwd, env, encoding: 'utf8' });
@@ -64,7 +71,7 @@ test('npm tarball contains runnable maintainer scripts and Architect source inpu
     const installHome = join(realpathSync(root), 'installed-home');
     run(
       process.execPath,
-      ['lib/cli.js', 'skills', 'install', 'social', '--codex'],
+      ['lib/cli.js', 'skills', 'install', '--codex'],
       packageRoot,
       { ...process.env, HOME: installHome },
     );
@@ -73,6 +80,9 @@ test('npm tarball contains runnable maintainer scripts and Architect source inpu
       readFileSync(join(packageRoot, 'generated', 'client-adapters', 'codex', 'social', 'SKILL.md')),
       'the CLI compiled from packed sources must install the exact hardened Codex adapter bytes',
     );
+    assert.equal(existsSync(join(installHome, '.codex', 'skills', 'network-grow')), false);
+    assert.equal(existsSync(join(installHome, '.codex', 'skills', 'reply-triage')), false);
+    assert.equal(existsSync(join(installHome, '.codex', 'skills', 'define-icp', 'SKILL.md')), true);
     run('npm', ['run', 'sync:capabilities', '--', 'contracts/capability-manifest.json'], packageRoot);
     const target = join(realpathSync(root), 'runtime', 'prompts', 'skills');
     run('npm', ['run', 'sync:architect', '--', target], packageRoot);

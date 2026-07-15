@@ -1,11 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
-const ROOT = join(import.meta.dirname, '..');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 function runInstall(home: string, args: string[]) {
   return spawnSync(
@@ -52,6 +53,110 @@ test('Codex installs its own adapter while Cursor keeps the generic package', ()
       readFileSync(join(home, '.cursor', 'skills', 'outbound', 'SKILL.md')),
       readFileSync(join(ROOT, generic.path, 'SKILL.md')),
     );
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('Claude and Codex omit every generic executable or guided package from a full install', () => {
+  const index = JSON.parse(readFileSync(join(ROOT, 'skills-index.json'), 'utf8')) as {
+    skills: Array<{ slug: string; execution_mode: string }>;
+  };
+  const unsafe = index.skills.filter((skill) => ['executable', 'guided-execution'].includes(skill.execution_mode));
+  const safe = index.skills.find((skill) => skill.execution_mode === 'knowledge');
+  assert.ok(safe);
+  for (const client of ['claude', 'codex'] as const) {
+    const home = mkdtempSync(join(tmpdir(), `dreamstate-cli-${client}-governed-`));
+    try {
+      const result = runInstall(home, ['skills', 'install', `--${client}`]);
+      assert.equal(result.status, 0, result.stderr || result.stdout);
+      const skillsDir = join(home, `.${client}`, 'skills');
+      for (const skill of unsafe) {
+        assert.equal(existsSync(join(skillsDir, skill.slug)), false, `${client} installed unsafe generic ${skill.slug}`);
+      }
+      assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
+      assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);
+      assert.equal(existsSync(join(skillsDir, safe.slug)), true, `${client} omitted safe knowledge package ${safe.slug}`);
+      assert.equal(existsSync(join(skillsDir, 'outreach', 'SKILL.md')), true, `${client} omitted governed outreach adapter`);
+      assert.equal(existsSync(join(skillsDir, 'social', 'SKILL.md')), true, `${client} omitted governed social adapter`);
+    } finally {
+      rmSync(home, { recursive: true, force: true });
+    }
+  }
+});
+
+test('Claude and Codex refuse explicit installation of an unsafe generic package', () => {
+  for (const client of ['claude', 'codex'] as const) {
+    const home = mkdtempSync(join(tmpdir(), `dreamstate-cli-${client}-unsafe-`));
+    try {
+      for (const slug of ['network-grow', 'reply-triage']) {
+        const result = runInstall(home, ['skills', 'install', slug, `--${client}`]);
+        assert.notEqual(result.status, 0, `${client} installed unsafe generic ${slug}`);
+        assert.match(result.stderr, /not available.*governed/i);
+      }
+      const safe = runInstall(home, ['skills', 'install', 'define-icp', `--${client}`]);
+      assert.equal(safe.status, 0, safe.stderr || safe.stdout);
+    } finally {
+      rmSync(home, { recursive: true, force: true });
+    }
+  }
+});
+
+test('a full governed upgrade prunes stale Dreamstate unsafe packages but preserves unrelated skills', () => {
+  const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-upgrade-'));
+  const skillsDir = join(home, '.claude', 'skills');
+  try {
+    for (const slug of ['network-grow', 'reply-triage', 'outreach', 'my-custom-skill']) {
+      mkdirSync(join(skillsDir, slug), { recursive: true });
+      writeFileSync(join(skillsDir, slug, 'SKILL.md'), `# stale ${slug}\n`);
+    }
+    const customBefore = readFileSync(join(skillsDir, 'my-custom-skill', 'SKILL.md'));
+
+    const result = runInstall(home, ['skills', 'install', '--claude']);
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
+    assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);
+    assert.deepEqual(readFileSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), customBefore);
+    assert.deepEqual(
+      readFileSync(join(skillsDir, 'outreach', 'SKILL.md')),
+      readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', 'outreach', 'SKILL.md')),
+      'the governed adapter must replace any stale same-slug package',
+    );
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('a governed outbound bundle upgrade prunes stale unsafe outreach packages only', () => {
+  const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-bundle-upgrade-'));
+  const skillsDir = join(home, '.codex', 'skills');
+  try {
+    for (const slug of ['network-grow', 'reply-triage', 'my-custom-skill']) {
+      mkdirSync(join(skillsDir, slug), { recursive: true });
+      writeFileSync(join(skillsDir, slug, 'SKILL.md'), `# stale ${slug}\n`);
+    }
+    const result = runInstall(home, ['skills', 'install', '--bundle', 'outbound', '--codex']);
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
+    assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);
+    assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
+    assert.equal(existsSync(join(skillsDir, 'outreach', 'SKILL.md')), true);
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('installing one safe governed skill does not prune other installed packages', () => {
+  const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-single-'));
+  const skillsDir = join(home, '.claude', 'skills');
+  try {
+    mkdirSync(join(skillsDir, 'network-grow'), { recursive: true });
+    writeFileSync(join(skillsDir, 'network-grow', 'SKILL.md'), '# prior package\n');
+    const result = runInstall(home, ['skills', 'install', 'define-icp', '--claude']);
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.equal(existsSync(join(skillsDir, 'network-grow', 'SKILL.md')), true);
+    assert.equal(existsSync(join(skillsDir, 'define-icp', 'SKILL.md')), true);
   } finally {
     rmSync(home, { recursive: true, force: true });
   }

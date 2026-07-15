@@ -2,14 +2,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   canonicalCapabilityManifestDigest,
   syncCapabilityManifest,
   validateCapabilityManifestExport,
 } from '../scripts/sync-capability-manifest.js';
 
-const ROOT = join(import.meta.dirname, '..');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pinned = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 
 function signed(overrides: Record<string, unknown> = {}) {
