@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "0306749b52b38cca",
+  "capability_hash": "f195bb71cf76a615",
   "api_version": "v1",
   "capabilities": [
     {
@@ -21551,152 +21551,6 @@
       }
     },
     {
-      "id": "intent:outreach.apply_template",
-      "kind": "run_intent",
-      "domain": "outreach",
-      "category": "outreach",
-      "label": "Outreach Apply Template",
-      "description": "Run the outreach.apply_template intent through Dreamstate One API governance.",
-      "when_to_use": [
-        "Use when an agent needs to outreach apply template from REST, MCP, or /v1/run."
-      ],
-      "when_not_to_use": [
-        "Do not call when required ids are unknown; inspect resources first."
-      ],
-      "required_scopes": [
-        "outreach:write"
-      ],
-      "mutates": true,
-      "idempotency_required": true,
-      "effect_replay": {
-        "strategy": "unsafe",
-        "proof": "No provider-native idempotency or Dreamstate-owned interrupted-call reconciliation has been proven for this effect."
-      },
-      "cost_policy": {
-        "type": "governed_action",
-        "credits": null
-      },
-      "async_policy": {
-        "mode": "sync",
-        "timeout_ms": 24000
-      },
-      "required_inputs": [
-        {
-          "key": "campaign_id",
-          "kind": "uuid",
-          "required": true
-        },
-        {
-          "key": "template_id",
-          "kind": "string",
-          "required": true
-        },
-        {
-          "key": "template_version",
-          "kind": "number",
-          "required": true
-        },
-        {
-          "key": "campaign_version",
-          "kind": "number",
-          "required": true
-        },
-        {
-          "key": "request_id",
-          "kind": "uuid",
-          "required": true
-        },
-        {
-          "key": "config",
-          "kind": "object",
-          "required": true
-        }
-      ],
-      "input_schema": [
-        {
-          "name": "campaign_id",
-          "type": "string",
-          "required": true,
-          "description": "campaign_id"
-        },
-        {
-          "name": "template_id",
-          "type": "string",
-          "required": true,
-          "description": "template_id"
-        },
-        {
-          "name": "template_version",
-          "type": "number",
-          "required": true,
-          "description": "template_version"
-        },
-        {
-          "name": "campaign_version",
-          "type": "number",
-          "required": true,
-          "description": "campaign_version"
-        },
-        {
-          "name": "request_id",
-          "type": "string",
-          "required": true,
-          "description": "request_id"
-        },
-        {
-          "name": "config",
-          "type": "object",
-          "required": true,
-          "description": "config"
-        }
-      ],
-      "output_manifest": "action",
-      "provider": null,
-      "source": null,
-      "run_intent": "outreach.apply_template",
-      "rest_paths": [
-        "/run",
-        "/outreach",
-        "/tools/{id}",
-        "/tools/{id}/run"
-      ],
-      "mcp_tools": [
-        "outreach_apply_template",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_run"
-      ],
-      "examples": [
-        "{\"intent\":\"outreach.apply_template\",\"fields\":{\"campaign_id\":\"uuid\",\"template_id\":\"string\",\"template_version\":\"number\",\"campaign_version\":\"number\",\"request_id\":\"uuid\",\"config\":\"object\"}}"
-      ],
-      "search": {
-        "aliases": [
-          "outreach.apply_template",
-          "Outreach Apply Template",
-          "{\"intent\":\"outreach.apply_template\",\"fields\":{\"campaign_id\":\"uuid\",\"template_id\":\"string\",\"template_version\":\"number\",\"campaign_version\":\"number\",\"request_id\":\"uuid\",\"config\":\"object\"}}"
-        ],
-        "use_cases": [
-          "Use when an agent needs to outreach apply template from REST, MCP, or /v1/run."
-        ],
-        "inputs": [
-          "campaign_id",
-          "template_id",
-          "template_version",
-          "campaign_version",
-          "request_id",
-          "config"
-        ],
-        "outputs": [
-          "result"
-        ],
-        "side_effects": [
-          "write_campaign"
-        ],
-        "prerequisites": [],
-        "deprecated": false
-      }
-    },
-    {
       "id": "intent:outreach.archive_contact",
       "kind": "run_intent",
       "domain": "outreach",
@@ -42589,12 +42443,6 @@
       "billing_exempt": false
     },
     {
-      "name": "outreach_apply_template",
-      "scope": "outreach:write",
-      "description": "Apply a versioned template to an editable pristine outreach table. This creates explicit sources and columns transactionally and never starts an import or activates the campaign.",
-      "billing_exempt": false
-    },
-    {
       "name": "outreach_archive_contact",
       "scope": "outreach:write",
       "description": "Soft-archive a contact: remove active list memberships, stop active sequence instances, preserve history.",
@@ -42920,8 +42768,8 @@
     }
   ],
   "counts": {
-    "capabilities": 226,
-    "run_intents": 84,
-    "mcp_tools": 160
+    "capabilities": 225,
+    "run_intents": 83,
+    "mcp_tools": 159
   }
 }
