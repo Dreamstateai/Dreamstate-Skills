@@ -123,8 +123,24 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, new RegExp(`^  evals_sha256: ${pinned.skills[id].evals_sha256}$`, 'm'));
       assert.match(standalone, new RegExp(`^  adapter_sha256: ${clients.skills[id].adapter_sha256[client]}$`, 'm'));
       assert.match(standalone, /mismatch_behavior: deny_run/);
-      assert.match(standalone, /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get\]/);
+      assert.match(
+        standalone,
+        /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get, dreamstate_proposals_get, dreamstate_get_run, dreamstate_list_runs\]/,
+      );
+      assert.match(
+        standalone,
+        /denied_operations: \[dreamstate_tools_run, dreamstate_proposals_create, dreamstate_proposals_mutate\]/,
+      );
       assert.match(standalone, /Refuse `dreamstate_tools_run` until the installed package is refreshed/);
+      assert.match(standalone, /`dreamstate_tools_search` and `dreamstate_tools_get`/);
+      assert.match(standalone, /`dreamstate_proposals_create`/);
+      assert.match(standalone, /human review/);
+      assert.match(standalone, /`dreamstate_proposals_mutate`/);
+      assert.match(standalone, /expected revision and state version/i);
+      assert.match(standalone, /revise, approve, or reject/i);
+      assert.match(standalone, /Never use `dreamstate_tools_run` for direct mutating or paid work/);
+      assert.match(standalone, /returned `run_id`/);
+      assert.match(standalone, /`dreamstate_get_run`/);
     }
     assert.equal(pinned.skills[id].kernel_sha256, clients.skills[id].kernel_sha256);
     assert.equal(pinned.skills[id].evals_sha256, clients.skills[id].evals_sha256);
@@ -198,12 +214,33 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
   });
   const live = { ...installed, capability_hash: 'f'.repeat(16) };
   const compatible = Object.entries(installed).every(([key, value]) => live[key as keyof typeof live] === value);
-  const permits = (operation: 'dreamstate_tools_search' | 'dreamstate_tools_get' | 'dreamstate_tools_run') => (
-    operation !== 'dreamstate_tools_run' || compatible
+  const mutationOperations = new Set([
+    'dreamstate_tools_run',
+    'dreamstate_proposals_create',
+    'dreamstate_proposals_mutate',
+  ]);
+  const permits = (operation: string) => (
+    !mutationOperations.has(operation) || compatible
   );
   assert.equal(permits('dreamstate_tools_search'), true);
   assert.equal(permits('dreamstate_tools_get'), true);
+  assert.equal(permits('dreamstate_proposals_get'), true);
+  assert.equal(permits('dreamstate_get_run'), true);
+  assert.equal(permits('dreamstate_list_runs'), true);
   assert.equal(permits('dreamstate_tools_run'), false);
+  assert.equal(permits('dreamstate_proposals_create'), false);
+  assert.equal(permits('dreamstate_proposals_mutate'), false);
+});
+
+test('the pinned MCP catalog exposes the governed proposal lifecycle used by Claude and Codex', () => {
+  const tools = new Set(catalog.mcp_tools.map((tool: { name: string }) => tool.name));
+  for (const tool of [
+    'dreamstate_proposals_create',
+    'dreamstate_proposals_get',
+    'dreamstate_proposals_mutate',
+  ]) {
+    assert.equal(tools.has(tool), true, `${tool} must be present in the pinned MCP catalog`);
+  }
 });
 
 test('generated Architect outreach packages contain no shortcut terminology', () => {

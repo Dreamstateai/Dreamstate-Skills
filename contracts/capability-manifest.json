@@ -93316,6 +93316,24 @@
       "billing_exempt": false
     },
     {
+      "name": "dreamstate_proposals_create",
+      "scope": null,
+      "description": "Create a revision-bound proposal for human review. This never runs the proposed effects.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_proposals_get",
+      "scope": null,
+      "description": "Read the current principal-owned proposal revision, approval state, and attached run id.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_proposals_mutate",
+      "scope": null,
+      "description": "Apply one compare-and-swap proposal transition. Approval revalidates live policy and queues the exact approved revision; it never bypasses proposal gates.",
+      "billing_exempt": false
+    },
+    {
       "name": "dreamstate_resume_run",
       "scope": null,
       "description": "Resume a failed, blocked, cancelled, or partially completed shared run from its durable frontier. Requires the current state_version.",
@@ -93727,6 +93745,6 @@
   "counts": {
     "capabilities": 227,
     "run_intents": 84,
-    "mcp_tools": 135
+    "mcp_tools": 138
   }
 }
