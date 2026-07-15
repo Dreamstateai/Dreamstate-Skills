@@ -26,6 +26,10 @@ const CI_WORKFLOW = join(ROOT, '.github', 'workflows', 'ci.yml');
 test('CI covers every supported Node line', { skip: !existsSync(CI_WORKFLOW) }, () => {
   const workflow = readFileSync(CI_WORKFLOW, 'utf8');
   assert.match(workflow, /node-version:\s*\[18\.20\.8, 20, 22\]/);
+  const checkIndex = workflow.indexOf('- run: npm run check');
+  const buildIndex = workflow.indexOf('- run: npm run build');
+  assert.ok(checkIndex >= 0 && buildIndex >= 0 && checkIndex < buildIndex, 'CI must check committed artifacts before build can overwrite them');
+  assert.match(workflow, /- run: npm run check:generated-clean/);
 });
 
 function run(command: string, args: string[], cwd: string, env = process.env) {

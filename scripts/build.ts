@@ -14,7 +14,7 @@ type Meta = Record<string, string | string[]>;
 type ExecutionMode = 'executable' | 'guided-execution' | 'knowledge' | 'planned';
 type Maturity = 'stable' | 'beta' | 'experimental';
 interface CapabilityRecord { id: string; kind: string; run_intent: string | null; mcp_tools: string[]; required_scopes: string[] }
-interface CapabilityManifest { schema_version: number; definition_version: string; capability_hash: string; api_version: string; capabilities: CapabilityRecord[]; mcp_tools: Array<{ name: string; scope: string | null }> }
+interface CapabilityManifest { schema_version: number; definition_version: string; capability_hash: string; manifest_digest: string; api_version: string; capabilities: CapabilityRecord[]; mcp_tools: Array<{ name: string; scope: string | null }> }
 export interface SkillManifest {
   schema_version: 2; slug: string; name: string; short_description: string; domain: string; category: string;
   tags: string[]; execution_mode: ExecutionMode; maturity: Maturity; supported_clients: string[];

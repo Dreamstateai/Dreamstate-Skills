@@ -28,6 +28,7 @@
   "scripts": {
     "build": "tsx scripts/build.ts",
     "check": "tsx scripts/build.ts --check",
+    "check:generated-clean": "tsx scripts/verify-generated-clean.ts",
     "sync:capabilities": "tsx scripts/sync-capability-manifest.ts",
     "sync:architect": "tsx scripts/sync-architect.ts",
     "compile": "tsc",

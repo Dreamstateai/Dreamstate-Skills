@@ -11,6 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
+const CANONICAL_MANIFEST_DIGEST = '10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every tools_used entry exists in the catalog. If it
@@ -126,6 +127,9 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   assert.doesNotMatch(pinned.source_release, /bootstrap|development/i);
   assert.match(pinned.source_release_hash, /^[a-f0-9]{64}$/);
   assert.equal(pinned.compatibility.playbook_kernel_hash, pinned.source_release_hash);
+  assert.equal(catalog.manifest_digest, CANONICAL_MANIFEST_DIGEST);
+  assert.equal(pinned.compatibility.manifest_digest, CANONICAL_MANIFEST_DIGEST);
+  assert.match(pinned.compatibility.manifest_digest, /^[a-f0-9]{64}$/);
   assert.equal(pinned.compatibility.capability_hash, catalog.capability_hash);
   assert.equal(pinned.compatibility.capability_definition_version, catalog.definition_version);
   assert.equal(pinned.compatibility.minimum_api_version, catalog.api_version);
@@ -145,6 +149,8 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
     assert.deepEqual(exactArchitectFiles, ['KERNEL.md', 'SKILL.md', 'evals.json']);
     assert.match(architect, /mutation_compatibility:/);
     assert.match(architect, /mismatch_behavior: deny_run/);
+    assert.match(architect, /manifest_digest_match: exact_sha256/);
+    assert.match(architect, new RegExp(`^  manifest_digest: ${CANONICAL_MANIFEST_DIGEST}$`, 'm'));
     assert.match(
       architect,
       /denied_operations: \[tools_run, propose_artifact, request_approval\]/,
@@ -153,6 +159,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
     assert.match(architect, /`propose_artifact`/);
     assert.match(architect, /`request_approval`/);
     assert.match(architect, /Refuse `tools_run` until the installed package is refreshed/);
+    assert.match(architect, /full 64-character SHA-256 manifest digest/i);
     for (const client of ['claude', 'codex']) {
       const clientRoot = `generated/client-adapters/${client}/${id}`;
       const standalone = artifacts[`${clientRoot}/SKILL.md`];
@@ -166,6 +173,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, new RegExp(`^  evals_sha256: ${pinned.skills[id].evals_sha256}$`, 'm'));
       assert.match(standalone, new RegExp(`^  adapter_sha256: ${clients.skills[id].adapter_sha256[client]}$`, 'm'));
       assert.match(standalone, /mismatch_behavior: deny_run/);
+      assert.match(standalone, /manifest_digest_match: exact_sha256/);
       assert.match(
         standalone,
         /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get, dreamstate_proposals_get, dreamstate_get_run, dreamstate_list_runs\]/,
@@ -175,6 +183,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
         /denied_operations: \[dreamstate_tools_run, dreamstate_proposals_create, dreamstate_proposals_mutate\]/,
       );
       assert.match(standalone, /Refuse `dreamstate_tools_run` until the installed package is refreshed/);
+      assert.match(standalone, /full 64-character SHA-256 manifest digest/i);
       assert.match(standalone, /`dreamstate_tools_search` and `dreamstate_tools_get`/);
       assert.match(standalone, /`dreamstate_proposals_create`/);
       assert.match(standalone, /human review/);
@@ -202,6 +211,13 @@ test('Architect generation rejects capability domains absent from the pinned reg
   assert.throws(
     () => buildArchitectArtifacts(withoutOutreach),
     /outreach.*capability domain.*pinned capability manifest/i,
+  );
+});
+
+test('Architect generation requires a full canonical manifest digest', () => {
+  assert.throws(
+    () => buildArchitectArtifacts({ ...catalog, manifest_digest: CANONICAL_MANIFEST_DIGEST.slice(0, 16) }),
+    /manifest digest is invalid/i,
   );
 });
 
@@ -254,36 +270,41 @@ test('signed capability domains stay identical across source, Architect, Claude,
 test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
-  const standalone = artifacts['generated/client-adapters/codex/outreach/SKILL.md'];
-  const scalar = (field: string) => standalone.match(new RegExp(`^  ${field}: (.+)$`, 'm'))?.[1];
-  const installed = {
-    capability_definition_version: scalar('capability_definition_version'),
-    capability_hash: scalar('capability_hash'),
-    minimum_api_version: scalar('minimum_api_version'),
-  };
-  assert.deepEqual(installed, {
-    capability_definition_version: pinned.compatibility.capability_definition_version,
-    capability_hash: pinned.compatibility.capability_hash,
-    minimum_api_version: pinned.compatibility.minimum_api_version,
-  });
-  const live = { ...installed, capability_hash: 'f'.repeat(16) };
-  const compatible = Object.entries(installed).every(([key, value]) => live[key as keyof typeof live] === value);
   const mutationOperations = new Set([
     'dreamstate_tools_run',
     'dreamstate_proposals_create',
     'dreamstate_proposals_mutate',
   ]);
-  const permits = (operation: string) => (
-    !mutationOperations.has(operation) || compatible
-  );
-  assert.equal(permits('dreamstate_tools_search'), true);
-  assert.equal(permits('dreamstate_tools_get'), true);
-  assert.equal(permits('dreamstate_proposals_get'), true);
-  assert.equal(permits('dreamstate_get_run'), true);
-  assert.equal(permits('dreamstate_list_runs'), true);
-  assert.equal(permits('dreamstate_tools_run'), false);
-  assert.equal(permits('dreamstate_proposals_create'), false);
-  assert.equal(permits('dreamstate_proposals_mutate'), false);
+  for (const client of ['claude', 'codex']) {
+    const standalone = artifacts[`generated/client-adapters/${client}/outreach/SKILL.md`];
+    const scalar = (field: string) => standalone.match(new RegExp(`^  ${field}: (.+)$`, 'm'))?.[1];
+    const installed = {
+      capability_definition_version: scalar('capability_definition_version'),
+      capability_hash: scalar('capability_hash'),
+      manifest_digest: scalar('manifest_digest'),
+      minimum_api_version: scalar('minimum_api_version'),
+    };
+    assert.deepEqual(installed, {
+      capability_definition_version: pinned.compatibility.capability_definition_version,
+      capability_hash: pinned.compatibility.capability_hash,
+      manifest_digest: pinned.compatibility.manifest_digest,
+      minimum_api_version: pinned.compatibility.minimum_api_version,
+    });
+    assert.equal(installed.manifest_digest, CANONICAL_MANIFEST_DIGEST);
+    const live = { ...installed, manifest_digest: 'f'.repeat(64) };
+    const compatible = Object.entries(installed).every(([key, value]) => live[key as keyof typeof live] === value);
+    const permits = (operation: string) => !mutationOperations.has(operation) || compatible;
+    for (const operation of [
+      'dreamstate_tools_search',
+      'dreamstate_tools_get',
+      'dreamstate_proposals_get',
+      'dreamstate_get_run',
+      'dreamstate_list_runs',
+    ]) assert.equal(permits(operation), true, `${client} must retain ${operation} for recovery`);
+    for (const operation of mutationOperations) {
+      assert.equal(permits(operation), false, `${client} must deny ${operation} on digest drift`);
+    }
+  }
 });
 
 test('the pinned MCP catalog exposes the governed proposal lifecycle used by Claude and Codex', () => {
