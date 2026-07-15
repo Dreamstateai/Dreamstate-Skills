@@ -50,7 +50,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "4d027b564e10a434",
+  "verified_capability_hash": "1406947c45ca79be",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/signal-scraper/SKILL.md",
   "install_command": "dreamstate skills install signal-scraper",

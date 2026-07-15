@@ -1,0 +1,30 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["outreach-list-builder"],
+      "id": "complex-reactive-table",
+      "required_concepts": ["signal", "profile_enrichment", "function", "ai_generation", "symbolic_output", "priority_filter"],
+      "request": "Build a lead table with hiring signals, person profile enrichment, a derived fit function, an AI opener, and filter to the highest priority rows."
+    },
+    {
+      "expected_skill_ids": ["outreach-list-builder"],
+      "id": "existing-table-preservation",
+      "request": "Add the missing qualification columns to this existing campaign table without replacing its user columns."
+    },
+    {
+      "expected_skill_ids": ["outreach-list-builder"],
+      "id": "bounded-column-sample-is-separate",
+      "required_concepts": ["table_column_run", "five through ten", "separate proposal", "adding a column never implies that it ran"],
+      "request": "Add the signal, enrichment, function, and AI columns, then safely test them on a few rows. Explain the exact staged proposal boundary."
+    },
+    {
+      "expected_skill_ids": ["outreach-list-builder"],
+      "id": "pilot-sample-and-bulk-expansion-are-distinct",
+      "required_concepts": ["intent:outreach.cold_outbound_preview", "outreach_source", "no durable destination", "table_column_run", "intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "still-inactive"],
+      "required_order": ["outreach_source", "outreach_bundle", "table_column_run", "outreach_bulk_expansion"],
+      "request": "Prove the scarce source on a few rows, build the draft table, sample its enrichments, then import and enroll the approved capped result set without launching."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "outreach-list-builder"
+}
