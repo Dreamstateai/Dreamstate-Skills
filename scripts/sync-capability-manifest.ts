@@ -20,4 +20,3 @@ if (
 }
 writeFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), `${JSON.stringify(value, null, 2)}\n`);
 console.log(`Synced ${value.capabilities.length} capabilities and ${value.mcp_tools.length} MCP tools (${value.capability_hash}).`);
-
