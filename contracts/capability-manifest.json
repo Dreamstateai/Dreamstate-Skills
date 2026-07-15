@@ -2,9 +2,2314 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "1406947c45ca79be",
+  "capability_hash": "908395dbdf63e39b",
   "api_version": "v1",
   "capabilities": [
+    {
+      "id": "brain.architect.resolve_attachment",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "architect",
+      "label": "Resolve Architect evidence attachment",
+      "description": "Revalidate a Daily Update snapshot and return what changed before Architect acts.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "attachment_id",
+          "required": true
+        },
+        {
+          "key": "snapshot_revision_id",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "attachment_id",
+          "type": "string",
+          "required": true,
+          "description": "Input attachment_id for brain.architect.resolve_attachment."
+        },
+        {
+          "name": "snapshot_revision_id",
+          "type": "string",
+          "required": true,
+          "description": "Input snapshot_revision_id for brain.architect.resolve_attachment."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "attachment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "snapshot_revision_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "attachment_id",
+            "snapshot_revision_id"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.architect.resolve_attachment\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.architect.resolve_attachment",
+          "Resolve Architect evidence attachment",
+          "{\"capability\":\"brain.architect.resolve_attachment\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "attachment_id",
+          "snapshot_revision_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.companies.get",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "companies",
+      "label": "Get compiled company record",
+      "description": "Read the current workspace-safe company record with governed field lineage.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "company_id",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "company_id",
+          "type": "string",
+          "required": true,
+          "description": "Input company_id for brain.companies.get."
+        },
+        {
+          "name": "include",
+          "type": "array",
+          "required": false,
+          "description": "Input include for brain.companies.get."
+        },
+        {
+          "name": "relationship_cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input relationship_cursor for brain.companies.get."
+        },
+        {
+          "name": "activity_cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input activity_cursor for brain.companies.get."
+        },
+        {
+          "name": "section_limit",
+          "type": "number",
+          "required": false,
+          "description": "Input section_limit for brain.companies.get."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "company_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "fields",
+                  "relationships",
+                  "activity",
+                  "workspace_overlay"
+                ]
+              }
+            },
+            "relationship_cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "activity_cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "section_limit": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "company_id"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.companies.get\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.companies.get",
+          "Get compiled company record",
+          "{\"capability\":\"brain.companies.get\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "company_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.get",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Get governed company Context",
+      "description": "Read one approved Context revision with its typed claims and exact source spans.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Context document id."
+        },
+        {
+          "name": "revision_id",
+          "type": "string",
+          "required": false,
+          "description": "Exact published revision id."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "revision_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "document_id"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_context_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.get\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.context.get",
+          "Get governed company Context",
+          "{\"capability\":\"brain.context.get\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.list",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "List governed company Context",
+      "description": "List approved workspace Context and, for user-bound callers, that user's approved Personal Context.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "folder_id",
+          "type": "string",
+          "required": false,
+          "description": "Optional Context folder id."
+        },
+        {
+          "name": "states",
+          "type": "array",
+          "required": false,
+          "description": "Optional Context publication states."
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Stable pagination cursor."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum records to return."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "minLength": 1,
+              "nullable": true
+            },
+            "states": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "published",
+                  "proposed",
+                  "conflict",
+                  "indexing",
+                  "source_failed",
+                  "archived"
+                ]
+              }
+            },
+            "cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "limit": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_context_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.list\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.context.list",
+          "List governed company Context",
+          "{\"capability\":\"brain.context.list\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.propose",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Propose a company Context edit",
+      "description": "Store an agent-authored Context change as an untrusted, human-reviewable proposal.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        },
+        {
+          "key": "base_revision_id",
+          "required": true
+        },
+        {
+          "key": "content",
+          "required": true
+        },
+        {
+          "key": "claims",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Input document_id for brain.context.propose."
+        },
+        {
+          "name": "base_revision_id",
+          "type": "string",
+          "required": true,
+          "description": "Input base_revision_id for brain.context.propose."
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "required": true,
+          "description": "Input content for brain.context.propose."
+        },
+        {
+          "name": "claims",
+          "type": "array",
+          "required": true,
+          "description": "Input claims for brain.context.propose."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "base_revision_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content": {
+              "type": "string"
+            },
+            "claims": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "claim_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "draft",
+                      "published",
+                      "proposed",
+                      "conflict",
+                      "indexing",
+                      "source_failed",
+                      "archived"
+                    ]
+                  },
+                  "citations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "source_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "source_revision_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "end": {
+                          "type": "integer",
+                          "exclusiveMinimum": true,
+                          "minimum": 0
+                        }
+                      },
+                      "required": [
+                        "source_id",
+                        "source_revision_id",
+                        "start",
+                        "end"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "text",
+                  "state",
+                  "citations"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "document_id",
+            "base_revision_id",
+            "content",
+            "claims"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_context_propose"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.propose\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.context.propose",
+          "Propose a company Context edit",
+          "{\"capability\":\"brain.context.propose\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id",
+          "base_revision_id",
+          "content",
+          "claims"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.publish",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Publish an approved company Context proposal",
+      "description": "Human-review and publish a proposal against its exact base revision, then rebuild affected claims.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "proposal_id",
+          "required": true
+        },
+        {
+          "key": "expected_base_revision_id",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "proposal_id",
+          "type": "string",
+          "required": true,
+          "description": "Input proposal_id for brain.context.publish."
+        },
+        {
+          "name": "expected_base_revision_id",
+          "type": "string",
+          "required": true,
+          "description": "Input expected_base_revision_id for brain.context.publish."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "proposal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected_base_revision_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "proposal_id",
+            "expected_base_revision_id"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [],
+      "examples": [
+        "{\"capability\":\"brain.context.publish\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.context.publish",
+          "Publish an approved company Context proposal",
+          "{\"capability\":\"brain.context.publish\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "proposal_id",
+          "expected_base_revision_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.daily_update.feedback",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "daily_update",
+      "label": "Add Daily Update feedback",
+      "description": "Append user-bound useful, not useful, or incorrect feedback to an immutable edition.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "edition_id",
+          "required": true
+        },
+        {
+          "key": "sentiment",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "edition_id",
+          "type": "string",
+          "required": true,
+          "description": "Input edition_id for brain.daily_update.feedback."
+        },
+        {
+          "name": "item_id",
+          "type": "string",
+          "required": false,
+          "description": "Input item_id for brain.daily_update.feedback."
+        },
+        {
+          "name": "sentiment",
+          "type": "string",
+          "required": true,
+          "description": "Input sentiment for brain.daily_update.feedback.",
+          "enum": [
+            "useful",
+            "not_useful",
+            "incorrect"
+          ]
+        },
+        {
+          "name": "comment",
+          "type": "string",
+          "required": false,
+          "description": "Input comment for brain.daily_update.feedback."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "edition_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "item_id": {
+              "type": "string",
+              "minLength": 1,
+              "nullable": true
+            },
+            "sentiment": {
+              "type": "string",
+              "enum": [
+                "useful",
+                "not_useful",
+                "incorrect"
+              ]
+            },
+            "comment": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "edition_id",
+            "sentiment"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [],
+      "examples": [
+        "{\"capability\":\"brain.daily_update.feedback\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.daily_update.feedback",
+          "Add Daily Update feedback",
+          "{\"capability\":\"brain.daily_update.feedback\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "edition_id",
+          "sentiment"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.daily_update.get",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "daily_update",
+      "label": "Get Daily Update",
+      "description": "Read the same immutable cited Daily Update edition shown in Command Center and Slack.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "edition_date",
+          "type": "string",
+          "required": false,
+          "description": "Input edition_date for brain.daily_update.get."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "edition_date": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.daily_update.get\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.daily_update.get",
+          "Get Daily Update",
+          "{\"capability\":\"brain.daily_update.get\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.daily_update.history",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "daily_update",
+      "label": "List Daily Update history",
+      "description": "Read workspace-safe Daily Update editions with stable cursor pagination.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input cursor for brain.daily_update.history."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Input limit for brain.daily_update.history."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "limit": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.daily_update.history\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.daily_update.history",
+          "List Daily Update history",
+          "{\"capability\":\"brain.daily_update.history\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.evidence.search",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "evidence",
+      "label": "Search governed evidence",
+      "description": "Search permitted person and company observations with exact citations.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "subject_kind",
+          "type": "string",
+          "required": false,
+          "description": "Optional governed subject kind.",
+          "enum": [
+            "person",
+            "company"
+          ]
+        },
+        {
+          "name": "subject_id",
+          "type": "string",
+          "required": false,
+          "description": "Optional stable governed subject id."
+        },
+        {
+          "name": "field_keys",
+          "type": "array",
+          "required": false,
+          "description": "Optional governed field keys."
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "Optional targeted evidence query."
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Stable pagination cursor."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum records to return."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "subject_kind": {
+              "type": "string",
+              "enum": [
+                "person",
+                "company"
+              ]
+            },
+            "subject_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field_keys": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "query": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "limit": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.evidence.search\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.evidence.search",
+          "Search governed evidence",
+          "{\"capability\":\"brain.evidence.search\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.learning.query_benchmarks",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "learning",
+      "label": "Query pooled benchmarks",
+      "description": "Query privacy-safe pooled GTM benchmarks through the approved cohort lattice.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "query_id",
+          "required": true
+        },
+        {
+          "key": "cohort_id",
+          "required": true
+        },
+        {
+          "key": "approved_cohorts_only",
+          "required": true
+        },
+        {
+          "key": "channel",
+          "required": true
+        },
+        {
+          "key": "motion",
+          "required": true
+        },
+        {
+          "key": "archetype_ids",
+          "required": true
+        },
+        {
+          "key": "metric_id",
+          "required": true
+        },
+        {
+          "key": "allowed_evidence_tiers",
+          "required": true
+        },
+        {
+          "key": "as_of",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "query_id",
+          "type": "string",
+          "required": true,
+          "description": "Input query_id for brain.learning.query_benchmarks."
+        },
+        {
+          "name": "cohort_id",
+          "type": "string",
+          "required": true,
+          "description": "Input cohort_id for brain.learning.query_benchmarks."
+        },
+        {
+          "name": "approved_cohorts_only",
+          "type": "boolean",
+          "required": true,
+          "description": "Input approved_cohorts_only for brain.learning.query_benchmarks."
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "required": true,
+          "description": "Input channel for brain.learning.query_benchmarks.",
+          "enum": [
+            "email",
+            "linkedin",
+            "x",
+            "whatsapp"
+          ]
+        },
+        {
+          "name": "motion",
+          "type": "string",
+          "required": true,
+          "description": "Input motion for brain.learning.query_benchmarks.",
+          "enum": [
+            "cold_outbound",
+            "warm_outbound",
+            "inbound_followup"
+          ]
+        },
+        {
+          "name": "archetype_ids",
+          "type": "array",
+          "required": true,
+          "description": "Input archetype_ids for brain.learning.query_benchmarks."
+        },
+        {
+          "name": "metric_id",
+          "type": "string",
+          "required": true,
+          "description": "Input metric_id for brain.learning.query_benchmarks.",
+          "enum": [
+            "positive_reply_rate",
+            "meeting_booked_rate",
+            "conversion_rate"
+          ]
+        },
+        {
+          "name": "allowed_evidence_tiers",
+          "type": "array",
+          "required": true,
+          "description": "Input allowed_evidence_tiers for brain.learning.query_benchmarks."
+        },
+        {
+          "name": "as_of",
+          "type": "string",
+          "required": true,
+          "description": "Input as_of for brain.learning.query_benchmarks."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "query_id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{1,63}$"
+            },
+            "cohort_id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{1,63}$"
+            },
+            "approved_cohorts_only": {
+              "type": "boolean",
+              "enum": [
+                true
+              ]
+            },
+            "channel": {
+              "type": "string",
+              "enum": [
+                "email",
+                "linkedin",
+                "x",
+                "whatsapp"
+              ]
+            },
+            "motion": {
+              "type": "string",
+              "enum": [
+                "cold_outbound",
+                "warm_outbound",
+                "inbound_followup"
+              ]
+            },
+            "archetype_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "control",
+                  "short_direct",
+                  "proof_led",
+                  "question_led"
+                ]
+              },
+              "minItems": 1
+            },
+            "metric_id": {
+              "type": "string",
+              "enum": [
+                "positive_reply_rate",
+                "meeting_booked_rate",
+                "conversion_rate"
+              ]
+            },
+            "allowed_evidence_tiers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "descriptive",
+                  "adjusted_observational",
+                  "experimental"
+                ]
+              },
+              "minItems": 1
+            },
+            "as_of": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "query_id",
+            "cohort_id",
+            "approved_cohorts_only",
+            "channel",
+            "motion",
+            "archetype_ids",
+            "metric_id",
+            "allowed_evidence_tiers",
+            "as_of"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.learning.query_benchmarks\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.learning.query_benchmarks",
+          "Query pooled benchmarks",
+          "{\"capability\":\"brain.learning.query_benchmarks\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "query_id",
+          "cohort_id",
+          "approved_cohorts_only",
+          "channel",
+          "motion",
+          "archetype_ids",
+          "metric_id",
+          "allowed_evidence_tiers",
+          "as_of"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.outreach.compare",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "outreach",
+      "label": "Compare outreach treatments",
+      "description": "Compare workspace-local outreach treatment rollups without causal overclaiming.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "episode_ids",
+          "required": true
+        },
+        {
+          "key": "treatment_ids",
+          "required": true
+        },
+        {
+          "key": "outcomes",
+          "required": true
+        },
+        {
+          "key": "allowed_evidence_tiers",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "episode_ids",
+          "type": "array",
+          "required": true,
+          "description": "Input episode_ids for brain.outreach.compare."
+        },
+        {
+          "name": "treatment_ids",
+          "type": "array",
+          "required": true,
+          "description": "Input treatment_ids for brain.outreach.compare."
+        },
+        {
+          "name": "outcomes",
+          "type": "array",
+          "required": true,
+          "description": "Input outcomes for brain.outreach.compare."
+        },
+        {
+          "name": "allowed_evidence_tiers",
+          "type": "array",
+          "required": true,
+          "description": "Input allowed_evidence_tiers for brain.outreach.compare."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "episode_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "treatment_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "outcomes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "allowed_evidence_tiers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "descriptive",
+                  "adjusted_observational",
+                  "experimental"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "episode_ids",
+            "treatment_ids",
+            "outcomes",
+            "allowed_evidence_tiers"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.outreach.compare\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.outreach.compare",
+          "Compare outreach treatments",
+          "{\"capability\":\"brain.outreach.compare\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "episode_ids",
+          "treatment_ids",
+          "outcomes",
+          "allowed_evidence_tiers"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.people.get",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "people",
+      "label": "Get compiled person record",
+      "description": "Read the current workspace-safe person record with governed field lineage.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "person_id",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "person_id",
+          "type": "string",
+          "required": true,
+          "description": "Input person_id for brain.people.get."
+        },
+        {
+          "name": "include",
+          "type": "array",
+          "required": false,
+          "description": "Input include for brain.people.get."
+        },
+        {
+          "name": "relationship_cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input relationship_cursor for brain.people.get."
+        },
+        {
+          "name": "activity_cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input activity_cursor for brain.people.get."
+        },
+        {
+          "name": "section_limit",
+          "type": "number",
+          "required": false,
+          "description": "Input section_limit for brain.people.get."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "person_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "fields",
+                  "relationships",
+                  "activity",
+                  "workspace_overlay"
+                ]
+              }
+            },
+            "relationship_cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "activity_cursor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "section_limit": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "person_id"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_query"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.people.get\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.people.get",
+          "Get compiled person record",
+          "{\"capability\":\"brain.people.get\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "person_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.records.append_note",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "records",
+      "label": "Append private record note",
+      "description": "Append or clear the encrypted workspace-private note attached to a stable person or company identity.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "subject_kind",
+          "required": true
+        },
+        {
+          "key": "subject_id",
+          "required": true
+        },
+        {
+          "key": "note",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "subject_kind",
+          "type": "string",
+          "required": true,
+          "description": "Input subject_kind for brain.records.append_note.",
+          "enum": [
+            "person",
+            "company"
+          ]
+        },
+        {
+          "name": "subject_id",
+          "type": "string",
+          "required": true,
+          "description": "Input subject_id for brain.records.append_note."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "required": true,
+          "description": "Input note for brain.records.append_note."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "subject_kind": {
+              "type": "string",
+              "enum": [
+                "person",
+                "company"
+              ]
+            },
+            "subject_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "note": {
+              "type": "string",
+              "maxLength": 16384
+            }
+          },
+          "required": [
+            "subject_kind",
+            "subject_id",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [],
+      "examples": [
+        "{\"capability\":\"brain.records.append_note\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.records.append_note",
+          "Append private record note",
+          "{\"capability\":\"brain.records.append_note\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "subject_kind",
+          "subject_id",
+          "note"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.retrieval.feedback",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "retrieval",
+      "label": "Report retrieval feedback",
+      "description": "Append digest-only feedback about an earlier governed Brain retrieval without storing query text, filter values, or evidence content.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "target_capability",
+          "required": true
+        },
+        {
+          "key": "source_request_id",
+          "required": true
+        },
+        {
+          "key": "reason",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "target_capability",
+          "type": "string",
+          "required": true,
+          "description": "Input target_capability for brain.retrieval.feedback.",
+          "enum": [
+            "brain.people.get",
+            "brain.companies.get",
+            "brain.evidence.search",
+            "brain.context.list",
+            "brain.context.get",
+            "brain.outreach.compare",
+            "brain.learning.query_benchmarks",
+            "brain.daily_update.get",
+            "brain.daily_update.history",
+            "brain.architect.resolve_attachment"
+          ]
+        },
+        {
+          "name": "source_request_id",
+          "type": "string",
+          "required": true,
+          "description": "Input source_request_id for brain.retrieval.feedback."
+        },
+        {
+          "name": "filter_keys",
+          "type": "array",
+          "required": false,
+          "description": "Input filter_keys for brain.retrieval.feedback."
+        },
+        {
+          "name": "evidence_ids",
+          "type": "array",
+          "required": false,
+          "description": "Input evidence_ids for brain.retrieval.feedback."
+        },
+        {
+          "name": "latency_ms",
+          "type": "number",
+          "required": false,
+          "description": "Input latency_ms for brain.retrieval.feedback."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": true,
+          "description": "Input reason for brain.retrieval.feedback.",
+          "enum": [
+            "insufficient_context",
+            "wrong_subject",
+            "missing_relationship",
+            "stale_result"
+          ]
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-12.1",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "target_capability": {
+              "type": "string",
+              "enum": [
+                "brain.people.get",
+                "brain.companies.get",
+                "brain.evidence.search",
+                "brain.context.list",
+                "brain.context.get",
+                "brain.outreach.compare",
+                "brain.learning.query_benchmarks",
+                "brain.daily_update.get",
+                "brain.daily_update.history",
+                "brain.architect.resolve_attachment"
+              ]
+            },
+            "source_request_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "filter_keys": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "maxItems": 64
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "maxItems": 100
+            },
+            "latency_ms": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 30000
+            },
+            "reason": {
+              "type": "string",
+              "enum": [
+                "insufficient_context",
+                "wrong_subject",
+                "missing_relationship",
+                "stale_result"
+              ]
+            }
+          },
+          "required": [
+            "target_capability",
+            "source_request_id",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [
+        "dreamstate_brain_retrieval_feedback"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.retrieval.feedback\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.retrieval.feedback",
+          "Report retrieval feedback",
+          "{\"capability\":\"brain.retrieval.feedback\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "target_capability",
+          "source_request_id",
+          "reason"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
     {
       "id": "column:ai",
       "kind": "column_recipe",
@@ -40478,9 +42783,33 @@
       "billing_exempt": false
     },
     {
+      "name": "dreamstate_brain_query",
+      "scope": "outreach:read",
+      "description": "Read the same governed, workspace-safe person/company records, evidence, outreach comparisons, pooled benchmarks, Daily Updates, and revalidated Architect attachments used by Dreamstate product surfaces. Returns versioned structured data with exact citations; never exposes another workspace or exact pooled source rows.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_brain_retrieval_feedback",
+      "scope": "outreach:write",
+      "description": "Append digest-only feedback about an earlier governed Brain result. The capability stores no query text, filter values, evidence content, person details, or company details.",
+      "billing_exempt": false
+    },
+    {
       "name": "dreamstate_cancel_run",
       "scope": null,
       "description": "Request cancellation at the next declared safe boundary. Completed effects are preserved.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_context_propose",
+      "scope": "content:write",
+      "description": "Store an agent-authored Context change as an immutable, base-revision-bound proposal for human review. This tool cannot publish its own proposal.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_context_query",
+      "scope": "content:read",
+      "description": "List or read the approved company Context used by Dreamstate product surfaces and agents. Credential callers receive only published workspace truth; draft and Personal content remain unavailable.",
       "billing_exempt": false
     },
     {
@@ -40923,8 +43252,8 @@
     }
   ],
   "counts": {
-    "capabilities": 211,
+    "capabilities": 226,
     "run_intents": 83,
-    "mcp_tools": 131
+    "mcp_tools": 135
   }
 }

@@ -58,7 +58,7 @@
     "visibility:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "1406947c45ca79be",
+  "verified_capability_hash": "908395dbdf63e39b",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/ai-visibility/SKILL.md",
   "install_command": "dreamstate skills install ai-visibility",
