@@ -35,7 +35,7 @@
     "visibility:read"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "908395dbdf63e39b",
+  "verified_capability_hash": "18403547a402ab26",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/citation-gap-analysis/SKILL.md",
   "install_command": "dreamstate skills install citation-gap-analysis",
