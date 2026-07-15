@@ -7,6 +7,25 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const INDEX_SKILLS = (JSON.parse(readFileSync(join(ROOT, 'skills-index.json'), 'utf8')) as {
+  skills: Array<{ slug: string; execution_mode: string }>;
+}).skills;
+const UNSAFE_GENERIC_SLUGS = INDEX_SKILLS
+  .filter((skill) => ['executable', 'guided-execution'].includes(skill.execution_mode))
+  .map((skill) => skill.slug);
+
+function seedInstalledSkills(skillsDir: string, slugs: string[]): void {
+  for (const slug of slugs) {
+    mkdirSync(join(skillsDir, slug), { recursive: true });
+    writeFileSync(join(skillsDir, slug, 'SKILL.md'), `# stale ${slug}\n`);
+  }
+}
+
+function assertNoUnsafeGenericSkills(skillsDir: string): void {
+  for (const slug of UNSAFE_GENERIC_SLUGS) {
+    assert.equal(existsSync(join(skillsDir, slug)), false, `stale unsafe generic ${slug} survived`);
+  }
+}
 
 function runInstall(home: string, args: string[]) {
   return spawnSync(
@@ -106,17 +125,13 @@ test('a full governed upgrade prunes stale Dreamstate unsafe packages but preser
   const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-upgrade-'));
   const skillsDir = join(home, '.claude', 'skills');
   try {
-    for (const slug of ['network-grow', 'reply-triage', 'outreach', 'my-custom-skill']) {
-      mkdirSync(join(skillsDir, slug), { recursive: true });
-      writeFileSync(join(skillsDir, slug, 'SKILL.md'), `# stale ${slug}\n`);
-    }
+    seedInstalledSkills(skillsDir, [...UNSAFE_GENERIC_SLUGS, 'outreach', 'my-custom-skill']);
     const customBefore = readFileSync(join(skillsDir, 'my-custom-skill', 'SKILL.md'));
 
     const result = runInstall(home, ['skills', 'install', '--claude']);
 
     assert.equal(result.status, 0, result.stderr || result.stdout);
-    assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
-    assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);
+    assertNoUnsafeGenericSkills(skillsDir);
     assert.deepEqual(readFileSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), customBefore);
     assert.deepEqual(
       readFileSync(join(skillsDir, 'outreach', 'SKILL.md')),
@@ -128,18 +143,14 @@ test('a full governed upgrade prunes stale Dreamstate unsafe packages but preser
   }
 });
 
-test('a governed outbound bundle upgrade prunes stale unsafe outreach packages only', () => {
+test('a governed outbound bundle upgrade prunes every stale unsafe Dreamstate package', () => {
   const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-bundle-upgrade-'));
   const skillsDir = join(home, '.codex', 'skills');
   try {
-    for (const slug of ['network-grow', 'reply-triage', 'my-custom-skill']) {
-      mkdirSync(join(skillsDir, slug), { recursive: true });
-      writeFileSync(join(skillsDir, slug, 'SKILL.md'), `# stale ${slug}\n`);
-    }
+    seedInstalledSkills(skillsDir, [...UNSAFE_GENERIC_SLUGS, 'my-custom-skill']);
     const result = runInstall(home, ['skills', 'install', '--bundle', 'outbound', '--codex']);
     assert.equal(result.status, 0, result.stderr || result.stdout);
-    assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
-    assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);
+    assertNoUnsafeGenericSkills(skillsDir);
     assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
     assert.equal(existsSync(join(skillsDir, 'outreach', 'SKILL.md')), true);
   } finally {
@@ -147,16 +158,46 @@ test('a governed outbound bundle upgrade prunes stale unsafe outreach packages o
   }
 });
 
-test('installing one safe governed skill does not prune other installed packages', () => {
+test('installing one safe governed skill prunes every stale unsafe Dreamstate package', () => {
   const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-single-'));
   const skillsDir = join(home, '.claude', 'skills');
   try {
-    mkdirSync(join(skillsDir, 'network-grow'), { recursive: true });
-    writeFileSync(join(skillsDir, 'network-grow', 'SKILL.md'), '# prior package\n');
+    seedInstalledSkills(skillsDir, [...UNSAFE_GENERIC_SLUGS, 'my-custom-skill']);
     const result = runInstall(home, ['skills', 'install', 'define-icp', '--claude']);
     assert.equal(result.status, 0, result.stderr || result.stdout);
-    assert.equal(existsSync(join(skillsDir, 'network-grow', 'SKILL.md')), true);
+    assertNoUnsafeGenericSkills(skillsDir);
+    assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
     assert.equal(existsSync(join(skillsDir, 'define-icp', 'SKILL.md')), true);
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('updating one safe governed skill prunes every stale unsafe Dreamstate package', () => {
+  const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-single-update-'));
+  const skillsDir = join(home, '.codex', 'skills');
+  try {
+    seedInstalledSkills(skillsDir, [...UNSAFE_GENERIC_SLUGS, 'my-custom-skill']);
+    const result = runInstall(home, ['skills', 'update', 'define-icp', '--codex']);
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assertNoUnsafeGenericSkills(skillsDir);
+    assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
+    assert.equal(existsSync(join(skillsDir, 'define-icp', 'SKILL.md')), true);
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('refusing an unsafe governed skill still prunes every stale unsafe Dreamstate package', () => {
+  const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-refusal-'));
+  const skillsDir = join(home, '.claude', 'skills');
+  try {
+    seedInstalledSkills(skillsDir, [...UNSAFE_GENERIC_SLUGS, 'my-custom-skill']);
+    const result = runInstall(home, ['skills', 'install', 'network-grow', '--claude']);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /not available.*governed/i);
+    assertNoUnsafeGenericSkills(skillsDir);
+    assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
   } finally {
     rmSync(home, { recursive: true, force: true });
   }

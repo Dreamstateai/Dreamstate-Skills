@@ -14,6 +14,20 @@ test('release tests use Node 18-compatible ESM directory resolution', () => {
   }
 });
 
+test('the package runtime floor matches test runner support', () => {
+  const packageJson = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as {
+    engines?: { node?: string };
+  };
+  assert.equal(packageJson.engines?.node, '>=18.19.0');
+});
+
+const CI_WORKFLOW = join(ROOT, '.github', 'workflows', 'ci.yml');
+
+test('CI covers every supported Node line', { skip: !existsSync(CI_WORKFLOW) }, () => {
+  const workflow = readFileSync(CI_WORKFLOW, 'utf8');
+  assert.match(workflow, /node-version:\s*\[18\.20\.8, 20, 22\]/);
+});
+
 function run(command: string, args: string[], cwd: string, env = process.env) {
   const result = spawnSync(command, args, { cwd, env, encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr || result.stdout);

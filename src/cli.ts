@@ -44,6 +44,7 @@ interface ParsedArgs {
 
 const GOVERNED_ADAPTER_CLIENTS = new Set(['claude', 'codex']);
 const SAFE_GENERIC_EXECUTION_MODES = new Set(['knowledge', 'planned']);
+const UNSAFE_GENERIC_EXECUTION_MODES = new Set(['executable', 'guided-execution']);
 
 function parseArgs(argv: string[]): ParsedArgs {
   const raw = argv.slice(2);
@@ -128,6 +129,10 @@ async function main(): Promise<void> {
 
   let skills: IndexedSkill[];
   try { skills = loadSkills(); } catch (error) { console.error(pc.red(`  ${(error as Error).message}`)); process.exit(1); }
+  // Keep the complete catalog as the cleanup authority. Bundle and slug
+  // filtering must never hide an old direct-action package from a governed
+  // Claude/Codex install or update.
+  const allIndexedSkills = skills;
 
   if (cmd === 'skills' && subcommand === 'list') {
     printSkills(skills);
@@ -205,6 +210,34 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
+  const governedClient = GOVERNED_ADAPTER_CLIENTS.has(agent);
+  const unsafeGenericSlugs = governedClient
+    ? allIndexedSkills
+      .filter((skill) => UNSAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''))
+      .map((skill) => skill.slug)
+    : [];
+  const unsafeRequestedGeneric = slug && governedClient
+    ? allIndexedSkills.find((skill) => (
+      skill.slug === slug && UNSAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? '')
+    ))
+    : undefined;
+
+  // Safety cleanup is the first governed-client mutation. It deliberately runs
+  // before adapter validation, request refusal, MCP config writes, and copying,
+  // so even a failed/refused governed invocation cannot leave known generic
+  // executable or guided packages active. Unrelated custom skills are untouched.
+  if (governedClient) {
+    try {
+      mkdirSync(client.skillsDir, { recursive: true });
+      for (const unsafeSlug of unsafeGenericSlugs) {
+        rmSync(join(client.skillsDir, unsafeSlug), { recursive: true, force: true });
+      }
+    } catch (error) {
+      console.error(pc.red(`  failed to remove unsafe generic skills: ${(error as Error).message}`));
+      process.exit(1);
+    }
+  }
+
   let adapterSkills: IndexedSkill[];
   try {
     adapterSkills = loadClientAdapterSkills(agent);
@@ -212,15 +245,7 @@ async function main(): Promise<void> {
     console.error(pc.red(`  ${(error as Error).message}`));
     process.exit(1);
   }
-  const unsafeGenericSlugs = GOVERNED_ADAPTER_CLIENTS.has(agent)
-    ? skills
-      .filter((skill) => !SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''))
-      .map((skill) => skill.slug)
-    : [];
-  const unsafeRequestedGeneric = slug && GOVERNED_ADAPTER_CLIENTS.has(agent)
-    ? skills.find((skill) => skill.slug === slug && !SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''))
-    : undefined;
-  if (GOVERNED_ADAPTER_CLIENTS.has(agent)) {
+  if (governedClient) {
     skills = skills.filter((skill) => SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''));
   }
   if (slug) {
@@ -271,11 +296,6 @@ async function main(): Promise<void> {
   let count = 0;
   try {
     mkdirSync(client.skillsDir, { recursive: true });
-    if (!slug) {
-      for (const unsafeSlug of unsafeGenericSlugs) {
-        rmSync(join(client.skillsDir, unsafeSlug), { recursive: true, force: true });
-      }
-    }
     for (const skill of skills) {
       const src = join(ROOT, skill.path);
       const dest = join(client.skillsDir, skill.slug);

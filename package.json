@@ -54,7 +54,7 @@
     "url": "git+https://github.com/Dreamstateai/Dreamstate-Skills.git"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.19.0"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
