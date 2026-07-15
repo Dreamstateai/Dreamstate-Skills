@@ -5,7 +5,7 @@ description: "Create or revise evidence-backed ICP, positioning, channel roles, 
 capability_domains: ["brain","context"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 908395dbdf63e39b
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   generator_version: 1.0.0
   client: claude
   kernel_id: strategy
   kernel_file: KERNEL.md
-  kernel_sha256: 77a8837bb29012cd2f05d0495de8a6b0bbbcfb5a05360e8b1a2e17e7fbae09c8
+  kernel_sha256: 74c80cf121843eba941c9876bd18e020d8c6cbb0fc43528a5703eac51d8fcda2
   adapter_sha256: e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a
   evals_file: evals.json
-  evals_sha256: 97a179e43d1827dd7eb2763452980a94ccf8cffbf539a9ce80d348a8ccd6e85d
+  evals_sha256: 79d641758b9ffc2554e53fc7284839e8bc7ec660d310e1363aafebcba419b29c
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

@@ -5,7 +5,7 @@ description: "Read targeted revisioned Company Brain facts or propose cited conf
 capability_domains: ["brain","context"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 908395dbdf63e39b
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   generator_version: 1.0.0
   client: codex
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: 99421a96e95050c362776b56f9c87e124b8d617118796dc3ce9963a32843474c
+  kernel_sha256: 235b44a41cef93322bef5c9bcfc425b28fac5aec123561ba37b0cc6e450cf8ea
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: 55471341ea47230f0c8ced832dbbdb99c16b42da18af5a57ac7adc75c6ac159e
+  evals_sha256: ecc63334d5dd7fcc0a161deb58a8de72b94d200170cd3d067dc2997e829101ee
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

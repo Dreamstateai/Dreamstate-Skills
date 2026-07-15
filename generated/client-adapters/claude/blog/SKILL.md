@@ -5,7 +5,7 @@ description: "Manage grounded blog research, draft, editorial review, revision, 
 capability_domains: ["content"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 908395dbdf63e39b
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   generator_version: 1.0.0
   client: claude
   kernel_id: blog
   kernel_file: KERNEL.md
-  kernel_sha256: b3cad1e2ca5565368418c0002b42531dcb36e92f4fa021e9eaf632e3700ed9af
+  kernel_sha256: b1be72b982064d20fd7b591678493185ba8a5ee1a39f820afe249fe1ef60d151
   adapter_sha256: e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a
   evals_file: evals.json
-  evals_sha256: 614cc4cdaafc799f38e2b0f0d4752a3dfb4c97ee5b59f2ba3cda3353e18471b4
+  evals_sha256: d41fd2a5099e96b8ee6c44bfbc5700a15e120e90a51a609131aca1c63a308a80
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

@@ -21,4 +21,3 @@ Market-language learning is a separate proposed Company Brain update. Preserve c
 ## Completion proof
 
 Return real thread links and evidence, triage reason, reviewable draft state, risk notes, and any durable run id. If discovery returns no credible opportunity, say so directly and recommend a refined search rather than creating one.
-

@@ -5,7 +5,7 @@ description: "Discover real Reddit and community threads, triage evidence and ri
 capability_domains: ["content"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 908395dbdf63e39b
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: be8f899ad92233a85f209c5a1e3a81935821fde07ffcd26fc0f26200ba399df5
+  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
   generator_version: 1.0.0
   client: claude
   kernel_id: reddit-engagement
   kernel_file: KERNEL.md
-  kernel_sha256: bdd074811713808962f9c740e9bd630c26b21518ee2ace2ea63a7b330c30a18a
+  kernel_sha256: 3e7f97663fdbe7b47eb111a36a1e887ff56691520ae18419f84c0eb8a29eb969
   adapter_sha256: e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a
   evals_file: evals.json
-  evals_sha256: 8894b325cbe15f0d98636a1d26d98fd696444efeee9e131e1555bf79c72948e2
+  evals_sha256: e937a37057751e4a1d0bd53ecff46d5d6987a81289452396b29971f6f03d9212
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]
