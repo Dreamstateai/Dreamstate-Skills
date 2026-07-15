@@ -2,7 +2,7 @@
 
 ## Promise
 
-Validate sequence graph structure, templates, variables, limits, and eligible sender accounts.
+Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.
 
 ## Execution boundary
 

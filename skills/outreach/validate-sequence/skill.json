@@ -2,7 +2,7 @@
   "schema_version": 2,
   "slug": "validate-sequence",
   "name": "Validate Sequence",
-  "short_description": "Validate sequence graph structure, templates, variables, limits, and eligible sender accounts.",
+  "short_description": "Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.",
   "domain": "outreach",
   "category": "Outreach",
   "tags": [

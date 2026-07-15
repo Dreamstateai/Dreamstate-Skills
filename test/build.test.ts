@@ -256,6 +256,22 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
     artifacts['generated/architect/outreach-list-builder/KERNEL.md'],
     /Preserve compatible identity and evidence fields/,
   );
+
+  const index = JSON.parse(artifacts['skills-index.json']);
+  const outreachSkills = index.skills.filter((skill: { domain: string }) => skill.domain === 'outreach');
+  for (const skill of outreachSkills) {
+    assert.equal(skill.mcp_tools.includes('outreach_apply_template'), false, `${skill.slug}: forbidden agent shortcut tool`);
+    assert.equal(skill.capability_ids.includes('intent:outreach.apply_template'), false, `${skill.slug}: forbidden agent shortcut capability`);
+    assert.equal(skill.run_intents.includes('outreach.apply_template'), false, `${skill.slug}: forbidden agent shortcut intent`);
+  }
+  for (const slug of ['outbound', 'sequence-builder', 'multichannel']) {
+    const body = artifacts[`skills/outreach/${slug}/SKILL.md`];
+    assert.match(body, /Never select, clone, or apply a campaign template or preset/);
+    for (const line of body.split('\n').filter((candidate) => /\b(?:templates?|presets?|clone)\b/i.test(candidate))) {
+      assert.match(line, /(?:Never select, clone, or apply|manual human product UI)/, `${slug}: positive shortcut guidance: ${line}`);
+    }
+  }
+  assert.doesNotMatch(artifacts['generated/site/skills-catalog.json'], /outreach_apply_template|intent:outreach\.apply_template|outreach\.apply_template/);
 });
 
 test('growth asset planning may describe a buyer template library but stays explicitly unsaved without a capability', () => {

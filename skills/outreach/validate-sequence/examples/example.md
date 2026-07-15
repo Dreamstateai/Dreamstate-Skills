@@ -2,7 +2,7 @@
 
 ## Request
 
-“Help me validate sequence graph structure, templates, variables, limits, and eligible sender accounts.”
+“Help me validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.”
 
 ## Correct response shape
 

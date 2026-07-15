@@ -111,7 +111,7 @@ export const SKILL_BLUEPRINTS: SkillBlueprint[] = [
     'build-linkedin-sequence|Build a LinkedIn sequence with connection-state rules, pacing, stop conditions, and approvals.',
     'build-email-sequence|Build an email sequence with deliverability constraints, reply stops, and honest personalization.',
     'build-multichannel-sequence|Coordinate channels around one buyer journey without duplicating pressure or messages.',
-    'validate-sequence|Validate sequence graph structure, templates, variables, limits, and eligible sender accounts.',
+    'validate-sequence|Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.',
     'launch-campaign|Launch an approved campaign under explicit audience, account, schedule, and volume constraints.',
     'grow-linkedin-network|Build a relevant LinkedIn network with fit checks, safe pacing, and reply-aware follow-up.',
     'classify-replies|Classify reply intent from conversation context and preserve uncertainty for human review.',

@@ -26,6 +26,11 @@ export interface SkillManifest {
 const VALID_CLIENTS = ['claude', 'cursor', 'codex', 'gemini', 'opencode'];
 const VALID_MODES: ExecutionMode[] = ['executable', 'guided-execution', 'knowledge', 'planned'];
 const VALID_MATURITY: Maturity[] = ['stable', 'beta', 'experimental'];
+const NON_DERIVING_ROUTER_TOOLS = new Set([
+  'dreamstate_tools_search',
+  'dreamstate_tools_get',
+  'dreamstate_tools_run',
+]);
 const DOMAIN_CATEGORY: Record<string, string> = {
   connect: 'Core', core: 'Core', developer: 'Core', outreach: 'Outreach', prospecting: 'Prospecting', signals: 'Signals',
   tables: 'Tables & enrichment', workflows: 'Workflows', messaging: 'Messaging', social: 'Content', content: 'Content',
@@ -81,7 +86,9 @@ function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest,
   const toolRegistry = new Map(capabilityManifest.mcp_tools.map((tool) => [tool.name, tool]));
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${file}: unknown MCP tool ${tool}`);
   if ((mode === 'executable' || mode === 'guided-execution') && tools.length === 0) throw new Error(`${file}: ${mode} skills require tools_used`);
-  const capabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool)));
+  const capabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some(
+    (tool) => tools.includes(tool) && !NON_DERIVING_ROUTER_TOOLS.has(tool),
+  ));
   const explicitCapabilities = strings(meta, 'capability_ids'); const knownIds = new Set(capabilityManifest.capabilities.map((capability) => capability.id));
   for (const id of explicitCapabilities) if (!knownIds.has(id)) throw new Error(`${file}: unknown capability ${id}`);
   const capabilityIds = [...new Set([...explicitCapabilities, ...capabilities.map((capability) => capability.id)])].sort();
@@ -197,10 +204,9 @@ function skillFromBlueprint(blueprint: SkillBlueprint, capabilityManifest: Capab
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${blueprint.slug}: unknown MCP tool ${tool}`);
   const knownCapabilities = new Map(capabilityManifest.capabilities.map((capability) => [capability.id, capability]));
   for (const id of contract.capabilityIds ?? []) if (!knownCapabilities.has(id)) throw new Error(`${blueprint.slug}: unknown capability ${id}`);
-  const broadRouterTools = new Set(['dreamstate_tools_run', 'dreamstate_tools_search', 'dreamstate_tools_get']);
   const capabilities = contract.capabilityIds
     ? contract.capabilityIds.map((id) => knownCapabilities.get(id) as CapabilityRecord)
-    : capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !broadRouterTools.has(tool)));
+    : capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !NON_DERIVING_ROUTER_TOOLS.has(tool)));
   return {
     schema_version: 2, slug: blueprint.slug, name: titleCase(blueprint.slug), short_description: blueprint.description,
     domain: blueprint.domain, category: DOMAIN_CATEGORY[blueprint.domain], tags: [blueprint.domain], execution_mode: contract.mode,
