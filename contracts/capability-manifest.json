@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "18403547a402ab26",
+  "capability_hash": "bfcf20d09201fe0b",
   "api_version": "v1",
   "capabilities": [
     {
@@ -41,7 +41,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -113,7 +113,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -203,7 +203,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -302,7 +302,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -374,7 +374,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -448,7 +448,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -520,7 +520,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -592,7 +592,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -664,7 +664,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -777,7 +777,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -849,7 +849,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -921,7 +921,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -993,7 +993,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -1065,7 +1065,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -1137,7 +1137,7 @@
       "provider": null,
       "source": {
         "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-12.1",
+        "contract_version": "2026-07-15.0",
         "citation_required": true
       },
       "run_intent": null,
@@ -21246,56 +21246,12 @@
         {
           "key": "name",
           "kind": "string",
-          "required": true,
-          "description": "name"
+          "required": true
         },
         {
           "key": "outreach_list_id",
           "kind": "uuid",
-          "required": true,
-          "description": "outreach_list_id"
-        },
-        {
-          "key": "graph_json",
-          "kind": "object",
-          "required": false,
-          "description": "graph_json"
-        },
-        {
-          "key": "linkedin_account_id",
-          "kind": "uuid",
-          "required": false,
-          "description": "linkedin_account_id"
-        },
-        {
-          "key": "linkedin_account_ids",
-          "kind": "array",
-          "required": false,
-          "description": "linkedin_account_ids"
-        },
-        {
-          "key": "mailbox_connection_ids",
-          "kind": "array",
-          "required": false,
-          "description": "mailbox_connection_ids"
-        },
-        {
-          "key": "ruleset_id",
-          "kind": "uuid",
-          "required": false,
-          "description": "ruleset_id"
-        },
-        {
-          "key": "cold_targeting_config",
-          "kind": "object",
-          "required": false,
-          "description": "cold_targeting_config"
-        },
-        {
-          "key": "linkedin_search_config",
-          "kind": "object",
-          "required": false,
-          "description": "linkedin_search_config"
+          "required": true
         }
       ],
       "input_schema": [
@@ -21310,48 +21266,6 @@
           "type": "string",
           "required": true,
           "description": "outreach_list_id"
-        },
-        {
-          "name": "graph_json",
-          "type": "object",
-          "required": false,
-          "description": "graph_json"
-        },
-        {
-          "name": "linkedin_account_id",
-          "type": "string",
-          "required": false,
-          "description": "linkedin_account_id"
-        },
-        {
-          "name": "linkedin_account_ids",
-          "type": "array",
-          "required": false,
-          "description": "linkedin_account_ids"
-        },
-        {
-          "name": "mailbox_connection_ids",
-          "type": "array",
-          "required": false,
-          "description": "mailbox_connection_ids"
-        },
-        {
-          "name": "ruleset_id",
-          "type": "string",
-          "required": false,
-          "description": "ruleset_id"
-        },
-        {
-          "name": "cold_targeting_config",
-          "type": "object",
-          "required": false,
-          "description": "cold_targeting_config"
-        },
-        {
-          "name": "linkedin_search_config",
-          "type": "object",
-          "required": false,
-          "description": "linkedin_search_config"
         }
       ],
       "output_manifest": "action",
@@ -21362,18 +21276,10 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/tables"
-      ],
-      "rest_operations": [
-        {
-          "method": "post",
-          "path": "/x/tables"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
         "outreach_create_campaign",
-        "canonical_outreach_create_campaign",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -21393,14 +21299,7 @@
         ],
         "inputs": [
           "name",
-          "outreach_list_id",
-          "graph_json",
-          "linkedin_account_id",
-          "linkedin_account_ids",
-          "mailbox_connection_ids",
-          "ruleset_id",
-          "cold_targeting_config",
-          "linkedin_search_config"
+          "outreach_list_id"
         ],
         "outputs": [
           "campaign_id",
@@ -22351,9 +22250,8 @@
       "required_inputs": [
         {
           "key": "campaign_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "kind": "uuid",
+          "required": true
         }
       ],
       "input_schema": [
@@ -22361,7 +22259,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "campaign_id"
         }
       ],
       "output_manifest": "structured",
@@ -22372,29 +22270,21 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/tables/{id}"
-      ],
-      "rest_operations": [
-        {
-          "method": "get",
-          "path": "/x/tables/{id}"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
-        "canonical_outreach_get_campaign",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
       ],
       "examples": [
-        "{\"intent\":\"outreach.get_campaign\",\"fields\":{}}"
+        "{\"intent\":\"outreach.get_campaign\",\"fields\":{\"campaign_id\":\"uuid\"}}"
       ],
       "search": {
         "aliases": [
           "outreach.get_campaign",
           "Outreach Get Campaign",
-          "{\"intent\":\"outreach.get_campaign\",\"fields\":{}}"
+          "{\"intent\":\"outreach.get_campaign\",\"fields\":{\"campaign_id\":\"uuid\"}}"
         ],
         "use_cases": [
           "Use when an agent needs to outreach get campaign from REST, MCP, or /v1/run."
@@ -22632,20 +22522,17 @@
         {
           "key": "limit",
           "kind": "integer",
-          "required": false,
-          "description": "limit"
+          "required": false
         },
         {
-          "key": "cursor",
-          "kind": "string",
-          "required": false,
-          "description": "cursor"
+          "key": "after",
+          "kind": "cursor",
+          "required": false
         },
         {
           "key": "status",
           "kind": "string",
-          "required": false,
-          "description": "status"
+          "required": false
         }
       ],
       "input_schema": [
@@ -22656,10 +22543,10 @@
           "description": "limit"
         },
         {
-          "name": "cursor",
-          "type": "string",
+          "name": "after",
+          "type": "cursor",
           "required": false,
-          "description": "cursor"
+          "description": "after"
         },
         {
           "name": "status",
@@ -22676,18 +22563,10 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/tables"
-      ],
-      "rest_operations": [
-        {
-          "method": "get",
-          "path": "/x/tables"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
         "outreach_campaigns",
-        "canonical_outreach_campaigns",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -22706,7 +22585,7 @@
         ],
         "inputs": [
           "limit",
-          "cursor",
+          "after",
           "status"
         ],
         "outputs": [
@@ -23416,7 +23295,7 @@
           "key": "campaign_id",
           "kind": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         },
         {
           "key": "node",
@@ -23442,7 +23321,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         },
         {
           "name": "node",
@@ -34798,7 +34677,7 @@
           "key": "campaign_id",
           "kind": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         },
         {
           "key": "step_id",
@@ -34824,7 +34703,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         },
         {
           "name": "step_id",
@@ -40489,7 +40368,7 @@
           "key": "campaign_id",
           "kind": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         }
       ],
       "input_schema": [
@@ -40497,7 +40376,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         }
       ],
       "output_manifest": "structured",
@@ -40584,7 +40463,7 @@
           "key": "campaign_id",
           "kind": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         },
         {
           "key": "step_id",
@@ -40604,7 +40483,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         },
         {
           "name": "step_id",
@@ -40706,7 +40585,7 @@
           "key": "campaign_id",
           "kind": "string",
           "required": false,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         }
       ],
       "input_schema": [
@@ -40714,7 +40593,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": false,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         }
       ],
       "output_manifest": "structured",
@@ -40798,7 +40677,7 @@
           "key": "campaign_id",
           "kind": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         }
       ],
       "input_schema": [
@@ -40806,7 +40685,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "Canonical identity for campaign_id."
         }
       ],
       "output_manifest": "structured",
@@ -40968,63 +40847,28 @@
       "required_inputs": [
         {
           "key": "campaign_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "kind": "uuid",
+          "required": true
         },
         {
-          "key": "key",
-          "kind": "string",
-          "required": true,
-          "description": "key"
+          "key": "column_type",
+          "kind": "source|email_find|phone_find|ai|formula|enrichment|waterfall|crm_lookup|merge_columns|assigned_to",
+          "required": true
         },
         {
           "key": "label",
           "kind": "string",
-          "required": true,
-          "description": "label"
+          "required": true
         },
         {
-          "key": "type",
-          "kind": "text|number|currency|date|url|email|image_url|checkbox|select|multi_select|assigned_to|message|ai|email_find|company_enrich|builtwith_tech|sumble_tech|blitz_enrich|predictleads_jobs|predictleads_news|predictleads_funding_enrich|http_request|scrape_url|serp_search|web_agent|web_search|web_search_deep|ai_answer|realtime_search|realtime_search_deep|fetch_page|local_business_search|place_details|keyword_research|serp_search_standard|serp_search_priority|phone_find|crm_lookup|waterfall|formula|merge_columns|enrichment|source",
-          "required": true,
-          "description": "type"
-        },
-        {
-          "key": "position",
-          "kind": "integer",
-          "required": false,
-          "description": "position"
-        },
-        {
-          "key": "draft_config_json",
-          "kind": "object",
-          "required": false,
-          "description": "draft_config_json"
-        },
-        {
-          "key": "published_config_json",
-          "kind": "object",
-          "required": false,
-          "description": "published_config_json"
-        },
-        {
-          "key": "run_if_json",
-          "kind": "object",
-          "required": false,
-          "description": "run_if_json"
-        },
-        {
-          "key": "run_mode",
-          "kind": "auto|on_demand",
-          "required": false,
-          "description": "run_mode"
-        },
-        {
-          "key": "client_draft_key",
+          "key": "key",
           "kind": "string",
-          "required": false,
-          "description": "client_draft_key"
+          "required": false
+        },
+        {
+          "key": "config",
+          "kind": "object",
+          "required": false
         }
       ],
       "input_schema": [
@@ -41032,13 +40876,13 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "campaign_id"
         },
         {
-          "name": "key",
-          "type": "string",
+          "name": "column_type",
+          "type": "source|email_find|phone_find|ai|formula|enrichment|waterfall|crm_lookup|merge_columns|assigned_to",
           "required": true,
-          "description": "key"
+          "description": "column_type"
         },
         {
           "name": "label",
@@ -41047,46 +40891,16 @@
           "description": "label"
         },
         {
-          "name": "type",
-          "type": "text|number|currency|date|url|email|image_url|checkbox|select|multi_select|assigned_to|message|ai|email_find|company_enrich|builtwith_tech|sumble_tech|blitz_enrich|predictleads_jobs|predictleads_news|predictleads_funding_enrich|http_request|scrape_url|serp_search|web_agent|web_search|web_search_deep|ai_answer|realtime_search|realtime_search_deep|fetch_page|local_business_search|place_details|keyword_research|serp_search_standard|serp_search_priority|phone_find|crm_lookup|waterfall|formula|merge_columns|enrichment|source",
-          "required": true,
-          "description": "type"
-        },
-        {
-          "name": "position",
-          "type": "integer",
-          "required": false,
-          "description": "position"
-        },
-        {
-          "name": "draft_config_json",
-          "type": "object",
-          "required": false,
-          "description": "draft_config_json"
-        },
-        {
-          "name": "published_config_json",
-          "type": "object",
-          "required": false,
-          "description": "published_config_json"
-        },
-        {
-          "name": "run_if_json",
-          "type": "object",
-          "required": false,
-          "description": "run_if_json"
-        },
-        {
-          "name": "run_mode",
-          "type": "auto|on_demand",
-          "required": false,
-          "description": "run_mode"
-        },
-        {
-          "name": "client_draft_key",
+          "name": "key",
           "type": "string",
           "required": false,
-          "description": "client_draft_key"
+          "description": "key"
+        },
+        {
+          "name": "config",
+          "type": "object",
+          "required": false,
+          "description": "config"
         }
       ],
       "output_manifest": "structured",
@@ -41097,18 +40911,10 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/columns"
-      ],
-      "rest_operations": [
-        {
-          "method": "post",
-          "path": "/x/columns"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
         "outreach_add_column",
-        "canonical_outreach_add_column",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -41127,15 +40933,10 @@
         ],
         "inputs": [
           "campaign_id",
-          "key",
+          "column_type",
           "label",
-          "type",
-          "position",
-          "draft_config_json",
-          "published_config_json",
-          "run_if_json",
-          "run_mode",
-          "client_draft_key"
+          "key",
+          "config"
         ],
         "outputs": [
           "column_id",
@@ -41274,15 +41075,13 @@
       "required_inputs": [
         {
           "key": "campaign_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "kind": "uuid",
+          "required": true
         },
         {
           "key": "column_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity for column_id."
+          "kind": "uuid",
+          "required": true
         }
       ],
       "input_schema": [
@@ -41290,13 +41089,13 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "campaign_id"
         },
         {
           "name": "column_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity for column_id."
+          "description": "column_id"
         }
       ],
       "output_manifest": "structured",
@@ -41307,18 +41106,10 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/columns/{id}"
-      ],
-      "rest_operations": [
-        {
-          "method": "delete",
-          "path": "/x/columns/{id}"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
         "outreach_delete_column",
-        "canonical_outreach_delete_column",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -41383,51 +41174,18 @@
       "required_inputs": [
         {
           "key": "campaign_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "kind": "uuid",
+          "required": true
         },
         {
           "key": "column_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity for column_id."
+          "kind": "uuid",
+          "required": true
         },
         {
-          "key": "label",
-          "kind": "string",
-          "required": false,
-          "description": "label"
-        },
-        {
-          "key": "description",
-          "kind": "string",
-          "required": false,
-          "description": "description"
-        },
-        {
-          "key": "color",
-          "kind": "string",
-          "required": false,
-          "description": "color"
-        },
-        {
-          "key": "hidden",
-          "kind": "boolean",
-          "required": false,
-          "description": "hidden"
-        },
-        {
-          "key": "pinned",
-          "kind": "boolean",
-          "required": false,
-          "description": "pinned"
-        },
-        {
-          "key": "position",
-          "kind": "integer",
-          "required": false,
-          "description": "position"
+          "key": "patch",
+          "kind": "object",
+          "required": true
         }
       ],
       "input_schema": [
@@ -41435,49 +41193,19 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "campaign_id"
         },
         {
           "name": "column_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity for column_id."
+          "description": "column_id"
         },
         {
-          "name": "label",
-          "type": "string",
-          "required": false,
-          "description": "label"
-        },
-        {
-          "name": "description",
-          "type": "string",
-          "required": false,
-          "description": "description"
-        },
-        {
-          "name": "color",
-          "type": "string",
-          "required": false,
-          "description": "color"
-        },
-        {
-          "name": "hidden",
-          "type": "boolean",
-          "required": false,
-          "description": "hidden"
-        },
-        {
-          "name": "pinned",
-          "type": "boolean",
-          "required": false,
-          "description": "pinned"
-        },
-        {
-          "name": "position",
-          "type": "integer",
-          "required": false,
-          "description": "position"
+          "name": "patch",
+          "type": "object",
+          "required": true,
+          "description": "patch"
         }
       ],
       "output_manifest": "structured",
@@ -41488,18 +41216,10 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/columns/{id}"
-      ],
-      "rest_operations": [
-        {
-          "method": "patch",
-          "path": "/x/columns/{id}"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
         "outreach_edit_column",
-        "canonical_outreach_edit_column",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -41519,12 +41239,7 @@
         "inputs": [
           "campaign_id",
           "column_id",
-          "label",
-          "description",
-          "color",
-          "hidden",
-          "pinned",
-          "position"
+          "patch"
         ],
         "outputs": [
           "column_id",
@@ -41570,21 +41285,18 @@
       "required_inputs": [
         {
           "key": "campaign_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "kind": "uuid",
+          "required": true
         },
         {
           "key": "limit",
           "kind": "integer",
-          "required": false,
-          "description": "limit"
+          "required": false
         },
         {
           "key": "cursor",
           "kind": "string",
-          "required": false,
-          "description": "cursor"
+          "required": false
         }
       ],
       "input_schema": [
@@ -41592,7 +41304,7 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "campaign_id"
         },
         {
           "name": "limit",
@@ -41615,18 +41327,10 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/columns"
-      ],
-      "rest_operations": [
-        {
-          "method": "get",
-          "path": "/x/columns"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
         "outreach_get_campaign_table",
-        "canonical_outreach_get_campaign_table",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -41699,33 +41403,28 @@
       "required_inputs": [
         {
           "key": "campaign_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "kind": "uuid",
+          "required": true
         },
         {
           "key": "column_id",
-          "kind": "string",
-          "required": true,
-          "description": "Canonical identity for column_id."
+          "kind": "uuid",
+          "required": true
         },
         {
           "key": "contact_ids",
-          "kind": "array",
-          "required": false,
-          "description": "contact_ids"
+          "kind": "uuid[]",
+          "required": false
         },
         {
           "key": "skip_existing",
           "kind": "boolean",
-          "required": false,
-          "description": "skip_existing"
+          "required": false
         },
         {
           "key": "max_rows",
           "kind": "integer",
-          "required": false,
-          "description": "max_rows"
+          "required": false
         }
       ],
       "input_schema": [
@@ -41733,17 +41432,17 @@
           "name": "campaign_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity. Accepted aliases: campaign_id, table_id."
+          "description": "campaign_id"
         },
         {
           "name": "column_id",
           "type": "string",
           "required": true,
-          "description": "Canonical identity for column_id."
+          "description": "column_id"
         },
         {
           "name": "contact_ids",
-          "type": "array",
+          "type": "uuid[]",
           "required": false,
           "description": "contact_ids"
         },
@@ -41768,17 +41467,9 @@
         "/run",
         "/outreach",
         "/tools/{id}",
-        "/tools/{id}/run",
-        "/x/columns/run"
-      ],
-      "rest_operations": [
-        {
-          "method": "post",
-          "path": "/x/columns/run"
-        }
+        "/tools/{id}/run"
       ],
       "mcp_tools": [
-        "canonical_outreach_run_column",
         "dreamstate_tools_get",
         "dreamstate_tools_run",
         "dreamstate_run"
@@ -92956,12 +92647,6 @@
       "billing_exempt": false
     },
     {
-      "name": "canonical_outreach_add_column",
-      "scope": "outreach:write",
-      "description": "Canonical write capability columns.add. Dispatches through outreach.table.add_column.",
-      "billing_exempt": false
-    },
-    {
       "name": "canonical_outreach_add_step",
       "scope": "outreach:write",
       "description": "Canonical write capability sequences.add_step. Dispatches through outreach.sequence.add_step.",
@@ -92998,12 +92683,6 @@
       "billing_exempt": false
     },
     {
-      "name": "canonical_outreach_campaigns",
-      "scope": "outreach:read",
-      "description": "Canonical read capability tables.list. Dispatches through outreach.list_campaigns.",
-      "billing_exempt": false
-    },
-    {
       "name": "canonical_outreach_cold_outbound_expand",
       "scope": "outreach:write",
       "description": "Canonical write capability sources.cold_outbound_expand. Dispatches through outreach.cold_outbound_expand.",
@@ -93016,27 +92695,9 @@
       "billing_exempt": false
     },
     {
-      "name": "canonical_outreach_create_campaign",
-      "scope": "outreach:write",
-      "description": "Canonical write capability tables.create. Dispatches through outreach.create_campaign.",
-      "billing_exempt": false
-    },
-    {
       "name": "canonical_outreach_create_list",
       "scope": "outreach:write",
       "description": "Canonical write capability lists.create. Dispatches through outreach.create_list.",
-      "billing_exempt": false
-    },
-    {
-      "name": "canonical_outreach_delete_column",
-      "scope": "outreach:write",
-      "description": "Canonical write capability columns.delete. Dispatches through outreach.table.delete_column.",
-      "billing_exempt": false
-    },
-    {
-      "name": "canonical_outreach_edit_column",
-      "scope": "outreach:write",
-      "description": "Canonical write capability columns.edit. Dispatches through outreach.table.edit_column.",
       "billing_exempt": false
     },
     {
@@ -93055,18 +92716,6 @@
       "name": "canonical_outreach_find_leads_job",
       "scope": "outreach:read",
       "description": "Canonical read capability runs.find_leads_get. Dispatches through outreach.find_leads.job.",
-      "billing_exempt": false
-    },
-    {
-      "name": "canonical_outreach_get_campaign",
-      "scope": "outreach:read",
-      "description": "Canonical read capability tables.get. Dispatches through outreach.get_campaign.",
-      "billing_exempt": false
-    },
-    {
-      "name": "canonical_outreach_get_campaign_table",
-      "scope": "outreach:read",
-      "description": "Canonical read capability columns.list. Dispatches through outreach.table.get.",
       "billing_exempt": false
     },
     {
@@ -93130,12 +92779,6 @@
       "billing_exempt": false
     },
     {
-      "name": "canonical_outreach_run_column",
-      "scope": "outreach:write",
-      "description": "Canonical write capability columns.run. Dispatches through outreach.table.run_column.",
-      "billing_exempt": false
-    },
-    {
       "name": "canonical_outreach_set_thread_status",
       "scope": "outreach:write",
       "description": "Canonical write capability context.thread_set_status. Dispatches through outreach.threads.set_status.",
@@ -93151,6 +92794,186 @@
       "name": "canonical_outreach_validate_sequence",
       "scope": "outreach:read",
       "description": "Canonical read capability sequences.validate. Dispatches through outreach.sequence.validate.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_cells_inspect",
+      "scope": "tables:read",
+      "description": "Canonical read capability cells.inspect. Dispatches through platform.cells.inspect.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_cells_settle",
+      "scope": "tables:write",
+      "description": "Canonical write capability cells.settle. Dispatches through platform.cells.settle.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_columns_add",
+      "scope": "tables:write",
+      "description": "Canonical write capability columns.add. Dispatches through platform.columns.add.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_columns_archive",
+      "scope": "tables:write",
+      "description": "Canonical write capability columns.archive. Dispatches through platform.columns.archive.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_columns_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability columns.list. Dispatches through platform.columns.list.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_columns_update",
+      "scope": "tables:write",
+      "description": "Canonical write capability columns.update. Dispatches through platform.columns.update.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_rows_delete",
+      "scope": "tables:write",
+      "description": "Canonical write capability rows.delete. Dispatches through platform.rows.delete.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_rows_get",
+      "scope": "tables:read",
+      "description": "Canonical read capability rows.get. Dispatches through platform.rows.get.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_rows_query",
+      "scope": "tables:read",
+      "description": "Canonical read capability rows.query. Dispatches through platform.rows.query.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_rows_restore",
+      "scope": "tables:write",
+      "description": "Canonical write capability rows.restore. Dispatches through platform.rows.restore.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_rows_upsert",
+      "scope": "tables:write",
+      "description": "Canonical write capability rows.upsert. Dispatches through platform.rows.upsert.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_selection_snapshots_create",
+      "scope": "tables:write",
+      "description": "Canonical write capability selection_snapshots.create. Dispatches through platform.selection_snapshots.create.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_selection_snapshots_get",
+      "scope": "tables:read",
+      "description": "Canonical read capability selection_snapshots.get. Dispatches through platform.selection_snapshots.get.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_runs_cancel",
+      "scope": "tables:write",
+      "description": "Canonical write capability table_runs.cancel. Dispatches through platform.table_runs.cancel.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_runs_get",
+      "scope": "tables:read",
+      "description": "Canonical read capability table_runs.get. Dispatches through platform.table_runs.get.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_runs_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability table_runs.list. Dispatches through platform.table_runs.list.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_sources_attach",
+      "scope": "tables:write",
+      "description": "Canonical write capability table_sources.attach. Dispatches through platform.table_sources.attach.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_sources_detach",
+      "scope": "tables:write",
+      "description": "Canonical write capability table_sources.detach. Dispatches through platform.table_sources.detach.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_sources_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability table_sources.list. Dispatches through platform.table_sources.list.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_table_sources_update",
+      "scope": "tables:write",
+      "description": "Canonical write capability table_sources.update. Dispatches through platform.table_sources.update.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_tables_archive",
+      "scope": "tables:write",
+      "description": "Canonical write capability tables.archive. Dispatches through platform.tables.archive.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_tables_create",
+      "scope": "tables:write",
+      "description": "Canonical write capability tables.create. Dispatches through platform.tables.create.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_tables_get",
+      "scope": "tables:read",
+      "description": "Canonical read capability tables.get. Dispatches through platform.tables.get.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_tables_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability tables.list. Dispatches through platform.tables.list.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_tables_update",
+      "scope": "tables:write",
+      "description": "Canonical write capability tables.update. Dispatches through platform.tables.update.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_views_archive",
+      "scope": "tables:write",
+      "description": "Canonical write capability views.archive. Dispatches through platform.views.archive.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_views_create",
+      "scope": "tables:write",
+      "description": "Canonical write capability views.create. Dispatches through platform.views.create.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_views_get",
+      "scope": "tables:read",
+      "description": "Canonical read capability views.get. Dispatches through platform.views.get.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_views_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability views.list. Dispatches through platform.views.list.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_views_update",
+      "scope": "tables:write",
+      "description": "Canonical write capability views.update. Dispatches through platform.views.update.",
       "billing_exempt": false
     },
     {
@@ -93745,6 +93568,6 @@
   "counts": {
     "capabilities": 227,
     "run_intents": 84,
-    "mcp_tools": 138
+    "mcp_tools": 160
   }
 }

@@ -65,7 +65,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "18403547a402ab26",
+  "verified_capability_hash": "bfcf20d09201fe0b",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/multichannel/SKILL.md",
   "install_command": "dreamstate skills install multichannel",
