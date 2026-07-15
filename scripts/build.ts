@@ -1,9 +1,11 @@
 #!/usr/bin/env -S npx tsx
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { SKILL_BLUEPRINTS, type SkillBlueprint } from '../src/skillBlueprints.ts';
+import { buildArchitectArtifacts } from './architect-build.ts';
+import { validateCapabilityManifestExport } from './sync-capability-manifest.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PLAYBOOKS_DIR = join(ROOT, 'playbooks');
@@ -12,7 +14,7 @@ type Meta = Record<string, string | string[]>;
 type ExecutionMode = 'executable' | 'guided-execution' | 'knowledge' | 'planned';
 type Maturity = 'stable' | 'beta' | 'experimental';
 interface CapabilityRecord { id: string; kind: string; run_intent: string | null; mcp_tools: string[]; required_scopes: string[] }
-interface CapabilityManifest { schema_version: number; definition_version: string; capability_hash: string; api_version: string; capabilities: CapabilityRecord[]; mcp_tools: Array<{ name: string; scope: string | null }> }
+interface CapabilityManifest { schema_version: number; definition_version: string; capability_hash: string; manifest_digest: string; api_version: string; capabilities: CapabilityRecord[]; mcp_tools: Array<{ name: string; scope: string | null }> }
 export interface SkillManifest {
   schema_version: 2; slug: string; name: string; short_description: string; domain: string; category: string;
   tags: string[]; execution_mode: ExecutionMode; maturity: Maturity; supported_clients: string[];
@@ -25,6 +27,11 @@ export interface SkillManifest {
 const VALID_CLIENTS = ['claude', 'cursor', 'codex', 'gemini', 'opencode'];
 const VALID_MODES: ExecutionMode[] = ['executable', 'guided-execution', 'knowledge', 'planned'];
 const VALID_MATURITY: Maturity[] = ['stable', 'beta', 'experimental'];
+const NON_DERIVING_ROUTER_TOOLS = new Set([
+  'dreamstate_tools_search',
+  'dreamstate_tools_get',
+  'dreamstate_tools_run',
+]);
 const DOMAIN_CATEGORY: Record<string, string> = {
   connect: 'Core', core: 'Core', developer: 'Core', outreach: 'Outreach', prospecting: 'Prospecting', signals: 'Signals',
   tables: 'Tables & enrichment', workflows: 'Workflows', messaging: 'Messaging', social: 'Content', content: 'Content',
@@ -61,7 +68,11 @@ function stripScalar(value: string): string { const trimmed = value.trim(); retu
 function strings(meta: Meta, key: string, fallback: string[] = []): string[] { const value = meta[key]; return Array.isArray(value) ? value : typeof value === 'string' && value ? [value] : fallback }
 function scalar(meta: Meta, key: string, fallback = ''): string { const value = meta[key]; return typeof value === 'string' ? value : fallback }
 function titleCase(slug: string): string { return slug.split('-').map((word) => `${word[0].toUpperCase()}${word.slice(1)}`).join(' ') }
-function loadCapabilityManifest(): CapabilityManifest { if (!existsSync(CAPABILITY_PATH)) throw new Error('contracts/capability-manifest.json is missing'); return JSON.parse(readFileSync(CAPABILITY_PATH, 'utf8')) as CapabilityManifest }
+export function loadCapabilityManifest(path = CAPABILITY_PATH): CapabilityManifest {
+  if (!existsSync(path)) throw new Error('contracts/capability-manifest.json is missing');
+  if (!lstatSync(path).isFile()) throw new Error('contracts/capability-manifest.json must be a regular file');
+  return validateCapabilityManifestExport(JSON.parse(readFileSync(path, 'utf8'))) as unknown as CapabilityManifest;
+}
 
 function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest, rank: number): SkillManifest {
   const { meta, body } = parseFrontmatter(readFileSync(join(PLAYBOOKS_DIR, file), 'utf8'), file);
@@ -76,7 +87,9 @@ function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest,
   const toolRegistry = new Map(capabilityManifest.mcp_tools.map((tool) => [tool.name, tool]));
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${file}: unknown MCP tool ${tool}`);
   if ((mode === 'executable' || mode === 'guided-execution') && tools.length === 0) throw new Error(`${file}: ${mode} skills require tools_used`);
-  const capabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool)));
+  const capabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some(
+    (tool) => tools.includes(tool) && !NON_DERIVING_ROUTER_TOOLS.has(tool),
+  ));
   const explicitCapabilities = strings(meta, 'capability_ids'); const knownIds = new Set(capabilityManifest.capabilities.map((capability) => capability.id));
   for (const id of explicitCapabilities) if (!knownIds.has(id)) throw new Error(`${file}: unknown capability ${id}`);
   const capabilityIds = [...new Set([...explicitCapabilities, ...capabilities.map((capability) => capability.id)])].sort();
@@ -192,10 +205,9 @@ function skillFromBlueprint(blueprint: SkillBlueprint, capabilityManifest: Capab
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${blueprint.slug}: unknown MCP tool ${tool}`);
   const knownCapabilities = new Map(capabilityManifest.capabilities.map((capability) => [capability.id, capability]));
   for (const id of contract.capabilityIds ?? []) if (!knownCapabilities.has(id)) throw new Error(`${blueprint.slug}: unknown capability ${id}`);
-  const broadRouterTools = new Set(['dreamstate_tools_run', 'dreamstate_tools_search', 'dreamstate_tools_get']);
   const capabilities = contract.capabilityIds
     ? contract.capabilityIds.map((id) => knownCapabilities.get(id) as CapabilityRecord)
-    : capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !broadRouterTools.has(tool)));
+    : capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !NON_DERIVING_ROUTER_TOOLS.has(tool)));
   return {
     schema_version: 2, slug: blueprint.slug, name: titleCase(blueprint.slug), short_description: blueprint.description,
     domain: blueprint.domain, category: DOMAIN_CATEGORY[blueprint.domain], tags: [blueprint.domain], execution_mode: contract.mode,
@@ -212,8 +224,8 @@ function skillFromBlueprint(blueprint: SkillBlueprint, capabilityManifest: Capab
 }
 function validateRelations(skills: SkillManifest[]): void { const slugs = new Set(skills.map((skill) => skill.slug)); if (slugs.size !== skills.length) throw new Error('duplicate skill slug'); for (const skill of skills) for (const related of skill.related_skills) if (!slugs.has(related)) throw new Error(`${skill.slug}: unknown related skill ${related}`) }
 
-export function build(): Record<string, string> {
-  const capabilityManifest = loadCapabilityManifest();
+export function build(options: { capabilityPath?: string } = {}): Record<string, string> {
+  const capabilityManifest = loadCapabilityManifest(options.capabilityPath);
   const authored = readdirSync(PLAYBOOKS_DIR).filter((file) => file.endsWith('.md')).sort().map((file, index) => skillFromPlaybook(file, capabilityManifest, index + 1));
   const authoredBySlug = new Map(authored.map((skill) => [skill.slug, skill]));
   const skills = SKILL_BLUEPRINTS.map((blueprint, index) => authoredBySlug.get(blueprint.slug) ?? skillFromBlueprint(blueprint, capabilityManifest, index + 1));
@@ -251,6 +263,7 @@ export function build(): Record<string, string> {
   artifacts['dist/mcp-prompts.json'] = `${JSON.stringify({ catalog_version: catalog.catalog_version, capability_hash: capabilityManifest.capability_hash, prompts }, null, 2)}\n`;
   artifacts['dist/dreamstate-prompts.generated.ts'] = `// GENERATED. Source: Dreamstate-Skills playbooks and runtime capability manifest.\nexport interface DreamstatePrompt { name: string; title: string; description: string; requiredScopes: string[]; executionMode: string; body: string }\nexport const DREAMSTATE_SKILLS_CAPABILITY_HASH = ${JSON.stringify(capabilityManifest.capability_hash)};\nexport const DREAMSTATE_PROMPTS: DreamstatePrompt[] = ${JSON.stringify(prompts.map((prompt) => ({ name: prompt.name, title: prompt.title, description: prompt.description, requiredScopes: prompt.required_scopes, executionMode: prompt.execution_mode, body: prompt.body })), null, 2)};\n`;
   artifacts['generated/catalog.sha256'] = `${createHash('sha256').update(JSON.stringify(catalog)).digest('hex')}\n`;
+  Object.assign(artifacts, buildArchitectArtifacts(capabilityManifest));
   return artifacts;
 }
 export function writeArtifacts(artifacts: Record<string, string>): number { for (const directory of OWNED) if (existsSync(join(ROOT, directory))) rmSync(join(ROOT, directory), { recursive: true, force: true }); for (const file of OWNED_FILES) if (existsSync(join(ROOT, file))) rmSync(join(ROOT, file), { force: true }); for (const [relative, content] of Object.entries(artifacts)) { const path = join(ROOT, relative); mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, content) } return Object.keys(artifacts).length }

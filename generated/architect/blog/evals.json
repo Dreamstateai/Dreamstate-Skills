@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["blog"],
+      "id": "grounded-blog-draft",
+      "request": "Draft a cited blog article in our voice and put it into editorial review."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "blog"
+}

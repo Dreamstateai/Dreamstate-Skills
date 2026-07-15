@@ -17,12 +17,12 @@
   "requires_skills": [
     "setup"
   ],
-  "description": "Validate sequence graph structure, templates, variables, limits, and eligible sender accounts.",
+  "description": "Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.",
   "domain": "outreach",
   "execution_mode": "knowledge",
   "maturity": "beta",
   "tools_used": [],
   "required_scopes": [],
-  "capability_hash": "4d027b564e10a434",
+  "capability_hash": "f195bb71cf76a615",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

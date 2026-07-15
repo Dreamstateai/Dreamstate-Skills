@@ -1,17 +1,14 @@
 ---
 name: multichannel
-description: "Run a combined LinkedIn + content motion against one audience through Dreamstate: warm the target list with social/blog content while a LinkedIn sequence reaches them directly, so prospects see the brand in more than one place. Use whenever the user wants multi-channel outreach, to 'warm up' an audience before DMing, to coordinate content with outbound, or an account-based play. Orchestrates the outreach and content engines together; you cannot post or send yourself."
+description: "Design a governed LinkedIn plus social content motion from scratch around one audience through Dreamstate. Use whenever the user wants multichannel outreach, audience warming, coordinated content and outbound, or an account-based play. It grounds both motions in shared context, proposes custom structures through the unified proposal lifecycle, and keeps publishing and campaign activation as explicit separate approvals."
 ---
 
 # Multichannel
 
-People respond when a brand shows up in more than one place. This skill coordinates two of
-Dreamstate's engines against the same audience: a direct LinkedIn sequence, plus a run of
-content that makes the brand familiar before and during the outreach. It is a thin
-orchestration over two deeper playbooks, so lean on them.
-
-Run `/connect` first if unsure. You need a healthy LinkedIn account (and an X account if
-you want content there too).
+Coordinate a direct LinkedIn sequence and a social content calendar against one shared
+audience and evidence base. Never select, clone, or apply a campaign template or preset.
+Those shortcuts belong only to the manual human product UI and are outside this agent
+skill. Build both motions from the user's requirements and exact live contracts.
 
 ## How it fits together
 
@@ -28,41 +25,43 @@ you want content there too).
 
 ## Step 1: One audience, two motions
 
-Define the ICP once with the user (see `/outbound` Step 0). Both motions target the same
-people, so the ICP is shared. Source and enrich the list: `outreach_create_list` ->
-`outreach_find_leads` (with a healthy `account_id`) -> `outreach_enrich_contact`.
+Query only workspace-authorized Company Brain and context records with citations. Inspect
+existing campaign, table, workflow, sequence, calendar, connected accounts, and revisions.
+Define the ICP, exclusions, themes, voice, channels, sender, schedule, volume, and success
+criteria once. Ask one structured popup for only the material choices that context cannot
+answer.
 
 ## Step 2: Direct motion (LinkedIn sequence)
 
-Run the core of `/outbound`: `outreach_create_campaign` -> `outreach_apply_template`
--> build and validate the sequence -> `outreach_enroll` -> `outreach_activate_campaign`. If
-the full outbound skill is installed, defer to it for the sequence detail rather than
-duplicating steps here.
+Load `/outbound` and `/sequence-builder`. Discover exact contracts, run bounded source and
+column evidence stages, and propose a custom draft list, table, workflow, campaign, and
+sequence. Keep sources, enrichments, formulas, AI generations, and actions distinct. This
+draft proposal does not enroll, activate, or send.
 
 ## Step 3: Ambient motion (content)
 
-Schedule a short run of content timed to overlap the sequence, so the audience sees the
-brand while the DMs land. Generate posts with `content_generate_post` on the themes that
-matter to this ICP, then `content_schedule_post` across the campaign window (get account
-ids from `content_list_accounts`). Defer to `/social-calendar` for the drafting/scheduling
-detail if it is installed.
+Load the social calendar specialist for LinkedIn and X, plus Reddit research when relevant
+to the requested audience or topic. Ground drafts in cited knowledge graph context and
+platform-specific evidence. Propose concrete draft copy, account bindings, schedule slots,
+and calendar revisions. Draft creation and scheduling/publishing are separate consequences;
+never treat content approval as outreach activation.
 
 Keep the content about the prospect's problem, not a pitch. The point is familiarity, so
 the DM feels like it is from a brand they have already seen, not a cold stranger.
 
 ## Step 4: Read it as one motion
 
-Use `outreach_analytics` to track reply and acceptance rate over the campaign window.
-Multichannel pays off when the warmed audience replies at a higher rate than a cold-only
-baseline; if the user ran cold before, compare. Attribute carefully: the content lifts the
-outreach, so judge them together, not in isolation.
+Create separate revision-bound proposals for each consequence: draft structure, bounded
+paid samples, bulk expansion, content scheduling or publishing, and final outreach
+activation. Present exact diffs, costs, accounts, audiences, and external effects. Mutate
+only after explicit approval and follow every returned run to terminal truth. Use exact
+analytics read contracts and label correlation versus attribution honestly.
 
 ## Note on channels
 
-Today Dreamstate's send channels here are LinkedIn (sequence) and social/blog content. If
-the user asks for cold email specifically, check which sending channels their workspace has
-enabled via `/connect`; route email through whatever email campaign capability is exposed
-there rather than assuming it exists.
+Never assume a connected or permitted channel. Use live readiness and sender/account
+contracts. Stop the affected proposal when a capability, scope, sender, budget, or current
+revision is unavailable; preserve completed stages and provide the smallest safe recovery.
 
 ## Package resources
 

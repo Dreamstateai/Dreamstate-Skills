@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["growth-asset-planner"],
+      "id": "unsaved-asset-proposal",
+      "must_state_unsaved_without_capability": true,
+      "request": "Create a downloadable ICP audit checklist for our buyers."
+    },
+    {
+      "expected_skill_ids": ["blog"],
+      "id": "blog-is-not-growth-asset",
+      "must_not_load": ["growth-asset-planner"],
+      "request": "Draft a blog article and send it to editorial review."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "growth-asset-planner"
+}

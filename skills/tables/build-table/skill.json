@@ -42,7 +42,6 @@
     "column:keyword_research",
     "column:local_business_search",
     "column:merge_columns",
-    "column:message",
     "column:multi_select",
     "column:number",
     "column:phone_find",
@@ -80,7 +79,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "4d027b564e10a434",
+  "verified_capability_hash": "f195bb71cf76a615",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/build-table/SKILL.md",
   "install_command": "dreamstate skills install build-table",

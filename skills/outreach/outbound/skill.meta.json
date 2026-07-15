@@ -15,38 +15,22 @@
   "requires_skills": [
     "setup"
   ],
-  "description": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.",
+  "description": "Design a governed LinkedIn outbound campaign from scratch through Dreamstate: ground the ICP, propose source and table work, build a custom sequence, stage bounded evidence runs, and launch only after explicit approval. Use whenever the user wants cold outreach, a lead list, a new campaign, demos, or pipeline. This orchestrator uses the same revision-bound proposal and durable-run lifecycle as Architect, Claude, and Codex.",
   "domain": "outreach",
   "execution_mode": "executable",
   "maturity": "stable",
   "tools_used": [
-    "outreach_find_leads",
-    "outreach_create_list",
-    "outreach_lists",
-    "outreach_list_contacts",
-    "outreach_get_contact",
-    "outreach_enrich_contact",
-    "outreach_get_campaign_table",
-    "outreach_add_column",
-    "outreach_set_cell",
-    "outreach_create_campaign",
-    "outreach_apply_template",
-    "outreach_get_sequence",
-    "outreach_get_step_options",
-    "outreach_add_step",
-    "outreach_validate_sequence",
-    "outreach_draft_message",
-    "outreach_enroll",
-    "outreach_activate_campaign",
-    "content_list_accounts",
-    "outreach_analytics"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_proposals_create",
+    "dreamstate_proposals_get",
+    "dreamstate_proposals_mutate",
+    "dreamstate_get_run",
+    "dreamstate_list_runs"
   ],
   "required_scopes": [
-    "actions",
-    "content:read",
-    "outreach:read",
-    "outreach:write"
+    "outreach:read"
   ],
-  "capability_hash": "4d027b564e10a434",
+  "capability_hash": "f195bb71cf76a615",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

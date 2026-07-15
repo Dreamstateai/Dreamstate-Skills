@@ -2,7 +2,7 @@
   "schema_version": 2,
   "slug": "validate-sequence",
   "name": "Validate Sequence",
-  "short_description": "Validate sequence graph structure, templates, variables, limits, and eligible sender accounts.",
+  "short_description": "Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.",
   "domain": "outreach",
   "category": "Outreach",
   "tags": [
@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "4d027b564e10a434",
+  "verified_capability_hash": "f195bb71cf76a615",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/validate-sequence/SKILL.md",
   "install_command": "dreamstate skills install validate-sequence",

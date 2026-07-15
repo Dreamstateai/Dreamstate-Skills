@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["visibility"],
+      "id": "citation-audit",
+      "request": "Audit whether AI assistants cite us for our core buyer questions and show the evidence gaps."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "visibility"
+}

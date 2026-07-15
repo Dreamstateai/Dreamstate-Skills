@@ -2,7 +2,7 @@
   "schema_version": 2,
   "slug": "sequence-builder",
   "name": "Sequence Builder",
-  "short_description": "Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch.",
+  "short_description": "Design a custom multi-step LinkedIn sequence from scratch for a Dreamstate campaign: connection rules, waits, DMs, branches, variables, and reply stops in a validated graph. Use whenever the user wants to build a sequence, design a cadence, define follow-up, or revise an existing graph. It creates one governed, revision-bound proposal and never enrolls, activates, or sends.",
   "domain": "outreach",
   "category": "Outreach",
   "tags": [
@@ -20,46 +20,23 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:outreach.apply_template",
-    "intent:outreach.create_campaign",
-    "intent:outreach.list_campaigns",
-    "intent:outreach.sequence.add_step",
-    "intent:outreach.sequence.edit_step",
-    "intent:outreach.sequence.get",
-    "intent:outreach.sequence.remove_step",
-    "intent:outreach.sequence.validate",
-    "intent:outreach.signals.list"
+    "resource:runs"
   ],
   "mcp_tools": [
-    "outreach_campaigns",
-    "outreach_create_campaign",
-    "outreach_apply_template",
-    "outreach_get_step_options",
-    "outreach_get_sequence",
-    "outreach_add_step",
-    "outreach_edit_step",
-    "outreach_remove_step",
-    "outreach_validate_sequence",
-    "outreach_list_signal_types"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_proposals_create",
+    "dreamstate_proposals_get",
+    "dreamstate_proposals_mutate",
+    "dreamstate_get_run"
   ],
-  "run_intents": [
-    "outreach.apply_template",
-    "outreach.create_campaign",
-    "outreach.list_campaigns",
-    "outreach.sequence.add_step",
-    "outreach.sequence.edit_step",
-    "outreach.sequence.get",
-    "outreach.sequence.remove_step",
-    "outreach.sequence.validate",
-    "outreach.signals.list"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
-    "outreach:read",
-    "outreach:write"
+    "outreach:read"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "4d027b564e10a434",
+  "verified_capability_hash": "f195bb71cf76a615",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/sequence-builder/SKILL.md",
   "install_command": "dreamstate skills install sequence-builder",

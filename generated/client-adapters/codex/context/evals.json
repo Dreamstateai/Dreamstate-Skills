@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["context"],
+      "id": "targeted-context-read",
+      "request": "Read the published positioning claim and evidence we should use for this campaign."
+    },
+    {
+      "expected_skill_ids": ["context"],
+      "id": "revisioned-memory-proposal",
+      "request": "Propose an update to our ICP based on this cited customer evidence."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "context"
+}

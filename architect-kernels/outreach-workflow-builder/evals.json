@@ -1,0 +1,23 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["outreach-workflow-builder"],
+      "id": "priority-branch-and-actions",
+      "request": "Build a workflow that branches on the priority column, enriches qualified rows, and stops before outreach when required evidence is missing."
+    },
+    {
+      "expected_skill_ids": ["outreach-workflow-builder"],
+      "id": "no-message-workflow",
+      "must_not_load": ["outreach-sequence-writer"],
+      "request": "Create a qualification-only workflow with no messaging."
+    },
+    {
+      "expected_skill_ids": ["outreach-workflow-builder"],
+      "id": "exact-result-set-expansion-is-separate",
+      "required_concepts": ["intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "stage_exact_result_set", "still-inactive", "separate proposal"],
+      "request": "After the source and priority samples are reviewed, import and enroll the capped resolved result set. Explain how workflow persistence, bulk expansion, and activation remain separate."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "outreach-workflow-builder"
+}

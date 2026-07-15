@@ -17,6 +17,7 @@ import { copySkillPackage } from './skill-copy.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const INDEX_PATH = join(ROOT, 'skills-index.json');
+const CLIENT_ADAPTER_RELEASE_PATH = join(ROOT, 'generated', 'client-adapters', 'RELEASE.json');
 
 interface IndexedSkill {
   slug: string;
@@ -40,6 +41,10 @@ interface ParsedArgs {
   subcommand: string | null;
   bundle: string | null;
 }
+
+const GOVERNED_ADAPTER_CLIENTS = new Set(['claude', 'codex']);
+const SAFE_GENERIC_EXECUTION_MODES = new Set(['knowledge', 'planned']);
+const UNSAFE_GENERIC_EXECUTION_MODES = new Set(['executable', 'guided-execution']);
 
 function parseArgs(argv: string[]): ParsedArgs {
   const raw = argv.slice(2);
@@ -74,6 +79,36 @@ function loadSkills(): IndexedSkill[] {
   return index.skills;
 }
 
+function loadClientAdapterSkills(agent: string): IndexedSkill[] {
+  if (agent !== 'claude' && agent !== 'codex') return [];
+  if (!existsSync(CLIENT_ADAPTER_RELEASE_PATH)) {
+    throw new Error('generated client adapter release is missing. Run `npm run build` first (maintainers) or reinstall the package.');
+  }
+  const release = JSON.parse(readFileSync(CLIENT_ADAPTER_RELEASE_PATH, 'utf8')) as {
+    skills?: Record<string, { capability_domains?: unknown }>;
+  };
+  if (!release.skills || typeof release.skills !== 'object' || Array.isArray(release.skills)) {
+    throw new Error('generated client adapter release has no skills map');
+  }
+  return Object.entries(release.skills).sort(([left], [right]) => left.localeCompare(right)).map(([slug, skill]) => {
+    const domains = skill.capability_domains;
+    if (!Array.isArray(domains) || domains.some((domain) => typeof domain !== 'string')) {
+      throw new Error(`generated client adapter ${slug} has invalid capability domains`);
+    }
+    const path = `generated/client-adapters/${agent}/${slug}`;
+    for (const file of ['SKILL.md', 'KERNEL.md', 'evals.json']) {
+      if (!existsSync(join(ROOT, path, file))) throw new Error(`generated client adapter ${slug} is missing ${file}`);
+    }
+    return {
+      slug,
+      domain: domains[0],
+      path,
+      name: slug,
+      execution_mode: 'governed-adapter',
+    };
+  });
+}
+
 function printSkills(skills: IndexedSkill[]): void {
   for (const skill of skills) {
     const mode = skill.execution_mode ? ` · ${skill.execution_mode}` : '';
@@ -94,6 +129,10 @@ async function main(): Promise<void> {
 
   let skills: IndexedSkill[];
   try { skills = loadSkills(); } catch (error) { console.error(pc.red(`  ${(error as Error).message}`)); process.exit(1); }
+  // Keep the complete catalog as the cleanup authority. Bundle and slug
+  // filtering must never hide an old direct-action package from a governed
+  // Claude/Codex install or update.
+  const allIndexedSkills = skills;
 
   if (cmd === 'skills' && subcommand === 'list') {
     printSkills(skills);
@@ -127,13 +166,6 @@ async function main(): Promise<void> {
   if (cmd !== 'install' && !(cmd === 'skills' && ['install', 'update'].includes(subcommand || ''))) {
     console.log(pc.dim(`  unknown command "${cmd}". Try: `) + pc.bold('dreamstate skills install') + '\n');
     process.exit(1);
-  }
-  if (slug) {
-    skills = skills.filter((s) => s.slug === slug);
-    if (skills.length === 0) {
-      console.error(pc.red(`  no skill named "${slug}". Run \`npx dreamstate-skills install\` to install all.`));
-      process.exit(1);
-    }
   }
   if (bundle) {
     const domains: Record<string, string[]> = {
@@ -176,6 +208,68 @@ async function main(): Promise<void> {
   if (!client) {
     console.error(pc.red(`  unknown agent "${agent}". Use --claude, --cursor, or --codex.`));
     process.exit(1);
+  }
+
+  const governedClient = GOVERNED_ADAPTER_CLIENTS.has(agent);
+  const unsafeGenericSlugs = governedClient
+    ? allIndexedSkills
+      .filter((skill) => UNSAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''))
+      .map((skill) => skill.slug)
+    : [];
+  const unsafeRequestedGeneric = slug && governedClient
+    ? allIndexedSkills.find((skill) => (
+      skill.slug === slug && UNSAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? '')
+    ))
+    : undefined;
+
+  // Safety cleanup is the first governed-client mutation. It deliberately runs
+  // before adapter validation, request refusal, MCP config writes, and copying,
+  // so even a failed/refused governed invocation cannot leave known generic
+  // executable or guided packages active. Unrelated custom skills are untouched.
+  if (governedClient) {
+    try {
+      mkdirSync(client.skillsDir, { recursive: true });
+      for (const unsafeSlug of unsafeGenericSlugs) {
+        rmSync(join(client.skillsDir, unsafeSlug), { recursive: true, force: true });
+      }
+    } catch (error) {
+      console.error(pc.red(`  failed to remove unsafe generic skills: ${(error as Error).message}`));
+      process.exit(1);
+    }
+  }
+
+  let adapterSkills: IndexedSkill[];
+  try {
+    adapterSkills = loadClientAdapterSkills(agent);
+  } catch (error) {
+    console.error(pc.red(`  ${(error as Error).message}`));
+    process.exit(1);
+  }
+  if (governedClient) {
+    skills = skills.filter((skill) => SAFE_GENERIC_EXECUTION_MODES.has(skill.execution_mode ?? ''));
+  }
+  if (slug) {
+    skills = [...skills.filter((skill) => skill.slug === slug), ...adapterSkills.filter((skill) => skill.slug === slug)];
+    if (skills.length === 0) {
+      if (unsafeRequestedGeneric) {
+        console.error(pc.red(`  skill "${slug}" is not available as a direct generic package for governed ${client.label} installs. Use a generated governed adapter instead.`));
+        process.exit(1);
+      }
+      console.error(pc.red(`  no skill named "${slug}" for ${client.label}. Run \`npx dreamstate-skills install\` to install all.`));
+      process.exit(1);
+    }
+  } else {
+    if (bundle && bundle !== 'all') {
+      const adapterDomains: Record<string, string[]> = {
+        developer: [],
+        outbound: ['outreach'],
+        content: ['content'],
+        seo: ['visibility'],
+      };
+      const allowed = adapterDomains[bundle] ?? [];
+      adapterSkills = adapterSkills.filter((skill) => allowed.includes(skill.domain ?? ''));
+    }
+    skills = [...skills, ...adapterSkills];
   }
 
   const s = p.spinner();

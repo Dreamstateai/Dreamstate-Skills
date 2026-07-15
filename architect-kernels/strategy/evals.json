@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["strategy"],
+      "id": "channel-strategy",
+      "request": "Revise our ICP and decide the roles of content, community, and outbound."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "strategy"
+}

@@ -1,13 +1,13 @@
 ---
 name: validate-sequence
-description: "Validate sequence graph structure, templates, variables, limits, and eligible sender accounts."
+description: "Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts."
 ---
 
 # Validate Sequence
 
 ## Outcome
 
-Validate sequence graph structure, templates, variables, limits, and eligible sender accounts.
+Validate custom sequence graph structure, steps, variables, limits, and eligible sender accounts.
 
 ## When to use
 

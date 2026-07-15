@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["weekly-growth-plan"],
+      "id": "cross-channel-week",
+      "must_not_execute": true,
+      "request": "Plan my week across LinkedIn, Reddit, SEO, and outbound."
+    },
+    {
+      "expected_skill_ids": ["social"],
+      "id": "social-calendar-not-weekly-plan",
+      "must_not_load": ["weekly-growth-plan"],
+      "request": "Put five authored posts onto next week's social calendar."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "weekly-growth-plan"
+}

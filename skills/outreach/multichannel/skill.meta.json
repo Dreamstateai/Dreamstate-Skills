@@ -15,30 +15,25 @@
   "requires_skills": [
     "setup"
   ],
-  "description": "Run a combined LinkedIn + content motion against one audience through Dreamstate: warm the target list with social/blog content while a LinkedIn sequence reaches them directly, so prospects see the brand in more than one place. Use whenever the user wants multi-channel outreach, to 'warm up' an audience before DMing, to coordinate content with outbound, or an account-based play. Orchestrates the outreach and content engines together; you cannot post or send yourself.",
+  "description": "Design a governed LinkedIn plus social content motion from scratch around one audience through Dreamstate. Use whenever the user wants multichannel outreach, audience warming, coordinated content and outbound, or an account-based play. It grounds both motions in shared context, proposes custom structures through the unified proposal lifecycle, and keeps publishing and campaign activation as explicit separate approvals.",
   "domain": "outreach",
   "execution_mode": "executable",
   "maturity": "stable",
   "tools_used": [
-    "outreach_create_list",
-    "outreach_find_leads",
-    "outreach_enrich_contact",
-    "outreach_create_campaign",
-    "outreach_apply_template",
-    "outreach_enroll",
-    "outreach_activate_campaign",
-    "content_generate_post",
-    "content_schedule_post",
-    "content_list_accounts",
-    "outreach_analytics"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_proposals_create",
+    "dreamstate_proposals_get",
+    "dreamstate_proposals_mutate",
+    "dreamstate_get_run",
+    "dreamstate_list_runs",
+    "dreamstate_brain_query",
+    "dreamstate_context_query"
   ],
   "required_scopes": [
-    "actions",
     "content:read",
-    "content:write",
-    "outreach:read",
-    "outreach:write"
+    "outreach:read"
   ],
-  "capability_hash": "4d027b564e10a434",
+  "capability_hash": "f195bb71cf76a615",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }
