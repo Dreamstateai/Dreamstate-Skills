@@ -3,6 +3,7 @@
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
   "capability_hash": "f195bb71cf76a615",
+  "manifest_digest": "10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412",
   "api_version": "v1",
   "capabilities": [
     {

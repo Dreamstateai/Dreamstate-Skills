@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { build, writeArtifacts, checkArtifacts } from '../scripts/build.js';
+import { buildArchitectArtifacts } from '../scripts/architect-build.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
@@ -105,11 +106,22 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   assert.equal(ids.length, 14);
   for (const id of ids) {
     const architectRoot = `generated/architect/${id}`;
+    const architect = artifacts[`${architectRoot}/SKILL.md`];
     const exactArchitectFiles = Object.keys(artifacts)
       .filter((path) => path.startsWith(`${architectRoot}/`))
       .map((path) => path.slice(architectRoot.length + 1))
       .sort();
     assert.deepEqual(exactArchitectFiles, ['KERNEL.md', 'SKILL.md', 'evals.json']);
+    assert.match(architect, /mutation_compatibility:/);
+    assert.match(architect, /mismatch_behavior: deny_run/);
+    assert.match(
+      architect,
+      /denied_operations: \[tools_run, propose_artifact, request_approval\]/,
+    );
+    assert.match(architect, /Never use `tools_run` for direct mutating or paid work/);
+    assert.match(architect, /`propose_artifact`/);
+    assert.match(architect, /`request_approval`/);
+    assert.match(architect, /Refuse `tools_run` until the installed package is refreshed/);
     for (const client of ['claude', 'codex']) {
       const clientRoot = `generated/client-adapters/${client}/${id}`;
       const standalone = artifacts[`${clientRoot}/SKILL.md`];
@@ -149,6 +161,17 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       /bounded structured partial outputs plus the exact next transition/,
     );
   }
+});
+
+test('Architect generation rejects capability domains absent from the pinned registry', () => {
+  const withoutOutreach = {
+    ...catalog,
+    capabilities: catalog.capabilities.filter((capability: { domain: string }) => capability.domain !== 'outreach'),
+  };
+  assert.throws(
+    () => buildArchitectArtifacts(withoutOutreach),
+    /outreach.*capability domain.*pinned capability manifest/i,
+  );
 });
 
 test('signed capability domains stay identical across source, Architect, Claude, Codex, and release manifests', () => {

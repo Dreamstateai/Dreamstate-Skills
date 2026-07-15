@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import test from 'node:test';
@@ -20,6 +20,26 @@ test('copies a complete nested skill package', () => {
     assert.equal(readFileSync(join(destination, 'references', 'guide.md'), 'utf8'), '# Guide\n');
     assert.equal(readFileSync(join(destination, 'examples', 'example.md'), 'utf8'), '# Example\n');
     assert.equal(readFileSync(join(destination, 'evals', 'contract.json'), 'utf8'), '{}\n');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('replaces a prior package exactly so generic files cannot survive an adapter install', () => {
+  const root = mkdtempSync(join(tmpdir(), 'dreamstate-skill-replace-'));
+  try {
+    const source = join(root, 'source');
+    const destination = join(root, 'installed');
+    mkdirSync(source);
+    mkdirSync(join(destination, 'references'), { recursive: true });
+    writeFileSync(join(source, 'SKILL.md'), '# Hardened adapter\n');
+    writeFileSync(join(destination, 'SKILL.md'), '# Generic skill\n');
+    writeFileSync(join(destination, 'references', 'stale.md'), '# Stale\n');
+
+    copySkillPackage(source, destination);
+
+    assert.equal(readFileSync(join(destination, 'SKILL.md'), 'utf8'), '# Hardened adapter\n');
+    assert.equal(existsSync(join(destination, 'references')), false);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
