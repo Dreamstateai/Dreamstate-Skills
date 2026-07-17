@@ -5,7 +5,7 @@ description: "Design a buyer-facing resource and its evidence, structure, CTA, d
 capability_domains: []
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  playbook_kernel_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8a2ae331c5d173e2
@@ -13,7 +13,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  source_release_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   generator_version: 1.0.0
   client: claude
   kernel_id: growth-asset-planner
@@ -21,7 +21,7 @@ generated:
   kernel_sha256: 5499e4fa692558dd4a98019503d0c1afa9e2e5731be5be8de80529301c8c75fc
   adapter_sha256: e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a
   evals_file: evals.json
-  evals_sha256: b5262f87fae233774f0674d21465bdb519ac89f856be7e8d5085fcb5042c10d4
+  evals_sha256: e6b08884e735b77c6da39c1d8fcd1530b430d51589ba1b3ac2b6ed3c71bb56e5
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

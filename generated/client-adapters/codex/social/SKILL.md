@@ -5,7 +5,7 @@ description: "Coordinate authored LinkedIn, X, and Reddit content across drafts,
 capability_domains: ["content"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  playbook_kernel_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8a2ae331c5d173e2
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  source_release_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   generator_version: 1.0.0
   client: codex
   kernel_id: social
   kernel_file: KERNEL.md
-  kernel_sha256: 0123783b1600e54ccb1cd5e11f470d21ec50d910c3695b1eaea1ff71208b4829
+  kernel_sha256: cfa32739aeff1d47b8b3265b9c5cedf5a9bfe0274c17efcbe5161d0ca36d207b
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: 779ba4bb852e8c9223ebd2ff90fc1c3be5faa699d1baf4d5b3b3c217a8f3a498
+  evals_sha256: 37f95f120febd4f47c82baa8b209c68ed844d4bca2dd0721211ff8a8f2764471
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

@@ -5,7 +5,7 @@ description: "Design custom channel steps, cadence, sender constraints, variable
 capability_domains: ["outreach"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  playbook_kernel_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8a2ae331c5d173e2
@@ -13,7 +13,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  source_release_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach-sequence-writer
@@ -21,7 +21,7 @@ generated:
   kernel_sha256: 0a39baebc155179c43473607b0c868618e60bc8ded8be812c84e67efbf63137a
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: a68dfa561e3681d855aa5276aad108134dba52522965d0eafe0218f32b56b9b3
+  evals_sha256: 8e26c9095dc3cab593d4fc3d308be91bf15d72093c01e76d46a2c1ad7152f562
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

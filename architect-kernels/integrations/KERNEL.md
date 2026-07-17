@@ -7,4 +7,3 @@ Inspect live readiness through structured search/get for the exact intended oper
 When connection is required, use only the backend-authorized connection or settings link returned by the live contract. Explain the minimum scope and consequence without exposing secret material. Stop the blocked mutation and record a bounded resume checkpoint. On resume, re-fetch readiness and the original operation contract rather than assuming the connection succeeded.
 
 Report current readiness, exact blocker, safe user action, canonical link, and what will resume afterward. A displayed connection card is not a successful connection, and a successful connection does not authorize the original mutation by itself.
-

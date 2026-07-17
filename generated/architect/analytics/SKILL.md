@@ -8,7 +8,7 @@ capability_domains: []
 max_context_tokens: 3000
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  playbook_kernel_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8a2ae331c5d173e2
@@ -16,14 +16,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  source_release_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   generator_version: 1.0.0
   kernel_id: analytics
   kernel_file: KERNEL.md
-  kernel_sha256: ceb0343e4d4642f58bdc28f3cb0f926ef76db00cf6756ae1245a170fb2a445d8
+  kernel_sha256: f2db66bc68dcaddc41c4c176e288539d1345178f42e98c35cd5892ec7b2ea49c
   adapter_sha256: 323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689
   evals_file: evals.json
-  evals_sha256: bdcc2ce952feafcd7b0d68aff752cb20ffe293a0a68b0e2985c9d6b656d8f2dc
+  evals_sha256: 1192535f1842d0a81e773435e0fe0404842d579ae8feb6983175627dd6a3b7ff
 ---
 
 # Architect surface adapter

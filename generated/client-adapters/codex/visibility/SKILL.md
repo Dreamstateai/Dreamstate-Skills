@@ -5,7 +5,7 @@ description: "Run and interpret AI-answer visibility audits with real citations,
 capability_domains: ["visibility"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  playbook_kernel_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8a2ae331c5d173e2
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.3.0
-  source_release_hash: 59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970
+  source_release_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
   generator_version: 1.0.0
   client: codex
   kernel_id: visibility
   kernel_file: KERNEL.md
-  kernel_sha256: cdd66447d429e4da88282fd4791870762621f00d5eeb24df5a036984d297331d
+  kernel_sha256: 102aade9ef2682e7bd131ade758d7e7cc4420f4e57db4c7f1621f88990efcbe6
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: c2dd18b2081c7b3252e3cd7e4dd418e122044d3388bf7d4d742a031ebf5e4995
+  evals_sha256: 64bdfadf9be479646e25092a1407c28b43c8c742512843c9406627502ac9d194
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]

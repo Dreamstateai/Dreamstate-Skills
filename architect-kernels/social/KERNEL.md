@@ -22,4 +22,3 @@ Scheduling and publishing are different consequences. Request the exact required
 ## Completion proof
 
 Return what was proposed, what was actually persisted, platform/account, schedule or publish state, run id, costs, citations, and any blocked or remaining work. Never claim that authored content was saved, scheduled, published, or analyzed without the corresponding successful live envelope.
-

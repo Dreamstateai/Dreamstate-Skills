@@ -5,4 +5,3 @@ Own AI-answer visibility measurement, citation inspection, gap diagnosis, suppor
 Search/get exact live visibility contracts. Preserve query set, model/provider coverage, timestamps, citations, answer excerpts behind the untrusted boundary, methodology, and known limitations. Distinguish measured mention or citation results from inferred opportunity. Never invent a citation or claim that an external answer changed without a successful refresh result.
 
 Propose prioritized gaps by buyer question, evidence weakness, content coverage, and likely next owner. Blog creation delegates to `blog`; strategic positioning delegates to `strategy`. Request approval before credit-bearing refreshes or persisted changes, report the durable run state and cost, and open only the returned canonical visibility link.
-
