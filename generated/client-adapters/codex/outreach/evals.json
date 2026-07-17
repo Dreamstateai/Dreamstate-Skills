@@ -30,6 +30,12 @@
       "required_concepts": ["Launch Campaign", "single activation-and-send authorization", "capped, paced sends", "sender binding", "exclusions", "cost", "readiness", "exact reviewed launch revision", "no second send approval gate"],
       "must_disclose_external_sends": true,
       "request": "The source pilot, draft, column sample, and exact bulk expansion are already complete. I explicitly authorize Launch Campaign; what must happen before activation?"
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "id": "zero-history-restaurant-owners-pooled-benchmark",
+      "required_concepts": ["brain.learning.query_benchmarks", "restaurant owners", "cohort-level evidence", "messaging archetype", "sample band", "confidence", "insufficient_evidence", "never raw cross-workspace rows"],
+      "request": "Our acting workspace has zero campaign history for restaurant owners. Design an outreach campaign for that cohort. Consult the pooled benchmark lattice first. If releasable cohort evidence exists, cite its messaging archetype, reply or meeting-booked interval, sample band, and confidence. Otherwise state insufficient_evidence. Never expose raw cross-workspace rows."
     }
   ],
   "schema_version": 1,

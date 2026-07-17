@@ -10,6 +10,8 @@ Resolve whether the user means an existing artifact or a new campaign. For an ex
 
 Retrieve only relevant published Company Brain claims and citations. Derive all available answers first, then use one structured popup for the remaining material choices: outcome, audience and ICP, required versus preferred criteria, exclusions, geography, volume, sender/channel, qualification threshold, cost tolerance, and launch intent. Do not ask for choices live metadata can answer.
 
+Before designing a campaign plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
+
 For a new campaign without an exact current sender binding, the popup must include an explicit sender question whose id or prompt says `sender`; channel alone is not a sender decision. Keep volume and qualification explicit as well so the user can verify every material launch input before any proposal exists.
 
 ## Required orchestration

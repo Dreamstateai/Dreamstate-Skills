@@ -4,26 +4,26 @@ name: Outreach
 description: Open an existing campaign or coordinate a new custom campaign from scratch through ordered evidence-pilot, draft-bundle, column-sample, capped-bulk, and activation-and-send gates.
 triggers: ["open or revise an outreach campaign","build a campaign from scratch","create a prospecting system","build a list workflow and sequence"]
 dependencies: ["outreach-list-builder","outreach-workflow-builder"]
-capability_domains: ["outreach"]
+capability_domains: ["brain","outreach"]
 max_context_tokens: 3000
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  playbook_kernel_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 14ccc37cfc5df853
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.1
-  source_release_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  source_release: 0.4.0
+  source_release_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   generator_version: 1.0.0
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: 060d01868a6271b87cf0138f68bdf727707d3c695a102566c2a0bc65b6c0deab
+  kernel_sha256: 0a5a2668528eb32f6c15ccd56f9c8c7e4d76d6a1d3381d6ba6a11a44f8a756b6
   adapter_sha256: 323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689
   evals_file: evals.json
-  evals_sha256: 4b6fe5184e7882bfbc31798f54f3e80d7cffa8728167e84474b6e9fe228c0d9b
+  evals_sha256: c7e441227c93ab83c82f9f062de0296ddea4890e1771d4bc20bf6742bea5e960
 ---
 
 # Architect surface adapter

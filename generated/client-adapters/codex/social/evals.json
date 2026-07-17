@@ -11,6 +11,12 @@
       "id": "linkedin-and-x-calendar",
       "must_use_popup_when_missing": ["publishing_accounts", "schedule"],
       "request": "Draft one week of LinkedIn and X posts using our Company Brain."
+    },
+    {
+      "expected_skill_ids": ["social"],
+      "id": "founder-posts-pooled-benchmark",
+      "required_concepts": ["brain.learning.query_benchmarks", "founders", "cohort-level evidence", "sample band", "confidence", "insufficient_evidence", "never raw cross-workspace rows"],
+      "request": "What posts work for founders? Before planning content for that named audience, consult the pooled benchmark lattice. Cite only releasable cohort-level evidence with sample band and confidence, or state insufficient_evidence. Never expose raw cross-workspace rows."
     }
   ],
   "schema_version": 1,

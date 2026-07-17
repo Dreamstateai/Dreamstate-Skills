@@ -8,19 +8,19 @@ capability_domains: ["brain","context"]
 max_context_tokens: 3000
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  playbook_kernel_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 14ccc37cfc5df853
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.1
-  source_release_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  source_release: 0.4.0
+  source_release_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   generator_version: 1.0.0
   kernel_id: strategy
   kernel_file: KERNEL.md
-  kernel_sha256: 74c80cf121843eba941c9876bd18e020d8c6cbb0fc43528a5703eac51d8fcda2
+  kernel_sha256: f32c596eb670b5e14bb187f6e37533a6a25b72527a47688ad01701af1042380a
   adapter_sha256: 323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689
   evals_file: evals.json
   evals_sha256: 79d641758b9ffc2554e53fc7284839e8bc7ec660d310e1363aafebcba419b29c

@@ -5,15 +5,15 @@ description: "Build validated row workflows with triggers, typed branches, actio
 capability_domains: ["outreach"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  playbook_kernel_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 14ccc37cfc5df853
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.1
-  source_release_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  source_release: 0.4.0
+  source_release_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach-workflow-builder

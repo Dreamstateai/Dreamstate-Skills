@@ -5,20 +5,20 @@ description: "Create or revise evidence-backed ICP, positioning, channel roles, 
 capability_domains: ["brain","context"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  playbook_kernel_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 14ccc37cfc5df853
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.1
-  source_release_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
+  source_release: 0.4.0
+  source_release_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
   generator_version: 1.0.0
   client: codex
   kernel_id: strategy
   kernel_file: KERNEL.md
-  kernel_sha256: 74c80cf121843eba941c9876bd18e020d8c6cbb0fc43528a5703eac51d8fcda2
+  kernel_sha256: f32c596eb670b5e14bb187f6e37533a6a25b72527a47688ad01701af1042380a
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
   evals_sha256: 79d641758b9ffc2554e53fc7284839e8bc7ec660d310e1363aafebcba419b29c
@@ -43,5 +43,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 Create or revise durable growth strategy: ICP, problem, positioning, proof, channel roles, constraints, objectives, tradeoffs, and measurement. Strategy decides where and why to play; it does not execute a campaign or weekly task list.
 
 Inspect current published strategy, Company Brain evidence and revisions, measured performance, active work, and explicit user direction. Separate canonical fact, observed metric, inference, and recommendation. Ask one structured popup only for an unresolved decision that changes positioning, target, channel allocation, or risk.
+
+Before designing a strategy for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 
 Use live search/get for authorized reads and for any durable strategy proposal capability. Present alternatives with evidence and consequences, then propose one coherent decision set with assumptions, rejected options, metrics, review date, and downstream skill handoffs. Do not mutate canonical strategy without an exact proposal contract and approval. Never claim that a strategy was saved from prose alone.

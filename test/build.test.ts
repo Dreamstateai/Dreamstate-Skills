@@ -102,7 +102,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   assert.deepEqual(clients.compatibility, pinned.compatibility);
 
   const ids = Object.keys(pinned.skills).sort();
-  assert.equal(ids.length, 14);
+  assert.equal(ids.length, 16);
   for (const id of ids) {
     const architectRoot = `generated/architect/${id}`;
     const exactArchitectFiles = Object.keys(artifacts)
@@ -145,13 +145,15 @@ test('signed capability domains stay identical across source, Architect, Claude,
     context: ['brain', 'context'],
     'growth-asset-planner': [],
     integrations: [],
-    outreach: ['outreach'],
+    outreach: ['brain', 'outreach'],
     'outreach-list-builder': ['outreach'],
     'outreach-sequence-writer': ['outreach'],
     'outreach-workflow-builder': ['outreach'],
     'reddit-engagement': ['content'],
-    social: ['content'],
+    seo: ['brain', 'content', 'tables', 'visibility'],
+    social: ['brain', 'content'],
     strategy: ['brain', 'context'],
+    tables: ['tables'],
     visibility: ['visibility'],
     'weekly-growth-plan': [],
   };
@@ -179,6 +181,36 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
+});
+
+test('audience planning kernels require privacy-safe pooled benchmark evidence', () => {
+  const artifacts = build();
+  for (const id of ['outreach', 'strategy', 'social', 'seo']) {
+    const kernel = artifacts[`generated/architect/${id}/KERNEL.md`];
+    assert.match(kernel, /brain\.learning\.query_benchmarks/);
+    assert.match(kernel, /named audience|named cohort/i);
+    assert.match(kernel, /insufficient_evidence/);
+    assert.match(kernel, /sample/i);
+    assert.match(kernel, /confidence/i);
+    assert.match(kernel, /raw (?:cross-workspace )?rows/i);
+  }
+
+  const outreach = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const restaurantOwners = outreach.cases.find((item: { id: string }) => (
+    item.id === 'zero-history-restaurant-owners-pooled-benchmark'
+  ));
+  assert.ok(restaurantOwners);
+  assert.ok(restaurantOwners.required_concepts.includes('brain.learning.query_benchmarks'));
+  assert.ok(restaurantOwners.required_concepts.includes('sample band'));
+  assert.ok(restaurantOwners.required_concepts.includes('confidence'));
+  assert.ok(restaurantOwners.required_concepts.includes('insufficient_evidence'));
+  assert.ok(restaurantOwners.required_concepts.includes('never raw cross-workspace rows'));
+
+  const social = JSON.parse(artifacts['generated/architect/social/evals.json']);
+  assert.ok(social.cases.some((item: { id: string }) => item.id === 'founder-posts-pooled-benchmark'));
+
+  const seo = JSON.parse(artifacts['generated/architect/seo/evals.json']);
+  assert.ok(seo.cases.some((item: { id: string }) => item.id === 'agency-keywords-pooled-benchmark'));
 });
 
 test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {

@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "build-reactive-table",
+      "required_concepts": ["row entity", "stable identifiers", "source", "dependency", "reviewable table", "durable"],
+      "request": "Build a reactive company table with a source, enrichment columns, a formula score, and a review view."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "bounded-paid-run",
+      "required_concepts": ["representative selection", "row cap", "credit ceiling", "settled cells", "approval", "terminal state"],
+      "request": "Run the paid enrichment columns across this table safely, then tell me what completed and what failed."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "tables"
+}
