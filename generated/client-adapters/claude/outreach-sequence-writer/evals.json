@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["outreach-sequence-writer"],
+      "id": "custom-messaging-with-lineage",
+      "request": "Write custom LinkedIn and email steps whose variables resolve from the qualified table outputs, then preview them on real rows."
+    },
+    {
+      "expected_skill_ids": [],
+      "id": "skip-without-messaging",
+      "must_not_load": ["outreach-sequence-writer"],
+      "request": "The workflow only scores and routes leads; it sends no messages."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "outreach-sequence-writer"
+}
+

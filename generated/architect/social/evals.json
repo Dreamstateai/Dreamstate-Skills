@@ -1,0 +1,19 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["social"],
+      "id": "authored-reddit-post",
+      "must_not_load": ["reddit-engagement"],
+      "request": "Write an authored Reddit post for our company and put it on next Tuesday's calendar."
+    },
+    {
+      "expected_skill_ids": ["social"],
+      "id": "linkedin-and-x-calendar",
+      "must_use_popup_when_missing": ["publishing_accounts", "schedule"],
+      "request": "Draft one week of LinkedIn and X posts using our Company Brain."
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "social"
+}
+

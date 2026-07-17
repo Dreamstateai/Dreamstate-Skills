@@ -1,0 +1,37 @@
+{
+  "cases": [
+    {
+      "expected_load_order": ["outreach-list-builder", "outreach-workflow-builder", "outreach"],
+      "expected_skill_ids": ["outreach"],
+      "id": "new-campaign-from-scratch",
+      "must_use_popup_when_missing": ["qualification", "sender", "volume"],
+      "request": "Build a new outbound campaign for US B2B founders from scratch."
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "id": "existing-campaign-complex-table",
+      "request": "Open my existing founder campaign, add signals, profile enrichment, a derived priority score and AI opener, then update its workflow."
+    },
+    {
+      "conditional_skill_id": "outreach-sequence-writer",
+      "id": "sequence-only-when-messaging",
+      "request": "Include custom outreach messages only if the workflow has a messaging branch."
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "id": "staged-pilot-build-sample-expand-launch",
+      "required_concepts": ["intent:outreach.cold_outbound_preview", "outreach_source", "outreach_bundle", "table_column_run", "intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "outreach_activation", "approval of one stage never authorizes a later stage"],
+      "required_order": ["outreach_source", "outreach_bundle", "table_column_run", "outreach_bulk_expansion", "outreach_activation"],
+      "request": "Build the full campaign, test columns on 7 rows, enroll the prioritized contacts, and launch it. Explain and preserve every approval boundary."
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "id": "explicit-final-launch-revalidation",
+      "required_concepts": ["Launch Campaign", "single activation-and-send authorization", "capped, paced sends", "sender binding", "exclusions", "cost", "readiness", "exact reviewed launch revision", "no second send approval gate"],
+      "must_disclose_external_sends": true,
+      "request": "The source pilot, draft, column sample, and exact bulk expansion are already complete. I explicitly authorize Launch Campaign; what must happen before activation?"
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "outreach"
+}

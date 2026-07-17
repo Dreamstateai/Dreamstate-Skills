@@ -7,6 +7,7 @@ import { build, writeArtifacts, checkArtifacts } from '../scripts/build.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
+const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every tools_used entry exists in the catalog. If it
@@ -83,4 +84,196 @@ test('site catalog is the same complete catalog as the installer index', () => {
   const site = JSON.parse(readFileSync(join(ROOT, 'generated', 'site', 'skills-catalog.json'), 'utf8'));
   assert.equal(site.skills.length, index.skills.length);
   assert.deepEqual(site.skills.map((skill: { slug: string }) => skill.slug), index.skills.map((skill: { slug: string }) => skill.slug));
+});
+
+test('one pinned release generates hash-identical Architect, Claude, and Codex kernels and evals', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  const clients = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
+  assert.match(pinned.source_release, /^\d+\.\d+\.\d+/);
+  assert.doesNotMatch(pinned.source_release, /bootstrap|development/i);
+  assert.match(pinned.source_release_hash, /^[a-f0-9]{64}$/);
+  assert.equal(pinned.compatibility.playbook_kernel_hash, pinned.source_release_hash);
+  assert.equal(pinned.compatibility.capability_hash, catalog.capability_hash);
+  assert.equal(pinned.compatibility.capability_definition_version, catalog.definition_version);
+  assert.equal(pinned.compatibility.minimum_api_version, catalog.api_version);
+  assert.doesNotMatch(JSON.stringify(pinned.compatibility), /development/i);
+  assert.equal(clients.source_release_hash, pinned.source_release_hash);
+  assert.deepEqual(clients.compatibility, pinned.compatibility);
+
+  const ids = Object.keys(pinned.skills).sort();
+  assert.equal(ids.length, 14);
+  for (const id of ids) {
+    const architectRoot = `generated/architect/${id}`;
+    const exactArchitectFiles = Object.keys(artifacts)
+      .filter((path) => path.startsWith(`${architectRoot}/`))
+      .map((path) => path.slice(architectRoot.length + 1))
+      .sort();
+    assert.deepEqual(exactArchitectFiles, ['KERNEL.md', 'SKILL.md', 'evals.json']);
+    for (const client of ['claude', 'codex']) {
+      const clientRoot = `generated/client-adapters/${client}/${id}`;
+      const standalone = artifacts[`${clientRoot}/SKILL.md`];
+      assert.equal(artifacts[`${clientRoot}/KERNEL.md`], artifacts[`${architectRoot}/KERNEL.md`]);
+      assert.equal(artifacts[`${clientRoot}/evals.json`], artifacts[`${architectRoot}/evals.json`]);
+      for (const [field, expected] of Object.entries(pinned.compatibility)) {
+        assert.match(standalone, new RegExp(`^  ${field}: ${String(expected)}$`, 'm'));
+      }
+      assert.match(standalone, new RegExp(`^  source_release_hash: ${pinned.source_release_hash}$`, 'm'));
+      assert.match(standalone, new RegExp(`^  kernel_sha256: ${pinned.skills[id].kernel_sha256}$`, 'm'));
+      assert.match(standalone, new RegExp(`^  evals_sha256: ${pinned.skills[id].evals_sha256}$`, 'm'));
+      assert.match(standalone, new RegExp(`^  adapter_sha256: ${clients.skills[id].adapter_sha256[client]}$`, 'm'));
+      assert.match(standalone, /mismatch_behavior: deny_run/);
+      assert.match(standalone, /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get\]/);
+      assert.match(standalone, /Refuse `dreamstate_tools_run` until the installed package is refreshed/);
+    }
+    assert.equal(pinned.skills[id].kernel_sha256, clients.skills[id].kernel_sha256);
+    assert.equal(pinned.skills[id].evals_sha256, clients.skills[id].evals_sha256);
+    assert.match(
+      artifacts[`${architectRoot}/SKILL.md`],
+      /bounded structured partial outputs plus the exact next transition/,
+    );
+  }
+});
+
+test('signed capability domains stay identical across source, Architect, Claude, Codex, and release manifests', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  const clients = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
+  const expected: Record<string, string[]> = {
+    analytics: [],
+    blog: ['content'],
+    context: ['brain', 'context'],
+    'growth-asset-planner': [],
+    integrations: [],
+    outreach: ['outreach'],
+    'outreach-list-builder': ['outreach'],
+    'outreach-sequence-writer': ['outreach'],
+    'outreach-workflow-builder': ['outreach'],
+    'reddit-engagement': ['content'],
+    social: ['content'],
+    strategy: ['brain', 'context'],
+    visibility: ['visibility'],
+    'weekly-growth-plan': [],
+  };
+
+  assert.deepEqual(
+    Object.fromEntries(architectSource.skills.map((skill: { id: string; capability_domains: string[] }) => [
+      skill.id,
+      skill.capability_domains,
+    ])),
+    expected,
+  );
+  for (const [id, capabilityDomains] of Object.entries(expected)) {
+    assert.deepEqual(pinned.skills[id].capability_domains, capabilityDomains);
+    assert.deepEqual(clients.skills[id].capability_domains, capabilityDomains);
+    for (const root of [
+      `generated/architect/${id}`,
+      `generated/client-adapters/claude/${id}`,
+      `generated/client-adapters/codex/${id}`,
+    ]) {
+      assert.ok(
+        artifacts[`${root}/SKILL.md`].split('\n').includes(
+          `capability_domains: ${JSON.stringify(capabilityDomains)}`,
+        ),
+        `${root}/SKILL.md must carry the signed capability domain closure`,
+      );
+    }
+  }
+});
+
+test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
+  const standalone = artifacts['generated/client-adapters/codex/outreach/SKILL.md'];
+  const scalar = (field: string) => standalone.match(new RegExp(`^  ${field}: (.+)$`, 'm'))?.[1];
+  const installed = {
+    capability_definition_version: scalar('capability_definition_version'),
+    capability_hash: scalar('capability_hash'),
+    minimum_api_version: scalar('minimum_api_version'),
+  };
+  assert.deepEqual(installed, {
+    capability_definition_version: pinned.compatibility.capability_definition_version,
+    capability_hash: pinned.compatibility.capability_hash,
+    minimum_api_version: pinned.compatibility.minimum_api_version,
+  });
+  const live = { ...installed, capability_hash: 'f'.repeat(16) };
+  const compatible = Object.entries(installed).every(([key, value]) => live[key as keyof typeof live] === value);
+  const permits = (operation: 'dreamstate_tools_search' | 'dreamstate_tools_get' | 'dreamstate_tools_run') => (
+    operation !== 'dreamstate_tools_run' || compatible
+  );
+  assert.equal(permits('dreamstate_tools_search'), true);
+  assert.equal(permits('dreamstate_tools_get'), true);
+  assert.equal(permits('dreamstate_tools_run'), false);
+});
+
+test('generated Architect outreach packages contain no shortcut terminology', () => {
+  const artifacts = build();
+  const forbidden = /\b(?:templates?|presets?|reusable|reuse)\b/i;
+  for (const id of ['outreach', 'outreach-list-builder', 'outreach-sequence-writer', 'outreach-workflow-builder']) {
+    for (const file of ['SKILL.md', 'KERNEL.md', 'evals.json']) {
+      const path = `generated/architect/${id}/${file}`;
+      assert.doesNotMatch(artifacts[path], forbidden, path);
+    }
+  }
+  assert.match(
+    artifacts['generated/architect/outreach-list-builder/KERNEL.md'],
+    /Preserve compatible identity and evidence fields/,
+  );
+});
+
+test('growth asset planning may describe a buyer template library but stays explicitly unsaved without a capability', () => {
+  const artifacts = build();
+  assert.match(
+    artifacts['generated/architect/growth-asset-planner/KERNEL.md'],
+    /buyer-facing template library/i,
+  );
+  const evals = JSON.parse(artifacts['generated/architect/growth-asset-planner/evals.json']);
+  assert.equal(evals.cases[0].must_state_unsaved_without_capability, true);
+  assert.match(artifacts['generated/architect/growth-asset-planner/KERNEL.md'], /explicitly unsaved proposal/i);
+});
+
+test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and launch as ordered typed stages', () => {
+  const artifacts = build();
+  const coordinator = artifacts['generated/architect/outreach/KERNEL.md'];
+  const listBuilder = artifacts['generated/architect/outreach-list-builder/KERNEL.md'];
+  const workflow = artifacts['generated/architect/outreach-workflow-builder/KERNEL.md'];
+
+  for (const changeKind of [
+    'outreach_source',
+    'outreach_bundle',
+    'table_column_run',
+    'outreach_bulk_expansion',
+    'outreach_activation',
+  ]) {
+    assert.match(coordinator, new RegExp(`\\b${changeKind}\\b`));
+  }
+  assert.match(coordinator, /Approval of one stage never authorizes a later stage/);
+  assert.match(coordinator, /Launch Campaign/);
+  const orderedKinds = [
+    'outreach_source',
+    'outreach_bundle',
+    'table_column_run',
+    'outreach_bulk_expansion',
+    'outreach_activation',
+  ];
+  let prior = -1;
+  for (const kind of orderedKinds) {
+    const offset = coordinator.indexOf(`\`${kind}\``, prior + 1);
+    assert.ok(offset > prior, `${kind} must follow the prior staged gate`);
+    prior = offset;
+  }
+  assert.match(coordinator, /intent:outreach\.cold_outbound_preview/);
+  assert.match(coordinator, /no list, campaign, source, import, enrollment, or other durable destination/i);
+  assert.match(coordinator, /intent:outreach\.cold_outbound_expand/);
+  assert.match(coordinator, /stage_exact_result_set=true/);
+  assert.match(coordinator, /require_campaign_status=draft/);
+  assert.match(listBuilder, /exactly five through ten rows/);
+  assert.match(listBuilder, /Adding a column never implies that it ran/);
+  assert.match(listBuilder, /eleven-through-fifty row cap for this release/);
+  assert.match(listBuilder, /It is never another five-to-ten-row import/);
+  assert.match(workflow, /source-evidence run/);
+  assert.match(workflow, /exact list revision/);
+  assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
+  assert.match(coordinator, /single activation-and-send authorization/i);
+  assert.match(coordinator, /Do not invent a second send approval gate/i);
 });

@@ -1,6 +1,6 @@
 {
   "name": "dreamstate-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Give your coding agent hands. Install agent skills that drive Dreamstate to do real outreach, SEO/GEO, and social at scale.",
   "type": "module",
   "bin": {
@@ -24,6 +24,8 @@
   "scripts": {
     "build": "tsx scripts/build.ts",
     "check": "tsx scripts/build.ts --check",
+    "sync:capabilities": "tsx scripts/sync-capability-manifest.ts",
+    "sync:architect": "tsx scripts/sync-architect.ts",
     "compile": "tsc",
     "test": "tsx --test test/*.test.ts",
     "prepublishOnly": "npm run build && npm run check && npm test && npm run compile"

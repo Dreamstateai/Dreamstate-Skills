@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "source_repository": "dreamstate-skills",
+  "source_release": "0.3.0",
+  "source_release_hash": "59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970",
+  "generator_version": "1.0.0",
+  "compatibility": {
+    "playbook_kernel_version": "1.0.0",
+    "playbook_kernel_hash": "59b2cbed76fd24da9ccc909e147dfd1f1ded4272046f6200b9471b464f9bd970",
+    "client_adapter_version": "1.0.0",
+    "capability_definition_version": "dreamstate-capabilities-v1",
+    "capability_hash": "45b3cca7154ce738",
+    "minimum_api_version": "v1"
+  },
+  "skills": {
+    "analytics": {
+      "capability_domains": [],
+      "kernel_sha256": "ceb0343e4d4642f58bdc28f3cb0f926ef76db00cf6756ae1245a170fb2a445d8",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "bdcc2ce952feafcd7b0d68aff752cb20ffe293a0a68b0e2985c9d6b656d8f2dc"
+    },
+    "blog": {
+      "capability_domains": [
+        "content"
+      ],
+      "kernel_sha256": "b3cad1e2ca5565368418c0002b42531dcb36e92f4fa021e9eaf632e3700ed9af",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "614cc4cdaafc799f38e2b0f0d4752a3dfb4c97ee5b59f2ba3cda3353e18471b4"
+    },
+    "context": {
+      "capability_domains": [
+        "brain",
+        "context"
+      ],
+      "kernel_sha256": "febf33d3d5dd374bda7763af75bbdefd9c03ba0db01223d7bc93b7c7c7b675c1",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "3e7584ea2dee2957d34ebb6f59f263bf207f1313000bae51805f11742d933474"
+    },
+    "growth-asset-planner": {
+      "capability_domains": [],
+      "kernel_sha256": "5499e4fa692558dd4a98019503d0c1afa9e2e5731be5be8de80529301c8c75fc",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "b5262f87fae233774f0674d21465bdb519ac89f856be7e8d5085fcb5042c10d4"
+    },
+    "integrations": {
+      "capability_domains": [],
+      "kernel_sha256": "d33b3f4cbefc7de6c00e511b120e6596c21a7bfd314194d6e00b464694953726",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "94bbf6e7cc83e64528408aed01a4e3fecdf27b14ff2ac6547e24f41869fe37af"
+    },
+    "outreach": {
+      "capability_domains": [
+        "outreach"
+      ],
+      "kernel_sha256": "060d01868a6271b87cf0138f68bdf727707d3c695a102566c2a0bc65b6c0deab",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "4b6fe5184e7882bfbc31798f54f3e80d7cffa8728167e84474b6e9fe228c0d9b"
+    },
+    "outreach-list-builder": {
+      "capability_domains": [
+        "outreach"
+      ],
+      "kernel_sha256": "30d34fd8bb8bb242452f407a1a743d1ae6390346f8b77c3a2169a75a1bfea8cd",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "f19268c7e63ecfd3b96998b8d41f2628a85a27eb1662fe7b3c6c63520da7546d"
+    },
+    "outreach-sequence-writer": {
+      "capability_domains": [
+        "outreach"
+      ],
+      "kernel_sha256": "0a39baebc155179c43473607b0c868618e60bc8ded8be812c84e67efbf63137a",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "a68dfa561e3681d855aa5276aad108134dba52522965d0eafe0218f32b56b9b3"
+    },
+    "outreach-workflow-builder": {
+      "capability_domains": [
+        "outreach"
+      ],
+      "kernel_sha256": "9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2"
+    },
+    "reddit-engagement": {
+      "capability_domains": [
+        "content"
+      ],
+      "kernel_sha256": "bdd074811713808962f9c740e9bd630c26b21518ee2ace2ea63a7b330c30a18a",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "8894b325cbe15f0d98636a1d26d98fd696444efeee9e131e1555bf79c72948e2"
+    },
+    "social": {
+      "capability_domains": [
+        "content"
+      ],
+      "kernel_sha256": "0123783b1600e54ccb1cd5e11f470d21ec50d910c3695b1eaea1ff71208b4829",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "779ba4bb852e8c9223ebd2ff90fc1c3be5faa699d1baf4d5b3b3c217a8f3a498"
+    },
+    "strategy": {
+      "capability_domains": [
+        "brain",
+        "context"
+      ],
+      "kernel_sha256": "77a8837bb29012cd2f05d0495de8a6b0bbbcfb5a05360e8b1a2e17e7fbae09c8",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "97a179e43d1827dd7eb2763452980a94ccf8cffbf539a9ce80d348a8ccd6e85d"
+    },
+    "visibility": {
+      "capability_domains": [
+        "visibility"
+      ],
+      "kernel_sha256": "cdd66447d429e4da88282fd4791870762621f00d5eeb24df5a036984d297331d",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "c2dd18b2081c7b3252e3cd7e4dd418e122044d3388bf7d4d742a031ebf5e4995"
+    },
+    "weekly-growth-plan": {
+      "capability_domains": [],
+      "kernel_sha256": "0a6adc0ef5e7a8c89d6f94bfaac7560a63fe326ce7ccd9f507c3aa25302910e9",
+      "adapter_sha256": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
+      "evals_sha256": "d768aab76828ac8446ea3b480f2f530dab62a84aaed04875f9e2b1c7a033d62a"
+    }
+  }
+}

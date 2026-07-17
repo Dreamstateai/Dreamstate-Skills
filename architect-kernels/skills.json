@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "source_release": "0.3.0",
+  "playbook_kernel_version": "1.0.0",
+  "client_adapter_version": "1.0.0",
+  "skills": [
+    {
+      "id": "analytics",
+      "name": "Analytics",
+      "description": "Diagnose current measured performance with explicit time ranges, provenance, limitations, confidence, and evidence-backed recommendations.",
+      "triggers": ["analyze growth performance", "explain a metric change", "diagnose a funnel", "compare measured channel results"],
+      "dependencies": [],
+      "capability_domains": [],
+      "max_context_tokens": 3000
+    },
+    {
+      "id": "blog",
+      "name": "Blog",
+      "description": "Manage grounded blog research, draft, editorial review, revision, scheduling, publication, and canonical editor inspection.",
+      "triggers": ["research or draft a blog post", "revise an article", "send a blog to review", "schedule or publish a blog"],
+      "dependencies": [],
+      "capability_domains": ["content"],
+      "max_context_tokens": 3500
+    },
+    {
+      "id": "context",
+      "name": "Context",
+      "description": "Read targeted revisioned Company Brain facts or propose cited conflict-aware updates without treating prompt text as canonical state.",
+      "triggers": ["read Company Brain context", "inspect published workspace memory", "propose a cited context update", "resolve a canonical fact"],
+      "dependencies": [],
+      "capability_domains": ["brain", "context"],
+      "max_context_tokens": 3000
+    },
+    {
+      "id": "growth-asset-planner",
+      "name": "Growth Asset Planner",
+      "description": "Design a buyer-facing resource and its evidence, structure, CTA, distribution, and follow-up path while remaining explicitly unsaved until live persistence exists.",
+      "triggers": ["design a lead magnet", "create a buyer checklist or playbook", "plan an audit or SOP", "design a resource hub"],
+      "dependencies": [],
+      "capability_domains": [],
+      "max_context_tokens": 3500
+    },
+    {
+      "id": "integrations",
+      "name": "Integrations",
+      "description": "Diagnose live account and provider readiness, open safe connection flows, and resume blocked work without requesting secrets in chat.",
+      "triggers": ["connect an account or provider", "diagnose integration readiness", "fix a sender or authorization blocker", "resume after connecting"],
+      "dependencies": [],
+      "capability_domains": [],
+      "max_context_tokens": 3000
+    },
+    {
+      "id": "outreach-list-builder",
+      "name": "Outreach List Builder",
+      "description": "Build or extend source-first reactive lead tables with live-discovered columns, typed dependencies, bounded samples, and quality/cost audits.",
+      "triggers": ["source a target list", "build or extend a lead table", "add enrichment signal function or AI columns", "prioritize and filter outreach rows"],
+      "dependencies": [],
+      "capability_domains": ["outreach"],
+      "max_context_tokens": 5000
+    },
+    {
+      "id": "outreach-sequence-writer",
+      "name": "Outreach Sequence Writer",
+      "description": "Design custom channel steps, cadence, sender constraints, variable lineage, and real-row previews only for workflows that contain messaging.",
+      "triggers": ["write a custom outreach sequence", "add messaging to a validated workflow", "design outreach cadence", "preview personalized steps"],
+      "dependencies": [],
+      "capability_domains": ["outreach"],
+      "max_context_tokens": 5000
+    },
+    {
+      "id": "outreach-workflow-builder",
+      "name": "Outreach Workflow Builder",
+      "description": "Build validated row workflows with triggers, typed branches, action handoffs, stop logic, eligibility, and explicit consequence boundaries.",
+      "triggers": ["build an outreach workflow", "branch on qualification or priority", "automate row processing", "define enrollment eligibility"],
+      "dependencies": [],
+      "capability_domains": ["outreach"],
+      "max_context_tokens": 5000
+    },
+    {
+      "id": "outreach",
+      "name": "Outreach",
+      "description": "Open an existing campaign or coordinate a new custom campaign from scratch through ordered evidence-pilot, draft-bundle, column-sample, capped-bulk, and activation-and-send gates.",
+      "triggers": ["open or revise an outreach campaign", "build a campaign from scratch", "create a prospecting system", "build a list workflow and sequence"],
+      "dependencies": ["outreach-list-builder", "outreach-workflow-builder"],
+      "capability_domains": ["outreach"],
+      "max_context_tokens": 3000
+    },
+    {
+      "id": "reddit-engagement",
+      "name": "Reddit Engagement",
+      "description": "Discover real Reddit and community threads, triage evidence and risk, and prepare thread-bound reply drafts for review.",
+      "triggers": ["find real Reddit threads", "monitor community conversations", "triage reply opportunities", "draft replies to real threads"],
+      "dependencies": [],
+      "capability_domains": ["content"],
+      "max_context_tokens": 5000
+    },
+    {
+      "id": "social",
+      "name": "Social",
+      "description": "Coordinate authored LinkedIn, X, and Reddit content across drafts, calendars, review, publishing, and measured performance.",
+      "triggers": ["author a social post", "build a social calendar", "schedule or publish authored content", "analyze social performance"],
+      "dependencies": [],
+      "capability_domains": ["content"],
+      "max_context_tokens": 5000
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy",
+      "description": "Create or revise evidence-backed ICP, positioning, channel roles, objectives, tradeoffs, and durable strategy proposals.",
+      "triggers": ["create a growth strategy", "revise ICP or positioning", "decide channel roles", "make a durable strategic decision"],
+      "dependencies": [],
+      "capability_domains": ["brain", "context"],
+      "max_context_tokens": 3000
+    },
+    {
+      "id": "visibility",
+      "name": "Visibility",
+      "description": "Run and interpret AI-answer visibility audits with real citations, method limits, gap diagnosis, governed refreshes, and a canonical inspection surface.",
+      "triggers": ["audit AI visibility", "inspect citations in AI answers", "diagnose answer-engine gaps", "refresh visibility measurement"],
+      "dependencies": [],
+      "capability_domains": ["visibility"],
+      "max_context_tokens": 3000
+    },
+    {
+      "id": "weekly-growth-plan",
+      "name": "Weekly Growth Plan",
+      "description": "Prioritize a one-week cross-channel operating plan with owners, deliverables, measures, and explicit delegation without silently executing it.",
+      "triggers": ["plan my growth week", "prioritize work across channels", "create a weekly operating plan", "decide what the team should do next"],
+      "dependencies": [],
+      "capability_domains": [],
+      "max_context_tokens": 3500
+    }
+  ]
+}

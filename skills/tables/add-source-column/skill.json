@@ -42,7 +42,6 @@
     "column:keyword_research",
     "column:local_business_search",
     "column:merge_columns",
-    "column:message",
     "column:multi_select",
     "column:number",
     "column:phone_find",
@@ -79,7 +78,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "4d027b564e10a434",
+  "verified_capability_hash": "45b3cca7154ce738",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/add-source-column/SKILL.md",
   "install_command": "dreamstate skills install add-source-column",
