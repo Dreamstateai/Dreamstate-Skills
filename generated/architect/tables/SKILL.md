@@ -8,15 +8,15 @@ capability_domains: ["tables"]
 max_context_tokens: 5000
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
+  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 14ccc37cfc5df853
+  capability_hash: b407e2e9a2aad409
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.4.0
-  source_release_hash: 52cb9816bdec3b5a061bf9daebdcbe659c6b78b3a8cbc595a23e6127103a07ba
+  source_release: 0.5.0
+  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
   generator_version: 1.0.0
   kernel_id: tables
   kernel_file: KERNEL.md

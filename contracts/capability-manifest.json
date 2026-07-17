@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "14ccc37cfc5df853",
+  "capability_hash": "b407e2e9a2aad409",
   "api_version": "v1",
   "capabilities": [
     {
@@ -2644,6 +2644,250 @@
           "base_revision_id",
           "content",
           "claims"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.propose_document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Propose a new company Context document",
+      "description": "Create a new unpublished Context document and attach agent-authored content as an untrusted, human-reviewable proposal.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "parent_node_ref",
+          "required": true
+        },
+        {
+          "key": "title",
+          "required": true
+        },
+        {
+          "key": "content",
+          "required": true
+        },
+        {
+          "key": "claims",
+          "required": true
+        },
+        {
+          "key": "idempotency_key",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "parent_node_ref",
+          "type": "string",
+          "required": true,
+          "description": "Input parent_node_ref for brain.context.propose_document."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Input title for brain.context.propose_document."
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "required": true,
+          "description": "Input content for brain.context.propose_document."
+        },
+        {
+          "name": "subject_user_id",
+          "type": "string",
+          "required": false,
+          "description": "Input subject_user_id for brain.context.propose_document."
+        },
+        {
+          "name": "claims",
+          "type": "array",
+          "required": true,
+          "description": "Input claims for brain.context.propose_document."
+        },
+        {
+          "name": "idempotency_key",
+          "type": "string",
+          "required": true,
+          "description": "Input idempotency_key for brain.context.propose_document."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "parent_node_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            },
+            "content": {
+              "type": "string",
+              "maxLength": 2000000
+            },
+            "subject_user_id": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true
+            },
+            "claims": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "claim_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "draft",
+                      "published",
+                      "proposed",
+                      "conflict",
+                      "indexing",
+                      "source_failed",
+                      "archived"
+                    ]
+                  },
+                  "citations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "source_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "source_revision_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "end": {
+                          "type": "integer",
+                          "exclusiveMinimum": true,
+                          "minimum": 0
+                        }
+                      },
+                      "required": [
+                        "source_id",
+                        "source_revision_id",
+                        "start",
+                        "end"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "claim_id",
+                  "text",
+                  "state",
+                  "citations"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 5000
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "parent_node_ref",
+            "title",
+            "content",
+            "claims",
+            "idempotency_key"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/brain/capabilities/{capability}"
+      ],
+      "mcp_tools": [],
+      "examples": [
+        "{\"capability\":\"brain.context.propose_document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "search": {
+        "aliases": [
+          "brain.context.propose_document",
+          "Propose a new company Context document",
+          "{\"capability\":\"brain.context.propose_document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "parent_node_ref",
+          "title",
+          "content",
+          "claims",
+          "idempotency_key"
         ],
         "outputs": [
           "result"
@@ -60087,7 +60331,7 @@
     ]
   },
   "counts": {
-    "capabilities": 300,
+    "capabilities": 301,
     "run_intents": 87,
     "mcp_tools": 174
   }
