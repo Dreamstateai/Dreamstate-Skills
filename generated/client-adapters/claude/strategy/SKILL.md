@@ -5,15 +5,15 @@ description: "Create or revise evidence-backed ICP, positioning, channel roles, 
 capability_domains: ["brain","context"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
+  playbook_kernel_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 8a2ae331c5d173e2
+  capability_hash: 14ccc37cfc5df853
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.0
-  source_release_hash: d8433e344980a74ae53946ce48fd113e80b293f56ec2b755ac41a4a2a834c115
+  source_release: 0.3.1
+  source_release_hash: 490312365f751e22143ca4d8fe1a8f0a8d4c4e4d3afe58ccf48e601d2d39502e
   generator_version: 1.0.0
   client: claude
   kernel_id: strategy

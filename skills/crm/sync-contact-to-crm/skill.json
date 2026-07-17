@@ -31,7 +31,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "8a2ae331c5d173e2",
+  "verified_capability_hash": "14ccc37cfc5df853",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/crm/sync-contact-to-crm/SKILL.md",
   "install_command": "dreamstate skills install sync-contact-to-crm",

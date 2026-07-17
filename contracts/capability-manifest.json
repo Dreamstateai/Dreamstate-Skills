@@ -2,9 +2,591 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "8a2ae331c5d173e2",
+  "capability_hash": "14ccc37cfc5df853",
   "api_version": "v1",
   "capabilities": [
+    {
+      "id": "attachments.create",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "attachment",
+      "label": "Attachment Create",
+      "description": "Canonical unified-table create operation for attachment resources.",
+      "when_to_use": [
+        "Use this operation to create a domain-neutral attachment through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not pass campaign_id or treat a campaign as the table resource."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "owner_kind",
+          "kind": "campaign|workflow",
+          "required": true,
+          "description": "owner_kind"
+        },
+        {
+          "key": "owner_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "owner_id"
+        },
+        {
+          "key": "table_id",
+          "kind": "unknown",
+          "required": true,
+          "description": "table_id"
+        },
+        {
+          "key": "position",
+          "kind": "integer",
+          "required": true,
+          "description": "position"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "owner_kind",
+          "type": "string",
+          "required": true,
+          "description": "owner_kind"
+        },
+        {
+          "name": "owner_id",
+          "type": "string",
+          "required": true,
+          "description": "owner_id"
+        },
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "table_id"
+        },
+        {
+          "name": "position",
+          "type": "number",
+          "required": true,
+          "description": "position"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "label"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "owner_kind": {
+            "type": "string",
+            "enum": [
+              "campaign",
+              "workflow"
+            ]
+          },
+          "owner_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "table_id": {
+            "$ref": "#/properties/owner_id"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "nullable": true,
+            "default": null
+          }
+        },
+        "required": [
+          "owner_kind",
+          "owner_id",
+          "table_id",
+          "position"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "$ref": "#/properties/id"
+          },
+          "owner_kind": {
+            "type": "string",
+            "enum": [
+              "campaign",
+              "workflow"
+            ]
+          },
+          "owner_id": {
+            "$ref": "#/properties/id"
+          },
+          "table_id": {
+            "$ref": "#/properties/id"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "$ref": "#/properties/created_at"
+          }
+        },
+        "required": [
+          "id",
+          "workspace_id",
+          "owner_kind",
+          "owner_id",
+          "table_id",
+          "position",
+          "label",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "attachments.create",
+        "noun": "attachment",
+        "verb": "create"
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/table-attachments"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/table-attachments"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_tables_attachments_create"
+      ],
+      "cli_commands": [
+        "dreamstate table-attachments create"
+      ],
+      "examples": [
+        "dreamstate table-attachments create"
+      ],
+      "web_url_template": "/dashboard/tables/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "search": {
+        "aliases": [
+          "attachments.create",
+          "Attachment Create",
+          "dreamstate table-attachments create"
+        ],
+        "use_cases": [
+          "Use this operation to create a domain-neutral attachment through the unified table data plane."
+        ],
+        "inputs": [
+          "owner_kind",
+          "owner_id",
+          "table_id",
+          "position"
+        ],
+        "outputs": [
+          "id",
+          "workspace_id",
+          "owner_kind",
+          "owner_id",
+          "table_id",
+          "position",
+          "label",
+          "created_at",
+          "updated_at"
+        ],
+        "side_effects": [
+          "write_tables"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "attachments.delete",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "attachment",
+      "label": "Attachment Delete",
+      "description": "Canonical unified-table delete operation for attachment resources.",
+      "when_to_use": [
+        "Use this operation to delete a domain-neutral attachment through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not pass campaign_id or treat a campaign as the table resource."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": false,
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "attachment_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for attachment_id."
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "attachment_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for attachment_id."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deleted": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "attachment_id",
+          "deleted"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "attachments.delete",
+        "noun": "attachment",
+        "verb": "delete"
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/table-attachments/{attachment_id}"
+      ],
+      "rest_operations": [
+        {
+          "method": "delete",
+          "path": "/table-attachments/{attachment_id}"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_tables_attachments_delete"
+      ],
+      "cli_commands": [
+        "dreamstate table-attachments delete"
+      ],
+      "examples": [
+        "dreamstate table-attachments delete"
+      ],
+      "web_url_template": "/dashboard/tables/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "search": {
+        "aliases": [
+          "attachments.delete",
+          "Attachment Delete",
+          "dreamstate table-attachments delete"
+        ],
+        "use_cases": [
+          "Use this operation to delete a domain-neutral attachment through the unified table data plane."
+        ],
+        "inputs": [
+          "attachment_id"
+        ],
+        "outputs": [
+          "attachment_id",
+          "deleted"
+        ],
+        "side_effects": [
+          "write_tables"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "attachments.list",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "attachment",
+      "label": "Attachment List",
+      "description": "Canonical unified-table list operation for attachment resources.",
+      "when_to_use": [
+        "Use this operation to list a domain-neutral attachment through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not pass campaign_id or treat a campaign as the table resource."
+      ],
+      "required_scopes": [
+        "tables:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "owner_kind",
+          "kind": "campaign|workflow",
+          "required": true,
+          "description": "owner_kind"
+        },
+        {
+          "key": "owner_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "owner_id"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "owner_kind",
+          "type": "string",
+          "required": true,
+          "description": "owner_kind"
+        },
+        {
+          "name": "owner_id",
+          "type": "string",
+          "required": true,
+          "description": "owner_id"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "owner_kind": {
+            "type": "string",
+            "enum": [
+              "campaign",
+              "workflow"
+            ]
+          },
+          "owner_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "owner_kind",
+          "owner_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "workspace_id": {
+                  "$ref": "#/properties/attachments/items/properties/id"
+                },
+                "owner_kind": {
+                  "type": "string",
+                  "enum": [
+                    "campaign",
+                    "workflow"
+                  ]
+                },
+                "owner_id": {
+                  "$ref": "#/properties/attachments/items/properties/id"
+                },
+                "table_id": {
+                  "$ref": "#/properties/attachments/items/properties/id"
+                },
+                "position": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200,
+                  "nullable": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "$ref": "#/properties/attachments/items/properties/created_at"
+                }
+              },
+              "required": [
+                "id",
+                "workspace_id",
+                "owner_kind",
+                "owner_id",
+                "table_id",
+                "position",
+                "label",
+                "created_at",
+                "updated_at"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "attachments"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "attachments.list",
+        "noun": "attachment",
+        "verb": "list"
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/table-attachments"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/table-attachments"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_tables_attachments_list"
+      ],
+      "cli_commands": [
+        "dreamstate table-attachments list"
+      ],
+      "examples": [
+        "dreamstate table-attachments list"
+      ],
+      "web_url_template": "/dashboard/tables/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "search": {
+        "aliases": [
+          "attachments.list",
+          "Attachment List",
+          "dreamstate table-attachments list"
+        ],
+        "use_cases": [
+          "Use this operation to list a domain-neutral attachment through the unified table data plane."
+        ],
+        "inputs": [
+          "owner_kind",
+          "owner_id"
+        ],
+        "outputs": [
+          "attachments"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
     {
       "id": "brain.architect.resolve_attachment",
       "kind": "brain_capability",
@@ -5236,6 +5818,21 @@
                   "observed_at": {
                     "type": "string",
                     "format": "date-time"
+                  },
+                  "field_availability": {
+                    "type": "string",
+                    "enum": [
+                      "available",
+                      "unavailable",
+                      "restricted"
+                    ]
+                  },
+                  "raw_payload_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "provider_receipt_id": {
+                    "$ref": "#/properties/cell/properties/cell_id"
                   }
                 },
                 "required": [
@@ -5338,12 +5935,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows/{row_id}/cells/{column_id}"
+        "/tables/{table_id}/rows/{row_id}/cells/{column_id}"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/rows/{row_id}/cells/{column_id}"
+          "path": "/tables/{table_id}/rows/{row_id}/cells/{column_id}"
         }
       ],
       "mcp_tools": [
@@ -5661,6 +6258,21 @@
               "observed_at": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "field_availability": {
+                "type": "string",
+                "enum": [
+                  "available",
+                  "unavailable",
+                  "restricted"
+                ]
+              },
+              "raw_payload_digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "provider_receipt_id": {
+                "$ref": "#/properties/provenance/properties/actor_id"
               }
             },
             "required": [
@@ -5828,6 +6440,21 @@
                   "observed_at": {
                     "type": "string",
                     "format": "date-time"
+                  },
+                  "field_availability": {
+                    "type": "string",
+                    "enum": [
+                      "available",
+                      "unavailable",
+                      "restricted"
+                    ]
+                  },
+                  "raw_payload_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "provider_receipt_id": {
+                    "$ref": "#/properties/cell/properties/cell_id"
                   }
                 },
                 "required": [
@@ -5930,12 +6557,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows/{row_id}/cells/{column_id}"
+        "/tables/{table_id}/rows/{row_id}/cells/{column_id}"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/rows/{row_id}/cells/{column_id}"
+          "path": "/tables/{table_id}/rows/{row_id}/cells/{column_id}"
         }
       ],
       "mcp_tools": [
@@ -20727,6 +21354,40 @@
               },
               "enrichment_key": {
                 "$ref": "#/properties/configuration/properties/workflow_action_id"
+              },
+              "provider_id": {
+                "$ref": "#/properties/configuration/properties/source_tool_id"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "run_if": {
+                "type": "object",
+                "additionalProperties": {},
+                "nullable": true
+              },
+              "waterfall": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/configuration/properties/source_tool_id"
+                },
+                "minItems": 1
+              },
+              "prompt_template": {
+                "type": "string",
+                "minLength": 1
+              },
+              "engine": {
+                "type": "string",
+                "minLength": 1
+              },
+              "handler_config": {
+                "type": "object",
+                "additionalProperties": {}
               }
             },
             "additionalProperties": false
@@ -20841,6 +21502,40 @@
               },
               "enrichment_key": {
                 "$ref": "#/properties/column_id"
+              },
+              "provider_id": {
+                "$ref": "#/properties/configuration/properties/source_tool_id"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "run_if": {
+                "type": "object",
+                "additionalProperties": {},
+                "nullable": true
+              },
+              "waterfall": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/configuration/properties/source_tool_id"
+                },
+                "minItems": 1
+              },
+              "prompt_template": {
+                "type": "string",
+                "minLength": 1
+              },
+              "engine": {
+                "type": "string",
+                "minLength": 1
+              },
+              "handler_config": {
+                "type": "object",
+                "additionalProperties": {}
               }
             },
             "additionalProperties": false
@@ -20886,12 +21581,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/columns"
+        "/tables/{table_id}/columns"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/columns"
+          "path": "/tables/{table_id}/columns"
         }
       ],
       "mcp_tools": [
@@ -21047,12 +21742,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/columns/{column_id}"
+        "/tables/{table_id}/columns/{column_id}"
       ],
       "rest_operations": [
         {
           "method": "delete",
-          "path": "/x/tables/{table_id}/columns/{column_id}"
+          "path": "/tables/{table_id}/columns/{column_id}"
         }
       ],
       "mcp_tools": [
@@ -21242,6 +21937,40 @@
                     },
                     "enrichment_key": {
                       "$ref": "#/properties/columns/items/properties/column_id"
+                    },
+                    "provider_id": {
+                      "$ref": "#/properties/columns/items/properties/configuration/properties/source_tool_id"
+                    },
+                    "input_bindings": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "run_if": {
+                      "type": "object",
+                      "additionalProperties": {},
+                      "nullable": true
+                    },
+                    "waterfall": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/properties/columns/items/properties/configuration/properties/source_tool_id"
+                      },
+                      "minItems": 1
+                    },
+                    "prompt_template": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "engine": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "handler_config": {
+                      "type": "object",
+                      "additionalProperties": {}
                     }
                   },
                   "additionalProperties": false
@@ -21294,12 +22023,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/columns"
+        "/tables/{table_id}/columns"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/columns"
+          "path": "/tables/{table_id}/columns"
         }
       ],
       "mcp_tools": [
@@ -21526,6 +22255,40 @@
               },
               "enrichment_key": {
                 "$ref": "#/properties/configuration/properties/workflow_action_id"
+              },
+              "provider_id": {
+                "$ref": "#/properties/configuration/properties/source_tool_id"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "run_if": {
+                "type": "object",
+                "additionalProperties": {},
+                "nullable": true
+              },
+              "waterfall": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/configuration/properties/source_tool_id"
+                },
+                "minItems": 1
+              },
+              "prompt_template": {
+                "type": "string",
+                "minLength": 1
+              },
+              "engine": {
+                "type": "string",
+                "minLength": 1
+              },
+              "handler_config": {
+                "type": "object",
+                "additionalProperties": {}
               }
             },
             "additionalProperties": false
@@ -21631,6 +22394,40 @@
               },
               "enrichment_key": {
                 "$ref": "#/properties/column_id"
+              },
+              "provider_id": {
+                "$ref": "#/properties/configuration/properties/source_tool_id"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "run_if": {
+                "type": "object",
+                "additionalProperties": {},
+                "nullable": true
+              },
+              "waterfall": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/configuration/properties/source_tool_id"
+                },
+                "minItems": 1
+              },
+              "prompt_template": {
+                "type": "string",
+                "minLength": 1
+              },
+              "engine": {
+                "type": "string",
+                "minLength": 1
+              },
+              "handler_config": {
+                "type": "object",
+                "additionalProperties": {}
               }
             },
             "additionalProperties": false
@@ -21676,12 +22473,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/columns/{column_id}"
+        "/tables/{table_id}/columns/{column_id}"
       ],
       "rest_operations": [
         {
           "method": "patch",
-          "path": "/x/tables/{table_id}/columns/{column_id}"
+          "path": "/tables/{table_id}/columns/{column_id}"
         }
       ],
       "mcp_tools": [
@@ -21728,6 +22525,901 @@
         ],
         "side_effects": [
           "write_tables"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "deals.archive",
+      "kind": "workspace_capability",
+      "domain": "deals",
+      "category": "deal_mutation",
+      "label": "Deals Archive",
+      "description": "Change workspace deals through the governed canonical deals service.",
+      "when_to_use": [
+        "Use when an authorized agent needs to change a workspace deal."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or surface policy in caller input."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": false,
+      "effect_replay": {
+        "strategy": "unsafe",
+        "proof": "Deal mutations are local and zero-credit, but no operation-key replay receipt is published yet."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "required_inputs": [
+        {
+          "key": "deal_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "deal_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "canonical_capability_id": "deals.archive",
+        "execution_core": "DealsService",
+        "outputs": [
+          "deal",
+          "credits_charged",
+          "web_url"
+        ]
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/x/deals/{id}"
+      ],
+      "rest_operations": [
+        {
+          "method": "delete",
+          "path": "/x/deals/{id}"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_deals_archive",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "search": {
+        "aliases": [
+          "deals.archive",
+          "Deals Archive",
+          "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+        ],
+        "use_cases": [
+          "Use when an authorized agent needs to change a workspace deal."
+        ],
+        "inputs": [
+          "deal_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_deals"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "deals.create",
+      "kind": "workspace_capability",
+      "domain": "deals",
+      "category": "deal_mutation",
+      "label": "Deals Create",
+      "description": "Change workspace deals through the governed canonical deals service.",
+      "when_to_use": [
+        "Use when an authorized agent needs to change a workspace deal."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or surface policy in caller input."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": false,
+      "effect_replay": {
+        "strategy": "unsafe",
+        "proof": "Deal mutations are local and zero-credit, but no operation-key replay receipt is published yet."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "required_inputs": [
+        {
+          "key": "name",
+          "kind": "string",
+          "required": true,
+          "description": "name"
+        },
+        {
+          "key": "company_id",
+          "kind": "uuid",
+          "required": false,
+          "description": "company_id"
+        },
+        {
+          "key": "stage_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "stage_id"
+        },
+        {
+          "key": "amount",
+          "kind": "number",
+          "required": false,
+          "description": "amount"
+        },
+        {
+          "key": "currency",
+          "kind": "string",
+          "required": false,
+          "description": "currency"
+        },
+        {
+          "key": "close_date",
+          "kind": "date",
+          "required": false,
+          "description": "close_date"
+        },
+        {
+          "key": "next_step",
+          "kind": "string",
+          "required": false,
+          "description": "next_step"
+        },
+        {
+          "key": "owner_user_id",
+          "kind": "uuid",
+          "required": false,
+          "description": "owner_user_id"
+        },
+        {
+          "key": "source",
+          "kind": "manual|import",
+          "required": false,
+          "description": "source"
+        },
+        {
+          "key": "attributed_campaign_id",
+          "kind": "uuid",
+          "required": false,
+          "description": "attributed_campaign_id"
+        },
+        {
+          "key": "custom_json",
+          "kind": "object",
+          "required": false,
+          "description": "custom_json"
+        },
+        {
+          "key": "position",
+          "kind": "integer",
+          "required": false,
+          "description": "position"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "name"
+        },
+        {
+          "name": "company_id",
+          "type": "string",
+          "required": false,
+          "description": "company_id"
+        },
+        {
+          "name": "stage_id",
+          "type": "string",
+          "required": true,
+          "description": "stage_id"
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "required": false,
+          "description": "amount"
+        },
+        {
+          "name": "currency",
+          "type": "string",
+          "required": false,
+          "description": "currency"
+        },
+        {
+          "name": "close_date",
+          "type": "date",
+          "required": false,
+          "description": "close_date"
+        },
+        {
+          "name": "next_step",
+          "type": "string",
+          "required": false,
+          "description": "next_step"
+        },
+        {
+          "name": "owner_user_id",
+          "type": "string",
+          "required": false,
+          "description": "owner_user_id"
+        },
+        {
+          "name": "source",
+          "type": "manual|import",
+          "required": false,
+          "description": "source"
+        },
+        {
+          "name": "attributed_campaign_id",
+          "type": "string",
+          "required": false,
+          "description": "attributed_campaign_id"
+        },
+        {
+          "name": "custom_json",
+          "type": "object",
+          "required": false,
+          "description": "custom_json"
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "required": false,
+          "description": "position"
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "canonical_capability_id": "deals.create",
+        "execution_core": "DealsService",
+        "outputs": [
+          "deal",
+          "credits_charged",
+          "web_url"
+        ]
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/x/deals"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/x/deals"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_deals_create",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "search": {
+        "aliases": [
+          "deals.create",
+          "Deals Create",
+          "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+        ],
+        "use_cases": [
+          "Use when an authorized agent needs to change a workspace deal."
+        ],
+        "inputs": [
+          "name",
+          "company_id",
+          "stage_id",
+          "amount",
+          "currency",
+          "close_date",
+          "next_step",
+          "owner_user_id",
+          "source",
+          "attributed_campaign_id",
+          "custom_json",
+          "position"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_deals"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "deals.get",
+      "kind": "workspace_capability",
+      "domain": "deals",
+      "category": "deal_read",
+      "label": "Deals Get",
+      "description": "Read workspace deals through the governed canonical deals service.",
+      "when_to_use": [
+        "Use when an agent needs current workspace deal state."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or surface policy in caller input."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "required_inputs": [
+        {
+          "key": "deal_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "deal_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "canonical_capability_id": "deals.get",
+        "execution_core": "DealsService",
+        "outputs": [
+          "deals",
+          "deal",
+          "history",
+          "web_url"
+        ]
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/x/deals/{id}"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/x/deals/{id}"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_deals_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"deal_id\":\"uuid\"}"
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "search": {
+        "aliases": [
+          "deals.get",
+          "Deals Get",
+          "{\"deal_id\":\"uuid\"}"
+        ],
+        "use_cases": [
+          "Use when an agent needs current workspace deal state."
+        ],
+        "inputs": [
+          "deal_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "deals.list",
+      "kind": "workspace_capability",
+      "domain": "deals",
+      "category": "deal_read",
+      "label": "Deals List",
+      "description": "Read workspace deals through the governed canonical deals service.",
+      "when_to_use": [
+        "Use when an agent needs current workspace deal state."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or surface policy in caller input."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "required_inputs": [],
+      "input_schema": [],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "canonical_capability_id": "deals.list",
+        "execution_core": "DealsService",
+        "outputs": [
+          "deals",
+          "deal",
+          "history",
+          "web_url"
+        ]
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/x/deals"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/x/deals"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_deals_list",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"deal_id\":\"uuid\"}"
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "search": {
+        "aliases": [
+          "deals.list",
+          "Deals List",
+          "{\"deal_id\":\"uuid\"}"
+        ],
+        "use_cases": [
+          "Use when an agent needs current workspace deal state."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "deals.move",
+      "kind": "workspace_capability",
+      "domain": "deals",
+      "category": "deal_mutation",
+      "label": "Deals Move",
+      "description": "Change workspace deals through the governed canonical deals service.",
+      "when_to_use": [
+        "Use when an authorized agent needs to change a workspace deal."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or surface policy in caller input."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": false,
+      "effect_replay": {
+        "strategy": "unsafe",
+        "proof": "Deal mutations are local and zero-credit, but no operation-key replay receipt is published yet."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "required_inputs": [
+        {
+          "key": "deal_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        },
+        {
+          "key": "to_stage_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "to_stage_id"
+        },
+        {
+          "key": "expected_version",
+          "kind": "integer",
+          "required": true,
+          "description": "expected_version"
+        },
+        {
+          "key": "position",
+          "kind": "integer",
+          "required": false,
+          "description": "position"
+        },
+        {
+          "key": "reason",
+          "kind": "string",
+          "required": false,
+          "description": "reason"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "deal_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        },
+        {
+          "name": "to_stage_id",
+          "type": "string",
+          "required": true,
+          "description": "to_stage_id"
+        },
+        {
+          "name": "expected_version",
+          "type": "integer",
+          "required": true,
+          "description": "expected_version"
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "required": false,
+          "description": "position"
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": false,
+          "description": "reason"
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "canonical_capability_id": "deals.move",
+        "execution_core": "DealsService",
+        "outputs": [
+          "deal",
+          "credits_charged",
+          "web_url"
+        ]
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/x/deals/{id}/move"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/x/deals/{id}/move"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_deals_move",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "search": {
+        "aliases": [
+          "deals.move",
+          "Deals Move",
+          "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+        ],
+        "use_cases": [
+          "Use when an authorized agent needs to change a workspace deal."
+        ],
+        "inputs": [
+          "deal_id",
+          "to_stage_id",
+          "expected_version",
+          "position",
+          "reason"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_deals"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "deals.update",
+      "kind": "workspace_capability",
+      "domain": "deals",
+      "category": "deal_mutation",
+      "label": "Deals Update",
+      "description": "Change workspace deals through the governed canonical deals service.",
+      "when_to_use": [
+        "Use when an authorized agent needs to change a workspace deal."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or surface policy in caller input."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": false,
+      "effect_replay": {
+        "strategy": "unsafe",
+        "proof": "Deal mutations are local and zero-credit, but no operation-key replay receipt is published yet."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "required_inputs": [
+        {
+          "key": "deal_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        },
+        {
+          "key": "name",
+          "kind": "string",
+          "required": false,
+          "description": "name"
+        },
+        {
+          "key": "company_id",
+          "kind": "uuid",
+          "required": false,
+          "description": "company_id"
+        },
+        {
+          "key": "amount",
+          "kind": "number",
+          "required": false,
+          "description": "amount"
+        },
+        {
+          "key": "currency",
+          "kind": "string",
+          "required": false,
+          "description": "currency"
+        },
+        {
+          "key": "close_date",
+          "kind": "date",
+          "required": false,
+          "description": "close_date"
+        },
+        {
+          "key": "next_step",
+          "kind": "string",
+          "required": false,
+          "description": "next_step"
+        },
+        {
+          "key": "owner_user_id",
+          "kind": "uuid",
+          "required": false,
+          "description": "owner_user_id"
+        },
+        {
+          "key": "attributed_campaign_id",
+          "kind": "uuid",
+          "required": false,
+          "description": "attributed_campaign_id"
+        },
+        {
+          "key": "custom_json",
+          "kind": "object",
+          "required": false,
+          "description": "custom_json"
+        },
+        {
+          "key": "position",
+          "kind": "integer",
+          "required": false,
+          "description": "position"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "deal_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity. Accepted aliases: deal_id, id."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "name"
+        },
+        {
+          "name": "company_id",
+          "type": "string",
+          "required": false,
+          "description": "company_id"
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "required": false,
+          "description": "amount"
+        },
+        {
+          "name": "currency",
+          "type": "string",
+          "required": false,
+          "description": "currency"
+        },
+        {
+          "name": "close_date",
+          "type": "date",
+          "required": false,
+          "description": "close_date"
+        },
+        {
+          "name": "next_step",
+          "type": "string",
+          "required": false,
+          "description": "next_step"
+        },
+        {
+          "name": "owner_user_id",
+          "type": "string",
+          "required": false,
+          "description": "owner_user_id"
+        },
+        {
+          "name": "attributed_campaign_id",
+          "type": "string",
+          "required": false,
+          "description": "attributed_campaign_id"
+        },
+        {
+          "name": "custom_json",
+          "type": "object",
+          "required": false,
+          "description": "custom_json"
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "required": false,
+          "description": "position"
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "canonical_capability_id": "deals.update",
+        "execution_core": "DealsService",
+        "outputs": [
+          "deal",
+          "credits_charged",
+          "web_url"
+        ]
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/x/deals/{id}"
+      ],
+      "rest_operations": [
+        {
+          "method": "patch",
+          "path": "/x/deals/{id}"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_deals_update",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "search": {
+        "aliases": [
+          "deals.update",
+          "Deals Update",
+          "{\"deal_id\":\"uuid\",\"expected_version\":1}"
+        ],
+        "use_cases": [
+          "Use when an authorized agent needs to change a workspace deal."
+        ],
+        "inputs": [
+          "deal_id",
+          "name",
+          "company_id",
+          "amount",
+          "currency",
+          "close_date",
+          "next_step",
+          "owner_user_id",
+          "attributed_campaign_id",
+          "custom_json",
+          "position"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_deals"
         ],
         "prerequisites": [],
         "deprecated": false
@@ -26465,15 +28157,15 @@
       "required_scopes": [
         "outreach:write"
       ],
-      "mutates": true,
-      "idempotency_required": true,
+      "mutates": false,
+      "idempotency_required": false,
       "effect_replay": {
-        "strategy": "unsafe",
-        "proof": "No provider-native idempotency or Dreamstate-owned interrupted-call reconciliation has been proven for this effect."
+        "strategy": "atomic_local",
+        "proof": "Read-only capability; retry cannot repeat a mutation."
       },
       "cost_policy": {
-        "type": "governed_action",
-        "credits": null
+        "type": "read",
+        "credits": 0
       },
       "async_policy": {
         "mode": "sync",
@@ -26549,7 +28241,7 @@
           "description": "config"
         }
       ],
-      "output_manifest": "action",
+      "output_manifest": "structured",
       "provider": null,
       "source": null,
       "run_intent": "outreach.apply_template",
@@ -26588,9 +28280,7 @@
         "outputs": [
           "result"
         ],
-        "side_effects": [
-          "write_campaign"
-        ],
+        "side_effects": [],
         "prerequisites": [],
         "deprecated": false
       }
@@ -32754,6 +34444,457 @@
       }
     },
     {
+      "id": "intent:social.reddit.search",
+      "kind": "run_intent",
+      "domain": "social",
+      "category": "social",
+      "label": "Social Reddit Search",
+      "description": "Run the social.reddit.search intent through Dreamstate One API governance.",
+      "when_to_use": [
+        "Use when an agent needs to social reddit search from REST, MCP, or /v1/run."
+      ],
+      "when_not_to_use": [
+        "Do not call when required ids are unknown; inspect resources first."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Read-only capability; retry cannot repeat a mutation."
+      },
+      "cost_policy": {
+        "type": "read",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "query",
+          "kind": "string",
+          "required": true,
+          "description": "query"
+        },
+        {
+          "key": "topic",
+          "kind": "string",
+          "required": true,
+          "description": "topic"
+        },
+        {
+          "key": "destination",
+          "kind": "object",
+          "required": true,
+          "description": "destination"
+        },
+        {
+          "key": "page_limit",
+          "kind": "integer",
+          "required": true,
+          "description": "page_limit"
+        },
+        {
+          "key": "cursor",
+          "kind": "string",
+          "required": true,
+          "description": "cursor"
+        },
+        {
+          "key": "oauth_connection_id",
+          "kind": "unknown",
+          "required": true,
+          "description": "oauth_connection_id"
+        },
+        {
+          "key": "community_scope",
+          "kind": "selected_subreddits|all_reddit",
+          "required": true,
+          "description": "community_scope"
+        },
+        {
+          "key": "subreddits",
+          "kind": "array",
+          "required": true,
+          "description": "subreddits"
+        },
+        {
+          "key": "search_mode",
+          "kind": "posts|comments|posts_and_comments",
+          "required": true,
+          "description": "search_mode"
+        },
+        {
+          "key": "sort",
+          "kind": "relevance|hot|top|new|comments",
+          "required": true,
+          "description": "sort"
+        },
+        {
+          "key": "time_filter",
+          "kind": "hour|day|week|month|year|all",
+          "required": true,
+          "description": "time_filter"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "query"
+        },
+        {
+          "name": "topic",
+          "type": "string",
+          "required": true,
+          "description": "topic"
+        },
+        {
+          "name": "destination",
+          "type": "object",
+          "required": true,
+          "description": "destination"
+        },
+        {
+          "name": "page_limit",
+          "type": "integer",
+          "required": true,
+          "description": "page_limit"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": true,
+          "description": "cursor"
+        },
+        {
+          "name": "oauth_connection_id",
+          "type": "unknown",
+          "required": true,
+          "description": "oauth_connection_id"
+        },
+        {
+          "name": "community_scope",
+          "type": "selected_subreddits|all_reddit",
+          "required": true,
+          "description": "community_scope"
+        },
+        {
+          "name": "subreddits",
+          "type": "array",
+          "required": true,
+          "description": "subreddits"
+        },
+        {
+          "name": "search_mode",
+          "type": "posts|comments|posts_and_comments",
+          "required": true,
+          "description": "search_mode"
+        },
+        {
+          "name": "sort",
+          "type": "relevance|hot|top|new|comments",
+          "required": true,
+          "description": "sort"
+        },
+        {
+          "name": "time_filter",
+          "type": "hour|day|week|month|year|all",
+          "required": true,
+          "description": "time_filter"
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": null,
+      "run_intent": "social.reddit.search",
+      "rest_paths": [
+        "/run",
+        "/tools/{id}",
+        "/tools/{id}/run",
+        "/x/sources/reddit-posts-search"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/x/sources/reddit-posts-search"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_reddit_posts_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run",
+        "dreamstate_run"
+      ],
+      "examples": [
+        "{\"intent\":\"social.reddit.search\",\"fields\":{}}"
+      ],
+      "search": {
+        "aliases": [
+          "social.reddit.search",
+          "Social Reddit Search",
+          "{\"intent\":\"social.reddit.search\",\"fields\":{}}"
+        ],
+        "use_cases": [
+          "Use when an agent needs to social reddit search from REST, MCP, or /v1/run."
+        ],
+        "inputs": [
+          "query",
+          "topic",
+          "destination",
+          "page_limit",
+          "cursor",
+          "oauth_connection_id",
+          "community_scope",
+          "subreddits",
+          "search_mode",
+          "sort",
+          "time_filter"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "intent:table.column.enrichment",
+      "kind": "run_intent",
+      "domain": "table",
+      "category": "enrichment",
+      "label": "Table Column Enrichment",
+      "description": "Run the table.column.enrichment intent through Dreamstate One API governance.",
+      "when_to_use": [
+        "Use when an agent needs to table column enrichment from REST, MCP, or /v1/run."
+      ],
+      "when_not_to_use": [
+        "Do not call when required ids are unknown; inspect resources first."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "unsafe",
+        "proof": "No provider-native idempotency or Dreamstate-owned interrupted-call reconciliation has been proven for this effect."
+      },
+      "cost_policy": {
+        "type": "governed_action",
+        "credits": null
+      },
+      "async_policy": {
+        "mode": "async_available",
+        "job_type": "table_column_enrichment",
+        "poll": "/jobs/{id}"
+      },
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "uuid",
+          "required": true
+        },
+        {
+          "key": "column_id",
+          "kind": "uuid",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "table_id"
+        },
+        {
+          "name": "column_id",
+          "type": "string",
+          "required": true,
+          "description": "column_id"
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": null,
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_get",
+        "dreamstate_tools_run",
+        "dreamstate_run"
+      ],
+      "examples": [
+        "{\"intent\":\"table.column.enrichment\",\"fields\":{\"table_id\":\"uuid\",\"column_id\":\"uuid\"}}"
+      ],
+      "search": {
+        "aliases": [
+          "table.column.enrichment",
+          "Table Column Enrichment",
+          "{\"intent\":\"table.column.enrichment\",\"fields\":{\"table_id\":\"uuid\",\"column_id\":\"uuid\"}}"
+        ],
+        "use_cases": [
+          "Use when an agent needs to table column enrichment from REST, MCP, or /v1/run."
+        ],
+        "inputs": [
+          "table_id",
+          "column_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_table"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "intent:table.source.ingestion",
+      "kind": "run_intent",
+      "domain": "table",
+      "category": "table",
+      "label": "Table Source Ingestion",
+      "description": "Run the table.source.ingestion intent through Dreamstate One API governance.",
+      "when_to_use": [
+        "Use when an agent needs to table source ingestion from REST, MCP, or /v1/run."
+      ],
+      "when_not_to_use": [
+        "Do not call when required ids are unknown; inspect resources first."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "unsafe",
+        "proof": "No provider-native idempotency or Dreamstate-owned interrupted-call reconciliation has been proven for this effect."
+      },
+      "cost_policy": {
+        "type": "governed_action",
+        "credits": null
+      },
+      "async_policy": {
+        "mode": "async_available",
+        "job_type": "table_source_ingestion",
+        "poll": "/jobs/{id}"
+      },
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "uuid",
+          "required": true
+        },
+        {
+          "key": "source_id",
+          "kind": "uuid",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "key": "dry_run",
+          "kind": "boolean",
+          "required": false
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "table_id"
+        },
+        {
+          "name": "source_id",
+          "type": "string",
+          "required": true,
+          "description": "source_id"
+        },
+        {
+          "name": "max_rows",
+          "type": "integer",
+          "required": true,
+          "description": "max_rows"
+        },
+        {
+          "name": "max_credits",
+          "type": "integer",
+          "required": true,
+          "description": "max_credits"
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "required": false,
+          "description": "dry_run"
+        }
+      ],
+      "output_manifest": "action",
+      "provider": null,
+      "source": null,
+      "run_intent": "table.source.ingestion",
+      "rest_paths": [
+        "/run",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_get",
+        "dreamstate_tools_run",
+        "dreamstate_run"
+      ],
+      "examples": [
+        "{\"intent\":\"table.source.ingestion\",\"fields\":{\"table_id\":\"uuid\",\"source_id\":\"uuid\",\"max_rows\":\"integer\",\"max_credits\":\"integer\"}}"
+      ],
+      "search": {
+        "aliases": [
+          "table.source.ingestion",
+          "Table Source Ingestion",
+          "{\"intent\":\"table.source.ingestion\",\"fields\":{\"table_id\":\"uuid\",\"source_id\":\"uuid\",\"max_rows\":\"integer\",\"max_credits\":\"integer\"}}"
+        ],
+        "use_cases": [
+          "Use when an agent needs to table source ingestion from REST, MCP, or /v1/run."
+        ],
+        "inputs": [
+          "table_id",
+          "source_id",
+          "max_rows",
+          "max_credits",
+          "dry_run"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_table"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "intent:visibility.ai_traffic",
       "kind": "run_intent",
       "domain": "visibility",
@@ -33215,19 +35356,365 @@
       "search": {
         "aliases": [
           "linkedin.posts.search",
+          "linkedin posts search",
           "Linkedin post search"
         ],
         "use_cases": [
+          "Social research",
+          "Social table ingestion",
           "Use as the provider source for a durable Social table ingestion run."
         ],
-        "inputs": [],
-        "outputs": [],
-        "side_effects": [],
-        "prerequisites": [],
+        "inputs": [
+          "provider-specific structured search contract"
+        ],
+        "outputs": [
+          "canonical content",
+          "nullable metric snapshot"
+        ],
+        "side_effects": [
+          "provider request only; durable table writes occur through table source runs"
+        ],
+        "prerequisites": [
+          "unipile_connected_account"
+        ],
         "deprecated": false
       },
       "surface_policy": {
         "architect": "allow"
+      }
+    },
+    {
+      "id": "provider:ai.answer_probe.chatgpt",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "answer_probe",
+      "label": "ChatGPT answer probe",
+      "description": "Run chatgpt answer probe through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need chatgpt answer probe.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "runApiService visibility.refresh + tracked_prompts/probe_runs",
+        "per_run_defaults": {
+          "max_rows": 25,
+          "max_credits": 250
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "prompt_template",
+          "required": true
+        },
+        {
+          "key": "engine",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "prompt_template",
+          "type": "object",
+          "required": true,
+          "description": "Structured prompt_template provider input."
+        },
+        {
+          "name": "engine",
+          "type": "object",
+          "required": true,
+          "description": "Structured engine provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "ai.answer_probe.chatgpt",
+        "kind": "probe"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run chatgpt answer probe for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "ai.answer_probe.chatgpt",
+          "chatgpt answer probe",
+          "probe table provider",
+          "ChatGPT answer probe",
+          "Run chatgpt answer probe for the selected table rows."
+        ],
+        "use_cases": [
+          "answer engine visibility",
+          "tracked prompt probe",
+          "row-level answer evidence",
+          "Use when selected table rows need chatgpt answer probe.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "prompt_template",
+          "engine",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "answer",
+          "is_cited",
+          "citations",
+          "competitor_mentions",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "tracked prompts and visibility probing enabled"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
+      }
+    },
+    {
+      "id": "provider:ai.answer_probe.google_aio",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "answer_probe",
+      "label": "Google AI Overview answer probe",
+      "description": "Run google ai overview answer probe through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need google ai overview answer probe.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "runApiService visibility.refresh + tracked_prompts/probe_runs",
+        "per_run_defaults": {
+          "max_rows": 25,
+          "max_credits": 250
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "prompt_template",
+          "required": true
+        },
+        {
+          "key": "engine",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "prompt_template",
+          "type": "object",
+          "required": true,
+          "description": "Structured prompt_template provider input."
+        },
+        {
+          "name": "engine",
+          "type": "object",
+          "required": true,
+          "description": "Structured engine provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "ai.answer_probe.google_aio",
+        "kind": "probe"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run google ai overview answer probe for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "ai.answer_probe.google_aio",
+          "google ai overview answer probe",
+          "probe table provider",
+          "Google AI Overview answer probe",
+          "Run google ai overview answer probe for the selected table rows."
+        ],
+        "use_cases": [
+          "answer engine visibility",
+          "tracked prompt probe",
+          "row-level answer evidence",
+          "Use when selected table rows need google ai overview answer probe.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "prompt_template",
+          "engine",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "answer",
+          "is_cited",
+          "citations",
+          "competitor_mentions",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "tracked prompts and visibility probing enabled"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
       }
     },
     {
@@ -33372,6 +35859,319 @@
         "side_effects": [],
         "prerequisites": [],
         "deprecated": false
+      }
+    },
+    {
+      "id": "provider:dataforseo.keyword_metrics",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "column_enrichment",
+      "label": "DataForSEO keyword metrics",
+      "description": "Run dataforseo keyword metrics through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need dataforseo keyword metrics.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "dataForSeoKeywordProvider.runDataForSeoKeyword + keywordIntelligenceService",
+        "per_run_defaults": {
+          "max_rows": 100,
+          "max_credits": 1000
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "input_bindings",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "input_bindings",
+          "type": "object",
+          "required": true,
+          "description": "Structured input_bindings provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "dataforseo.keyword_metrics",
+        "kind": "enrichment"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run dataforseo keyword metrics for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "dataforseo.keyword_metrics",
+          "dataforseo keyword metrics",
+          "enrichment table provider",
+          "DataForSEO keyword metrics",
+          "Run dataforseo keyword metrics for the selected table rows."
+        ],
+        "use_cases": [
+          "table enrichment",
+          "reactive column",
+          "bounded provider waterfall",
+          "Use when selected table rows need dataforseo keyword metrics.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "input_bindings",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "keyword",
+          "search_volume",
+          "competition",
+          "competition_index",
+          "cpc",
+          "intent",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "provider credentials when required"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
+      }
+    },
+    {
+      "id": "provider:dataforseo.serp_features",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "column_enrichment",
+      "label": "DataForSEO SERP features",
+      "description": "Run dataforseo serp features through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need dataforseo serp features.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "dataforseoClient + serpScrapeService",
+        "per_run_defaults": {
+          "max_rows": 100,
+          "max_credits": 1000
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "input_bindings",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "input_bindings",
+          "type": "object",
+          "required": true,
+          "description": "Structured input_bindings provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "dataforseo.serp_features",
+        "kind": "enrichment"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run dataforseo serp features for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "dataforseo.serp_features",
+          "dataforseo serp features",
+          "enrichment table provider",
+          "DataForSEO SERP features",
+          "Run dataforseo serp features for the selected table rows."
+        ],
+        "use_cases": [
+          "table enrichment",
+          "reactive column",
+          "bounded provider waterfall",
+          "Use when selected table rows need dataforseo serp features.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "input_bindings",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "keyword",
+          "serp_features",
+          "top_result_url",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "provider credentials when required"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
       }
     },
     {
@@ -33668,6 +36468,471 @@
         "side_effects": [],
         "prerequisites": [],
         "deprecated": false
+      }
+    },
+    {
+      "id": "provider:enrich.email",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "column_enrichment",
+      "label": "Email enrichment waterfall",
+      "description": "Run email enrichment waterfall through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need email enrichment waterfall.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "emailWaterfall.findAndVerifyEmail",
+        "per_run_defaults": {
+          "max_rows": 100,
+          "max_credits": 5000
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "input_bindings",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "input_bindings",
+          "type": "object",
+          "required": true,
+          "description": "Structured input_bindings provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "enrich.email",
+        "kind": "enrichment"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run email enrichment waterfall for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "enrich.email",
+          "email enrichment waterfall",
+          "enrichment table provider",
+          "Email enrichment waterfall",
+          "Run email enrichment waterfall for the selected table rows."
+        ],
+        "use_cases": [
+          "table enrichment",
+          "reactive column",
+          "bounded provider waterfall",
+          "Use when selected table rows need email enrichment waterfall.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "input_bindings",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "email",
+          "email_status",
+          "provider",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "provider credentials when required"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
+      }
+    },
+    {
+      "id": "provider:enrich.person.waterfall",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "column_enrichment",
+      "label": "Person enrichment waterfall",
+      "description": "Run person enrichment waterfall through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need person enrichment waterfall.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "emailWaterfall.findAndVerifyEmail + phoneWaterfall.findPhone",
+        "per_run_defaults": {
+          "max_rows": 100,
+          "max_credits": 5000
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "input_bindings",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "input_bindings",
+          "type": "object",
+          "required": true,
+          "description": "Structured input_bindings provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "enrich.person.waterfall",
+        "kind": "enrichment"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run person enrichment waterfall for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "enrich.person.waterfall",
+          "person enrichment waterfall",
+          "enrichment table provider",
+          "Person enrichment waterfall",
+          "Run person enrichment waterfall for the selected table rows."
+        ],
+        "use_cases": [
+          "table enrichment",
+          "reactive column",
+          "bounded provider waterfall",
+          "Use when selected table rows need person enrichment waterfall.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "input_bindings",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "email",
+          "email_status",
+          "phone",
+          "provider",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "provider credentials when required"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
+      }
+    },
+    {
+      "id": "provider:enrich.phone",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "column_enrichment",
+      "label": "Phone enrichment waterfall",
+      "description": "Run phone enrichment waterfall through the existing billing-aware provider runtime and project the result into a unified table cell.",
+      "when_to_use": [
+        "Use when selected table rows need phone enrichment waterfall.",
+        "Use with explicit row and credit ceilings through table.column.enrichment."
+      ],
+      "when_not_to_use": [
+        "Do not run without an explicit row selection, input bindings, and bounded credits."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "phoneWaterfall.findPhone",
+        "per_run_defaults": {
+          "max_rows": 100,
+          "max_credits": 5000
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "tableColumnRunExecutor"
+      },
+      "required_inputs": [
+        {
+          "key": "column_id",
+          "required": true
+        },
+        {
+          "key": "row_selection",
+          "required": true
+        },
+        {
+          "key": "input_bindings",
+          "required": true
+        },
+        {
+          "key": "max_rows",
+          "required": true
+        },
+        {
+          "key": "max_credits",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "column_id",
+          "type": "object",
+          "required": true,
+          "description": "Structured column_id provider input."
+        },
+        {
+          "name": "row_selection",
+          "type": "object",
+          "required": true,
+          "description": "Structured row_selection provider input."
+        },
+        {
+          "name": "input_bindings",
+          "type": "object",
+          "required": true,
+          "description": "Structured input_bindings provider input."
+        },
+        {
+          "name": "max_rows",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_rows provider input."
+        },
+        {
+          "name": "max_credits",
+          "type": "object",
+          "required": true,
+          "description": "Structured max_credits provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "enrich.phone",
+        "kind": "enrichment"
+      },
+      "source": {
+        "nullable_outputs": true,
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.column.enrichment",
+      "rest_paths": [
+        "/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Run phone enrichment waterfall for the selected table rows."
+      ],
+      "search": {
+        "aliases": [
+          "enrich.phone",
+          "phone enrichment waterfall",
+          "enrichment table provider",
+          "Phone enrichment waterfall",
+          "Run phone enrichment waterfall for the selected table rows."
+        ],
+        "use_cases": [
+          "table enrichment",
+          "reactive column",
+          "bounded provider waterfall",
+          "Use when selected table rows need phone enrichment waterfall.",
+          "Use with explicit row and credit ceilings through table.column.enrichment."
+        ],
+        "inputs": [
+          "column_id",
+          "row_selection",
+          "input_bindings",
+          "max_rows",
+          "max_credits"
+        ],
+        "outputs": [
+          "phone",
+          "provider",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "provider credentials when required"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
       }
     },
     {
@@ -34185,6 +37450,182 @@
       }
     },
     {
+      "id": "provider:social.posts.search",
+      "kind": "provider",
+      "domain": "tables",
+      "category": "source_ingestion",
+      "label": "Cross-platform Social post search source",
+      "description": "Coordinate governed LinkedIn, X, and Reddit searches and progressively ingest canonical content rows.",
+      "when_to_use": [
+        "Use when a content table needs cross-platform Social posts matching a query or structured topic.",
+        "Use with explicit row and credit ceilings through table.source.ingestion."
+      ],
+      "when_not_to_use": [
+        "Do not use for profile enrichment or for an unbounded background crawl."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Each provider page has a unique operation_request_key and a reserve/call/settle receipt before table projection."
+      },
+      "cost_policy": {
+        "type": "delegated_provider_runtime",
+        "runtime_reference": "socialIngestionRuntime governed provider-attempt settlement",
+        "per_run_defaults": {
+          "max_rows": 300,
+          "max_credits": 300
+        }
+      },
+      "async_policy": {
+        "mode": "async",
+        "executor": "socialIngestionRuntime"
+      },
+      "required_inputs": [
+        {
+          "key": "query_or_topic",
+          "required": true
+        },
+        {
+          "key": "linkedin",
+          "required": true
+        },
+        {
+          "key": "x",
+          "required": true
+        },
+        {
+          "key": "reddit",
+          "required": true
+        },
+        {
+          "key": "page_limit",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "query_or_topic",
+          "type": "object",
+          "required": true,
+          "description": "Structured query_or_topic provider input."
+        },
+        {
+          "name": "linkedin",
+          "type": "object",
+          "required": true,
+          "description": "Structured linkedin provider input."
+        },
+        {
+          "name": "x",
+          "type": "object",
+          "required": true,
+          "description": "Structured x provider input."
+        },
+        {
+          "name": "reddit",
+          "type": "object",
+          "required": true,
+          "description": "Structured reddit provider input."
+        },
+        {
+          "name": "page_limit",
+          "type": "object",
+          "required": true,
+          "description": "Structured page_limit provider input."
+        }
+      ],
+      "output_manifest": "structured",
+      "provider": {
+        "id": "social.posts.search",
+        "kind": "source",
+        "row_kind": "content"
+      },
+      "source": {
+        "canonical_upsert_key": [
+          "platform",
+          "external_post_id"
+        ],
+        "missing_metrics": "absent_never_zero"
+      },
+      "run_intent": "table.source.ingestion",
+      "rest_paths": [
+        "/tables/{table_id}/sources/{source_id}/runs"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "Find Social posts about AI agents across LinkedIn, X, and Reddit."
+      ],
+      "search": {
+        "aliases": [
+          "social post search",
+          "linkedin x reddit research",
+          "cross-platform content source",
+          "social.posts.search",
+          "Cross-platform Social post search source",
+          "Find Social posts about AI agents across LinkedIn, X, and Reddit."
+        ],
+        "use_cases": [
+          "social research table",
+          "content discovery",
+          "post search source",
+          "Use when a content table needs cross-platform Social posts matching a query or structured topic.",
+          "Use with explicit row and credit ceilings through table.source.ingestion."
+        ],
+        "inputs": [
+          "query_or_topic",
+          "linkedin",
+          "x",
+          "reddit",
+          "page_limit"
+        ],
+        "outputs": [
+          "platform",
+          "external_post_id",
+          "canonical_url",
+          "text",
+          "posted_at",
+          "author_name",
+          "author_username",
+          "author_profile_url",
+          "author_followers",
+          "impressions",
+          "views",
+          "likes",
+          "reactions",
+          "comments",
+          "reposts",
+          "quotes",
+          "bookmarks",
+          "reddit_score",
+          "provider_result"
+        ],
+        "side_effects": [
+          "external_provider_read",
+          "spend_credits",
+          "upsert_table_rows",
+          "settle_table_cells",
+          "write_tables"
+        ],
+        "prerequisites": [
+          "provider credentials or connected accounts for each requested platform"
+        ],
+        "deprecated": false
+      },
+      "surface_policy": {
+        "architect": "allow",
+        "mcp_core": "allow",
+        "rest": "allow"
+      }
+    },
+    {
       "id": "provider:visibility:ga4",
       "kind": "provider",
       "domain": "outreach",
@@ -34465,19 +37906,94 @@
       "search": {
         "aliases": [
           "reddit.posts.search",
+          "reddit posts search",
           "Reddit post search"
         ],
         "use_cases": [
+          "Social research",
+          "Social table ingestion",
           "Use as the provider source for a durable Social table ingestion run."
         ],
-        "inputs": [],
-        "outputs": [],
-        "side_effects": [],
-        "prerequisites": [],
+        "inputs": [
+          "provider-specific structured search contract"
+        ],
+        "outputs": [
+          "canonical content",
+          "nullable metric snapshot"
+        ],
+        "side_effects": [
+          "provider request only; durable table writes occur through table source runs"
+        ],
+        "prerequisites": [
+          "reddit_oauth_application"
+        ],
         "deprecated": false
       },
       "surface_policy": {
         "architect": "allow"
+      }
+    },
+    {
+      "id": "resource:deals",
+      "domain": "deals",
+      "category": "resources",
+      "label": "Deals",
+      "description": "List, read, create, update, move, and archive workspace deals.",
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "rest_paths": [
+        "/x/deals",
+        "/x/deals/{id}",
+        "/x/deals/{id}/move"
+      ],
+      "mcp_tools": [
+        "canonical_deals_list",
+        "canonical_deals_get",
+        "canonical_deals_create",
+        "canonical_deals_update",
+        "canonical_deals_move",
+        "canonical_deals_archive"
+      ],
+      "examples": [
+        "List deals, inspect one deal, and open it in the workspace deals board."
+      ],
+      "web_url_template": "/dashboard/deals?deal={id}",
+      "kind": "resource",
+      "when_to_use": [
+        "List deals, inspect one deal, and open it in the workspace deals board."
+      ],
+      "when_not_to_use": [],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "resource_dependent"
+      },
+      "async_policy": {
+        "mode": "resource_dependent"
+      },
+      "required_inputs": [],
+      "input_schema": [],
+      "output_manifest": "structured",
+      "provider": null,
+      "source": null,
+      "run_intent": null,
+      "search": {
+        "aliases": [
+          "deals",
+          "Deals",
+          "List deals, inspect one deal, and open it in the workspace deals board."
+        ],
+        "use_cases": [
+          "List deals, inspect one deal, and open it in the workspace deals board."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
       }
     },
     {
@@ -35225,12 +38741,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows/{row_id}"
+        "/tables/{table_id}/rows/{row_id}"
       ],
       "rest_operations": [
         {
           "method": "delete",
-          "path": "/x/tables/{table_id}/rows/{row_id}"
+          "path": "/tables/{table_id}/rows/{row_id}"
         }
       ],
       "mcp_tools": [
@@ -35487,12 +39003,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows/{row_id}"
+        "/tables/{table_id}/rows/{row_id}"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/rows/{row_id}"
+          "path": "/tables/{table_id}/rows/{row_id}"
         }
       ],
       "mcp_tools": [
@@ -35629,6 +39145,12 @@
           "type": "string",
           "required": false,
           "description": "search"
+        },
+        {
+          "name": "include_cells",
+          "type": "object",
+          "required": false,
+          "description": "include_cells"
         }
       ],
       "input_json_schema": {
@@ -35841,6 +39363,23 @@
             "maxLength": 500,
             "nullable": true,
             "default": null
+          },
+          "include_cells": {
+            "type": "object",
+            "properties": {
+              "column_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/cursor/anyOf/0/properties/row_id"
+                },
+                "minItems": 1,
+                "maxItems": 200
+              }
+            },
+            "required": [
+              "column_ids"
+            ],
+            "additionalProperties": false
           }
         },
         "additionalProperties": false
@@ -36129,6 +39668,21 @@
                     },
                     "observed_at": {
                       "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
+                    },
+                    "field_availability": {
+                      "type": "string",
+                      "enum": [
+                        "available",
+                        "unavailable",
+                        "restricted"
+                      ]
+                    },
+                    "raw_payload_digest": {
+                      "type": "string",
+                      "pattern": "^sha256:[a-f0-9]{64}$"
+                    },
+                    "provider_receipt_id": {
+                      "$ref": "#/properties/rows/items/properties/row_id"
                     }
                   },
                   "required": [
@@ -36302,12 +39856,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows/query"
+        "/tables/{table_id}/rows/query"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/rows/query"
+          "path": "/tables/{table_id}/rows/query"
         }
       ],
       "mcp_tools": [
@@ -36568,12 +40122,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows/{row_id}/restore"
+        "/tables/{table_id}/rows/{row_id}/restore"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/rows/{row_id}/restore"
+          "path": "/tables/{table_id}/rows/{row_id}/restore"
         }
       ],
       "mcp_tools": [
@@ -36900,12 +40454,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/rows"
+        "/tables/{table_id}/rows"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/rows"
+          "path": "/tables/{table_id}/rows"
         }
       ],
       "mcp_tools": [
@@ -37274,12 +40828,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/selection-snapshots"
+        "/tables/{table_id}/selection-snapshots"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/selection-snapshots"
+          "path": "/tables/{table_id}/selection-snapshots"
         }
       ],
       "mcp_tools": [
@@ -37455,12 +41009,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/selection-snapshots/{selection_snapshot_id}"
+        "/tables/{table_id}/selection-snapshots/{selection_snapshot_id}"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/selection-snapshots/{selection_snapshot_id}"
+          "path": "/tables/{table_id}/selection-snapshots/{selection_snapshot_id}"
         }
       ],
       "mcp_tools": [
@@ -49301,12 +52855,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/runs/{run_id}/cancel"
+        "/tables/{table_id}/runs/{run_id}/cancel"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/runs/{run_id}/cancel"
+          "path": "/tables/{table_id}/runs/{run_id}/cancel"
         }
       ],
       "mcp_tools": [
@@ -49531,12 +53085,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/runs/{run_id}"
+        "/tables/{table_id}/runs/{run_id}"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/runs/{run_id}"
+          "path": "/tables/{table_id}/runs/{run_id}"
         }
       ],
       "mcp_tools": [
@@ -49828,12 +53382,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/runs"
+        "/tables/{table_id}/runs"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/runs"
+          "path": "/tables/{table_id}/runs"
         }
       ],
       "mcp_tools": [
@@ -49951,6 +53505,18 @@
           "type": "string",
           "required": false,
           "description": "reason"
+        },
+        {
+          "name": "max_rows",
+          "type": "number",
+          "required": false,
+          "description": "max_rows"
+        },
+        {
+          "name": "max_credits",
+          "type": "number",
+          "required": false,
+          "description": "max_credits"
         }
       ],
       "input_json_schema": {
@@ -49964,6 +53530,16 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 1000
+          },
+          "max_rows": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          },
+          "max_credits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
           }
         },
         "required": [
@@ -50001,12 +53577,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/runs/{run_id}/retry"
+        "/tables/{table_id}/runs/{run_id}/retry"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/runs/{run_id}/retry"
+          "path": "/tables/{table_id}/runs/{run_id}/retry"
         }
       ],
       "mcp_tools": [
@@ -50297,12 +53873,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/sources"
+        "/tables/{table_id}/sources"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/sources"
+          "path": "/tables/{table_id}/sources"
         }
       ],
       "mcp_tools": [
@@ -50455,12 +54031,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/sources/{source_id}"
+        "/tables/{table_id}/sources/{source_id}"
       ],
       "rest_operations": [
         {
           "method": "delete",
-          "path": "/x/tables/{table_id}/sources/{source_id}"
+          "path": "/tables/{table_id}/sources/{source_id}"
         }
       ],
       "mcp_tools": [
@@ -50666,12 +54242,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/sources"
+        "/tables/{table_id}/sources"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/sources"
+          "path": "/tables/{table_id}/sources"
         }
       ],
       "mcp_tools": [
@@ -50756,30 +54332,6 @@
           "kind": "string",
           "required": true,
           "description": "Canonical identity for source_id."
-        },
-        {
-          "key": "max_credits",
-          "kind": "string",
-          "required": true,
-          "description": "max_credits"
-        },
-        {
-          "key": "max_units",
-          "kind": "unknown",
-          "required": true,
-          "description": "max_units"
-        },
-        {
-          "key": "max_pages_per_provider",
-          "kind": "integer",
-          "required": true,
-          "description": "max_pages_per_provider"
-        },
-        {
-          "key": "max_provider_elapsed_ms",
-          "kind": "integer",
-          "required": true,
-          "description": "max_provider_elapsed_ms"
         }
       ],
       "input_schema": [
@@ -50794,103 +54346,130 @@
           "type": "string",
           "required": true,
           "description": "Canonical identity for source_id."
-        },
-        {
-          "name": "max_credits",
-          "type": "string",
-          "required": true,
-          "description": "max_credits"
-        },
-        {
-          "name": "max_units",
-          "type": "string",
-          "required": true,
-          "description": "max_units"
-        },
-        {
-          "name": "max_pages_per_provider",
-          "type": "number",
-          "required": true,
-          "description": "max_pages_per_provider"
-        },
-        {
-          "name": "max_provider_elapsed_ms",
-          "type": "number",
-          "required": true,
-          "description": "max_provider_elapsed_ms"
         }
       ],
       "input_json_schema": {
-        "type": "object",
-        "properties": {
-          "max_credits": {
-            "type": "string",
-            "pattern": "^(?:0|[1-9]\\d*)\\.\\d{6}$",
-            "minLength": 8,
-            "maxLength": 17
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "max_credits": {
+                "type": "string",
+                "pattern": "^(?:0|[1-9]\\d*)\\.\\d{6}$",
+                "minLength": 8,
+                "maxLength": 17
+              },
+              "max_units": {
+                "$ref": "#/anyOf/0/properties/max_credits"
+              },
+              "max_pages_per_provider": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              "max_provider_elapsed_ms": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "max_credits",
+              "max_units",
+              "max_pages_per_provider",
+              "max_provider_elapsed_ms"
+            ],
+            "additionalProperties": false
           },
-          "max_units": {
-            "$ref": "#/properties/max_credits"
-          },
-          "max_pages_per_provider": {
-            "type": "integer",
-            "exclusiveMinimum": true,
-            "minimum": 0,
-            "maximum": 2147483647
-          },
-          "max_provider_elapsed_ms": {
-            "type": "integer",
-            "exclusiveMinimum": true,
-            "minimum": 0,
-            "maximum": 9007199254740991
+          {
+            "type": "object",
+            "properties": {
+              "max_rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "max_credits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000000
+              },
+              "dry_run": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "max_rows",
+              "max_credits"
+            ],
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "max_credits",
-          "max_units",
-          "max_pages_per_provider",
-          "max_provider_elapsed_ms"
-        ],
-        "additionalProperties": false
+        ]
       },
       "output_json_schema": {
-        "type": "object",
-        "properties": {
-          "run_id": {
-            "type": "string",
-            "format": "uuid"
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "queued",
+                  "running",
+                  "partially_completed",
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "timed_out"
+                ]
+              },
+              "state_version": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "cancellation_requested": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "run_id",
+              "status",
+              "state_version",
+              "replayed",
+              "cancellation_requested"
+            ],
+            "additionalProperties": false
           },
-          "status": {
-            "type": "string",
-            "enum": [
-              "queued",
-              "running",
-              "partially_completed",
-              "succeeded",
-              "failed",
-              "cancelled",
-              "timed_out"
-            ]
-          },
-          "state_version": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "replayed": {
-            "type": "boolean"
-          },
-          "cancellation_requested": {
-            "type": "boolean"
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "queued"
+                ]
+              }
+            },
+            "required": [
+              "run_id",
+              "status"
+            ],
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "run_id",
-          "status",
-          "state_version",
-          "replayed",
-          "cancellation_requested"
-        ],
-        "additionalProperties": false
+        ]
       },
       "output_manifest": "structured",
       "provider": null,
@@ -50902,12 +54481,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/sources/{source_id}/runs"
+        "/tables/{table_id}/sources/{source_id}/runs"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/sources/{source_id}/runs"
+          "path": "/tables/{table_id}/sources/{source_id}/runs"
         }
       ],
       "mcp_tools": [
@@ -50936,18 +54515,10 @@
         ],
         "inputs": [
           "table_id",
-          "source_id",
-          "max_credits",
-          "max_units",
-          "max_pages_per_provider",
-          "max_provider_elapsed_ms"
+          "source_id"
         ],
         "outputs": [
-          "run_id",
-          "status",
-          "state_version",
-          "replayed",
-          "cancellation_requested"
+          "result"
         ],
         "side_effects": [
           "write_tables"
@@ -51153,12 +54724,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/sources/{source_id}"
+        "/tables/{table_id}/sources/{source_id}"
       ],
       "rest_operations": [
         {
           "method": "patch",
-          "path": "/x/tables/{table_id}/sources/{source_id}"
+          "path": "/tables/{table_id}/sources/{source_id}"
         }
       ],
       "mcp_tools": [
@@ -51296,12 +54867,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}"
+        "/tables/{table_id}"
       ],
       "rest_operations": [
         {
           "method": "delete",
-          "path": "/x/tables/{table_id}"
+          "path": "/tables/{table_id}"
         }
       ],
       "mcp_tools": [
@@ -51544,12 +55115,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables"
+        "/tables"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables"
+          "path": "/tables"
         }
       ],
       "mcp_tools": [
@@ -51733,12 +55304,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}"
+        "/tables/{table_id}"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}"
+          "path": "/tables/{table_id}"
         }
       ],
       "mcp_tools": [
@@ -51957,12 +55528,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables"
+        "/tables"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables"
+          "path": "/tables"
         }
       ],
       "mcp_tools": [
@@ -52160,12 +55731,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}"
+        "/tables/{table_id}"
       ],
       "rest_operations": [
         {
           "method": "patch",
-          "path": "/x/tables/{table_id}"
+          "path": "/tables/{table_id}"
         }
       ],
       "mcp_tools": [
@@ -52457,12 +56028,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/views/{view_id}"
+        "/tables/{table_id}/views/{view_id}"
       ],
       "rest_operations": [
         {
           "method": "delete",
-          "path": "/x/tables/{table_id}/views/{view_id}"
+          "path": "/tables/{table_id}/views/{view_id}"
         }
       ],
       "mcp_tools": [
@@ -52973,12 +56544,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/views"
+        "/tables/{table_id}/views"
       ],
       "rest_operations": [
         {
           "method": "post",
-          "path": "/x/tables/{table_id}/views"
+          "path": "/tables/{table_id}/views"
         }
       ],
       "mcp_tools": [
@@ -53285,12 +56856,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/views/{view_id}"
+        "/tables/{table_id}/views/{view_id}"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/views/{view_id}"
+          "path": "/tables/{table_id}/views/{view_id}"
         }
       ],
       "mcp_tools": [
@@ -53590,12 +57161,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/views"
+        "/tables/{table_id}/views"
       ],
       "rest_operations": [
         {
           "method": "get",
-          "path": "/x/tables/{table_id}/views"
+          "path": "/tables/{table_id}/views"
         }
       ],
       "mcp_tools": [
@@ -54114,12 +57685,12 @@
       },
       "run_intent": null,
       "rest_paths": [
-        "/x/tables/{table_id}/views/{view_id}"
+        "/tables/{table_id}/views/{view_id}"
       ],
       "rest_operations": [
         {
           "method": "patch",
-          "path": "/x/tables/{table_id}/views/{view_id}"
+          "path": "/tables/{table_id}/views/{view_id}"
         }
       ],
       "mcp_tools": [
@@ -54172,6 +57743,329 @@
         "side_effects": [
           "write_tables"
         ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "workbooks.create",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "workbook",
+      "label": "Workbook Create",
+      "description": "Canonical unified-table create operation for workbook resources.",
+      "when_to_use": [
+        "Use this operation to create a domain-neutral workbook through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not pass campaign_id or treat a campaign as the table resource."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "name",
+          "kind": "string",
+          "required": true,
+          "description": "name"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "name"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "$ref": "#/properties/id"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "$ref": "#/properties/created_at"
+          }
+        },
+        "required": [
+          "id",
+          "workspace_id",
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "workbooks.create",
+        "noun": "workbook",
+        "verb": "create"
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/workbooks"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/workbooks"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_tables_workbooks_create"
+      ],
+      "cli_commands": [
+        "dreamstate workbooks create"
+      ],
+      "examples": [
+        "dreamstate workbooks create"
+      ],
+      "web_url_template": "/dashboard/tables/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "search": {
+        "aliases": [
+          "workbooks.create",
+          "Workbook Create",
+          "dreamstate workbooks create"
+        ],
+        "use_cases": [
+          "Use this operation to create a domain-neutral workbook through the unified table data plane."
+        ],
+        "inputs": [
+          "name"
+        ],
+        "outputs": [
+          "id",
+          "workspace_id",
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "side_effects": [
+          "write_tables"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "workbooks.list",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "workbook",
+      "label": "Workbook List",
+      "description": "Canonical unified-table list operation for workbook resources.",
+      "when_to_use": [
+        "Use this operation to list a domain-neutral workbook through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not pass campaign_id or treat a campaign as the table resource."
+      ],
+      "required_scopes": [
+        "tables:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "limit"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "cursor"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 50
+          },
+          "cursor": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "workbooks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "workspace_id": {
+                  "$ref": "#/properties/workbooks/items/properties/id"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "$ref": "#/properties/workbooks/items/properties/created_at"
+                }
+              },
+              "required": [
+                "id",
+                "workspace_id",
+                "name",
+                "created_at",
+                "updated_at"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "next_cursor": {
+            "allOf": [
+              {
+                "$ref": "#/properties/workbooks/items/properties/id"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "workbooks",
+          "next_cursor"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "workbooks.list",
+        "noun": "workbook",
+        "verb": "list"
+      },
+      "run_intent": null,
+      "rest_paths": [
+        "/workbooks"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/workbooks"
+        }
+      ],
+      "mcp_tools": [
+        "canonical_tables_workbooks_list"
+      ],
+      "cli_commands": [
+        "dreamstate workbooks list"
+      ],
+      "examples": [
+        "dreamstate workbooks list"
+      ],
+      "web_url_template": "/dashboard/tables/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "search": {
+        "aliases": [
+          "workbooks.list",
+          "Workbook List",
+          "dreamstate workbooks list"
+        ],
+        "use_cases": [
+          "Use this operation to list a domain-neutral workbook through the unified table data plane."
+        ],
+        "inputs": [],
+        "outputs": [
+          "workbooks",
+          "next_cursor"
+        ],
+        "side_effects": [],
         "prerequisites": [],
         "deprecated": false
       }
@@ -54736,15 +58630,27 @@
       "search": {
         "aliases": [
           "x.posts.search",
+          "x posts search",
           "X post search"
         ],
         "use_cases": [
+          "Social research",
+          "Social table ingestion",
           "Use as the provider source for a durable Social table ingestion run."
         ],
-        "inputs": [],
-        "outputs": [],
-        "side_effects": [],
-        "prerequisites": [],
+        "inputs": [
+          "provider-specific structured search contract"
+        ],
+        "outputs": [
+          "canonical content",
+          "nullable metric snapshot"
+        ],
+        "side_effects": [
+          "provider request only; durable table writes occur through table source runs"
+        ],
+        "prerequisites": [
+          "x_api_project"
+        ],
         "deprecated": false
       },
       "surface_policy": {
@@ -54769,6 +58675,42 @@
       "name": "canonical_context_update",
       "scope": "context:write",
       "description": "Canonical write capability context.update. Dispatches through context.update.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_deals_archive",
+      "scope": "outreach:write",
+      "description": "Canonical write capability deals.archive. Dispatches through platform.deals.archive.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_deals_create",
+      "scope": "outreach:write",
+      "description": "Canonical write capability deals.create. Dispatches through platform.deals.create.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_deals_get",
+      "scope": "outreach:read",
+      "description": "Canonical read capability deals.get. Dispatches through platform.deals.get.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_deals_list",
+      "scope": "outreach:read",
+      "description": "Canonical read capability deals.list. Dispatches through platform.deals.list.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_deals_move",
+      "scope": "outreach:write",
+      "description": "Canonical write capability deals.move. Dispatches through platform.deals.move.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_deals_update",
+      "scope": "outreach:write",
+      "description": "Canonical write capability deals.update. Dispatches through platform.deals.update.",
       "billing_exempt": false
     },
     {
@@ -54943,6 +58885,30 @@
       "name": "canonical_outreach_validate_sequence",
       "scope": "outreach:read",
       "description": "Canonical read capability sequences.validate. Dispatches through outreach.sequence.validate.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_reddit_posts_search",
+      "scope": "content:read",
+      "description": "Canonical read capability sources.reddit_posts_search. Dispatches through social.reddit.search.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_attachments_create",
+      "scope": "tables:write",
+      "description": "Canonical write capability attachments.create. Dispatches through platform.attachments.create.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_attachments_delete",
+      "scope": "tables:write",
+      "description": "Canonical write capability attachments.delete. Dispatches through platform.attachments.delete.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_attachments_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability attachments.list. Dispatches through platform.attachments.list.",
       "billing_exempt": false
     },
     {
@@ -55135,6 +59101,18 @@
       "name": "canonical_tables_views_update",
       "scope": "tables:write",
       "description": "Canonical write capability views.update. Dispatches through platform.views.update.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_workbooks_create",
+      "scope": "tables:write",
+      "description": "Canonical write capability workbooks.create. Dispatches through platform.workbooks.create.",
+      "billing_exempt": false
+    },
+    {
+      "name": "canonical_tables_workbooks_list",
+      "scope": "tables:read",
+      "description": "Canonical read capability workbooks.list. Dispatches through platform.workbooks.list.",
       "billing_exempt": false
     },
     {
@@ -55727,7 +59705,7 @@
     }
   ],
   "social_skills": {
-    "contract_version": "2026-07-15.2",
+    "contract_version": "2026-07-17.1",
     "aliases": {
       "reddit-engagement": "social.reddit"
     },
@@ -56109,8 +60087,8 @@
     ]
   },
   "counts": {
-    "capabilities": 277,
-    "run_intents": 84,
-    "mcp_tools": 162
+    "capabilities": 300,
+    "run_intents": 87,
+    "mcp_tools": 174
   }
 }

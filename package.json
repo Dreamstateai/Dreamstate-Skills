@@ -1,6 +1,6 @@
 {
   "name": "dreamstate-skills",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Give your coding agent hands. Install agent skills that drive Dreamstate to do real outreach, SEO/GEO, and social at scale.",
   "type": "module",
   "bin": {
