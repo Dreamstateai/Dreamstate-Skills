@@ -4,10 +4,12 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { build, writeArtifacts, checkArtifacts } from '../scripts/build.js';
+import { buildArchitectArtifacts } from '../scripts/architect-build.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
+const buildArchitect = () => buildArchitectArtifacts(catalog);
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every tools_used entry exists in the catalog. If it
@@ -87,7 +89,7 @@ test('site catalog is the same complete catalog as the installer index', () => {
 });
 
 test('one pinned release generates hash-identical Architect, Claude, and Codex kernels and evals', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const clients = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
   assert.match(pinned.source_release, /^\d+\.\d+\.\d+/);
@@ -102,7 +104,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   assert.deepEqual(clients.compatibility, pinned.compatibility);
 
   const ids = Object.keys(pinned.skills).sort();
-  assert.equal(ids.length, 16);
+  assert.equal(ids.length, 14);
   for (const id of ids) {
     const architectRoot = `generated/architect/${id}`;
     const exactArchitectFiles = Object.keys(artifacts)
@@ -136,7 +138,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
 });
 
 test('signed capability domains stay identical across source, Architect, Claude, Codex, and release manifests', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const clients = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
   const expected: Record<string, string[]> = {
@@ -146,10 +148,8 @@ test('signed capability domains stay identical across source, Architect, Claude,
     'growth-asset-planner': [],
     integrations: [],
     outreach: ['brain', 'outreach'],
-    'outreach-list-builder': ['outreach'],
     'outreach-sequence-writer': ['outreach'],
     'outreach-workflow-builder': ['outreach'],
-    'reddit-engagement': ['content'],
     seo: ['brain', 'content', 'tables', 'visibility'],
     social: ['brain', 'content'],
     strategy: ['brain', 'context'],
@@ -184,7 +184,7 @@ test('signed capability domains stay identical across source, Architect, Claude,
 });
 
 test('audience planning kernels require privacy-safe pooled benchmark evidence', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   for (const id of ['outreach', 'strategy', 'social', 'seo']) {
     const kernel = artifacts[`generated/architect/${id}/KERNEL.md`];
     assert.match(kernel, /brain\.learning\.query_benchmarks/);
@@ -214,7 +214,7 @@ test('audience planning kernels require privacy-safe pooled benchmark evidence',
 });
 
 test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   const pinned = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
   const standalone = artifacts['generated/client-adapters/codex/outreach/SKILL.md'];
   const scalar = (field: string) => standalone.match(new RegExp(`^  ${field}: (.+)$`, 'm'))?.[1];
@@ -239,22 +239,22 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
 });
 
 test('generated Architect outreach packages contain no shortcut terminology', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   const forbidden = /\b(?:templates?|presets?|reusable|reuse)\b/i;
-  for (const id of ['outreach', 'outreach-list-builder', 'outreach-sequence-writer', 'outreach-workflow-builder']) {
+  for (const id of ['outreach', 'tables', 'outreach-sequence-writer', 'outreach-workflow-builder']) {
     for (const file of ['SKILL.md', 'KERNEL.md', 'evals.json']) {
       const path = `generated/architect/${id}/${file}`;
       assert.doesNotMatch(artifacts[path], forbidden, path);
     }
   }
   assert.match(
-    artifacts['generated/architect/outreach-list-builder/KERNEL.md'],
+    artifacts['generated/architect/tables/KERNEL.md'],
     /Preserve compatible identity and evidence fields/,
   );
 });
 
 test('growth asset planning may describe a buyer template library but stays explicitly unsaved without a capability', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   assert.match(
     artifacts['generated/architect/growth-asset-planner/KERNEL.md'],
     /buyer-facing template library/i,
@@ -265,9 +265,9 @@ test('growth asset planning may describe a buyer template library but stays expl
 });
 
 test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and launch as ordered typed stages', () => {
-  const artifacts = build();
+  const artifacts = buildArchitect();
   const coordinator = artifacts['generated/architect/outreach/KERNEL.md'];
-  const listBuilder = artifacts['generated/architect/outreach-list-builder/KERNEL.md'];
+  const tables = artifacts['generated/architect/tables/KERNEL.md'];
   const workflow = artifacts['generated/architect/outreach-workflow-builder/KERNEL.md'];
 
   for (const changeKind of [
@@ -294,17 +294,16 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.ok(offset > prior, `${kind} must follow the prior staged gate`);
     prior = offset;
   }
-  assert.match(coordinator, /intent:outreach\.cold_outbound_preview/);
-  assert.match(coordinator, /no list, campaign, source, import, enrollment, or other durable destination/i);
-  assert.match(coordinator, /intent:outreach\.cold_outbound_expand/);
+  assert.match(coordinator, /sources\.cold_outbound_preview/);
+  assert.match(coordinator, /no worksheet, campaign, source, import, enrollment, or other durable destination/i);
+  assert.match(coordinator, /sources\.cold_outbound_expand/);
   assert.match(coordinator, /stage_exact_result_set=true/);
   assert.match(coordinator, /require_campaign_status=draft/);
-  assert.match(listBuilder, /exactly five through ten rows/);
-  assert.match(listBuilder, /Adding a column never implies that it ran/);
-  assert.match(listBuilder, /eleven-through-fifty row cap for this release/);
-  assert.match(listBuilder, /It is never another five-to-ten-row import/);
+  assert.match(tables, /smallest representative selection/i);
+  assert.match(tables, /Approval for a schema change never authorizes a paid run/);
+  assert.match(tables, /exact workbook, worksheet, saved view/);
   assert.match(workflow, /source-evidence run/);
-  assert.match(workflow, /exact list revision/);
+  assert.match(workflow, /exact workbook, worksheet, and saved-view revisions/);
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
   assert.match(coordinator, /single activation-and-send authorization/i);
   assert.match(coordinator, /Do not invent a second send approval gate/i);

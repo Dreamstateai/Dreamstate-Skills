@@ -8,7 +8,7 @@ capability_domains: ["outreach"]
 max_context_tokens: 5000
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5670b126c6ce3829
@@ -16,14 +16,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   generator_version: 1.0.0
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: 9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b
+  kernel_sha256: 35961fb1035a3820f1285e495315d1dfbf141938cbbdfb07547878f6eb6fd842
   adapter_sha256: 323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689
   evals_file: evals.json
-  evals_sha256: f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2
+  evals_sha256: 3368d0b413a6efc78120cfcd27e97d61347244b6ee7f89632a92e504e5aac260
 ---
 
 # Architect surface adapter

@@ -8,7 +8,7 @@ capability_domains: ["brain","context"]
 max_context_tokens: 3000
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5670b126c6ce3829
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md

@@ -2,10 +2,10 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.0",
-  "source_release_hash": "0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306",
+  "source_release_hash": "7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306",
+    "playbook_kernel_hash": "7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "5670b126c6ce3829",
@@ -72,20 +72,8 @@
         "brain",
         "outreach"
       ],
-      "kernel_sha256": "0a5a2668528eb32f6c15ccd56f9c8c7e4d76d6a1d3381d6ba6a11a44f8a756b6",
-      "evals_sha256": "c7e441227c93ab83c82f9f062de0296ddea4890e1771d4bc20bf6742bea5e960",
-      "adapter_sha256": {
-        "architect": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
-        "claude": "e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a",
-        "codex": "2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba"
-      }
-    },
-    "outreach-list-builder": {
-      "capability_domains": [
-        "outreach"
-      ],
-      "kernel_sha256": "30d34fd8bb8bb242452f407a1a743d1ae6390346f8b77c3a2169a75a1bfea8cd",
-      "evals_sha256": "f19268c7e63ecfd3b96998b8d41f2628a85a27eb1662fe7b3c6c63520da7546d",
+      "kernel_sha256": "1fa1bffbd2e25d95a28664bcf5b4e6adcb026097e5c3c013b464ea381a0b368e",
+      "evals_sha256": "8352fd8da1a1a703f76310cf3f38ab22824b0437712580f73e5967989848a593",
       "adapter_sha256": {
         "architect": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
         "claude": "e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a",
@@ -108,20 +96,8 @@
       "capability_domains": [
         "outreach"
       ],
-      "kernel_sha256": "9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b",
-      "evals_sha256": "f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2",
-      "adapter_sha256": {
-        "architect": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
-        "claude": "e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a",
-        "codex": "2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba"
-      }
-    },
-    "reddit-engagement": {
-      "capability_domains": [
-        "content"
-      ],
-      "kernel_sha256": "3e7f97663fdbe7b47eb111a36a1e887ff56691520ae18419f84c0eb8a29eb969",
-      "evals_sha256": "e937a37057751e4a1d0bd53ecff46d5d6987a81289452396b29971f6f03d9212",
+      "kernel_sha256": "35961fb1035a3820f1285e495315d1dfbf141938cbbdfb07547878f6eb6fd842",
+      "evals_sha256": "3368d0b413a6efc78120cfcd27e97d61347244b6ee7f89632a92e504e5aac260",
       "adapter_sha256": {
         "architect": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
         "claude": "e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a",
@@ -148,8 +124,8 @@
         "brain",
         "content"
       ],
-      "kernel_sha256": "3687be23e41a402ee7cbb40866d03429fb4b28dcf8d0d18108c42909b6e9080e",
-      "evals_sha256": "e3c32701e8aa4f837e84c5661f87be4975fdadd42489d75f128fd6d1b8c655be",
+      "kernel_sha256": "5007cfd9a5c7aae22cad38e3c0df6f3bddb13a739a3c13dbc6a1cc6ee8a40f2f",
+      "evals_sha256": "71781fbd01cf98a23e4499c3827c958a83099523a1b80a51d456ef05c943d85b",
       "adapter_sha256": {
         "architect": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",
         "claude": "e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a",
@@ -173,7 +149,7 @@
       "capability_domains": [
         "tables"
       ],
-      "kernel_sha256": "ab1c9eface65b504b89af93739b3afa05c3637fb80fd6329a0cfa84ad41d96b1",
+      "kernel_sha256": "f98f09282163420a24d10eac1a734e9f840ef8f7735cc56492fbefb7b98456ea",
       "evals_sha256": "aacb5e127d0eab6090d7d6227b0503fe65d6207fcfd18a386806aadc59fa3156",
       "adapter_sha256": {
         "architect": "323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689",

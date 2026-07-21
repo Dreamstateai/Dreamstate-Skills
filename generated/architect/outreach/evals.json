@@ -1,7 +1,7 @@
 {
   "cases": [
     {
-      "expected_load_order": ["outreach-list-builder", "outreach-workflow-builder", "outreach"],
+      "expected_load_order": ["tables", "outreach-workflow-builder", "outreach"],
       "expected_skill_ids": ["outreach"],
       "id": "new-campaign-from-scratch",
       "must_use_popup_when_missing": ["qualification", "sender", "volume"],
@@ -20,7 +20,7 @@
     {
       "expected_skill_ids": ["outreach"],
       "id": "staged-pilot-build-sample-expand-launch",
-      "required_concepts": ["intent:outreach.cold_outbound_preview", "outreach_source", "outreach_bundle", "table_column_run", "intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "outreach_activation", "approval of one stage never authorizes a later stage"],
+      "required_concepts": ["sources.cold_outbound_preview", "outreach_source", "outreach_bundle", "table_column_run", "sources.cold_outbound_expand", "outreach_bulk_expansion", "outreach_activation", "approval of one stage never authorizes a later stage"],
       "required_order": ["outreach_source", "outreach_bundle", "table_column_run", "outreach_bulk_expansion", "outreach_activation"],
       "request": "Build the full campaign, test columns on 7 rows, enroll the prioritized contacts, and launch it. Explain and preserve every approval boundary."
     },

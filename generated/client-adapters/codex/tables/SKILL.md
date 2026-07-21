@@ -5,7 +5,7 @@ description: "Create, inspect, revise, and run unified workbooks, tables, views,
 capability_domains: ["tables"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5670b126c6ce3829
@@ -13,12 +13,12 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   generator_version: 1.0.0
   client: codex
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: ab1c9eface65b504b89af93739b3afa05c3637fb80fd6329a0cfa84ad41d96b1
+  kernel_sha256: f98f09282163420a24d10eac1a734e9f840ef8f7735cc56492fbefb7b98456ea
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
   evals_sha256: aacb5e127d0eab6090d7d6227b0503fe65d6207fcfd18a386806aadc59fa3156
@@ -51,6 +51,8 @@ Resolve the workspace, workbook, table, view, row entity, stable identifiers, cu
 ## Capability workflow
 
 Search the live registry by desired table outcome and fetch every selected contract. Live schemas own supported providers, column types, costs, readiness, limits, and result shapes. Keep source, enrichment, formula, action, and workflow responsibilities explicit. Declare each node's inputs, outputs, dependencies, run conditions, provider, expected cost, and failure behavior before proposing a change.
+
+For outreach tables, preserve the table's current schema and lineage. Preserve compatible identity and evidence fields and search live contracts for signals, profile enrichments, functions, AI generation operations, and their outputs. Side-effecting actions remain workflow operations, never recomputable columns. A source evidence pilot has no durable destination. A later expansion binds the exact workbook, worksheet, saved view, and reviewed revision; never substitute a campaign-local audience identifier.
 
 Prepare a reviewable table or revision before paid or destructive work. Run the smallest representative selection first with an explicit row cap and credit ceiling. Inspect settled cells and run evidence before proposing a larger exact selection. Approval for a schema change never authorizes a paid run, and approval for one selection never authorizes another. Use current revisions and idempotency fences, preserve partial successes, and never retry failed rows blindly.
 

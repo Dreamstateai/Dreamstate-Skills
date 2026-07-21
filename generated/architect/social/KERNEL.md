@@ -2,7 +2,7 @@
 
 ## Job boundary
 
-Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar placement, review, scheduling, publishing, and evidence-backed performance analysis. An authored Reddit post is social content. Discovery of real community threads and replies to those threads belongs to `reddit-engagement`. Contact sourcing, paid outreach, and enrollment belong to `outreach`.
+Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar placement, review, scheduling, publishing, and evidence-backed performance analysis. An authored Reddit post is social content. Discovery of real community threads and replies to those threads belongs to the canonical `social.reddit` child skill. Contact sourcing, paid outreach, and enrollment belong to `outreach`.
 
 ## Grounding and intake
 

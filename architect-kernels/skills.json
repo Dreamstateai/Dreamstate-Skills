@@ -50,15 +50,6 @@
       "max_context_tokens": 3000
     },
     {
-      "id": "outreach-list-builder",
-      "name": "Outreach List Builder",
-      "description": "Build or extend source-first reactive lead tables with live-discovered columns, typed dependencies, bounded samples, and quality/cost audits.",
-      "triggers": ["source a target list", "build or extend a lead table", "add enrichment signal function or AI columns", "prioritize and filter outreach rows"],
-      "dependencies": [],
-      "capability_domains": ["outreach"],
-      "max_context_tokens": 5000
-    },
-    {
       "id": "outreach-sequence-writer",
       "name": "Outreach Sequence Writer",
       "description": "Design custom channel steps, cadence, sender constraints, variable lineage, and real-row previews only for workflows that contain messaging.",
@@ -81,18 +72,9 @@
       "name": "Outreach",
       "description": "Open an existing campaign or coordinate a new custom campaign from scratch through ordered evidence-pilot, draft-bundle, column-sample, capped-bulk, and activation-and-send gates.",
       "triggers": ["open or revise an outreach campaign", "build a campaign from scratch", "create a prospecting system", "build a list workflow and sequence"],
-      "dependencies": ["outreach-list-builder", "outreach-workflow-builder"],
+      "dependencies": ["tables", "outreach-workflow-builder"],
       "capability_domains": ["brain", "outreach"],
       "max_context_tokens": 3000
-    },
-    {
-      "id": "reddit-engagement",
-      "name": "Reddit Engagement",
-      "description": "Discover real Reddit and community threads, triage evidence and risk, and prepare thread-bound reply drafts for review.",
-      "triggers": ["find real Reddit threads", "monitor community conversations", "triage reply opportunities", "draft replies to real threads"],
-      "dependencies": [],
-      "capability_domains": ["content"],
-      "max_context_tokens": 5000
     },
     {
       "id": "seo",

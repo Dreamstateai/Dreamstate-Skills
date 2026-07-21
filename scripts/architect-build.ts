@@ -12,7 +12,7 @@ const SKILL_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CAPABILITY_DOMAIN = /^[a-z][a-z0-9_-]{0,63}$/;
 const OUTREACH_POLICY_IDS = new Set([
   'outreach',
-  'outreach-list-builder',
+  'tables',
   'outreach-sequence-writer',
   'outreach-workflow-builder',
 ]);

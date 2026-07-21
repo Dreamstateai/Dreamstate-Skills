@@ -5,7 +5,7 @@ description: "Build validated row workflows with triggers, typed branches, actio
 capability_domains: ["outreach"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5670b126c6ce3829
@@ -13,15 +13,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: 9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b
+  kernel_sha256: 35961fb1035a3820f1285e495315d1dfbf141938cbbdfb07547878f6eb6fd842
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2
+  evals_sha256: 3368d0b413a6efc78120cfcd27e97d61347244b6ee7f89632a92e504e5aac260
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]
@@ -46,7 +46,7 @@ Own what happens to sourced rows and when: trigger, qualification branches, cond
 
 ## Inputs
 
-Require the list-builder handoff or an inspected existing table with exact artifact revision, row identity, typed column outputs, qualification output, exclusions, sample evidence, and capability digests. Resolve current workflow graph and active nested surface when editing. If a referenced column or output is missing, return the dependency gap instead of inventing it.
+Require the tables handoff or an inspected existing worksheet and saved view with exact revisions, row identity, typed column outputs, qualification output, exclusions, sample evidence, and capability digests. Resolve current workflow graph and active nested surface when editing. If a referenced column or output is missing, return the dependency gap instead of inventing it.
 
 ## Graph design
 
@@ -58,7 +58,7 @@ Require the list-builder handoff or an inspected existing table with exact artif
 6. Define stop conditions for disqualification, missing consent, sender or integration failure, reply, bounce, unsubscribe, campaign pause, cost cap, and terminal completion only when supported by live contracts.
 7. Separate eligibility from enrollment and enrollment from activation. A qualifying branch may make a row eligible; it does not itself authorize external outreach.
 
-Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence. A workflow proposal cannot run columns or enroll contacts, and cannot expand a source. After pilot and column-sample inspection, one separate `outreach_bulk_expansion` proposal must use the exact `intent:outreach.cold_outbound_expand` contract and bind the source-evidence run, draft campaign, exact list revision, configured source id, unchanged targeting, integer eleven-through-fifty row cap, exact-result-set flag, and required draft status; never represent a filter or future query as an enrolled audience. Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before that proposal. Final activation remains a later coordinator-owned consequence.
+Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence. A workflow proposal cannot run columns or enroll contacts, and cannot expand a source. After pilot and column-sample inspection, one separate `outreach_bulk_expansion` proposal must use the exact `sources.cold_outbound_expand` contract and bind the source-evidence run, draft campaign, exact workbook, worksheet, and saved-view revisions, configured source id, unchanged targeting, integer eleven-through-fifty row cap, exact-result-set flag, and required draft status; never represent a filter or future query as an enrolled audience. Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before that proposal. Final activation remains a later coordinator-owned consequence.
 
 ## Handoff
 

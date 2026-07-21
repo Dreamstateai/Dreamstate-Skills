@@ -3,7 +3,7 @@
     {
       "expected_skill_ids": ["social"],
       "id": "authored-reddit-post",
-      "must_not_load": ["reddit-engagement"],
+      "must_not_load": ["social.reddit"],
       "request": "Write an authored Reddit post for our company and put it on next Tuesday's calendar."
     },
     {
