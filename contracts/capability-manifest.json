@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "a11e972ceecbd313",
+  "capability_hash": "5670b126c6ce3829",
   "api_version": "v1",
   "capabilities": [
     {
@@ -183376,7 +183376,10 @@
               "x_author_reply_nudge",
               "seo_geo_signals_ready",
               "ai_citations",
-              "engage_keyword_hit"
+              "engage_keyword_hit",
+              "performance_insights_ready",
+              "agency_health",
+              "task_reminder"
             ],
             "properties": {
               "mentions": {
@@ -183439,6 +183442,15 @@
                 "$ref": "#/properties/preferences/properties/mentions"
               },
               "engage_keyword_hit": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "performance_insights_ready": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "agency_health": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "task_reminder": {
                 "$ref": "#/properties/preferences/properties/mentions"
               }
             },
@@ -183612,7 +183624,10 @@
               "x_author_reply_nudge",
               "seo_geo_signals_ready",
               "ai_citations",
-              "engage_keyword_hit"
+              "engage_keyword_hit",
+              "performance_insights_ready",
+              "agency_health",
+              "task_reminder"
             ],
             "properties": {
               "mentions": {
@@ -183675,6 +183690,15 @@
                 "$ref": "#/properties/preferences/properties/mentions"
               },
               "engage_keyword_hit": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "performance_insights_ready": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "agency_health": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "task_reminder": {
                 "$ref": "#/properties/preferences/properties/mentions"
               }
             },
@@ -183929,7 +183953,7 @@
       "required_inputs": [
         {
           "key": "notification_type",
-          "kind": "mentions|comments_replies|post_published|post_errors|approval_requested|approval_reminders|approval_completed|unscheduled_blocking|daily_ideas|keyword_alerts|draft_reminders|x_author_reply_nudge|seo_geo_signals_ready|ai_citations|engage_keyword_hit",
+          "kind": "mentions|comments_replies|post_published|post_errors|approval_requested|approval_reminders|approval_completed|unscheduled_blocking|daily_ideas|keyword_alerts|draft_reminders|x_author_reply_nudge|seo_geo_signals_ready|ai_citations|engage_keyword_hit|performance_insights_ready|agency_health|task_reminder",
           "required": true,
           "description": "notification_type"
         },
@@ -183974,7 +183998,10 @@
               "x_author_reply_nudge",
               "seo_geo_signals_ready",
               "ai_citations",
-              "engage_keyword_hit"
+              "engage_keyword_hit",
+              "performance_insights_ready",
+              "agency_health",
+              "task_reminder"
             ]
           },
           "channels": {
@@ -184019,7 +184046,10 @@
               "x_author_reply_nudge",
               "seo_geo_signals_ready",
               "ai_citations",
-              "engage_keyword_hit"
+              "engage_keyword_hit",
+              "performance_insights_ready",
+              "agency_health",
+              "task_reminder"
             ]
           },
           "preferences": {
@@ -184504,7 +184534,8 @@
               "form_submission",
               "billing_access",
               "engage_keyword_hit",
-              "growth_daily_report"
+              "growth_daily_report",
+              "performance_insights_ready"
             ],
             "properties": {
               "keyword_alerts": {
@@ -184549,6 +184580,9 @@
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               },
               "growth_daily_report": {
+                "$ref": "#/properties/preferences/properties/keyword_alerts"
+              },
+              "performance_insights_ready": {
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               }
             },
@@ -184727,7 +184761,8 @@
               "form_submission",
               "billing_access",
               "engage_keyword_hit",
-              "growth_daily_report"
+              "growth_daily_report",
+              "performance_insights_ready"
             ],
             "properties": {
               "keyword_alerts": {
@@ -184772,6 +184807,9 @@
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               },
               "growth_daily_report": {
+                "$ref": "#/properties/preferences/properties/keyword_alerts"
+              },
+              "performance_insights_ready": {
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               }
             },
@@ -185026,7 +185064,7 @@
       "required_inputs": [
         {
           "key": "notification_type",
-          "kind": "keyword_alerts|draft_reminders|ai_citations|outreach_urgent|outreach_reply|form_submission|billing_access|engage_keyword_hit|growth_daily_report",
+          "kind": "keyword_alerts|draft_reminders|ai_citations|outreach_urgent|outreach_reply|form_submission|billing_access|engage_keyword_hit|growth_daily_report|performance_insights_ready",
           "required": true,
           "description": "notification_type"
         },
@@ -185065,7 +185103,8 @@
               "form_submission",
               "billing_access",
               "engage_keyword_hit",
-              "growth_daily_report"
+              "growth_daily_report",
+              "performance_insights_ready"
             ]
           },
           "channels": {
@@ -185104,7 +185143,8 @@
               "form_submission",
               "billing_access",
               "engage_keyword_hit",
-              "growth_daily_report"
+              "growth_daily_report",
+              "performance_insights_ready"
             ]
           },
           "preferences": {
