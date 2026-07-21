@@ -32,10 +32,18 @@
       },
       "expected": {
         "allowed_tools": [
-          "workflow_run"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run",
+          "dreamstate_list_runs",
+          "dreamstate_cancel_run",
+          "dreamstate_resume_run"
         ],
         "allowed_capability_ids": [
-          "resource:workflows.write"
+          "workflows.get",
+          "workflows.run_trace_get",
+          "workflows.runs_list"
         ]
       },
       "check": "tool_trace_subset"

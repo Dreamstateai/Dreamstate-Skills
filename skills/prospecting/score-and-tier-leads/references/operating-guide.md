@@ -8,11 +8,11 @@ Score and tier prospects from explicit fit, timing, relationship, and confidence
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`, `outreach_add_column`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
 
-Declared capabilities: `column:ai`, `column:formula`, `function:icp_score_and_route`
+Declared capabilities: `columns.add`, `columns.run`, `columns.sample`, `runs.column_get`
 
-Required scopes: `outreach:write`
+Required scopes: `outreach:read`, `outreach:write`, `tables:write`
 
 ## Evidence checklist
 

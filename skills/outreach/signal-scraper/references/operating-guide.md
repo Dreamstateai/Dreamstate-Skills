@@ -8,11 +8,11 @@ Find in-market leads by buying signal and pull them into a Dreamstate list, one 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_list_signal_types`, `outreach_find_leads`, `outreach_create_list`, `outreach_lists`, `outreach_list_contacts`, `content_list_accounts`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.list_accounts`, `intent:outreach.create_list`, `intent:outreach.find_leads`, `intent:outreach.list_contacts`, `intent:outreach.list_lists`, `intent:outreach.signals.list`
+Declared capabilities: `contacts.list`, `outreach.triggers_supported_list`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`
 
-Required scopes: `content:read`, `outreach:read`, `outreach:write`
+Required scopes: `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`
 
 ## Evidence checklist
 

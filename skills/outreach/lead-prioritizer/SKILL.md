@@ -13,6 +13,10 @@ the data, you decide what "good fit" means and apply it consistently.
 Run `/connect` first if unsure. Works best on a list that has already been through
 `/enrich-list`, so there are firmographics to score on.
 
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## Step 1: Pin the rubric
 
 Score against something explicit, or the numbers are noise. Confirm the ICP with the user
@@ -22,25 +26,26 @@ Score against something explicit, or the numbers are noise. Confirm the ICP with
 - The "why now" signal, if any (raised, hiring, switched tools).
 - The disqualifiers (agencies, students, competitors, wrong region).
 
-Decide a simple, defensible scale up front, e.g. a 1-5 fit score, or TIER_1..TIER_4
-bands. State it to the user before you start so the scores mean the same thing on every
-row.
+Use the canonical fit-score contract: `0-100` or `null`. Persist components, reasons,
+evidence, confidence, and the exact function/prompt revision beside the score. Return `null`
+when required evidence is missing rather than fabricating precision. State the rubric before
+you start so the scores mean the same thing on every row.
 
 ## Step 2: Read the rows
 
-Pull the table with `outreach_get_campaign_table` (or `outreach_list_contacts` for the
-roster), and `outreach_get_contact` for the enriched detail on each person. If many rows
+Pull the table with `rows.query` (or `contacts.list` for the roster), and `contacts.get`
+for the enriched detail on each person. If many rows
 are missing firmographics, say so and suggest running `/enrich-list` first; scoring on
 empty fields just launders guesses.
 
 ## Step 3: Score and persist
 
-Add the scoring columns once with `outreach_add_column` (`kind: "freeform"`), then write
-each row with `outreach_set_cell`:
+Add the scoring columns once with `columns.add`, then write each row with `cells.settle`,
+including the score function/prompt revision and evidence provenance:
 
-- `icp_fit` — the score or tier.
-- `fit_reason` — one line on why, so the score is auditable and the user can recalibrate
-  the rubric if they disagree.
+- `icp_fit` — the `0-100` score or `null`.
+- `fit_reason` and supporting fields — why, components, evidence, confidence, and revision,
+  so the score is auditable and the user can recalibrate the rubric if they disagree.
 
 Score honestly. A tight set of 30 strong fits beats 300 maybes: the downstream sends are
 capped per account, so spending those sends on weak rows is the real cost.

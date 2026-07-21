@@ -67,8 +67,8 @@ columns you want — and each stage reads and writes that table.
   .mcp.json / mcp.json / config.toml  ──►  mcp.trydreamstate.com
         │                                    │
         ▼                                    ▼
-  skills on disk                       48 tools: outreach_* · content_* · visibility_*
-                                       (sends paced under per-account caps)
+  skills on disk                       8 compact gateway + run-control tools
+                                       (explicit canonical capability IDs)
 ```
 
 - **The skills are playbooks, not tool wrappers.** They encode the strategy — ICP
@@ -103,7 +103,7 @@ skills-index.json      Generated catalog the install CLI reads
 config/icp.example.json  Copy to icp.json — the ICP the scoring/copy skills read
 references/            Browsable docs (e.g. input-columns.md: your CSV → a Dreamstate row)
 src/*.ts               TypeScript: the install CLI (cli.ts) + config writers + banner
-src/catalog.json       Pinned snapshot of Dreamstate MCP tools + the scope each needs
+contracts/capability-manifest.json  Pinned canonical capabilities, MCP tools, scopes, and release hash
 scripts/build.ts       playbooks/ -> skills/ + skills-index.json + dist/ MCP prompts
 test/*.ts              Contract, determinism, and config-writer round-trip tests
 dist/                  MCP-prompt artifacts the Dreamstate server vendors
@@ -118,8 +118,8 @@ The generated tree is committed and CI fails if it drifts from `playbooks/`, so 
 playbooks and every published surface can never diverge.
 
 Add or improve a playbook? See [CONTRIBUTING.md](CONTRIBUTING.md). Every playbook is
-validated against the tool catalog in CI, so a skill that references a tool that
-doesn't exist can't merge.
+validated against the canonical capability manifest in CI, so a skill that
+references an unknown tool or capability cannot merge.
 
 ## License
 

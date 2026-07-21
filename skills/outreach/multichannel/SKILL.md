@@ -13,6 +13,10 @@ orchestration over two deeper playbooks, so lean on them.
 Run `/connect` first if unsure. You need a healthy LinkedIn account (and an X account if
 you want content there too).
 
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## How it fits together
 
 ```
@@ -23,28 +27,30 @@ you want content there too).
            └──────────────┬──────────────┘
                    prospect sees both
                           │
-                  outreach_analytics
+          canonical analytics evidence
 ```
 
 ## Step 1: One audience, two motions
 
 Define the ICP once with the user (see `/outbound` Step 0). Both motions target the same
-people, so the ICP is shared. Source and enrich the list: `outreach_create_list` ->
-`outreach_find_leads` (with a healthy `account_id`) -> `outreach_enrich_contact`.
+people, so the ICP is shared. Create the workbook/table with `workbooks.create`, source rows
+with `sources.find_leads` (healthy `account_id` and exact worksheet/view destination), then
+enrich selected contacts with `contacts.enrich`.
 
 ## Step 2: Direct motion (LinkedIn sequence)
 
-Run the core of `/outbound`: `outreach_create_campaign` -> `outreach_apply_template`
--> build and validate the sequence -> `outreach_enroll` -> `outreach_activate_campaign`. If
+Run the core of `/outbound`: `campaigns.create` -> `campaigns.template_apply` -> build and
+validate the sequence -> `sequences.enroll_selection` using a frozen workbook/worksheet/view
+snapshot -> `campaigns.activate`. If
 the full outbound skill is installed, defer to it for the sequence detail rather than
 duplicating steps here.
 
 ## Step 3: Ambient motion (content)
 
 Schedule a short run of content timed to overlap the sequence, so the audience sees the
-brand while the DMs land. Generate posts with `content_generate_post` on the themes that
-matter to this ICP, then `content_schedule_post` across the campaign window (get account
-ids from `content_list_accounts`). Defer to `/social-calendar` for the drafting/scheduling
+brand while the DMs land. Generate posts with `content.artifact_generate` on the themes that
+matter to this ICP, then `content.schedule` across the campaign window (get account ids from
+`social.accounts_list`). Defer to `/social-calendar` for the drafting/scheduling
 detail if it is installed.
 
 Keep the content about the prospect's problem, not a pitch. The point is familiarity, so
@@ -52,7 +58,7 @@ the DM feels like it is from a brand they have already seen, not a cold stranger
 
 ## Step 4: Read it as one motion
 
-Use `outreach_analytics` to track reply and acceptance rate over the campaign window.
+Use `outreach.workspace_stats_get` to track reply and acceptance rate over the campaign window.
 Multichannel pays off when the warmed audience replies at a higher rate than a cold-only
 baseline; if the user ran cold before, compare. Attribute carefully: the content lifts the
 outreach, so judge them together, not in isolation.

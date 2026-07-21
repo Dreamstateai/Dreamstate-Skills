@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
-tools_used: [outreach_find_leads, outreach_create_list, outreach_lists, outreach_list_contacts, outreach_get_contact, outreach_enrich_contact, outreach_get_campaign_table, outreach_add_column, outreach_set_cell, outreach_create_campaign, outreach_apply_template, outreach_get_sequence, outreach_get_step_options, outreach_add_step, outreach_validate_sequence, outreach_draft_message, outreach_enroll, outreach_activate_campaign, content_list_accounts, outreach_analytics]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [social.accounts_list, workbooks.create, tables.create, tables.list, sources.find_leads, contacts.list, contacts.get, contacts.enrich, rows.query, columns.add, cells.settle, campaigns.create, campaigns.template_apply, sequences.get, sequences.step_options, sequences.add_step, sequences.validate, contacts.draft_opener, sequences.enroll_selection, campaigns.activate, outreach.workspace_stats_get]
 ---
 
 # Outbound
@@ -17,6 +18,10 @@ makes a good opener, when to launch); Dreamstate brings the hands (sourcing, enr
 sending under per-account caps you cannot bypass).
 
 Run `/connect` first if unsure. You need a healthy connected LinkedIn account.
+
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
 
 ## The pipeline
 
@@ -45,45 +50,47 @@ an `icp.json`, read it instead of asking.
 
 ## Step 1: Source (→ /signal-scraper)
 
-Pick a healthy LinkedIn account with `content_list_accounts`. Create a list with
-`outreach_create_list` and source rows with `outreach_find_leads` (pass `account_id` and
-`list_id`; use the user's LinkedIn search URL if they have one). Start with a small `limit`
-and check quality with `outreach_list_contacts` before scaling.
+Pick a healthy LinkedIn account with `social.accounts_list`. Create a workbook and first
+worksheet/table with `workbooks.create`, then source rows with `sources.find_leads` (pass
+`account_id` and the exact workbook/worksheet/view destination; use the user's LinkedIn search
+URL if they have one). Start with a small `limit` and check quality with `contacts.list` before scaling.
 
 ## Step 2: Build the table and enrich (→ /enrich-list)
 
-Enrich kept contacts with `outreach_enrich_contact` and read fields with
-`outreach_get_contact`. Add the columns the pipeline needs with `outreach_add_column` and
-write per-row values with `outreach_set_cell`. `outreach_get_campaign_table` is the
+Enrich kept contacts with `contacts.enrich` and read fields with `contacts.get`. Add the
+columns the pipeline needs with `columns.add` and write per-row values with `cells.settle`,
+including provenance. `rows.query` is the
 Clay-style view of rows x columns.
 
 ## Step 3: Score against the ICP (→ /lead-prioritizer)
 
-Rate each contact against the Step 0 rubric and persist it: an `icp_fit` column
-(`outreach_add_column` once, then `outreach_set_cell` per row), plus a `fit_reason`. Drop
+Rate each contact against the Step 0 rubric and persist it: an `icp_fit` column containing
+`0-100` or `null` (`columns.add` once, then `cells.settle` per row), plus components,
+`fit_reason`, evidence, confidence, and the exact function/prompt revision. Never invent a
+score when evidence is missing. Drop
 low-fit rows. A tight list of 30 great fits beats 300 maybes; the sends are capped, so
 weak rows cost real sends.
 
 ## Step 4: Write openers (→ /hook-writer)
 
-For the top tier, draft a personalized opener with `outreach_draft_message` (an opener
-`framework_id` from `outreach_get_step_options`, plus the `campaign_id`) and save it to an
+For the top tier, draft a personalized opener with `contacts.draft_opener` (an opener
+`framework_id` from `sequences.step_options`, plus the `campaign_id`) and save it to an
 `opener` column. Show the user the first few to calibrate voice.
 
 ## Step 5: Build and validate the sequence (→ /sequence-builder)
 
-Create the campaign (`outreach_create_campaign`, bound to the list), configure targeting
-(`outreach_apply_template`), and wire the steps with `outreach_add_step`, threading
-the `graph_version` from `outreach_get_sequence` forward and retrying on
+Create the campaign (`campaigns.create`, bound to the frozen worksheet/view), configure
+targeting (`campaigns.template_apply`), and wire the steps with `sequences.add_step`, threading
+the `graph_version` from `sequences.get` forward and retrying on
 `graph_version_conflict`. A solid cold cadence: connection_request → wait → DM (opener) →
-wait → DM (follow-up). Run `outreach_validate_sequence` and fix anything it flags.
+wait → DM (follow-up). Run `sequences.validate` and fix anything it flags.
 
 ## Step 6: Enroll and launch
 
-Enroll your scored, kept contacts with `outreach_enroll` (one call per contact, unique
-`client_request_id` each so retries are idempotent). Enroll does not send; the engine
+Freeze the approved workbook/worksheet/saved-view selection and enroll it once with
+`sequences.enroll_selection` through a unique idempotency key. Enrollment does not send; the engine
 drains enrollments under per-account daily caps and reserves any connection slot at
-dispatch. Then `outreach_activate_campaign`: the one outward action, through the same
+dispatch. Then `campaigns.activate`: the one outward action, through the same
 activation gate the app uses. `status: "blocked"` means it did NOT start (read the gate
 reason and fix it); `status: "accepted"` means the capped engine has begun.
 
@@ -92,7 +99,7 @@ cadence, and that sending is paced under daily caps (not a blast).
 
 ## Step 7: Watch it, do not babysit it
 
-After a day or two, read `outreach_analytics` (`metric: "overview"`) for reply rate,
+After a day or two, read `outreach.workspace_stats_get` for reply rate,
 acceptance rate, sends, demos. If reply rate is weak, the lever is usually the opener or
 the targeting, not the volume. Use `metric: "icp"` or `"signal_source"` to see which
 segment responds and double down. Route the responses through `/reply-triage`.

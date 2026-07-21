@@ -8,11 +8,11 @@ Call Dreamstate API resources and typed run intents with idempotency and async r
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `resource:runs`
+Declared capabilities: `runs.get`, `tools.get`, `tools.run`
 
-Required scopes: `outreach:read`
+Required scopes: none
 
 ## Evidence checklist
 

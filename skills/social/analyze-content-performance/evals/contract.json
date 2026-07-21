@@ -32,10 +32,15 @@
       },
       "expected": {
         "allowed_tools": [
-          "content_post_analytics"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:content.post_analytics"
+          "social.performance_analysis_get",
+          "social.performance_snapshot_get",
+          "social.post_analytics"
         ]
       },
       "check": "tool_trace_subset"

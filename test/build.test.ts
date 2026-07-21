@@ -12,7 +12,8 @@ const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 
 const buildArchitect = () => buildArchitectArtifacts(catalog);
 
 // build() IS the contract test: it parses every playbook, validates the
-// frontmatter, and asserts every tools_used entry exists in the catalog. If it
+// frontmatter, and asserts every declared tool and capability exists in the
+// pinned canonical manifest. If it
 // returns without throwing, the contract held.
 test('build succeeds: all playbooks valid and every tool exists in the catalog', () => {
   const artifacts = build();
@@ -28,6 +29,7 @@ test('--check passes immediately after a build (generated tree is deterministic)
 test('every indexed skill references only catalog tools, with correct derived scopes', () => {
   writeArtifacts(build());
   const index = JSON.parse(readFileSync(join(ROOT, 'skills-index.json'), 'utf8'));
+  const gatewayTools = new Set(['dreamstate_tools_search', 'dreamstate_tools_get', 'dreamstate_tools_run']);
   assert.ok(index.skills.length >= 5, 'expected several skills');
   for (const skill of index.skills) {
     // The generated skill.meta.json must exist at the indexed path.
@@ -43,6 +45,10 @@ test('every indexed skill references only catalog tools, with correct derived sc
       .flatMap((capability: { required_scopes: string[] }) => capability.required_scopes);
     const expected = [...new Set([...meta.tools_used.map((t: string) => catalog.mcp_tools.find((entry: { name: string; scope: string | null }) => entry.name === t)?.scope).filter(Boolean), ...capabilityScopes])].sort();
     assert.deepEqual(meta.required_scopes, expected, `${skill.slug}: required_scopes mismatch`);
+    if (['executable', 'guided-execution'].includes(skill.execution_mode) && skill.mcp_tools.some((tool: string) => gatewayTools.has(tool))) {
+      assert.ok(skill.capability_ids.length > 0, `${skill.slug}: compact gateway skills must declare an explicit capability boundary`);
+      assert.ok(skill.capability_ids.length < catalog.capabilities.length, `${skill.slug}: compact gateway tools must not expand to the full registry`);
+    }
   }
 });
 

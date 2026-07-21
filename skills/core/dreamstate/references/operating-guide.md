@@ -8,9 +8,9 @@ Route a growth task to the safest Dreamstate primitive before any data is change
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: none
+Declared capabilities: `runs.get`, `tools.get`, `tools.run`, `tools.search`
 
 Required scopes: none
 

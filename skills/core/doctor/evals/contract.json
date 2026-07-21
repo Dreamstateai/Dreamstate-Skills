@@ -34,10 +34,14 @@
         "allowed_tools": [
           "ping",
           "dreamstate_tools_search",
-          "content_list_accounts"
+          "dreamstate_tools_get"
         ],
         "allowed_capability_ids": [
-          "intent:content.list_accounts"
+          "integrations.unipile_status_get",
+          "social.accounts_list",
+          "tools.get",
+          "tools.search",
+          "usage.status_get"
         ]
       },
       "check": "tool_trace_subset"

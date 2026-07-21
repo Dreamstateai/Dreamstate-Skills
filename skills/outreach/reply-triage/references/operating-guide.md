@@ -8,11 +8,11 @@ Work the LinkedIn inbox for an outreach campaign end to end: read open conversat
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_campaigns`, `outreach_list_contacts`, `outreach_get_contact`, `content_list_accounts`, `outreach_send_reply`, `outreach_set_thread_status`, `outreach_assign_thread`, `outreach_mark_thread_read`, `outreach_analytics`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.list_accounts`, `intent:outreach.get_contact`, `intent:outreach.list_campaigns`, `intent:outreach.list_contacts`, `intent:outreach.send_reply`
+Declared capabilities: `campaigns.list`, `outreach.dm_conversation_assign`, `outreach.dm_conversation_get`, `outreach.dm_conversation_read`, `outreach.dm_conversation_status_update`, `outreach.dm_conversations_list`, `outreach.dm_message_send`, `outreach.workspace_stats_get`, `social.accounts_list`
 
-Required scopes: `actions`, `content:read`, `outreach:read`, `outreach:write`
+Required scopes: `content:read`, `outreach:read`, `outreach:write`
 
 ## Evidence checklist
 

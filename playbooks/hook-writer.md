@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [outreach_lists, outreach_list_contacts, outreach_get_contact, outreach_get_campaign_table, outreach_get_step_options, outreach_draft_message, outreach_add_column, outreach_set_cell]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [tables.list, contacts.list, contacts.get, rows.query, sequences.step_options, contacts.draft_opener, columns.add, cells.settle]
 ---
 
 # Hook Writer
@@ -18,9 +19,13 @@ the voice; Dreamstate drafts against each contact's real, enriched data.
 Run `/connect` first if unsure. Works best after `/enrich-list` and `/lead-prioritizer`,
 so you write openers for real, ranked people.
 
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## Step 1: Pick the framework and voice
 
-Openers have shapes. Read the available ones with `outreach_get_step_options` (it returns
+Openers have shapes. Read the available ones with `sequences.step_options` (it returns
 opener `framework_id`s like `post_reference` and the campaign's variable tokens). With the
 user, settle on:
 
@@ -32,7 +37,7 @@ user, settle on:
 ## Step 2: Draft against each row
 
 For each contact (do the top tier first if the list is scored), pull their detail with
-`outreach_get_contact`, then call `outreach_draft_message`:
+`contacts.get`, then call `contacts.draft_opener`:
 
 - Pass an opener `framework_id` from step options.
 - Pass the `campaign_id` if one exists, so the draft uses the campaign's messaging config
@@ -43,8 +48,9 @@ have, fall back to a safer angle for that row rather than shipping a broken merg
 
 ## Step 3: Save the opener on the row
 
-Add an `opener` column once with `outreach_add_column` (`kind: "freeform"`), then write
-each contact's line with `outreach_set_cell` (`column_key: "opener"`). Now the
+Add an `opener` column once with `columns.add` (`behavior: "value"`, `value_type: "string"`),
+then write each contact's line with `cells.settle`, including its row/column identity and
+draft provenance. Now the
 personalization lives on the table, not in this chat, so `/sequence-builder` and the user
 can both use it.
 

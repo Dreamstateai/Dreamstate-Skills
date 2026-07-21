@@ -8,9 +8,9 @@ Write and publish a blog post on a given topic through Dreamstate: draft it, AI-
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_list_blog`, `content_create_blog`, `content_generate_blog`, `content_get_blog`, `content_publish_blog`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.create_blog`, `intent:content.generate_blog`, `intent:content.get_blog`, `intent:content.list_blog`, `intent:content.publish_blog`
+Declared capabilities: `content.article_create_schedule`, `content.article_delivery_create`, `content.article_get`, `content.article_list`, `content.article_update`
 
 Required scopes: `actions`, `content:read`, `content:write`
 

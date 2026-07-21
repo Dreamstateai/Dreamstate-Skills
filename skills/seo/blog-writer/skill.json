@@ -20,26 +20,19 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.create_blog",
-    "intent:content.generate_blog",
-    "intent:content.get_blog",
-    "intent:content.list_blog",
-    "intent:content.publish_blog"
+    "content.article_create_schedule",
+    "content.article_delivery_create",
+    "content.article_get",
+    "content.article_list",
+    "content.article_update"
   ],
   "mcp_tools": [
-    "content_list_blog",
-    "content_create_blog",
-    "content_generate_blog",
-    "content_get_blog",
-    "content_publish_blog"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
-  "run_intents": [
-    "content.create_blog",
-    "content.generate_blog",
-    "content.get_blog",
-    "content.list_blog",
-    "content.publish_blog"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
     "actions",
@@ -47,7 +40,7 @@
     "content:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "85a8e666839c915e",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/blog-writer/SKILL.md",
   "install_command": "dreamstate skills install blog-writer",

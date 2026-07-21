@@ -8,9 +8,9 @@ Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection req
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_campaigns`, `outreach_create_campaign`, `outreach_apply_template`, `outreach_get_step_options`, `outreach_get_sequence`, `outreach_add_step`, `outreach_edit_step`, `outreach_remove_step`, `outreach_validate_sequence`, `outreach_list_signal_types`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:outreach.apply_template`, `intent:outreach.create_campaign`, `intent:outreach.list_campaigns`, `intent:outreach.sequence.add_step`, `intent:outreach.sequence.edit_step`, `intent:outreach.sequence.get`, `intent:outreach.sequence.remove_step`, `intent:outreach.sequence.validate`, `intent:outreach.signals.list`
+Declared capabilities: `campaigns.create`, `campaigns.list`, `campaigns.template_apply`, `outreach.triggers_supported_list`, `sequences.add_step`, `sequences.edit_step`, `sequences.get`, `sequences.remove_step`, `sequences.step_options`, `sequences.validate`
 
 Required scopes: `outreach:read`, `outreach:write`
 

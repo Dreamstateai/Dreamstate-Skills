@@ -32,29 +32,24 @@
       },
       "expected": {
         "allowed_tools": [
-          "outreach_create_list",
-          "outreach_find_leads",
-          "outreach_enrich_contact",
-          "outreach_create_campaign",
-          "outreach_apply_template",
-          "outreach_enroll",
-          "outreach_activate_campaign",
-          "content_generate_post",
-          "content_schedule_post",
-          "content_list_accounts",
-          "outreach_analytics"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:content.generate_post",
-          "intent:content.list_accounts",
-          "intent:content.schedule_post",
-          "intent:outreach.activate_campaign",
-          "intent:outreach.apply_template",
-          "intent:outreach.create_campaign",
-          "intent:outreach.create_list",
-          "intent:outreach.enrich_contact",
-          "intent:outreach.enroll",
-          "intent:outreach.find_leads"
+          "campaigns.activate",
+          "campaigns.create",
+          "campaigns.template_apply",
+          "contacts.enrich",
+          "content.artifact_generate",
+          "content.schedule",
+          "outreach.workspace_stats_get",
+          "sequences.enroll_selection",
+          "social.accounts_list",
+          "sources.find_leads",
+          "tables.create",
+          "workbooks.create"
         ]
       },
       "check": "tool_trace_subset"

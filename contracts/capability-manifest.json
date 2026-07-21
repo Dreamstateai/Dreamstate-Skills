@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "5670b126c6ce3829",
+  "capability_hash": "85a8e666839c915e",
   "api_version": "v1",
   "capabilities": [
     {
@@ -56803,6 +56803,12 @@
           "description": "approval_ids"
         },
         {
+          "key": "expected_revision",
+          "kind": "integer",
+          "required": true,
+          "description": "expected_revision"
+        },
+        {
           "key": "decision",
           "kind": "approved|changes_requested",
           "required": true,
@@ -56815,6 +56821,12 @@
           "type": "array",
           "required": true,
           "description": "approval_ids"
+        },
+        {
+          "name": "expected_revision",
+          "type": "number",
+          "required": true,
+          "description": "expected_revision"
         },
         {
           "name": "decision",
@@ -56841,6 +56853,11 @@
             "minItems": 1,
             "maxItems": 50
           },
+          "expected_revision": {
+            "type": "integer",
+            "exclusiveMinimum": true,
+            "minimum": 0
+          },
           "decision": {
             "type": "string",
             "enum": [
@@ -56856,6 +56873,7 @@
         },
         "required": [
           "approval_ids",
+          "expected_revision",
           "decision"
         ],
         "additionalProperties": false
@@ -57015,6 +57033,7 @@
         ],
         "inputs": [
           "approval_ids",
+          "expected_revision",
           "decision"
         ],
         "outputs": [
@@ -69723,7 +69742,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -81476,7 +81495,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -81817,7 +81836,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -82178,7 +82197,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -90819,10 +90838,16 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "post_id",
+          "key": "artifact_id",
           "kind": "uuid",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
+        },
+        {
+          "key": "expected_artifact_revision",
+          "kind": "integer",
+          "required": true,
+          "description": "expected_artifact_revision"
         },
         {
           "key": "content",
@@ -90839,10 +90864,16 @@
       ],
       "input_schema": [
         {
-          "name": "post_id",
+          "name": "artifact_id",
           "type": "string",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
+        },
+        {
+          "name": "expected_artifact_revision",
+          "type": "number",
+          "required": true,
+          "description": "expected_artifact_revision"
         },
         {
           "name": "content",
@@ -90896,9 +90927,14 @@
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "post_id": {
+          "artifact_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "expected_artifact_revision": {
+            "type": "integer",
+            "exclusiveMinimum": true,
+            "minimum": 0
           },
           "content": {
             "type": "string",
@@ -90920,7 +90956,7 @@
             "maxLength": 2000
           },
           "orchestration_session_id": {
-            "$ref": "#/properties/post_id"
+            "$ref": "#/properties/artifact_id"
           },
           "ai_provider": {
             "type": "string",
@@ -90970,7 +91006,8 @@
           }
         },
         "required": [
-          "post_id",
+          "artifact_id",
+          "expected_artifact_revision",
           "content",
           "change_type"
         ],
@@ -90986,13 +91023,16 @@
                 "type": "string",
                 "format": "uuid"
               },
-              "post_id": {
+              "artifact_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "user_id": {
+              "workspace_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "version_number": {
+              "created_by": {
+                "$ref": "#/properties/version/properties/id"
+              },
+              "version": {
                 "type": "integer",
                 "exclusiveMinimum": true,
                 "minimum": 0
@@ -91104,9 +91144,10 @@
             },
             "required": [
               "id",
-              "post_id",
-              "user_id",
-              "version_number",
+              "artifact_id",
+              "workspace_id",
+              "created_by",
+              "version",
               "created_at",
               "content",
               "change_type",
@@ -91190,7 +91231,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -91278,7 +91319,8 @@
           "Use the stable content.version_create contract for canonical content_artifact version_create behavior."
         ],
         "inputs": [
-          "post_id",
+          "artifact_id",
+          "expected_artifact_revision",
           "content",
           "change_type"
         ],
@@ -91340,10 +91382,10 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "post_id",
+          "key": "artifact_id",
           "kind": "uuid",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
           "key": "from_version",
@@ -91360,10 +91402,10 @@
       ],
       "input_schema": [
         {
-          "name": "post_id",
+          "name": "artifact_id",
           "type": "string",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
           "name": "from_version",
@@ -91381,7 +91423,7 @@
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "post_id": {
+          "artifact_id": {
             "type": "string",
             "format": "uuid"
           },
@@ -91397,7 +91439,7 @@
           }
         },
         "required": [
-          "post_id",
+          "artifact_id",
           "from_version",
           "to_version"
         ],
@@ -91532,7 +91574,7 @@
           "Use the stable content.version_diff_get contract for canonical content_artifact version_diff_get behavior."
         ],
         "inputs": [
-          "post_id",
+          "artifact_id",
           "from_version",
           "to_version"
         ],
@@ -91646,13 +91688,16 @@
                 "type": "string",
                 "format": "uuid"
               },
-              "post_id": {
+              "artifact_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "user_id": {
+              "workspace_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "version_number": {
+              "created_by": {
+                "$ref": "#/properties/version/properties/id"
+              },
+              "version": {
                 "type": "integer",
                 "exclusiveMinimum": true,
                 "minimum": 0
@@ -91764,9 +91809,10 @@
             },
             "required": [
               "id",
-              "post_id",
-              "user_id",
-              "version_number",
+              "artifact_id",
+              "workspace_id",
+              "created_by",
+              "version",
               "created_at",
               "content",
               "change_type",
@@ -91850,7 +91896,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -91998,48 +92044,48 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "post_id",
+          "key": "artifact_id",
           "kind": "uuid",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
-          "key": "version_number",
+          "key": "version",
           "kind": "integer",
           "required": true,
-          "description": "version_number"
+          "description": "version"
         }
       ],
       "input_schema": [
         {
-          "name": "post_id",
+          "name": "artifact_id",
           "type": "string",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
-          "name": "version_number",
+          "name": "version",
           "type": "number",
           "required": true,
-          "description": "version_number"
+          "description": "version"
         }
       ],
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "post_id": {
+          "artifact_id": {
             "type": "string",
             "format": "uuid"
           },
-          "version_number": {
+          "version": {
             "type": "integer",
             "exclusiveMinimum": true,
             "minimum": 0
           }
         },
         "required": [
-          "post_id",
-          "version_number"
+          "artifact_id",
+          "version"
         ],
         "additionalProperties": false
       },
@@ -92053,13 +92099,16 @@
                 "type": "string",
                 "format": "uuid"
               },
-              "post_id": {
+              "artifact_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "user_id": {
+              "workspace_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "version_number": {
+              "created_by": {
+                "$ref": "#/properties/version/properties/id"
+              },
+              "version": {
                 "type": "integer",
                 "exclusiveMinimum": true,
                 "minimum": 0
@@ -92171,9 +92220,10 @@
             },
             "required": [
               "id",
-              "post_id",
-              "user_id",
-              "version_number",
+              "artifact_id",
+              "workspace_id",
+              "created_by",
+              "version",
               "created_at",
               "content",
               "change_type",
@@ -92268,8 +92318,8 @@
           "Use the stable content.version_get contract for canonical content_artifact version_get behavior."
         ],
         "inputs": [
-          "post_id",
-          "version_number"
+          "artifact_id",
+          "version"
         ],
         "outputs": [
           "version",
@@ -92325,48 +92375,66 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "post_id",
+          "key": "artifact_id",
           "kind": "uuid",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
-          "key": "version_number",
+          "key": "expected_artifact_revision",
           "kind": "integer",
           "required": true,
-          "description": "version_number"
+          "description": "expected_artifact_revision"
+        },
+        {
+          "key": "version",
+          "kind": "integer",
+          "required": true,
+          "description": "version"
         }
       ],
       "input_schema": [
         {
-          "name": "post_id",
+          "name": "artifact_id",
           "type": "string",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
-          "name": "version_number",
+          "name": "expected_artifact_revision",
           "type": "number",
           "required": true,
-          "description": "version_number"
+          "description": "expected_artifact_revision"
+        },
+        {
+          "name": "version",
+          "type": "number",
+          "required": true,
+          "description": "version"
         }
       ],
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "post_id": {
+          "artifact_id": {
             "type": "string",
             "format": "uuid"
           },
-          "version_number": {
+          "expected_artifact_revision": {
+            "type": "integer",
+            "exclusiveMinimum": true,
+            "minimum": 0
+          },
+          "version": {
             "type": "integer",
             "exclusiveMinimum": true,
             "minimum": 0
           }
         },
         "required": [
-          "post_id",
-          "version_number"
+          "artifact_id",
+          "expected_artifact_revision",
+          "version"
         ],
         "additionalProperties": false
       },
@@ -92380,13 +92448,16 @@
                 "type": "string",
                 "format": "uuid"
               },
-              "post_id": {
+              "artifact_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "user_id": {
+              "workspace_id": {
                 "$ref": "#/properties/version/properties/id"
               },
-              "version_number": {
+              "created_by": {
+                "$ref": "#/properties/version/properties/id"
+              },
+              "version": {
                 "type": "integer",
                 "exclusiveMinimum": true,
                 "minimum": 0
@@ -92498,9 +92569,10 @@
             },
             "required": [
               "id",
-              "post_id",
-              "user_id",
-              "version_number",
+              "artifact_id",
+              "workspace_id",
+              "created_by",
+              "version",
               "created_at",
               "content",
               "change_type",
@@ -92584,7 +92656,7 @@
                 "kind": {
                   "type": "string",
                   "enum": [
-                    "post_version",
+                    "content_artifact_version",
                     "post_label",
                     "bookmark_collection"
                   ]
@@ -92672,8 +92744,9 @@
           "Use the stable content.version_rollback contract for canonical content_artifact version_rollback behavior."
         ],
         "inputs": [
-          "post_id",
-          "version_number"
+          "artifact_id",
+          "expected_artifact_revision",
+          "version"
         ],
         "outputs": [
           "version",
@@ -92733,30 +92806,30 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "post_id",
+          "key": "artifact_id",
           "kind": "uuid",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         }
       ],
       "input_schema": [
         {
-          "name": "post_id",
+          "name": "artifact_id",
           "type": "string",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         }
       ],
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "post_id": {
+          "artifact_id": {
             "type": "string",
             "format": "uuid"
           }
         },
         "required": [
-          "post_id"
+          "artifact_id"
         ],
         "additionalProperties": false
       },
@@ -92924,7 +92997,7 @@
           "Use the stable content.version_stats_get contract for canonical content_artifact version_stats_get behavior."
         ],
         "inputs": [
-          "post_id"
+          "artifact_id"
         ],
         "outputs": [
           "stats",
@@ -92977,18 +93050,18 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "post_id",
+          "key": "artifact_id",
           "kind": "uuid",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         }
       ],
       "input_schema": [
         {
-          "name": "post_id",
+          "name": "artifact_id",
           "type": "string",
           "required": true,
-          "description": "post_id"
+          "description": "artifact_id"
         },
         {
           "name": "limit",
@@ -92997,10 +93070,10 @@
           "description": "limit"
         },
         {
-          "name": "cursor_version_number",
+          "name": "cursor_version",
           "type": "number",
           "required": false,
-          "description": "cursor_version_number"
+          "description": "cursor_version"
         },
         {
           "name": "cursor_version_id",
@@ -93012,7 +93085,7 @@
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "post_id": {
+          "artifact_id": {
             "type": "string",
             "format": "uuid"
           },
@@ -93022,17 +93095,17 @@
             "maximum": 200,
             "default": 100
           },
-          "cursor_version_number": {
+          "cursor_version": {
             "type": "integer",
             "exclusiveMinimum": true,
             "minimum": 0
           },
           "cursor_version_id": {
-            "$ref": "#/properties/post_id"
+            "$ref": "#/properties/artifact_id"
           }
         },
         "required": [
-          "post_id"
+          "artifact_id"
         ],
         "additionalProperties": false
       },
@@ -93048,13 +93121,16 @@
                   "type": "string",
                   "format": "uuid"
                 },
-                "post_id": {
+                "artifact_id": {
                   "$ref": "#/properties/versions/items/properties/id"
                 },
-                "user_id": {
+                "workspace_id": {
                   "$ref": "#/properties/versions/items/properties/id"
                 },
-                "version_number": {
+                "created_by": {
+                  "$ref": "#/properties/versions/items/properties/id"
+                },
+                "version": {
                   "type": "integer",
                   "exclusiveMinimum": true,
                   "minimum": 0
@@ -93166,9 +93242,10 @@
               },
               "required": [
                 "id",
-                "post_id",
-                "user_id",
-                "version_number",
+                "artifact_id",
+                "workspace_id",
+                "created_by",
+                "version",
                 "created_at",
                 "content",
                 "change_type",
@@ -93202,7 +93279,7 @@
           "frontier": {
             "type": "object",
             "properties": {
-              "version_number": {
+              "version": {
                 "type": "integer",
                 "exclusiveMinimum": true,
                 "minimum": 0
@@ -93212,7 +93289,7 @@
               }
             },
             "required": [
-              "version_number",
+              "version",
               "version_id"
             ],
             "additionalProperties": false,
@@ -93289,7 +93366,7 @@
           "Use the stable content.versions_list contract for canonical content_artifact versions_list behavior."
         ],
         "inputs": [
-          "post_id"
+          "artifact_id"
         ],
         "outputs": [
           "versions",
@@ -120230,6 +120307,11 @@
                         "minLength": 1,
                         "maxLength": 100000
                       },
+                      "scheduled_edit_content": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100000
+                      },
                       "channels": {
                         "type": "array",
                         "items": {
@@ -120260,6 +120342,7 @@
                       "title",
                       "initial_content",
                       "edited_content",
+                      "scheduled_edit_content",
                       "channels",
                       "account_ids",
                       "scheduled_at"
@@ -120569,6 +120652,80 @@
                       "graph",
                       "node",
                       "edited_data"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "workspace_id",
+                  "authorization_id",
+                  "effect_id",
+                  "idempotency_key",
+                  "maximum_credits",
+                  "scenario_id",
+                  "inputs"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "workspace_id": {
+                    "$ref": "#/anyOf/0/properties/workspace_id"
+                  },
+                  "authorization_id": {
+                    "$ref": "#/anyOf/0/properties/workspace_id"
+                  },
+                  "effect_id": {
+                    "$ref": "#/anyOf/1/anyOf/0/properties/effect_id"
+                  },
+                  "idempotency_key": {
+                    "$ref": "#/anyOf/1/anyOf/0/properties/idempotency_key"
+                  },
+                  "maximum_credits": {
+                    "$ref": "#/anyOf/1/anyOf/0/properties/maximum_credits"
+                  },
+                  "scenario_id": {
+                    "type": "string",
+                    "enum": [
+                      "graph.lifecycle_traversal_export"
+                    ]
+                  },
+                  "inputs": {
+                    "type": "object",
+                    "properties": {
+                      "company_node_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "person_node_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "relation_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "company_label": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "updated_company_label": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "person_label": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      }
+                    },
+                    "required": [
+                      "company_node_id",
+                      "person_node_id",
+                      "relation_id",
+                      "company_label",
+                      "updated_company_label",
+                      "person_label"
                     ],
                     "additionalProperties": false
                   }
@@ -121686,7 +121843,33 @@
                             "proposal_required",
                             "delegation_grant_required",
                             "outcome_unknown",
-                            "published_immutable"
+                            "published_immutable",
+                            "actor_required",
+                            "admin_authority_unavailable",
+                            "admin_required",
+                            "calendar_sync_failed",
+                            "continuation_limit_reached",
+                            "deal_configuration_admin_required",
+                            "deals_configuration_failed",
+                            "executor_missing",
+                            "feature_unavailable",
+                            "file_digest_mismatch",
+                            "file_too_large",
+                            "has_live_triggers",
+                            "invalid_destination",
+                            "invalid_graph",
+                            "not_applicable",
+                            "opportunity_not_ready",
+                            "owner_approval_required",
+                            "principal_mismatch",
+                            "provider_rejected",
+                            "provider_status_unavailable",
+                            "provider_unavailable",
+                            "reconciliation_required",
+                            "request_canceled",
+                            "reserved_object_key",
+                            "table_source_run_required",
+                            "vault_seed_in_flight"
                           ]
                         },
                         "message": {
@@ -122742,7 +122925,33 @@
                             "proposal_required",
                             "delegation_grant_required",
                             "outcome_unknown",
-                            "published_immutable"
+                            "published_immutable",
+                            "actor_required",
+                            "admin_authority_unavailable",
+                            "admin_required",
+                            "calendar_sync_failed",
+                            "continuation_limit_reached",
+                            "deal_configuration_admin_required",
+                            "deals_configuration_failed",
+                            "executor_missing",
+                            "feature_unavailable",
+                            "file_digest_mismatch",
+                            "file_too_large",
+                            "has_live_triggers",
+                            "invalid_destination",
+                            "invalid_graph",
+                            "not_applicable",
+                            "opportunity_not_ready",
+                            "owner_approval_required",
+                            "principal_mismatch",
+                            "provider_rejected",
+                            "provider_status_unavailable",
+                            "provider_unavailable",
+                            "reconciliation_required",
+                            "request_canceled",
+                            "reserved_object_key",
+                            "table_source_run_required",
+                            "vault_seed_in_flight"
                           ]
                         },
                         "message": {
@@ -183378,8 +183587,11 @@
               "ai_citations",
               "engage_keyword_hit",
               "performance_insights_ready",
+              "command_center_digest",
               "agency_health",
-              "task_reminder"
+              "task_reminder",
+              "integration_connection_health",
+              "linkedin_org_activity"
             ],
             "properties": {
               "mentions": {
@@ -183447,10 +183659,19 @@
               "performance_insights_ready": {
                 "$ref": "#/properties/preferences/properties/mentions"
               },
+              "command_center_digest": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
               "agency_health": {
                 "$ref": "#/properties/preferences/properties/mentions"
               },
               "task_reminder": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "integration_connection_health": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "linkedin_org_activity": {
                 "$ref": "#/properties/preferences/properties/mentions"
               }
             },
@@ -183626,8 +183847,11 @@
               "ai_citations",
               "engage_keyword_hit",
               "performance_insights_ready",
+              "command_center_digest",
               "agency_health",
-              "task_reminder"
+              "task_reminder",
+              "integration_connection_health",
+              "linkedin_org_activity"
             ],
             "properties": {
               "mentions": {
@@ -183695,10 +183919,19 @@
               "performance_insights_ready": {
                 "$ref": "#/properties/preferences/properties/mentions"
               },
+              "command_center_digest": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
               "agency_health": {
                 "$ref": "#/properties/preferences/properties/mentions"
               },
               "task_reminder": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "integration_connection_health": {
+                "$ref": "#/properties/preferences/properties/mentions"
+              },
+              "linkedin_org_activity": {
                 "$ref": "#/properties/preferences/properties/mentions"
               }
             },
@@ -183953,7 +184186,7 @@
       "required_inputs": [
         {
           "key": "notification_type",
-          "kind": "mentions|comments_replies|post_published|post_errors|approval_requested|approval_reminders|approval_completed|unscheduled_blocking|daily_ideas|keyword_alerts|draft_reminders|x_author_reply_nudge|seo_geo_signals_ready|ai_citations|engage_keyword_hit|performance_insights_ready|agency_health|task_reminder",
+          "kind": "mentions|comments_replies|post_published|post_errors|approval_requested|approval_reminders|approval_completed|unscheduled_blocking|daily_ideas|keyword_alerts|draft_reminders|x_author_reply_nudge|seo_geo_signals_ready|ai_citations|engage_keyword_hit|performance_insights_ready|command_center_digest|agency_health|task_reminder|integration_connection_health|linkedin_org_activity",
           "required": true,
           "description": "notification_type"
         },
@@ -184000,8 +184233,11 @@
               "ai_citations",
               "engage_keyword_hit",
               "performance_insights_ready",
+              "command_center_digest",
               "agency_health",
-              "task_reminder"
+              "task_reminder",
+              "integration_connection_health",
+              "linkedin_org_activity"
             ]
           },
           "channels": {
@@ -184048,8 +184284,11 @@
               "ai_citations",
               "engage_keyword_hit",
               "performance_insights_ready",
+              "command_center_digest",
               "agency_health",
-              "task_reminder"
+              "task_reminder",
+              "integration_connection_health",
+              "linkedin_org_activity"
             ]
           },
           "preferences": {
@@ -184535,7 +184774,8 @@
               "billing_access",
               "engage_keyword_hit",
               "growth_daily_report",
-              "performance_insights_ready"
+              "performance_insights_ready",
+              "command_center_digest"
             ],
             "properties": {
               "keyword_alerts": {
@@ -184583,6 +184823,9 @@
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               },
               "performance_insights_ready": {
+                "$ref": "#/properties/preferences/properties/keyword_alerts"
+              },
+              "command_center_digest": {
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               }
             },
@@ -184762,7 +185005,8 @@
               "billing_access",
               "engage_keyword_hit",
               "growth_daily_report",
-              "performance_insights_ready"
+              "performance_insights_ready",
+              "command_center_digest"
             ],
             "properties": {
               "keyword_alerts": {
@@ -184810,6 +185054,9 @@
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               },
               "performance_insights_ready": {
+                "$ref": "#/properties/preferences/properties/keyword_alerts"
+              },
+              "command_center_digest": {
                 "$ref": "#/properties/preferences/properties/keyword_alerts"
               }
             },
@@ -185064,7 +185311,7 @@
       "required_inputs": [
         {
           "key": "notification_type",
-          "kind": "keyword_alerts|draft_reminders|ai_citations|outreach_urgent|outreach_reply|form_submission|billing_access|engage_keyword_hit|growth_daily_report|performance_insights_ready",
+          "kind": "keyword_alerts|draft_reminders|ai_citations|outreach_urgent|outreach_reply|form_submission|billing_access|engage_keyword_hit|growth_daily_report|performance_insights_ready|command_center_digest",
           "required": true,
           "description": "notification_type"
         },
@@ -185104,7 +185351,8 @@
               "billing_access",
               "engage_keyword_hit",
               "growth_daily_report",
-              "performance_insights_ready"
+              "performance_insights_ready",
+              "command_center_digest"
             ]
           },
           "channels": {
@@ -185144,7 +185392,8 @@
               "billing_access",
               "engage_keyword_hit",
               "growth_daily_report",
-              "performance_insights_ready"
+              "performance_insights_ready",
+              "command_center_digest"
             ]
           },
           "preferences": {
@@ -235432,7 +235681,33 @@
                             "proposal_required",
                             "delegation_grant_required",
                             "outcome_unknown",
-                            "published_immutable"
+                            "published_immutable",
+                            "actor_required",
+                            "admin_authority_unavailable",
+                            "admin_required",
+                            "calendar_sync_failed",
+                            "continuation_limit_reached",
+                            "deal_configuration_admin_required",
+                            "deals_configuration_failed",
+                            "executor_missing",
+                            "feature_unavailable",
+                            "file_digest_mismatch",
+                            "file_too_large",
+                            "has_live_triggers",
+                            "invalid_destination",
+                            "invalid_graph",
+                            "not_applicable",
+                            "opportunity_not_ready",
+                            "owner_approval_required",
+                            "principal_mismatch",
+                            "provider_rejected",
+                            "provider_status_unavailable",
+                            "provider_unavailable",
+                            "reconciliation_required",
+                            "request_canceled",
+                            "reserved_object_key",
+                            "table_source_run_required",
+                            "vault_seed_in_flight"
                           ]
                         },
                         "message": {
@@ -236346,7 +236621,33 @@
                             "proposal_required",
                             "delegation_grant_required",
                             "outcome_unknown",
-                            "published_immutable"
+                            "published_immutable",
+                            "actor_required",
+                            "admin_authority_unavailable",
+                            "admin_required",
+                            "calendar_sync_failed",
+                            "continuation_limit_reached",
+                            "deal_configuration_admin_required",
+                            "deals_configuration_failed",
+                            "executor_missing",
+                            "feature_unavailable",
+                            "file_digest_mismatch",
+                            "file_too_large",
+                            "has_live_triggers",
+                            "invalid_destination",
+                            "invalid_graph",
+                            "not_applicable",
+                            "opportunity_not_ready",
+                            "owner_approval_required",
+                            "principal_mismatch",
+                            "provider_rejected",
+                            "provider_status_unavailable",
+                            "provider_unavailable",
+                            "reconciliation_required",
+                            "request_canceled",
+                            "reserved_object_key",
+                            "table_source_run_required",
+                            "vault_seed_in_flight"
                           ]
                         },
                         "message": {
@@ -237141,7 +237442,33 @@
                             "proposal_required",
                             "delegation_grant_required",
                             "outcome_unknown",
-                            "published_immutable"
+                            "published_immutable",
+                            "actor_required",
+                            "admin_authority_unavailable",
+                            "admin_required",
+                            "calendar_sync_failed",
+                            "continuation_limit_reached",
+                            "deal_configuration_admin_required",
+                            "deals_configuration_failed",
+                            "executor_missing",
+                            "feature_unavailable",
+                            "file_digest_mismatch",
+                            "file_too_large",
+                            "has_live_triggers",
+                            "invalid_destination",
+                            "invalid_graph",
+                            "not_applicable",
+                            "opportunity_not_ready",
+                            "owner_approval_required",
+                            "principal_mismatch",
+                            "provider_rejected",
+                            "provider_status_unavailable",
+                            "provider_unavailable",
+                            "reconciliation_required",
+                            "request_canceled",
+                            "reserved_object_key",
+                            "table_source_run_required",
+                            "vault_seed_in_flight"
                           ]
                         },
                         "message": {

@@ -22,20 +22,26 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:outreach.find_leads"
+    "runs.find_leads_get",
+    "sources.find_leads"
   ],
   "mcp_tools": [
-    "outreach_find_leads"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run",
+    "dreamstate_list_runs",
+    "dreamstate_cancel_run",
+    "dreamstate_resume_run"
   ],
-  "run_intents": [
-    "outreach.find_leads"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
+    "outreach:read",
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "85a8e666839c915e",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/prospecting/source-people/SKILL.md",
   "install_command": "dreamstate skills install source-people",

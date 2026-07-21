@@ -8,9 +8,9 @@ Read the open reply threads on a Dreamstate campaign and classify each by intent
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_campaigns`, `outreach_list_contacts`, `outreach_get_contact`, `outreach_set_thread_status`, `outreach_mark_thread_read`, `outreach_analytics`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:outreach.get_contact`, `intent:outreach.list_campaigns`, `intent:outreach.list_contacts`
+Declared capabilities: `campaigns.list`, `outreach.dm_conversation_get`, `outreach.dm_conversation_read`, `outreach.dm_conversation_status_update`, `outreach.dm_conversations_list`, `outreach.workspace_stats_get`
 
 Required scopes: `outreach:read`, `outreach:write`
 

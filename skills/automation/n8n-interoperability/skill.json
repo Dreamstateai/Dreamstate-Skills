@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "85a8e666839c915e",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/automation/n8n-interoperability/SKILL.md",
   "install_command": "dreamstate skills install n8n-interoperability",

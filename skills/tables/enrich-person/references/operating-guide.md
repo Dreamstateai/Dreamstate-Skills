@@ -8,11 +8,11 @@ Enrich people rows while separating identity, employment, contact, and inferred 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_enrich_contact`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
 
-Declared capabilities: `intent:outreach.enrich_contact`
+Declared capabilities: `columns.add`, `columns.run`, `contacts.enrich`, `runs.column_get`
 
-Required scopes: `outreach:write`
+Required scopes: `outreach:read`, `outreach:write`, `tables:write`
 
 ## Evidence checklist
 

@@ -14,7 +14,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach                  # connect | outreach | seo | social | email
 tier: playbook                    # capability | composite | playbook
-tools_used: [outreach_find_leads, outreach_enroll, ...]   # every MCP tool you call
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [campaigns.create, columns.add, columns.run, sequences.enroll_selection]
 ---
 
 # Title
@@ -24,12 +25,12 @@ The body: the strategy and the step-by-step the agent follows.
 
 ## The rules (enforced in CI)
 
-1. **Every tool in `tools_used` must exist in `src/catalog.json`.** The build fails
-   otherwise. This is what stops a renamed or imagined tool from shipping a broken
-   skill. If you need a tool that isn't in the catalog, it isn't exposed by the MCP
-   yet — open an issue.
+1. **Every tool and capability must exist in `contracts/capability-manifest.json`.**
+   Executable and guided gateway skills must declare an explicit, bounded
+   `capability_ids` set. This stops renamed, imagined, or accidentally global
+   capability access from shipping.
 2. **`required_scopes` is derived, not declared.** The build computes it from the
-   scopes of your `tools_used`. A user whose key lacks those scopes won't see the
+   scopes of `tools_used` and `capability_ids`. A user whose key lacks those scopes won't see the
    playbook as an MCP prompt, so don't list a sending tool in a read-only helper.
 3. **The generated tree is committed and must match.** `playbooks/` is the source;
    `npm run build` regenerates `skills/`, `skills-index.json`, and `dist/`. Commit them.
@@ -55,7 +56,7 @@ npm install
 # add or edit playbooks/your-skill.md
 npm run build      # regenerate skills/ + skills-index.json + dist/
 npm test           # contract + schema + config-writer tests
-git add playbooks/ skills/ skills-index.json dist/
+git add playbooks/ contracts/capability-manifest.json skills/ skills-index.json dist/ generated/
 ```
 
 Open a PR. CI validates the frontmatter, the tool contract, build determinism, and the

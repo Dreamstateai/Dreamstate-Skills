@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [outreach_campaigns, outreach_create_campaign, outreach_apply_template, outreach_get_step_options, outreach_get_sequence, outreach_add_step, outreach_edit_step, outreach_remove_step, outreach_validate_sequence, outreach_list_signal_types]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [campaigns.list, campaigns.create, campaigns.template_apply, sequences.step_options, sequences.get, sequences.add_step, sequences.edit_step, sequences.remove_step, sequences.validate, outreach.triggers_supported_list]
 ---
 
 # Sequence Builder
@@ -18,26 +19,30 @@ Dreamstate holds the graph and tells you when it is sound.
 Run `/connect` first if unsure. Needs a campaign to build into; create one here or reuse
 an existing one.
 
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## Step 1: Get or create the campaign
 
-Find an existing campaign with `outreach_campaigns`, or create one with
-`outreach_create_campaign` bound to the lead list (`outreach_list_id`). Pick
+Find an existing campaign with `campaigns.list`, or create one with `campaigns.create`
+bound to the exact frozen worksheet/view. Pick
 `campaign_kind`:
 
 - `cold_outbound` — targeting a sourced list by ICP (the usual case).
 - `intent_signals` — signal-triggered enrollment; list options with
-  `outreach_list_signal_types` first.
+  `outreach.triggers_supported_list` first.
 
-Apply the chosen campaign template with `outreach_apply_template`. For `intent_signals` you MUST read
-`outreach_get_sequence` first for the current `graph_version`, then pass `signal_config`
+Apply the chosen campaign template with `campaigns.template_apply`. For `intent_signals` you MUST read
+`sequences.get` first for the current `graph_version`, then pass `signal_config`
 with that exact version (it is a compare-and-set; a stale value returns
 `graph_version_conflict`, so re-read and retry).
 
 ## Step 2: Read the building blocks
 
-Call `outreach_get_step_options` for the action subtypes (`send_connection_request`,
+Call `sequences.step_options` for the action subtypes (`send_connection_request`,
 `send_dm`, `wait`), opener frameworks, and variable tokens. Read the current graph and its
-`graph_version` with `outreach_get_sequence`. A solid default cadence for cold LinkedIn:
+`graph_version` with `sequences.get`. A solid default cadence for cold LinkedIn:
 
 ```
   connection_request ──► wait 1-2d ──► send_dm (opener) ──► wait 3d ──► send_dm (follow-up)
@@ -45,11 +50,11 @@ Call `outreach_get_step_options` for the action subtypes (`send_connection_reque
 
 ## Step 3: Wire the steps
 
-Add each step with `outreach_add_step`, passing the `node` and the current `graph_version`,
+Add each step with `sequences.add_step`, passing the `node` and the current `graph_version`,
 and `after_step_id` to attach it to the previous step. The `graph_version` you pass must be
 the latest you read; every successful add returns a new version, so thread it forward. On
-`graph_version_conflict`, re-read with `outreach_get_sequence` and retry with the fresh
-version. Use `outreach_edit_step` / `outreach_remove_step` to fix mistakes rather than
+`graph_version_conflict`, re-read with `sequences.get` and retry with the fresh
+version. Use `sequences.edit_step` / `sequences.remove_step` to fix mistakes rather than
 stacking corrective steps.
 
 If `/hook-writer` already wrote openers onto the rows, use that copy for the DM steps so
@@ -57,7 +62,7 @@ the personalization the user approved is what actually goes out.
 
 ## Step 4: Validate before you hand off
 
-Run `outreach_validate_sequence`. It runs the same structural checks activation does
+Run `sequences.validate`. It runs the same structural checks activation does
 (cycles, orphan steps, unwired branches). Fix anything it flags; a graph that fails
 validation will be rejected at activation anyway.
 
