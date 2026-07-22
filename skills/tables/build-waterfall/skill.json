@@ -22,21 +22,29 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "column:waterfall",
-    "function:waterfall_enrich_list"
+    "columns.add",
+    "columns.run",
+    "columns.sample",
+    "runs.column_get"
   ],
   "mcp_tools": [
-    "dreamstate_tools_run"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run",
+    "dreamstate_list_runs",
+    "dreamstate_cancel_run",
+    "dreamstate_resume_run"
   ],
-  "run_intents": [
-    "outreach.table.add_column"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
-    "outreach:write"
+    "outreach:read",
+    "outreach:write",
+    "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/build-waterfall/SKILL.md",
   "install_command": "dreamstate skills install build-waterfall",

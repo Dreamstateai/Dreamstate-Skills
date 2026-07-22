@@ -32,20 +32,19 @@
       },
       "expected": {
         "allowed_tools": [
-          "outreach_list_signal_types",
-          "outreach_find_leads",
-          "outreach_create_list",
-          "outreach_lists",
-          "outreach_list_contacts",
-          "content_list_accounts"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:content.list_accounts",
-          "intent:outreach.create_list",
-          "intent:outreach.find_leads",
-          "intent:outreach.list_contacts",
-          "intent:outreach.list_lists",
-          "intent:outreach.signals.list"
+          "contacts.list",
+          "outreach.triggers_supported_list",
+          "social.accounts_list",
+          "sources.find_leads",
+          "tables.create",
+          "tables.list",
+          "workbooks.create"
         ]
       },
       "check": "tool_trace_subset"

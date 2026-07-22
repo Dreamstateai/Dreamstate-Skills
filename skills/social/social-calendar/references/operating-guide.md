@@ -8,9 +8,9 @@ Plan, draft, and schedule a batch of LinkedIn and X posts through Dreamstate. Us
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_list_accounts`, `content_generate_post`, `content_get_post`, `content_list_posts`, `content_schedule_post`, `content_publish_post`, `content_post_analytics`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.generate_post`, `intent:content.get_post`, `intent:content.list_accounts`, `intent:content.list_posts`, `intent:content.post_analytics`, `intent:content.publish_post`, `intent:content.schedule_post`
+Declared capabilities: `content.artifact_generate`, `content.artifact_get`, `content.artifact_list`, `content.artifact_update`, `content.delivery_publish`, `content.schedule`, `social.accounts_list`, `social.post_analytics`
 
 Required scopes: `actions`, `content:read`, `content:write`
 

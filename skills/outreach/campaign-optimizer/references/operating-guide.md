@@ -8,11 +8,11 @@ Diagnose and tune a running outreach campaign: read its analytics, find what's u
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_campaigns`, `outreach_analytics`, `outreach_get_campaign_table`, `outreach_get_sequence`, `outreach_get_step_options`, `outreach_edit_step`, `outreach_pause_campaign`, `outreach_set_thread_status`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:outreach.list_campaigns`, `intent:outreach.pause_campaign`, `intent:outreach.sequence.edit_step`, `intent:outreach.sequence.get`, `intent:outreach.table.get`
+Declared capabilities: `campaigns.list`, `campaigns.pause`, `campaigns.variant_metrics_get`, `outreach.channel_stats_get`, `outreach.dm_conversation_status_update`, `outreach.workspace_stats_get`, `rows.query`, `sequences.edit_step`, `sequences.get`, `sequences.step_options`
 
-Required scopes: `outreach:read`, `outreach:write`
+Required scopes: `outreach:read`, `outreach:write`, `tables:read`
 
 ## Evidence checklist
 

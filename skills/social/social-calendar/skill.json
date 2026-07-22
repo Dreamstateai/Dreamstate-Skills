@@ -20,32 +20,22 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.generate_post",
-    "intent:content.get_post",
-    "intent:content.list_accounts",
-    "intent:content.list_posts",
-    "intent:content.post_analytics",
-    "intent:content.publish_post",
-    "intent:content.schedule_post"
+    "content.artifact_generate",
+    "content.artifact_get",
+    "content.artifact_list",
+    "content.artifact_update",
+    "content.delivery_publish",
+    "content.schedule",
+    "social.accounts_list",
+    "social.post_analytics"
   ],
   "mcp_tools": [
-    "content_list_accounts",
-    "content_generate_post",
-    "content_get_post",
-    "content_list_posts",
-    "content_schedule_post",
-    "content_publish_post",
-    "content_post_analytics"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
-  "run_intents": [
-    "content.generate_post",
-    "content.get_post",
-    "content.list_accounts",
-    "content.list_posts",
-    "content.post_analytics",
-    "content.publish_post",
-    "content.schedule_post"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
     "actions",
@@ -53,7 +43,7 @@
     "content:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/social/social-calendar/SKILL.md",
   "install_command": "dreamstate skills install social-calendar",

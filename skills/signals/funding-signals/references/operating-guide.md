@@ -8,11 +8,11 @@ Find and interpret funding events without treating every announcement as purchas
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
 
-Declared capabilities: `column:predictleads_funding_enrich`, `source:predictleads_funding`
+Declared capabilities: `columns.add`, `columns.run`, `sources.list`, `table_sources.attach`, `table_sources.run`
 
-Required scopes: `outreach:write`
+Required scopes: `outreach:read`, `tables:write`
 
 ## Evidence checklist
 

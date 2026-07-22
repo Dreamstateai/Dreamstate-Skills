@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: capability
-tools_used: [outreach_campaigns, outreach_list_contacts, outreach_get_contact, outreach_set_thread_status, outreach_mark_thread_read, outreach_analytics]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [campaigns.list, outreach.dm_conversations_list, outreach.dm_conversation_get, outreach.dm_conversation_status_update, outreach.dm_conversation_read, outreach.workspace_stats_get]
 ---
 
 # Reply Classifier
@@ -17,11 +18,15 @@ yours; Dreamstate moves the labels and holds the pipeline state.
 
 Run `/connect` first if unsure.
 
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## Step 1: Gather the open threads
 
-List campaigns with `outreach_campaigns` and pick the one the user means (or all active).
-Use `outreach_list_contacts` to find contacts with replies / open threads, and
-`outreach_get_contact` for each thread's context (`conversation_urn`, last messages).
+List campaigns with `campaigns.list` and pick the one the user means (or all active).
+Use `outreach.dm_conversations_list` to find open threads, and
+`outreach.dm_conversation_get` for each thread's context (`conversation_urn`, last messages).
 
 ## Step 2: Classify by meaning, not keywords
 
@@ -40,14 +45,14 @@ now, schedule a nudge, hand to a human, drop). This is what a human would scan.
 
 ## Step 3: Record the status
 
-Set each thread's pipeline status with `outreach_set_thread_status` so the inbox reflects
+Set each thread's pipeline status with `outreach.dm_conversation_status_update` so the inbox reflects
 reality and the same thread is not re-triaged later. For **Auto / OOO** and clear
-**Not interested**, `outreach_mark_thread_read` and move on. Do not draft or send here;
+**Not interested**, use `outreach.dm_conversation_read` and move on. Do not draft or send here;
 that is `/reply-triage`'s job.
 
 ## Step 4: Report the shape of the inbox
 
 Summarize counts per bucket and call out the hot threads (interested, answerable
-objections, referrals) the user should respond to first. Pull `outreach_analytics`
-(`metric: "overview"`) so the reply rate is in context. Hand off the live ones to
+objections, referrals) the user should respond to first. Pull `outreach.workspace_stats_get`
+so the reply rate is in context. Hand off the live ones to
 `/reply-triage` to draft and send the responses under the per-account cap.

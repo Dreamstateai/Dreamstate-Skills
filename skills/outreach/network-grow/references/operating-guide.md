@@ -8,11 +8,11 @@ Grow a LinkedIn network with the right people: source or take a targeted list, w
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_list_accounts`, `outreach_lists`, `outreach_create_list`, `outreach_find_leads`, `outreach_list_contacts`, `outreach_get_contact`, `outreach_enrich_contact`, `outreach_create_campaign`, `outreach_draft_message`, `outreach_send_connection`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.list_accounts`, `intent:outreach.create_campaign`, `intent:outreach.create_list`, `intent:outreach.draft_opener`, `intent:outreach.enrich_contact`, `intent:outreach.find_leads`, `intent:outreach.get_contact`, `intent:outreach.list_contacts`, `intent:outreach.list_lists`, `intent:outreach.send_connection`
+Declared capabilities: `campaigns.create`, `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `contacts.send_connection`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`
 
-Required scopes: `actions`, `content:read`, `outreach:read`, `outreach:write`
+Required scopes: `actions`, `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`
 
 ## Evidence checklist
 

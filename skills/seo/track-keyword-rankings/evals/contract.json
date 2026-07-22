@@ -32,12 +32,15 @@
       },
       "expected": {
         "allowed_tools": [
-          "seo_keyword_tracking",
-          "seo_rank_overview"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:seo.keyword_tracking",
-          "intent:seo.rank_overview"
+          "seo.serp_snapshot_resolve",
+          "seo.serp_spend_get",
+          "visibility.keywords_get"
         ]
       },
       "check": "tool_trace_subset"

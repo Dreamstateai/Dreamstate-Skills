@@ -8,11 +8,11 @@ Connect this agent to Dreamstate and verify it can act. Use this FIRST, before a
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `ping`, `content_list_accounts`, `outreach_lists`
+Declared tools: `ping`, `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
 
-Declared capabilities: `intent:content.list_accounts`, `intent:outreach.list_lists`
+Declared capabilities: `social.accounts_list`, `tables.list`
 
-Required scopes: `content:read`, `outreach:read`
+Required scopes: `content:read`, `tables:read`
 
 ## Evidence checklist
 

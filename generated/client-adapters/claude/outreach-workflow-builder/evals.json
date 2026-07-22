@@ -14,8 +14,11 @@
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
       "id": "exact-result-set-expansion-is-separate",
-      "required_concepts": ["intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "stage_exact_result_set", "still-inactive", "separate proposal"],
-      "request": "After the source and priority samples are reviewed, import and enroll the capped resolved result set. Explain how workflow persistence, bulk expansion, and activation remain separate."
+      "fixture_profile": "outreach_exact_result_set_expansion",
+      "required_capability_ids": ["sources.cold_outbound_expand"],
+      "required_completion_fields": [{"id":"durability_state","allowed_values":["proposal_only"]},{"id":"campaign_state","allowed_values":["inactive"]},{"id":"selection_state","allowed_values":["exact"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"run_state","allowed_values":["blocked"]}],
+      "required_concepts": ["source-evidence run"],
+      "request": "Prepare a reviewable proposal-only exact-result-set expansion. The reviewed source-evidence run is run_eval_source_001. Bind configured source src_eval_001, workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, draft campaign camp_eval_001 revision 3, unchanged targeting revision 4, and cap 25. Search, fetch, and dry-run the exact sources.cold_outbound_expand contract. Use stage_exact_result_set=true and require_campaign_status=draft. Do not import, enroll, activate, or send; the campaign must remain inactive. Explain workflow persistence, bulk expansion, and activation as separate boundaries."
     }
   ],
   "schema_version": 1,

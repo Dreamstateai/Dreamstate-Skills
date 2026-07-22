@@ -11,10 +11,11 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = '10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412';
+const CANONICAL_MANIFEST_DIGEST = '47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3';
 
 // build() IS the contract test: it parses every playbook, validates the
-// frontmatter, and asserts every tools_used entry exists in the catalog. If it
+// frontmatter, and asserts every declared tool and capability exists in the
+// pinned canonical manifest. If it
 // returns without throwing, the contract held.
 test('build succeeds: all playbooks valid and every tool exists in the catalog', () => {
   const artifacts = build();
@@ -59,6 +60,7 @@ test('--check passes immediately after a build (generated tree is deterministic)
 test('every indexed skill references only catalog tools, with correct derived scopes', () => {
   writeArtifacts(build());
   const index = JSON.parse(readFileSync(join(ROOT, 'skills-index.json'), 'utf8'));
+  const gatewayTools = new Set(['dreamstate_tools_search', 'dreamstate_tools_get', 'dreamstate_tools_run']);
   assert.ok(index.skills.length >= 5, 'expected several skills');
   for (const skill of index.skills) {
     // The generated skill.meta.json must exist at the indexed path.
@@ -74,6 +76,10 @@ test('every indexed skill references only catalog tools, with correct derived sc
       .flatMap((capability: { required_scopes: string[] }) => capability.required_scopes);
     const expected = [...new Set([...meta.tools_used.map((t: string) => catalog.mcp_tools.find((entry: { name: string; scope: string | null }) => entry.name === t)?.scope).filter(Boolean), ...capabilityScopes])].sort();
     assert.deepEqual(meta.required_scopes, expected, `${skill.slug}: required_scopes mismatch`);
+    if (['executable', 'guided-execution'].includes(skill.execution_mode) && skill.mcp_tools.some((tool: string) => gatewayTools.has(tool))) {
+      assert.ok(skill.capability_ids.length > 0, `${skill.slug}: compact gateway skills must declare an explicit capability boundary`);
+      assert.ok(skill.capability_ids.length < catalog.capabilities.length, `${skill.slug}: compact gateway tools must not expand to the full registry`);
+    }
   }
 });
 
@@ -193,6 +199,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, /Never use `dreamstate_tools_run` for direct mutating or paid work/);
       assert.match(standalone, /returned `run_id`/);
       assert.match(standalone, /`dreamstate_get_run`/);
+      assert.match(standalone, /^completion_contract: \{"version":1,"fields":\[/m);
     }
     assert.equal(pinned.skills[id].kernel_sha256, clients.skills[id].kernel_sha256);
     assert.equal(pinned.skills[id].evals_sha256, clients.skills[id].evals_sha256);
@@ -200,17 +207,31 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       artifacts[`${architectRoot}/SKILL.md`],
       /bounded structured partial outputs plus the exact next transition/,
     );
+    assert.match(artifacts[`${architectRoot}/SKILL.md`], /^completion_contract: \{"version":1,"fields":\[/m);
   }
 });
 
-test('Architect generation rejects capability domains absent from the pinned registry', () => {
-  const withoutOutreach = {
+test('Context resolver metadata covers governed updates to fixed Company documents', () => {
+  const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
+  assert.ok(context);
+  assert.ok(context.triggers.some((trigger: string) => (
+    /update/i.test(trigger) && /Company Brain/i.test(trigger) && /Ideal Customer/i.test(trigger)
+  )));
+  const artifacts = build();
+  assert.match(
+    artifacts['generated/architect/context/SKILL.md'],
+    /update a governed Company Brain document such as Ideal Customer/,
+  );
+});
+
+test('Architect generation rejects signed capability IDs absent from the pinned registry', () => {
+  const withoutRequiredCapability = {
     ...catalog,
-    capabilities: catalog.capabilities.filter((capability: { domain: string }) => capability.domain !== 'outreach'),
+    capabilities: catalog.capabilities.filter((capability: { id: string }) => capability.id !== 'sources.cold_outbound_expand'),
   };
   assert.throws(
-    () => buildArchitectArtifacts(withoutOutreach),
-    /outreach.*capability domain.*pinned capability manifest/i,
+    () => buildArchitectArtifacts(withoutRequiredCapability),
+    /outreach-workflow-builder.*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
   );
 });
 
@@ -231,13 +252,13 @@ test('signed capability domains stay identical across source, Architect, Claude,
     context: ['brain', 'context'],
     'growth-asset-planner': [],
     integrations: [],
-    outreach: ['outreach'],
-    'outreach-list-builder': ['outreach'],
+    outreach: ['brain', 'outreach'],
     'outreach-sequence-writer': ['outreach'],
     'outreach-workflow-builder': ['outreach'],
-    'reddit-engagement': ['content'],
-    social: ['content'],
+    seo: ['brain', 'content', 'tables', 'visibility'],
+    social: ['brain', 'content'],
     strategy: ['brain', 'context'],
+    tables: ['tables'],
     visibility: ['visibility'],
     'weekly-growth-plan': [],
   };
@@ -265,6 +286,60 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
+  const exactCapabilityIds = ['sources.cold_outbound_expand'];
+  assert.deepEqual(
+    architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach-workflow-builder')?.capability_ids,
+    exactCapabilityIds,
+  );
+  assert.deepEqual(pinned.skills['outreach-workflow-builder'].capability_ids, exactCapabilityIds);
+  assert.deepEqual(clients.skills['outreach-workflow-builder'].capability_ids, exactCapabilityIds);
+  for (const root of [
+    'generated/architect/outreach-workflow-builder',
+    'generated/client-adapters/claude/outreach-workflow-builder',
+    'generated/client-adapters/codex/outreach-workflow-builder',
+  ]) {
+    assert.ok(
+      artifacts[`${root}/SKILL.md`].split('\n').includes(`capability_ids: ${JSON.stringify(exactCapabilityIds)}`),
+      `${root}/SKILL.md must carry the signed exact capability closure`,
+    );
+  }
+});
+
+test('audience planning kernels require privacy-safe pooled benchmark evidence', () => {
+  const artifacts = build();
+  const outreach = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const restaurantOwners = outreach.cases.find((item: { id: string }) => item.id === 'zero-history-restaurant-owners-pooled-benchmark');
+  assert.ok(restaurantOwners);
+  for (const concept of ['brain.learning.query_benchmarks', 'sample band', 'confidence', 'insufficient_evidence', 'never raw cross-workspace rows']) {
+    assert.ok(restaurantOwners.required_concepts.includes(concept));
+  }
+  assert.equal(restaurantOwners.fixture_profile, 'outreach_zero_history_benchmark');
+  assert.deepEqual(restaurantOwners.required_capability_ids, ['brain.learning.query_benchmarks']);
+  assert.match(restaurantOwners.request, /State the privacy boundary verbatim: never raw cross-workspace rows/);
+
+  const social = JSON.parse(artifacts['generated/architect/social/evals.json']);
+  assert.ok(social.cases.some((item: { id: string }) => item.id === 'founder-posts-pooled-benchmark'));
+  const seo = JSON.parse(artifacts['generated/architect/seo/evals.json']);
+  assert.ok(seo.cases.some((item: { id: string }) => item.id === 'agency-keywords-pooled-benchmark'));
+  const technicalSeo = seo.cases.find((item: { id: string }) => item.id === 'technical-and-content-plan');
+  assert.ok(technicalSeo);
+  for (const pattern of [/owninfluence\.com/, /demo bookings/, /fast-triage/, /buffer\.com/, /hootsuite\.com/, /read-only/]) {
+    assert.match(technicalSeo.request, pattern);
+  }
+  const seoKernel = artifacts['generated/architect/seo/KERNEL.md'];
+  assert.match(seoKernel, /Every benchmark handoff, including a blocked or unavailable one/);
+  assert.match(artifacts['generated/architect/outreach/KERNEL.md'], /Do not terminate after discovery or contract inspection/);
+  assert.match(seoKernel, /exact capability id `brain\.learning\.query_benchmarks`/);
+  assert.match(seoKernel, /privacy boundary: never raw cross-workspace rows/);
+});
+
+test('social research executes scoped reads without blocking on optional presentation choices', () => {
+  const kernel = build()['generated/architect/social/KERNEL.md'];
+  assert.match(kernel, /topic or query and time window/i);
+  assert.match(kernel, /ranking and output (?:format )?choices are optional/i);
+  assert.match(kernel, /transparent defaults/i);
+  assert.match(kernel, /nullable metrics/i);
+  assert.match(kernel, /Ask only for truly required missing inputs/i);
 });
 
 test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {
@@ -307,30 +382,28 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
   }
 });
 
-test('the pinned MCP catalog exposes the governed proposal lifecycle used by Claude and Codex', () => {
-  const tools = new Set(catalog.mcp_tools.map((tool: { name: string }) => tool.name));
-  for (const tool of [
-    'dreamstate_proposals_create',
-    'dreamstate_proposals_get',
-    'dreamstate_proposals_mutate',
-  ]) {
-    assert.equal(tools.has(tool), true, `${tool} must be present in the pinned MCP catalog`);
-  }
+test('the pinned MCP catalog exposes only the compact canonical gateway', () => {
+  assert.deepEqual(catalog.mcp_tools.map((tool: { name: string }) => tool.name).sort(), [
+    'dreamstate_cancel_run',
+    'dreamstate_get_run',
+    'dreamstate_list_runs',
+    'dreamstate_resume_run',
+    'dreamstate_tools_get',
+    'dreamstate_tools_run',
+    'dreamstate_tools_search',
+    'ping',
+  ]);
 });
 
 test('generated Architect outreach packages contain no shortcut terminology', () => {
   const artifacts = build();
   const forbidden = /\b(?:templates?|presets?|reusable|reuse)\b/i;
-  for (const id of ['outreach', 'outreach-list-builder', 'outreach-sequence-writer', 'outreach-workflow-builder']) {
+  for (const id of ['outreach', 'outreach-sequence-writer', 'outreach-workflow-builder']) {
     for (const file of ['SKILL.md', 'KERNEL.md', 'evals.json']) {
       const path = `generated/architect/${id}/${file}`;
       assert.doesNotMatch(artifacts[path], forbidden, path);
     }
   }
-  assert.match(
-    artifacts['generated/architect/outreach-list-builder/KERNEL.md'],
-    /Preserve compatible identity and evidence fields/,
-  );
 
   const index = JSON.parse(artifacts['skills-index.json']);
   const outreachSkills = index.skills.filter((skill: { domain: string }) => skill.domain === 'outreach');
@@ -338,13 +411,6 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
     assert.equal(skill.mcp_tools.includes('outreach_apply_template'), false, `${skill.slug}: forbidden agent shortcut tool`);
     assert.equal(skill.capability_ids.includes('intent:outreach.apply_template'), false, `${skill.slug}: forbidden agent shortcut capability`);
     assert.equal(skill.run_intents.includes('outreach.apply_template'), false, `${skill.slug}: forbidden agent shortcut intent`);
-  }
-  for (const slug of ['outbound', 'sequence-builder', 'multichannel']) {
-    const body = artifacts[`skills/outreach/${slug}/SKILL.md`];
-    assert.match(body, /Never select, clone, or apply a campaign template or preset/);
-    for (const line of body.split('\n').filter((candidate) => /\b(?:templates?|presets?|clone)\b/i.test(candidate))) {
-      assert.match(line, /(?:Never select, clone, or apply|manual human product UI)/, `${slug}: positive shortcut guidance: ${line}`);
-    }
   }
   assert.doesNotMatch(artifacts['generated/site/skills-catalog.json'], /outreach_apply_template|intent:outreach\.apply_template|outreach\.apply_template/);
 });
@@ -363,7 +429,7 @@ test('growth asset planning may describe a buyer template library but stays expl
 test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and launch as ordered typed stages', () => {
   const artifacts = build();
   const coordinator = artifacts['generated/architect/outreach/KERNEL.md'];
-  const listBuilder = artifacts['generated/architect/outreach-list-builder/KERNEL.md'];
+  const tables = artifacts['generated/architect/tables/KERNEL.md'];
   const workflow = artifacts['generated/architect/outreach-workflow-builder/KERNEL.md'];
 
   for (const changeKind of [
@@ -390,18 +456,98 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.ok(offset > prior, `${kind} must follow the prior staged gate`);
     prior = offset;
   }
-  assert.match(coordinator, /intent:outreach\.cold_outbound_preview/);
-  assert.match(coordinator, /no list, campaign, source, import, enrollment, or other durable destination/i);
-  assert.match(coordinator, /intent:outreach\.cold_outbound_expand/);
+  assert.match(coordinator, /sources\.cold_outbound_preview/);
+  assert.match(coordinator, /no worksheet, campaign, source, import, enrollment, or other durable destination/i);
+  assert.match(coordinator, /sources\.cold_outbound_expand/);
   assert.match(coordinator, /stage_exact_result_set=true/);
   assert.match(coordinator, /require_campaign_status=draft/);
-  assert.match(listBuilder, /exactly five through ten rows/);
-  assert.match(listBuilder, /Adding a column never implies that it ran/);
-  assert.match(listBuilder, /eleven-through-fifty row cap for this release/);
-  assert.match(listBuilder, /It is never another five-to-ten-row import/);
+  assert.match(tables, /smallest representative selection/i);
+  assert.match(coordinator, /adding columns never means they ran/i);
   assert.match(workflow, /source-evidence run/);
-  assert.match(workflow, /exact list revision/);
+  assert.match(workflow, /exact workbook, worksheet, and saved-view revisions/);
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
   assert.match(coordinator, /single activation-and-send authorization/i);
   assert.match(coordinator, /Do not invent a second send approval gate/i);
+});
+
+test('outreach release uses exact capability evidence and signed lifecycle states', () => {
+  const artifacts = build();
+  const outreach = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const workflow = JSON.parse(artifacts['generated/architect/outreach-workflow-builder/evals.json']);
+  const staged = outreach.cases.find((item: { id: string }) => item.id === 'staged-pilot-build-sample-expand-launch');
+  const launch = outreach.cases.find((item: { id: string }) => item.id === 'explicit-final-launch-revalidation');
+  const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
+  const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'exact-result-set-expansion-is-separate');
+
+  assert.deepEqual(staged.required_capability_ids, [
+    'sources.cold_outbound_preview',
+    'sources.cold_outbound_expand',
+  ]);
+  assert.deepEqual(staged.required_completion_fields, [
+    { id: 'stage_boundary_state', allowed_values: ['ordered_separate'] },
+    { id: 'campaign_state', allowed_values: ['inactive'] },
+    { id: 'activation_state', allowed_values: ['inactive'] },
+    { id: 'external_send_state', allowed_values: ['not_authorized'] },
+    { id: 'approval_state', allowed_values: ['required'] },
+    { id: 'run_state', allowed_values: ['not_applicable'] },
+  ]);
+  assert.match(staged.request, /creates no run.*run_state not_applicable.*do not fabricate a blocked run/i);
+  assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'external_send_state' && field.allowed_values.includes('not_authorized')
+  )));
+  assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'selection_state' && field.allowed_values.includes('missing')
+  )));
+  assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'run_state' && field.allowed_values.includes('blocked')
+  )));
+  assert.deepEqual(conditional.must_use_popup_when_missing, ['messaging branch']);
+  assert.deepEqual(exactSet.required_capability_ids, ['sources.cold_outbound_expand']);
+  assert.equal(exactSet.fixture_profile, 'outreach_exact_result_set_expansion');
+  assert.ok(exactSet.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'selection_state' && field.allowed_values.includes('exact')
+  )));
+  assert.match(
+    artifacts['generated/architect/outreach/KERNEL.md'],
+    /structured `ask_user` popup whose finite `messaging_branch_state` choice is `present` or `absent`/,
+  );
+  assert.match(
+    artifacts['generated/architect/outreach/KERNEL.md'],
+    /three distinct questions whose ids or prompts literally include `qualification`, `sender`, and `volume`/,
+  );
+  const outreachSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach');
+  const integrationsSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'integrations');
+  assert.ok(outreachSkill.triggers.includes('design an outreach campaign for a named cohort using pooled benchmarks'));
+  assert.match(integrationsSkill.description, /Provider content research, metrics, and search-window coverage remain with their domain skills/);
+});
+
+test('table evals require exact contracts and authoritative schema or paid-run receipts', () => {
+  const artifacts = build();
+  const tables = JSON.parse(artifacts['generated/architect/tables/evals.json']);
+  const buildTable = tables.cases.find((item: { id: string }) => item.id === 'build-reactive-table');
+  const paidSample = tables.cases.find((item: { id: string }) => item.id === 'bounded-paid-run');
+
+  assert.equal(buildTable.fixture_profile, 'tables_reactive_proposal');
+  assert.deepEqual(buildTable.required_capability_ids, ['tables.create']);
+  assert.deepEqual(buildTable.required_completion_fields, [
+    { id: 'schema_state', allowed_values: ['identity_source_dependencies_ready'] },
+    { id: 'artifact_state', allowed_values: ['proposal_saved', 'existing'] },
+    { id: 'durability_state', allowed_values: ['proposal_only', 'durable'] },
+  ]);
+  assert.equal(paidSample.fixture_profile, 'tables_bounded_paid_sample');
+  assert.deepEqual(paidSample.required_capability_ids, ['columns.sample']);
+  assert.deepEqual(paidSample.required_completion_fields, [
+    { id: 'execution_bounds_state', allowed_values: ['representative_capped_credits'] },
+    { id: 'cell_state', allowed_values: ['settled', 'partial', 'failed'] },
+    { id: 'approval_state', allowed_values: ['required', 'approved'] },
+    { id: 'run_state', allowed_values: ['terminal'] },
+  ]);
+  assert.match(
+    artifacts['generated/architect/tables/KERNEL.md'],
+    /only the canonical run receipt establish the approved selection, row cap, credit ceiling, terminal state, actual spend, and settled-cell outcomes/i,
+  );
+  assert.match(
+    buildTable.request,
+    /A proposal without the tools_run preparation receipt is incomplete/,
+  );
 });

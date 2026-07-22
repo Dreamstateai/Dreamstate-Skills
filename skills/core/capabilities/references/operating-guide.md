@@ -10,7 +10,7 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`
 
-Declared capabilities: none
+Declared capabilities: `tools.get`, `tools.search`
 
 Required scopes: none
 

@@ -32,10 +32,16 @@
       },
       "expected": {
         "allowed_tools": [
-          "dreamstate_tools_run"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "function:account_engagement_scoring"
+          "browser.linkedin.network_engagers_list",
+          "columns.add",
+          "columns.run",
+          "radar.engagement_posts_list"
         ]
       },
       "check": "tool_trace_subset"

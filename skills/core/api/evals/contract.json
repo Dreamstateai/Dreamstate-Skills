@@ -32,12 +32,15 @@
       },
       "expected": {
         "allowed_tools": [
+          "dreamstate_tools_search",
           "dreamstate_tools_get",
           "dreamstate_tools_run",
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "resource:runs"
+          "runs.get",
+          "tools.get",
+          "tools.run"
         ]
       },
       "check": "tool_trace_subset"

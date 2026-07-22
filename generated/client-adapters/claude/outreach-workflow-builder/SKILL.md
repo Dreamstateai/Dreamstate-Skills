@@ -1,28 +1,30 @@
 ---
 id: outreach-workflow-builder
 name: outreach-workflow-builder
-description: "Build validated row workflows with triggers, typed branches, action handoffs, stop logic, eligibility, and explicit consequence boundaries."
+description: "Build validated row workflows with triggers, typed branches, action handoffs, stop logic, eligibility, and explicit workflow-versus-expansion-versus-activation consequence boundaries."
 capability_domains: ["outreach"]
+capability_ids: ["sources.cold_outbound_expand"]
+completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: f195bb71cf76a615
-  manifest_digest: 10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412
+  capability_hash: a29a72f7045de668
+  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.0
-  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: 9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b
+  kernel_sha256: 31382e496ec2befe83711035ce947bf50ed1d0d9af21a6b9bee6a36b3b01453c
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
-  evals_sha256: f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2
+  evals_sha256: 0116d8d55e6219bd6c1bdaab68fedd4c27f44c1baa625a3f5eaf98ac19cfcf8b
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -51,7 +53,7 @@ Own what happens to sourced rows and when: trigger, qualification branches, cond
 
 ## Inputs
 
-Require the list-builder handoff or an inspected existing table with exact artifact revision, row identity, typed column outputs, qualification output, exclusions, sample evidence, and capability digests. Resolve current workflow graph and active nested surface when editing. If a referenced column or output is missing, return the dependency gap instead of inventing it.
+Require the tables handoff or an inspected existing worksheet and saved view with exact revisions, row identity, typed column outputs, qualification output, exclusions, sample evidence, and capability digests. Resolve current workflow graph and active nested surface when editing. If a referenced column or output is missing, return the dependency gap instead of inventing it.
 
 ## Graph design
 
@@ -63,8 +65,22 @@ Require the list-builder handoff or an inspected existing table with exact artif
 6. Define stop conditions for disqualification, missing consent, sender or integration failure, reply, bounce, unsubscribe, campaign pause, cost cap, and terminal completion only when supported by live contracts.
 7. Separate eligibility from enrollment and enrollment from activation. A qualifying branch may make a row eligible; it does not itself authorize external outreach.
 
-Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence. A workflow proposal cannot run columns or enroll contacts, and cannot expand a source. After pilot and column-sample inspection, one separate `outreach_bulk_expansion` proposal must use the exact `intent:outreach.cold_outbound_expand` contract and bind the source-evidence run, draft campaign, exact list revision, configured source id, unchanged targeting, integer eleven-through-fifty row cap, exact-result-set flag, and required draft status; never represent a filter or future query as an enrolled audience. Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before that proposal. Final activation remains a later coordinator-owned consequence.
+Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence.
+
+Keep the lifecycle boundaries explicit in the handoff:
+
+1. Workflow persistence saves the reviewed graph only. A workflow proposal cannot run columns or enroll contacts. It also cannot expand a source, import contacts, or activate a campaign.
+2. After pilot and column-sample inspection, `outreach_bulk_expansion` is a separate proposal using the exact `sources.cold_outbound_expand` contract. Bind the source-evidence run, draft campaign, exact workbook, worksheet, and saved-view revisions, configured source id, unchanged targeting, integer eleven-through-fifty row cap, `stage_exact_result_set=true`, and required draft status. It imports and stages only that capped resolved set; the campaign remains inactive. Never represent a filter or future query as an enrolled audience.
+3. Activation remains a later coordinator-owned consequence with its own approval boundary.
+
+Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before the bulk-expansion proposal.
+
+Before a terminal exact-result-set handoff, call `tools_search` and then `tools_get` for `sources.cold_outbound_expand` in the active tool turn. A remembered or prose-only capability id is not contract evidence. If the exact live schema is unavailable, return that blocker and do not claim the expansion proposal is ready.
+
+When the source-evidence run and every immutable workbook, worksheet, saved-view, source, campaign, targeting revision, and row-cap binding are supplied, do not ask for them again. Use the fetched `sources.cold_outbound_expand` contract in a canonical `tools_run` dry run. The dry run may validate and return proposal evidence only: it must not import, enroll, activate, or send. Preserve its receipt as the source-evidence run, keep `durability_state=proposal_only`, `selection_state=exact`, `campaign_state=inactive`, `activation_state=inactive`, and `run_state=blocked` until a separately approved mutation is executed.
+
+In the typed completion handoff, `activation_state` reports only whether activation actually occurred. Use `inactive` whenever it did not; any blocked work belongs in `run_state`.
 
 ## Handoff
 
-Return at most 750 tokens: graph revision, trigger, ordered nodes and symbolic edges, typed conditions, qualification path, action handoffs and side effects, stop/retry logic, eligibility output, dry-run evidence, costs, capability ids/digests, and unresolved blockers. State whether messaging exists; only that fact authorizes conditional loading of `outreach-sequence-writer`.
+Return at most 750 tokens: graph revision, trigger, ordered nodes and symbolic edges, typed conditions, qualification path, action handoffs and side effects, stop/retry logic, eligibility output, dry-run evidence, costs, capability ids/digests, and unresolved blockers. State whether messaging exists; only that fact authorizes conditional loading of `outreach-sequence-writer`. If the user makes messaging conditional and no supplied or inspected graph proves whether a messaging branch exists, resolve that material decision by calling `ask_user` in the current turn. Do not answer with a promise to ask later. If the graph does prove messaging, load `outreach-sequence-writer`; never silently omit both transitions.

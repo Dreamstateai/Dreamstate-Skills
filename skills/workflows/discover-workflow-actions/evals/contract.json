@@ -35,7 +35,11 @@
           "dreamstate_tools_search",
           "dreamstate_tools_get"
         ],
-        "allowed_capability_ids": []
+        "allowed_capability_ids": [
+          "tools.get",
+          "tools.search",
+          "workflows.node_options"
+        ]
       },
       "check": "tool_trace_subset"
     },

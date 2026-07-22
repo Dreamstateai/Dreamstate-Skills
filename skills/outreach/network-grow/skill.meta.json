@@ -20,23 +20,19 @@
   "execution_mode": "executable",
   "maturity": "stable",
   "tools_used": [
-    "content_list_accounts",
-    "outreach_lists",
-    "outreach_create_list",
-    "outreach_find_leads",
-    "outreach_list_contacts",
-    "outreach_get_contact",
-    "outreach_enrich_contact",
-    "outreach_create_campaign",
-    "outreach_draft_message",
-    "outreach_send_connection"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "required_scopes": [
     "actions",
     "content:read",
     "outreach:read",
-    "outreach:write"
+    "outreach:write",
+    "tables:read",
+    "tables:write"
   ],
-  "capability_hash": "f195bb71cf76a615",
+  "capability_hash": "a29a72f7045de668",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

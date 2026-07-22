@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.1 - 2026-07-21
+
+- Bound every generated Architect skill to exact canonical capability IDs and a signed completion contract.
+- Refreshed the canonical capability registry while preserving the governed proposal, approval, run, and compatibility gates across Architect, Claude Code, and Codex.
+
+## 0.5.0 - 2026-07-17
+
+- Authorized the Context skill to propose brand-new governed documents via `brain.context.propose_document`: new documents remain unpublished pending human review, and protected roots cannot be fabricated.
+- Synced the capability manifest to the current backend runtime registries.
+
 ## 0.3.0 - 2026-07-15
 
 - Added one governed proposal lifecycle shared by Architect, Claude Code, Codex, MCP, and API clients.

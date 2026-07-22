@@ -6,7 +6,7 @@
     {
       "name": "routes-to-correct-skill",
       "input": {
-        "request": "Design a governed LinkedIn outbound campaign from scratch through Dreamstate: ground the ICP, propose source and table work, build a custom sequence, stage bounded evidence runs, and launch only after explicit approval. Use whenever the user wants cold outreach, a lead list, a new campaign, demos, or pipeline. This orchestrator uses the same revision-bound proposal and durable-run lifecycle as Architect, Claude, and Codex."
+        "request": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits."
       },
       "expected": {
         "selected_skill": "outbound"
@@ -16,7 +16,7 @@
     {
       "name": "respects-execution-mode",
       "input": {
-        "request": "Design a governed LinkedIn outbound campaign from scratch through Dreamstate: ground the ICP, propose source and table work, build a custom sequence, stage bounded evidence runs, and launch only after explicit approval. Use whenever the user wants cold outreach, a lead list, a new campaign, demos, or pipeline. This orchestrator uses the same revision-bound proposal and durable-run lifecycle as Architect, Claude, and Codex.",
+        "request": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.",
         "capability_available": true
       },
       "expected": {
@@ -28,20 +28,37 @@
     {
       "name": "uses-declared-contracts-only",
       "input": {
-        "request": "Design a governed LinkedIn outbound campaign from scratch through Dreamstate: ground the ICP, propose source and table work, build a custom sequence, stage bounded evidence runs, and launch only after explicit approval. Use whenever the user wants cold outreach, a lead list, a new campaign, demos, or pipeline. This orchestrator uses the same revision-bound proposal and durable-run lifecycle as Architect, Claude, and Codex."
+        "request": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits."
       },
       "expected": {
         "allowed_tools": [
           "dreamstate_tools_search",
           "dreamstate_tools_get",
-          "dreamstate_proposals_create",
-          "dreamstate_proposals_get",
-          "dreamstate_proposals_mutate",
-          "dreamstate_get_run",
-          "dreamstate_list_runs"
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "resource:runs"
+          "campaigns.activate",
+          "campaigns.create",
+          "campaigns.template_apply",
+          "cells.settle",
+          "columns.add",
+          "contacts.draft_opener",
+          "contacts.enrich",
+          "contacts.get",
+          "contacts.list",
+          "outreach.workspace_stats_get",
+          "rows.query",
+          "sequences.add_step",
+          "sequences.enroll_selection",
+          "sequences.get",
+          "sequences.step_options",
+          "sequences.validate",
+          "social.accounts_list",
+          "sources.find_leads",
+          "tables.create",
+          "tables.list",
+          "workbooks.create"
         ]
       },
       "check": "tool_trace_subset"

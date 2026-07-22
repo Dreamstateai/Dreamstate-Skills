@@ -22,20 +22,29 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:outreach.enrich_contact"
+    "columns.add",
+    "columns.run",
+    "contacts.enrich",
+    "runs.column_get"
   ],
   "mcp_tools": [
-    "outreach_enrich_contact"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run",
+    "dreamstate_list_runs",
+    "dreamstate_cancel_run",
+    "dreamstate_resume_run"
   ],
-  "run_intents": [
-    "outreach.enrich_contact"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
-    "outreach:write"
+    "outreach:read",
+    "outreach:write",
+    "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/enrich-person/SKILL.md",
   "install_command": "dreamstate skills install enrich-person",

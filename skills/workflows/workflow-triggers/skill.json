@@ -22,16 +22,15 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "resource:workflow-triggers",
-    "resource:workflow-triggers.write",
-    "workflow_trigger:analytics",
-    "workflow_trigger:linkedin_signal",
-    "workflow_trigger:webhook"
+    "workflows.trigger_create",
+    "workflows.trigger_delete",
+    "workflows.triggers_list"
   ],
   "mcp_tools": [
-    "workflow_triggers",
-    "workflow_trigger_create",
-    "workflow_trigger_delete"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "run_intents": [],
   "resources": [],
@@ -40,7 +39,7 @@
     "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/workflows/workflow-triggers/SKILL.md",
   "install_command": "dreamstate skills install workflow-triggers",

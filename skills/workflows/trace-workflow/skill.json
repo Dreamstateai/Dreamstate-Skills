@@ -22,11 +22,14 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "resource:workflow-runs"
+    "workflows.run_trace_get",
+    "workflows.runs_list"
   ],
   "mcp_tools": [
-    "workflow_trace",
-    "workflow_runs"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "run_intents": [],
   "resources": [],
@@ -34,7 +37,7 @@
     "workflows:read"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/workflows/trace-workflow/SKILL.md",
   "install_command": "dreamstate skills install trace-workflow",

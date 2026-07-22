@@ -2,27 +2,29 @@
 id: outreach
 name: outreach
 description: "Open an existing campaign or coordinate a new custom campaign from scratch through ordered evidence-pilot, draft-bundle, column-sample, capped-bulk, and activation-and-send gates."
-capability_domains: ["outreach"]
+capability_domains: ["brain","outreach"]
+capability_ids: []
+completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: f195bb71cf76a615
-  manifest_digest: 10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412
+  capability_hash: a29a72f7045de668
+  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.0
-  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: 060d01868a6271b87cf0138f68bdf727707d3c695a102566c2a0bc65b6c0deab
+  kernel_sha256: 2d0d9e04ec0b5574e2acadf2378af5bc70ffb97c7cb3a39ab81949c327983711
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: 4b6fe5184e7882bfbc31798f54f3e80d7cffa8728167e84474b6e9fe228c0d9b
+  evals_sha256: 2098874a845d24fb19b2368a57bd3cf43e77381f88c818d23c2a0e9114b6d336
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -51,30 +53,38 @@ Open an existing campaign or design a new custom outreach campaign from scratch.
 
 ## Intake and current state
 
-Resolve whether the user means an existing artifact or a new campaign. For an existing campaign, inspect its concrete current list, table schema, workflow graph, sequence graph, sender binding, revision, status, and mounted nested surface. Preserve the user's viewport, filters, selection, and tab. For a new campaign, construct every list, field, workflow branch, and custom message from the user's requirements and live contracts.
+Resolve whether the user means an existing artifact or a new campaign. For an existing campaign, inspect its concrete workbook, worksheet, saved view, table schema, workflow graph, sequence graph, sender binding, revision, status, and mounted nested surface. Preserve the user's viewport, filters, selection, and tab. For a new campaign, construct every worksheet, field, workflow branch, and custom message from the user's requirements and live contracts.
 
 Retrieve only relevant published Company Brain claims and citations. Derive all available answers first, then use one structured popup for the remaining material choices: outcome, audience and ICP, required versus preferred criteria, exclusions, geography, volume, sender/channel, qualification threshold, cost tolerance, and launch intent. Do not ask for choices live metadata can answer.
 
-For a new campaign without an exact current sender binding, the popup must include an explicit sender question whose id or prompt says `sender`; channel alone is not a sender decision. Keep volume and qualification explicit as well so the user can verify every material launch input before any proposal exists.
+Before designing a campaign plan for a named audience or named cohort, search for, fetch, and call `brain.learning.query_benchmarks` for that approved cohort. Do not terminate after discovery or contract inspection. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. Every campaign-plan response identifies the benchmark capability and states the exact privacy boundary: released results are cohort-level evidence, never raw cross-workspace rows. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
+
+For a new campaign without an exact current sender binding, scratch intake is incomplete unless one structured popup contains three distinct questions whose ids or prompts literally include `qualification`, `sender`, and `volume`. Channel alone is not a sender decision. The popup must expose all three so the user can verify every material launch input before any proposal exists.
 
 ## Required orchestration
 
-1. Run `outreach-list-builder` first. It owns source pilots, row identity, filters, table shape, columns, dependency order, sample quality, and cost audit.
+1. Run `tables` first. It owns source pilots, row identity, filters, canonical workbook/worksheet/view shape, columns, dependency order, sample quality, and cost audit.
 2. Run `outreach-workflow-builder` second. It owns trigger, qualification branches, conditions, action handoffs, stop logic, and enrollment eligibility.
 3. Load `outreach-sequence-writer` only when the validated workflow contains messaging. It owns custom steps, timing, variables, sender/channel constraints, and real-row copy previews.
 4. Only after the user approves a paid source-evidence pilot and its durable run evidence has been inspected, combine specialist handoffs into one `outreach_bundle` proposal whose symbolic outputs resolve in dependency order. Include the selected evidence run, existing revisions, capability ids and digests, required inputs, produced outputs, run conditions, exclusions, costs, consequences, and native table/workflow/sequence previews. This proposal creates or revises draft structure only: it does not run columns, expand the source, enroll contacts, activate, or send.
 
 Each specialist handoff is typed and at most 750 tokens. If a specialist is blocked, surface the exact missing contract or decision; do not silently fill the gap.
 
+If the user makes messaging conditional but the current workflow does not prove whether a messaging branch exists, do not merely restate the condition and do not load the sequence writer speculatively. Open one structured `ask_user` popup whose finite `messaging_branch_state` choice is `present` or `absent`; load `outreach-sequence-writer` only after the resolved state is `present`.
+
 ## Staged gates
 
 Keep these consequences and proposal revisions separate and in this order:
 
-1. Before any durable bundle, a standalone `outreach_source` test-run proposal may contain one through three candidate searches. Fetch the exact `intent:outreach.cold_outbound_preview` contract. Each leaf binds only the reviewed targeting object and an integer `row_limit` from five through ten, carries a positive credit ceiling, and has no list, campaign, source, import, enrollment, or other durable destination. Its result rows remain run evidence only.
-2. After comparing that evidence, the `outreach_bundle` creates the reviewable draft list, table, workflow, campaign, and custom-sequence structure only.
+Before a terminal staged-campaign handoff, call `tools_search` and then `tools_get` for both `sources.cold_outbound_preview` and `sources.cold_outbound_expand` in the active tool turn. Their names in this kernel are routing requirements, not inspected contract evidence. If either exact live contract cannot be fetched, report that blocker instead of presenting the stage plan as execution-ready.
+
+In the typed completion handoff, `activation_state` reports only whether campaign activation actually occurred. Use `inactive` whenever it did not, even when progress is blocked; report blocking exclusively in `run_state`.
+
+1. Before any durable bundle, a standalone `outreach_source` test-run proposal may contain one through three candidate searches. Fetch the exact `sources.cold_outbound_preview` contract, and name both the proposal type and capability in the stage summary. Each leaf binds only the reviewed targeting object and an integer `row_limit` from five through ten, carries a positive credit ceiling, and has no worksheet, campaign, source, import, enrollment, or other durable destination. Its result rows remain run evidence only.
+2. After comparing that evidence, the `outreach_bundle` creates the reviewable draft workbook, worksheet, saved view, workflow, campaign, and custom-sequence structure only.
 3. A later `table_column_run` proposal names the exact current table revision, selected column changes, and exactly five through ten current contact ids. Its approval authorizes only that bounded enrichment sample.
-4. After inspecting real sample outputs and priority results, one `outreach_bulk_expansion` proposal uses the exact `intent:outreach.cold_outbound_expand` contract. It binds the reviewed draft campaign, list and list revision, configured source id, source-evidence run, unchanged targeting, an integer eleven-through-fifty `row_cap`, `stage_exact_result_set=true`, and `require_campaign_status=draft`. It imports only the resolved capped result set, stages that exact set for the still-inactive campaign, and never represents a future dynamic audience. This is not another five-to-ten-row pilot.
-5. An `outreach_activation` proposal is sculpted only when the user explicitly authorizes “Launch Campaign.” Immediately before proposing and again before execution, revalidate permission, integration and sender binding, exclusions, cost and credit ceilings, campaign revision, capability digests, readiness, and both pilot and sample evidence. This is the single activation-and-send authorization: approval activates only the exact reviewed launch revision and authorizes its capped, paced sends under the reviewed workflow, sender, stop, and safety limits. Do not invent a second send approval gate, and never hide that external sends are authorized.
+4. After inspecting real sample outputs and priority results, one `outreach_bulk_expansion` proposal uses the exact `sources.cold_outbound_expand` contract, and the stage summary names both. It binds the reviewed draft campaign, exact worksheet and saved view revisions, configured source id, source-evidence run, unchanged targeting, an integer eleven-through-fifty `row_cap`, `stage_exact_result_set=true`, and `require_campaign_status=draft`. It imports only the resolved capped result set, stages that exact set for the still-inactive campaign, and never represents a future dynamic audience. This is not another five-to-ten-row pilot.
+5. An `outreach_activation` proposal requires explicit launch intent. A user's explicit instruction to launch satisfies that decision; do not ask them to repeat it. Label the handoff and review action `Launch Campaign`. Immediately before proposing and again before execution, revalidate permission, integration and sender binding, exclusions, cost and credit ceilings, campaign revision, capability digests, readiness, and both pilot and sample evidence. The launch handoff explains that this is the single activation-and-send authorization: approval activates only the exact reviewed launch revision and authorizes its capped, paced sends under the reviewed workflow, sender, stop, and safety limits. Record the explicit intent, exact approval, and revision as launch proof. Do not invent a second send approval gate. State that no second gate remains and that approval authorizes external sends.
 
 Approval of one stage never authorizes a later stage. Pilot evidence never means it was imported; adding columns never means they ran; applying a workflow never means contacts enrolled; bulk expansion never means the campaign activated; activation never implies every send succeeded.
 

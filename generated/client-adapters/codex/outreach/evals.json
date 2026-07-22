@@ -1,11 +1,11 @@
 {
   "cases": [
     {
-      "expected_load_order": ["outreach-list-builder", "outreach-workflow-builder", "outreach"],
+      "expected_load_order": ["tables", "outreach-workflow-builder", "outreach"],
       "expected_skill_ids": ["outreach"],
       "id": "new-campaign-from-scratch",
       "must_use_popup_when_missing": ["qualification", "sender", "volume"],
-      "request": "Build a new outbound campaign for US B2B founders from scratch."
+      "request": "Build a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or volume. Resolve those three material launch inputs in one structured popup before planning."
     },
     {
       "expected_skill_ids": ["outreach"],
@@ -15,21 +15,34 @@
     {
       "conditional_skill_id": "outreach-sequence-writer",
       "id": "sequence-only-when-messaging",
-      "request": "Include custom outreach messages only if the workflow has a messaging branch."
+      "must_use_popup_when_missing": ["messaging branch"],
+      "request": "Update my current workflow to include custom outreach messages only if its inspected graph has a messaging branch."
     },
     {
       "expected_skill_ids": ["outreach"],
       "id": "staged-pilot-build-sample-expand-launch",
-      "required_concepts": ["intent:outreach.cold_outbound_preview", "outreach_source", "outreach_bundle", "table_column_run", "intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "outreach_activation", "approval of one stage never authorizes a later stage"],
-      "required_order": ["outreach_source", "outreach_bundle", "table_column_run", "outreach_bulk_expansion", "outreach_activation"],
-      "request": "Build the full campaign, test columns on 7 rows, enroll the prioritized contacts, and launch it. Explain and preserve every approval boundary."
+      "resume_after_elicitation": "recommended",
+      "required_capability_ids": ["sources.cold_outbound_preview", "sources.cold_outbound_expand"],
+      "required_completion_fields": [{"id":"stage_boundary_state","allowed_values":["ordered_separate"]},{"id":"campaign_state","allowed_values":["inactive"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"external_send_state","allowed_values":["not_authorized"]},{"id":"approval_state","allowed_values":["required"]},{"id":"run_state","allowed_values":["not_applicable"]}],
+      "request": "Prepare a reviewable staged proposal only; do not execute or launch. Use these non-secret planning inputs: US B2B SaaS founders, 7-row column sample, email sender to be selected later, 25-contact expansion cap, and qualification threshold 80. Fetch and inspect the exact sources.cold_outbound_preview and sources.cold_outbound_expand contracts. Show the separately approved source pilot, draft bundle, bounded column sample, exact bulk expansion, enrollment/activation boundary, and external-send boundary. Report campaign_state inactive, activation_state inactive, and approval_state required because the sender binding and approvals are missing. Because this request authorizes no execution and creates no run, report run_state not_applicable; do not fabricate a blocked run."
     },
     {
       "expected_skill_ids": ["outreach"],
       "id": "explicit-final-launch-revalidation",
-      "required_concepts": ["Launch Campaign", "single activation-and-send authorization", "capped, paced sends", "sender binding", "exclusions", "cost", "readiness", "exact reviewed launch revision", "no second send approval gate"],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [{"id":"stage_boundary_state","allowed_values":["ordered_separate"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"external_send_state","allowed_values":["not_authorized"]},{"id":"selection_state","allowed_values":["missing"]},{"id":"approval_state","allowed_values":["required"]},{"id":"run_state","allowed_values":["blocked"]}],
+      "required_concepts": ["Launch Campaign", "sender binding", "exclusions", "cost", "readiness"],
       "must_disclose_external_sends": true,
-      "request": "The source pilot, draft, column sample, and exact bulk expansion are already complete. I explicitly authorize Launch Campaign; what must happen before activation?"
+      "request": "The source pilot, draft, column sample, and bulk expansion are described as complete, and I explicitly state launch intent. No approval-to-grant binding, canonical sender-binding evidence, exact selection receipt, or readiness receipt is attached. Do not activate or send. Explain the Launch Campaign preflight: revalidate sender binding, exclusions, exact selection, cost ceiling, readiness, revisions, capability digests, and approval evidence. State that launch approval, once validly bound, is the single capped-and-paced external-send authorization, but report this request blocked and not authorized."
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "fixture_profile": "outreach_zero_history_benchmark",
+      "id": "zero-history-restaurant-owners-pooled-benchmark",
+      "required_capability_ids": ["brain.learning.query_benchmarks"],
+      "resume_after_elicitation": "recommended",
+      "required_concepts": ["brain.learning.query_benchmarks", "restaurant owners", "cohort-level evidence", "messaging archetype", "sample band", "confidence", "insufficient_evidence", "never raw cross-workspace rows"],
+      "request": "Our acting workspace has zero campaign history for restaurant owners. Search for, fetch, and call the exact brain.learning.query_benchmarks contract before designing the campaign. Report its cohort-level evidence boundary, messaging archetype availability, sample band, confidence, and insufficient_evidence state exactly from the canonical receipt. State the privacy boundary verbatim: never raw cross-workspace rows. Do not create or launch a campaign."
     }
   ],
   "schema_version": 1,

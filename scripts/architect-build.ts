@@ -10,6 +10,7 @@ const SHA256 = /^[a-f0-9]{64}$/;
 const CAPABILITY_HASH = /^[a-f0-9]{16,64}$/;
 const SKILL_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CAPABILITY_DOMAIN = /^[a-z][a-z0-9_-]{0,63}$/;
+const CAPABILITY_ID = /^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+$/;
 const OUTREACH_POLICY_IDS = new Set([
   'outreach',
   'outreach-list-builder',
@@ -39,7 +40,20 @@ interface ArchitectSkillSource {
   triggers: string[];
   dependencies: string[];
   capability_domains: string[];
+  capability_ids: string[];
   max_context_tokens: number;
+  completion_contract: CompletionContract;
+}
+
+interface CompletionField {
+  id: string;
+  description: string;
+  allowed_values: string[];
+}
+
+interface CompletionContract {
+  version: 1;
+  fields: CompletionField[];
 }
 
 interface ArchitectSourceManifest {
@@ -95,6 +109,7 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
   }
   if (!Array.isArray(value.skills) || value.skills.length === 0) throw new Error('architect skills must be non-empty');
   const ids = new Set<string>();
+  const completionFieldsById = new Map<string, CompletionField>();
   for (const skill of value.skills) {
     if (!SKILL_ID.test(skill.id) || ids.has(skill.id)) throw new Error(`invalid or duplicate Architect skill ${skill.id}`);
     ids.add(skill.id);
@@ -105,11 +120,38 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
     if (skill.capability_domains.some((domain) => !CAPABILITY_DOMAIN.test(domain))) {
       throw new Error(`${skill.id}.capability_domains contains an invalid domain`);
     }
+    assertStringArray(skill.capability_ids, `${skill.id}.capability_ids`);
+    if (skill.capability_ids.some((capabilityId) => !CAPABILITY_ID.test(capabilityId))) {
+      throw new Error(`${skill.id}.capability_ids contains an invalid capability id`);
+    }
     if (!Number.isInteger(skill.max_context_tokens) || skill.max_context_tokens < 1 || skill.max_context_tokens > 6_000) {
       throw new Error(`${skill.id}: max_context_tokens must be 1..6000`);
     }
     if (skill.id === 'outreach' && skill.max_context_tokens > 3_000) {
       throw new Error('outreach coordinator exceeds its 3000-token cap');
+    }
+    if (skill.completion_contract?.version !== 1 || !Array.isArray(skill.completion_contract.fields)
+      || skill.completion_contract.fields.length < 1 || skill.completion_contract.fields.length > 12) {
+      throw new Error(`${skill.id}: completion_contract must contain 1..12 fields at version 1`);
+    }
+    const completionIds = new Set<string>();
+    for (const field of skill.completion_contract.fields) {
+      if (!/^[a-z][a-z0-9_]{0,63}$/.test(field.id) || completionIds.has(field.id)) {
+        throw new Error(`${skill.id}: invalid or duplicate completion field ${field.id}`);
+      }
+      completionIds.add(field.id);
+      if (!field.description?.trim() || field.description.length > 300) {
+        throw new Error(`${skill.id}.${field.id}: completion description must be 1..300 characters`);
+      }
+      assertStringArray(field.allowed_values, `${skill.id}.${field.id}.allowed_values`);
+      if (field.allowed_values.length > 12 || field.allowed_values.some((item) => !/^[a-z][a-z0-9_]{0,63}$/.test(item))) {
+        throw new Error(`${skill.id}.${field.id}: completion allowed_values are invalid`);
+      }
+      const prior = completionFieldsById.get(field.id);
+      if (prior && JSON.stringify(prior) !== JSON.stringify(field)) {
+        throw new Error(`${skill.id}.${field.id}: shared completion field conflicts with another signed definition`);
+      }
+      completionFieldsById.set(field.id, field);
     }
   }
   for (const skill of value.skills) {
@@ -166,6 +208,24 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
     if (evalDocument.schema_version !== 1 || evalDocument.skill_id !== skill.id || !Array.isArray(evalDocument.cases) || !evalDocument.cases.length) {
       throw new Error(`${skill.id}: eval contract does not match schema v1`);
     }
+    const completionFields = new Map(skill.completion_contract.fields.map((field) => [field.id, field]));
+    for (const evalCase of evalDocument.cases) {
+      if (!evalCase || typeof evalCase !== 'object') throw new Error(`${skill.id}: eval case must be an object`);
+      const requirements = (evalCase as { required_completion_fields?: unknown }).required_completion_fields;
+      if (requirements === undefined) continue;
+      if (!Array.isArray(requirements) || requirements.length > 12) {
+        throw new Error(`${skill.id}: required_completion_fields are invalid`);
+      }
+      for (const requirement of requirements) {
+        if (!requirement || typeof requirement !== 'object') throw new Error(`${skill.id}: completion requirement is invalid`);
+        const { id, allowed_values: allowedValues } = requirement as { id?: unknown; allowed_values?: unknown };
+        const signed = typeof id === 'string' ? completionFields.get(id) : undefined;
+        if (!signed || !Array.isArray(allowedValues) || !allowedValues.length
+          || allowedValues.some((item) => typeof item !== 'string' || !signed.allowed_values.includes(item))) {
+          throw new Error(`${skill.id}: eval completion requirement is not a subset of the signed contract`);
+        }
+      }
+    }
     if (OUTREACH_POLICY_IDS.has(skill.id) && hasOutreachShortcutLanguage(`${kernel}\n${evals}`)) {
       throw new Error(`${skill.id}: Architect outreach source contains forbidden shortcut language`);
     }
@@ -216,7 +276,9 @@ function architectSkillFile(skill: SourceSkill, compatibility: Compatibility, so
     `triggers: ${JSON.stringify(skill.triggers)}`,
     `dependencies: ${JSON.stringify(skill.dependencies)}`,
     `capability_domains: ${JSON.stringify(skill.capability_domains)}`,
+    `capability_ids: ${JSON.stringify(skill.capability_ids)}`,
     `max_context_tokens: ${skill.max_context_tokens}`,
+    `completion_contract: ${JSON.stringify(skill.completion_contract)}`,
     'compatibility:',
     `  playbook_kernel_version: ${compatibility.playbook_kernel_version}`,
     `  playbook_kernel_hash: ${compatibility.playbook_kernel_hash}`,
@@ -265,6 +327,8 @@ function codingSkillFile(
     `name: ${skill.id}`,
     `description: ${JSON.stringify(skill.description)}`,
     `capability_domains: ${JSON.stringify(skill.capability_domains)}`,
+    `capability_ids: ${JSON.stringify(skill.capability_ids)}`,
+    `completion_contract: ${JSON.stringify(skill.completion_contract)}`,
     'compatibility:',
     `  playbook_kernel_version: ${compatibility.playbook_kernel_version}`,
     `  playbook_kernel_hash: ${compatibility.playbook_kernel_hash}`,
@@ -306,17 +370,17 @@ function codingSkillFile(
 export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityManifest): Record<string, string> {
   validateCapabilityManifest(capabilityManifest);
   const { manifest, skills, sourceHash } = loadSources();
-  const capabilityDomains = new Set(
+  const capabilityIds = new Set(
     capabilityManifest.capabilities.flatMap((capability) => {
       if (!capability || typeof capability !== 'object' || Array.isArray(capability)) return [];
-      const domain = (capability as { domain?: unknown }).domain;
-      return typeof domain === 'string' && domain.trim() ? [domain] : [];
+      const id = (capability as { id?: unknown }).id;
+      return typeof id === 'string' && id.trim() ? [id] : [];
     }),
   );
   for (const skill of skills) {
-    for (const domain of skill.capability_domains) {
-      if (!capabilityDomains.has(domain)) {
-        throw new Error(`${skill.id}: capability domain ${domain} is absent from the pinned capability manifest`);
+    for (const capabilityId of skill.capability_ids) {
+      if (!capabilityIds.has(capabilityId)) {
+        throw new Error(`${skill.id}: capability id ${capabilityId} is absent from the pinned capability manifest`);
       }
     }
   }
@@ -332,6 +396,7 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
   const artifacts: Record<string, string> = {};
   const pinnedSkills: Record<string, {
     capability_domains: string[];
+    capability_ids: string[];
     kernel_sha256: string;
     adapter_sha256: string;
     evals_sha256: string;
@@ -345,6 +410,7 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
     artifacts[`${architectRoot}/evals.json`] = skill.evals;
     pinnedSkills[skill.id] = {
       capability_domains: skill.capability_domains,
+      capability_ids: skill.capability_ids,
       kernel_sha256: skill.kernel_sha256,
       adapter_sha256: architect.adapterHash,
       evals_sha256: skill.evals_sha256,
@@ -366,6 +432,7 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
     }
     clientSkills[skill.id] = {
       capability_domains: skill.capability_domains,
+      capability_ids: skill.capability_ids,
       kernel_sha256: skill.kernel_sha256,
       evals_sha256: skill.evals_sha256,
       adapter_sha256: {

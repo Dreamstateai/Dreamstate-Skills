@@ -22,20 +22,28 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.generate_post"
+    "content.artifact_create",
+    "content.artifact_generate",
+    "content.artifact_get",
+    "content.artifact_update"
   ],
   "mcp_tools": [
-    "content_generate_post"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run",
+    "dreamstate_list_runs",
+    "dreamstate_cancel_run",
+    "dreamstate_resume_run"
   ],
-  "run_intents": [
-    "content.generate_post"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
+    "content:read",
     "content:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/social/linkedin-post/SKILL.md",
   "install_command": "dreamstate skills install linkedin-post",
