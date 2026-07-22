@@ -33,12 +33,13 @@
       "expected": {
         "allowed_tools": [
           "ping",
-          "content_list_accounts",
-          "outreach_lists"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run"
         ],
         "allowed_capability_ids": [
-          "intent:content.list_accounts",
-          "intent:outreach.list_lists"
+          "social.accounts_list",
+          "tables.list"
         ]
       },
       "check": "tool_trace_subset"

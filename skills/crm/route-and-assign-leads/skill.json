@@ -22,10 +22,14 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "function:icp_score_and_route"
+    "contacts.update",
+    "records.field_set"
   ],
   "mcp_tools": [
-    "dreamstate_tools_run"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "run_intents": [],
   "resources": [],
@@ -33,7 +37,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/crm/route-and-assign-leads/SKILL.md",
   "install_command": "dreamstate skills install route-and-assign-leads",

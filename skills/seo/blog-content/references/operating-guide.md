@@ -8,9 +8,9 @@ Plan, generate, review, and publish useful long-form content through Dreamstate.
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_create_blog`, `content_generate_blog`, `content_get_blog`, `content_publish_blog`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
 
-Declared capabilities: `intent:content.create_blog`, `intent:content.generate_blog`, `intent:content.get_blog`, `intent:content.publish_blog`
+Declared capabilities: `content.article_create_schedule`, `content.article_delivery_create`, `content.article_get`, `content.article_update`, `content.artifact_create`, `content.artifact_generate`
 
 Required scopes: `actions`, `content:read`, `content:write`
 

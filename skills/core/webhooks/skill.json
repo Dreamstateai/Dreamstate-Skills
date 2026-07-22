@@ -22,33 +22,16 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "event:campaign.activated",
-    "event:campaign.paused",
-    "event:connection.accepted",
-    "event:contact.created",
-    "event:content.scheduled",
-    "event:enrichment.completed",
-    "event:lead.sourced",
-    "event:post.failed",
-    "event:post.published",
-    "event:reply.received",
-    "event:run.completed",
-    "event:run.failed",
-    "event:run.started",
-    "event:seo.rank.changed",
-    "event:sequence.step.sent",
-    "event:table.column.completed",
-    "event:usage.ceiling_reached",
-    "event:usage.overage_started",
-    "event:usage.threshold_reached",
-    "resource:webhooks",
-    "resource:webhooks.write"
+    "webhooks.create",
+    "webhooks.delete",
+    "webhooks.list",
+    "webhooks.test_delivery"
   ],
   "mcp_tools": [
-    "webhooks_create",
-    "webhooks_list",
-    "webhooks_test_delivery",
-    "webhooks_delete"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "run_intents": [],
   "resources": [],
@@ -57,7 +40,7 @@
     "outreach:read"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/webhooks/SKILL.md",
   "install_command": "dreamstate skills install webhooks",

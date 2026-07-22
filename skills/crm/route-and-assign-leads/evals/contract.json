@@ -32,10 +32,14 @@
       },
       "expected": {
         "allowed_tools": [
-          "dreamstate_tools_run"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "function:icp_score_and_route"
+          "contacts.update",
+          "records.field_set"
         ]
       },
       "check": "tool_trace_subset"

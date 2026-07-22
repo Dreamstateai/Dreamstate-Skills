@@ -8,11 +8,11 @@ Install Dreamstate skills, authenticate the client, and verify the connection en
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `ping`, `content_list_accounts`, `outreach_lists`
+Declared tools: `ping`, `dreamstate_tools_search`, `dreamstate_tools_get`
 
-Declared capabilities: `intent:content.list_accounts`, `intent:outreach.list_lists`
+Declared capabilities: `social.accounts_list`, `tools.get`, `tools.search`
 
-Required scopes: `content:read`, `outreach:read`
+Required scopes: `content:read`
 
 ## Evidence checklist
 

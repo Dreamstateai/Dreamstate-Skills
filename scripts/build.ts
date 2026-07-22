@@ -87,14 +87,17 @@ function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest,
   const toolRegistry = new Map(capabilityManifest.mcp_tools.map((tool) => [tool.name, tool]));
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${file}: unknown MCP tool ${tool}`);
   if ((mode === 'executable' || mode === 'guided-execution') && tools.length === 0) throw new Error(`${file}: ${mode} skills require tools_used`);
-  const capabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some(
-    (tool) => tools.includes(tool) && !NON_DERIVING_ROUTER_TOOLS.has(tool),
-  ));
   const explicitCapabilities = strings(meta, 'capability_ids'); const knownIds = new Set(capabilityManifest.capabilities.map((capability) => capability.id));
   for (const id of explicitCapabilities) if (!knownIds.has(id)) throw new Error(`${file}: unknown capability ${id}`);
-  const capabilityIds = [...new Set([...explicitCapabilities, ...capabilities.map((capability) => capability.id)])].sort();
-  const requiredScopes = [...new Set([...tools.map((tool) => toolRegistry.get(tool)?.scope).filter((scope): scope is string => Boolean(scope)), ...capabilities.flatMap((capability) => capability.required_scopes)])].sort();
-  const runIntents = [...new Set(capabilities.map((capability) => capability.run_intent).filter((intent): intent is string => Boolean(intent)))].sort();
+  const broadRouterTools = new Set(['dreamstate_tools_run', 'dreamstate_tools_search', 'dreamstate_tools_get']);
+  const implicitCapabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !broadRouterTools.has(tool)));
+  const capabilityIds = [...new Set([...explicitCapabilities, ...implicitCapabilities.map((capability) => capability.id)])].sort();
+  if ((mode === 'executable' || mode === 'guided-execution') && tools.some((tool) => broadRouterTools.has(tool)) && explicitCapabilities.length === 0) {
+    throw new Error(`${file}: compact gateway skills require explicit capability_ids`);
+  }
+  const selectedCapabilities = capabilityIds.map((id) => capabilityManifest.capabilities.find((capability) => capability.id === id) as CapabilityRecord);
+  const requiredScopes = [...new Set([...tools.map((tool) => toolRegistry.get(tool)?.scope).filter((scope): scope is string => Boolean(scope)), ...selectedCapabilities.flatMap((capability) => capability.required_scopes)])].sort();
+  const runIntents = [...new Set(selectedCapabilities.map((capability) => capability.run_intent).filter((intent): intent is string => Boolean(intent)))].sort();
   const related = strings(meta, 'related_skills');
   const approvals = strings(meta, 'requires_human_approval', tools.some((tool) => /send|publish|activate|delete|apply|edit|add|create|run/.test(tool)) ? ['Before sending, publishing, activating, deleting, or starting a paid bulk run.'] : []);
   return {
@@ -113,36 +116,40 @@ function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest,
   };
 }
 
+const DISCOVERY_TOOLS = ['dreamstate_tools_search', 'dreamstate_tools_get'];
+const EXECUTION_TOOLS = [...DISCOVERY_TOOLS, 'dreamstate_tools_run', 'dreamstate_get_run'];
+const DURABLE_EXECUTION_TOOLS = [...EXECUTION_TOOLS, 'dreamstate_list_runs', 'dreamstate_cancel_run', 'dreamstate_resume_run'];
+
 const BLUEPRINT_EXECUTION: Record<string, { mode: ExecutionMode; tools?: string[]; capabilityIds?: string[] }> = {
-  dreamstate: { mode: 'guided-execution', tools: ['dreamstate_tools_search', 'dreamstate_tools_get', 'dreamstate_tools_run'] },
-  setup: { mode: 'guided-execution', tools: ['ping', 'content_list_accounts', 'outreach_lists'] },
-  doctor: { mode: 'guided-execution', tools: ['ping', 'dreamstate_tools_search', 'content_list_accounts'] },
-  api: { mode: 'guided-execution', tools: ['dreamstate_tools_get', 'dreamstate_tools_run', 'dreamstate_get_run'] },
-  capabilities: { mode: 'executable', tools: ['dreamstate_tools_search', 'dreamstate_tools_get'] },
-  webhooks: { mode: 'executable', tools: ['webhooks_create', 'webhooks_list', 'webhooks_test_delivery', 'webhooks_delete'] },
-  'source-people': { mode: 'executable', tools: ['outreach_find_leads'] },
-  'import-and-map-list': { mode: 'executable', tools: ['outreach_bulk_upsert_contacts', 'outreach_upsert_contact', 'outreach_add_to_list'] },
-  'score-and-tier-leads': { mode: 'executable', tools: ['dreamstate_tools_run', 'outreach_add_column'], capabilityIds: ['function:icp_score_and_route', 'column:ai', 'column:formula'] },
-  'funding-signals': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['source:predictleads_funding', 'column:predictleads_funding_enrich'] },
-  'hiring-signals': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['column:predictleads_jobs'] },
-  'technology-signals': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['column:builtwith_tech', 'column:sumble_tech'] },
-  'company-event-signals': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['column:predictleads_news', 'source:predictleads_funding'] },
-  'content-engagement-signals': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['function:account_engagement_scoring'] },
-  'multi-signal-scoring': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['function:account_engagement_scoring', 'function:signal_triggered_outreach', 'column:ai', 'column:formula'] },
-  'build-table': { mode: 'executable', tools: ['outreach_create_list', 'outreach_add_column'] },
-  'add-source-column': { mode: 'guided-execution', tools: ['dreamstate_tools_search', 'dreamstate_tools_get', 'outreach_add_column'] },
-  'enrich-company': { mode: 'executable', tools: ['outreach_enrich_contact'] },
-  'enrich-person': { mode: 'executable', tools: ['outreach_enrich_contact'] },
-  'find-and-verify-email': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['intent:outreach.find_email', 'column:email_find'] },
-  'find-phone': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['intent:outreach.find_phone', 'column:phone_find'] },
-  'build-waterfall': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['column:waterfall', 'function:waterfall_enrich_list'] },
-  'formula-and-conditions': { mode: 'executable', tools: ['outreach_add_column'] },
-  'merge-columns': { mode: 'executable', tools: ['outreach_add_column'] },
-  'build-workflow': { mode: 'executable', tools: ['workflow_apply'] },
-  'discover-workflow-actions': { mode: 'executable', tools: ['dreamstate_tools_search', 'dreamstate_tools_get'] },
-  'run-workflow': { mode: 'executable', tools: ['workflow_run'] },
-  'trace-workflow': { mode: 'executable', tools: ['workflow_trace', 'workflow_runs'] },
-  'workflow-triggers': { mode: 'executable', tools: ['workflow_triggers', 'workflow_trigger_create', 'workflow_trigger_delete'] },
+  dreamstate: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'tools.run', 'runs.get'] },
+  setup: { mode: 'guided-execution', tools: ['ping', ...DISCOVERY_TOOLS], capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list'] },
+  doctor: { mode: 'guided-execution', tools: ['ping', ...DISCOVERY_TOOLS], capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list', 'usage.status_get', 'integrations.unipile_status_get'] },
+  api: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.get', 'tools.run', 'runs.get'] },
+  capabilities: { mode: 'executable', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get'] },
+  webhooks: { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['webhooks.create', 'webhooks.list', 'webhooks.test_delivery', 'webhooks.delete'] },
+  'source-people': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['sources.find_leads', 'runs.find_leads_get'] },
+  'import-and-map-list': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['contacts.bulk_upsert', 'contacts.upsert', 'columns.add', 'runs.bulk_upsert_get'] },
+  'score-and-tier-leads': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['columns.add', 'columns.run', 'columns.sample', 'runs.column_get'] },
+  'funding-signals': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['sources.list', 'table_sources.attach', 'table_sources.run', 'columns.add', 'columns.run'] },
+  'hiring-signals': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['sources.list', 'columns.add', 'columns.run', 'runs.column_get'] },
+  'technology-signals': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['sources.list', 'columns.add', 'columns.run', 'runs.column_get'] },
+  'company-event-signals': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['sources.list', 'table_sources.attach', 'table_sources.run', 'columns.add', 'columns.run'] },
+  'content-engagement-signals': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['browser.linkedin.network_engagers_list', 'radar.engagement_posts_list', 'columns.add', 'columns.run'] },
+  'multi-signal-scoring': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['columns.add', 'columns.run', 'columns.run_all', 'columns.sample', 'runs.column_get'] },
+  'build-table': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['tables.create', 'tables.get', 'columns.add'] },
+  'add-source-column': { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['sources.list', 'columns.add', 'table_sources.attach'] },
+  'enrich-company': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['contacts.enrich', 'columns.add', 'columns.run', 'runs.column_get'] },
+  'enrich-person': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['contacts.enrich', 'columns.add', 'columns.run', 'runs.column_get'] },
+  'find-and-verify-email': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['contacts.find_email', 'columns.add', 'columns.run', 'runs.column_get'] },
+  'find-phone': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['contacts.find_phone', 'columns.add', 'columns.run', 'runs.column_get'] },
+  'build-waterfall': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['columns.add', 'columns.run', 'columns.sample', 'runs.column_get'] },
+  'formula-and-conditions': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['columns.add', 'columns.update', 'columns.run', 'columns.sample'] },
+  'merge-columns': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['columns.add', 'columns.update', 'columns.run', 'columns.sample'] },
+  'build-workflow': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['workflows.create', 'workflows.node_options', 'workflows.graph_apply', 'workflows.validate_graph'] },
+  'discover-workflow-actions': { mode: 'executable', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'workflows.node_options'] },
+  'run-workflow': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['workflows.get', 'workflows.runs_list', 'workflows.run_trace_get'] },
+  'trace-workflow': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['workflows.run_trace_get', 'workflows.runs_list'] },
+  'workflow-triggers': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['workflows.triggers_list', 'workflows.trigger_create', 'workflows.trigger_delete'] },
   'snapshot-and-restore-workflow': { mode: 'planned' },
   'build-email-sequence': { mode: 'planned' },
   'build-multichannel-sequence': { mode: 'planned' },
@@ -158,20 +165,20 @@ const BLUEPRINT_EXECUTION: Record<string, { mode: ExecutionMode; tools?: string[
   'linkedin-ads-measurement': { mode: 'planned' },
   'linkedin-ads-optimization': { mode: 'planned' },
   'linkedin-ads-outbound-sync': { mode: 'planned' },
-  'linkedin-post': { mode: 'executable', tools: ['content_generate_post'] },
-  'x-post': { mode: 'executable', tools: ['content_generate_post'] },
-  'schedule-content': { mode: 'executable', tools: ['content_schedule_post'] },
-  'publish-content': { mode: 'executable', tools: ['content_publish_post'] },
-  'analyze-content-performance': { mode: 'executable', tools: ['content_post_analytics'] },
-  'blog-content': { mode: 'executable', tools: ['content_create_blog', 'content_generate_blog', 'content_get_blog', 'content_publish_blog'], capabilityIds: ['intent:content.create_blog', 'intent:content.generate_blog', 'intent:content.get_blog', 'intent:content.publish_blog'] },
-  'track-keyword-rankings': { mode: 'executable', tools: ['seo_keyword_tracking', 'seo_rank_overview'] },
-  'analyze-competitor-rankings': { mode: 'executable', tools: ['seo_competitor_ranks'] },
-  'ai-visibility-audit': { mode: 'executable', tools: ['visibility_overview'] },
-  'citation-gap-analysis': { mode: 'executable', tools: ['visibility_citations'] },
-  'ai-traffic-analysis': { mode: 'executable', tools: ['visibility_ai_traffic'] },
-  'refresh-visibility-measurement': { mode: 'executable', tools: ['visibility_refresh'] },
-  'sync-contact-to-crm': { mode: 'executable', tools: ['crm_sync'] },
-  'route-and-assign-leads': { mode: 'executable', tools: ['dreamstate_tools_run'], capabilityIds: ['function:icp_score_and_route'] },
+  'linkedin-post': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['content.artifact_create', 'content.artifact_generate', 'content.artifact_get', 'content.artifact_update'] },
+  'x-post': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['content.artifact_create', 'content.artifact_generate', 'content.artifact_get', 'content.artifact_update'] },
+  'schedule-content': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['social.accounts_list', 'content.artifact_get', 'content.schedule', 'content.unschedule'] },
+  'publish-content': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['social.accounts_list', 'content.artifact_get', 'content.delivery_publish'] },
+  'analyze-content-performance': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['social.post_analytics', 'social.performance_snapshot_get', 'social.performance_analysis_get'] },
+  'blog-content': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['content.artifact_create', 'content.artifact_generate', 'content.article_get', 'content.article_update', 'content.article_create_schedule', 'content.article_delivery_create'] },
+  'track-keyword-rankings': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['visibility.keywords_get', 'seo.serp_snapshot_resolve', 'seo.serp_spend_get'] },
+  'analyze-competitor-rankings': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['radar.competitors_list', 'radar.competitor_posts_list', 'visibility.keywords_get'] },
+  'ai-visibility-audit': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['visibility.overview'] },
+  'citation-gap-analysis': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['visibility.citations'] },
+  'ai-traffic-analysis': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['visibility.ai_traffic'] },
+  'refresh-visibility-measurement': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['visibility.refresh'] },
+  'sync-contact-to-crm': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['crm.health_get', 'crm.field_mappings_get', 'crm.sync'] },
+  'route-and-assign-leads': { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['records.field_set', 'contacts.update'] },
 };
 
 const DOMAIN_GUIDANCE: Record<string, string> = {
@@ -205,6 +212,10 @@ function skillFromBlueprint(blueprint: SkillBlueprint, capabilityManifest: Capab
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${blueprint.slug}: unknown MCP tool ${tool}`);
   const knownCapabilities = new Map(capabilityManifest.capabilities.map((capability) => [capability.id, capability]));
   for (const id of contract.capabilityIds ?? []) if (!knownCapabilities.has(id)) throw new Error(`${blueprint.slug}: unknown capability ${id}`);
+  const broadRouterTools = new Set(['dreamstate_tools_run', 'dreamstate_tools_search', 'dreamstate_tools_get']);
+  if ((contract.mode === 'executable' || contract.mode === 'guided-execution') && tools.some((tool) => broadRouterTools.has(tool)) && !contract.capabilityIds?.length) {
+    throw new Error(`${blueprint.slug}: compact gateway skills require explicit capabilityIds`);
+  }
   const capabilities = contract.capabilityIds
     ? contract.capabilityIds.map((id) => knownCapabilities.get(id) as CapabilityRecord)
     : capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !NON_DERIVING_ROUTER_TOOLS.has(tool)));

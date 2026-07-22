@@ -8,9 +8,9 @@ Assign leads using explicit territory, capacity, account ownership, and escalati
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `function:icp_score_and_route`
+Declared capabilities: `contacts.update`, `records.field_set`
 
 Required scopes: `outreach:write`
 

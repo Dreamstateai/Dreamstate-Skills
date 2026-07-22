@@ -38,15 +38,15 @@ function runInstall(home: string, args: string[]) {
 test('Claude installs the release-pinned hardened adapter bytes', () => {
   const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-claude-'));
   try {
-    const result = runInstall(home, ['skills', 'install', 'outreach-list-builder', '--claude']);
+    const result = runInstall(home, ['skills', 'install', 'outreach-workflow-builder', '--claude']);
     assert.equal(result.status, 0, result.stderr || result.stdout);
     for (const file of ['SKILL.md', 'KERNEL.md', 'evals.json']) {
       assert.deepEqual(
-        readFileSync(join(home, '.claude', 'skills', 'outreach-list-builder', file)),
-        readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', 'outreach-list-builder', file)),
+        readFileSync(join(home, '.claude', 'skills', 'outreach-workflow-builder', file)),
+        readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', 'outreach-workflow-builder', file)),
       );
     }
-    const installed = readFileSync(join(home, '.claude', 'skills', 'outreach-list-builder', 'SKILL.md'), 'utf8');
+    const installed = readFileSync(join(home, '.claude', 'skills', 'outreach-workflow-builder', 'SKILL.md'), 'utf8');
     assert.match(installed, /client: claude/);
     assert.match(installed, /mismatch_behavior: deny_run/);
   } finally {

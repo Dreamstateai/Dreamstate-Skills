@@ -2,27 +2,29 @@
 id: social
 name: social
 description: "Coordinate authored LinkedIn, X, and Reddit content across drafts, calendars, review, publishing, and measured performance."
-capability_domains: ["content"]
+capability_domains: ["brain","content"]
+capability_ids: []
+completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: f195bb71cf76a615
-  manifest_digest: 10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412
+  capability_hash: a29a72f7045de668
+  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.3.0
-  source_release_hash: 04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   client: codex
   kernel_id: social
   kernel_file: KERNEL.md
-  kernel_sha256: cfa32739aeff1d47b8b3265b9c5cedf5a9bfe0274c17efcbe5161d0ca36d207b
+  kernel_sha256: 7fcd112a1336116cc6ad15825516c511bfcc535be627813173587880348e351f
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: 37f95f120febd4f47c82baa8b209c68ed844d4bca2dd0721211ff8a8f2764471
+  evals_sha256: 4a27a9fed4b381c442c41451c9a419a2d469115c3b8fa7ac8e0735066be12684
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,7 +49,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 ## Job boundary
 
-Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar placement, review, scheduling, publishing, and evidence-backed performance analysis. An authored Reddit post is social content. Discovery of real community threads and replies to those threads belongs to `reddit-engagement`. Contact sourcing, paid outreach, and enrollment belong to `outreach`.
+Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar placement, review, scheduling, publishing, and evidence-backed performance analysis. An authored Reddit post is social content. Discovery of real community threads and replies to those threads belongs to the canonical `social.reddit` child skill. Contact sourcing, paid outreach, and enrollment belong to `outreach`.
 
 ## Grounding and intake
 
@@ -56,9 +58,13 @@ Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar p
 3. Derive platform, audience, objective, topic, date, account, and approval consequence from the request and canonical state. Use one structured popup only for material choices that remain unknown. Never ask again for a fact already present.
 4. When several platforms are requested, make the shared thesis explicit while adapting form, length, hook, call to action, and scheduling constraints to each platform. Do not mechanically duplicate copy.
 
+Before designing a content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
+
 ## Capability workflow
 
 Search the full live registry by desired outcome, available context, platform, artifact kind, and allowed side effects. Fetch the exact contract for every selected operation. Live schemas own account fields, platform rules, readiness, cost, and output shape; this kernel owns none of those menus.
+
+For a read whose request already supplies a topic or query and time window, ranking and output format choices are optional, not blockers. Execute the read with transparent defaults, report those defaults, and preserve nullable metrics rather than opening a popup. Ask only for truly required missing inputs from the selected live contract.
 
 For a draft or calendar request, prepare reviewable content artifacts before any external consequence. Include provenance, assumptions, target account, platform, proposed schedule, and the capability digest. Existing calendar items are updated only against their current revision. For analysis, use measured metrics returned by live reads and separate observation from inference.
 

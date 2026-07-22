@@ -16,32 +16,31 @@
     "codex"
   ],
   "related_skills": [],
-  "requires_human_approval": [],
+  "requires_human_approval": [
+    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
+  ],
   "capability_ids": [
-    "intent:outreach.get_contact",
-    "intent:outreach.list_campaigns",
-    "intent:outreach.list_contacts"
+    "campaigns.list",
+    "outreach.dm_conversation_get",
+    "outreach.dm_conversation_read",
+    "outreach.dm_conversation_status_update",
+    "outreach.dm_conversations_list",
+    "outreach.workspace_stats_get"
   ],
   "mcp_tools": [
-    "outreach_campaigns",
-    "outreach_list_contacts",
-    "outreach_get_contact",
-    "outreach_set_thread_status",
-    "outreach_mark_thread_read",
-    "outreach_analytics"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
-  "run_intents": [
-    "outreach.get_contact",
-    "outreach.list_campaigns",
-    "outreach.list_contacts"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
     "outreach:read",
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/reply-classifier/SKILL.md",
   "install_command": "dreamstate skills install reply-classifier",

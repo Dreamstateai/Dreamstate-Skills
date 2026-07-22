@@ -32,13 +32,20 @@
       },
       "expected": {
         "allowed_tools": [
-          "dreamstate_tools_run"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run",
+          "dreamstate_list_runs",
+          "dreamstate_cancel_run",
+          "dreamstate_resume_run"
         ],
         "allowed_capability_ids": [
-          "column:ai",
-          "column:formula",
-          "function:account_engagement_scoring",
-          "function:signal_triggered_outreach"
+          "columns.add",
+          "columns.run",
+          "columns.run_all",
+          "columns.sample",
+          "runs.column_get"
         ]
       },
       "check": "tool_trace_subset"

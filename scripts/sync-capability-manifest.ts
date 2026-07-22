@@ -18,6 +18,7 @@ const EXPECTED_KEYS = [
   'api_version',
   'capabilities',
   'mcp_tools',
+  'social_skills',
   'counts',
 ].sort();
 
@@ -28,9 +29,9 @@ export interface CapabilityManifestExport extends ArchitectCapabilityManifest {
   manifest_digest: string;
   capabilities: JsonObject[];
   mcp_tools: Array<JsonObject & { name: string }>;
+  social_skills: JsonObject;
   counts: {
     capabilities: number;
-    run_intents: number;
     mcp_tools: number;
   };
 }
@@ -80,6 +81,7 @@ function digestPayload(value: JsonObject): JsonObject {
     api_version: value.api_version,
     capabilities,
     mcp_tools: mcpTools,
+    social_skills: value.social_skills,
     counts: value.counts,
   };
 }
@@ -108,6 +110,19 @@ export function validateCapabilityManifestExport(value: unknown): CapabilityMani
   if (!Array.isArray(manifest.mcp_tools) || !manifest.mcp_tools.length) {
     throw new Error('mcp_tools must be a non-empty array');
   }
+  const socialSkills = object(manifest.social_skills, 'social_skills');
+  string(socialSkills.contract_version, 'social_skills.contract_version');
+  object(socialSkills.aliases, 'social_skills.aliases');
+  if (!Array.isArray(socialSkills.skills) || !socialSkills.skills.length) {
+    throw new Error('social_skills.skills must be a non-empty array');
+  }
+  const socialSkillIds = new Set<string>();
+  for (const [index, unknownSkill] of socialSkills.skills.entries()) {
+    const skill = object(unknownSkill, `social_skills.skills[${index}]`);
+    const id = string(skill.skill_id, `social_skills.skills[${index}].skill_id`);
+    if (socialSkillIds.has(id)) throw new Error(`duplicate social skill ${id}`);
+    socialSkillIds.add(id);
+  }
 
   const toolNames = new Set<string>();
   for (const [index, unknownTool] of manifest.mcp_tools.entries()) {
@@ -121,15 +136,13 @@ export function validateCapabilityManifestExport(value: unknown): CapabilityMani
   }
 
   const capabilityIds = new Set<string>();
-  let runIntentCount = 0;
   for (const [index, unknownCapability] of manifest.capabilities.entries()) {
     const capability = object(unknownCapability, `capabilities[${index}]`);
     const id = string(capability.id, `capabilities[${index}].id`);
     if (capabilityIds.has(id)) throw new Error(`duplicate capability id ${id}`);
     capabilityIds.add(id);
-    const kind = string(capability.kind, `${id}.kind`);
+    string(capability.kind, `${id}.kind`);
     string(capability.domain, `${id}.domain`);
-    if (kind === 'run_intent') runIntentCount += 1;
     for (const tool of stringArray(capability.mcp_tools, `${id}.mcp_tools`)) {
       if (!toolNames.has(tool)) throw new Error(`${id}: unknown MCP tool ${tool}`);
     }
@@ -137,7 +150,6 @@ export function validateCapabilityManifestExport(value: unknown): CapabilityMani
 
   const counts = object(manifest.counts, 'counts');
   if (counts.capabilities !== manifest.capabilities.length) throw new Error('capability count mismatch');
-  if (counts.run_intents !== runIntentCount) throw new Error('run intent count mismatch');
   if (counts.mcp_tools !== manifest.mcp_tools.length) throw new Error('MCP tool count mismatch');
   if (canonicalCapabilityManifestDigest(manifest) !== manifestDigest) throw new Error('manifest digest mismatch');
 

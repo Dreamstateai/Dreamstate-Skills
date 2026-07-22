@@ -34,9 +34,15 @@
         "allowed_tools": [
           "dreamstate_tools_search",
           "dreamstate_tools_get",
-          "dreamstate_tools_run"
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
-        "allowed_capability_ids": []
+        "allowed_capability_ids": [
+          "runs.get",
+          "tools.get",
+          "tools.run",
+          "tools.search"
+        ]
       },
       "check": "tool_trace_subset"
     },

@@ -8,9 +8,9 @@ Refresh visibility measurements with the same prompts, providers, locale, and me
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `visibility_refresh`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
 
-Declared capabilities: `intent:visibility.refresh`
+Declared capabilities: `visibility.refresh`
 
 Required scopes: `visibility:write`
 

@@ -1,20 +1,21 @@
 {
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
-  "source_release": "0.3.0",
-  "source_release_hash": "04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24",
+  "source_release": "0.5.1",
+  "source_release_hash": "f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "04784d702af011050f185a5e9cc4c3c3c4224e12d4000a28c0c7cb36e89e8a24",
+    "playbook_kernel_hash": "f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "f195bb71cf76a615",
-    "manifest_digest": "10958b8c8b0492506ecfdac97a45a1ff0150e919866765ff809a463a5afcc412",
+    "capability_hash": "a29a72f7045de668",
+    "manifest_digest": "47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3",
     "minimum_api_version": "v1"
   },
   "skills": {
     "analytics": {
       "capability_domains": [],
+      "capability_ids": [],
       "kernel_sha256": "f2db66bc68dcaddc41c4c176e288539d1345178f42e98c35cd5892ec7b2ea49c",
       "evals_sha256": "1192535f1842d0a81e773435e0fe0404842d579ae8feb6983175627dd6a3b7ff",
       "adapter_sha256": {
@@ -27,6 +28,7 @@
       "capability_domains": [
         "content"
       ],
+      "capability_ids": [],
       "kernel_sha256": "b1be72b982064d20fd7b591678493185ba8a5ee1a39f820afe249fe1ef60d151",
       "evals_sha256": "d41fd2a5099e96b8ee6c44bfbc5700a15e120e90a51a609131aca1c63a308a80",
       "adapter_sha256": {
@@ -40,8 +42,9 @@
         "brain",
         "context"
       ],
-      "kernel_sha256": "235b44a41cef93322bef5c9bcfc425b28fac5aec123561ba37b0cc6e450cf8ea",
-      "evals_sha256": "ecc63334d5dd7fcc0a161deb58a8de72b94d200170cd3d067dc2997e829101ee",
+      "capability_ids": [],
+      "kernel_sha256": "df46dec50ede86ba06c6c4ede7541975cef9d05489506d1cdf5c606cafeb2051",
+      "evals_sha256": "e663a444559460266597fc6cce336bb525ee8c512ea56a9afbf7bc1d245d8b9c",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -50,6 +53,7 @@
     },
     "growth-asset-planner": {
       "capability_domains": [],
+      "capability_ids": [],
       "kernel_sha256": "5499e4fa692558dd4a98019503d0c1afa9e2e5731be5be8de80529301c8c75fc",
       "evals_sha256": "e6b08884e735b77c6da39c1d8fcd1530b430d51589ba1b3ac2b6ed3c71bb56e5",
       "adapter_sha256": {
@@ -60,6 +64,7 @@
     },
     "integrations": {
       "capability_domains": [],
+      "capability_ids": [],
       "kernel_sha256": "e41ba440e27b81175efd268199458ebdccc2ab9bb64f32c3d8a22811d43cd574",
       "evals_sha256": "8558d9507802b43b8ce793e719d7d4f84ea4c245ebc37fe852187f9be2db0b6e",
       "adapter_sha256": {
@@ -70,22 +75,12 @@
     },
     "outreach": {
       "capability_domains": [
+        "brain",
         "outreach"
       ],
-      "kernel_sha256": "060d01868a6271b87cf0138f68bdf727707d3c695a102566c2a0bc65b6c0deab",
-      "evals_sha256": "4b6fe5184e7882bfbc31798f54f3e80d7cffa8728167e84474b6e9fe228c0d9b",
-      "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
-        "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
-        "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
-      }
-    },
-    "outreach-list-builder": {
-      "capability_domains": [
-        "outreach"
-      ],
-      "kernel_sha256": "30d34fd8bb8bb242452f407a1a743d1ae6390346f8b77c3a2169a75a1bfea8cd",
-      "evals_sha256": "f19268c7e63ecfd3b96998b8d41f2628a85a27eb1662fe7b3c6c63520da7546d",
+      "capability_ids": [],
+      "kernel_sha256": "2d0d9e04ec0b5574e2acadf2378af5bc70ffb97c7cb3a39ab81949c327983711",
+      "evals_sha256": "2098874a845d24fb19b2368a57bd3cf43e77381f88c818d23c2a0e9114b6d336",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -96,6 +91,7 @@
       "capability_domains": [
         "outreach"
       ],
+      "capability_ids": [],
       "kernel_sha256": "0a39baebc155179c43473607b0c868618e60bc8ded8be812c84e67efbf63137a",
       "evals_sha256": "8e26c9095dc3cab593d4fc3d308be91bf15d72093c01e76d46a2c1ad7152f562",
       "adapter_sha256": {
@@ -108,20 +104,27 @@
       "capability_domains": [
         "outreach"
       ],
-      "kernel_sha256": "9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b",
-      "evals_sha256": "f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2",
+      "capability_ids": [
+        "sources.cold_outbound_expand"
+      ],
+      "kernel_sha256": "31382e496ec2befe83711035ce947bf50ed1d0d9af21a6b9bee6a36b3b01453c",
+      "evals_sha256": "0116d8d55e6219bd6c1bdaab68fedd4c27f44c1baa625a3f5eaf98ac19cfcf8b",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
     },
-    "reddit-engagement": {
+    "seo": {
       "capability_domains": [
-        "content"
+        "brain",
+        "content",
+        "tables",
+        "visibility"
       ],
-      "kernel_sha256": "3e7f97663fdbe7b47eb111a36a1e887ff56691520ae18419f84c0eb8a29eb969",
-      "evals_sha256": "e937a37057751e4a1d0bd53ecff46d5d6987a81289452396b29971f6f03d9212",
+      "capability_ids": [],
+      "kernel_sha256": "375a25fb836e846f277a39a0ea53651bc0d5438df8fbc7ad4a359d50bc22e3a4",
+      "evals_sha256": "3e7d2672a42e7120734a6c7607451c542fc2b16829b3b85d17db48211e50f576",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -130,10 +133,12 @@
     },
     "social": {
       "capability_domains": [
+        "brain",
         "content"
       ],
-      "kernel_sha256": "cfa32739aeff1d47b8b3265b9c5cedf5a9bfe0274c17efcbe5161d0ca36d207b",
-      "evals_sha256": "37f95f120febd4f47c82baa8b209c68ed844d4bca2dd0721211ff8a8f2764471",
+      "capability_ids": [],
+      "kernel_sha256": "7fcd112a1336116cc6ad15825516c511bfcc535be627813173587880348e351f",
+      "evals_sha256": "4a27a9fed4b381c442c41451c9a419a2d469115c3b8fa7ac8e0735066be12684",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -145,8 +150,22 @@
         "brain",
         "context"
       ],
-      "kernel_sha256": "74c80cf121843eba941c9876bd18e020d8c6cbb0fc43528a5703eac51d8fcda2",
+      "capability_ids": [],
+      "kernel_sha256": "f32c596eb670b5e14bb187f6e37533a6a25b72527a47688ad01701af1042380a",
       "evals_sha256": "79d641758b9ffc2554e53fc7284839e8bc7ec660d310e1363aafebcba419b29c",
+      "adapter_sha256": {
+        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
+        "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
+      }
+    },
+    "tables": {
+      "capability_domains": [
+        "tables"
+      ],
+      "capability_ids": [],
+      "kernel_sha256": "a187da7158fe91d32aeedc34e15df80633a39d9190afb9fbf74c0d947ff4a845",
+      "evals_sha256": "553d9c5c43683539976f1d18b1f0bfde936792d8f2eec8aec5bd89d19cdf6225",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -157,6 +176,7 @@
       "capability_domains": [
         "visibility"
       ],
+      "capability_ids": [],
       "kernel_sha256": "102aade9ef2682e7bd131ade758d7e7cc4420f4e57db4c7f1621f88990efcbe6",
       "evals_sha256": "64bdfadf9be479646e25092a1407c28b43c8c742512843c9406627502ac9d194",
       "adapter_sha256": {
@@ -167,6 +187,7 @@
     },
     "weekly-growth-plan": {
       "capability_domains": [],
+      "capability_ids": [],
       "kernel_sha256": "5156685bb3d677cb310874ccbcdfdb45a73a968c6bbf62fc1cb2f3bef4d0649c",
       "evals_sha256": "d963532fbc7ae6cc04ffc931581791d2192a6e5cc6b47bf7005a6dfe2c5a67a3",
       "adapter_sha256": {

@@ -8,11 +8,11 @@ Turn verified social and content engagement into timely, context-aware follow-up
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `function:account_engagement_scoring`
+Declared capabilities: `browser.linkedin.network_engagers_list`, `columns.add`, `columns.run`, `radar.engagement_posts_list`
 
-Required scopes: `outreach:write`
+Required scopes: `content:read`, `tables:write`
 
 ## Evidence checklist
 

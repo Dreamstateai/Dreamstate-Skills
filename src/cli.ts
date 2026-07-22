@@ -22,6 +22,7 @@ const CLIENT_ADAPTER_RELEASE_PATH = join(ROOT, 'generated', 'client-adapters', '
 interface IndexedSkill {
   slug: string;
   domain?: string;
+  capability_domains?: string[];
   path: string;
   name?: string;
   short_description?: string;
@@ -102,6 +103,7 @@ function loadClientAdapterSkills(agent: string): IndexedSkill[] {
     return {
       slug,
       domain: domains[0],
+      capability_domains: domains,
       path,
       name: slug,
       execution_mode: 'governed-adapter',
@@ -267,7 +269,10 @@ async function main(): Promise<void> {
         seo: ['visibility'],
       };
       const allowed = adapterDomains[bundle] ?? [];
-      adapterSkills = adapterSkills.filter((skill) => allowed.includes(skill.domain ?? ''));
+      adapterSkills = adapterSkills.filter((skill) => (
+        skill.capability_domains?.some((domain) => allowed.includes(domain))
+        ?? allowed.includes(skill.domain ?? '')
+      ));
     }
     skills = [...skills, ...adapterSkills];
   }

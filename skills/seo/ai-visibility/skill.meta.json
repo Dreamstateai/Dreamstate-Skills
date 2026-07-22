@@ -20,14 +20,10 @@
   "execution_mode": "executable",
   "maturity": "stable",
   "tools_used": [
-    "visibility_overview",
-    "visibility_citations",
-    "visibility_ai_traffic",
-    "visibility_refresh",
-    "content_create_blog",
-    "content_generate_blog",
-    "content_get_blog",
-    "content_publish_blog"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "required_scopes": [
     "actions",
@@ -36,6 +32,6 @@
     "visibility:read",
     "visibility:write"
   ],
-  "capability_hash": "f195bb71cf76a615",
+  "capability_hash": "a29a72f7045de668",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

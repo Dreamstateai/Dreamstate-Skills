@@ -20,37 +20,31 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.list_accounts",
-    "intent:outreach.create_list",
-    "intent:outreach.find_leads",
-    "intent:outreach.list_contacts",
-    "intent:outreach.list_lists",
-    "intent:outreach.signals.list"
+    "contacts.list",
+    "outreach.triggers_supported_list",
+    "social.accounts_list",
+    "sources.find_leads",
+    "tables.create",
+    "tables.list",
+    "workbooks.create"
   ],
   "mcp_tools": [
-    "outreach_list_signal_types",
-    "outreach_find_leads",
-    "outreach_create_list",
-    "outreach_lists",
-    "outreach_list_contacts",
-    "content_list_accounts"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
-  "run_intents": [
-    "content.list_accounts",
-    "outreach.create_list",
-    "outreach.find_leads",
-    "outreach.list_contacts",
-    "outreach.list_lists",
-    "outreach.signals.list"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
     "content:read",
     "outreach:read",
-    "outreach:write"
+    "outreach:write",
+    "tables:read",
+    "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/signal-scraper/SKILL.md",
   "install_command": "dreamstate skills install signal-scraper",

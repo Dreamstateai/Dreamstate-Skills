@@ -32,10 +32,16 @@
       },
       "expected": {
         "allowed_tools": [
-          "workflow_apply"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "resource:workflows.write"
+          "workflows.create",
+          "workflows.graph_apply",
+          "workflows.node_options",
+          "workflows.validate_graph"
         ]
       },
       "check": "tool_trace_subset"

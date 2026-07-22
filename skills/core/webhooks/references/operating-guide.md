@@ -8,9 +8,9 @@ Design and operate signed Dreamstate webhook subscriptions with replay-safe even
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `webhooks_create`, `webhooks_list`, `webhooks_test_delivery`, `webhooks_delete`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `event:campaign.activated`, `event:campaign.paused`, `event:connection.accepted`, `event:contact.created`, `event:content.scheduled`, `event:enrichment.completed`, `event:lead.sourced`, `event:post.failed`, `event:post.published`, `event:reply.received`, `event:run.completed`, `event:run.failed`, `event:run.started`, `event:seo.rank.changed`, `event:sequence.step.sent`, `event:table.column.completed`, `event:usage.ceiling_reached`, `event:usage.overage_started`, `event:usage.threshold_reached`, `resource:webhooks`, `resource:webhooks.write`
+Declared capabilities: `webhooks.create`, `webhooks.delete`, `webhooks.list`, `webhooks.test_delivery`
 
 Required scopes: `actions`, `outreach:read`
 

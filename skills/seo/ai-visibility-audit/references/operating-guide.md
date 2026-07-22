@@ -8,9 +8,9 @@ Measure brand visibility across AI answers and identify defensible improvement o
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `visibility_overview`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:visibility.overview`
+Declared capabilities: `visibility.overview`
 
 Required scopes: `visibility:read`
 

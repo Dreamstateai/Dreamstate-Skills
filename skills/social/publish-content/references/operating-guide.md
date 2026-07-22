@@ -8,11 +8,11 @@ Publish approved social content and verify the durable platform post and URL.
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_publish_post`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
 
-Declared capabilities: `intent:content.publish_post`
+Declared capabilities: `content.artifact_get`, `content.delivery_publish`, `social.accounts_list`
 
-Required scopes: `actions`
+Required scopes: `actions`, `content:read`
 
 ## Evidence checklist
 

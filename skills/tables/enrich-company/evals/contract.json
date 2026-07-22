@@ -32,10 +32,19 @@
       },
       "expected": {
         "allowed_tools": [
-          "outreach_enrich_contact"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run",
+          "dreamstate_list_runs",
+          "dreamstate_cancel_run",
+          "dreamstate_resume_run"
         ],
         "allowed_capability_ids": [
-          "intent:outreach.enrich_contact"
+          "columns.add",
+          "columns.run",
+          "contacts.enrich",
+          "runs.column_get"
         ]
       },
       "check": "tool_trace_subset"

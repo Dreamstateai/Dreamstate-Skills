@@ -20,39 +20,31 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.list_accounts",
-    "intent:outreach.get_contact",
-    "intent:outreach.list_campaigns",
-    "intent:outreach.list_contacts",
-    "intent:outreach.send_reply"
+    "campaigns.list",
+    "outreach.dm_conversation_assign",
+    "outreach.dm_conversation_get",
+    "outreach.dm_conversation_read",
+    "outreach.dm_conversation_status_update",
+    "outreach.dm_conversations_list",
+    "outreach.dm_message_send",
+    "outreach.workspace_stats_get",
+    "social.accounts_list"
   ],
   "mcp_tools": [
-    "outreach_campaigns",
-    "outreach_list_contacts",
-    "outreach_get_contact",
-    "content_list_accounts",
-    "outreach_send_reply",
-    "outreach_set_thread_status",
-    "outreach_assign_thread",
-    "outreach_mark_thread_read",
-    "outreach_analytics"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
-  "run_intents": [
-    "content.list_accounts",
-    "outreach.get_contact",
-    "outreach.list_campaigns",
-    "outreach.list_contacts",
-    "outreach.send_reply"
-  ],
+  "run_intents": [],
   "resources": [],
   "required_scopes": [
-    "actions",
     "content:read",
     "outreach:read",
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f195bb71cf76a615",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/reply-triage/SKILL.md",
   "install_command": "dreamstate skills install reply-triage",

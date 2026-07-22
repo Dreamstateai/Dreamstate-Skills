@@ -1,19 +1,21 @@
 ---
 name: outbound
-description: "Design a governed LinkedIn outbound campaign from scratch through Dreamstate: ground the ICP, propose source and table work, build a custom sequence, stage bounded evidence runs, and launch only after explicit approval. Use whenever the user wants cold outreach, a lead list, a new campaign, demos, or pipeline. This orchestrator uses the same revision-bound proposal and durable-run lifecycle as Architect, Claude, and Codex."
+description: "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits."
 ---
 
 # Outbound
 
-Turn a target audience into a reviewable custom campaign and, only after explicit staged
-approval, a safely paced live motion. Use the compact Dreamstate MCP profile. Every paid
-or mutating effect goes through `dreamstate_proposals_create`, human review, one
-revision-bound `dreamstate_proposals_mutate`, and durable run inspection.
+This is the orchestrator: turn a target audience into a live, personalized LinkedIn
+campaign that sends safely. It runs the pipeline stages in order, each of which is also a
+standalone skill you can drop to for detail. You bring the judgment (who to target, what
+makes a good opener, when to launch); Dreamstate brings the hands (sourcing, enrichment,
+sending under per-account caps you cannot bypass).
 
-Never select, clone, or apply a campaign template or preset. Those shortcuts belong only
-to the manual human product UI and are outside this agent skill. Build every list, column,
-workflow branch, message, wait, and stop rule from the user's requirements and exact live
-contracts.
+Run `/connect` first if unsure. You need a healthy connected LinkedIn account.
+
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
 
 ## The pipeline
 
@@ -32,74 +34,77 @@ contracts.
 If the individual skills are installed, defer to each for its detail rather than
 duplicating steps. The tool list here lets `/outbound` also run the whole thing on its own.
 
-## Step 0: Inspect before asking
+## Step 0: Pin the ICP first
 
-Use `dreamstate_tools_search` and `dreamstate_tools_get` to inspect exact current read,
-source, table, workflow, sequence, enrollment, activation, and analytics contracts. For
-an existing campaign, read its current list, schema, graphs, sender, status, revision, and
-run truth. Derive answers from available workspace context, then ask one structured popup
-for only material missing choices: outcome, ICP, exclusions, geography, volume, sender,
-channels, qualification threshold, budget, and launch intent.
+Sourcing the wrong people wastes credits and burns sender reputation. Get the user to
+commit to a crisp ICP before anything else: titles/seniority, company shape (industry,
+size, geography), a one-line "why now" signal if there is one, and what disqualifies a
+lead. Write it down in the chat; it is the rubric you score against later. If the user has
+an `icp.json`, read it instead of asking.
 
-## Step 1: Prove the source
+## Step 1: Source (→ /signal-scraper)
 
-Create one bounded `outreach_source` proposal for five to ten evidence rows. Bind exact
-targeting, exclusions, source capability id and digest, row cap, and credit ceiling. The
-pilot writes no list or campaign. Present the proposal and wait for explicit approval;
-then follow its `run_id` with `dreamstate_get_run` until terminal truth and inspect the
-actual evidence before designing durable structure.
+Pick a healthy LinkedIn account with `social.accounts_list`. Create a workbook and first
+worksheet/table with `workbooks.create`, then source rows with `sources.find_leads` (pass
+`account_id` and the exact workbook/worksheet/view destination; use the user's LinkedIn search
+URL if they have one). Start with a small `limit` and check quality with `contacts.list` before scaling.
 
-## Step 2: Propose the custom draft structure
+## Step 2: Build the table and enrich (→ /enrich-list)
 
-Use the evidence to create one dependency-complete `outreach_bundle` proposal. It may
-create or revise the draft list, table, workflow, campaign, and custom sequence structure.
-For every source, enrichment, formula, AI generation, and action column include exact
-inputs, outputs, provider contract and digest, run condition, cost, and dependency edges.
-Keep sources, enrichments, formulas, and actions semantically distinct. This proposal must
-not run columns, expand the audience, enroll, activate, or send.
+Enrich kept contacts with `contacts.enrich` and read fields with `contacts.get`. Add the
+columns the pipeline needs with `columns.add` and write per-row values with `cells.settle`,
+including provenance. `rows.query` is the
+Clay-style view of rows x columns.
 
-## Step 3: Validate on real rows
+## Step 3: Score against the ICP (→ /lead-prioritizer)
 
-After the draft exists, create a separate `table_column_run` proposal for exactly five to
-ten current contacts. Show the input-to-output mapping, conditions, priority formula,
-provider cost, and expected visible columns. Approve and inspect terminal sample output
-before proposing broader execution. Missing or poor evidence blocks expansion.
+Rate each contact against the Step 0 rubric and persist it: an `icp_fit` column containing
+`0-100` or `null` (`columns.add` once, then `cells.settle` per row), plus components,
+`fit_reason`, evidence, confidence, and the exact function/prompt revision. Never invent a
+score when evidence is missing. Drop
+low-fit rows. A tight list of 30 great fits beats 300 maybes; the sends are capped, so
+weak rows cost real sends.
 
-## Step 4: Expand only the reviewed audience
+## Step 4: Write openers (→ /hook-writer)
 
-Create an `outreach_bulk_expansion` proposal that binds the exact draft revision, source
-evidence run, unchanged targeting, explicit row cap, qualification rule, and credit bound.
-It may stage only that resolved result set for the inactive campaign. Approval never
-authorizes activation or sending.
+For the top tier, draft a personalized opener with `contacts.draft_opener` (an opener
+`framework_id` from `sequences.step_options`, plus the `campaign_id`) and save it to an
+`opener` column. Show the user the first few to calibrate voice.
 
-## Step 5: Build and validate the custom sequence
+## Step 5: Build and validate the sequence (→ /sequence-builder)
 
-Load `/sequence-builder` when messaging is required. Construct each connection, wait, DM,
-follow-up, branch, and reply-stop node explicitly from user choices and live contracts.
-Bind stable node ids, field references, sender/channel constraints, graph revision, and
-real-row copy previews. Validate cycles, orphan nodes, variables, pacing, and stop logic.
+Create the campaign (`campaigns.create`, bound to the frozen worksheet/view), configure
+targeting (`campaigns.template_apply`), and wire the steps with `sequences.add_step`, threading
+the `graph_version` from `sequences.get` forward and retrying on
+`graph_version_conflict`. A solid cold cadence: connection_request → wait → DM (opener) →
+wait → DM (follow-up). Run `sequences.validate` and fix anything it flags.
 
-## Step 6: Launch through one explicit final gate
+## Step 6: Enroll and launch
 
-Only when the user explicitly requests launch, create an `outreach_activation` proposal
-for the exact reviewed campaign/list/sequence revisions, sender binding, eligible rows,
-schedule, pacing, exclusions, reply stops, and cost/volume ceilings. State plainly that
-approval authorizes external sends. Revalidate all readiness and capability digests before
-approval and execution. Poll the returned run; queued or accepted is not completion.
+Freeze the approved workbook/worksheet/saved-view selection and enroll it once with
+`sequences.enroll_selection` through a unique idempotency key. Enrollment does not send; the engine
+drains enrollments under per-account daily caps and reserves any connection slot at
+dispatch. Then `campaigns.activate`: the one outward action, through the same
+activation gate the app uses. `status: "blocked"` means it did NOT start (read the gate
+reason and fix it); `status: "accepted"` means the capped engine has begun.
+
+Confirm to the user in plain terms: how many enrolled, which account is sending, the
+cadence, and that sending is paced under daily caps (not a blast).
 
 ## Step 7: Watch it, do not babysit it
 
-Use exact read contracts and durable runs to inspect delivery, acceptance, replies,
-stops, and failures. Never infer sends from activation. Preserve completed work and use
-`dreamstate_list_runs` plus proposal/run reads for recovery.
+After a day or two, read `outreach.workspace_stats_get` for reply rate,
+acceptance rate, sends, demos. If reply rate is weak, the lever is usually the opener or
+the targeting, not the volume. Use `metric: "icp"` or `"signal_source"` to see which
+segment responds and double down. Route the responses through `/reply-triage`.
 
 ## Guardrails worth stating to the user
 
-- Approval of one stage never authorizes a later stage.
-- A proposal is not execution; approval is not completion; activation is not proof of a
-  send.
-- Every external send is a real action by the selected account. Preserve suppression,
-  sender health, pacing, reply stops, and workspace boundaries.
+- Sending is capped per account by Dreamstate and you cannot raise those caps from here.
+  That protects their LinkedIn standing. Frame "at scale" as "as fast as is safe", not
+  unlimited.
+- Every send is a real action taken as the user's connected account. Confirm the opener
+  copy and the target list with the user before Step 6 if there is any doubt.
 
 ## Package resources
 

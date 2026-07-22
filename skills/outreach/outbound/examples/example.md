@@ -2,7 +2,7 @@
 
 ## Request
 
-“Help me design a governed LinkedIn outbound campaign from scratch through Dreamstate: ground the ICP, propose source and table work, build a custom sequence, stage bounded evidence runs, and launch only after explicit approval. Use whenever the user wants cold outreach, a lead list, a new campaign, demos, or pipeline. This orchestrator uses the same revision-bound proposal and durable-run lifecycle as Architect, Claude, and Codex.”
+“Help me run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.”
 
 ## Correct response shape
 

@@ -14,13 +14,16 @@ Run `/connect` first if unsure. You need a healthy LinkedIn account that owns th
 If you only want to label the inbox without sending, use `/reply-classifier` instead; this
 skill goes all the way through to the response.
 
+The dotted names below are canonical capability IDs. Inspect their live contracts with
+`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## Step 1: Find the live conversations
 
-List campaigns with `outreach_campaigns` and pick the one the user means (or all active).
-Use `outreach_list_contacts` to find contacts with replies / open threads, and
-`outreach_get_contact` for the thread context (`conversation_urn`, last messages). Get the
-sending `account_id` from `content_list_accounts` — `outreach_send_reply` requires the
-account that owns the thread.
+List campaigns with `campaigns.list` and pick the one the user means (or all active).
+Use `outreach.dm_conversations_list` to find open threads, and
+`outreach.dm_conversation_get` for each thread's context. Get the sending account evidence
+from `social.accounts_list`; the conversation itself remains the authoritative send target.
 
 ## Step 2: Classify each reply by intent
 
@@ -34,16 +37,16 @@ the same read `/reply-classifier` does; if you ran that first, reuse its labels.
 For each thread, take the action that matches the intent:
 
 - **Interested / Objection / Referral**: draft a short, specific reply and send it with
-  `outreach_send_reply` (`account_id`, `thread_id` = the `conversation_urn`, `body`, and a
-  unique `client_request_id`). It enforces the per-account daily DM cap before sending; at
+  `outreach.dm_message_send` (`conversation_urn`, `body`, and a unique
+  `client_request_id`). It enforces the per-account daily DM cap before sending; at
   cap it returns `status: "blocked"` and sends nothing — tell the user and queue the rest
   for tomorrow rather than forcing it.
-- **Interested**: also set `outreach_set_thread_status` to the pipeline status the user
-  uses for hot leads, and `outreach_assign_thread` to the right workspace member so a
+- **Interested**: also set `outreach.dm_conversation_status_update` to the pipeline status
+  the user uses for hot leads, and `outreach.dm_conversation_assign` to the right workspace member so a
   human owns the follow-through.
 - **Not now / Not interested**: set the matching status so they drop out of the active
   view. Do not argue with a no.
-- **Auto / OOO**: `outreach_mark_thread_read` and move on; no reply.
+- **Auto / OOO**: use `outreach.dm_conversation_read` and move on; no reply.
 
 Before sending any reply, show the user the draft for at least the first few threads so
 they can calibrate your voice. These go out as them.
@@ -52,7 +55,7 @@ they can calibrate your voice. These go out as them.
 
 Tell the user what you did: counts per bucket, how many replies you sent, how many were
 blocked by the daily cap, and which threads are now assigned to whom. Pull
-`outreach_analytics` (`metric: "overview"`) so they see reply and acceptance rate in
+`outreach.workspace_stats_get` so they see reply and acceptance rate in
 context. If interested-rate is high but demos are low, the gap is your reply quality or
 the handoff, not the top of funnel.
 

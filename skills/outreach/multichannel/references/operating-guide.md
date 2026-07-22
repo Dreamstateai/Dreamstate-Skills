@@ -2,17 +2,17 @@
 
 ## Promise
 
-Design a governed LinkedIn plus social content motion from scratch around one audience through Dreamstate. Use whenever the user wants multichannel outreach, audience warming, coordinated content and outbound, or an account-based play. It grounds both motions in shared context, proposes custom structures through the unified proposal lifecycle, and keeps publishing and campaign activation as explicit separate approvals.
+Run a combined LinkedIn + content motion against one audience through Dreamstate: warm the target list with social/blog content while a LinkedIn sequence reaches them directly, so prospects see the brand in more than one place. Use whenever the user wants multi-channel outreach, to 'warm up' an audience before DMing, to coordinate content with outbound, or an account-based play. Orchestrates the outreach and content engines together; you cannot post or send yourself.
 
 ## Execution boundary
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_proposals_create`, `dreamstate_proposals_get`, `dreamstate_proposals_mutate`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_brain_query`, `dreamstate_context_query`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `brain.architect.resolve_attachment`, `brain.companies.get`, `brain.context.get`, `brain.context.list`, `brain.daily_update.get`, `brain.daily_update.history`, `brain.evidence.search`, `brain.learning.query_benchmarks`, `brain.outreach.compare`, `brain.people.get`, `resource:runs`
+Declared capabilities: `campaigns.activate`, `campaigns.create`, `campaigns.template_apply`, `contacts.enrich`, `content.artifact_generate`, `content.schedule`, `outreach.workspace_stats_get`, `sequences.enroll_selection`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `workbooks.create`
 
-Required scopes: `content:read`, `outreach:read`
+Required scopes: `actions`, `content:read`, `content:write`, `outreach:read`, `outreach:write`, `tables:write`
 
 ## Evidence checklist
 

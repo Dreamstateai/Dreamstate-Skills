@@ -12,40 +12,39 @@ the angle and the editorial call; Dreamstate does the writing and the publishing
 Run `/connect` first if unsure. (If the user wants you to *choose* topics from where AI search
 cites competitors instead, use `/ai-visibility` for the gap analysis, then come here to write.)
 
+The dotted names below are canonical capability IDs. Inspect each live contract with
+`dreamstate_tools_get`, invoke it with `dreamstate_tools_run`, and follow asynchronous work
+with `dreamstate_get_run`.
+
 ## Step 1: Pin the angle, and avoid duplicates
 
 Confirm with the user: the topic, the target reader, the angle (what this post argues or
 teaches), and the keyword/query it should answer. Then check what already exists with
-`content_list_blog` so you do not rewrite a post the brand already has; if a close one exists,
+`content.article_list` so you do not rewrite a post the brand already has; if a close one exists,
 suggest updating it instead.
 
 ## Step 2: Create the draft item
 
-Call `content_create_blog` with a `title` and `content_type`. Pass a `brief` that names the
-angle, the target query, and the key points you want covered, plus any seed markdown the user
-gives you. A specific brief is the difference between a sharp post and generic filler. Keep the
-returned item id.
+Call `content.article_create_schedule` with the title, target platforms, and any campaign or
+label context. Keep the returned article id and revision.
 
 ## Step 3: Generate the full draft (async)
 
-Call `content_generate_blog` (`mode: "full"`). This is ASYNC: the item moves
-`draft -> researching -> ... -> draft_ready`, and the response only confirms the job queued.
-Poll `content_get_blog` until `status` is `draft_ready`. Do not block the user while it runs;
-tell them it is generating and check back.
+Draft the article body from the approved angle, then persist it with `content.article_update`
+using the exact `expected_revision`. If a supporting run is asynchronous, follow its returned
+run id with `dreamstate_get_run`; never infer completion from elapsed time.
 
 ## Step 4: Review before publishing
 
-Read the finished draft with `content_get_blog` and show it to the user. This is long-form
+Read the finished draft with `content.article_get` and show it to the user. This is long-form
 content with their name on it, so edit for accuracy, voice, and the angle you agreed in Step 1
 before anything goes live. Regenerate (back to Step 3) or hand-edit the brief if the draft
 misses.
 
 ## Step 5: Publish
 
-On approval, `content_publish_blog`:
-
-- `self_hosted: true` publishes to the public `/blog/<slug>`.
-- a `destination_id` publishes to a named workspace destination instead.
+On approval, call `content.article_delivery_create`. The returned delivery record is the
+source of truth for destination, status, receipts, and any later reconciliation.
 
 Confirm to the user where it went live (the URL or destination) and the title. If it is part of
 a content push, suggest queueing the next topic, or running `/ai-visibility` in a few weeks to
