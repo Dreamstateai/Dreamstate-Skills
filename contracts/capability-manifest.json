@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "85a8e666839c915e",
+  "capability_hash": "a29a72f7045de668",
   "api_version": "v1",
   "capabilities": [
     {
@@ -287780,7 +287780,6 @@
                 "webhook_event",
                 "workflow_trigger",
                 "resource",
-                "function",
                 "validator"
               ]
             },

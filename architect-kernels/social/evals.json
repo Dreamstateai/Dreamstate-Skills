@@ -15,6 +15,8 @@
     {
       "expected_skill_ids": ["social"],
       "id": "founder-posts-pooled-benchmark",
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [{"id":"evidence_state","allowed_values":["verified","partial","unavailable"]}],
       "required_concepts": ["brain.learning.query_benchmarks", "founders", "cohort-level evidence", "sample band", "confidence", "insufficient_evidence", "never raw cross-workspace rows"],
       "request": "What posts work for founders? Before planning content for that named audience, consult the pooled benchmark lattice. Cite only releasable cohort-level evidence with sample band and confidence, or state insufficient_evidence. Never expose raw cross-workspace rows."
     }

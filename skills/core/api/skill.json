@@ -36,7 +36,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "85a8e666839c915e",
+  "verified_capability_hash": "a29a72f7045de668",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/api/SKILL.md",
   "install_command": "dreamstate skills install api",

@@ -1,22 +1,24 @@
 ---
 id: context
 name: Context
-description: Read targeted revisioned Company Brain facts or propose cited conflict-aware updates without treating prompt text as canonical state.
-triggers: ["read Company Brain context","inspect published workspace memory","propose a cited context update","resolve a canonical fact"]
+description: Read targeted revisioned Company Brain facts or propose cited conflict-aware updates and new governed documents without treating prompt text as canonical state.
+triggers: ["read Company Brain context","inspect published workspace memory","propose a cited context update","update a governed Company Brain document such as Ideal Customer","resolve a canonical fact","propose a new governed Company document","keep a knowledge document unpublished for human review"]
 dependencies: []
 capability_domains: ["brain","context"]
+capability_ids: []
 max_context_tokens: 3000
+completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 85a8e666839c915e
+  capability_hash: a29a72f7045de668
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.0
-  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md

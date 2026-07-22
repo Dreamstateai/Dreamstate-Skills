@@ -133,6 +133,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, /mismatch_behavior: deny_run/);
       assert.match(standalone, /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get\]/);
       assert.match(standalone, /Refuse `dreamstate_tools_run` until the installed package is refreshed/);
+      assert.match(standalone, /^completion_contract: \{"version":1,"fields":\[/m);
     }
     assert.equal(pinned.skills[id].kernel_sha256, clients.skills[id].kernel_sha256);
     assert.equal(pinned.skills[id].evals_sha256, clients.skills[id].evals_sha256);
@@ -140,7 +141,22 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       artifacts[`${architectRoot}/SKILL.md`],
       /bounded structured partial outputs plus the exact next transition/,
     );
+    assert.match(artifacts[`${architectRoot}/SKILL.md`], /^completion_contract: \{"version":1,"fields":\[/m);
   }
+});
+
+test('Context resolver metadata covers governed updates to fixed Company documents', () => {
+  const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
+  assert.ok(context);
+  assert.ok(context.triggers.some((trigger: string) => (
+    /update/i.test(trigger) && /Company Brain/i.test(trigger) && /Ideal Customer/i.test(trigger)
+  )));
+
+  const artifacts = buildArchitect();
+  assert.match(
+    artifacts['generated/architect/context/SKILL.md'],
+    /update a governed Company Brain document such as Ideal Customer/,
+  );
 });
 
 test('signed capability domains stay identical across source, Architect, Claude, Codex, and release manifests', () => {
@@ -187,6 +203,25 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
+  const exactCapabilityIds = ['sources.cold_outbound_expand'];
+  assert.deepEqual(
+    architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach-workflow-builder')?.capability_ids,
+    exactCapabilityIds,
+  );
+  assert.deepEqual(pinned.skills['outreach-workflow-builder'].capability_ids, exactCapabilityIds);
+  assert.deepEqual(clients.skills['outreach-workflow-builder'].capability_ids, exactCapabilityIds);
+  for (const root of [
+    'generated/architect/outreach-workflow-builder',
+    'generated/client-adapters/claude/outreach-workflow-builder',
+    'generated/client-adapters/codex/outreach-workflow-builder',
+  ]) {
+    assert.ok(
+      artifacts[`${root}/SKILL.md`].split('\n').includes(
+        `capability_ids: ${JSON.stringify(exactCapabilityIds)}`,
+      ),
+      `${root}/SKILL.md must carry the signed exact capability closure`,
+    );
+  }
 });
 
 test('audience planning kernels require privacy-safe pooled benchmark evidence', () => {
@@ -211,12 +246,49 @@ test('audience planning kernels require privacy-safe pooled benchmark evidence',
   assert.ok(restaurantOwners.required_concepts.includes('confidence'));
   assert.ok(restaurantOwners.required_concepts.includes('insufficient_evidence'));
   assert.ok(restaurantOwners.required_concepts.includes('never raw cross-workspace rows'));
+  assert.equal(restaurantOwners.fixture_profile, 'outreach_zero_history_benchmark');
+  assert.deepEqual(restaurantOwners.required_capability_ids, ['brain.learning.query_benchmarks']);
+  assert.match(restaurantOwners.request, /State the privacy boundary verbatim: never raw cross-workspace rows/);
 
   const social = JSON.parse(artifacts['generated/architect/social/evals.json']);
   assert.ok(social.cases.some((item: { id: string }) => item.id === 'founder-posts-pooled-benchmark'));
 
   const seo = JSON.parse(artifacts['generated/architect/seo/evals.json']);
   assert.ok(seo.cases.some((item: { id: string }) => item.id === 'agency-keywords-pooled-benchmark'));
+  const technicalSeo = seo.cases.find((item: { id: string }) => (
+    item.id === 'technical-and-content-plan'
+  ));
+  assert.ok(technicalSeo);
+  assert.match(technicalSeo.request, /owninfluence\.com/);
+  assert.match(technicalSeo.request, /demo bookings/);
+  assert.match(technicalSeo.request, /fast-triage/);
+  assert.match(technicalSeo.request, /buffer\.com/);
+  assert.match(technicalSeo.request, /hootsuite\.com/);
+  assert.match(technicalSeo.request, /read-only/);
+  const seoKernel = artifacts['generated/architect/seo/KERNEL.md'];
+  assert.match(
+    seoKernel,
+    /Every benchmark handoff, including a blocked or unavailable one/,
+  );
+  assert.match(
+    artifacts['generated/architect/outreach/KERNEL.md'],
+    /Do not terminate after discovery or contract inspection/,
+  );
+  assert.match(
+    seoKernel,
+    /exact capability id `brain\.learning\.query_benchmarks`/,
+  );
+  assert.match(seoKernel, /privacy boundary: never raw cross-workspace rows/);
+});
+
+test('social research executes scoped reads without blocking on optional presentation choices', () => {
+  const artifacts = buildArchitect();
+  const kernel = artifacts['generated/architect/social/KERNEL.md'];
+  assert.match(kernel, /topic or query and time window/i);
+  assert.match(kernel, /ranking and output (?:format )?choices are optional/i);
+  assert.match(kernel, /transparent defaults/i);
+  assert.match(kernel, /nullable metrics/i);
+  assert.match(kernel, /Ask only for truly required missing inputs/i);
 });
 
 test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {
@@ -313,4 +385,86 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
   assert.match(coordinator, /single activation-and-send authorization/i);
   assert.match(coordinator, /Do not invent a second send approval gate/i);
+});
+
+test('outreach release uses exact capability evidence and signed lifecycle states', () => {
+  const artifacts = build();
+  const outreach = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const workflow = JSON.parse(artifacts['generated/architect/outreach-workflow-builder/evals.json']);
+  const staged = outreach.cases.find((item: { id: string }) => item.id === 'staged-pilot-build-sample-expand-launch');
+  const launch = outreach.cases.find((item: { id: string }) => item.id === 'explicit-final-launch-revalidation');
+  const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
+  const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'exact-result-set-expansion-is-separate');
+
+  assert.deepEqual(staged.required_capability_ids, [
+    'sources.cold_outbound_preview',
+    'sources.cold_outbound_expand',
+  ]);
+  assert.deepEqual(staged.required_completion_fields, [
+    { id: 'stage_boundary_state', allowed_values: ['ordered_separate'] },
+    { id: 'campaign_state', allowed_values: ['inactive'] },
+    { id: 'activation_state', allowed_values: ['inactive'] },
+    { id: 'external_send_state', allowed_values: ['not_authorized'] },
+    { id: 'approval_state', allowed_values: ['required'] },
+    { id: 'run_state', allowed_values: ['not_applicable'] },
+  ]);
+  assert.match(staged.request, /creates no run.*run_state not_applicable.*do not fabricate a blocked run/i);
+  assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'external_send_state' && field.allowed_values.includes('not_authorized')
+  )));
+  assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'selection_state' && field.allowed_values.includes('missing')
+  )));
+  assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'run_state' && field.allowed_values.includes('blocked')
+  )));
+  assert.deepEqual(conditional.must_use_popup_when_missing, ['messaging branch']);
+  assert.deepEqual(exactSet.required_capability_ids, ['sources.cold_outbound_expand']);
+  assert.equal(exactSet.fixture_profile, 'outreach_exact_result_set_expansion');
+  assert.ok(exactSet.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
+    field.id === 'selection_state' && field.allowed_values.includes('exact')
+  )));
+  assert.match(
+    artifacts['generated/architect/outreach/KERNEL.md'],
+    /structured `ask_user` popup whose finite `messaging_branch_state` choice is `present` or `absent`/,
+  );
+  assert.match(
+    artifacts['generated/architect/outreach/KERNEL.md'],
+    /three distinct questions whose ids or prompts literally include `qualification`, `sender`, and `volume`/,
+  );
+  const outreachSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach');
+  const integrationsSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'integrations');
+  assert.ok(outreachSkill.triggers.includes('design an outreach campaign for a named cohort using pooled benchmarks'));
+  assert.match(integrationsSkill.description, /Provider content research, metrics, and search-window coverage remain with their domain skills/);
+});
+
+test('table evals require exact contracts and authoritative schema or paid-run receipts', () => {
+  const artifacts = build();
+  const tables = JSON.parse(artifacts['generated/architect/tables/evals.json']);
+  const buildTable = tables.cases.find((item: { id: string }) => item.id === 'build-reactive-table');
+  const paidSample = tables.cases.find((item: { id: string }) => item.id === 'bounded-paid-run');
+
+  assert.equal(buildTable.fixture_profile, 'tables_reactive_proposal');
+  assert.deepEqual(buildTable.required_capability_ids, ['tables.create']);
+  assert.deepEqual(buildTable.required_completion_fields, [
+    { id: 'schema_state', allowed_values: ['identity_source_dependencies_ready'] },
+    { id: 'artifact_state', allowed_values: ['proposal_saved', 'existing'] },
+    { id: 'durability_state', allowed_values: ['proposal_only', 'durable'] },
+  ]);
+  assert.equal(paidSample.fixture_profile, 'tables_bounded_paid_sample');
+  assert.deepEqual(paidSample.required_capability_ids, ['columns.sample']);
+  assert.deepEqual(paidSample.required_completion_fields, [
+    { id: 'execution_bounds_state', allowed_values: ['representative_capped_credits'] },
+    { id: 'cell_state', allowed_values: ['settled', 'partial', 'failed'] },
+    { id: 'approval_state', allowed_values: ['required', 'approved'] },
+    { id: 'run_state', allowed_values: ['terminal'] },
+  ]);
+  assert.match(
+    artifacts['generated/architect/tables/KERNEL.md'],
+    /only the canonical run receipt establish the approved selection, row cap, credit ceiling, terminal state, actual spend, and settled-cell outcomes/i,
+  );
+  assert.match(
+    buildTable.request,
+    /A proposal without the tools_run preparation receipt is incomplete/,
+  );
 });

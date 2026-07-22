@@ -3,17 +3,19 @@ id: blog
 name: blog
 description: "Manage grounded blog research, draft, editorial review, revision, scheduling, publication, and canonical editor inspection."
 capability_domains: ["content"]
+capability_ids: []
+completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 85a8e666839c915e
+  capability_hash: a29a72f7045de668
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.0
-  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   client: codex
   kernel_id: blog

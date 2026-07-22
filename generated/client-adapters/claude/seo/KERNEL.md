@@ -10,6 +10,8 @@ Inspect the canonical site, market, current search and visibility measurements, 
 
 Before designing a keyword or content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, irrelevant, or cannot support a keyword-specific claim, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 
+Every benchmark handoff, including a blocked or unavailable one, closes with the exact capability id `brain.learning.query_benchmarks`, the releasable cohort-level evidence state, and the privacy boundary: never raw cross-workspace rows.
+
 ## Capability workflow
 
 Search the live registry for the exact current reads, table providers, visibility measures, and content operations required by the request, then fetch each selected contract. For keyword work, keep audience questions, query metrics, intent, competition, product relevance, and conversion evidence separate. For technical work, preserve the affected URL and observed issue. For content work, keep the target query, evidence, brief, draft, destination, and current revision linked.

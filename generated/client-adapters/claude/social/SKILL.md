@@ -3,25 +3,27 @@ id: social
 name: social
 description: "Coordinate authored LinkedIn, X, and Reddit content across drafts, calendars, review, publishing, and measured performance."
 capability_domains: ["brain","content"]
+capability_ids: []
+completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 85a8e666839c915e
+  capability_hash: a29a72f7045de668
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.0
-  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   client: claude
   kernel_id: social
   kernel_file: KERNEL.md
-  kernel_sha256: 5007cfd9a5c7aae22cad38e3c0df6f3bddb13a739a3c13dbc6a1cc6ee8a40f2f
+  kernel_sha256: 7fcd112a1336116cc6ad15825516c511bfcc535be627813173587880348e351f
   adapter_sha256: e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a
   evals_file: evals.json
-  evals_sha256: 71781fbd01cf98a23e4499c3827c958a83099523a1b80a51d456ef05c943d85b
+  evals_sha256: 4a27a9fed4b381c442c41451c9a419a2d469115c3b8fa7ac8e0735066be12684
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]
@@ -56,6 +58,8 @@ Before designing a content plan for a named audience or named cohort, fetch and 
 ## Capability workflow
 
 Search the full live registry by desired outcome, available context, platform, artifact kind, and allowed side effects. Fetch the exact contract for every selected operation. Live schemas own account fields, platform rules, readiness, cost, and output shape; this kernel owns none of those menus.
+
+For a read whose request already supplies a topic or query and time window, ranking and output format choices are optional, not blockers. Execute the read with transparent defaults, report those defaults, and preserve nullable metrics rather than opening a popup. Ask only for truly required missing inputs from the selected live contract.
 
 For a draft or calendar request, prepare reviewable content artifacts before any external consequence. Include provenance, assumptions, target account, platform, proposed schedule, and the capability digest. Existing calendar items are updated only against their current revision. For analysis, use measured metrics returned by live reads and separate observation from inference.
 

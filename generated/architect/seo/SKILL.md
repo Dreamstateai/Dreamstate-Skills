@@ -5,25 +5,27 @@ description: Coordinate evidence-backed keyword research, technical diagnosis, c
 triggers: ["build a keyword plan","audit technical SEO","plan search content","improve SEO or AI visibility"]
 dependencies: []
 capability_domains: ["brain","content","tables","visibility"]
+capability_ids: []
 max_context_tokens: 5000
+completion_contract: {"version":1,"fields":[{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"sample_state","description":"Benchmark sample band disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"privacy_state","description":"Cross-workspace privacy boundary state.","allowed_values":["cohort_only","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"target_conversion","description":"Named target conversion state.","allowed_values":["defined","missing"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 85a8e666839c915e
+  capability_hash: a29a72f7045de668
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.0
-  source_release_hash: 7ac74bf92982249bc50f480b065063cd6dbb5b4cf123061ed6029a87f67bbfb1
+  source_release: 0.5.1
+  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
   generator_version: 1.0.0
   kernel_id: seo
   kernel_file: KERNEL.md
-  kernel_sha256: 41f27a617fac51fbec5feff36bd5601e951f266cdba4fe3c09a8fafe593a74cc
+  kernel_sha256: 375a25fb836e846f277a39a0ea53651bc0d5438df8fbc7ad4a359d50bc22e3a4
   adapter_sha256: 323f2c18e97b8d14419904eb432f67608b00047695f0dc1725b7576b85dae689
   evals_file: evals.json
-  evals_sha256: 60e59f466532e8a34a9dd62aa2b998a991a9477207da36d7472c6f92d5ff12a2
+  evals_sha256: 3e7d2672a42e7120734a6c7607451c542fc2b16829b3b85d17db48211e50f576
 ---
 
 # Architect surface adapter

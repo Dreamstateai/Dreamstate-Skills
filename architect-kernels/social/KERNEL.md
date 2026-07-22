@@ -17,6 +17,8 @@ Before designing a content plan for a named audience or named cohort, fetch and 
 
 Search the full live registry by desired outcome, available context, platform, artifact kind, and allowed side effects. Fetch the exact contract for every selected operation. Live schemas own account fields, platform rules, readiness, cost, and output shape; this kernel owns none of those menus.
 
+For a read whose request already supplies a topic or query and time window, ranking and output format choices are optional, not blockers. Execute the read with transparent defaults, report those defaults, and preserve nullable metrics rather than opening a popup. Ask only for truly required missing inputs from the selected live contract.
+
 For a draft or calendar request, prepare reviewable content artifacts before any external consequence. Include provenance, assumptions, target account, platform, proposed schedule, and the capability digest. Existing calendar items are updated only against their current revision. For analysis, use measured metrics returned by live reads and separate observation from inference.
 
 Scheduling and publishing are different consequences. Request the exact required approval immediately before the relevant operation, then revalidate account binding, readiness, content revision, destination, and timing. A successful proposal or accepted job is not a completed post. Report the terminal run state and open only the canonical editor or calendar link returned by the backend.
