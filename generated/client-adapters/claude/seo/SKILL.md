@@ -7,21 +7,21 @@ capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"sample_state","description":"Benchmark sample band disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"privacy_state","description":"Cross-workspace privacy boundary state.","allowed_values":["cohort_only","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"target_conversion","description":"Named target conversion state.","allowed_values":["defined","missing"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  playbook_kernel_hash: b7991aeba1a58ca4b9c3a48155a8f5a3622eaeec867a0d2b459aa4ea614ec39d
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a29a72f7045de668
-  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
+  capability_hash: 6b97b199c1245e68
+  manifest_digest: a72d39d411d2546db5b1e9580575ab79e016dc395048282ba65281c67036fe3b
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  source_release_hash: b7991aeba1a58ca4b9c3a48155a8f5a3622eaeec867a0d2b459aa4ea614ec39d
   generator_version: 1.0.0
   client: claude
   kernel_id: seo
   kernel_file: KERNEL.md
-  kernel_sha256: 375a25fb836e846f277a39a0ea53651bc0d5438df8fbc7ad4a359d50bc22e3a4
+  kernel_sha256: 0cc741d83efb5bcc5cac105893b7bde4351d15cb81d2311a3579ca78a35e51fa
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
   evals_sha256: 3e7d2672a42e7120734a6c7607451c542fc2b16829b3b85d17db48211e50f576
@@ -54,6 +54,8 @@ Own evidence-backed keyword research, technical diagnosis, content planning, AI 
 ## Grounding and audience evidence
 
 Inspect the canonical site, market, current search and visibility measurements, existing content, target conversions, and relevant Company Brain claims before recommending work. Preserve source, observation time, property identity, and known measurement gaps. Use one structured popup only for unresolved choices that materially change the site, audience, geography, conversion, or publishing consequence.
+
+A named conversion such as demo bookings is already a defined benchmark outcome. Do not ask for a demo URL, form URL, or other bounded text unless the requested task actually needs to inspect that exact page. After a recommended structured answer is restored, treat it as resolved and never ask the same bounded question again.
 
 Before designing a keyword or content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, irrelevant, or cannot support a keyword-specific claim, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 

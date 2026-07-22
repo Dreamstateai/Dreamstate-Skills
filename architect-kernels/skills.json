@@ -8,7 +8,7 @@
       "id": "analytics",
       "name": "Analytics",
       "description": "Diagnose current measured performance with explicit time ranges, provenance, limitations, confidence, and evidence-backed recommendations.",
-      "triggers": ["analyze growth performance", "explain a metric change", "diagnose a funnel", "compare measured channel results"],
+      "triggers": ["analyze growth performance", "explain a metric change", "diagnose a funnel", "compare measured channel results", "diagnose LinkedIn or social engagement", "explain why a measured social metric changed"],
       "dependencies": [],
       "capability_domains": [],
       "capability_ids": [],

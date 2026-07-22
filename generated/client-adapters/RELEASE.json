@@ -2,21 +2,21 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.1",
-  "source_release_hash": "f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa",
+  "source_release_hash": "b7991aeba1a58ca4b9c3a48155a8f5a3622eaeec867a0d2b459aa4ea614ec39d",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa",
+    "playbook_kernel_hash": "b7991aeba1a58ca4b9c3a48155a8f5a3622eaeec867a0d2b459aa4ea614ec39d",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "a29a72f7045de668",
-    "manifest_digest": "47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3",
+    "capability_hash": "6b97b199c1245e68",
+    "manifest_digest": "a72d39d411d2546db5b1e9580575ab79e016dc395048282ba65281c67036fe3b",
     "minimum_api_version": "v1"
   },
   "skills": {
     "analytics": {
       "capability_domains": [],
       "capability_ids": [],
-      "kernel_sha256": "f2db66bc68dcaddc41c4c176e288539d1345178f42e98c35cd5892ec7b2ea49c",
+      "kernel_sha256": "249605006935d0cc26eda0b00f305e90272f14fa92cecf3af25d4b17b628458d",
       "evals_sha256": "1192535f1842d0a81e773435e0fe0404842d579ae8feb6983175627dd6a3b7ff",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
@@ -123,7 +123,7 @@
         "visibility"
       ],
       "capability_ids": [],
-      "kernel_sha256": "375a25fb836e846f277a39a0ea53651bc0d5438df8fbc7ad4a359d50bc22e3a4",
+      "kernel_sha256": "0cc741d83efb5bcc5cac105893b7bde4351d15cb81d2311a3579ca78a35e51fa",
       "evals_sha256": "3e7d2672a42e7120734a6c7607451c542fc2b16829b3b85d17db48211e50f576",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
