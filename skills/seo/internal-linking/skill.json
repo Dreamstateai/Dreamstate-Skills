@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "a29a72f7045de668",
+  "verified_capability_hash": "6b97b199c1245e68",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/internal-linking/SKILL.md",
   "install_command": "dreamstate skills install internal-linking",
