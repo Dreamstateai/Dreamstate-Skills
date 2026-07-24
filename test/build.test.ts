@@ -11,7 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = '9f1e978a9a77a7a9aaea36992fb3e9690da415a3b436c6443f9fceaec700dc11';
+const CANONICAL_MANIFEST_DIGEST = 'fbbcbf2afdfb1a2f1b99a695807ab50f1bf3a7af671c7215e9cb32af2266535c';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -255,6 +255,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
       'outreach.demand_plan_get',
       'sources.cold_outbound_expand',
       'sources.cold_outbound_preview',
+      'sources.linkedin_post_engagers_preview',
     ],
     'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
     'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
@@ -636,9 +637,6 @@ test('competitor engager release eval is production-real and preserves dependenc
     'column_sample',
     'bulk_expansion',
     'launch_revalidation',
-    'activation',
-    'enrollment',
-    'provider_send',
   ]);
   assert.deepEqual(
     full.required_tool_sequence.slice(0, 4),

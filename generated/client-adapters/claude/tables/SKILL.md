@@ -7,16 +7,16 @@ capability_ids: ["columns.sample","tables.create"]
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c
+  playbook_kernel_hash: cd09fb0789b3de52ef0cb72c738c85b2072a38bef636884374a326c024cde29b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 358149d3de20a85c
-  manifest_digest: 9f1e978a9a77a7a9aaea36992fb3e9690da415a3b436c6443f9fceaec700dc11
+  capability_hash: 3fd3cec34b08dcd1
+  manifest_digest: fbbcbf2afdfb1a2f1b99a695807ab50f1bf3a7af671c7215e9cb32af2266535c
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: 9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c
+  source_release_hash: cd09fb0789b3de52ef0cb72c738c85b2072a38bef636884374a326c024cde29b
   generator_version: 1.0.0
   client: claude
   kernel_id: tables

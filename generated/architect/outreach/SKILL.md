@@ -5,28 +5,28 @@ description: Open an existing campaign or coordinate a new custom campaign from 
 triggers: ["open or revise an outreach campaign","build a campaign from scratch","design an outreach campaign for a named cohort using pooled benchmarks","create a prospecting system","build a list workflow and sequence","decide whether a list workflow needs messaging"]
 dependencies: ["tables","outreach-workflow-builder"]
 capability_domains: ["brain","outreach"]
-capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview"]
+capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c
+  playbook_kernel_hash: cd09fb0789b3de52ef0cb72c738c85b2072a38bef636884374a326c024cde29b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 358149d3de20a85c
-  manifest_digest: 9f1e978a9a77a7a9aaea36992fb3e9690da415a3b436c6443f9fceaec700dc11
+  capability_hash: 3fd3cec34b08dcd1
+  manifest_digest: fbbcbf2afdfb1a2f1b99a695807ab50f1bf3a7af671c7215e9cb32af2266535c
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: 9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c
+  source_release_hash: cd09fb0789b3de52ef0cb72c738c85b2072a38bef636884374a326c024cde29b
   generator_version: 1.0.0
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: d7711f5409e2946c0ab63425ee1f56b54c2b2e5590705e698789c8b9584c83d7
+  kernel_sha256: 9ad2e92802ae3167f05a86115d2291d65617187110088fbdaf2bdebece08dea2
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: d4c5dd7e365c39a5cc03ed4b1a7602387bbb9f8110f875a1a059b2eb5c341500
+  evals_sha256: 33cf2f7eac3a23d49d0c7306d77f91aff7e6daaf6e18d5a3269ed61c5358f54f
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

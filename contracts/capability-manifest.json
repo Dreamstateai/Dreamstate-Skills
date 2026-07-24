@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "358149d3de20a85c",
+  "capability_hash": "3fd3cec34b08dcd1",
   "api_version": "v1",
   "capabilities": [
     {
@@ -37648,52 +37648,30 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "campaign_id",
+          "key": "launch_authorization_id",
           "kind": "uuid",
           "required": true,
-          "description": "campaign_id"
-        },
-        {
-          "key": "sender_account_ids",
-          "kind": "array",
-          "required": true,
-          "description": "sender_account_ids"
+          "description": "launch_authorization_id"
         }
       ],
       "input_schema": [
         {
-          "name": "campaign_id",
+          "name": "launch_authorization_id",
           "type": "string",
           "required": true,
-          "description": "campaign_id"
-        },
-        {
-          "name": "sender_account_ids",
-          "type": "array",
-          "required": true,
-          "description": "sender_account_ids"
+          "description": "launch_authorization_id"
         }
       ],
       "input_json_schema": {
         "type": "object",
         "properties": {
-          "campaign_id": {
+          "launch_authorization_id": {
             "type": "string",
             "format": "uuid"
-          },
-          "sender_account_ids": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "minItems": 1,
-            "maxItems": 50
           }
         },
         "required": [
-          "campaign_id",
-          "sender_account_ids"
+          "launch_authorization_id"
         ],
         "additionalProperties": false
       },
@@ -37724,11 +37702,76 @@
                 "enum": [
                   "capped_engine"
                 ]
+              },
+              "launch_authorization_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "launch_authorization_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "selection_snapshot_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "selection_digest": {
+                "type": "string",
+                "minLength": 1
+              },
+              "enrollment_binding_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "selected_row_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              },
+              "enrolled_row_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              },
+              "enrolled_contact_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              },
+              "workflow_revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_revision": {
+                "type": "string",
+                "minLength": 1
               }
             },
             "required": [
               "sender_binding",
-              "dispatch"
+              "dispatch",
+              "launch_authorization_id",
+              "launch_authorization_digest",
+              "selection_snapshot_id",
+              "selection_digest",
+              "enrollment_binding_id",
+              "selected_row_ids",
+              "enrolled_row_ids",
+              "enrolled_contact_ids",
+              "workflow_revision",
+              "sequence_revision"
             ],
             "additionalProperties": false
           },
@@ -37887,8 +37930,7 @@
           "Use the stable campaigns.activate contract for canonical campaign activate behavior."
         ],
         "inputs": [
-          "campaign_id",
-          "sender_account_ids"
+          "launch_authorization_id"
         ],
         "outputs": [
           "campaign_id",
@@ -40065,6 +40107,18 @@
           "description": "sequence_version_id"
         },
         {
+          "name": "linkedin_account_ids",
+          "type": "array",
+          "required": false,
+          "description": "linkedin_account_ids"
+        },
+        {
+          "name": "mailbox_connection_ids",
+          "type": "array",
+          "required": false,
+          "description": "mailbox_connection_ids"
+        },
+        {
           "name": "cold_targeting_config",
           "type": "object",
           "required": false,
@@ -40098,6 +40152,24 @@
           "sequence_version_id": {
             "type": "string",
             "format": "uuid"
+          },
+          "linkedin_account_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 50
+          },
+          "mailbox_connection_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 50
           },
           "cold_targeting_config": {
             "type": "object",
@@ -44112,274 +44184,6 @@
         "inputs": [
           "campaign_id",
           "status"
-        ],
-        "outputs": [
-          "result",
-          "receipt",
-          "graph_effects"
-        ],
-        "side_effects": [
-          "write_campaign",
-          "campaigns",
-          "run",
-          "receipt",
-          "graph_effects",
-          "evidence"
-        ],
-        "prerequisites": [],
-        "deprecated": false
-      }
-    },
-    {
-      "id": "campaigns.resume",
-      "entitlement": "outreach",
-      "kind": "workspace_capability",
-      "domain": "campaign",
-      "category": "campaign",
-      "label": "Campaign Resume",
-      "description": "Canonical resume operation for campaign resources.",
-      "when_to_use": [
-        "Use the stable campaigns.resume contract for canonical campaign resume behavior."
-      ],
-      "when_not_to_use": [
-        "Do not supply workspace identity or choose a transport-specific compatibility alias."
-      ],
-      "required_scopes": [
-        "outreach:write"
-      ],
-      "mutates": true,
-      "idempotency_required": true,
-      "effects": {
-        "domain": "campaigns",
-        "reports": [
-          "run",
-          "receipt",
-          "graph_effects",
-          "evidence"
-        ]
-      },
-      "effect_replay": {
-        "strategy": "durable_receipt",
-        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
-      },
-      "cost_policy": {
-        "type": "none",
-        "credits": 0,
-        "zero_cost": true,
-        "side_effect_free": false,
-        "external_call": false
-      },
-      "async_policy": {
-        "mode": "sync"
-      },
-      "dry_run_supported": false,
-      "required_inputs": [
-        {
-          "key": "campaign_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "campaign_id"
-        }
-      ],
-      "input_schema": [
-        {
-          "name": "campaign_id",
-          "type": "string",
-          "required": true,
-          "description": "campaign_id"
-        }
-      ],
-      "input_json_schema": {
-        "type": "object",
-        "properties": {
-          "campaign_id": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "required": [
-          "campaign_id"
-        ],
-        "additionalProperties": false
-      },
-      "output_json_schema": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "type": "object",
-            "additionalProperties": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "boolean"
-                },
-                {
-                  "enum": [
-                    "null"
-                  ],
-                  "nullable": true
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/properties/result/additionalProperties"
-                  }
-                },
-                {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/properties/result/additionalProperties"
-                  }
-                }
-              ]
-            }
-          },
-          "receipt": {
-            "type": "object",
-            "properties": {
-              "capability_id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "run_id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "run_step_id": {
-                "$ref": "#/properties/receipt/properties/run_id"
-              },
-              "operation_request_key": {
-                "type": "string",
-                "minLength": 1
-              },
-              "idempotency_key": {
-                "type": "string",
-                "minLength": 1
-              },
-              "replay_strategy": {
-                "type": "string",
-                "enum": [
-                  "durable_receipt"
-                ]
-              }
-            },
-            "required": [
-              "capability_id",
-              "run_id",
-              "run_step_id",
-              "operation_request_key",
-              "idempotency_key",
-              "replay_strategy"
-            ],
-            "additionalProperties": false
-          },
-          "graph_effects": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "op": {
-                  "type": "string",
-                  "enum": [
-                    "created",
-                    "updated",
-                    "archived",
-                    "deleted"
-                  ]
-                },
-                "kind": {
-                  "type": "string",
-                  "enum": [
-                    "campaign",
-                    "email_template",
-                    "column_template",
-                    "outreach_configuration",
-                    "step_override",
-                    "evidence"
-                  ]
-                },
-                "id": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "op",
-                "kind",
-                "id"
-              ],
-              "additionalProperties": false
-            }
-          }
-        },
-        "required": [
-          "result",
-          "receipt",
-          "graph_effects"
-        ],
-        "additionalProperties": false
-      },
-      "output_manifest": "structured",
-      "provider": null,
-      "source": {
-        "contract": "canonical-parity",
-        "canonical_capability_id": "campaigns.resume",
-        "execution_core": "canonicalContract"
-      },
-      "rest_paths": [
-        "/tools/{id}",
-        "/tools/{id}/run"
-      ],
-      "rest_operations": [
-        {
-          "method": "get",
-          "path": "/tools/{id}"
-        },
-        {
-          "method": "post",
-          "path": "/tools/{id}/run"
-        }
-      ],
-      "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run"
-      ],
-      "cli_commands": [
-        "dreamstate tools run campaigns.resume"
-      ],
-      "examples": [
-        "dreamstate tools get campaigns.resume",
-        "dreamstate tools run campaigns.resume"
-      ],
-      "web_url_template": "/dashboard/campaigns/outreach/{id}",
-      "readiness": {
-        "ready": true,
-        "state": "available",
-        "runtime": "canonicalContract"
-      },
-      "execution": {
-        "status": "active",
-        "executor_id": "campaigns.resume",
-        "schema_policy": "strict"
-      },
-      "search": {
-        "aliases": [
-          "campaigns.resume",
-          "Campaign Resume",
-          "dreamstate tools get campaigns.resume",
-          "dreamstate tools run campaigns.resume"
-        ],
-        "use_cases": [
-          "Use the stable campaigns.resume contract for canonical campaign resume behavior."
-        ],
-        "inputs": [
-          "campaign_id"
         ],
         "outputs": [
           "result",
@@ -126862,6 +126666,241 @@
                   "inputs"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "workspace_id": {
+                    "$ref": "#/anyOf/0/properties/workspace_id"
+                  },
+                  "authorization_id": {
+                    "$ref": "#/anyOf/0/properties/workspace_id"
+                  },
+                  "effect_id": {
+                    "$ref": "#/anyOf/1/anyOf/0/properties/effect_id"
+                  },
+                  "idempotency_key": {
+                    "$ref": "#/anyOf/1/anyOf/0/properties/idempotency_key"
+                  },
+                  "maximum_credits": {
+                    "$ref": "#/anyOf/1/anyOf/0/properties/maximum_credits"
+                  },
+                  "scenario_id": {
+                    "type": "string",
+                    "enum": [
+                      "outreach.competitor_engager_campaign"
+                    ]
+                  },
+                  "inputs": {
+                    "type": "object",
+                    "properties": {
+                      "variant": {
+                        "type": "string",
+                        "enum": [
+                          "full",
+                          "missing_enrichment",
+                          "required_filter_failures",
+                          "capacity_race",
+                          "stale_low_precision"
+                        ]
+                      },
+                      "context_query": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                      },
+                      "context_node_ref": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512
+                      },
+                      "workbook_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "workbook_name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "worksheet_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "saved_view_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "source_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "source": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "profile_enrichment_column_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "profile_column": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "formula_fit_score_column_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "formula_column": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "ai_fit_score_column_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "ai_column": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "message_preview_column_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "message_column": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "sequence_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "sequence_definition": {
+                        "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition"
+                      },
+                      "campaign_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "campaign_name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "workflow_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "workflow_name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "workflow_graph": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "targeting": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "worksheet_revision": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "sender_account_ids": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/anyOf/0/properties/workspace_id"
+                        },
+                        "minItems": 1,
+                        "maxItems": 50
+                      },
+                      "demand_objective": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "demand_binding": {
+                        "$ref": "#/anyOf/0/properties/params"
+                      },
+                      "approval_proposal_id": {
+                        "$ref": "#/anyOf/0/properties/workspace_id"
+                      },
+                      "approval_revision": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0
+                      },
+                      "approval_digest": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "approval_expires_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "source_maximum_credits": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100000
+                      },
+                      "column_maximum_credits": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100000
+                      },
+                      "expansion_maximum_credits": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100000
+                      },
+                      "max_concurrency": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 25
+                      },
+                      "expected_row_count": {
+                        "type": "number",
+                        "enum": [
+                          7
+                        ]
+                      }
+                    },
+                    "required": [
+                      "variant",
+                      "context_query",
+                      "context_node_ref",
+                      "workbook_id",
+                      "workbook_name",
+                      "worksheet_id",
+                      "saved_view_id",
+                      "source_id",
+                      "source",
+                      "profile_enrichment_column_id",
+                      "profile_column",
+                      "formula_fit_score_column_id",
+                      "formula_column",
+                      "ai_fit_score_column_id",
+                      "ai_column",
+                      "message_preview_column_id",
+                      "message_column",
+                      "sequence_id",
+                      "sequence_definition",
+                      "campaign_id",
+                      "campaign_name",
+                      "workflow_id",
+                      "workflow_name",
+                      "workflow_graph",
+                      "targeting",
+                      "worksheet_revision",
+                      "sender_account_ids",
+                      "demand_objective",
+                      "demand_binding",
+                      "approval_proposal_id",
+                      "approval_revision",
+                      "approval_digest",
+                      "approval_expires_at",
+                      "source_maximum_credits",
+                      "column_maximum_credits",
+                      "expansion_maximum_credits",
+                      "max_concurrency",
+                      "expected_row_count"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "workspace_id",
+                  "authorization_id",
+                  "effect_id",
+                  "idempotency_key",
+                  "maximum_credits",
+                  "scenario_id",
+                  "inputs"
+                ],
+                "additionalProperties": false
               }
             ]
           }
@@ -127648,7 +127687,8 @@
                   "visibility.ai_search",
                   "seo.operational",
                   "productivity.calendar_tasks_record_files",
-                  "surface.cli_mcp_claude_codex"
+                  "surface.cli_mcp_claude_codex",
+                  "outreach.competitor_engager_campaign"
                 ]
               },
               "anchor_ledger_id": {
@@ -128752,7 +128792,8 @@
                   "visibility.ai_search",
                   "seo.operational",
                   "productivity.calendar_tasks_record_files",
-                  "surface.cli_mcp_claude_codex"
+                  "surface.cli_mcp_claude_codex",
+                  "outreach.competitor_engager_campaign"
                 ]
               },
               "anchor_ledger_id": {
@@ -201519,13 +201560,107 @@
               "approval_digest": {
                 "type": "string",
                 "pattern": "^[a-f0-9]{64}$"
+              },
+              "approval_proposal_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "approval_revision": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0
+              },
+              "selection_snapshot_id": {
+                "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+              },
+              "selection_digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "row_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              },
+              "sender_account_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              },
+              "qualification_contract": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "number",
+                    "enum": [
+                      1
+                    ]
+                  },
+                  "profile_enrichment_column_id": {
+                    "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+                  },
+                  "formula_fit_score_column_id": {
+                    "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+                  },
+                  "formula_minimum": {
+                    "type": "number"
+                  },
+                  "formula_required_reasons": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "minItems": 1,
+                    "maxItems": 20
+                  },
+                  "ai_fit_score_column_id": {
+                    "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+                  },
+                  "ai_minimum": {
+                    "type": "number"
+                  },
+                  "message_preview_column_id": {
+                    "$ref": "#/properties/approved_selection/properties/approval_proposal_id"
+                  }
+                },
+                "required": [
+                  "version",
+                  "profile_enrichment_column_id",
+                  "formula_fit_score_column_id",
+                  "formula_minimum",
+                  "formula_required_reasons",
+                  "ai_fit_score_column_id",
+                  "ai_minimum",
+                  "message_preview_column_id"
+                ],
+                "additionalProperties": false
+              },
+              "expires_at": {
+                "type": "string",
+                "format": "date-time"
               }
             },
             "required": [
               "row_count",
               "worksheet_revision",
               "plan_digest",
-              "approval_digest"
+              "approval_digest",
+              "approval_proposal_id",
+              "approval_revision",
+              "selection_snapshot_id",
+              "selection_digest",
+              "row_ids",
+              "sender_account_ids",
+              "qualification_contract",
+              "expires_at"
             ],
             "additionalProperties": false
           }
@@ -300388,6 +300523,488 @@
       }
     },
     {
+      "id": "sources.linkedin_post_engagers_preview",
+      "entitlement": "outreach",
+      "kind": "workspace_capability",
+      "domain": "source",
+      "category": "source",
+      "label": "Source Linkedin Post Engagers Preview",
+      "description": "Canonical linkedin_post_engagers_preview operation for source resources.",
+      "when_to_use": [
+        "Use the stable sources.linkedin_post_engagers_preview contract for canonical source linkedin_post_engagers_preview behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "effects": {
+        "domain": "sources",
+        "reports": [
+          "source_evidence",
+          "freshness",
+          "completeness"
+        ]
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "configuration",
+          "kind": "object",
+          "required": true,
+          "description": "configuration"
+        },
+        {
+          "key": "row_limit",
+          "kind": "7",
+          "required": true,
+          "description": "row_limit"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "configuration",
+          "type": "object",
+          "required": true,
+          "description": "configuration"
+        },
+        {
+          "name": "row_limit",
+          "type": "string",
+          "required": true,
+          "description": "row_limit"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "configuration": {
+            "type": "object",
+            "properties": {
+              "social": {
+                "type": "string",
+                "enum": [
+                  "linkedin"
+                ],
+                "default": "linkedin"
+              },
+              "post_scope": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "all_workspace_posts"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "selected_posts"
+                        ]
+                      },
+                      "post_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "minItems": 1,
+                        "maxItems": 1000
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "post_ids"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "min_engagements": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000000,
+                "default": 1
+              },
+              "observed_after": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "default": null
+              },
+              "observed_before": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "default": null
+              }
+            },
+            "required": [
+              "post_scope"
+            ],
+            "additionalProperties": false
+          },
+          "row_limit": {
+            "type": "number",
+            "enum": [
+              7
+            ]
+          }
+        },
+        "required": [
+          "configuration",
+          "row_limit"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "provider_id": {
+            "type": "string",
+            "enum": [
+              "linkedin.post_engagers"
+            ]
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "linkedin_urn": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "record_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "nullable": true
+                },
+                "full_name": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "headline": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "total_engagements": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "reactions": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "comments": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "engaged_post_count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "last_engagement_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "engagement_evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "reaction",
+                          "comment"
+                        ]
+                      },
+                      "event_ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "post_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "observed_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "snippet": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "event_ref",
+                      "post_id",
+                      "observed_at",
+                      "snippet"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 200
+                },
+                "profile_evidence": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "enum": [
+                        "workspace_contact",
+                        "linkedin_author"
+                      ]
+                    },
+                    "source_record_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "observed_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "company_name": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "industry": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "company_size": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "location": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "raw_profile": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "company_name": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "industry": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "company_size": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "location": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "company_name",
+                        "industry",
+                        "company_size",
+                        "location"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "evidence_digest": {
+                      "type": "string",
+                      "pattern": "^sha256:[a-f0-9]{64}$"
+                    }
+                  },
+                  "required": [
+                    "source",
+                    "source_record_id",
+                    "observed_at",
+                    "title",
+                    "company_name",
+                    "industry",
+                    "company_size",
+                    "location",
+                    "raw_profile",
+                    "evidence_digest"
+                  ],
+                  "additionalProperties": false,
+                  "nullable": true
+                }
+              },
+              "required": [
+                "linkedin_urn",
+                "record_id",
+                "full_name",
+                "headline",
+                "total_engagements",
+                "reactions",
+                "comments",
+                "engaged_post_count",
+                "last_engagement_at",
+                "engagement_evidence",
+                "profile_evidence"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 7,
+            "maxItems": 7
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "next_cursor": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": true
+          },
+          "completeness": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "page"
+            ]
+          },
+          "payload_digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "evidence_only": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          "destination_created": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "provider_id",
+          "rows",
+          "observed_at",
+          "next_cursor",
+          "completeness",
+          "payload_digest",
+          "evidence_only",
+          "destination_created"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "sources.linkedin_post_engagers_preview",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run sources.linkedin_post_engagers_preview"
+      ],
+      "examples": [
+        "dreamstate tools get sources.linkedin_post_engagers_preview",
+        "dreamstate tools run sources.linkedin_post_engagers_preview"
+      ],
+      "web_url_template": "/dashboard/workspace?run_id={id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "sources.linkedin_post_engagers_preview",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "sources.linkedin_post_engagers_preview",
+          "Source Linkedin Post Engagers Preview",
+          "dreamstate tools get sources.linkedin_post_engagers_preview",
+          "dreamstate tools run sources.linkedin_post_engagers_preview"
+        ],
+        "use_cases": [
+          "Use the stable sources.linkedin_post_engagers_preview contract for canonical source linkedin_post_engagers_preview behavior."
+        ],
+        "inputs": [
+          "configuration",
+          "row_limit"
+        ],
+        "outputs": [
+          "provider_id",
+          "rows",
+          "observed_at",
+          "next_cursor",
+          "completeness",
+          "payload_digest",
+          "evidence_only",
+          "destination_created"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "sources.list",
       "entitlement": "outreach",
       "kind": "workspace_capability",
@@ -347339,5 +347956,5 @@
     "capabilities": 1106,
     "mcp_tools": 8
   },
-  "manifest_digest": "9f1e978a9a77a7a9aaea36992fb3e9690da415a3b436c6443f9fceaec700dc11"
+  "manifest_digest": "fbbcbf2afdfb1a2f1b99a695807ab50f1bf3a7af671c7215e9cb32af2266535c"
 }

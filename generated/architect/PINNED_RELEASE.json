@@ -2,15 +2,15 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.1",
-  "source_release_hash": "9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c",
+  "source_release_hash": "cd09fb0789b3de52ef0cb72c738c85b2072a38bef636884374a326c024cde29b",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c",
+    "playbook_kernel_hash": "cd09fb0789b3de52ef0cb72c738c85b2072a38bef636884374a326c024cde29b",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "358149d3de20a85c",
-    "manifest_digest": "9f1e978a9a77a7a9aaea36992fb3e9690da415a3b436c6443f9fceaec700dc11",
+    "capability_hash": "3fd3cec34b08dcd1",
+    "manifest_digest": "fbbcbf2afdfb1a2f1b99a695807ab50f1bf3a7af671c7215e9cb32af2266535c",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -94,11 +94,12 @@
         "campaigns.graph_apply",
         "outreach.demand_plan_get",
         "sources.cold_outbound_expand",
-        "sources.cold_outbound_preview"
+        "sources.cold_outbound_preview",
+        "sources.linkedin_post_engagers_preview"
       ],
-      "kernel_sha256": "d7711f5409e2946c0ab63425ee1f56b54c2b2e5590705e698789c8b9584c83d7",
+      "kernel_sha256": "9ad2e92802ae3167f05a86115d2291d65617187110088fbdaf2bdebece08dea2",
       "adapter_sha256": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
-      "evals_sha256": "d4c5dd7e365c39a5cc03ed4b1a7602387bbb9f8110f875a1a059b2eb5c341500"
+      "evals_sha256": "33cf2f7eac3a23d49d0c7306d77f91aff7e6daaf6e18d5a3269ed61c5358f54f"
     },
     "outreach-sequence-writer": {
       "capability_domains": [

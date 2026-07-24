@@ -60,9 +60,9 @@
       "forbidden_question_concepts": ["outreach_volume"],
       "id": "competitor-engagers-canonical-full-journey",
       "max_intake_checkpoints": 1,
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.get", "campaigns.create", "campaigns.graph_apply", "outreach.demand_plan_get", "sources.cold_outbound_preview", "sources.cold_outbound_expand", "campaigns.activate"],
-      "required_concepts": ["one complete intake", "no second ask_user", "linkedin.post_engagers", "exactly 7 successful distinct pilot rows", "raw provider payload", "fetched-at", "profile verification", "company enrichment", "required filters", "null is unsure", "required fail sets fit to 0", "nice-to-have weight", "structured run_if_json", "no row position", "fixed scaffold", "personalization slots", "qualification rate", "cost per qualified", "Launch Campaign", "fresh demand revalidation", "activation terminal receipt", "enrollment terminal receipt", "provider send terminal receipt"],
-      "required_terminal_receipts": ["source_pilot", "bundle_graph_apply", "column_sample", "bulk_expansion", "launch_revalidation", "activation", "enrollment", "provider_send"],
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.get", "campaigns.create", "campaigns.graph_apply", "outreach.demand_plan_get", "sources.linkedin_post_engagers_preview", "sources.cold_outbound_expand", "campaigns.activate"],
+      "required_concepts": ["one complete intake", "no second ask_user", "linkedin.post_engagers", "exactly 7 successful distinct pilot rows", "raw provider payload", "provider payload digest", "fetched-at", "profile verification", "company enrichment", "required filters", "null is unsure", "required fail sets fit to 0", "nice-to-have weight", "structured run_if_json", "no row position", "fixed scaffold", "personalization slots", "qualification rate", "cost per qualified", "Launch Campaign", "fresh demand revalidation", "manual_resume", "durable same-job checkpoint", "server-issued launch authorization", "auth-ID-only activation", "crash-safe post-approval resume"],
+      "required_terminal_receipts": ["source_pilot", "bundle_graph_apply", "column_sample", "bulk_expansion", "launch_revalidation"],
       "required_tool_sequence": [
         {"tool":"load_skill","skill_id":"outreach"},
         {"tool":"tools_search","capability_id":"brain.context.search"},
@@ -79,8 +79,8 @@
         {"tool":"tools_get","capability_id":"outreach.demand_plan_get"},
         {"tool":"tools_run","capability_id":"outreach.demand_plan_get","phase":"planning"},
         {"tool":"load_skill","skill_id":"tables"},
-        {"tool":"tools_search","capability_id":"sources.cold_outbound_preview"},
-        {"tool":"tools_get","capability_id":"sources.cold_outbound_preview"},
+        {"tool":"tools_search","capability_id":"sources.linkedin_post_engagers_preview"},
+        {"tool":"tools_get","capability_id":"sources.linkedin_post_engagers_preview"},
         {"tool":"propose_artifact","artifact_type":"outreach_source","phase":"exact_7_row_source_evidence_pilot"},
         {"tool":"request_approval","artifact_type":"outreach_source","phase":"exact_7_row_pilot_authorization"},
         {"tool":"load_skill","skill_id":"outreach-workflow-builder"},
@@ -103,8 +103,7 @@
         {"tool":"tools_search","capability_id":"campaigns.activate"},
         {"tool":"tools_get","capability_id":"campaigns.activate"},
         {"tool":"propose_artifact","artifact_type":"outreach_activation","phase":"single_launch_approval_qualified_only_activation_enrollment_paced_send"},
-        {"tool":"request_approval","artifact_type":"outreach_activation","phase":"single_launch_authorization"},
-        {"tool":"open_canvas","phase":"terminal_receipts_verified"}
+        {"tool":"request_approval","artifact_type":"outreach_activation","phase":"single_launch_authorization"}
       ],
       "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing workbook and schema; use the exact competitor-engager source; show one complete intake with no volume question; then execute the canonical 7-row pilot, dependency-ordered verification/enrichment/filter/scoring sample, real-prospect fixed-scaffold message preview, canonical workbook/workflow/campaign/sequence bundle, cost and qualification audit, single launch approval, fresh demand revalidation, qualified-only staging, activation, paced multi-channel sends, and terminal receipts."
     },
