@@ -4,7 +4,8 @@
       "expected_skill_ids": ["growth-asset-planner"],
       "id": "unsaved-asset-proposal",
       "must_state_unsaved_without_capability": true,
-      "request": "Create a downloadable ICP audit checklist for our buyers."
+      "request": "Create a downloadable ICP audit checklist for our buyers.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "command_center.assets.list", "command_center.assets.create"]
     },
     {
       "expected_skill_ids": ["blog"],

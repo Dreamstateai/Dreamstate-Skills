@@ -5,28 +5,28 @@ description: Read targeted revisioned Company Brain facts or propose cited confl
 triggers: ["read Company Brain context","inspect published workspace memory","propose a cited context update","update a governed Company Brain document such as Ideal Customer","resolve a canonical fact","propose a new governed Company document","keep a knowledge document unpublished for human review"]
 dependencies: []
 capability_domains: ["brain","context"]
-capability_ids: []
+capability_ids: ["brain.context.get","brain.context.propose_document","brain.context.search"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  playbook_kernel_hash: d1be7a15cb9fc008b60819c14e47349f222f63757ca7fd9608d8c65573280e2e
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a29a72f7045de668
-  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
+  capability_hash: 6989c784ac48af12
+  manifest_digest: 29322b452ca55c48e99398cb5f7e4e62c72e739378c9feeaa9cdbbc9001648cc
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  source_release_hash: d1be7a15cb9fc008b60819c14e47349f222f63757ca7fd9608d8c65573280e2e
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: df46dec50ede86ba06c6c4ede7541975cef9d05489506d1cdf5c606cafeb2051
+  kernel_sha256: 2589933d81e1c812f22ea752fb6279c1b0340037e660031135b6c5410bf112ff
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: e663a444559460266597fc6cce336bb525ee8c512ea56a9afbf7bc1d245d8b9c
+  evals_sha256: 364106a25a6d8c017e32b2300b04ec9a5627e886b1b61bc911723ef30f6ba3da
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

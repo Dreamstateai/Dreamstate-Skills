@@ -3,7 +3,14 @@
     {
       "expected_skill_ids": ["strategy"],
       "id": "channel-strategy",
-      "request": "Revise our ICP and decide the roles of content, community, and outbound."
+      "request": "Revise our ICP and decide the roles of content, community, and outbound.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "social.strategy_overview", "social.strategy_update"]
+    },
+    {
+      "expected_skill_ids": ["strategy"],
+      "id": "named-cohort-strategy-benchmark",
+      "request": "Design a growth strategy for B2B SaaS founders. Consult the pooled benchmark lattice first and report only releasable cohort-level evidence, sample band, confidence, or insufficient_evidence; never raw cross-workspace rows.",
+      "required_capability_ids": ["brain.learning.query_benchmarks"]
     }
   ],
   "schema_version": 1,

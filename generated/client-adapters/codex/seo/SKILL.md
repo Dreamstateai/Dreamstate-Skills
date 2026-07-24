@@ -3,28 +3,28 @@ id: seo
 name: seo
 description: "Coordinate evidence-backed keyword research, technical diagnosis, content planning, AI visibility, and measured follow-up for a site and named audience."
 capability_domains: ["brain","content","tables","visibility"]
-capability_ids: []
+capability_ids: ["brain.learning.query_benchmarks","seo.robots_audit","visibility.citations","visibility.keywords_get","visibility.overview","visibility.workspace_site_get"]
 completion_contract: {"version":1,"fields":[{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"sample_state","description":"Benchmark sample band disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"privacy_state","description":"Cross-workspace privacy boundary state.","allowed_values":["cohort_only","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"target_conversion","description":"Named target conversion state.","allowed_values":["defined","missing"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  playbook_kernel_hash: d1be7a15cb9fc008b60819c14e47349f222f63757ca7fd9608d8c65573280e2e
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a29a72f7045de668
-  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
+  capability_hash: 6989c784ac48af12
+  manifest_digest: 29322b452ca55c48e99398cb5f7e4e62c72e739378c9feeaa9cdbbc9001648cc
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  source_release_hash: d1be7a15cb9fc008b60819c14e47349f222f63757ca7fd9608d8c65573280e2e
   generator_version: 1.0.0
   client: codex
   kernel_id: seo
   kernel_file: KERNEL.md
-  kernel_sha256: 375a25fb836e846f277a39a0ea53651bc0d5438df8fbc7ad4a359d50bc22e3a4
+  kernel_sha256: 92a6fff0e6a6f51c24865168ce8577fe664040425a4f16032744d979659a0acc
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: 3e7d2672a42e7120734a6c7607451c542fc2b16829b3b85d17db48211e50f576
+  evals_sha256: 54994b4a8e1560f433682c67584a1fecdd09c9862ffd45924264378af4252da9
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -46,6 +46,9 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 ---
 
 # SEO coordinator
+<!-- architect-operation-contract
+{"required_capability_ids":["brain.learning.query_benchmarks","seo.robots_audit","visibility.citations","visibility.keywords_get","visibility.overview","visibility.workspace_site_get"]}
+-->
 
 ## Job boundary
 

@@ -11,6 +11,8 @@ const CAPABILITY_HASH = /^[a-f0-9]{16,64}$/;
 const SKILL_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CAPABILITY_DOMAIN = /^[a-z][a-z0-9_-]{0,63}$/;
 const CAPABILITY_ID = /^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+$/;
+const OPERATION_CONTRACT_START = '<!-- architect-operation-contract\n';
+const OPERATION_CONTRACT_END = '\n-->';
 const OUTREACH_POLICY_IDS = new Set([
   'outreach',
   'outreach-list-builder',
@@ -40,7 +42,6 @@ interface ArchitectSkillSource {
   triggers: string[];
   dependencies: string[];
   capability_domains: string[];
-  capability_ids: string[];
   max_context_tokens: number;
   completion_contract: CompletionContract;
 }
@@ -65,6 +66,7 @@ interface ArchitectSourceManifest {
 }
 
 interface SourceSkill extends ArchitectSkillSource {
+  capability_ids: string[];
   kernel: string;
   evals: string;
   kernel_sha256: string;
@@ -96,6 +98,45 @@ function assertStringArray(value: unknown, field: string): asserts value is stri
   if (new Set(value).size !== value.length) throw new Error(`${field} contains duplicates`);
 }
 
+function kernelOperationContract(skillId: string, kernel: string): string[] {
+  const start = kernel.indexOf(OPERATION_CONTRACT_START);
+  if (
+    start < 0
+    || kernel.indexOf(OPERATION_CONTRACT_START, start + 1) >= 0
+  ) {
+    throw new Error(`${skillId}: kernel must contain exactly one operation contract`);
+  }
+  const contentStart = start + OPERATION_CONTRACT_START.length;
+  const end = kernel.indexOf(OPERATION_CONTRACT_END, contentStart);
+  if (end < 0) {
+    throw new Error(`${skillId}: kernel operation contract is unterminated`);
+  }
+  let value: unknown;
+  try {
+    value = JSON.parse(kernel.slice(contentStart, end));
+  } catch {
+    throw new Error(`${skillId}: kernel operation contract must be valid JSON`);
+  }
+  if (
+    !value
+    || typeof value !== 'object'
+    || Array.isArray(value)
+    || Object.keys(value).length !== 1
+    || !Object.hasOwn(value, 'required_capability_ids')
+  ) {
+    throw new Error(`${skillId}: kernel operation contract shape is invalid`);
+  }
+  const ids = (value as { required_capability_ids?: unknown }).required_capability_ids;
+  assertStringArray(ids, `${skillId}.kernel.required_capability_ids`);
+  if (
+    ids.some((id) => !CAPABILITY_ID.test(id))
+    || new Set(ids).size !== ids.length
+  ) {
+    throw new Error(`${skillId}: kernel operation contract capability ids are invalid`);
+  }
+  return [...ids].sort();
+}
+
 function assertSourceManifest(value: ArchitectSourceManifest): void {
   if (value.schema_version !== 1) throw new Error('architect-kernels/skills.json: unsupported schema');
   if (!/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(value.source_release)) {
@@ -120,9 +161,10 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
     if (skill.capability_domains.some((domain) => !CAPABILITY_DOMAIN.test(domain))) {
       throw new Error(`${skill.id}.capability_domains contains an invalid domain`);
     }
-    assertStringArray(skill.capability_ids, `${skill.id}.capability_ids`);
-    if (skill.capability_ids.some((capabilityId) => !CAPABILITY_ID.test(capabilityId))) {
-      throw new Error(`${skill.id}.capability_ids contains an invalid capability id`);
+    if ('capability_ids' in skill) {
+      throw new Error(
+        `${skill.id}.capability_ids is generated from kernel/eval references and must not be hand-authored`,
+      );
     }
     if (!Number.isInteger(skill.max_context_tokens) || skill.max_context_tokens < 1 || skill.max_context_tokens > 6_000) {
       throw new Error(`${skill.id}: max_context_tokens must be 1..6000`);
@@ -204,7 +246,11 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
     const kernel = readFileSync(join(directory, 'KERNEL.md'), 'utf8');
     const evals = readFileSync(join(directory, 'evals.json'), 'utf8');
     if (!kernel.trim()) throw new Error(`${skill.id}: kernel is empty`);
-    const evalDocument = JSON.parse(evals) as { schema_version?: unknown; skill_id?: unknown; cases?: unknown };
+    const evalDocument = JSON.parse(evals) as {
+      schema_version?: unknown;
+      skill_id?: unknown;
+      cases?: Array<{ required_capability_ids?: unknown }>;
+    };
     if (evalDocument.schema_version !== 1 || evalDocument.skill_id !== skill.id || !Array.isArray(evalDocument.cases) || !evalDocument.cases.length) {
       throw new Error(`${skill.id}: eval contract does not match schema v1`);
     }
@@ -229,8 +275,32 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
     if (OUTREACH_POLICY_IDS.has(skill.id) && hasOutreachShortcutLanguage(`${kernel}\n${evals}`)) {
       throw new Error(`${skill.id}: Architect outreach source contains forbidden shortcut language`);
     }
+    const namedCapabilityIds = new Set<string>();
+    for (const testCase of evalDocument.cases) {
+      const required = testCase.required_capability_ids;
+      if (required === undefined) continue;
+      assertStringArray(required, `${skill.id}.evals.required_capability_ids`);
+      for (const capabilityId of required) {
+        if (!CAPABILITY_ID.test(capabilityId)) {
+          throw new Error(
+            `${skill.id}.evals.required_capability_ids contains invalid capability id ${capabilityId}`,
+          );
+        }
+        namedCapabilityIds.add(capabilityId);
+      }
+    }
+    const evalCapabilityIds = [...namedCapabilityIds].sort();
+    const complianceCapabilityIds = kernelOperationContract(skill.id, kernel);
+    if (JSON.stringify(complianceCapabilityIds) !== JSON.stringify(evalCapabilityIds)) {
+      throw new Error(
+        `${skill.id}: kernel operation contract must exactly match eval-declared capability authority`,
+      );
+    }
     return {
       ...skill,
+      // Runtime authority is derived only from eval operation declarations.
+      // The kernel contract above is a compliance assertion, never a grant.
+      capability_ids: evalCapabilityIds,
       kernel,
       evals,
       kernel_sha256: sha256(kernel),
@@ -369,7 +439,6 @@ function codingSkillFile(
 
 export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityManifest): Record<string, string> {
   validateCapabilityManifest(capabilityManifest);
-  const { manifest, skills, sourceHash } = loadSources();
   const capabilityIds = new Set(
     capabilityManifest.capabilities.flatMap((capability) => {
       if (!capability || typeof capability !== 'object' || Array.isArray(capability)) return [];
@@ -377,6 +446,7 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
       return typeof id === 'string' && id.trim() ? [id] : [];
     }),
   );
+  const { manifest, skills, sourceHash } = loadSources();
   for (const skill of skills) {
     for (const capabilityId of skill.capability_ids) {
       if (!capabilityIds.has(capabilityId)) {

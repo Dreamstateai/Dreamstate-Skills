@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "a29a72f7045de668",
+  "verified_capability_hash": "6989c784ac48af12",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/grow-linkedin-network/SKILL.md",
   "install_command": "dreamstate skills install grow-linkedin-network",

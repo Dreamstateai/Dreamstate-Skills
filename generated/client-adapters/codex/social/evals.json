@@ -4,13 +4,15 @@
       "expected_skill_ids": ["social"],
       "id": "authored-reddit-post",
       "must_not_load": ["social.reddit"],
-      "request": "Write an authored Reddit post for our company and put it on next Tuesday's calendar."
+      "request": "Write an authored Reddit post for our company and put it on next Tuesday's calendar.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "content.artifact_create", "content.artifact_generate", "content.schedule", "content.delivery_publish"]
     },
     {
       "expected_skill_ids": ["social"],
       "id": "linkedin-and-x-calendar",
       "must_use_popup_when_missing": ["publishing_accounts", "schedule"],
-      "request": "Draft one week of LinkedIn and X posts using our Company Brain."
+      "request": "Draft one week of LinkedIn and X posts using our Company Brain.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "content.artifact_create", "content.artifact_generate", "content.schedule", "content.delivery_publish"]
     },
     {
       "expected_skill_ids": ["social"],
@@ -18,7 +20,8 @@
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [{"id":"evidence_state","allowed_values":["verified","partial","unavailable"]}],
       "required_concepts": ["brain.learning.query_benchmarks", "founders", "cohort-level evidence", "sample band", "confidence", "insufficient_evidence", "never raw cross-workspace rows"],
-      "request": "What posts work for founders? Before planning content for that named audience, consult the pooled benchmark lattice. Cite only releasable cohort-level evidence with sample band and confidence, or state insufficient_evidence. Never expose raw cross-workspace rows."
+      "request": "What posts work for founders? Before planning content for that named audience, consult the pooled benchmark lattice. Cite only releasable cohort-level evidence with sample band and confidence, or state insufficient_evidence. Never expose raw cross-workspace rows.",
+      "required_capability_ids": ["brain.learning.query_benchmarks"]
     }
   ],
   "schema_version": 1,

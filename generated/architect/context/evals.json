@@ -3,17 +3,20 @@
     {
       "expected_skill_ids": ["context"],
       "id": "targeted-canonical-context-read",
-      "request": "Search Company Context for our published positioning, open only the exact matching node revision, and cite its digest and source spans."
+      "request": "Search Company Context for our published positioning, open only the exact matching node revision, and cite its digest and source spans.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get"]
     },
     {
       "expected_skill_ids": ["context"],
       "id": "explicit-member-context-read",
-      "request": "Use the explicitly selected workspace member's Personal Context to read their published Writing Instructions."
+      "request": "Use the explicitly selected workspace member's Personal Context to read their published Writing Instructions.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get"]
     },
     {
       "expected_skill_ids": ["context"],
       "id": "revisioned-human-approved-proposal",
-      "request": "Propose an update to Ideal Customer from this cited evidence, but do not approve or publish it yourself."
+      "request": "Propose an update to Ideal Customer from this cited evidence, but do not approve or publish it yourself.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get"]
     },
     {
       "expected_skill_ids": ["context"],
@@ -23,7 +26,8 @@
     {
       "expected_skill_ids": ["context"],
       "id": "propose-new-governed-document",
-      "request": "We have cited pricing-objection research that fits no existing Company document. Propose a brand-new document for it under an appropriate folder, leaving it unpublished for a human to review and publish."
+      "request": "We have cited pricing-objection research that fits no existing Company document. Propose a brand-new document for it under an appropriate folder, leaving it unpublished for a human to review and publish.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "brain.context.propose_document"]
     },
     {
       "expected_skill_ids": ["context"],

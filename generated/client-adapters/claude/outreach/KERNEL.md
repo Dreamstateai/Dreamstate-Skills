@@ -1,4 +1,7 @@
 # Outreach campaign coordinator
+<!-- architect-operation-contract
+{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","sources.cold_outbound_expand","sources.cold_outbound_preview"]}
+-->
 
 ## Job boundary
 

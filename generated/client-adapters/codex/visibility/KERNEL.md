@@ -1,4 +1,7 @@
 # AI visibility
+<!-- architect-operation-contract
+{"required_capability_ids":["visibility.citations","visibility.overview","visibility.refresh","visibility.tracked_prompts.list","visibility.workspace_site_get"]}
+-->
 
 Own AI-answer visibility measurement, citation inspection, gap diagnosis, supported refresh runs, and the visibility canvas. Establish the brand, market, questions, competitors, locale, and comparison period from canonical context; ask one structured popup only when a missing scope materially changes the audit.
 

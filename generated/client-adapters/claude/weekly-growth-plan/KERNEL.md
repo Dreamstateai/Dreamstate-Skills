@@ -1,4 +1,7 @@
 # Weekly cross-channel growth plan
+<!-- architect-operation-contract
+{"required_capability_ids":["brain.context.get","brain.context.search","campaigns.list","social.strategy_overview","social.weekly_plan_items_list","visibility.overview"]}
+-->
 
 Build one evidence-backed operating plan for the next week across the channels the user selects. This is a prioritization and delegation layer, not a social calendar and not an execution shortcut.
 

@@ -1,4 +1,7 @@
 # Custom outreach sequence writer
+<!-- architect-operation-contract
+{"required_capability_ids":["brain.context.get","brain.context.search","sequences.bind","sequences.definition_get","sequences.step_options","sequences.validate"]}
+-->
 
 ## Job boundary
 

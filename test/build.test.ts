@@ -11,7 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = '47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3';
+const CANONICAL_MANIFEST_DIGEST = '29322b452ca55c48e99398cb5f7e4e62c72e739378c9feeaa9cdbbc9001648cc';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -231,8 +231,78 @@ test('Architect generation rejects signed capability IDs absent from the pinned 
   };
   assert.throws(
     () => buildArchitectArtifacts(withoutRequiredCapability),
-    /outreach-workflow-builder.*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
+    /(?:outreach|outreach-workflow-builder).*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
   );
+});
+
+test('Architect exact grants are derived only from machine-readable eval operation contracts', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  const expected = {
+    analytics: ['social.analytics_query', 'social.post_analytics'],
+    blog: ['brain.context.get', 'brain.context.search', 'content.article_create_schedule', 'content.article_delivery_create', 'content.article_get', 'content.article_update', 'content.delivery_publish', 'content.submit_review'],
+    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search'],
+    'growth-asset-planner': ['brain.context.get', 'brain.context.search', 'command_center.assets.create', 'command_center.assets.list'],
+    integrations: ['integrations.outreach_connectors_list', 'integrations.scheduler_status_get', 'integrations.unipile_status_get'],
+    outreach: [
+      'brain.context.get',
+      'brain.context.search',
+      'brain.learning.query_benchmarks',
+      'campaigns.activate',
+      'campaigns.create',
+      'campaigns.get',
+      'campaigns.graph_apply',
+      'sources.cold_outbound_expand',
+      'sources.cold_outbound_preview',
+    ],
+    'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
+    'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
+    seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
+    social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
+    strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
+    tables: ['columns.sample', 'tables.create'],
+    visibility: ['visibility.citations', 'visibility.overview', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
+    'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'campaigns.list', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview'],
+  };
+
+  for (const [skillId, capabilityIds] of Object.entries(expected)) {
+    assert.deepEqual(pinned.skills[skillId].capability_ids, capabilityIds);
+    assert.match(
+      artifacts[`generated/architect/${skillId}/SKILL.md`],
+      new RegExp(`^capability_ids: ${JSON.stringify(capabilityIds).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'),
+    );
+  }
+  assert.ok(
+    architectSource.skills.every((skill: Record<string, unknown>) => !('capability_ids' in skill)),
+    'source manifests must not carry a second hand-maintained grant list',
+  );
+  assert.ok(
+    !pinned.skills.context.capability_ids.includes('brain.context.publish'),
+    'a canonical id mentioned only in negative kernel prose must never become authority',
+  );
+});
+
+test('every kernel compliance contract exactly covers its eval-declared operation authority', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  assert.equal(Object.keys(pinned.skills).length, 14);
+
+  const path = join(ROOT, 'architect-kernels', 'strategy', 'KERNEL.md');
+  const original = readFileSync(path, 'utf8');
+  const drifted = original.replace(
+    '"brain.learning.query_benchmarks",',
+    '',
+  );
+  assert.notEqual(drifted, original);
+  try {
+    writeFileSync(path, drifted);
+    assert.throws(
+      () => buildArchitectArtifacts(catalog),
+      /strategy.*operation contract.*eval-declared capability authority/i,
+    );
+  } finally {
+    writeFileSync(path, original);
+  }
 });
 
 test('Architect generation requires a full canonical manifest digest', () => {
@@ -286,10 +356,18 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
-  const exactCapabilityIds = ['sources.cold_outbound_expand'];
-  assert.deepEqual(
-    architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach-workflow-builder')?.capability_ids,
-    exactCapabilityIds,
+  const exactCapabilityIds = [
+    'sources.cold_outbound_expand',
+    'workflows.get',
+    'workflows.graph_apply',
+    'workflows.node_registry',
+    'workflows.validate_graph',
+  ];
+  assert.equal(
+    'capability_ids' in architectSource.skills.find(
+      (skill: { id: string }) => skill.id === 'outreach-workflow-builder',
+    ),
+    false,
   );
   assert.deepEqual(pinned.skills['outreach-workflow-builder'].capability_ids, exactCapabilityIds);
   assert.deepEqual(clients.skills['outreach-workflow-builder'].capability_ids, exactCapabilityIds);

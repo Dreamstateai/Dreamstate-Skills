@@ -3,7 +3,14 @@
     {
       "expected_skill_ids": ["visibility"],
       "id": "citation-audit",
-      "request": "Audit whether AI assistants cite us for our core buyer questions and show the evidence gaps."
+      "request": "Audit whether AI assistants cite us for our core buyer questions and show the evidence gaps.",
+      "required_capability_ids": ["visibility.workspace_site_get", "visibility.overview", "visibility.citations", "visibility.tracked_prompts.list"]
+    },
+    {
+      "expected_skill_ids": ["visibility"],
+      "id": "approved-citation-refresh",
+      "request": "Refresh the approved AI citation measurement after the credit-bearing consequence is reviewed, then report its durable run state.",
+      "required_capability_ids": ["visibility.refresh"]
     }
   ],
   "schema_version": 1,

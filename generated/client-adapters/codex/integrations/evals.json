@@ -4,7 +4,8 @@
       "expected_skill_ids": ["integrations"],
       "id": "safe-connect-resume",
       "must_not_request_secrets": true,
-      "request": "Connect the account needed for this publish operation and resume safely."
+      "request": "Connect the account needed for this publish operation and resume safely.",
+      "required_capability_ids": ["integrations.unipile_status_get", "integrations.scheduler_status_get", "integrations.outreach_connectors_list"]
     }
   ],
   "schema_version": 1,

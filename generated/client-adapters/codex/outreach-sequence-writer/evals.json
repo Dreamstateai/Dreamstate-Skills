@@ -3,7 +3,8 @@
     {
       "expected_skill_ids": ["outreach-sequence-writer"],
       "id": "custom-messaging-with-lineage",
-      "request": "Write custom LinkedIn and email steps whose variables resolve from the qualified table outputs, then preview them on real rows."
+      "request": "Write custom LinkedIn and email steps whose variables resolve from the qualified table outputs, then preview them on real rows.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "sequences.definition_get", "sequences.step_options", "sequences.validate", "sequences.bind"]
     },
     {
       "expected_skill_ids": [],

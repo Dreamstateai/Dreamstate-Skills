@@ -1,4 +1,7 @@
 # Unified tables coordinator
+<!-- architect-operation-contract
+{"required_capability_ids":["columns.sample","tables.create"]}
+-->
 
 ## Job boundary
 

@@ -4,7 +4,8 @@
       "expected_skill_ids": ["weekly-growth-plan"],
       "id": "cross-channel-week",
       "must_not_execute": true,
-      "request": "Plan my week across LinkedIn, Reddit, SEO, and outbound."
+      "request": "Plan my week across LinkedIn, Reddit, SEO, and outbound.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "social.strategy_overview", "social.weekly_plan_items_list", "campaigns.list", "visibility.overview"]
     },
     {
       "expected_skill_ids": ["social"],

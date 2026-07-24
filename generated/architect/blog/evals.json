@@ -3,7 +3,8 @@
     {
       "expected_skill_ids": ["blog"],
       "id": "grounded-blog-draft",
-      "request": "Draft a cited blog article in our voice and put it into editorial review."
+      "request": "Draft a cited blog article in our voice and put it into editorial review.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "content.article_get", "content.article_update", "content.submit_review", "content.article_create_schedule", "content.article_delivery_create", "content.delivery_publish"]
     }
   ],
   "schema_version": 1,

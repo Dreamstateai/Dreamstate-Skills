@@ -5,12 +5,14 @@
       "expected_skill_ids": ["outreach"],
       "id": "new-campaign-from-scratch",
       "must_use_popup_when_missing": ["qualification", "sender", "volume"],
-      "request": "Build a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or volume. Resolve those three material launch inputs in one structured popup before planning."
+      "request": "Build a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or volume. Resolve those three material launch inputs in one structured popup before planning.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.create"]
     },
     {
       "expected_skill_ids": ["outreach"],
       "id": "existing-campaign-complex-table",
-      "request": "Open my existing founder campaign, add signals, profile enrichment, a derived priority score and AI opener, then update its workflow."
+      "request": "Open my existing founder campaign, add signals, profile enrichment, a derived priority score and AI opener, then update its workflow.",
+      "required_capability_ids": ["campaigns.get", "campaigns.graph_apply"]
     },
     {
       "conditional_skill_id": "outreach-sequence-writer",
@@ -33,7 +35,8 @@
       "required_completion_fields": [{"id":"stage_boundary_state","allowed_values":["ordered_separate"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"external_send_state","allowed_values":["not_authorized"]},{"id":"selection_state","allowed_values":["missing"]},{"id":"approval_state","allowed_values":["required"]},{"id":"run_state","allowed_values":["blocked"]}],
       "required_concepts": ["Launch Campaign", "sender binding", "exclusions", "cost", "readiness"],
       "must_disclose_external_sends": true,
-      "request": "The source pilot, draft, column sample, and bulk expansion are described as complete, and I explicitly state launch intent. No approval-to-grant binding, canonical sender-binding evidence, exact selection receipt, or readiness receipt is attached. Do not activate or send. Explain the Launch Campaign preflight: revalidate sender binding, exclusions, exact selection, cost ceiling, readiness, revisions, capability digests, and approval evidence. State that launch approval, once validly bound, is the single capped-and-paced external-send authorization, but report this request blocked and not authorized."
+      "request": "The source pilot, draft, column sample, and bulk expansion are described as complete, and I explicitly state launch intent. No approval-to-grant binding, canonical sender-binding evidence, exact selection receipt, or readiness receipt is attached. Do not activate or send. Explain the Launch Campaign preflight: revalidate sender binding, exclusions, exact selection, cost ceiling, readiness, revisions, capability digests, and approval evidence. State that launch approval, once validly bound, is the single capped-and-paced external-send authorization, but report this request blocked and not authorized.",
+      "required_capability_ids": ["campaigns.get", "campaigns.activate"]
     },
     {
       "expected_skill_ids": ["outreach"],

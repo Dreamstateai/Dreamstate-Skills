@@ -3,7 +3,8 @@
     {
       "expected_skill_ids": ["analytics"],
       "id": "measured-social-diagnosis",
-      "request": "Explain why LinkedIn engagement fell this month using the metrics we actually have."
+      "request": "Explain why LinkedIn engagement fell this month using the metrics we actually have.",
+      "required_capability_ids": ["social.analytics_query", "social.post_analytics"]
     }
   ],
   "schema_version": 1,

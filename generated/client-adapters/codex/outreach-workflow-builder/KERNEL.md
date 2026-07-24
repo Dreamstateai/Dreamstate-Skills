@@ -1,4 +1,7 @@
 # Outreach workflow builder
+<!-- architect-operation-contract
+{"required_capability_ids":["sources.cold_outbound_expand","workflows.get","workflows.graph_apply","workflows.node_registry","workflows.validate_graph"]}
+-->
 
 ## Job boundary
 

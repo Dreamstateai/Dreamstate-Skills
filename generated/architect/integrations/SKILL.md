@@ -5,28 +5,28 @@ description: Own account connection setup and repair, open safe connection flows
 triggers: ["connect an account or provider","diagnose connection readiness","fix a disconnected sender or authorization blocker","resume after connecting"]
 dependencies: []
 capability_domains: []
-capability_ids: []
+capability_ids: ["integrations.outreach_connectors_list","integrations.scheduler_status_get","integrations.unipile_status_get"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  playbook_kernel_hash: d1be7a15cb9fc008b60819c14e47349f222f63757ca7fd9608d8c65573280e2e
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a29a72f7045de668
-  manifest_digest: 47e2492846da293d7876ae2c7d881552509f8a34ce79d2c164d429cbfe668fc3
+  capability_hash: 6989c784ac48af12
+  manifest_digest: 29322b452ca55c48e99398cb5f7e4e62c72e739378c9feeaa9cdbbc9001648cc
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: f55a18de27f107e935b2e2e3df0b109956ccd57b03fd0cf216ec50e98fc414fa
+  source_release_hash: d1be7a15cb9fc008b60819c14e47349f222f63757ca7fd9608d8c65573280e2e
   generator_version: 1.0.0
   kernel_id: integrations
   kernel_file: KERNEL.md
-  kernel_sha256: e41ba440e27b81175efd268199458ebdccc2ab9bb64f32c3d8a22811d43cd574
+  kernel_sha256: 4782c723fc21d2d461c26c2f4445aab2906a8d28bb5611fde51ffaecefcb0d34
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: 8558d9507802b43b8ce793e719d7d4f84ea4c245ebc37fe852187f9be2db0b6e
+  evals_sha256: f598709643bf428d69bc1623db08e115d258b03853c24f5062593fbf0b9f3797
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

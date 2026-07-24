@@ -3,13 +3,15 @@
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
       "id": "priority-branch-and-actions",
-      "request": "Build a workflow that branches on the priority column, enriches qualified rows, and stops before outreach when required evidence is missing."
+      "request": "Build a workflow that branches on the priority column, enriches qualified rows, and stops before outreach when required evidence is missing.",
+      "required_capability_ids": ["workflows.get", "workflows.node_registry", "workflows.validate_graph", "workflows.graph_apply"]
     },
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
       "id": "no-message-workflow",
       "must_not_load": ["outreach-sequence-writer"],
-      "request": "Create a qualification-only workflow with no messaging."
+      "request": "Create a qualification-only workflow with no messaging.",
+      "required_capability_ids": ["workflows.node_registry", "workflows.validate_graph", "workflows.graph_apply"]
     },
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
