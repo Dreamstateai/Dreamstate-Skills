@@ -7,7 +7,7 @@ capability_ids: ["visibility.citations","visibility.overview","visibility.refres
 completion_contract: {"version":1,"fields":[{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 1f8aeda96f41a951d0b4cb69bf8eb5ad35b31d5a520360b471c8ea433265800c
+  playbook_kernel_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: d9e85ef15d6916dd
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: 1f8aeda96f41a951d0b4cb69bf8eb5ad35b31d5a520360b471c8ea433265800c
+  source_release_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
   generator_version: 1.0.0
   client: codex
   kernel_id: visibility

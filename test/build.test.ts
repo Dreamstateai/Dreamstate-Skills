@@ -593,7 +593,11 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   )));
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /structured `ask_user` popup whose finite `messaging_branch_state` choice is `present` or `absent`/,
+    /include the finite `messaging_branch_state` choice \(`present` or `absent`\) in the same one complete intake/,
+  );
+  assert.match(
+    artifacts['generated/architect/outreach/KERNEL.md'],
+    /maximum intake-checkpoint count is one.*never open a second intake.*ask a later follow-up question/s,
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
@@ -601,6 +605,9 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   );
   const scratch = outreach.cases.find((item: { id: string }) => item.id === 'new-campaign-from-scratch');
   assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification', 'sender']);
+  assert.equal(scratch.max_intake_checkpoints, 1);
+  assert.deepEqual(scratch.forbidden_question_concepts, ['outreach_volume']);
+  assert.equal(conditional.max_intake_checkpoints, 1);
   assert.ok(scratch.required_capability_ids.includes('outreach.demand_plan_get'));
   const outreachSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach');
   const integrationsSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'integrations');
@@ -621,22 +628,101 @@ test('competitor engager release eval is production-real and preserves dependenc
   ]);
   assert.deepEqual(full.expected_skill_ids, ['outreach']);
   assert.ok(full.forbidden_test_substitutions.includes('mock run receipt'));
+  assert.equal(full.max_intake_checkpoints, 1);
+  assert.deepEqual(full.forbidden_question_concepts, ['outreach_volume']);
+  assert.deepEqual(full.required_terminal_receipts, [
+    'source_pilot',
+    'bundle_graph_apply',
+    'column_sample',
+    'bulk_expansion',
+    'launch_revalidation',
+    'activation',
+    'enrollment',
+    'provider_send',
+  ]);
   assert.deepEqual(
-    full.required_tool_sequence.slice(0, 5),
+    full.required_tool_sequence.slice(0, 4),
     [
       { tool: 'load_skill', skill_id: 'outreach' },
       { tool: 'tools_search', capability_id: 'brain.context.search' },
       { tool: 'tools_get', capability_id: 'brain.context.search' },
-      { tool: 'tools_search', capability_id: 'brain.context.get' },
-      { tool: 'tools_get', capability_id: 'brain.context.get' },
+      { tool: 'tools_run', capability_id: 'brain.context.search', phase: 'company_brain_search' },
     ],
   );
+  const sequence = full.required_tool_sequence as Array<{
+    tool: string;
+    skill_id?: string;
+    capability_id?: string;
+    artifact_type?: string;
+    phase?: string;
+  }>;
+  const sequenceIndex = (predicate: (step: typeof sequence[number]) => boolean) => sequence.findIndex(predicate);
+  const intakeIndex = sequenceIndex((step) => step.tool === 'ask_user' && step.phase === 'one_complete_intake');
+  const pilotProposalIndex = sequenceIndex((step) => (
+    step.tool === 'propose_artifact'
+    && step.artifact_type === 'outreach_source'
+    && step.phase === 'exact_7_row_source_evidence_pilot'
+  ));
+  const bundleIndex = sequenceIndex((step) => (
+    step.tool === 'propose_artifact' && step.artifact_type === 'outreach_bundle'
+  ));
+  const sampleIndex = sequenceIndex((step) => (
+    step.tool === 'propose_artifact' && step.artifact_type === 'table_column_run'
+  ));
+  const expansionIndex = sequenceIndex((step) => (
+    step.tool === 'propose_artifact' && step.artifact_type === 'outreach_bulk_expansion'
+  ));
+  const revalidationIndex = sequenceIndex((step) => (
+    step.tool === 'tools_run'
+    && step.capability_id === 'outreach.demand_plan_get'
+    && step.phase === 'launch_revalidation'
+  ));
+  const activationIndex = sequenceIndex((step) => (
+    step.tool === 'propose_artifact'
+    && step.artifact_type === 'outreach_activation'
+    && step.phase === 'single_launch_approval_qualified_only_activation_enrollment_paced_send'
+  ));
+  const terminalIndex = sequenceIndex((step) => (
+    step.tool === 'request_approval'
+    && step.artifact_type === 'outreach_activation'
+    && step.phase === 'single_launch_authorization'
+  ));
+  assert.ok(intakeIndex > 0);
+  assert.ok(pilotProposalIndex > intakeIndex);
+  assert.ok(bundleIndex > pilotProposalIndex);
+  assert.ok(sampleIndex > bundleIndex);
+  assert.ok(expansionIndex > sampleIndex);
+  assert.ok(revalidationIndex > expansionIndex);
+  assert.ok(activationIndex > revalidationIndex);
+  assert.ok(terminalIndex > activationIndex);
   assert.match(full.request, /existing workbook.*7-row pilot.*terminal receipts/i);
   assert.ok(failures.has('competitor-engagers-missing-enrichment-blocks-ai'));
   assert.ok(failures.has('competitor-engagers-required-failures-disqualify'));
   assert.ok(failures.has('competitor-engagers-capacity-change-blocks-launch'));
   assert.ok(failures.has('competitor-engagers-stale-and-low-precision-audit'));
+  const missing = failures.get('competitor-engagers-missing-enrichment-blocks-ai');
+  assert.ok(missing.required_concepts.includes('AI provider call count 0'));
+  assert.deepEqual(missing.required_terminal_receipts, ['column_sample_skipped_cell']);
+  assert.equal(missing.required_tool_sequence.at(-2).phase, 'missing_enrichment_sample_authorization');
+  const deterministicFailures = failures.get('competitor-engagers-required-failures-disqualify');
+  assert.ok(deterministicFailures.required_concepts.includes('durable filter and cell receipts'));
+  assert.ok(deterministicFailures.required_concepts.includes('AI provider call count 0'));
+  assert.deepEqual(deterministicFailures.required_terminal_receipts, [
+    'required_filter_results', 'column_sample_disqualified_cells',
+  ]);
+  const capacity = failures.get('competitor-engagers-capacity-change-blocks-launch');
+  assert.ok(capacity.required_concepts.includes('no outreach_activation proposal'));
+  assert.deepEqual(capacity.required_terminal_receipts, ['launch_revalidation']);
+  assert.equal(capacity.required_tool_sequence.at(-1).phase, 'blocked_before_activation');
+  const lowPrecision = failures.get('competitor-engagers-stale-and-low-precision-audit');
+  assert.ok(lowPrecision.required_concepts.includes('no outreach_bulk_expansion proposal'));
+  assert.deepEqual(lowPrecision.required_terminal_receipts, [
+    'source_pilot', 'profile_verification', 'qualification_audit',
+  ]);
+  assert.equal(lowPrecision.required_tool_sequence.at(-1).phase, 'audit_stops_before_expansion');
   const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
+  assert.match(kernel, /exactly seven successful distinct rows/);
+  assert.match(kernel, /partial receipt remains partial and is never filled with synthetic rows/);
   assert.match(kernel, /complete raw provider payload/);
   assert.match(kernel, /null enrichment result is `unsure`/);
   assert.match(kernel, /never uses row position, row index, row number, or table order/);

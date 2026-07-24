@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","brain.learning.quer
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 1f8aeda96f41a951d0b4cb69bf8eb5ad35b31d5a520360b471c8ea433265800c
+  playbook_kernel_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: d9e85ef15d6916dd
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: 1f8aeda96f41a951d0b4cb69bf8eb5ad35b31d5a520360b471c8ea433265800c
+  source_release_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: 323c44b1600f17f4c05854581209f8df0c556d9602db26493ac9bca1803dcfbf
+  kernel_sha256: c977d34c7552e6245dab20357eb10d5944f2a76707f2416b3eb2801661c9b3fe
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: d4bf4b8db260cfaa0936ce4077822420668b9f6328ee12fd0950422329683ece
+  evals_sha256: 29bef42a4c0703518717beda84fbee7482010dae479e1402010514977dcbf54f
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -58,7 +58,7 @@ Open an existing campaign or design a new custom outreach campaign from scratch.
 
 Resolve whether the user means an existing artifact or a new campaign. For an existing campaign, inspect its concrete workbook, worksheet, saved view, table schema, workflow graph, sequence graph, sender binding, revision, status, and mounted nested surface. Preserve the user's viewport, filters, selection, and tab. For a new campaign, construct every worksheet, field, workflow branch, and custom message from the user's requirements and live contracts.
 
-Retrieve only relevant published Company Brain claims and citations. Derive all available answers first, then use one structured popup for every remaining material choice: outcome, audience and ICP, required versus preferred criteria, exclusions, geography, sender/channel, qualification threshold, cost tolerance, and launch intent. Do not ask for choices live metadata can answer. That popup is the job's one complete intake; after it is answered, continue the work and never open a second intake.
+Retrieve only relevant published Company Brain claims and citations. Derive all available answers first, then use one structured popup for every remaining material choice: outcome, audience and ICP, required versus preferred criteria, exclusions, geography, sender/channel, qualification threshold, cost tolerance, launch intent, and any unresolved conditional messaging-branch decision. Do not ask for choices live metadata can answer. That popup is the job's one complete intake and the maximum intake-checkpoint count is one. After it is answered, continue the work and never open a second intake, ask a later follow-up question, or turn a later contract/runtime failure into a user-routing choice. If a material decision was omitted from that one intake, stop at the exact typed blocker instead of reopening elicitation.
 
 Before designing a campaign plan for a named audience or named cohort, search for, fetch, and call `brain.learning.query_benchmarks` for that approved cohort. Do not terminate after discovery or contract inspection. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. Every campaign-plan response identifies the benchmark capability and states the exact privacy boundary: released results are cohort-level evidence, never raw cross-workspace rows. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 
@@ -67,7 +67,7 @@ For a new campaign without an exact current sender binding, scratch intake is in
 ## Required orchestration
 
 1. After the one intake closes, fetch and run the exact free read `outreach.demand_plan_get` with the structured demand intent and launch objective. Treat its sender readiness, ramp, current usage, credit headroom, channel limits, and stage cap as authoritative planning evidence.
-2. Run `tables`. It owns the exactly 7-row source-evidence pilot (`pilot_row_limit` is exactly 7), row identity, filters, canonical workbook/worksheet/view shape, columns, dependency order, sample quality, and cost audit.
+2. Run `tables`. It owns the exactly 7-row source-evidence pilot (`pilot_row_limit` is exactly 7 and the reviewed source-preview `row_limit` is the same integer 7), row identity, filters, canonical workbook/worksheet/view shape, columns, dependency order, sample quality, and cost audit. An acceptable pilot receipt contains seven successful, distinct, stable-identity source-evidence rows from the reviewed targeting variant. Fewer than seven, duplicate/padded rows, prose examples, or rows copied from a mock are not a completed pilot: preserve the partial receipt and revise or stop. The pilot is paid run evidence only and must not create or import workbook rows, stage contacts, enroll anyone, activate anything, or send.
 3. Run `outreach-workflow-builder`. It owns trigger, qualification branches, conditions, action handoffs, stop logic, and enrollment eligibility.
 4. Load `outreach-sequence-writer` only when the validated workflow contains messaging. It owns custom steps, timing, variables, sender/channel constraints, and real-row copy previews.
 5. Only after the user approves the 7-row paid source-evidence pilot and its durable run evidence has been inspected, combine specialist handoffs into one `outreach_bundle` proposal whose symbolic outputs resolve in dependency order. It must create the canonical workbook, worksheet, saved view, workflow, campaign, and custom sequence. Include the demand-plan evidence, selected source-evidence run, existing revisions, exact capability ids and digests, required inputs, produced outputs, run conditions, exclusions, costs, consequences, and native table/workflow/sequence previews. This proposal creates or revises draft structure only: it does not run columns, expand the source, enroll contacts, activate, or send.
@@ -75,7 +75,7 @@ For a new campaign without an exact current sender binding, scratch intake is in
 
 Each specialist handoff is typed and at most 750 tokens. If a specialist is blocked, surface the exact missing contract or decision; do not silently fill the gap.
 
-If the user makes messaging conditional but the current workflow does not prove whether a messaging branch exists, do not merely restate the condition and do not load the sequence writer speculatively. Open one structured `ask_user` popup whose finite `messaging_branch_state` choice is `present` or `absent`; load `outreach-sequence-writer` only after the resolved state is `present`.
+If the user makes messaging conditional, inspect the current workflow before intake. When the graph cannot prove whether a messaging branch exists, include the finite `messaging_branch_state` choice (`present` or `absent`) in the same one complete intake. Never open a later `ask_user` popup for it and never load the sequence writer speculatively. Load `outreach-sequence-writer` only after the inspected graph or the one intake resolves the state to `present`; after intake, an unresolved state is a typed blocker rather than permission for a second question.
 
 ## Competitor-engager production journey
 
@@ -98,7 +98,7 @@ Before a terminal staged-campaign handoff, call `tools_search` and then `tools_g
 
 In the typed completion handoff, `activation_state` reports only whether campaign activation actually occurred. Use `inactive` whenever it did not, even when progress is blocked; report blocking exclusively in `run_state`.
 
-1. Before any durable bundle, a standalone `outreach_source` test-run proposal may contain one through three candidate searches. Fetch the exact `sources.cold_outbound_preview` contract, and name both the proposal type and capability in the stage summary. Each leaf binds only the reviewed targeting object and `row_limit: 7`, matching the demand plan's `pilot_row_limit` exactly, carries a positive credit ceiling, and has no worksheet, campaign, source, import, enrollment, or other durable destination. Its result rows remain run evidence only.
+1. Before any durable bundle, a standalone `outreach_source` test-run proposal may contain one through three candidate searches. Fetch the exact `sources.cold_outbound_preview` contract, and name both the proposal type and capability in the stage summary. Each leaf binds only the reviewed targeting object and `row_limit: 7`, matching the demand plan's integer `pilot_row_limit: 7` exactly, carries a positive credit ceiling, and has no worksheet, campaign, source, import, enrollment, or other durable destination. Its result rows remain run evidence only. Do not call the pilot complete until its terminal canonical receipt proves exactly seven successful distinct rows, stable identities, complete raw provider payload preservation, actual cost, and source/fetched-at provenance; a partial receipt remains partial and is never filled with synthetic rows.
 2. After comparing that evidence, the `outreach_bundle` creates the reviewable draft workbook, worksheet, saved view, workflow, campaign, and custom-sequence structure only.
 3. A later `table_column_run` proposal names the exact current table revision, selected column changes, and exactly five through ten current contact ids. Its approval authorizes only that bounded enrichment sample.
 4. After inspecting real sample outputs and priority results, one `outreach_bulk_expansion` proposal uses the exact `sources.cold_outbound_expand` contract, and the stage summary names both. It binds the reviewed draft campaign, exact worksheet and saved view revisions, configured source id, source-evidence run, unchanged targeting, an integer eleven-through-fifty `row_cap` that never exceeds the demand plan's `expansion_row_cap`, `stage_exact_result_set=true`, and `require_campaign_status=draft`. It imports only the resolved capped result set, stages that exact set for the still-inactive campaign, and never represents a future dynamic audience. If live headroom is below eleven, stop truthfully before this stage rather than inflating it. This is not another pilot.
