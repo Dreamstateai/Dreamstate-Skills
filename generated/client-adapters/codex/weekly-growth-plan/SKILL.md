@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","campaigns.list","so
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444
+  playbook_kernel_hash: 9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 358149d3de20a85c
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444
+  source_release_hash: 9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c
   generator_version: 1.0.0
   client: codex
   kernel_id: weekly-growth-plan

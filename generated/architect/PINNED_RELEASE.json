@@ -2,11 +2,11 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.1",
-  "source_release_hash": "b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444",
+  "source_release_hash": "9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444",
+    "playbook_kernel_hash": "9d3783a1d6178d71b12a7f003390675eed201144ced247927bacedc4aca7142c",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "358149d3de20a85c",
@@ -96,7 +96,7 @@
         "sources.cold_outbound_expand",
         "sources.cold_outbound_preview"
       ],
-      "kernel_sha256": "c977d34c7552e6245dab20357eb10d5944f2a76707f2416b3eb2801661c9b3fe",
+      "kernel_sha256": "d7711f5409e2946c0ab63425ee1f56b54c2b2e5590705e698789c8b9584c83d7",
       "adapter_sha256": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
       "evals_sha256": "d4c5dd7e365c39a5cc03ed4b1a7602387bbb9f8110f875a1a059b2eb5c341500"
     },
