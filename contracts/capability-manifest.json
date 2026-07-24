@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "d9e85ef15d6916dd",
+  "capability_hash": "358149d3de20a85c",
   "api_version": "v1",
   "capabilities": [
     {
@@ -201178,16 +201178,16 @@
       "dry_run_supported": false,
       "required_inputs": [
         {
-          "key": "intent",
-          "kind": "unknown",
-          "required": true,
-          "description": "intent"
-        },
-        {
           "key": "objective",
           "kind": "object",
           "required": true,
           "description": "objective"
+        },
+        {
+          "key": "binding",
+          "kind": "object",
+          "required": true,
+          "description": "binding"
         },
         {
           "key": "phase",
@@ -201200,7 +201200,7 @@
         {
           "name": "intent",
           "type": "string",
-          "required": true,
+          "required": false,
           "description": "intent"
         },
         {
@@ -201208,6 +201208,12 @@
           "type": "object",
           "required": true,
           "description": "objective"
+        },
+        {
+          "name": "binding",
+          "type": "object",
+          "required": true,
+          "description": "binding"
         },
         {
           "name": "phase",
@@ -201220,6 +201226,12 @@
           "type": "object",
           "required": false,
           "description": "prior_plan"
+        },
+        {
+          "name": "approved_selection",
+          "type": "object",
+          "required": false,
+          "description": "approved_selection"
         }
       ],
       "input_json_schema": {
@@ -201255,7 +201267,7 @@
                     "type": "integer",
                     "exclusiveMinimum": true,
                     "minimum": 0,
-                    "maximum": 50
+                    "maximum": 10000
                   }
                 },
                 "required": [
@@ -201264,7 +201276,10 @@
                 ],
                 "additionalProperties": false
               }
-            ]
+            ],
+            "default": {
+              "mode": "demand_based"
+            }
           },
           "objective": {
             "type": "object",
@@ -201293,6 +201308,70 @@
             ],
             "additionalProperties": false
           },
+          "binding": {
+            "type": "object",
+            "properties": {
+              "architect_job_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "campaign_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "workbook_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "worksheet_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "worksheet_revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "source_selection_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "icp_filter_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "column_graph_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "workflow_revision": {
+                "$ref": "#/properties/binding/properties/worksheet_revision"
+              },
+              "sequence_revision": {
+                "$ref": "#/properties/binding/properties/worksheet_revision"
+              },
+              "maximum_credits_per_row": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "architect_job_id",
+              "campaign_id",
+              "workbook_id",
+              "worksheet_id",
+              "worksheet_revision",
+              "source_selection_digest",
+              "icp_filter_digest",
+              "column_graph_digest",
+              "workflow_revision",
+              "sequence_revision",
+              "maximum_credits_per_row"
+            ],
+            "additionalProperties": false
+          },
           "phase": {
             "type": "string",
             "enum": [
@@ -201303,12 +201382,27 @@
           "prior_plan": {
             "type": "object",
             "properties": {
+              "plan_version": {
+                "type": "number",
+                "enum": [
+                  1
+                ]
+              },
               "mode": {
                 "type": "string",
                 "enum": [
                   "demand_based",
                   "fixed_cohort"
                 ]
+              },
+              "intent": {
+                "$ref": "#/properties/intent"
+              },
+              "objective": {
+                "$ref": "#/properties/objective"
+              },
+              "binding": {
+                "$ref": "#/properties/binding"
               },
               "pilot_row_limit": {
                 "type": "number",
@@ -201340,6 +201434,14 @@
               "calculated_at": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "capacity_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "plan_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
               },
               "evidence": {
                 "type": "object",
@@ -201379,21 +201481,58 @@
               }
             },
             "required": [
+              "plan_version",
               "mode",
+              "intent",
+              "objective",
+              "binding",
               "pilot_row_limit",
               "expansion_row_cap",
               "sender_capacity",
               "remaining_headroom",
               "constraints",
               "calculated_at",
+              "capacity_digest",
+              "plan_digest",
               "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "approved_selection": {
+            "type": "object",
+            "properties": {
+              "row_count": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 50
+              },
+              "worksheet_revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "plan_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "approval_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "row_count",
+              "worksheet_revision",
+              "plan_digest",
+              "approval_digest"
             ],
             "additionalProperties": false
           }
         },
         "required": [
-          "intent",
           "objective",
+          "binding",
           "phase"
         ],
         "additionalProperties": false
@@ -201407,12 +201546,150 @@
               "plan": {
                 "type": "object",
                 "properties": {
+                  "plan_version": {
+                    "type": "number",
+                    "enum": [
+                      1
+                    ]
+                  },
                   "mode": {
                     "type": "string",
                     "enum": [
                       "demand_based",
                       "fixed_cohort"
                     ]
+                  },
+                  "intent": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "demand_based"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "mode"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "fixed_cohort"
+                            ]
+                          },
+                          "exact_quantity": {
+                            "type": "integer",
+                            "exclusiveMinimum": true,
+                            "minimum": 0,
+                            "maximum": 10000
+                          }
+                        },
+                        "required": [
+                          "mode",
+                          "exact_quantity"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "objective": {
+                    "type": "object",
+                    "properties": {
+                      "channel": {
+                        "type": "string",
+                        "enum": [
+                          "linkedin_invite",
+                          "linkedin_message",
+                          "email"
+                        ]
+                      },
+                      "outcome": {
+                        "type": "string",
+                        "enum": [
+                          "qualified_conversations",
+                          "meetings",
+                          "replies",
+                          "awareness"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "channel",
+                      "outcome"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "binding": {
+                    "type": "object",
+                    "properties": {
+                      "architect_job_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "campaign_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "workbook_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "worksheet_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "worksheet_revision": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "source_selection_digest": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "icp_filter_digest": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "column_graph_digest": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "workflow_revision": {
+                        "$ref": "#/properties/data/properties/plan/properties/binding/properties/worksheet_revision"
+                      },
+                      "sequence_revision": {
+                        "$ref": "#/properties/data/properties/plan/properties/binding/properties/worksheet_revision"
+                      },
+                      "maximum_credits_per_row": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "architect_job_id",
+                      "campaign_id",
+                      "workbook_id",
+                      "worksheet_id",
+                      "worksheet_revision",
+                      "source_selection_digest",
+                      "icp_filter_digest",
+                      "column_graph_digest",
+                      "workflow_revision",
+                      "sequence_revision",
+                      "maximum_credits_per_row"
+                    ],
+                    "additionalProperties": false
                   },
                   "pilot_row_limit": {
                     "type": "number",
@@ -201444,6 +201721,14 @@
                   "calculated_at": {
                     "type": "string",
                     "format": "date-time"
+                  },
+                  "capacity_digest": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "plan_digest": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
                   },
                   "evidence": {
                     "type": "object",
@@ -201483,13 +201768,19 @@
                   }
                 },
                 "required": [
+                  "plan_version",
                   "mode",
+                  "intent",
+                  "objective",
+                  "binding",
                   "pilot_row_limit",
                   "expansion_row_cap",
                   "sender_capacity",
                   "remaining_headroom",
                   "constraints",
                   "calculated_at",
+                  "capacity_digest",
+                  "plan_digest",
                   "evidence"
                 ],
                 "additionalProperties": false
@@ -201502,13 +201793,25 @@
               },
               "launch_ready": {
                 "type": "boolean"
+              },
+              "approval_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$",
+                "nullable": true
+              },
+              "approved_selection_digest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$",
+                "nullable": true
               }
             },
             "required": [
               "plan",
               "revalidated",
               "capacity_changed",
-              "launch_ready"
+              "launch_ready",
+              "approval_digest",
+              "approved_selection_digest"
             ],
             "additionalProperties": false
           },
@@ -201599,8 +201902,8 @@
           "Use the stable outreach.demand_plan_get contract for canonical outreach_action demand_plan_get behavior."
         ],
         "inputs": [
-          "intent",
           "objective",
+          "binding",
           "phase"
         ],
         "outputs": [
@@ -299326,7 +299629,7 @@
         },
         {
           "key": "row_limit",
-          "kind": "integer",
+          "kind": "7",
           "required": true,
           "description": "row_limit"
         }
@@ -299340,7 +299643,7 @@
         },
         {
           "name": "row_limit",
-          "type": "number",
+          "type": "string",
           "required": true,
           "description": "row_limit"
         }
@@ -299600,9 +299903,10 @@
             "additionalProperties": false
           },
           "row_limit": {
-            "type": "integer",
-            "minimum": 5,
-            "maximum": 10
+            "type": "number",
+            "enum": [
+              7
+            ]
           }
         },
         "required": [
@@ -347035,5 +347339,5 @@
     "capabilities": 1106,
     "mcp_tools": 8
   },
-  "manifest_digest": "46d2671183ad22732eb60eb7383823b0496c1bf20b16e6c2aa641f554302348a"
+  "manifest_digest": "9f1e978a9a77a7a9aaea36992fb3e9690da415a3b436c6443f9fceaec700dc11"
 }
