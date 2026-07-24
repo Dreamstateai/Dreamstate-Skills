@@ -7,7 +7,6 @@
       "id": "new-campaign-from-scratch",
       "max_intake_checkpoints": 1,
       "must_use_popup_when_missing": ["qualification", "sender"],
-      "must_not_ask": ["weekly volume", "daily volume", "enrollment quantity", "list size"],
       "request": "Build and launch a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Resolve every remaining material choice in one structured popup, default the structured volume intent to demand_based, then continue the work without a second intake.",
       "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.create", "outreach.demand_plan_get"]
     },
@@ -45,8 +44,9 @@
     },
     {
       "expected_skill_ids": ["outreach"],
+      "forbidden_question_concepts": ["outreach_volume"],
       "id": "explicit-fixed-cohort-only",
-      "must_not_ask": ["weekly volume", "daily volume"],
+      "max_intake_checkpoints": 1,
       "required_capability_ids": ["outreach.demand_plan_get"],
       "required_concepts": ["fixed_cohort", "exact_quantity", "7-row", "expansion_row_cap"],
       "request": "Build this campaign for the exact 18 contacts in the cohort I supplied. Preserve structured intent as fixed_cohort with exact_quantity 18, calculate live capacity with outreach.demand_plan_get, keep the evidence pilot at exactly 7, and never expand or stage above the returned expansion_row_cap. Do not ask me another volume question."
@@ -60,7 +60,6 @@
       "forbidden_question_concepts": ["outreach_volume"],
       "id": "competitor-engagers-canonical-full-journey",
       "max_intake_checkpoints": 1,
-      "must_not_ask": ["weekly volume", "daily volume", "list size"],
       "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.get", "campaigns.create", "campaigns.graph_apply", "outreach.demand_plan_get", "sources.cold_outbound_preview", "sources.cold_outbound_expand", "campaigns.activate"],
       "required_concepts": ["one complete intake", "no second ask_user", "linkedin.post_engagers", "exactly 7 successful distinct pilot rows", "raw provider payload", "fetched-at", "profile verification", "company enrichment", "required filters", "null is unsure", "required fail sets fit to 0", "nice-to-have weight", "structured run_if_json", "no row position", "fixed scaffold", "personalization slots", "qualification rate", "cost per qualified", "Launch Campaign", "fresh demand revalidation", "activation terminal receipt", "enrollment terminal receipt", "provider send terminal receipt"],
       "required_terminal_receipts": ["source_pilot", "bundle_graph_apply", "column_sample", "bulk_expansion", "launch_revalidation", "activation", "enrollment", "provider_send"],

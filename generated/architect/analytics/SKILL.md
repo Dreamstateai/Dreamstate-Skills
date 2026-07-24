@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
+  playbook_kernel_hash: b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: d9e85ef15d6916dd
@@ -19,7 +19,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
+  source_release_hash: b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444
   generator_version: 1.0.0
   kernel_id: analytics
   kernel_file: KERNEL.md

@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","brain.learning.quer
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
+  playbook_kernel_hash: b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: d9e85ef15d6916dd
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.1
-  source_release_hash: b9a046d99dd44a29e63c8e7a89d25938b1c4050c76b938f9865d666534bbfdaf
+  source_release_hash: b8267f05e7698a0343ea7bb7e5ef1e7724d2e6de132b92dfe722454cba846444
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: c977d34c7552e6245dab20357eb10d5944f2a76707f2416b3eb2801661c9b3fe
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: 29bef42a4c0703518717beda84fbee7482010dae479e1402010514977dcbf54f
+  evals_sha256: d4c5dd7e365c39a5cc03ed4b1a7602387bbb9f8110f875a1a059b2eb5c341500
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
