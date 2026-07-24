@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "3fd3cec34b08dcd1",
+  "capability_hash": "f545d33b0e147d4e",
   "api_version": "v1",
   "capabilities": [
     {
@@ -300762,6 +300762,49 @@
                       "snippet": {
                         "type": "string",
                         "nullable": true
+                      },
+                      "provider_fetched_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "raw_provider_payload": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "enum": [
+                                "null"
+                              ],
+                              "nullable": true
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/properties/rows/items/properties/engagement_evidence/items/properties/raw_provider_payload/additionalProperties"
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": {
+                                "$ref": "#/properties/rows/items/properties/engagement_evidence/items/properties/raw_provider_payload/additionalProperties"
+                              }
+                            }
+                          ]
+                        },
+                        "description": "Provider-defined JSON evidence with recursively typed values"
+                      },
+                      "provider_payload_digest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
                       }
                     },
                     "required": [
@@ -300769,7 +300812,10 @@
                       "event_ref",
                       "post_id",
                       "observed_at",
-                      "snippet"
+                      "snippet",
+                      "provider_fetched_at",
+                      "raw_provider_payload",
+                      "provider_payload_digest"
                     ],
                     "additionalProperties": false
                   },
@@ -347956,5 +348002,5 @@
     "capabilities": 1106,
     "mcp_tools": 8
   },
-  "manifest_digest": "fbbcbf2afdfb1a2f1b99a695807ab50f1bf3a7af671c7215e9cb32af2266535c"
+  "manifest_digest": "897c121cd546d3212a7fed051f8198cfe4631eef1ab82ef4fbd2aec96321353b"
 }

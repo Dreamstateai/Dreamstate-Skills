@@ -39,7 +39,7 @@
     "visibility:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "3fd3cec34b08dcd1",
+  "verified_capability_hash": "f545d33b0e147d4e",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/track-keyword-rankings/SKILL.md",
   "install_command": "dreamstate skills install track-keyword-rankings",
