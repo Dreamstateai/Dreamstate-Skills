@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "6989c784ac48af12",
+  "capability_hash": "d9e85ef15d6916dd",
   "api_version": "v1",
   "capabilities": [
     {
@@ -201137,6 +201137,485 @@
       }
     },
     {
+      "id": "outreach.demand_plan_get",
+      "entitlement": "outreach",
+      "kind": "workspace_capability",
+      "domain": "outreach_action",
+      "category": "outreach_action",
+      "label": "Outreach Action Demand Plan Get",
+      "description": "Canonical demand_plan_get operation for outreach_action resources.",
+      "when_to_use": [
+        "Use the stable outreach.demand_plan_get contract for canonical outreach_action demand_plan_get behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "outreach:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "effects": {
+        "domain": "outreach",
+        "reports": [
+          "source_timestamp",
+          "completeness",
+          "frontier",
+          "provider_evidence"
+        ]
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "intent",
+          "kind": "unknown",
+          "required": true,
+          "description": "intent"
+        },
+        {
+          "key": "objective",
+          "kind": "object",
+          "required": true,
+          "description": "objective"
+        },
+        {
+          "key": "phase",
+          "kind": "planning|launch_revalidation",
+          "required": true,
+          "description": "phase"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "intent",
+          "type": "string",
+          "required": true,
+          "description": "intent"
+        },
+        {
+          "name": "objective",
+          "type": "object",
+          "required": true,
+          "description": "objective"
+        },
+        {
+          "name": "phase",
+          "type": "string",
+          "required": true,
+          "description": "phase"
+        },
+        {
+          "name": "prior_plan",
+          "type": "object",
+          "required": false,
+          "description": "prior_plan"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "intent": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "demand_based"
+                    ]
+                  }
+                },
+                "required": [
+                  "mode"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "fixed_cohort"
+                    ]
+                  },
+                  "exact_quantity": {
+                    "type": "integer",
+                    "exclusiveMinimum": true,
+                    "minimum": 0,
+                    "maximum": 50
+                  }
+                },
+                "required": [
+                  "mode",
+                  "exact_quantity"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "objective": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "enum": [
+                  "linkedin_invite",
+                  "linkedin_message",
+                  "email"
+                ]
+              },
+              "outcome": {
+                "type": "string",
+                "enum": [
+                  "qualified_conversations",
+                  "meetings",
+                  "replies",
+                  "awareness"
+                ]
+              }
+            },
+            "required": [
+              "channel",
+              "outcome"
+            ],
+            "additionalProperties": false
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "planning",
+              "launch_revalidation"
+            ]
+          },
+          "prior_plan": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "demand_based",
+                  "fixed_cohort"
+                ]
+              },
+              "pilot_row_limit": {
+                "type": "number",
+                "enum": [
+                  7
+                ]
+              },
+              "expansion_row_cap": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "sender_capacity": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "remaining_headroom": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "constraints": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "calculated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "evidence": {
+                "type": "object",
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "null"
+                      ],
+                      "nullable": true
+                    },
+                    {
+                      "type": "string",
+                      "maxLength": 64000
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/properties/prior_plan/properties/evidence/additionalProperties"
+                      },
+                      "maxItems": 2000
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": {
+                        "$ref": "#/properties/prior_plan/properties/evidence/additionalProperties"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "mode",
+              "pilot_row_limit",
+              "expansion_row_cap",
+              "sender_capacity",
+              "remaining_headroom",
+              "constraints",
+              "calculated_at",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "intent",
+          "objective",
+          "phase"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "plan": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "demand_based",
+                      "fixed_cohort"
+                    ]
+                  },
+                  "pilot_row_limit": {
+                    "type": "number",
+                    "enum": [
+                      7
+                    ]
+                  },
+                  "expansion_row_cap": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 50
+                  },
+                  "sender_capacity": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "remaining_headroom": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "constraints": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  },
+                  "calculated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "evidence": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "null"
+                          ],
+                          "nullable": true
+                        },
+                        {
+                          "type": "string",
+                          "maxLength": 64000
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/properties/data/properties/plan/properties/evidence/additionalProperties"
+                          },
+                          "maxItems": 2000
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/properties/data/properties/plan/properties/evidence/additionalProperties"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "mode",
+                  "pilot_row_limit",
+                  "expansion_row_cap",
+                  "sender_capacity",
+                  "remaining_headroom",
+                  "constraints",
+                  "calculated_at",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              },
+              "revalidated": {
+                "type": "boolean"
+              },
+              "capacity_changed": {
+                "type": "boolean"
+              },
+              "launch_ready": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "plan",
+              "revalidated",
+              "capacity_changed",
+              "launch_ready"
+            ],
+            "additionalProperties": false
+          },
+          "source_timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completeness": {
+            "type": "string",
+            "enum": [
+              "complete"
+            ]
+          },
+          "truncated": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "frontier": {
+            "enum": [
+              "null"
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "data",
+          "source_timestamp",
+          "completeness",
+          "truncated",
+          "frontier"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "outreach.demand_plan_get",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run outreach.demand_plan_get"
+      ],
+      "examples": [
+        "dreamstate tools get outreach.demand_plan_get",
+        "dreamstate tools run outreach.demand_plan_get"
+      ],
+      "web_url_template": "/dashboard/campaigns/outreach/{id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "outreach.demand_plan_get",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "outreach.demand_plan_get",
+          "Outreach Action Demand Plan Get",
+          "dreamstate tools get outreach.demand_plan_get",
+          "dreamstate tools run outreach.demand_plan_get"
+        ],
+        "use_cases": [
+          "Use the stable outreach.demand_plan_get contract for canonical outreach_action demand_plan_get behavior."
+        ],
+        "inputs": [
+          "intent",
+          "objective",
+          "phase"
+        ],
+        "outputs": [
+          "data",
+          "source_timestamp",
+          "completeness",
+          "truncated",
+          "frontier"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "outreach.dm_attachment_get",
       "entitlement": "outreach",
       "kind": "workspace_capability",
@@ -346553,8 +347032,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1105,
+    "capabilities": 1106,
     "mcp_tools": 8
   },
-  "manifest_digest": "29322b452ca55c48e99398cb5f7e4e62c72e739378c9feeaa9cdbbc9001648cc"
+  "manifest_digest": "46d2671183ad22732eb60eb7383823b0496c1bf20b16e6c2aa641f554302348a"
 }

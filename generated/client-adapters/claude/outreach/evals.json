@@ -4,9 +4,10 @@
       "expected_load_order": ["tables", "outreach-workflow-builder", "outreach"],
       "expected_skill_ids": ["outreach"],
       "id": "new-campaign-from-scratch",
-      "must_use_popup_when_missing": ["qualification", "sender", "volume"],
-      "request": "Build a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or volume. Resolve those three material launch inputs in one structured popup before planning.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.create"]
+      "must_use_popup_when_missing": ["qualification", "sender"],
+      "must_not_ask": ["weekly volume", "daily volume", "enrollment quantity", "list size"],
+      "request": "Build and launch a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Resolve every remaining material choice in one structured popup, default the structured volume intent to demand_based, then continue the work without a second intake.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.create", "outreach.demand_plan_get"]
     },
     {
       "expected_skill_ids": ["outreach"],
@@ -24,19 +25,85 @@
       "expected_skill_ids": ["outreach"],
       "id": "staged-pilot-build-sample-expand-launch",
       "resume_after_elicitation": "recommended",
-      "required_capability_ids": ["sources.cold_outbound_preview", "sources.cold_outbound_expand"],
+      "required_capability_ids": ["outreach.demand_plan_get", "sources.cold_outbound_preview", "sources.cold_outbound_expand"],
       "required_completion_fields": [{"id":"stage_boundary_state","allowed_values":["ordered_separate"]},{"id":"campaign_state","allowed_values":["inactive"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"external_send_state","allowed_values":["not_authorized"]},{"id":"approval_state","allowed_values":["required"]},{"id":"run_state","allowed_values":["not_applicable"]}],
-      "request": "Prepare a reviewable staged proposal only; do not execute or launch. Use these non-secret planning inputs: US B2B SaaS founders, 7-row column sample, email sender to be selected later, 25-contact expansion cap, and qualification threshold 80. Fetch and inspect the exact sources.cold_outbound_preview and sources.cold_outbound_expand contracts. Show the separately approved source pilot, draft bundle, bounded column sample, exact bulk expansion, enrollment/activation boundary, and external-send boundary. Report campaign_state inactive, activation_state inactive, and approval_state required because the sender binding and approvals are missing. Because this request authorizes no execution and creates no run, report run_state not_applicable; do not fabricate a blocked run."
+      "request": "Prepare a reviewable staged proposal only; do not execute or launch. Use these non-secret planning inputs: US B2B SaaS founders, email sender to be selected later, and qualification threshold 80. I supplied no exact cohort quantity, so fetch and inspect outreach.demand_plan_get and use demand_based mode. Use exactly its 7-row evidence pilot and its live expansion_row_cap. Fetch and inspect the exact sources.cold_outbound_preview and sources.cold_outbound_expand contracts. Show the separately approved source pilot, canonical workbook/worksheet/view/workflow/campaign/custom-sequence bundle, bounded column sample, exact bulk expansion, enrollment/activation boundary, and external-send boundary. Report campaign_state inactive, activation_state inactive, and approval_state required because the sender binding and approvals are missing. Because this request authorizes no execution and creates no run, report run_state not_applicable; do not fabricate a blocked run."
     },
     {
       "expected_skill_ids": ["outreach"],
       "id": "explicit-final-launch-revalidation",
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [{"id":"stage_boundary_state","allowed_values":["ordered_separate"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"external_send_state","allowed_values":["not_authorized"]},{"id":"selection_state","allowed_values":["missing"]},{"id":"approval_state","allowed_values":["required"]},{"id":"run_state","allowed_values":["blocked"]}],
-      "required_concepts": ["Launch Campaign", "sender binding", "exclusions", "cost", "readiness"],
+      "required_concepts": ["Launch Campaign", "outreach.demand_plan_get", "launch_revalidation", "sender binding", "exclusions", "cost", "readiness"],
       "must_disclose_external_sends": true,
-      "request": "The source pilot, draft, column sample, and bulk expansion are described as complete, and I explicitly state launch intent. No approval-to-grant binding, canonical sender-binding evidence, exact selection receipt, or readiness receipt is attached. Do not activate or send. Explain the Launch Campaign preflight: revalidate sender binding, exclusions, exact selection, cost ceiling, readiness, revisions, capability digests, and approval evidence. State that launch approval, once validly bound, is the single capped-and-paced external-send authorization, but report this request blocked and not authorized.",
-      "required_capability_ids": ["campaigns.get", "campaigns.activate"]
+      "request": "The source pilot, draft, column sample, and bulk expansion are described as complete, and I explicitly state launch intent. No approval-to-grant binding, canonical sender-binding evidence, exact selection receipt, or readiness receipt is attached. Do not activate or send. Explain the Launch Campaign preflight: run outreach.demand_plan_get with phase launch_revalidation and the prior plan, then revalidate sender binding, exclusions, exact selection, cost ceiling, readiness, revisions, capability digests, and approval evidence. State that launch approval, once validly bound, is the single capped-and-paced external-send authorization, but report this request blocked and not authorized.",
+      "required_capability_ids": ["campaigns.get", "campaigns.activate", "outreach.demand_plan_get"]
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "id": "explicit-fixed-cohort-only",
+      "must_not_ask": ["weekly volume", "daily volume"],
+      "required_capability_ids": ["outreach.demand_plan_get"],
+      "required_concepts": ["fixed_cohort", "exact_quantity", "7-row", "expansion_row_cap"],
+      "request": "Build this campaign for the exact 18 contacts in the cohort I supplied. Preserve structured intent as fixed_cohort with exact_quantity 18, calculate live capacity with outreach.demand_plan_get, keep the evidence pilot at exactly 7, and never expand or stage above the returned expansion_row_cap. Do not ask me another volume question."
+    },
+    {
+      "execution_profile": "production_real",
+      "expected_load_order": ["tables", "outreach-workflow-builder", "outreach-sequence-writer", "outreach"],
+      "expected_skill_ids": ["outreach"],
+      "fixture_profile": "competitor_engagers_canonical_full_journey",
+      "forbidden_test_substitutions": ["fabricated capability domain", "unconditional tool success", "counter-only assertion", "mock proposal receipt", "mock run receipt"],
+      "id": "competitor-engagers-canonical-full-journey",
+      "must_not_ask": ["weekly volume", "daily volume", "list size"],
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.get", "campaigns.create", "campaigns.graph_apply", "outreach.demand_plan_get", "sources.cold_outbound_preview", "sources.cold_outbound_expand", "campaigns.activate"],
+      "required_concepts": ["linkedin.post_engagers", "raw provider payload", "fetched-at", "profile verification", "company enrichment", "required filters", "null is unsure", "required fail sets fit to 0", "nice-to-have weight", "structured run_if_json", "no row position", "fixed scaffold", "personalization slots", "qualification rate", "cost per qualified", "Launch Campaign", "terminal receipts"],
+      "required_tool_sequence": [
+        {"tool":"load_skill","skill_id":"outreach"},
+        {"tool":"tools_search","capability_id":"brain.context.search"},
+        {"tool":"tools_get","capability_id":"brain.context.search"},
+        {"tool":"tools_search","capability_id":"brain.context.get"},
+        {"tool":"tools_get","capability_id":"brain.context.get"},
+        {"tool":"tools_search","capability_id":"campaigns.get"},
+        {"tool":"tools_get","capability_id":"campaigns.get"},
+        {"tool":"tools_search","capability_id":"outreach.demand_plan_get"},
+        {"tool":"tools_get","capability_id":"outreach.demand_plan_get"},
+        {"tool":"tools_search","capability_id":"sources.cold_outbound_preview"},
+        {"tool":"tools_get","capability_id":"sources.cold_outbound_preview"}
+      ],
+      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing workbook and schema; use the exact competitor-engager source; show one complete intake with no volume question; then execute the canonical 7-row pilot, dependency-ordered verification/enrichment/filter/scoring sample, real-prospect fixed-scaffold message preview, canonical workbook/workflow/campaign/sequence bundle, cost and qualification audit, single launch approval, fresh demand revalidation, qualified-only staging, activation, paced multi-channel sends, and terminal receipts."
+    },
+    {
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["outreach"],
+      "fixture_profile": "competitor_engagers_missing_enrichment",
+      "id": "competitor-engagers-missing-enrichment-blocks-ai",
+      "required_concepts": ["enrichment missing", "AI not run", "unsure", "zero AI cost", "durable skipped cell receipt"],
+      "request": "Run the competitor-engager sample where person or company enrichment is missing. Prove the structured run condition skips the AI fit scorer, preserves the row as unsure, records zero AI cost, and returns the real skipped-cell receipt."
+    },
+    {
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["outreach"],
+      "fixture_profile": "competitor_engagers_required_filter_failures",
+      "id": "competitor-engagers-required-failures-disqualify",
+      "required_concepts": ["excluded keyword", "location fail", "company size fail", "AI not run", "fit 0", "hidden by default"],
+      "request": "Run rows that fail each deterministic required criterion: exclusion keyword, location, and company size. Prove each is disqualified with fit 0, hidden from the qualified view, and never invokes the AI scorer."
+    },
+    {
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["outreach"],
+      "fixture_profile": "competitor_engagers_capacity_race",
+      "id": "competitor-engagers-capacity-change-blocks-launch",
+      "required_capability_ids": ["outreach.demand_plan_get", "campaigns.activate"],
+      "required_concepts": ["launch_revalidation", "capacity changed", "blocked", "replanned", "no activation receipt", "no send receipt"],
+      "request": "Reduce live sender headroom after approval but before launch. Revalidate the prior demand plan and prove activation and sending stay blocked until the exact qualified selection is replanned within fresh capacity."
+    },
+    {
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["outreach"],
+      "fixture_profile": "competitor_engagers_stale_profile_and_low_precision",
+      "id": "competitor-engagers-stale-and-low-precision-audit",
+      "required_concepts": ["stale title", "current company", "disqualified", "source precision", "qualification below 10%", "different scarce-signal angle", "cost audit"],
+      "request": "Return a stale person/title verification plus a low-precision competitor-engager source sample. Prove the stale row is not qualified and the post-batch audit stops expansion, names the failed criterion and cost, and proposes a different scarce-signal source angle."
     },
     {
       "expected_skill_ids": ["outreach"],

@@ -11,7 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = '29322b452ca55c48e99398cb5f7e4e62c72e739378c9feeaa9cdbbc9001648cc';
+const CANONICAL_MANIFEST_DIGEST = '46d2671183ad22732eb60eb7383823b0496c1bf20b16e6c2aa641f554302348a';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -252,6 +252,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
       'campaigns.create',
       'campaigns.get',
       'campaigns.graph_apply',
+      'outreach.demand_plan_get',
       'sources.cold_outbound_expand',
       'sources.cold_outbound_preview',
     ],
@@ -535,6 +536,10 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     prior = offset;
   }
   assert.match(coordinator, /sources\.cold_outbound_preview/);
+  assert.match(coordinator, /outreach\.demand_plan_get/);
+  assert.match(coordinator, /pilot_row_limit.*exactly 7/i);
+  assert.match(coordinator, /default.*demand_based/i);
+  assert.doesNotMatch(coordinator, /three distinct questions whose ids or prompts literally include/i);
   assert.match(coordinator, /no worksheet, campaign, source, import, enrollment, or other durable destination/i);
   assert.match(coordinator, /sources\.cold_outbound_expand/);
   assert.match(coordinator, /stage_exact_result_set=true/);
@@ -558,6 +563,7 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'exact-result-set-expansion-is-separate');
 
   assert.deepEqual(staged.required_capability_ids, [
+    'outreach.demand_plan_get',
     'sources.cold_outbound_preview',
     'sources.cold_outbound_expand',
   ]);
@@ -591,12 +597,51 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /three distinct questions whose ids or prompts literally include `qualification`, `sender`, and `volume`/,
+    /Volume is application-calculated.*Default structured intent to `\{mode:"demand_based"\}`/s,
   );
+  const scratch = outreach.cases.find((item: { id: string }) => item.id === 'new-campaign-from-scratch');
+  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification', 'sender']);
+  assert.ok(scratch.required_capability_ids.includes('outreach.demand_plan_get'));
   const outreachSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach');
   const integrationsSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'integrations');
   assert.ok(outreachSkill.triggers.includes('design an outreach campaign for a named cohort using pooled benchmarks'));
   assert.match(integrationsSkill.description, /Provider content research, metrics, and search-window coverage remain with their domain skills/);
+});
+
+test('competitor engager release eval is production-real and preserves dependency, evidence, and failure contracts', () => {
+  const artifacts = build();
+  const outreach = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const full = outreach.cases.find((item: { id: string }) => item.id === 'competitor-engagers-canonical-full-journey');
+  const failures = new Map(outreach.cases
+    .filter((item: { id: string }) => item.id.startsWith('competitor-engagers-'))
+    .map((item: { id: string }) => [item.id, item]));
+  assert.equal(full.execution_profile, 'production_real');
+  assert.deepEqual(full.expected_load_order, [
+    'tables', 'outreach-workflow-builder', 'outreach-sequence-writer', 'outreach',
+  ]);
+  assert.deepEqual(full.expected_skill_ids, ['outreach']);
+  assert.ok(full.forbidden_test_substitutions.includes('mock run receipt'));
+  assert.deepEqual(
+    full.required_tool_sequence.slice(0, 5),
+    [
+      { tool: 'load_skill', skill_id: 'outreach' },
+      { tool: 'tools_search', capability_id: 'brain.context.search' },
+      { tool: 'tools_get', capability_id: 'brain.context.search' },
+      { tool: 'tools_search', capability_id: 'brain.context.get' },
+      { tool: 'tools_get', capability_id: 'brain.context.get' },
+    ],
+  );
+  assert.match(full.request, /existing workbook.*7-row pilot.*terminal receipts/i);
+  assert.ok(failures.has('competitor-engagers-missing-enrichment-blocks-ai'));
+  assert.ok(failures.has('competitor-engagers-required-failures-disqualify'));
+  assert.ok(failures.has('competitor-engagers-capacity-change-blocks-launch'));
+  assert.ok(failures.has('competitor-engagers-stale-and-low-precision-audit'));
+  const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
+  assert.match(kernel, /complete raw provider payload/);
+  assert.match(kernel, /null enrichment result is `unsure`/);
+  assert.match(kernel, /never uses row position, row index, row number, or table order/);
+  assert.match(kernel, /fixed greeting, pitch paragraphs, CTA, sign-off/);
+  assert.match(kernel, /wait for terminal activation, enrollment, and provider receipts/);
 });
 
 test('table evals require exact contracts and authoritative schema or paid-run receipts', () => {

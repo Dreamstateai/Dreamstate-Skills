@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "6989c784ac48af12",
+  "verified_capability_hash": "d9e85ef15d6916dd",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/sender-health/SKILL.md",
   "install_command": "dreamstate skills install sender-health",
