@@ -17,7 +17,7 @@
   "requires_skills": [
     "setup"
   ],
-  "description": "Call Dreamstate API resources and typed run intents with idempotency and async result checks.",
+  "description": "Call Dreamstate API resources and typed capability runs with idempotency and async result checks.",
   "domain": "core",
   "execution_mode": "guided-execution",
   "maturity": "beta",
@@ -28,6 +28,6 @@
     "dreamstate_get_run"
   ],
   "required_scopes": [],
-  "capability_hash": "1f8e2f4bd87779d6",
+  "capability_hash": "70acbffd5d943747",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

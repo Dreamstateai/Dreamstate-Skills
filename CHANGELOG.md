@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.3 - 2026-07-25
+
+- Merged the 0.5.0 safety-release line into the reconciled 0.5.2 line, keeping both histories. The 0.5.2 canonical reconciliation and its `manifest_digest` generator support are authoritative; 0.5.0's canonical-only wording cut in the skill blueprints is preserved.
+- Regenerated the capability manifest from the current Influence runtime registries: 1140 capabilities, 11 MCP tools, capability hash `70acbffd5d943747`, manifest digest `c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034`.
+- Retired `outreach-list-builder` (absorbed by `tables`) and `reddit-engagement` from the Architect kernel set, matching the canonical reconciliation.
+
 ## 0.5.2 - 2026-07-25
 
 - Reconciled Architect, Claude Code, and Codex with Influence commit `77a2ecab4c2a099923f0c62d4e01935d13944794` and its canonical `1f8e2f4bd87779d6` capability contract.

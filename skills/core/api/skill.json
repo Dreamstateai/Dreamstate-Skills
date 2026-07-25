@@ -2,7 +2,7 @@
   "schema_version": 2,
   "slug": "api",
   "name": "Api",
-  "short_description": "Call Dreamstate API resources and typed run intents with idempotency and async result checks.",
+  "short_description": "Call Dreamstate API resources and typed capability runs with idempotency and async result checks.",
   "domain": "core",
   "category": "Core",
   "tags": [
@@ -36,7 +36,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "1f8e2f4bd87779d6",
+  "verified_capability_hash": "70acbffd5d943747",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/api/SKILL.md",
   "install_command": "dreamstate skills install api",

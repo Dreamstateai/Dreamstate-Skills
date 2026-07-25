@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "1f8e2f4bd87779d6",
+  "capability_hash": "70acbffd5d943747",
   "api_version": "v1",
   "capabilities": [
     {
@@ -259409,6 +259409,12 @@
           "description": "Canonical identity for table_id."
         },
         {
+          "name": "source_run_id",
+          "type": "string",
+          "required": false,
+          "description": "source_run_id"
+        },
+        {
           "name": "limit",
           "type": "number",
           "required": false,
@@ -259460,6 +259466,10 @@
       "input_json_schema": {
         "type": "object",
         "properties": {
+          "source_run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "limit": {
             "type": "integer",
             "minimum": 1,
@@ -259482,8 +259492,7 @@
                     "minimum": 0
                   },
                   "row_id": {
-                    "type": "string",
-                    "format": "uuid"
+                    "$ref": "#/properties/source_run_id"
                   }
                 },
                 "required": [
@@ -259537,7 +259546,7 @@
                     }
                   },
                   "row_id": {
-                    "$ref": "#/properties/cursor/anyOf/0/properties/row_id"
+                    "$ref": "#/properties/source_run_id"
                   }
                 },
                 "required": [
@@ -259554,7 +259563,7 @@
           "visible_column_ids": {
             "type": "array",
             "items": {
-              "$ref": "#/properties/cursor/anyOf/0/properties/row_id"
+              "$ref": "#/properties/source_run_id"
             },
             "maxItems": 200,
             "default": []
@@ -259674,7 +259683,7 @@
               "column_ids": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/properties/cursor/anyOf/0/properties/row_id"
+                  "$ref": "#/properties/source_run_id"
                 },
                 "minItems": 1,
                 "maxItems": 200
@@ -259696,580 +259705,647 @@
         ]
       },
       "output_json_schema": {
-        "type": "object",
-        "properties": {
-          "rows": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "row_id": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "table_id": {
-                  "$ref": "#/properties/rows/items/properties/row_id"
-                },
-                "workspace_id": {
-                  "$ref": "#/properties/rows/items/properties/row_id"
-                },
-                "row_kind": {
-                  "type": "string",
-                  "enum": [
-                    "person",
-                    "company",
-                    "content",
-                    "page",
-                    "keyword"
-                  ]
-                },
-                "subject_id": {
-                  "allOf": [
-                    {
-                      "$ref": "#/properties/rows/items/properties/row_id"
-                    }
-                  ],
-                  "nullable": true
-                },
-                "external_key": {
-                  "allOf": [
-                    {
-                      "$ref": "#/properties/rows/items/properties/row_id"
-                    }
-                  ],
-                  "nullable": true
-                },
-                "position": {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "source_state": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "rows": {
+                "type": "array",
+                "items": {
                   "type": "object",
                   "properties": {
-                    "status": {
+                    "row_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "table_id": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                    },
+                    "workspace_id": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                    },
+                    "row_kind": {
                       "type": "string",
                       "enum": [
-                        "not_started",
-                        "queued",
-                        "running",
-                        "partial",
-                        "completed",
-                        "failed"
+                        "person",
+                        "company",
+                        "content",
+                        "page",
+                        "keyword"
                       ]
                     },
-                    "run_ids": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/properties/rows/items/properties/row_id"
-                      }
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "run_ids",
-                    "updated_at"
-                  ],
-                  "additionalProperties": false
-                },
-                "manual_state": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "editable",
-                        "locked"
-                      ]
-                    },
-                    "updated_by": {
+                    "subject_id": {
                       "allOf": [
                         {
-                          "$ref": "#/properties/rows/items/properties/row_id"
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
                         }
                       ],
                       "nullable": true
                     },
-                    "updated_at": {
+                    "external_key": {
                       "allOf": [
                         {
-                          "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
                         }
                       ],
                       "nullable": true
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "updated_by",
-                    "updated_at"
-                  ],
-                  "additionalProperties": false
-                },
-                "created_at": {
-                  "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
-                },
-                "updated_at": {
-                  "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
-                },
-                "deleted_at": {
-                  "allOf": [
-                    {
-                      "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
-                    }
-                  ],
-                  "nullable": true
-                }
-              },
-              "required": [
-                "row_id",
-                "table_id",
-                "workspace_id",
-                "row_kind",
-                "subject_id",
-                "external_key",
-                "position",
-                "source_state",
-                "manual_state",
-                "created_at",
-                "updated_at",
-                "deleted_at"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "cells": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "cell_id": {
-                  "$ref": "#/properties/rows/items/properties/row_id"
-                },
-                "table_id": {
-                  "$ref": "#/properties/rows/items/properties/row_id"
-                },
-                "row_id": {
-                  "$ref": "#/properties/rows/items/properties/row_id"
-                },
-                "column_id": {
-                  "$ref": "#/properties/rows/items/properties/row_id"
-                },
-                "value": {
-                  "anyOf": [
-                    {
-                      "type": "string"
                     },
-                    {
-                      "type": "number"
+                    "position": {
+                      "type": "integer",
+                      "minimum": 0
                     },
-                    {
-                      "type": "boolean"
-                    },
-                    {
-                      "enum": [
-                        "null"
-                      ],
-                      "nullable": true
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/properties/cells/items/properties/value"
-                      }
-                    },
-                    {
+                    "source_state": {
                       "type": "object",
-                      "additionalProperties": {
-                        "$ref": "#/properties/cells/items/properties/value"
-                      }
-                    }
-                  ]
-                },
-                "value_type": {
-                  "type": "string",
-                  "enum": [
-                    "text",
-                    "number",
-                    "boolean",
-                    "datetime",
-                    "url",
-                    "json",
-                    "reference"
-                  ]
-                },
-                "nullable": {
-                  "type": "boolean"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "empty",
-                    "queued",
-                    "running",
-                    "completed",
-                    "failed",
-                    "skipped",
-                    "stale"
-                  ]
-                },
-                "cost": {
-                  "type": "object",
-                  "properties": {
-                    "credits": {
-                      "type": "number",
-                      "minimum": 0,
-                      "nullable": true
-                    },
-                    "units": {
-                      "type": "number",
-                      "minimum": 0,
-                      "nullable": true
-                    }
-                  },
-                  "required": [
-                    "credits",
-                    "units"
-                  ],
-                  "additionalProperties": false
-                },
-                "run_id": {
-                  "allOf": [
-                    {
-                      "$ref": "#/properties/rows/items/properties/row_id"
-                    }
-                  ],
-                  "nullable": true
-                },
-                "provenance": {
-                  "type": "object",
-                  "properties": {
-                    "kind": {
-                      "type": "string",
-                      "enum": [
-                        "source",
-                        "manual",
-                        "formula",
-                        "ai",
-                        "tool",
-                        "enrichment",
-                        "relation",
-                        "workflow",
-                        "system"
-                      ]
-                    },
-                    "provider_tool_id": {
-                      "type": "string",
-                      "minLength": 3,
-                      "maxLength": 200,
-                      "pattern": "^[a-z][a-z0-9_-]*(?:\\.[a-z0-9][a-z0-9_-]*)+$",
-                      "nullable": true
-                    },
-                    "actor_id": {
-                      "allOf": [
-                        {
-                          "$ref": "#/properties/rows/items/properties/row_id"
-                        }
-                      ],
-                      "nullable": true
-                    },
-                    "observed_at": {
-                      "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
-                    },
-                    "field_availability": {
-                      "type": "string",
-                      "enum": [
-                        "available",
-                        "unavailable",
-                        "restricted"
-                      ]
-                    },
-                    "raw_payload_digest": {
-                      "type": "string",
-                      "pattern": "^sha256:[a-f0-9]{64}$"
-                    },
-                    "input_digest": {
-                      "$ref": "#/properties/cells/items/properties/provenance/properties/raw_payload_digest"
-                    },
-                    "output_digest": {
-                      "$ref": "#/properties/cells/items/properties/provenance/properties/raw_payload_digest"
-                    },
-                    "provider_receipt_id": {
-                      "$ref": "#/properties/rows/items/properties/row_id"
-                    },
-                    "evidence_refs": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 2048
-                      },
-                      "maxItems": 100
-                    },
-                    "citations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "url": {
-                            "type": "string",
-                            "maxLength": 2048,
-                            "format": "uri"
-                          },
-                          "title": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 500
-                          },
-                          "reference_id": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 500
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "not_started",
+                            "queued",
+                            "running",
+                            "partial",
+                            "completed",
+                            "failed"
+                          ]
+                        },
+                        "run_ids": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
                           }
                         },
-                        "required": [
-                          "url"
-                        ],
-                        "additionalProperties": false
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "nullable": true
+                        }
                       },
-                      "maxItems": 100
+                      "required": [
+                        "status",
+                        "run_ids",
+                        "updated_at"
+                      ],
+                      "additionalProperties": false
                     },
-                    "prompt_revision": {
+                    "manual_state": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "editable",
+                            "locked"
+                          ]
+                        },
+                        "updated_by": {
+                          "allOf": [
+                            {
+                              "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                            }
+                          ],
+                          "nullable": true
+                        },
+                        "updated_at": {
+                          "allOf": [
+                            {
+                              "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
+                            }
+                          ],
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "updated_by",
+                        "updated_at"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "created_at": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
+                    },
+                    "updated_at": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
+                    },
+                    "deleted_at": {
+                      "allOf": [
+                        {
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
+                        }
+                      ],
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "row_id",
+                    "table_id",
+                    "workspace_id",
+                    "row_kind",
+                    "subject_id",
+                    "external_key",
+                    "position",
+                    "source_state",
+                    "manual_state",
+                    "created_at",
+                    "updated_at",
+                    "deleted_at"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "cells": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "cell_id": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                    },
+                    "table_id": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                    },
+                    "row_id": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                    },
+                    "column_id": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                    },
+                    "value": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "enum": [
+                            "null"
+                          ],
+                          "nullable": true
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/anyOf/0/properties/cells/items/properties/value"
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/anyOf/0/properties/cells/items/properties/value"
+                          }
+                        }
+                      ]
+                    },
+                    "value_type": {
                       "type": "string",
-                      "minLength": 1,
+                      "enum": [
+                        "text",
+                        "number",
+                        "boolean",
+                        "datetime",
+                        "url",
+                        "json",
+                        "reference"
+                      ]
+                    },
+                    "nullable": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "empty",
+                        "queued",
+                        "running",
+                        "completed",
+                        "failed",
+                        "skipped",
+                        "stale"
+                      ]
+                    },
+                    "cost": {
+                      "type": "object",
+                      "properties": {
+                        "credits": {
+                          "type": "number",
+                          "minimum": 0,
+                          "nullable": true
+                        },
+                        "units": {
+                          "type": "number",
+                          "minimum": 0,
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "credits",
+                        "units"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "run_id": {
+                      "allOf": [
+                        {
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                        }
+                      ],
                       "nullable": true
                     },
-                    "function_revision": {
-                      "type": "string",
-                      "minLength": 1,
-                      "nullable": true
-                    },
-                    "model": {
-                      "type": "string",
-                      "minLength": 1,
-                      "nullable": true
-                    },
-                    "model_revision": {
-                      "type": "string",
-                      "minLength": 1,
-                      "nullable": true
-                    },
-                    "confidence": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 1
-                    },
-                    "components": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "key": {
+                    "provenance": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "source",
+                            "manual",
+                            "formula",
+                            "ai",
+                            "tool",
+                            "enrichment",
+                            "relation",
+                            "workflow",
+                            "system"
+                          ]
+                        },
+                        "provider_tool_id": {
+                          "type": "string",
+                          "minLength": 3,
+                          "maxLength": 200,
+                          "pattern": "^[a-z][a-z0-9_-]*(?:\\.[a-z0-9][a-z0-9_-]*)+$",
+                          "nullable": true
+                        },
+                        "actor_id": {
+                          "allOf": [
+                            {
+                              "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                            }
+                          ],
+                          "nullable": true
+                        },
+                        "observed_at": {
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
+                        },
+                        "field_availability": {
+                          "type": "string",
+                          "enum": [
+                            "available",
+                            "unavailable",
+                            "restricted"
+                          ]
+                        },
+                        "raw_payload_digest": {
+                          "type": "string",
+                          "pattern": "^sha256:[a-f0-9]{64}$"
+                        },
+                        "input_digest": {
+                          "$ref": "#/anyOf/0/properties/cells/items/properties/provenance/properties/raw_payload_digest"
+                        },
+                        "output_digest": {
+                          "$ref": "#/anyOf/0/properties/cells/items/properties/provenance/properties/raw_payload_digest"
+                        },
+                        "provider_receipt_id": {
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                        },
+                        "evidence_refs": {
+                          "type": "array",
+                          "items": {
                             "type": "string",
                             "minLength": 1,
-                            "maxLength": 120
+                            "maxLength": 2048
                           },
-                          "score": {
-                            "type": "number",
-                            "minimum": 0,
-                            "maximum": 100,
-                            "nullable": true
+                          "maxItems": 100
+                        },
+                        "citations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "maxLength": 2048,
+                                "format": "uri"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 500
+                              },
+                              "reference_id": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 500
+                              }
+                            },
+                            "required": [
+                              "url"
+                            ],
+                            "additionalProperties": false
                           },
-                          "weight": {
-                            "type": "number",
-                            "minimum": 0,
-                            "maximum": 1
+                          "maxItems": 100
+                        },
+                        "prompt_revision": {
+                          "type": "string",
+                          "minLength": 1,
+                          "nullable": true
+                        },
+                        "function_revision": {
+                          "type": "string",
+                          "minLength": 1,
+                          "nullable": true
+                        },
+                        "model": {
+                          "type": "string",
+                          "minLength": 1,
+                          "nullable": true
+                        },
+                        "model_revision": {
+                          "type": "string",
+                          "minLength": 1,
+                          "nullable": true
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "components": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 120
+                              },
+                              "score": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "nullable": true
+                              },
+                              "weight": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "reason": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 2000
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "score",
+                              "weight",
+                              "reason"
+                            ],
+                            "additionalProperties": false
                           },
-                          "reason": {
+                          "maxItems": 100
+                        },
+                        "reasons": {
+                          "type": "array",
+                          "items": {
                             "type": "string",
                             "minLength": 1,
                             "maxLength": 2000
+                          },
+                          "maxItems": 100
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "provider_tool_id",
+                        "actor_id",
+                        "observed_at"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "history": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "history_id": {
+                            "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                          },
+                          "value": {
+                            "$ref": "#/anyOf/0/properties/cells/items/properties/value"
+                          },
+                          "status": {
+                            "$ref": "#/anyOf/0/properties/cells/items/properties/status"
+                          },
+                          "cost": {
+                            "$ref": "#/anyOf/0/properties/cells/items/properties/cost"
+                          },
+                          "run_id": {
+                            "allOf": [
+                              {
+                                "$ref": "#/anyOf/0/properties/rows/items/properties/row_id"
+                              }
+                            ],
+                            "nullable": true
+                          },
+                          "provenance": {
+                            "$ref": "#/anyOf/0/properties/cells/items/properties/provenance"
+                          },
+                          "recorded_at": {
+                            "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
                           }
                         },
                         "required": [
-                          "key",
-                          "score",
-                          "weight",
-                          "reason"
+                          "history_id",
+                          "value",
+                          "status",
+                          "cost",
+                          "run_id",
+                          "provenance",
+                          "recorded_at"
                         ],
                         "additionalProperties": false
                       },
-                      "maxItems": 100
+                      "maxItems": 50
                     },
-                    "reasons": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 2000
-                      },
-                      "maxItems": 100
+                    "observed_at": {
+                      "allOf": [
+                        {
+                          "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
+                        }
+                      ],
+                      "nullable": true
+                    },
+                    "updated_at": {
+                      "$ref": "#/anyOf/0/properties/rows/items/properties/source_state/properties/updated_at"
                     }
                   },
                   "required": [
-                    "kind",
-                    "provider_tool_id",
-                    "actor_id",
-                    "observed_at"
+                    "cell_id",
+                    "table_id",
+                    "row_id",
+                    "column_id",
+                    "value",
+                    "value_type",
+                    "nullable",
+                    "status",
+                    "cost",
+                    "run_id",
+                    "provenance",
+                    "history",
+                    "observed_at",
+                    "updated_at"
                   ],
                   "additionalProperties": false
-                },
-                "history": {
-                  "type": "array",
-                  "items": {
+                }
+              },
+              "group_keys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "nullable": true
+                }
+              },
+              "total_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "next_cursor": {
+                "anyOf": [
+                  {
                     "type": "object",
                     "properties": {
-                      "history_id": {
-                        "$ref": "#/properties/rows/items/properties/row_id"
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "position"
+                        ]
                       },
-                      "value": {
-                        "$ref": "#/properties/cells/items/properties/value"
+                      "position": {
+                        "type": "integer",
+                        "minimum": 0
                       },
-                      "status": {
-                        "$ref": "#/properties/cells/items/properties/status"
-                      },
-                      "cost": {
-                        "$ref": "#/properties/cells/items/properties/cost"
-                      },
-                      "run_id": {
-                        "allOf": [
-                          {
-                            "$ref": "#/properties/rows/items/properties/row_id"
-                          }
-                        ],
-                        "nullable": true
-                      },
-                      "provenance": {
-                        "$ref": "#/properties/cells/items/properties/provenance"
-                      },
-                      "recorded_at": {
-                        "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
+                      "row_id": {
+                        "type": "string",
+                        "format": "uuid"
                       }
                     },
                     "required": [
-                      "history_id",
-                      "value",
-                      "status",
-                      "cost",
-                      "run_id",
-                      "provenance",
-                      "recorded_at"
+                      "kind",
+                      "position",
+                      "row_id"
                     ],
                     "additionalProperties": false
                   },
-                  "maxItems": 50
-                },
-                "observed_at": {
-                  "allOf": [
-                    {
-                      "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
-                    }
-                  ],
-                  "nullable": true
-                },
-                "updated_at": {
-                  "$ref": "#/properties/rows/items/properties/source_state/properties/updated_at"
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "sorted"
+                        ]
+                      },
+                      "sort_values": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/anyOf/0/properties/cells/items/properties/value"
+                        }
+                      },
+                      "row_id": {
+                        "$ref": "#/anyOf/0/properties/next_cursor/anyOf/0/properties/row_id"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "sort_values",
+                      "row_id"
+                    ],
+                    "additionalProperties": false
+                  }
+                ],
+                "nullable": true
+              }
+            },
+            "required": [
+              "rows",
+              "cells",
+              "group_keys",
+              "total_count",
+              "next_cursor"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "source_run_id": {
+                "$ref": "#/anyOf/0/properties/next_cursor/anyOf/0/properties/row_id"
+              },
+              "source_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/anyOf/0/properties/rows/items"
                 }
               },
-              "required": [
-                "cell_id",
-                "table_id",
-                "row_id",
-                "column_id",
-                "value",
-                "value_type",
-                "nullable",
-                "status",
-                "cost",
-                "run_id",
-                "provenance",
-                "history",
-                "observed_at",
-                "updated_at"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "group_keys": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "nullable": true
-            }
-          },
-          "total_count": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "next_cursor": {
-            "anyOf": [
-              {
+              "frontier": {
                 "type": "object",
                 "properties": {
-                  "kind": {
-                    "type": "string",
-                    "enum": [
-                      "position"
-                    ]
+                  "next_cursor": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "position"
+                        ]
+                      },
+                      "position": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "row_id": {
+                        "$ref": "#/anyOf/0/properties/next_cursor/anyOf/0/properties/row_id"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "position",
+                      "row_id"
+                    ],
+                    "additionalProperties": false,
+                    "nullable": true
                   },
-                  "position": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "row_id": {
-                    "type": "string",
-                    "format": "uuid"
+                  "exhausted": {
+                    "type": "boolean"
                   }
                 },
                 "required": [
-                  "kind",
-                  "position",
-                  "row_id"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "kind": {
-                    "type": "string",
-                    "enum": [
-                      "sorted"
-                    ]
-                  },
-                  "sort_values": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/properties/cells/items/properties/value"
-                    }
-                  },
-                  "row_id": {
-                    "$ref": "#/properties/next_cursor/anyOf/0/properties/row_id"
-                  }
-                },
-                "required": [
-                  "kind",
-                  "sort_values",
-                  "row_id"
+                  "next_cursor",
+                  "exhausted"
                 ],
                 "additionalProperties": false
               }
+            },
+            "required": [
+              "source_run_id",
+              "source_count",
+              "rows",
+              "frontier"
             ],
-            "nullable": true
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "rows",
-          "cells",
-          "group_keys",
-          "total_count",
-          "next_cursor"
-        ],
-        "additionalProperties": false
+        ]
       },
       "output_manifest": "structured",
       "provider": null,
@@ -260333,11 +260409,7 @@
           "table_id"
         ],
         "outputs": [
-          "rows",
-          "cells",
-          "group_keys",
-          "total_count",
-          "next_cursor"
+          "result"
         ],
         "side_effects": [],
         "prerequisites": [],
@@ -342102,6 +342174,306 @@
       }
     },
     {
+      "id": "workbook_audiences.list",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "view",
+      "label": "View List",
+      "description": "Canonical unified-table list operation for view resources.",
+      "when_to_use": [
+        "Use this operation to list a domain-neutral view through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not pass campaign_id or treat a campaign as the table resource."
+      ],
+      "required_scopes": [
+        "tables:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "limit"
+        },
+        {
+          "name": "cursor",
+          "type": "object",
+          "required": false,
+          "description": "cursor"
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "required": false,
+          "description": "search"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 50
+          },
+          "cursor": {
+            "type": "object",
+            "properties": {
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "required": [
+              "updated_at",
+              "id"
+            ],
+            "additionalProperties": false,
+            "nullable": true,
+            "default": null
+          },
+          "search": {
+            "type": "string",
+            "maxLength": 200
+          }
+        },
+        "additionalProperties": false,
+        "required": []
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "audiences": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "workbook_id": {
+                  "$ref": "#/properties/audiences/items/properties/id"
+                },
+                "worksheet_id": {
+                  "$ref": "#/properties/audiences/items/properties/id"
+                },
+                "view_id": {
+                  "$ref": "#/properties/audiences/items/properties/id"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 606
+                },
+                "workbook_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "worksheet_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "view_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 4000,
+                  "nullable": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "$ref": "#/properties/audiences/items/properties/created_at"
+                },
+                "contacts_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "nullable": true
+                },
+                "source_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "nullable": true
+                }
+              },
+              "required": [
+                "id",
+                "workbook_id",
+                "worksheet_id",
+                "view_id",
+                "name",
+                "workbook_name",
+                "worksheet_name",
+                "view_name",
+                "description",
+                "created_at",
+                "updated_at",
+                "contacts_count",
+                "source_count"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 50
+          },
+          "completeness": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "truncated"
+            ]
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "next_cursor": {
+            "type": "object",
+            "properties": {
+              "updated_at": {
+                "$ref": "#/properties/audiences/items/properties/created_at"
+              },
+              "id": {
+                "$ref": "#/properties/audiences/items/properties/id"
+              }
+            },
+            "required": [
+              "updated_at",
+              "id"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          },
+          "frontier": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "workbook_audience_cursor"
+                ]
+              },
+              "next_cursor": {
+                "$ref": "#/properties/next_cursor"
+              }
+            },
+            "required": [
+              "kind",
+              "next_cursor"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          }
+        },
+        "required": [
+          "audiences",
+          "completeness",
+          "truncated",
+          "next_cursor",
+          "frontier"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "workbook_audiences.list",
+        "noun": "view",
+        "verb": "list"
+      },
+      "rest_paths": [
+        "/workbook-audiences",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/workbook-audiences"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate views list"
+      ],
+      "examples": [
+        "dreamstate views list"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "workbook_audiences.list",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "workbook_audiences.list",
+          "View List",
+          "dreamstate views list"
+        ],
+        "use_cases": [
+          "Use this operation to list a domain-neutral view through the unified table data plane."
+        ],
+        "inputs": [],
+        "outputs": [
+          "audiences",
+          "completeness",
+          "truncated",
+          "next_cursor",
+          "frontier"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "workbooks.archive",
       "kind": "resource",
       "domain": "tables",
@@ -359735,8 +360107,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1139,
+    "capabilities": 1140,
     "mcp_tools": 11
   },
-  "manifest_digest": "39b629d74188afa1e3596d4c8402eccdd86915c5e99b2b720e64d18f425a7936"
+  "manifest_digest": "c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034"
 }

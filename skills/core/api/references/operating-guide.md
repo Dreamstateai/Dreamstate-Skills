@@ -2,7 +2,7 @@
 
 ## Promise
 
-Call Dreamstate API resources and typed run intents with idempotency and async result checks.
+Call Dreamstate API resources and typed capability runs with idempotency and async result checks.
 
 ## Execution boundary
 

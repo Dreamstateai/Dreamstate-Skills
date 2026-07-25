@@ -2,7 +2,7 @@
 
 ## Request
 
-“Help me call Dreamstate API resources and typed run intents with idempotency and async result checks.”
+“Help me call Dreamstate API resources and typed capability runs with idempotency and async result checks.”
 
 ## Correct response shape
 

@@ -7,16 +7,16 @@ capability_ids: ["brain.learning.query_benchmarks","seo.robots_audit","visibilit
 completion_contract: {"version":1,"fields":[{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"sample_state","description":"Benchmark sample band disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"privacy_state","description":"Cross-workspace privacy boundary state.","allowed_values":["cohort_only","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"target_conversion","description":"Named target conversion state.","allowed_values":["defined","missing"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 77460e4d7803974989375c69d4396cd963d9c41569b0e95c13f0925c013906f8
+  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 1f8e2f4bd87779d6
-  manifest_digest: 39b629d74188afa1e3596d4c8402eccdd86915c5e99b2b720e64d18f425a7936
+  capability_hash: 70acbffd5d943747
+  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.2
-  source_release_hash: 77460e4d7803974989375c69d4396cd963d9c41569b0e95c13f0925c013906f8
+  source_release: 0.5.3
+  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
   generator_version: 1.0.0
   client: claude
   kernel_id: seo
