@@ -11,7 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = '897c121cd546d3212a7fed051f8198cfe4631eef1ab82ef4fbd2aec96321353b';
+const CANONICAL_MANIFEST_DIGEST = '39b629d74188afa1e3596d4c8402eccdd86915c5e99b2b720e64d18f425a7936';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -464,6 +464,9 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
 
 test('the pinned MCP catalog exposes only the compact canonical gateway', () => {
   assert.deepEqual(catalog.mcp_tools.map((tool: { name: string }) => tool.name).sort(), [
+    'dreamstate_agent_proposal_create',
+    'dreamstate_agent_proposal_delegate_bindings',
+    'dreamstate_agent_proposal_get',
     'dreamstate_cancel_run',
     'dreamstate_get_run',
     'dreamstate_list_runs',

@@ -10,16 +10,16 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 032a861caa0a439b4560be2b3d8af54818cb3cc7560d72718cbf864f371100d1
+  playbook_kernel_hash: 77460e4d7803974989375c69d4396cd963d9c41569b0e95c13f0925c013906f8
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: f545d33b0e147d4e
-  manifest_digest: 897c121cd546d3212a7fed051f8198cfe4631eef1ab82ef4fbd2aec96321353b
+  capability_hash: 1f8e2f4bd87779d6
+  manifest_digest: 39b629d74188afa1e3596d4c8402eccdd86915c5e99b2b720e64d18f425a7936
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.1
-  source_release_hash: 032a861caa0a439b4560be2b3d8af54818cb3cc7560d72718cbf864f371100d1
+  source_release: 0.5.2
+  source_release_hash: 77460e4d7803974989375c69d4396cd963d9c41569b0e95c13f0925c013906f8
   generator_version: 1.0.0
   kernel_id: integrations
   kernel_file: KERNEL.md

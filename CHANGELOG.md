@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.2 - 2026-07-25
+
+- Reconciled Architect, Claude Code, and Codex with Influence commit `77a2ecab4c2a099923f0c62d4e01935d13944794` and its canonical `1f8e2f4bd87779d6` capability contract.
+- Preserved the signed Architect kernels and eval contracts while regenerating exact client adapters and release pins from the current runtime registry.
+
 ## 0.5.1 - 2026-07-21
 
 - Bound every generated Architect skill to exact canonical capability IDs and a signed completion contract.

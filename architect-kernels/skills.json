@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_release": "0.5.1",
+  "source_release": "0.5.2",
   "playbook_kernel_version": "1.0.0",
   "client_adapter_version": "1.0.0",
   "skills": [
