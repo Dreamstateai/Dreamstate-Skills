@@ -17,37 +17,37 @@ Run `/connect` first if unsure.
 
 There are three ways people arrive in the table:
 
-- **Already in Dreamstate** — find the list with `outreach_lists` and keep its `id`.
-- **Source fresh** — create one with `outreach_create_list`, then use
-  `outreach_find_leads` (healthy `account_id` from `content_list_accounts`, destination
+- **Already in Dreamstate** — find the list with `tables.list` and keep its `id`.
+- **Source fresh** — create one with `tables.create`, then use
+  `sources.find_leads` (healthy `account_id` from `social.accounts_list`, destination
   `list_id`). For signal-based sourcing, defer to `/signal-scraper`.
 - **From the user's own data (a CSV / paste)** — create a list, then add a row per
-  person and write their known fields with `outreach_set_cell` (see Step 2). Map the
+  person and write their known fields with `cells.settle` (see Step 2). Map the
   user's headers onto Dreamstate fields first; only `name` (or first/last) is truly
   required, everything else is a column you fill or enrich.
 
-Confirm the roster with `outreach_list_contacts`.
+Confirm the roster with `contacts.list`.
 
 ## Step 2: Shape the columns (the Clay part)
 
 Decide what each row should hold beyond the built-in contact fields. Add a column once
-with `outreach_add_column` and reuse it for every row:
+with `columns.add` and reuse it for every row:
 
 - `kind: "freeform"` for text/number values you or the user write (e.g.
   `key: "persona"`, `key: "account_tier"`, `key: "notes"`).
-- Rename or retype later with `outreach_edit_column` rather than piling on duplicates, and
-  `outreach_delete_column` to clear out a stray or experimental column so the table stays clean.
+- Rename or retype later with `columns.update` rather than piling on duplicates, and
+  `columns.archive` to clear out a stray or experimental column so the table stays clean.
 
 Keep the schema tight and intentional: a column exists because a later stage reads it
 (`/lead-prioritizer` writes `icp_fit`, `/hook-writer` writes `opener`). Don't add columns
-nothing consumes. Write per-row values with `outreach_set_cell` (`column_key`,
+nothing consumes. Write per-row values with `cells.settle` (`column_key`,
 `contact_id`, `value`).
 
 ## Step 3: Enrich the firmographics
 
-For each contact worth keeping, call `outreach_enrich_contact` (1 credit each,
+For each contact worth keeping, call `contacts.enrich` (1 credit each,
 off-account, bounded by the daily spend cap) to fill title, company, size, industry, and
-the other provider fields. Read what came back with `outreach_get_contact`.
+the other provider fields. Read what came back with `contacts.get`.
 
 If the list is large, enrich the highest-priority rows first, so a cap pause still leaves
 the user with the leads that matter. Note any rows left un-enriched so nothing is
@@ -55,7 +55,7 @@ silently missing.
 
 ## Step 4: Hand back a clean table
 
-Read the table with `outreach_get_campaign_table` (the Clay view: rows x columns) and
+Read the table with `tables.get` (the Clay view: rows x columns) and
 summarize: how many rows, which columns are populated, how many enriched, and a few
 example rows. Tell the user the list is ready for `/lead-prioritizer` (scoring) and
 `/hook-writer` (openers), or to drop straight into `/outbound`.

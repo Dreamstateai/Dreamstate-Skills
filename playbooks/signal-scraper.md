@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: capability
-tools_used: [outreach_list_signal_types, outreach_find_leads, outreach_create_list, outreach_lists, outreach_list_contacts, content_list_accounts]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [sources.list, sources.cold_outbound_preview, sources.cold_outbound_expand, sources.find_leads, tables.create, tables.list, contacts.list, social.accounts_list]
 ---
 
 # Signal Scraper
@@ -20,9 +21,9 @@ Run `/connect` first if unsure. You need a healthy LinkedIn account to source th
 
 ## Step 1: Pick the account and the destination list
 
-Call `content_list_accounts` and keep a healthy LinkedIn `account_id` (the search runs
-through it). Create the destination with `outreach_create_list` (`kind: "manual"` for a
-static list you control), or reuse an existing one via `outreach_lists`. Keep the
+Call `social.accounts_list` and keep a healthy LinkedIn `account_id` (the search runs
+through it). Create the destination with `tables.create` (`kind: "manual"` for a
+static list you control), or reuse an existing one via `tables.list`. Keep the
 `list_id` so sourced people land in one table.
 
 ## Step 2: Decide the signal, not just the title
@@ -35,13 +36,13 @@ name one rather than sourcing on title alone:
 - **Tech / tooling change** — adopted or dropped a tool adjacent to yours.
 - **Engagement** — interacted with a relevant post, viewed a profile, changed jobs.
 
-Call `outreach_list_signal_types` to see which signals this workspace can target. If the
+Call `sources.list` to see which signals this workspace can target. If the
 user only has a plain ICP (titles + company shape), that is fine — source on filters and
 treat the signal as "none", but say so, because a no-signal list converts worse.
 
 ## Step 3: Source the rows
 
-Call `outreach_find_leads`:
+Call `sources.find_leads`:
 
 - Always pass `account_id` and the destination `list_id`.
 - Use `filters` (keywords, title, company, location, industry, seniority) for a
@@ -49,13 +50,13 @@ Call `outreach_find_leads`:
   URL. Prefer their URL when they have one; it captures intent your filters might miss.
 - Start with a small `limit` (e.g. 20) to sanity-check quality before scaling.
 
-`outreach_find_leads` is bounded-sync: it may return rows directly, or a job id with
+`sources.find_leads` is bounded-sync: it may return rows directly, or a job id with
 `status: "working"` for the slow path. If working, tell the user it is sourcing and
 re-list shortly rather than blocking.
 
 ## Step 4: Sanity-check before handing off
 
-Read the first batch with `outreach_list_contacts`. If the people are off-ICP, fix the
+Read the first batch with `contacts.list`. If the people are off-ICP, fix the
 filters and re-source now, before anyone spends enrichment credits on them. Garbage
 sourced here is expensive to clean downstream.
 

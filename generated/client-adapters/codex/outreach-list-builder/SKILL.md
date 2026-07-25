@@ -5,23 +5,23 @@ description: "Build or extend source-first reactive lead tables with live-discov
 capability_domains: ["outreach"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: b407e2e9a2aad409
+  capability_hash: a2abbe7ba4cbc084
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach-list-builder
   kernel_file: KERNEL.md
-  kernel_sha256: 30d34fd8bb8bb242452f407a1a743d1ae6390346f8b77c3a2169a75a1bfea8cd
+  kernel_sha256: 3cdeba4c8014baa87043e7c2d84342ee78761bf8f8109013a20def59bcfbcde5
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: f19268c7e63ecfd3b96998b8d41f2628a85a27eb1662fe7b3c6c63520da7546d
+  evals_sha256: a547cfcc31ce0f58f8402d262338e2aaa8fb9e1cc77e2aebde257fc0a9e3582a
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]
@@ -48,9 +48,9 @@ Own list sourcing, row identity, filters and exclusions, table shape, registered
 
 Translate the ICP into required criteria, preferred criteria, exclusions, geography, volume, acceptable approximation, and identity keys. Preserve those distinctions in every source search and audit. Search the complete live source capability set; do not recall a source, provider, field, column type, output, or price from this kernel.
 
-When signal scarcity or provider quality is uncertain, design two or three small source pilots. Fetch every candidate's exact contract, then use `intent:outreach.cold_outbound_preview` for a standalone `outreach_source` test run. Bind only the reviewed targeting object and an integer `row_limit` from five through ten, set a positive credit ceiling, and provide no list, campaign, source, import, enrollment, or other durable destination. Compare actual coverage, freshness, precision, provenance, duplicate rate, and credit use before choosing the source path or designing any durable bundle.
+When signal scarcity or provider quality is uncertain, design two or three small source pilots. Fetch every candidate's exact contract, then use `sources.cold_outbound_preview` for a standalone `outreach_source` test run. Bind only the reviewed targeting object and an integer `row_limit` from five through ten, set a positive credit ceiling, and provide no list, campaign, source, import, enrollment, or other durable destination. Compare actual coverage, freshness, precision, provenance, duplicate rate, and credit use before choosing the source path or designing any durable bundle.
 
-Keep all three data gates distinct. The evidence pilot above leaves rows only in run evidence. After the draft bundle exists, a separate `table_column_run` executes selected columns on exactly five through ten current contacts. Only after both audits may a separately approved `outreach_bulk_expansion` use `intent:outreach.cold_outbound_expand` to import the capped resolved source result set into one exact list revision and stage that exact set for one still-inactive draft campaign. It carries the campaign id, list id and revision, configured source id, source-evidence run id, unchanged targeting, an integer eleven-through-fifty row cap for this release, exact-result-set flag, and required draft status. It is never another five-to-ten-row import.
+Keep all three data gates distinct. The evidence pilot above leaves rows only in run evidence. After the draft bundle exists, a separate `table_column_run` executes selected columns on exactly five through ten current contacts. Only after both audits may a separately approved `outreach_bulk_expansion` use `sources.cold_outbound_expand` to import the capped resolved source result set into one exact list revision and stage that exact set for one still-inactive draft campaign. It carries the campaign id, list id and revision, configured source id, source-evidence run id, unchanged targeting, an integer eleven-through-fifty row cap for this release, exact-result-set flag, and required draft status. It is never another five-to-ten-row import.
 
 ## Dependency-complete table
 

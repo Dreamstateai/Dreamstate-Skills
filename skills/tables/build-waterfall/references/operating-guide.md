@@ -8,11 +8,11 @@ Design a provider waterfall that stops on success and exposes cost, confidence, 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `column:waterfall`, `function:waterfall_enrich_list`
+Declared capabilities: `columns.add`, `columns.run`
 
-Required scopes: `outreach:write`
+Required scopes: `tables:write`
 
 ## Evidence checklist
 

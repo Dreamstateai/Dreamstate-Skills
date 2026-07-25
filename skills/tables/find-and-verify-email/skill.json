@@ -22,22 +22,20 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "column:email_find",
-    "intent:outreach.find_email"
+    "contacts.find_email"
   ],
   "mcp_tools": [
-    "dreamstate_tools_run"
-  ],
-  "run_intents": [
-    "outreach.find_email",
-    "outreach.table.add_column"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "resources": [],
   "required_scopes": [
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "a2abbe7ba4cbc084",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/find-and-verify-email/SKILL.md",
   "install_command": "dreamstate skills install find-and-verify-email",

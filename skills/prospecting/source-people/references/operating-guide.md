@@ -8,9 +8,9 @@ Find relevant people inside target accounts using role, seniority, and function 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_find_leads`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:outreach.find_leads`
+Declared capabilities: `sources.find_leads`
 
 Required scopes: `outreach:write`
 

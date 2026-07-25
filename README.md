@@ -103,7 +103,7 @@ skills-index.json      Generated catalog the install CLI reads
 config/icp.example.json  Copy to icp.json — the ICP the scoring/copy skills read
 references/            Browsable docs (e.g. input-columns.md: your CSV → a Dreamstate row)
 src/*.ts               TypeScript: the install CLI (cli.ts) + config writers + banner
-src/catalog.json       Pinned snapshot of Dreamstate MCP tools + the scope each needs
+contracts/capability-manifest.json  Pinned canonical capability and compact MCP contract
 scripts/build.ts       playbooks/ -> skills/ + skills-index.json + dist/ MCP prompts
 test/*.ts              Contract, determinism, and config-writer round-trip tests
 dist/                  MCP-prompt artifacts the Dreamstate server vendors

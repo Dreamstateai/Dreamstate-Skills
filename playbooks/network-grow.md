@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [content_list_accounts, outreach_lists, outreach_create_list, outreach_find_leads, outreach_list_contacts, outreach_get_contact, outreach_enrich_contact, outreach_create_campaign, outreach_draft_message, outreach_send_connection]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [social.accounts_list, tables.list, tables.create, sources.find_leads, contacts.list, contacts.get, contacts.enrich, campaigns.create, contacts.draft_opener, contacts.send_connection]
 ---
 
 # Network Grow
@@ -20,35 +21,35 @@ Run `/connect` first if unsure. You need a healthy LinkedIn account.
 
 ## Step 1: Account and audience
 
-Get a healthy LinkedIn `account_id` from `content_list_accounts`. Then get the people into a
+Get a healthy LinkedIn `account_id` from `social.accounts_list`. Then get the people into a
 list:
 
-- Reuse an existing list with `outreach_lists`, or
-- Create one with `outreach_create_list` and source with `outreach_find_leads` (pass
+- Reuse an existing list with `tables.list`, or
+- Create one with `tables.create` and source with `sources.find_leads` (pass
   `account_id` and `list_id`; use the user's LinkedIn search URL if they have one).
 
-Confirm the roster with `outreach_list_contacts`. Optionally enrich with
-`outreach_enrich_contact` if you want titles/companies to personalize the note well.
+Confirm the roster with `contacts.list`. Optionally enrich with
+`contacts.enrich` if you want titles/companies to personalize the note well.
 
 ## Step 2: A connection campaign is the vehicle
 
-`outreach_send_connection` is enroll-only: it queues each invite through a connection campaign,
+`contacts.send_connection` is enroll-only: it queues each invite through a connection campaign,
 and the engine reserves the slot and fires it under its own ramp cap at dispatch (it never
 sends directly, and you cannot raise that cap from here). So create a lightweight campaign with
-`outreach_create_campaign` bound to the list to act as the sender vehicle, or reuse an existing
+`campaigns.create` bound to the list to act as the sender vehicle, or reuse an existing
 connection campaign. Keep its `campaign_id`.
 
 ## Step 3: Write a note worth accepting
 
 The connection note is short and the whole pitch. Per contact, read context with
-`outreach_get_contact` and draft a one-liner with `outreach_draft_message`: a real reason you
+`contacts.get` and draft a one-liner with `contacts.draft_opener`: a real reason you
 want to connect (shared interest, their work, the event), not a disguised sales pitch. People
 accept humans, not funnels. Show the user the first few notes to set the voice; these go out
 as them.
 
 ## Step 4: Send under the cap
 
-For each contact, call `outreach_send_connection` (`contact_id`, `campaign_id`, `account_id`,
+For each contact, call `contacts.send_connection` (`contact_id`, `campaign_id`, `account_id`,
 and a unique `client_request_id` so retries are idempotent). It returns
 `accepted | queued | blocked`:
 

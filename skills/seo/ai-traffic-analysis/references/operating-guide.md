@@ -8,9 +8,9 @@ Separate AI-referred traffic evidence from crawler activity and unattributed ass
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `visibility_ai_traffic`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
 
-Declared capabilities: `intent:visibility.ai_traffic`
+Declared capabilities: `visibility.ai_traffic`
 
 Required scopes: `visibility:read`
 

@@ -5,15 +5,15 @@ description: "Run and interpret AI-answer visibility audits with real citations,
 capability_domains: ["visibility"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: b407e2e9a2aad409
+  capability_hash: a2abbe7ba4cbc084
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   generator_version: 1.0.0
   client: claude
   kernel_id: visibility

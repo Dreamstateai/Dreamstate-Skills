@@ -21,17 +21,21 @@
   "requires_human_approval": [
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
-  "capability_ids": [],
-  "mcp_tools": [
-    "crm_sync"
+  "capability_ids": [
+    "crm.sync"
   ],
-  "run_intents": [],
+  "mcp_tools": [
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
+  ],
   "resources": [],
   "required_scopes": [
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "a2abbe7ba4cbc084",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/crm/sync-contact-to-crm/SKILL.md",
   "install_command": "dreamstate skills install sync-contact-to-crm",

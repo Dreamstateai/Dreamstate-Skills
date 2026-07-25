@@ -22,20 +22,21 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.generate_post"
+    "content.artifact_create",
+    "content.artifact_generate"
   ],
   "mcp_tools": [
-    "content_generate_post"
-  ],
-  "run_intents": [
-    "content.generate_post"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "resources": [],
   "required_scopes": [
     "content:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "a2abbe7ba4cbc084",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/social/x-post/SKILL.md",
   "install_command": "dreamstate skills install x-post",

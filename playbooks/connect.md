@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: connect
 tier: composite
-tools_used: [ping, content_list_accounts, outreach_lists]
+tools_used: [ping, dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run]
+capability_ids: [social.accounts_list, tables.list]
 ---
 
 # Connect Dreamstate
@@ -48,8 +49,8 @@ paste an API key into the chat. Once they have approved, retry `ping`.
 Tool visibility is scoped to the key. A playbook that needs to send will fail if the
 key is read-only, so find out now. Probe lightly:
 
-- `outreach_lists` — confirms outreach read access and shows existing lists.
-- `content_list_accounts` — returns the connected LinkedIn and X accounts, each with
+- `tables.list` — confirms outreach read access and shows existing lists.
+- `social.accounts_list` — returns the connected LinkedIn and X accounts, each with
   a health flag.
 
 Summarize for the user in plain language: which domains are available (outreach /
@@ -59,7 +60,7 @@ are missing, that key does not have that scope; say so rather than guessing.
 ## Step 3: Are the accounts ready to act?
 
 Most outreach and social playbooks need a healthy connected account to send from.
-From `content_list_accounts`, report:
+From `social.accounts_list`, report:
 
 - The connected LinkedIn account(s) and their health.
 - The connected X account(s) and their health.
@@ -67,8 +68,8 @@ From `content_list_accounts`, report:
 If an account is unhealthy or none is connected, the user must reconnect it in the
 Dreamstate dashboard before sending. Flag that now: "You have no healthy LinkedIn
 account connected, so any send step will be blocked until you reconnect one in
-Dreamstate." Better to say it here than to have `outreach_send_*` or
-`content_publish_post` return `blocked` later.
+Dreamstate." Better to say it here than to have a send capability or
+`content.delivery_publish` return `blocked` later.
 
 ## Report
 

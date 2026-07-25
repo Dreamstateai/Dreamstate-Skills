@@ -32,13 +32,14 @@
       },
       "expected": {
         "allowed_tools": [
-          "outreach_bulk_upsert_contacts",
-          "outreach_upsert_contact",
-          "outreach_add_to_list"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:outreach.add_to_list",
-          "intent:outreach.upsert_contact"
+          "contacts.bulk_upsert",
+          "contacts.upsert"
         ]
       },
       "check": "tool_trace_subset"

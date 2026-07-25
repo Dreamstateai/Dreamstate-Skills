@@ -8,9 +8,9 @@ Design a workflow graph with explicit inputs, branches, retries, approvals, and 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `workflow_apply`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
 
-Declared capabilities: `resource:workflows.write`
+Declared capabilities: `workflows.create`, `workflows.graph_apply`
 
 Required scopes: `workflows:write`
 

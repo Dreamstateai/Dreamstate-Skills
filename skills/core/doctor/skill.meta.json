@@ -24,11 +24,11 @@
   "tools_used": [
     "ping",
     "dreamstate_tools_search",
-    "content_list_accounts"
+    "dreamstate_tools_get"
   ],
   "required_scopes": [
     "content:read"
   ],
-  "capability_hash": "b407e2e9a2aad409",
+  "capability_hash": "a2abbe7ba4cbc084",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

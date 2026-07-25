@@ -22,11 +22,14 @@
   "execution_mode": "executable",
   "maturity": "beta",
   "tools_used": [
-    "outreach_add_column"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run",
+    "dreamstate_get_run"
   ],
   "required_scopes": [
-    "outreach:write"
+    "tables:write"
   ],
-  "capability_hash": "b407e2e9a2aad409",
+  "capability_hash": "a2abbe7ba4cbc084",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

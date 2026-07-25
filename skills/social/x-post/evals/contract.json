@@ -32,10 +32,14 @@
       },
       "expected": {
         "allowed_tools": [
-          "content_generate_post"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:content.generate_post"
+          "content.artifact_create",
+          "content.artifact_generate"
         ]
       },
       "check": "tool_trace_subset"

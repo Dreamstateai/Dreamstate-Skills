@@ -32,10 +32,13 @@
       },
       "expected": {
         "allowed_tools": [
-          "seo_competitor_ranks"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run"
         ],
         "allowed_capability_ids": [
-          "intent:seo.competitor_ranks"
+          "seo.serp_snapshot_resolve",
+          "visibility.citations"
         ]
       },
       "check": "tool_trace_subset"

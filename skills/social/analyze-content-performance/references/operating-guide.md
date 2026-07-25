@@ -8,9 +8,9 @@ Interpret content performance using reach, engagement quality, conversion, and c
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_post_analytics`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.post_analytics`
+Declared capabilities: `social.post_analytics`
 
 Required scopes: `content:read`
 

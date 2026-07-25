@@ -22,22 +22,19 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:content.list_accounts"
+    "social.accounts_list"
   ],
   "mcp_tools": [
     "ping",
     "dreamstate_tools_search",
-    "content_list_accounts"
-  ],
-  "run_intents": [
-    "content.list_accounts"
+    "dreamstate_tools_get"
   ],
   "resources": [],
   "required_scopes": [
     "content:read"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "a2abbe7ba4cbc084",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/doctor/SKILL.md",
   "install_command": "dreamstate skills install doctor",

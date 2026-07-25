@@ -8,11 +8,11 @@ Build deterministic formulas and run conditions from explicit fields instead of 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_add_column`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `column:ai`, `column:ai_answer`, `column:assigned_to`, `column:blitz_enrich`, `column:builtwith_tech`, `column:checkbox`, `column:company_enrich`, `column:crm_lookup`, `column:currency`, `column:date`, `column:email`, `column:email_find`, `column:enrichment`, `column:fetch_page`, `column:formula`, `column:http_request`, `column:image_url`, `column:keyword_research`, `column:local_business_search`, `column:merge_columns`, `column:multi_select`, `column:number`, `column:phone_find`, `column:place_details`, `column:predictleads_funding_enrich`, `column:predictleads_jobs`, `column:predictleads_news`, `column:realtime_search`, `column:realtime_search_deep`, `column:scrape_url`, `column:select`, `column:serp_search`, `column:serp_search_priority`, `column:serp_search_standard`, `column:sumble_tech`, `column:text`, `column:url`, `column:waterfall`, `column:web_agent`, `column:web_search`, `column:web_search_deep`, `intent:outreach.table.add_column`
+Declared capabilities: `columns.add`, `columns.run`
 
-Required scopes: `outreach:write`
+Required scopes: `tables:write`
 
 ## Evidence checklist
 

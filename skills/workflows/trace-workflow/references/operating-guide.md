@@ -8,9 +8,9 @@ Trace a workflow run across nodes, branches, tool calls, outputs, retries, and f
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `workflow_trace`, `workflow_runs`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
 
-Declared capabilities: `resource:workflow-runs`
+Declared capabilities: `workflows.run_trace_get`, `workflows.runs_list`
 
 Required scopes: `workflows:read`
 

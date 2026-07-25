@@ -5,7 +5,8 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: seo
 tier: playbook
-tools_used: [content_list_blog, content_create_blog, content_generate_blog, content_get_blog, content_publish_blog]
+tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+capability_ids: [content.article_list, content.article_create_schedule, content.artifact_generate, content.article_get, content.article_delivery_create, content.delivery_publish]
 ---
 
 # Blog Writer
@@ -21,33 +22,33 @@ cites competitors instead, use `/ai-visibility` for the gap analysis, then come 
 
 Confirm with the user: the topic, the target reader, the angle (what this post argues or
 teaches), and the keyword/query it should answer. Then check what already exists with
-`content_list_blog` so you do not rewrite a post the brand already has; if a close one exists,
+`content.article_list` so you do not rewrite a post the brand already has; if a close one exists,
 suggest updating it instead.
 
 ## Step 2: Create the draft item
 
-Call `content_create_blog` with a `title` and `content_type`. Pass a `brief` that names the
+Call `content.article_create_schedule` with a `title` and `content_type`. Pass a `brief` that names the
 angle, the target query, and the key points you want covered, plus any seed markdown the user
 gives you. A specific brief is the difference between a sharp post and generic filler. Keep the
 returned item id.
 
 ## Step 3: Generate the full draft (async)
 
-Call `content_generate_blog` (`mode: "full"`). This is ASYNC: the item moves
+Call `content.artifact_generate` (`mode: "full"`). This is ASYNC: the item moves
 `draft -> researching -> ... -> draft_ready`, and the response only confirms the job queued.
-Poll `content_get_blog` until `status` is `draft_ready`. Do not block the user while it runs;
+Poll `content.article_get` until `status` is `draft_ready`. Do not block the user while it runs;
 tell them it is generating and check back.
 
 ## Step 4: Review before publishing
 
-Read the finished draft with `content_get_blog` and show it to the user. This is long-form
+Read the finished draft with `content.article_get` and show it to the user. This is long-form
 content with their name on it, so edit for accuracy, voice, and the angle you agreed in Step 1
 before anything goes live. Regenerate (back to Step 3) or hand-edit the brief if the draft
 misses.
 
 ## Step 5: Publish
 
-On approval, `content_publish_blog`:
+On approval, `content.delivery_publish`:
 
 - `self_hosted: true` publishes to the public `/blog/<slug>`.
 - a `destination_id` publishes to a named workspace destination instead.

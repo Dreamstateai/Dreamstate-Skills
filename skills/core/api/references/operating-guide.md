@@ -2,13 +2,13 @@
 
 ## Promise
 
-Call Dreamstate API resources and typed run intents with idempotency and async result checks.
+Call Dreamstate API resources and typed capability runs with idempotency and async result checks.
 
 ## Execution boundary
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
 Declared capabilities: `resource:runs`
 

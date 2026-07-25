@@ -32,9 +32,14 @@
       },
       "expected": {
         "allowed_tools": [
-          "crm_sync"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
-        "allowed_capability_ids": []
+        "allowed_capability_ids": [
+          "crm.sync"
+        ]
       },
       "check": "tool_trace_subset"
     },

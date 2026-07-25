@@ -27,11 +27,10 @@
     "dreamstate_tools_get",
     "dreamstate_tools_run"
   ],
-  "run_intents": [],
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "a2abbe7ba4cbc084",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/dreamstate/SKILL.md",
   "install_command": "dreamstate skills install dreamstate",

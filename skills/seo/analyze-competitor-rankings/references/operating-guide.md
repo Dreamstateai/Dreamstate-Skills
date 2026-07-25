@@ -8,11 +8,11 @@ Compare ranking coverage and page intent without treating correlation as strateg
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `seo_competitor_ranks`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
 
-Declared capabilities: `intent:seo.competitor_ranks`
+Declared capabilities: `seo.serp_snapshot_resolve`, `visibility.citations`
 
-Required scopes: `visibility:read`
+Required scopes: `visibility:read`, `visibility:write`
 
 ## Evidence checklist
 

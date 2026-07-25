@@ -8,9 +8,9 @@ Write a LinkedIn post with a clear idea, useful development, and platform-approp
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `content_generate_post`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:content.generate_post`
+Declared capabilities: `content.artifact_create`, `content.artifact_generate`
 
 Required scopes: `content:write`
 

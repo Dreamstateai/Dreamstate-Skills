@@ -8,11 +8,11 @@ Use hiring activity to infer changing priorities while preserving role and timin
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `column:predictleads_jobs`
+Declared capabilities: `columns.add`, `columns.run`, `sources.list`
 
-Required scopes: `outreach:write`
+Required scopes: `outreach:read`, `tables:write`
 
 ## Evidence checklist
 

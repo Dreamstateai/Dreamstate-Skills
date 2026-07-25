@@ -8,9 +8,9 @@ Import an external list and map fields into stable Dreamstate columns without da
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `outreach_bulk_upsert_contacts`, `outreach_upsert_contact`, `outreach_add_to_list`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `intent:outreach.add_to_list`, `intent:outreach.upsert_contact`
+Declared capabilities: `contacts.bulk_upsert`, `contacts.upsert`
 
 Required scopes: `outreach:write`
 

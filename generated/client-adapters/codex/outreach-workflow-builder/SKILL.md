@@ -5,23 +5,23 @@ description: "Build validated row workflows with triggers, typed branches, actio
 capability_domains: ["outreach"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: b407e2e9a2aad409
+  capability_hash: a2abbe7ba4cbc084
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: 9667252b12f5a6d542c87d948384f07e06c92d58463d79b6b8777b8a3c2cf98b
+  kernel_sha256: fb022e0b0d13eaf27e3fb241f62f8d5286a1d6dd2617dac195daefd1e216dc7a
   adapter_sha256: 2aad6cc6aa97169d8cc78f6a7b69ad95c40ab40c22ad77656cef9da1390a65ba
   evals_file: evals.json
-  evals_sha256: f86acf56cd54e62e77e6fdbeeb18d1c24161a397782b4ae1d00932f9be725fd2
+  evals_sha256: 5dc7ed8b4750266498a37e960eac39a394743f46d47950a85570fa9bae161ae4
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]
@@ -58,7 +58,7 @@ Require the list-builder handoff or an inspected existing table with exact artif
 6. Define stop conditions for disqualification, missing consent, sender or integration failure, reply, bounce, unsubscribe, campaign pause, cost cap, and terminal completion only when supported by live contracts.
 7. Separate eligibility from enrollment and enrollment from activation. A qualifying branch may make a row eligible; it does not itself authorize external outreach.
 
-Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence. A workflow proposal cannot run columns or enroll contacts, and cannot expand a source. After pilot and column-sample inspection, one separate `outreach_bulk_expansion` proposal must use the exact `intent:outreach.cold_outbound_expand` contract and bind the source-evidence run, draft campaign, exact list revision, configured source id, unchanged targeting, integer eleven-through-fifty row cap, exact-result-set flag, and required draft status; never represent a filter or future query as an enrolled audience. Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before that proposal. Final activation remains a later coordinator-owned consequence.
+Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence. A workflow proposal cannot run columns or enroll contacts, and cannot expand a source. After pilot and column-sample inspection, one separate `outreach_bulk_expansion` proposal must use the exact `sources.cold_outbound_expand` contract and bind the source-evidence run, draft campaign, exact list revision, configured source id, unchanged targeting, integer eleven-through-fifty row cap, exact-result-set flag, and required draft status; never represent a filter or future query as an enrolled audience. Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before that proposal. Final activation remains a later coordinator-owned consequence.
 
 ## Handoff
 

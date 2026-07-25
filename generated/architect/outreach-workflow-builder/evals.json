@@ -14,7 +14,7 @@
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
       "id": "exact-result-set-expansion-is-separate",
-      "required_concepts": ["intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "stage_exact_result_set", "still-inactive", "separate proposal"],
+      "required_concepts": ["sources.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "stage_exact_result_set", "still-inactive", "separate proposal"],
       "request": "After the source and priority samples are reviewed, import and enroll the capped resolved result set. Explain how workflow persistence, bulk expansion, and activation remain separate."
     }
   ],

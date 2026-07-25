@@ -32,10 +32,13 @@
       },
       "expected": {
         "allowed_tools": [
-          "visibility_refresh"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:visibility.refresh"
+          "visibility.refresh"
         ]
       },
       "check": "tool_trace_subset"

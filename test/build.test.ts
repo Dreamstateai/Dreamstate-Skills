@@ -17,6 +17,30 @@ test('build succeeds: all playbooks valid and every tool exists in the catalog',
   assert.ok(Object.keys(artifacts).length > 0, 'expected generated artifacts');
 });
 
+test('release metadata exposes only canonical capability ids and the compact MCP surface', () => {
+  const compactTools = new Set([
+    'ping',
+    'dreamstate_tools_search',
+    'dreamstate_tools_get',
+    'dreamstate_tools_run',
+    'dreamstate_get_run',
+    'dreamstate_list_runs',
+    'dreamstate_resume_run',
+    'dreamstate_cancel_run',
+  ]);
+  assert.ok(catalog.capabilities.length > 0);
+  assert.equal(catalog.capabilities.some((capability: Record<string, unknown>) => capability.id.startsWith('intent:')), false);
+  assert.equal(catalog.capabilities.some((capability: Record<string, unknown>) => 'run_intent' in capability), false);
+  assert.equal(catalog.mcp_tools.every((tool: { name: string }) => compactTools.has(tool.name)), true);
+
+  const artifacts = build();
+  for (const [path, body] of Object.entries(artifacts)) {
+    assert.doesNotMatch(body, /"run_intents"\s*:/, `${path} must not reintroduce run-intent metadata`);
+    assert.doesNotMatch(body, /"run_intent"\s*:/, `${path} must not reintroduce run-intent metadata`);
+    assert.doesNotMatch(body, /intent:[a-z]/, `${path} must use canonical capability ids`);
+  }
+});
+
 test('--check passes immediately after a build (generated tree is deterministic)', () => {
   writeArtifacts(build());
   const drifted = checkArtifacts(build());
@@ -294,9 +318,9 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.ok(offset > prior, `${kind} must follow the prior staged gate`);
     prior = offset;
   }
-  assert.match(coordinator, /intent:outreach\.cold_outbound_preview/);
+  assert.match(coordinator, /sources\.cold_outbound_preview/);
   assert.match(coordinator, /no list, campaign, source, import, enrollment, or other durable destination/i);
-  assert.match(coordinator, /intent:outreach\.cold_outbound_expand/);
+  assert.match(coordinator, /sources\.cold_outbound_expand/);
   assert.match(coordinator, /stage_exact_result_set=true/);
   assert.match(coordinator, /require_campaign_status=draft/);
   assert.match(listBuilder, /exactly five through ten rows/);

@@ -22,20 +22,21 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "intent:seo.competitor_ranks"
+    "seo.serp_snapshot_resolve",
+    "visibility.citations"
   ],
   "mcp_tools": [
-    "seo_competitor_ranks"
-  ],
-  "run_intents": [
-    "seo.competitor_ranks"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run"
   ],
   "resources": [],
   "required_scopes": [
-    "visibility:read"
+    "visibility:read",
+    "visibility:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b407e2e9a2aad409",
+  "verified_capability_hash": "a2abbe7ba4cbc084",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/analyze-competitor-rankings/SKILL.md",
   "install_command": "dreamstate skills install analyze-competitor-rankings",

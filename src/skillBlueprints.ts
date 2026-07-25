@@ -21,7 +21,7 @@ export const SKILL_BLUEPRINTS: SkillBlueprint[] = [
     'doctor|Diagnose authentication, workspace, scope, billing, provider, and connected-account readiness.',
     'cli|Operate the Dreamstate command line using live help and capability discovery as the authority.',
     'mcp|Discover and use Dreamstate MCP tools with explicit scopes, approvals, and durable verification.',
-    'api|Call Dreamstate API resources and typed run intents with idempotency and async result checks.',
+    'api|Call Dreamstate API resources and typed capability runs with idempotency and async result checks.',
     'capabilities|Inspect the workspace-specific capabilities available before selecting an execution path.',
     'usage-and-credits|Estimate, constrain, inspect, and explain Dreamstate credit consumption before paid work.',
     'webhooks|Design and operate signed Dreamstate webhook subscriptions with replay-safe event handling.',

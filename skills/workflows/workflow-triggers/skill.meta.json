@@ -22,14 +22,14 @@
   "execution_mode": "executable",
   "maturity": "beta",
   "tools_used": [
-    "workflow_triggers",
-    "workflow_trigger_create",
-    "workflow_trigger_delete"
+    "dreamstate_tools_search",
+    "dreamstate_tools_get",
+    "dreamstate_tools_run"
   ],
   "required_scopes": [
     "workflows:read",
     "workflows:write"
   ],
-  "capability_hash": "b407e2e9a2aad409",
+  "capability_hash": "a2abbe7ba4cbc084",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

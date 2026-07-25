@@ -28,15 +28,15 @@ row.
 
 ## Step 2: Read the rows
 
-Pull the table with `outreach_get_campaign_table` (or `outreach_list_contacts` for the
-roster), and `outreach_get_contact` for the enriched detail on each person. If many rows
+Pull the table with `tables.get` (or `contacts.list` for the
+roster), and `contacts.get` for the enriched detail on each person. If many rows
 are missing firmographics, say so and suggest running `/enrich-list` first; scoring on
 empty fields just launders guesses.
 
 ## Step 3: Score and persist
 
-Add the scoring columns once with `outreach_add_column` (`kind: "freeform"`), then write
-each row with `outreach_set_cell`:
+Add the scoring columns once with `columns.add` (`kind: "freeform"`), then write
+each row with `cells.settle`:
 
 - `icp_fit` — the score or tier.
 - `fit_reason` — one line on why, so the score is auditable and the user can recalibrate

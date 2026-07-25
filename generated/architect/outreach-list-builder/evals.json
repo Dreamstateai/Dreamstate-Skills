@@ -20,7 +20,7 @@
     {
       "expected_skill_ids": ["outreach-list-builder"],
       "id": "pilot-sample-and-bulk-expansion-are-distinct",
-      "required_concepts": ["intent:outreach.cold_outbound_preview", "outreach_source", "no durable destination", "table_column_run", "intent:outreach.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "still-inactive"],
+      "required_concepts": ["sources.cold_outbound_preview", "outreach_source", "no durable destination", "table_column_run", "sources.cold_outbound_expand", "outreach_bulk_expansion", "source-evidence run", "exact list revision", "configured source id", "still-inactive"],
       "required_order": ["outreach_source", "outreach_bundle", "table_column_run", "outreach_bulk_expansion"],
       "request": "Prove the scarce source on a few rows, build the draft table, sample its enrichments, then import and enroll the approved capped result set without launching."
     }

@@ -32,16 +32,17 @@
       },
       "expected": {
         "allowed_tools": [
-          "content_create_blog",
-          "content_generate_blog",
-          "content_get_blog",
-          "content_publish_blog"
+          "dreamstate_tools_search",
+          "dreamstate_tools_get",
+          "dreamstate_tools_run",
+          "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "intent:content.create_blog",
-          "intent:content.generate_blog",
-          "intent:content.get_blog",
-          "intent:content.publish_blog"
+          "content.article_create_schedule",
+          "content.article_delivery_create",
+          "content.article_get",
+          "content.artifact_generate",
+          "content.delivery_publish"
         ]
       },
       "check": "tool_trace_subset"

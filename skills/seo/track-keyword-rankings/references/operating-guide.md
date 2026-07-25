@@ -8,11 +8,11 @@ Track keyword movement with stable locations, devices, dates, and comparable sna
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `seo_keyword_tracking`, `seo_rank_overview`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
 
-Declared capabilities: `intent:seo.keyword_tracking`, `intent:seo.rank_overview`
+Declared capabilities: `visibility.keywords_get`, `visibility.overview`
 
-Required scopes: `visibility:read`, `visibility:write`
+Required scopes: `visibility:read`
 
 ## Evidence checklist
 

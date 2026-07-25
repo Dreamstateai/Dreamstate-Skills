@@ -8,9 +8,9 @@ Find business phone data through compliant providers and preserve source and con
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_run`
+Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `column:phone_find`, `intent:outreach.find_phone`
+Declared capabilities: `contacts.find_phone`
 
 Required scopes: `outreach:write`
 

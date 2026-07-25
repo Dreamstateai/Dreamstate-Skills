@@ -5,23 +5,23 @@ description: "Open an existing campaign or coordinate a new custom campaign from
 capability_domains: ["brain","outreach"]
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  playbook_kernel_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: b407e2e9a2aad409
+  capability_hash: a2abbe7ba4cbc084
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.0
-  source_release_hash: 0f6e13ab5c438d539df2d17bb390ab9db8ac4c07c2747c46fdf1474fb584f306
+  source_release_hash: 2e48794d262c9c5fcb9a9a4083977c303809b6dc3b84feebc7012250ffc42e59
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: 0a5a2668528eb32f6c15ccd56f9c8c7e4d76d6a1d3381d6ba6a11a44f8a756b6
+  kernel_sha256: 997992c11af9ffbe3a4c213c666e0ab9ba44a614b24335141bcd01ef3f12c4a4
   adapter_sha256: e8d99ea288bffa663c80aa3ca106aeb5910b1cd35cf33b8eb109db149641d46a
   evals_file: evals.json
-  evals_sha256: c7e441227c93ab83c82f9f062de0296ddea4890e1771d4bc20bf6742bea5e960
+  evals_sha256: 36e92e413a6573cb9f1e1687d02fad4c14a735c8a12c96e36d50993e7e17974c
 mutation_compatibility:
   mismatch_behavior: deny_run
   recovery_operations: [dreamstate_tools_search, dreamstate_tools_get]
@@ -67,10 +67,10 @@ Each specialist handoff is typed and at most 750 tokens. If a specialist is bloc
 
 Keep these consequences and proposal revisions separate and in this order:
 
-1. Before any durable bundle, a standalone `outreach_source` test-run proposal may contain one through three candidate searches. Fetch the exact `intent:outreach.cold_outbound_preview` contract. Each leaf binds only the reviewed targeting object and an integer `row_limit` from five through ten, carries a positive credit ceiling, and has no list, campaign, source, import, enrollment, or other durable destination. Its result rows remain run evidence only.
+1. Before any durable bundle, a standalone `outreach_source` test-run proposal may contain one through three candidate searches. Fetch the exact `sources.cold_outbound_preview` contract. Each leaf binds only the reviewed targeting object and an integer `row_limit` from five through ten, carries a positive credit ceiling, and has no list, campaign, source, import, enrollment, or other durable destination. Its result rows remain run evidence only.
 2. After comparing that evidence, the `outreach_bundle` creates the reviewable draft list, table, workflow, campaign, and custom-sequence structure only.
 3. A later `table_column_run` proposal names the exact current table revision, selected column changes, and exactly five through ten current contact ids. Its approval authorizes only that bounded enrichment sample.
-4. After inspecting real sample outputs and priority results, one `outreach_bulk_expansion` proposal uses the exact `intent:outreach.cold_outbound_expand` contract. It binds the reviewed draft campaign, list and list revision, configured source id, source-evidence run, unchanged targeting, an integer eleven-through-fifty `row_cap`, `stage_exact_result_set=true`, and `require_campaign_status=draft`. It imports only the resolved capped result set, stages that exact set for the still-inactive campaign, and never represents a future dynamic audience. This is not another five-to-ten-row pilot.
+4. After inspecting real sample outputs and priority results, one `outreach_bulk_expansion` proposal uses the exact `sources.cold_outbound_expand` contract. It binds the reviewed draft campaign, list and list revision, configured source id, source-evidence run, unchanged targeting, an integer eleven-through-fifty `row_cap`, `stage_exact_result_set=true`, and `require_campaign_status=draft`. It imports only the resolved capped result set, stages that exact set for the still-inactive campaign, and never represents a future dynamic audience. This is not another five-to-ten-row pilot.
 5. An `outreach_activation` proposal is sculpted only when the user explicitly authorizes “Launch Campaign.” Immediately before proposing and again before execution, revalidate permission, integration and sender binding, exclusions, cost and credit ceilings, campaign revision, capability digests, readiness, and both pilot and sample evidence. This is the single activation-and-send authorization: approval activates only the exact reviewed launch revision and authorizes its capped, paced sends under the reviewed workflow, sender, stop, and safety limits. Do not invent a second send approval gate, and never hide that external sends are authorized.
 
 Approval of one stage never authorizes a later stage. Pilot evidence never means it was imported; adding columns never means they ran; applying a workflow never means contacts enrolled; bulk expansion never means the campaign activated; activation never implies every send succeeded.

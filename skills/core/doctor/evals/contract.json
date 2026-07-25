@@ -34,10 +34,10 @@
         "allowed_tools": [
           "ping",
           "dreamstate_tools_search",
-          "content_list_accounts"
+          "dreamstate_tools_get"
         ],
         "allowed_capability_ids": [
-          "intent:content.list_accounts"
+          "social.accounts_list"
         ]
       },
       "check": "tool_trace_subset"
