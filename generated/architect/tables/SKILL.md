@@ -10,7 +10,7 @@ max_context_tokens: 5000
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
+  playbook_kernel_hash: 62f0861bd0a5fa2f9e6044567bddd49df6fe1ae41b496fd85488c72d9e20d092
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
+  source_release_hash: 62f0861bd0a5fa2f9e6044567bddd49df6fe1ae41b496fd85488c72d9e20d092
   generator_version: 1.0.0
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: 1f149047890aa1ec48855cc23437e3576dd9b09ae14eb3004b57d17c290dd6d5
+  kernel_sha256: b155793f0095c5bee9acee17ba6078596c87c1a026e5fe03d45f3cfce7d6ce43
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: 553d9c5c43683539976f1d18b1f0bfde936792d8f2eec8aec5bd89d19cdf6225
+  evals_sha256: 567c1ffff18e64349b2490bf5e167334594d4634e207e141977b29cd106c331e
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
