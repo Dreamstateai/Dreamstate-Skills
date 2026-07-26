@@ -38,16 +38,16 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.list",
-          "campaigns.pause",
-          "campaigns.variant_metrics_get",
           "outreach.channel_stats_get",
           "outreach.dm_conversation_status_update",
+          "outreach.global_pause_set",
           "outreach.workspace_stats_get",
           "rows.query",
           "sequences.edit_step",
           "sequences.get",
-          "sequences.step_options"
+          "sequences.step_options",
+          "workflows.analytics_by_campaign",
+          "workflows.list"
         ]
       },
       "check": "tool_trace_subset"

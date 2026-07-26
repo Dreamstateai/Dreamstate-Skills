@@ -20,7 +20,6 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "campaigns.create",
     "contacts.draft_opener",
     "contacts.enrich",
     "contacts.get",
@@ -30,7 +29,8 @@
     "sources.find_leads",
     "tables.create",
     "tables.list",
-    "workbooks.create"
+    "workbooks.create",
+    "workflows.create"
   ],
   "mcp_tools": [
     "dreamstate_tools_search",
@@ -46,10 +46,11 @@
     "outreach:read",
     "outreach:write",
     "tables:read",
-    "tables:write"
+    "tables:write",
+    "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "70acbffd5d943747",
+  "verified_capability_hash": "01002d9587befbf3",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/network-grow/SKILL.md",
   "install_command": "dreamstate skills install network-grow",

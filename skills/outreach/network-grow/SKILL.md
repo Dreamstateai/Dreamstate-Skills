@@ -35,7 +35,7 @@ titles/companies to personalize the note well.
 `contacts.send_connection` is enroll-only: it queues each invite through a connection campaign,
 and the engine reserves the slot and fires it under its own ramp cap at dispatch (it never
 sends directly, and you cannot raise that cap from here). So create a lightweight campaign with
-`campaigns.create` bound to a frozen worksheet/view to act as the sender vehicle, or reuse an existing
+`workflows.create` bound to a frozen worksheet/view to act as the sender vehicle, or reuse an existing
 connection campaign. Keep its `campaign_id`.
 
 ## Step 3: Write a note worth accepting

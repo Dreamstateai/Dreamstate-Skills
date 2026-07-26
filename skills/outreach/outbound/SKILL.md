@@ -73,8 +73,8 @@ For the top tier, draft a personalized opener with `contacts.draft_opener` (an o
 
 ## Step 5: Build and validate the sequence (→ /sequence-builder)
 
-Create the campaign (`campaigns.create`, bound to the frozen worksheet/view), configure
-targeting (`campaigns.template_apply`), and wire the steps with `sequences.add_step`, threading
+Create the campaign (`workflows.create`, bound to the frozen worksheet/view), configure
+targeting (`workflows.graph_apply`), and wire the steps with `sequences.add_step`, threading
 the `graph_version` from `sequences.get` forward and retrying on
 `graph_version_conflict`. A solid cold cadence: connection_request → wait → DM (opener) →
 wait → DM (follow-up). Run `sequences.validate` and fix anything it flags.
@@ -84,7 +84,7 @@ wait → DM (follow-up). Run `sequences.validate` and fix anything it flags.
 Freeze the approved workbook/worksheet/saved-view selection and enroll it once with
 `sequences.enroll_selection` through a unique idempotency key. Enrollment does not send; the engine
 drains enrollments under per-account daily caps and reserves any connection slot at
-dispatch. Then `campaigns.activate`: the one outward action, through the same
+dispatch. Then `workflows.activate`: the one outward action, through the same
 activation gate the app uses. `status: "blocked"` means it did NOT start (read the gate
 reason and fix it); `status: "accepted"` means the capped engine has begun.
 

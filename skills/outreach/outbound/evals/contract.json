@@ -38,9 +38,6 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.activate",
-          "campaigns.create",
-          "campaigns.template_apply",
           "cells.settle",
           "columns.add",
           "contacts.draft_opener",
@@ -58,7 +55,10 @@
           "sources.find_leads",
           "tables.create",
           "tables.list",
-          "workbooks.create"
+          "workbooks.create",
+          "workflows.activate",
+          "workflows.create",
+          "workflows.graph_apply"
         ]
       },
       "check": "tool_trace_subset"
