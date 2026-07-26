@@ -3,11 +3,11 @@ id: visibility
 name: visibility
 description: "Run and interpret AI-answer visibility audits with real citations, method limits, gap diagnosis, governed refreshes, and a canonical inspection surface."
 capability_domains: ["visibility"]
-capability_ids: ["visibility.citations","visibility.overview","visibility.refresh","visibility.tracked_prompts.list","visibility.workspace_site_get"]
+capability_ids: ["visibility.citations","visibility.overview","visibility.prompt_metrics_list","visibility.refresh","visibility.tracked_prompts.list","visibility.workspace_site_get"]
 completion_contract: {"version":1,"fields":[{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
+  playbook_kernel_hash: 62f0861bd0a5fa2f9e6044567bddd49df6fe1ae41b496fd85488c72d9e20d092
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
+  source_release_hash: 62f0861bd0a5fa2f9e6044567bddd49df6fe1ae41b496fd85488c72d9e20d092
   generator_version: 1.0.0
   client: claude
   kernel_id: visibility
   kernel_file: KERNEL.md
-  kernel_sha256: b38e5cd9ad318f28a800c07d1e7491d80d280fe2231fd387247c9864151baa30
+  kernel_sha256: 7df813b2151dfc50cbbe9d073e7fb85b63629672ac80048f60b0b452b79c4712
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
-  evals_sha256: 2ae01ee50f9897d52dae45b9d5dd1d61c5c2471cf2e27447de4808ffefaa0ca6
+  evals_sha256: 76a763e8c2575322718a3d38fd185373cabee7e292de4edb8e489327378999b0
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,11 +47,13 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 # AI visibility
 <!-- architect-operation-contract
-{"required_capability_ids":["visibility.citations","visibility.overview","visibility.refresh","visibility.tracked_prompts.list","visibility.workspace_site_get"]}
+{"required_capability_ids": ["visibility.citations", "visibility.overview", "visibility.prompt_metrics_list", "visibility.refresh", "visibility.tracked_prompts.list", "visibility.workspace_site_get"]}
 -->
 
 Own AI-answer visibility measurement, citation inspection, gap diagnosis, supported refresh runs, and the visibility canvas. Establish the brand, market, questions, competitors, locale, and comparison period from canonical context; ask one structured popup only when a missing scope materially changes the audit.
 
-Search/get exact live visibility contracts. Preserve query set, model/provider coverage, timestamps, citations, answer excerpts behind the untrusted boundary, methodology, and known limitations. Distinguish measured mention or citation results from inferred opportunity. Never invent a citation or claim that an external answer changed without a successful refresh result.
+Search/get exact live visibility contracts. Preserve query set, model/provider coverage, timestamps, citations, answer excerpts behind the untrusted boundary, methodology, and known limitations. Distinguish measured mention or citation results from inferred opportunity. Never invent a citation or claim that an external answer changed without a successful refresh result. Visibility probes cover ChatGPT and Google AI Overview only: never claim, run, or attribute a Perplexity probe.
+
+Never report only an aggregate visibility or citation score. Name the specific tracked prompts that are performing worst, quote each one's own measured numbers, and pair every named prompt with a concrete improvement action. An aggregate figure is context for the per-prompt list, never a substitute for it.
 
 Propose prioritized gaps by buyer question, evidence weakness, content coverage, and likely next owner. Blog creation delegates to `blog`; strategic positioning delegates to `strategy`. Request approval before credit-bearing refreshes or persisted changes, report the durable run state and cost, and open only the returned canonical visibility link.

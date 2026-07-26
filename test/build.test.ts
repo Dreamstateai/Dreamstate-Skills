@@ -264,7 +264,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
     social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
     strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
     tables: ['columns.sample', 'tables.create'],
-    visibility: ['visibility.citations', 'visibility.overview', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
+    visibility: ['visibility.citations', 'visibility.overview', 'visibility.prompt_metrics_list', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
     'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview', 'workflows.list'],
   };
 
@@ -555,7 +555,7 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
   assert.match(workflow, /exact workbook, worksheet, and saved-view revisions/);
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
   assert.match(coordinator, /single activation-and-send authorization/i);
-  assert.match(coordinator, /Do not invent a second send approval gate/i);
+  assert.match(coordinator, /no second gate remains/i);
 });
 
 test('outreach release uses exact capability evidence and signed lifecycle states', () => {
@@ -726,9 +726,15 @@ test('competitor engager release eval is production-real and preserves dependenc
   assert.match(kernel, /exactly seven successful distinct rows/);
   assert.match(kernel, /partial receipt remains partial and is never filled with synthetic rows/);
   assert.match(kernel, /complete raw provider payload/);
-  assert.match(kernel, /null enrichment result is `unsure`/);
-  assert.match(kernel, /never uses row position, row index, row number, or table order/);
-  assert.match(kernel, /fixed greeting, pitch paragraphs, CTA, sign-off/);
+  // The coordinator delegates qualification and messaging rules; asserting them at their
+  // owning kernels is what keeps a rule from being silently duplicated or dropped.
+  const tablesKernel = artifacts['generated/architect/tables/KERNEL.md'];
+  assert.match(tablesKernel, /null enrichment result is `unsure`/);
+  assert.match(tablesKernel, /never uses row position, row index, row number, or table order/);
+  assert.match(
+    artifacts['generated/architect/outreach-sequence-writer/KERNEL.md'],
+    /fixed greeting, pitch paragraphs, CTA, sign-off/,
+  );
   assert.match(kernel, /wait for terminal activation, enrollment, and provider receipts/);
 });
 
@@ -759,6 +765,6 @@ test('table evals require exact contracts and authoritative schema or paid-run r
   );
   assert.match(
     buildTable.request,
-    /A proposal without the tools_run preparation receipt is incomplete/,
+    /do not claim a preparation receipt it cannot produce/,
   );
 });

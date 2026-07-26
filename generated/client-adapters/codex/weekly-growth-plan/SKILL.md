@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","social.strategy_ove
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
+  playbook_kernel_hash: 62f0861bd0a5fa2f9e6044567bddd49df6fe1ae41b496fd85488c72d9e20d092
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,12 +16,12 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
+  source_release_hash: 62f0861bd0a5fa2f9e6044567bddd49df6fe1ae41b496fd85488c72d9e20d092
   generator_version: 1.0.0
   client: codex
   kernel_id: weekly-growth-plan
   kernel_file: KERNEL.md
-  kernel_sha256: a4998060be837fb4bf0e1f173c14eaa41fa77090cc67403c1856a8d2b4ff5f6d
+  kernel_sha256: 3854b74f38da0d20bb6026e0b7a770a475ad5c8543ba8cd4445be9a96148e94a
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
   evals_sha256: 1a7ab87f6b25b1448c08ca5a2bfe26aa29b9320aac910712131ad059a54df0da
@@ -47,7 +47,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 # Weekly cross-channel growth plan
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","workflows.list","social.strategy_overview","social.weekly_plan_items_list","visibility.overview"]}
+{"required_capability_ids": ["brain.context.get", "brain.context.search", "social.strategy_overview", "social.weekly_plan_items_list", "visibility.overview", "workflows.list"]}
 -->
 
 Build one evidence-backed operating plan for the next week across the channels the user selects. This is a prioritization and delegation layer, not a social calendar and not an execution shortcut.

@@ -7,7 +7,7 @@
       "required_capability_ids": ["tables.create"],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [{"id":"schema_state","allowed_values":["identity_source_dependencies_ready"]},{"id":"artifact_state","allowed_values":["proposal_saved","existing"]},{"id":"durability_state","allowed_values":["proposal_only","durable"]}],
-      "request": "Required order: search for tables.create, fetch that exact live contract, call it through tools_run in non-mutating dry-run preparation mode, verify the canonical receipt has schema_state=identity_source_dependencies_ready, then save the reviewable proposal. The requested schema uses company_domain as stable row identity, a company search source, profile enrichment after identity resolution, a deterministic formula score after enrichment, and a review view. Use recommended non-secret defaults. A proposal without the tools_run preparation receipt is incomplete. Do not start a paid run."
+      "request": "Required order: search for tables.create, fetch that exact live contract, bind the proposal to every field and constraint it declares, then save the reviewable proposal. Use the execution mode that contract declares supported and do not claim a preparation receipt it cannot produce. The requested schema uses company_domain as stable row identity, a company search source, profile enrichment after identity resolution, a deterministic formula score after enrichment, and a review view. Use recommended non-secret defaults. A proposal that does not match the fetched contract is incomplete. Do not create the table and do not start a paid run."
     },
     {
       "expected_skill_ids": ["tables"],
