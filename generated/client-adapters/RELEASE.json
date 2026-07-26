@@ -2,10 +2,10 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.3",
-  "source_release_hash": "15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124",
+  "source_release_hash": "ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124",
+    "playbook_kernel_hash": "ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "70acbffd5d943747",
@@ -107,17 +107,18 @@
         "brain.context.get",
         "brain.context.search",
         "brain.learning.query_benchmarks",
-        "campaigns.activate",
-        "campaigns.create",
-        "campaigns.get",
-        "campaigns.graph_apply",
         "outreach.demand_plan_get",
+        "sequences.enroll_selection",
         "sources.cold_outbound_expand",
         "sources.cold_outbound_preview",
-        "sources.linkedin_post_engagers_preview"
+        "sources.linkedin_post_engagers_preview",
+        "workflows.activate",
+        "workflows.create",
+        "workflows.get",
+        "workflows.graph_apply"
       ],
-      "kernel_sha256": "a47f562276fea4c5842b7952170c913cdf99f98b1cd82e0b54d7d0bc6c9a5458",
-      "evals_sha256": "33cf2f7eac3a23d49d0c7306d77f91aff7e6daaf6e18d5a3269ed61c5358f54f",
+      "kernel_sha256": "b2b155c1d7eb3e47d30f64d1376e425e6349c4e264bce63f61fd216d105c0603",
+      "evals_sha256": "06fc1246ce9990a48b053a3c2db965e6edbecd6440777c6123bcaff00d0c42f9",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -268,13 +269,13 @@
       "capability_ids": [
         "brain.context.get",
         "brain.context.search",
-        "campaigns.list",
         "social.strategy_overview",
         "social.weekly_plan_items_list",
-        "visibility.overview"
+        "visibility.overview",
+        "workflows.list"
       ],
-      "kernel_sha256": "071bf4e4cf03ef08d6466ecb02de7e34ce5851d9140efd3b66c972ccf03866aa",
-      "evals_sha256": "853796159a961cb88732c13861539bdee696446f047e8c2c5d8c58a34db12c53",
+      "kernel_sha256": "a4998060be837fb4bf0e1f173c14eaa41fa77090cc67403c1856a8d2b4ff5f6d",
+      "evals_sha256": "1a7ab87f6b25b1448c08ca5a2bfe26aa29b9320aac910712131ad059a54df0da",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",

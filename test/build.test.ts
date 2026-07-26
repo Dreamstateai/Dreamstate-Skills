@@ -248,14 +248,15 @@ test('Architect exact grants are derived only from machine-readable eval operati
       'brain.context.get',
       'brain.context.search',
       'brain.learning.query_benchmarks',
-      'campaigns.activate',
-      'campaigns.create',
-      'campaigns.get',
-      'campaigns.graph_apply',
       'outreach.demand_plan_get',
+      'sequences.enroll_selection',
       'sources.cold_outbound_expand',
       'sources.cold_outbound_preview',
       'sources.linkedin_post_engagers_preview',
+      'workflows.activate',
+      'workflows.create',
+      'workflows.get',
+      'workflows.graph_apply',
     ],
     'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
     'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
@@ -264,7 +265,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
     strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
     tables: ['columns.sample', 'tables.create'],
     visibility: ['visibility.citations', 'visibility.overview', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
-    'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'campaigns.list', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview'],
+    'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview', 'workflows.list'],
   };
 
   for (const [skillId, capabilityIds] of Object.entries(expected)) {

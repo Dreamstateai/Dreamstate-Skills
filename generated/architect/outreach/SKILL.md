@@ -5,12 +5,12 @@ description: Open an existing campaign or coordinate a new custom campaign from 
 triggers: ["open or revise an outreach campaign","build a campaign from scratch","design an outreach campaign for a named cohort using pooled benchmarks","create a prospecting system","build a list workflow and sequence","decide whether a list workflow needs messaging"]
 dependencies: ["tables","outreach-workflow-builder"]
 capability_domains: ["brain","outreach"]
-capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview"]
+capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","outreach.demand_plan_get","sequences.enroll_selection","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview","workflows.activate","workflows.create","workflows.get","workflows.graph_apply"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 70acbffd5d943747
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
   generator_version: 1.0.0
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: a47f562276fea4c5842b7952170c913cdf99f98b1cd82e0b54d7d0bc6c9a5458
+  kernel_sha256: b2b155c1d7eb3e47d30f64d1376e425e6349c4e264bce63f61fd216d105c0603
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: 33cf2f7eac3a23d49d0c7306d77f91aff7e6daaf6e18d5a3269ed61c5358f54f
+  evals_sha256: 06fc1246ce9990a48b053a3c2db965e6edbecd6440777c6123bcaff00d0c42f9
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

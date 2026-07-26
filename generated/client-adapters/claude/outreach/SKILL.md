@@ -3,11 +3,11 @@ id: outreach
 name: outreach
 description: "Open an existing campaign or coordinate a new custom campaign from scratch through ordered evidence-pilot, draft-bundle, column-sample, capped-bulk, and activation-and-send gates."
 capability_domains: ["brain","outreach"]
-capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview"]
+capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","outreach.demand_plan_get","sequences.enroll_selection","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview","workflows.activate","workflows.create","workflows.get","workflows.graph_apply"]
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 70acbffd5d943747
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release_hash: ee049aedfc65ed0b493f73721673e2bba31d7cd32ec82af5677442c5ef3142bd
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: a47f562276fea4c5842b7952170c913cdf99f98b1cd82e0b54d7d0bc6c9a5458
+  kernel_sha256: b2b155c1d7eb3e47d30f64d1376e425e6349c4e264bce63f61fd216d105c0603
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
-  evals_sha256: 33cf2f7eac3a23d49d0c7306d77f91aff7e6daaf6e18d5a3269ed61c5358f54f
+  evals_sha256: 06fc1246ce9990a48b053a3c2db965e6edbecd6440777c6123bcaff00d0c42f9
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,7 +47,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 # Outreach campaign coordinator
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview"]}
+{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","sequences.enroll_selection","workflows.activate","workflows.create","workflows.get","workflows.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview"]}
 -->
 
 ## Job boundary
@@ -102,7 +102,7 @@ In the typed completion handoff, `activation_state` reports only whether campaig
 2. After comparing that evidence, the `outreach_bundle` creates the reviewable draft workbook, worksheet, saved view, workflow, campaign, and custom-sequence structure only.
 3. A later `table_column_run` proposal names the exact current table revision, selected column changes, and exactly five through ten current contact ids. Its approval authorizes only that bounded enrichment sample.
 4. After inspecting real sample outputs and priority results, one `outreach_bulk_expansion` proposal uses the exact `sources.cold_outbound_expand` contract, and the stage summary names both. It binds the reviewed draft campaign, exact worksheet and saved view revisions, configured source id, source-evidence run, unchanged targeting, an integer eleven-through-fifty `row_cap` that never exceeds the demand plan's `expansion_row_cap`, `stage_exact_result_set=true`, and `require_campaign_status=draft`. It imports only the resolved capped result set, stages that exact set for the still-inactive campaign, and never represents a future dynamic audience. If live headroom is below eleven, stop truthfully before this stage rather than inflating it. This is not another pilot.
-5. An `outreach_activation` proposal requires explicit launch intent. A user's explicit instruction to launch satisfies that decision; do not ask them to repeat it. Label the handoff and review action `Launch Campaign`. Immediately before proposing and again after approval, fetch and run `outreach.demand_plan_get` with `phase:"launch_revalidation"` and the prior plan, then revalidate permission, integration and sender binding, exclusions, exact result set, cost and credit ceilings, campaign revision, capability digests, readiness, and both pilot and sample evidence. A reduced plan shrinks or blocks the launch; it never races through stale capacity. The proposal must use `execution_policy:"manual_resume"` and carry the immutable launch purpose only in its review preview; its apply params and input types are empty because no client or model may author a launch authorization id. Stop at the durable same-job approval checkpoint. After an independent human approves, the server issues the persisted authorization, resumes that exact job on a reviewer-owned deterministic run, and calls `campaigns.activate` with only `{launch_authorization_id}`. A crash or duplicate approval replays that same authorization and run. The launch handoff explains that this is the single activation-and-send authorization: approval activates only the exact reviewed launch revision and authorizes its capped, paced sends under the reviewed workflow, sender, stop, and safety limits. Record the explicit intent, exact approval, and revision as launch proof. Do not invent a second send approval gate. State that no second gate remains and that approval authorizes external sends.
+5. An `outreach_activation` proposal requires explicit launch intent. A user's explicit instruction to launch satisfies that decision; do not ask them to repeat it. Label the handoff and review action `Launch Campaign`. Immediately before proposing and again after approval, fetch and run `outreach.demand_plan_get` with `phase:"launch_revalidation"` and the prior plan, then revalidate permission, integration and sender binding, exclusions, exact result set, cost and credit ceilings, workflow revision, capability digests, readiness, and both pilot and sample evidence. A reduced plan shrinks or blocks the launch; it never races through stale capacity. Stop at the durable same-job approval checkpoint before anything paid runs. After the approval, the run binds the frozen selection with `sequences.enroll_selection`, freezes the reviewed draft with `workflows.draft_publish`, and starts paced sending with `workflows.activate` against that exact published version id. Enrollment must carry the reviewed `selection_snapshot_id`, and activation must name the exact version publish froze; any drift means sends would run under logic nobody reviewed, so stop instead. A crash or duplicate approval replays that same run idempotently. The launch handoff explains that this is the single activation-and-send authorization: approval activates only the exact reviewed launch revision and authorizes its capped, paced sends under the reviewed workflow, sender, stop, and safety limits. Record the explicit intent, exact approval, and revision as launch proof. Do not invent a second send approval gate. State that no second gate remains and that approval authorizes external sends.
 
 Approval of one stage never authorizes a later stage. Pilot evidence never means it was imported; adding columns never means they ran; applying a workflow never means contacts enrolled; bulk expansion never means the campaign activated; activation never implies every send succeeded.
 
