@@ -20,16 +20,16 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "campaigns.create",
-    "campaigns.list",
-    "campaigns.template_apply",
     "outreach.triggers_supported_list",
     "sequences.add_step",
     "sequences.edit_step",
     "sequences.get",
     "sequences.remove_step",
     "sequences.step_options",
-    "sequences.validate"
+    "sequences.validate",
+    "workflows.create",
+    "workflows.graph_apply",
+    "workflows.list"
   ],
   "mcp_tools": [
     "dreamstate_tools_search",
@@ -41,10 +41,12 @@
   "resources": [],
   "required_scopes": [
     "outreach:read",
-    "outreach:write"
+    "outreach:write",
+    "workflows:read",
+    "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "70acbffd5d943747",
+  "verified_capability_hash": "01002d9587befbf3",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/sequence-builder/SKILL.md",
   "install_command": "dreamstate skills install sequence-builder",

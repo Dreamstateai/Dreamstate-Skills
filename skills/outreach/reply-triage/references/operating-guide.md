@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `campaigns.list`, `outreach.dm_conversation_assign`, `outreach.dm_conversation_get`, `outreach.dm_conversation_read`, `outreach.dm_conversation_status_update`, `outreach.dm_conversations_list`, `outreach.dm_message_send`, `outreach.workspace_stats_get`, `social.accounts_list`
+Declared capabilities: `outreach.dm_conversation_assign`, `outreach.dm_conversation_get`, `outreach.dm_conversation_read`, `outreach.dm_conversation_status_update`, `outreach.dm_conversations_list`, `outreach.dm_message_send`, `outreach.workspace_stats_get`, `social.accounts_list`, `workflows.list`
 
-Required scopes: `content:read`, `outreach:read`, `outreach:write`
+Required scopes: `content:read`, `outreach:read`, `outreach:write`, `workflows:read`
 
 ## Evidence checklist
 

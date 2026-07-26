@@ -18,9 +18,9 @@ with `dreamstate_get_run`.
 
 ## Step 1: Pick the campaign and read the numbers
 
-List campaigns with `campaigns.list` and pick the one the user means (or scan the active
+List campaigns with `workflows.list` and pick the one the user means (or scan the active
 ones). Pull `outreach.workspace_stats_get`, `outreach.channel_stats_get`, and the selected
-campaign's `campaigns.variant_metrics_get` evidence:
+campaign's `workflows.analytics_by_campaign` evidence:
 
 - `metric: "overview"` — sends, acceptance rate, reply rate, positive reply rate, demos.
 - `metric: "icp"` or `"signal_source"` — which segment is actually responding.
@@ -54,7 +54,7 @@ Take the smallest change that addresses the bucket:
   `graph_version_conflict`, re-read with `sequences.get` and retry). Shorter, more
   specific, more about them.
 - **Campaign is structurally off** (wrong audience, burning sender reputation, or being
-  replaced) → `campaigns.pause` (`campaign_id`). This runs the in-app kill-switch
+  replaced) → `outreach.global_pause_set` (`campaign_id`). This runs the in-app kill-switch
   cascade so in-flight instances actually stop, not just a row flip. Pause, fix the targeting
   in a new or reconfigured campaign, relaunch.
 - **Threads stuck in the wrong state** → `outreach.dm_conversation_status_update` to move replied or dead

@@ -38,7 +38,6 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.list",
           "outreach.dm_conversation_assign",
           "outreach.dm_conversation_get",
           "outreach.dm_conversation_read",
@@ -46,7 +45,8 @@
           "outreach.dm_conversations_list",
           "outreach.dm_message_send",
           "outreach.workspace_stats_get",
-          "social.accounts_list"
+          "social.accounts_list",
+          "workflows.list"
         ]
       },
       "check": "tool_trace_subset"

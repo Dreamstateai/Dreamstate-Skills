@@ -20,7 +20,6 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "campaigns.list",
     "outreach.dm_conversation_assign",
     "outreach.dm_conversation_get",
     "outreach.dm_conversation_read",
@@ -28,7 +27,8 @@
     "outreach.dm_conversations_list",
     "outreach.dm_message_send",
     "outreach.workspace_stats_get",
-    "social.accounts_list"
+    "social.accounts_list",
+    "workflows.list"
   ],
   "mcp_tools": [
     "dreamstate_tools_search",
@@ -41,10 +41,11 @@
   "required_scopes": [
     "content:read",
     "outreach:read",
-    "outreach:write"
+    "outreach:write",
+    "workflows:read"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "70acbffd5d943747",
+  "verified_capability_hash": "01002d9587befbf3",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/reply-triage/SKILL.md",
   "install_command": "dreamstate skills install reply-triage",

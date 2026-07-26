@@ -39,9 +39,9 @@ enrich selected contacts with `contacts.enrich`.
 
 ## Step 2: Direct motion (LinkedIn sequence)
 
-Run the core of `/outbound`: `campaigns.create` -> `campaigns.template_apply` -> build and
+Run the core of `/outbound`: `workflows.create` -> `workflows.graph_apply` -> build and
 validate the sequence -> `sequences.enroll_selection` using a frozen workbook/worksheet/view
-snapshot -> `campaigns.activate`. If
+snapshot -> `workflows.activate`. If
 the full outbound skill is installed, defer to it for the sequence detail rather than
 duplicating steps here.
 

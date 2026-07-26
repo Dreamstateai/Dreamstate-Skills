@@ -19,7 +19,7 @@ with `dreamstate_get_run`.
 
 ## Step 1: Get or create the campaign
 
-Find an existing campaign with `campaigns.list`, or create one with `campaigns.create`
+Find an existing campaign with `workflows.list`, or create one with `workflows.create`
 bound to the exact frozen worksheet/view. Pick
 `campaign_kind`:
 
@@ -27,7 +27,7 @@ bound to the exact frozen worksheet/view. Pick
 - `intent_signals` — signal-triggered enrollment; list options with
   `outreach.triggers_supported_list` first.
 
-Apply the chosen campaign template with `campaigns.template_apply`. For `intent_signals` you MUST read
+Apply the chosen campaign template with `workflows.graph_apply`. For `intent_signals` you MUST read
 `sequences.get` first for the current `graph_version`, then pass `signal_config`
 with that exact version (it is a compare-and-set; a stale value returns
 `graph_version_conflict`, so re-read and retry).

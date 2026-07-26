@@ -26,13 +26,13 @@
     "dreamstate_get_run"
   ],
   "required_scopes": [
-    "actions",
     "content:read",
     "outreach:read",
     "outreach:write",
     "tables:read",
-    "tables:write"
+    "tables:write",
+    "workflows:write"
   ],
-  "capability_hash": "70acbffd5d943747",
+  "capability_hash": "01002d9587befbf3",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }
