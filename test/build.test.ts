@@ -161,7 +161,18 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       architect,
       /denied_operations: \[tools_run, propose_artifact, request_approval\]/,
     );
-    assert.match(architect, /Never use `tools_run` for direct mutating or paid work/);
+    // The prohibition is not absolute, and it must not become absolute again.
+    // An absolute ban contradicted the kernels that name a write whose own
+    // output is the review surface, so the model proposed instead of running
+    // and dead-ended when the proposal schema could not carry the change. The
+    // exception is authored in the kernel, not judged by the model, so both
+    // halves are pinned: the kernel-named carve-out and the ban on everything
+    // else. Dropping either half restores the deadlock.
+    assert.match(
+      architect,
+      /plus the specific writes the kernel above names as runnable directly because what they produce is itself the human review surface/,
+    );
+    assert.match(architect, /Never use `tools_run` for any other mutating or paid work/);
     assert.match(architect, /`propose_artifact`/);
     assert.match(architect, /`request_approval`/);
     assert.match(architect, /Refuse `tools_run` until the installed package is refreshed/);

@@ -22,7 +22,7 @@
       "kernel_sha256": "5ae6d4d3a1b6a7ed2e565b5bb87b9565f14f9998c7c14006b77eadc335e20049",
       "evals_sha256": "d815f6c1c23673c342ceb15287c29db3e0ac044f5ec5c2fda873f2cd67f6ec7e",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -44,7 +44,7 @@
       "kernel_sha256": "466b0f0837d60107b14c4b5bed89a8df152baf9a4a6d881fba16130f3049c9db",
       "evals_sha256": "b419b7fa9101ec22b58e03eac1a7b1711bef7d2ff970a56b96a7f0ddb55837fe",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -63,7 +63,7 @@
       "kernel_sha256": "c40f96ca61425677481d80ceeb65e52dd60c292dfa633d3b5d573bcfbc2e27b8",
       "evals_sha256": "742b266e11e6dea771538e6678e3cc669242e410e02dce42a4b0a14693a12082",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -79,7 +79,7 @@
       "kernel_sha256": "8b688590bd8b69015d4d3c338795e355d499945ff417841baf7ce84776f1be91",
       "evals_sha256": "d09247e03084f11438adac2226d086f940435e8c7a8b3eea9abc49dc57ef4334",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -94,7 +94,7 @@
       "kernel_sha256": "4782c723fc21d2d461c26c2f4445aab2906a8d28bb5611fde51ffaecefcb0d34",
       "evals_sha256": "f598709643bf428d69bc1623db08e115d258b03853c24f5062593fbf0b9f3797",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -121,7 +121,7 @@
       "kernel_sha256": "45c62a0a2f167ed77274e1119ca141b302b4762fde7194dd580b10ae74e93da4",
       "evals_sha256": "c9d4bf68a1ef96b93ab3ecb6d8c5680c67571ba2f9a3532a8684cdc8c348183a",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -141,7 +141,7 @@
       "kernel_sha256": "f750d15e753d8292a62cbea47878c2057fc7702413529bd542d3dffae4b49f36",
       "evals_sha256": "f743122906bb76a5bd95e62630960aa0b15b0b4b2e5b3aac42ac5b6f9e5d6b03",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -160,7 +160,7 @@
       "kernel_sha256": "ff8ff0535cc74d1332412d9e29d43c84d58fe35bd3112112bd74ca1da7a6dab3",
       "evals_sha256": "b9a91259c05be30780b42e41f79f930476bf6ab5d433fc23b6bc1748e83f4207",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -183,7 +183,7 @@
       "kernel_sha256": "92a6fff0e6a6f51c24865168ce8577fe664040425a4f16032744d979659a0acc",
       "evals_sha256": "54994b4a8e1560f433682c67584a1fecdd09c9862ffd45924264378af4252da9",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -205,7 +205,7 @@
       "kernel_sha256": "c6ea678f6dd053284bf921a0c4518a6de7f9a9c2dc910b009f2e72a471dd917d",
       "evals_sha256": "deb07f6a7855f28649575d2533176cb72658e553544052ff94e611c770184fc4",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -225,7 +225,7 @@
       "kernel_sha256": "efdf0aedf75a26cf833e9adb8d6765d0a4e7c4c9999aabcd4f73443672de9d38",
       "evals_sha256": "e721f2fcb0e2ab9457066c4f686f20ec48bed1b5cf994733bd7082da157d690b",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -243,7 +243,7 @@
       "kernel_sha256": "f26e6084d056f62b0f3b1d49746ca78f60af1d5f6006155b39ebee4cf97096ab",
       "evals_sha256": "f67511bc9aa49d2bedf99fc2f08ebb6cb6a00607423558313698b5b3d7c5a3f8",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -263,7 +263,7 @@
       "kernel_sha256": "7df813b2151dfc50cbbe9d073e7fb85b63629672ac80048f60b0b452b79c4712",
       "evals_sha256": "76a763e8c2575322718a3d38fd185373cabee7e292de4edb8e489327378999b0",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
@@ -281,7 +281,7 @@
       "kernel_sha256": "3854b74f38da0d20bb6026e0b7a770a475ad5c8543ba8cd4445be9a96148e94a",
       "evals_sha256": "1a7ab87f6b25b1448c08ca5a2bfe26aa29b9320aac910712131ad059a54df0da",
       "adapter_sha256": {
-        "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
+        "architect": "a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
         "codex": "5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2"
       }
