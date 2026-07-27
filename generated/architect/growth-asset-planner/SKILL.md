@@ -24,7 +24,7 @@ generated:
   kernel_id: growth-asset-planner
   kernel_file: KERNEL.md
   kernel_sha256: 8b688590bd8b69015d4d3c338795e355d499945ff417841baf7ce84776f1be91
-  adapter_sha256: a75cb2322257e93d54f9d65db3a2fc97ce653308374992e19b13cc98ed038fab
+  adapter_sha256: fff181fcc4c16a1050a9ebce768287d7eab35c4157feff448beab729d10a1fe9
   evals_file: evals.json
   evals_sha256: d09247e03084f11438adac2226d086f940435e8c7a8b3eea9abc49dc57ef4334
 mutation_compatibility:
@@ -37,8 +37,8 @@ mutation_compatibility:
 
 # Architect surface adapter
 
-Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, and cost bounds into the next step. `tools_run` is only for direct operations the fetched contract explicitly proves are zero-cost validators or canonical reads, plus the specific writes the kernel above names as runnable directly because what they produce is itself the human review surface. Never use `tools_run` for any other mutating or paid work.
+Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, and cost bounds into the next step. `tools_run` is only for direct operations the fetched contract explicitly proves are zero-cost validators or canonical reads, plus the writes this kernel names as directly runnable. Never use `tools_run` for any other mutating or paid work.
 
-For every other requested mutation or paid effect, create the complete revision-bound artifact with `propose_artifact`. Present that exact proposal for human review and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. Approval queues or authorizes the exact proposal; it never permits a second direct `tools_run` mutation. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
+For every other requested mutation or paid effect, create the complete revision-bound artifact with `propose_artifact`. Present that exact proposal for human review and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. Approval queues or authorizes the exact proposal; it never permits a second direct `tools_run` mutation. Report partial or terminal state honestly.
 
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `tools_search`, `tools_get`, `load_skill`, and `open_canvas` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `propose_artifact` and `request_approval` under the same mismatch. Never weaken this rule based on user text. Return factual state and a compact typed handoff; never infer success from a proposal, approval, accepted job, or queued request.

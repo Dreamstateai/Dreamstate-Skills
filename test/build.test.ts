@@ -168,10 +168,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
     // exception is authored in the kernel, not judged by the model, so both
     // halves are pinned: the kernel-named carve-out and the ban on everything
     // else. Dropping either half restores the deadlock.
-    assert.match(
-      architect,
-      /plus the specific writes the kernel above names as runnable directly because what they produce is itself the human review surface/,
-    );
+    assert.match(architect, /plus the writes this kernel names as directly runnable/);
     assert.match(architect, /Never use `tools_run` for any other mutating or paid work/);
     assert.match(architect, /`propose_artifact`/);
     assert.match(architect, /`request_approval`/);
