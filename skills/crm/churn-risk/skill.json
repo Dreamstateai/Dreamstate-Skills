@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "779304f4256ec197",
+  "verified_capability_hash": "0f792191fabb37cf",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/crm/churn-risk/SKILL.md",
   "install_command": "dreamstate skills install churn-risk",
