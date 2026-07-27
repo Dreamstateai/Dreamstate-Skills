@@ -7,6 +7,17 @@
       "required_capability_ids": ["brain.context.search", "brain.context.get", "sequences.definition_get", "sequences.step_options", "sequences.validate", "sequences.bind"]
     },
     {
+      "expected_skill_ids": ["outreach-sequence-writer"],
+      "forbidden_question_concepts": ["preview_count"],
+      "id": "preview-count-never-asked",
+      "max_intake_checkpoints": 0,
+      "required_concepts": [
+        "preview count is the coordinator's pilot integer",
+        "preview exactly the approved sample rows"
+      ],
+      "request": "Preview the custom steps on the approved sample rows the coordinator already handed you. Do not ask me how many previews to generate."
+    },
+    {
       "expected_skill_ids": [],
       "id": "skip-without-messaging",
       "must_not_load": ["outreach-sequence-writer"],

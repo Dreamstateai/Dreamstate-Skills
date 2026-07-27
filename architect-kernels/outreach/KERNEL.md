@@ -11,13 +11,15 @@ Open an existing campaign or design a new one. Own intake, relevant Company Brai
 
 Resolve whether the user means an existing artifact or a new campaign. For an existing one, inspect its workbook, worksheet, view, schema, workflow, sequence, sender, revision, status, and mounted surface, preserving viewport, filters, selection, and tab. For a new one, construct worksheets, fields, branches, and messages from requirements and live contracts.
 
-Retrieve only relevant published Company Brain claims and citations. Derive available answers, then one structured popup for all remaining material choices. For cold outbound the required intake concept set is exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, `qualification`, `sender`, `channel`, `cost_ceiling`, `launch_intent`, and `messaging_branch_state`. That set is closed: omitting a concept live state did not answer is incomplete intake, and no concept outside it may be asked. Never ask what live metadata answers. The maximum intake-checkpoint count is one; never open a second intake or ask a later follow-up question. A contract or runtime failure becomes an exact typed blocker, not a user-routing question.
+Retrieve only relevant published Company Brain claims and citations. Derive available answers, then one structured popup for all remaining material choices. For cold outbound the required intake concept set is exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`. That set is closed: omitting a concept live state did not answer is incomplete intake, and no concept outside it may be asked. Never ask what published Brain claims or live metadata answer. The maximum intake-checkpoint count is one; never open a second intake or ask a later follow-up question. A contract or runtime failure becomes an exact typed blocker, not a user-routing question.
 
-Messaging content is not intake. Tone, copy angle, offer framing, call to action, per-step channel motion, and cadence belong to `outreach-sequence-writer` at its later step, never the intake popup or an earlier turn. `channel` is an intake concept only as the channels the sender may use, never a message motion. The one messaging-adjacent intake question is the finite `messaging_branch_state` choice below. `outreach_volume` is never an intake concept.
+`sender`, `channel`, `cost_ceiling`, and `launch_intent` are never opening intake and never block the workbook. Sender and channel resolve from live sender inventory at the launch gate, asked there only when that inventory leaves the binding genuinely ambiguous; channel alone is not a sender decision. The demand plan owns cost bounds, and the user's instruction to launch is the launch intent.
+
+Messaging content is not intake. Tone, copy angle, offer framing, call to action, per-step channel motion, and cadence belong to `outreach-sequence-writer` at its later step, never the intake popup or an earlier turn. `outreach_volume` is never an intake concept.
 
 For a named audience or cohort, fetch and call `brain.learning.query_benchmarks`. Do not terminate after discovery or contract inspection. Cite only its released cohort/persona, messaging archetype, outcome interval, sample/contributor bands, tier, and confidence. Name the capability and state the evidence is cohort-level, never raw cross-workspace rows. Unavailable, sparse, suppressed, or irrelevant results are `insufficient_evidence`; never invent numbers.
 
-For a new campaign without an exact current sender binding, scratch intake is incomplete unless that one popup carries distinct `qualification` and `sender` questions. Channel alone is not a sender decision. Volume is application-calculated: never ask for a weekly, daily, enrollment, list-size, or campaign-volume preference. Default structured intent to `{mode:"demand_based"}`. Use `{mode:"fixed_cohort",exact_quantity:N}` only when already-resolved structured request state carries a user-supplied exact current list or cohort quantity; never infer it with keyword or text-pattern detection.
+Volume is application-calculated: never ask for a weekly, daily, enrollment, list-size, or campaign-volume preference. Default structured intent to `{mode:"demand_based"}`. Use `{mode:"fixed_cohort",exact_quantity:N}` only when already-resolved structured request state carries a user-supplied exact current list or cohort quantity; never infer it with keyword or text-pattern detection.
 
 ## Required orchestration
 
@@ -32,7 +34,7 @@ The step 2 workbook, not the bundle, is the goal of opening turns. While unappro
 
 Handoffs are typed, at most 750 tokens, naming exact blockers.
 
-For conditional messaging, inspect first. If unresolved, include the finite `messaging_branch_state` choice (`present` or `absent`) in the same one complete intake. Never ask later or load speculatively. Load the writer only for `present`; unresolved-after-intake is blocked.
+Resolve `messaging_branch_state` by inspection, never by asking: no messaging branch in the inspected graph is `absent`, any messaging branch is `present`. Never load the writer speculatively. Load it only for `present`; an uninspectable graph is a typed blocker, not a question.
 
 ## Competitor-engager production journey
 

@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.propose_document","brain.con
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 4d76c6a8316763c8993a0026479630b90aa9f169f1a56425bfa837c418c709fd
+  playbook_kernel_hash: d79499f42c8fd6928357fe975180b0bfae3d3a97c71f89554c80223b16d1f160
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 4d76c6a8316763c8993a0026479630b90aa9f169f1a56425bfa837c418c709fd
+  source_release_hash: d79499f42c8fd6928357fe975180b0bfae3d3a97c71f89554c80223b16d1f160
   generator_version: 1.0.0
   client: codex
   kernel_id: context

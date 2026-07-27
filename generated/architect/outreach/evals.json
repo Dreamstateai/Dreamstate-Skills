@@ -10,15 +10,21 @@
         "outreach"
       ],
       "forbidden_question_concepts": [
-        "outreach_volume"
+        "outreach_volume",
+        "sender",
+        "channel",
+        "cost_ceiling",
+        "launch_intent"
       ],
       "id": "new-campaign-from-scratch",
       "max_intake_checkpoints": 1,
       "must_use_popup_when_missing": [
-        "qualification",
-        "sender"
+        "qualification"
       ],
-      "request": "Build and launch a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Resolve every remaining material choice in one structured popup, default the structured volume intent to demand_based, then continue the work without a second intake.",
+      "required_concepts": [
+        "sender binding resolves at the launch gate"
+      ],
+      "request": "Build and launch a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Resolve every remaining material choice in one structured popup, default the structured volume intent to demand_based, then continue the work without a second intake. A missing sender must not stop the opening turns: carry it to the launch gate.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
@@ -78,18 +84,18 @@
     },
     {
       "conditional_skill_id": "outreach-sequence-writer",
-      "id": "sequence-only-when-messaging",
-      "max_intake_checkpoints": 1,
-      "must_use_popup_when_missing": [
+      "forbidden_question_concepts": [
         "messaging branch"
       ],
+      "id": "sequence-only-when-messaging",
+      "max_intake_checkpoints": 1,
       "required_concepts": [
-        "inspect before intake",
-        "same one complete intake",
-        "no later ask_user",
-        "unresolved after intake is blocked"
+        "inspect the graph to resolve the messaging branch",
+        "never ask the user about the messaging branch",
+        "load the writer only when a messaging branch is present",
+        "an uninspectable graph is a typed blocker"
       ],
-      "request": "Update my current workflow to include custom outreach messages only if its inspected graph has a messaging branch. Inspect before intake; if the branch state is still unknown, include that choice in the same one complete intake and never ask a later follow-up."
+      "request": "Update my current workflow to include custom outreach messages only if its inspected graph has a messaging branch. Resolve the branch state by inspecting the graph, never by asking me, and if the graph cannot be inspected report the typed blocker instead of a question."
     },
     {
       "expected_skill_ids": [

@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","sequences.bind","se
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 4d76c6a8316763c8993a0026479630b90aa9f169f1a56425bfa837c418c709fd
+  playbook_kernel_hash: d79499f42c8fd6928357fe975180b0bfae3d3a97c71f89554c80223b16d1f160
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 4d76c6a8316763c8993a0026479630b90aa9f169f1a56425bfa837c418c709fd
+  source_release_hash: d79499f42c8fd6928357fe975180b0bfae3d3a97c71f89554c80223b16d1f160
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-sequence-writer
   kernel_file: KERNEL.md
-  kernel_sha256: f750d15e753d8292a62cbea47878c2057fc7702413529bd542d3dffae4b49f36
+  kernel_sha256: 62c161006989187c36f2255ed39c5fd05acc128cdb5dc7792d490dfee780f470
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
-  evals_sha256: f743122906bb76a5bd95e62630960aa0b15b0b4b2e5b3aac42ac5b6f9e5d6b03
+  evals_sha256: 262a3f6294df8ce82b453549480ef1333b9ae153fb75896c0e994a0d3fe9f64e
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -65,7 +65,7 @@ Require the coordinator intake, list handoff, and workflow handoff. The workflow
 3. Define ordered steps with delays and send windows. Each variable maps to one typed upstream output and declares missing-input behavior. Never display unresolved placeholders as a valid preview.
 4. Ground claims in approved Company Brain facts and row evidence. Separate stable campaign copy from per-row generated copy. Preserve generated-output provenance, cost, and model/run identity when returned.
 5. Validate sender/channel constraints, graph reachability, timing, stop-on-reply behavior, duplicate prevention, and per-account safety caps through the live contract.
-6. Generate a bounded preview using real approved sample rows. Code owns the fixed greeting, pitch paragraphs, CTA, sign-off, and line breaks; the model fills only bounded personalization slots from verified evidence. When the workflow is valid, use one email plus LinkedIn sequence with threading, waits, windows, cooldowns, caps, and stop-on-reply. Audit factuality, variable resolution, specificity, prohibited claims, tone, duplication, and channel fit. A synthetic example cannot substitute for this check when real rows exist.
+6. Generate a bounded preview using real approved sample rows. Preview count is the coordinator's pilot integer, so preview exactly the approved sample rows and never ask how many previews to generate. Code owns the fixed greeting, pitch paragraphs, CTA, sign-off, and line breaks; the model fills only bounded personalization slots from verified evidence. When the workflow is valid, use one email plus LinkedIn sequence with threading, waits, windows, cooldowns, caps, and stop-on-reply. Audit factuality, variable resolution, specificity, prohibited claims, tone, duplication, and channel fit. A synthetic example cannot substitute for this check when real rows exist.
 
 ## Handoff and consequence
 
