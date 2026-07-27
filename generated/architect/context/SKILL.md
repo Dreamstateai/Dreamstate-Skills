@@ -5,12 +5,12 @@ description: Read targeted revisioned Company Brain facts or propose cited confl
 triggers: ["read Company Brain context","inspect published workspace memory","propose a cited context update","update a governed Company Brain document such as Ideal Customer","resolve a canonical fact","propose a new governed Company document","keep a knowledge document unpublished for human review"]
 dependencies: []
 capability_domains: ["brain","context"]
-capability_ids: ["brain.context.get","brain.context.propose_document","brain.context.search"]
+capability_ids: ["brain.context.get","brain.context.propose_document","brain.context.search","brand.context_url_analyze"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc
+  playbook_kernel_hash: 6359baa7a6c3b63c324668d10359b541883b7696a4b73e7472a76e1e47dea264
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc
+  source_release_hash: 6359baa7a6c3b63c324668d10359b541883b7696a4b73e7472a76e1e47dea264
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: 2589933d81e1c812f22ea752fb6279c1b0340037e660031135b6c5410bf112ff
+  kernel_sha256: c40f96ca61425677481d80ceeb65e52dd60c292dfa633d3b5d573bcfbc2e27b8
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: 364106a25a6d8c017e32b2300b04ec9a5627e886b1b61bc911723ef30f6ba3da
+  evals_sha256: 742b266e11e6dea771538e6678e3cc669242e410e02dce42a4b0a14693a12082
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

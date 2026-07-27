@@ -241,7 +241,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
   const expected = {
     analytics: ['social.analytics_query', 'social.post_analytics'],
     blog: ['brain.context.get', 'brain.context.search', 'content.article_create_schedule', 'content.article_delivery_create', 'content.article_get', 'content.article_update', 'content.delivery_publish', 'content.submit_review'],
-    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search'],
+    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search', 'brand.context_url_analyze'],
     'growth-asset-planner': ['brain.context.get', 'brain.context.search', 'command_center.assets.create', 'command_center.assets.list'],
     integrations: ['integrations.outreach_connectors_list', 'integrations.scheduler_status_get', 'integrations.unipile_status_get'],
     outreach: [

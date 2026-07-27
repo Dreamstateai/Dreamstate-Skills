@@ -7,7 +7,7 @@ capability_ids: ["integrations.outreach_connectors_list","integrations.scheduler
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc
+  playbook_kernel_hash: 6359baa7a6c3b63c324668d10359b541883b7696a4b73e7472a76e1e47dea264
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc
+  source_release_hash: 6359baa7a6c3b63c324668d10359b541883b7696a4b73e7472a76e1e47dea264
   generator_version: 1.0.0
   client: claude
   kernel_id: integrations
