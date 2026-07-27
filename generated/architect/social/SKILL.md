@@ -11,7 +11,7 @@ max_context_tokens: 5000
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 3010420c5a656d51ad106f397d974fe48a9e9232b451bd99fe4e4f682df2c6a2
+  playbook_kernel_hash: b6e9362bf41e1fd802974e801d5c88923ee5999e99113876ddbc5faba2440760
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 0f792191fabb37cf
@@ -20,7 +20,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.6
-  source_release_hash: 3010420c5a656d51ad106f397d974fe48a9e9232b451bd99fe4e4f682df2c6a2
+  source_release_hash: b6e9362bf41e1fd802974e801d5c88923ee5999e99113876ddbc5faba2440760
   generator_version: 1.0.0
   kernel_id: social
   kernel_file: KERNEL.md

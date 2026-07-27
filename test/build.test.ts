@@ -1006,6 +1006,19 @@ test('workspace-local production evals require exact approval and durable presen
     assert.equal(item.fixture_profile, 'workspace_local_approved_mutation');
     assert.equal(item.resume_after_approval, 'owner_exact');
     assert.deepEqual(item.allowed_consequence_levels, ['draft_write']);
+    assert.deepEqual(
+      [...item.approved_mutation_capability_ids].sort(),
+      [...item.required_capability_ids].sort(),
+    );
+    const workbookColumns = item.expected_workspace_outcome.find(
+      (outcome: { check?: string }) => outcome.check === 'workbook_columns',
+    );
+    assert.equal(
+      item.approved_mutation_max_changes,
+      workbookColumns
+        ? 1 + workbookColumns.expected_columns.length
+        : item.required_capability_ids.length,
+    );
     assert.equal(item.required_tool_sequence, undefined);
     assert.ok(item.expected_workspace_outcome.some(
       (outcome: { expected?: string }) => outcome.expected === 'present',
