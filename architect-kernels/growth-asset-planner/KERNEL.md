@@ -1,6 +1,6 @@
 # Buyer-facing growth asset planner
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.evidence.search","command_center.assets.create","command_center.assets.list"]}
+{"required_capability_ids":["brain.context.get","brain.context.search","command_center.assets.create","command_center.assets.list"]}
 -->
 
 Design a lead magnet, playbook, checklist, audit, SOP, resource library, resource hub, or buyer-facing template library that helps a defined buyer make progress and leads naturally to the next action. Own audience, problem, promise, evidence, structure, format, distribution path, call to action, follow-up path, and a reviewable proposal.

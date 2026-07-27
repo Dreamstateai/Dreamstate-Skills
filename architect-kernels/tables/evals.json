@@ -13,10 +13,75 @@
       "expected_skill_ids": ["tables"],
       "fixture_profile": "tables_bounded_paid_sample",
       "id": "bounded-paid-run",
-      "required_capability_ids": ["columns.sample"],
+      "required_capability_ids": ["table_runs.preview_cost", "selection_snapshots.create", "columns.run", "table_runs.get"],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [{"id":"execution_bounds_state","allowed_values":["representative_capped_credits"]},{"id":"cell_state","allowed_values":["settled","partial","failed"]},{"id":"approval_state","allowed_values":["required","approved"]},{"id":"run_state","allowed_values":["terminal"]}],
-      "request": "Use the exact live columns.sample contract for the existing table selection. Run only the canonical representative sample with its explicit 10-row cap and 25-credit ceiling. The canonical runner must verify the current table revision, exact approved selection, and grant before execution. Follow the durable run to terminal settled-cell evidence, then report completed, failed, and blocked cells without retrying failures."
+      "request": "Use the exact live canonical run contracts for the existing table selection. Preview cost, freeze the reviewed representative selection, and run the selected column with an explicit 10-row cap and 25-credit ceiling. The canonical runner must verify the current table revision, exact approved selection, and grant before execution. Follow the durable run to terminal settled-cell evidence, then report completed, failed, and blocked cells without retrying failures."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "record-field-read-returns-real-values",
+      "request": "Open record rec-1 and tell me every field it currently holds, with the actual saved values. Do not describe what the record probably contains and do not ask me to paste it.",
+      "required_capability_ids": ["records.get"]
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "record-field-write-binds-to-the-read-revision",
+      "request": "Change the owner field on record rec-1 to Dana. Read the record first, show me the old value, and bind the proposed change to the revision that read returned.",
+      "required_capability_ids": ["records.get", "records.field_set"]
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "fixture_profile": "outreach_source_pilot",
+      "id": "exact-seven-row-source-pilot",
+      "required_proposal_fields": {"row_limit": 7},
+      "required_capability_ids": ["sources.cold_outbound_preview", "sources.linkedin_post_engagers_preview"],
+      "required_concepts": ["literal row_limit: 7", "exactly seven distinct stable identities", "no padding", "no import", "no enrollment"],
+      "request": "Prepare the source-evidence pilot for a reviewable outreach Workbook. Select the exact cold-outbound or LinkedIn-engager preview contract from the requested source. The proposal must use literal row_limit: 7. Accept only a terminal receipt with exactly seven distinct stable identities and complete provider provenance. Keep any partial result partial: no padding, import, Workbook insertion, enrollment, activation, or send."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "fixture_profile": "outreach_exact_result_set_expansion",
+      "id": "exact-result-set-expansion",
+      "required_capability_ids": ["sources.cold_outbound_expand"],
+      "required_concepts": ["approved Workbook revision", "post-approval demand plan", "stage_exact_result_set=true"],
+      "request": "Prepare a separately reviewed exact-result-set expansion after the Workbook and bounded sample are approved. Bind the source-evidence receipt, exact Workbook, worksheet, saved-view and workflow revisions, configured source, unchanged targeting, post-approval demand-plan cap, and stage_exact_result_set=true. Do not enroll, activate, or send."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "workbook-lifecycle-and-user-state",
+      "required_capability_ids": ["workbooks.list", "workbooks.create", "workbooks.get", "workbooks.overview", "workbooks.update", "workbooks.update_user_state", "workbooks.duplicate", "workbooks.archive"],
+      "request": "Create and inspect a Workbook, update its exact revision and my tab state, duplicate it with a durable receipt, then archive only the approved duplicate while preserving the original."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "worksheet-lifecycle",
+      "required_capability_ids": ["worksheets.list", "worksheets.create", "worksheets.update", "worksheets.reorder", "worksheets.duplicate", "worksheets.archive"],
+      "request": "Add two typed worksheets to the current Workbook, revise and reorder them against exact revisions, duplicate the approved worksheet, and archive only that duplicate after readback."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "table-and-view-lifecycle",
+      "required_capability_ids": ["tables.list", "tables.create", "tables.get", "tables.update", "tables.archive", "views.list", "views.create", "views.get", "views.update", "views.archive"],
+      "request": "Inspect the current worksheet table, create a review view with typed filters, sorts and visible columns, revise it safely, then archive only the approved temporary view and table."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "source-binding-and-frontier",
+      "required_capability_ids": ["table_sources.list", "table_sources.attach", "table_sources.preview_sync", "table_sources.update", "table_sources.run", "table_sources.reset_frontier", "table_sources.restore_frontier", "table_sources.detach"],
+      "request": "Attach the reviewed source definition to this worksheet, preview its bounded sync, run it, inspect and deliberately reset then restore its exact frontier, and detach only after separate approval."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "columns-rows-and-selection",
+      "required_capability_ids": ["columns.list", "columns.add", "columns.update", "columns.run_all", "columns.archive", "rows.upsert", "rows.get", "rows.query", "rows.delete", "rows.restore", "selection_snapshots.get"],
+      "request": "Add and revise typed dependency columns, upsert and query exact stable rows, run all eligible columns under a bounded selection, inspect the frozen selection, and prove delete/restore and column archive preserve history."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "run-center-recovery",
+      "required_capability_ids": ["table_runs.list", "table_runs.get", "table_runs.failure_report", "table_runs.retry", "table_runs.resume", "table_runs.reconcile_column", "table_runs.cancel"],
+      "request": "Inspect the Run Center for this Workbook, open the exact failed run and failure report, choose the correct retry, resume, or column reconciliation path, and cancel only a separately approved still-active run."
     }
   ],
   "schema_version": 1,

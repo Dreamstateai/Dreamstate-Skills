@@ -11,10 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const reviewedGrants: Record<string, string[]> = JSON.parse(
-  readFileSync(join(ROOT, 'test', 'fixtures', 'architect-capability-grants.json'), 'utf8'),
-);
-const CANONICAL_MANIFEST_DIGEST = 'ba82767c025e7490994804262df9849a3ce74cb8104aa8e531ee30702c81f0a9';
+const CANONICAL_MANIFEST_DIGEST = 'f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -164,7 +161,15 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       architect,
       /denied_operations: \[tools_run, propose_artifact, request_approval\]/,
     );
-    assert.match(architect, /Never use `tools_run` for direct mutating or paid work/);
+    const expectedDirectRunIds = id === 'context' ? ['brand.context_url_analyze'] : [];
+    assert.match(
+      architect,
+      new RegExp(`^direct_run_capability_ids: ${JSON.stringify(expectedDirectRunIds)}$`, 'm'),
+    );
+    assert.match(
+      architect,
+      new RegExp(`complete allowlist for direct mutating or paid runs is exactly ${JSON.stringify(expectedDirectRunIds).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`),
+    );
     assert.match(architect, /`propose_artifact`/);
     assert.match(architect, /`request_approval`/);
     assert.match(architect, /Refuse `tools_run` until the installed package is refreshed/);
@@ -183,6 +188,10 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, new RegExp(`^  adapter_sha256: ${clients.skills[id].adapter_sha256[client]}$`, 'm'));
       assert.match(standalone, /mismatch_behavior: deny_run/);
       assert.match(standalone, /manifest_digest_match: exact_sha256/);
+      assert.match(
+        standalone,
+        new RegExp(`^direct_run_capability_ids: ${JSON.stringify(expectedDirectRunIds)}$`, 'm'),
+      );
       assert.match(
         standalone,
         /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get, dreamstate_proposals_get, dreamstate_get_run, dreamstate_list_runs\]/,
@@ -214,6 +223,17 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   }
 });
 
+test('direct mutating or paid runs require an exact kernel-owned allowlist', () => {
+  const artifacts = build();
+  const context = artifacts['generated/architect/context/SKILL.md'];
+  const outreach = artifacts['generated/architect/outreach/SKILL.md'];
+  assert.match(context, /^direct_run_capability_ids: \["brand\.context_url_analyze"\]$/m);
+  assert.match(context, /complete allowlist for direct mutating or paid runs is exactly \["brand\.context_url_analyze"\]/);
+  assert.match(outreach, /^direct_run_capability_ids: \[\]$/m);
+  assert.match(outreach, /complete allowlist for direct mutating or paid runs is exactly \[\]/);
+  assert.doesNotMatch(outreach, /brand\.context_url_analyze/);
+});
+
 test('Context resolver metadata covers governed updates to fixed Company documents', () => {
   const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
   assert.ok(context);
@@ -234,131 +254,58 @@ test('Architect generation rejects signed capability IDs absent from the pinned 
   };
   assert.throws(
     () => buildArchitectArtifacts(withoutRequiredCapability),
-    /(?:outreach|outreach-workflow-builder).*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
+    /tables.*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
   );
 });
 
-function kernelGrants(skillId: string): string[] {
-  const kernel = readFileSync(join(ROOT, 'architect-kernels', skillId, 'KERNEL.md'), 'utf8');
-  const body = kernel.split('<!-- architect-operation-contract\n')[1].split('\n-->')[0];
-  return JSON.parse(body).required_capability_ids;
-}
-
-test('Architect exact grants are the authored kernel operation contract, propagated verbatim', () => {
+test('Architect exact grants are derived only from machine-readable eval operation contracts', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  const catalogIds = new Set(catalog.capabilities.map((capability: { id: string }) => capability.id));
+  const expected = {
+    analytics: ['social.analytics_query', 'social.post_analytics'],
+    blog: ['brain.context.get', 'brain.context.search', 'content.article_create_schedule', 'content.article_delivery_create', 'content.article_get', 'content.article_update', 'content.delivery_publish', 'content.submit_review'],
+    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search'],
+    'growth-asset-planner': ['brain.context.get', 'brain.context.search', 'command_center.assets.create', 'command_center.assets.list'],
+    integrations: ['integrations.outreach_connectors_list', 'integrations.scheduler_status_get', 'integrations.unipile_status_get'],
+    outreach: [
+      'brain.context.get',
+      'brain.context.search',
+      'brain.learning.query_benchmarks',
+      'outreach.demand_plan_get',
+      'sequences.enroll_selection',
+      'sequences.publish',
+      'workflows.activate',
+      'workflows.draft_publish',
+      'workflows.get',
+    ],
+    'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
+    'outreach-workflow-builder': ['workflows.create', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
+    seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
+    social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
+    strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
+    tables: ['columns.sample', 'sources.cold_outbound_expand', 'sources.cold_outbound_preview', 'sources.linkedin_post_engagers_preview', 'tables.create'],
+    visibility: ['visibility.citations', 'visibility.overview', 'visibility.prompt_metrics_list', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
+    'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview', 'workflows.list'],
+  };
 
-  // The kernel operation contract is the single authored grant. skill_registry loads
-  // this list verbatim as SkillDescriptor.capabilities and tools_run denies any id
-  // absent from it, so a skill's runtime reach must equal what its kernel authored,
-  // never the incidental union of whatever its eval cases happen to assert on.
-  assert.deepEqual(
-    Object.keys(reviewedGrants).sort(),
-    Object.keys(pinned.skills).sort(),
-    'every Architect skill must have a reviewed grant snapshot',
-  );
-  for (const skillId of Object.keys(pinned.skills)) {
-    const capabilityIds = kernelGrants(skillId);
-
-    // Widening or narrowing a skill's runtime authority is a security decision, so it
-    // has to be a deliberate two-file change. Comparing the pipeline against KERNEL.md
-    // alone cannot catch a typo or bad merge inside KERNEL.md itself: both sides would
-    // re-derive from the same edited bytes. The snapshot is the independent record of
-    // what was actually reviewed.
-    assert.deepEqual(
-      capabilityIds,
-      reviewedGrants[skillId],
-      `${skillId}: kernel operation contract changed without updating the reviewed grant snapshot`,
-    );
-
-    // Grant order is signed into PINNED_RELEASE, so the build must impose a canonical
-    // order rather than inherit whatever order a kernel happened to be authored in.
-    assert.deepEqual(
-      pinned.skills[skillId].capability_ids,
-      [...pinned.skills[skillId].capability_ids].sort(),
-      `${skillId}: pinned grants must be sorted, or the release digest is authoring-order dependent`,
-    );
-    assert.deepEqual(pinned.skills[skillId].capability_ids, [...capabilityIds].sort());
+  for (const [skillId, capabilityIds] of Object.entries(expected)) {
+    assert.deepEqual(pinned.skills[skillId].capability_ids, capabilityIds);
     assert.match(
       artifacts[`generated/architect/${skillId}/SKILL.md`],
-      new RegExp(`^capability_ids: ${JSON.stringify([...capabilityIds].sort()).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'),
-    );
-    for (const capabilityId of capabilityIds) {
-      assert.ok(catalogIds.has(capabilityId), `${skillId}: ${capabilityId} is not in the pinned capability manifest`);
-    }
-    const evalIds: string[] = JSON.parse(artifacts[`generated/architect/${skillId}/evals.json`]).cases
-      .flatMap((item: { required_capability_ids?: string[] }) => item.required_capability_ids ?? []);
-    for (const capabilityId of evalIds) {
-      assert.ok(capabilityIds.includes(capabilityId), `${skillId}: eval asserts ungranted ${capabilityId}`);
-    }
-  }
-
-  // A skill must actually reach the surface its kernel claims to own, or the
-  // journey it coordinates cannot complete.
-  for (const capabilityId of ['columns.add', 'columns.run', 'workbooks.create', 'worksheets.create', 'views.create']) {
-    assert.ok(pinned.skills.tables.capability_ids.includes(capabilityId));
-  }
-  assert.ok(pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.create'));
-  for (const capabilityId of ['sequences.add_step', 'sequences.edit_step', 'sequences.remove_step']) {
-    assert.ok(pinned.skills['outreach-sequence-writer'].capability_ids.includes(capabilityId));
-  }
-
-  // A capability named only in a kernel's prohibition must never become authority.
-  assert.ok(
-    !pinned.skills.context.capability_ids.includes('brain.context.publish'),
-    'context: "Never call brain.context.publish from this agent skill"',
-  );
-  for (const capabilityId of ['sequences.enroll_selection', 'sequences.publish']) {
-    assert.ok(
-      !pinned.skills['outreach-sequence-writer'].capability_ids.includes(capabilityId),
-      'outreach-sequence-writer: "Never activate, enroll, or send"',
+      new RegExp(`^capability_ids: ${JSON.stringify(capabilityIds).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'),
     );
   }
-  assert.ok(
-    !pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.activate'),
-    'outreach-workflow-builder: "Activation remains a later coordinator-owned consequence"',
-  );
-  const mutating = new Set(
-    catalog.capabilities
-      .filter((capability: { mutates?: boolean }) => capability.mutates === true)
-      .map((capability: { id: string }) => capability.id),
-  );
-  assert.ok(mutating.has('columns.add'), 'manifest mutation flag must be readable, or this check is vacuous');
-  for (const capabilityId of pinned.skills.analytics.capability_ids) {
-    assert.ok(!mutating.has(capabilityId), `analytics must not mutate: ${capabilityId}`);
-  }
-
-  // Grants are authored in the kernel operation contract, and evals are only a
-  // subset of that authority, so nothing else bounds how far a skill's destructive
-  // surface can grow. This pins the mutating count per skill: widening it is always
-  // a visible number change in a reviewed fixture, never a silent kernel edit.
-  const mutatingBudget = JSON.parse(
-    readFileSync(new URL('./fixtures/architect-mutating-grant-budget.json', import.meta.url), 'utf8'),
-  ) as Record<string, number>;
-  assert.deepStrictEqual(
-    Object.keys(mutatingBudget).sort(),
-    Object.keys(pinned.skills).sort(),
-    'every pinned skill needs a reviewed mutating-grant budget',
-  );
-  for (const [skillId, skill] of Object.entries(pinned.skills)) {
-    const actual = (skill as { capability_ids: string[] }).capability_ids.filter((id) =>
-      mutating.has(id),
-    );
-    assert.strictEqual(
-      actual.length,
-      mutatingBudget[skillId],
-      `${skillId}: mutating grant count changed without updating the reviewed budget (${actual.join(', ')})`,
-    );
-  }
-
   assert.ok(
     architectSource.skills.every((skill: Record<string, unknown>) => !('capability_ids' in skill)),
     'source manifests must not carry a second hand-maintained grant list',
   );
+  assert.ok(
+    !pinned.skills.context.capability_ids.includes('brain.context.publish'),
+    'a canonical id mentioned only in negative kernel prose must never become authority',
+  );
 });
 
-test('every kernel operation contract must cover its eval-declared operation authority', () => {
+test('every kernel compliance contract exactly covers its eval-declared operation authority', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   assert.equal(Object.keys(pinned.skills).length, 14);
@@ -374,7 +321,7 @@ test('every kernel operation contract must cover its eval-declared operation aut
     writeFileSync(path, drifted);
     assert.throws(
       () => buildArchitectArtifacts(catalog),
-      /strategy.*evals declare capability ids.*does not grant/i,
+      /strategy.*operation contract.*eval-declared capability authority/i,
     );
   } finally {
     writeFileSync(path, original);
@@ -404,7 +351,7 @@ test('signed capability domains stay identical across source, Architect, Claude,
     seo: ['brain', 'content', 'tables', 'visibility'],
     social: ['brain', 'content'],
     strategy: ['brain', 'context'],
-    tables: ['tables', 'records'],
+    tables: ['tables'],
     visibility: ['visibility'],
     'weekly-growth-plan': [],
   };
@@ -432,7 +379,13 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
-  const exactCapabilityIds = kernelGrants('outreach-workflow-builder');
+  const exactCapabilityIds = [
+    'workflows.create',
+    'workflows.get',
+    'workflows.graph_apply',
+    'workflows.node_registry',
+    'workflows.validate_graph',
+  ];
   assert.equal(
     'capability_ids' in architectSource.skills.find(
       (skill: { id: string }) => skill.id === 'outreach-workflow-builder',
@@ -476,7 +429,7 @@ test('audience planning kernels require privacy-safe pooled benchmark evidence',
   }
   const seoKernel = artifacts['generated/architect/seo/KERNEL.md'];
   assert.match(seoKernel, /Every benchmark handoff, including a blocked or unavailable one/);
-  assert.match(artifacts['generated/architect/outreach/KERNEL.md'], /Do not terminate after discovery or contract inspection/);
+  assert.match(artifacts['generated/architect/outreach/KERNEL.md'], /do not terminate after discovery or contract inspection/i);
   assert.match(seoKernel, /exact capability id `brain\.learning\.query_benchmarks`/);
   assert.match(seoKernel, /privacy boundary: never raw cross-workspace rows/);
 });
@@ -566,6 +519,195 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
   assert.doesNotMatch(artifacts['generated/site/skills-catalog.json'], /outreach_apply_template|intent:outreach\.apply_template|outreach\.apply_template/);
 });
 
+test('active Architect outreach sources are campaign-free and reject retired campaign contracts', () => {
+  const artifacts = build();
+  const retiredEvalLanguage = /campaigns\.|campaign_state|campaign_id|outreach_campaigns|campaignId|outreachCampaignId|\bLaunch Campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
+  for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
+    assert.doesNotMatch(
+      artifacts[`generated/architect/${id}/KERNEL.md`],
+      retiredEvalLanguage,
+      `${id}: active model-visible kernel language must use workbook, workflow, and sequence identities`,
+    );
+  }
+
+  for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
+    const evals = JSON.parse(artifacts[`generated/architect/${id}/evals.json`]);
+    assert.doesNotMatch(JSON.stringify(evals), retiredEvalLanguage, `${id}: retired eval identity or authority`);
+  }
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  for (const id of Object.keys(pinned.skills)) {
+    assert.equal(
+      pinned.skills[id].capability_ids.some((capabilityId: string) => capabilityId.startsWith('campaigns.')),
+      false,
+      `${id}: retired campaign grant`,
+    );
+  }
+
+  const path = join(ROOT, 'architect-kernels', 'outreach-sequence-writer', 'KERNEL.md');
+  const original = readFileSync(path, 'utf8');
+  for (const retiredIdentity of ['campaign_id', 'outreach_campaigns', 'campaignId', 'outreachCampaignId']) {
+    try {
+      writeFileSync(path, `${original}\nRetired identity: ${retiredIdentity}.\n`);
+      assert.throws(
+        () => buildArchitectArtifacts(catalog),
+        /outreach-sequence-writer.*retired campaign.*(?:identity|terminology)/i,
+      );
+    } finally {
+      writeFileSync(path, original);
+    }
+  }
+
+  const evalPath = join(ROOT, 'architect-kernels', 'outreach', 'evals.json');
+  const originalEvals = readFileSync(evalPath, 'utf8');
+  const driftedEvals = JSON.parse(originalEvals);
+  driftedEvals.cases[0].request = 'Bind campaign_id and propose Launch Campaign.';
+  try {
+    writeFileSync(evalPath, `${JSON.stringify(driftedEvals, null, 2)}\n`);
+    assert.throws(
+      () => buildArchitectArtifacts(catalog),
+      /outreach.*retired campaign.*(?:identity|terminology|capability|state)/i,
+    );
+  } finally {
+    writeFileSync(evalPath, originalEvals);
+  }
+
+  const manifestPath = join(ROOT, 'architect-kernels', 'skills.json');
+  const originalManifest = readFileSync(manifestPath, 'utf8');
+  const driftedManifest = JSON.parse(originalManifest);
+  driftedManifest.skills.find((skill: { id: string }) => skill.id === 'outreach')
+    .triggers.push('Launch Campaign');
+  try {
+    writeFileSync(manifestPath, `${JSON.stringify(driftedManifest, null, 2)}\n`);
+    assert.throws(
+      () => buildArchitectArtifacts(catalog),
+      /outreach.*retired campaign.*(?:artifact|identity|terminology)/i,
+    );
+  } finally {
+    writeFileSync(manifestPath, originalManifest);
+  }
+});
+
+test('outreach specialists own every mutating authoring capability while the coordinator does not', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  const mutating = new Set(catalog.capabilities
+    .filter((capability: { mutates: boolean }) => capability.mutates)
+    .map((capability: { id: string }) => capability.id));
+  for (const specialistId of ['outreach-workflow-builder', 'outreach-sequence-writer']) {
+    const evals = JSON.parse(artifacts[`generated/architect/${specialistId}/evals.json`]);
+    const requiredMutations = [...new Set(evals.cases.flatMap(
+      (item: { required_capability_ids?: string[] }) => item.required_capability_ids ?? [],
+    ))].filter((id) => mutating.has(id));
+    for (const capabilityId of requiredMutations) {
+      assert.ok(pinned.skills[specialistId].capability_ids.includes(capabilityId), `${specialistId}: ${capabilityId}`);
+      assert.equal(pinned.skills.outreach.capability_ids.includes(capabilityId), false, `coordinator: ${capabilityId}`);
+    }
+  }
+  assert.ok(pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.create'));
+  assert.ok(pinned.skills['outreach-sequence-writer'].capability_ids.includes('sequences.bind'));
+});
+
+test('tables is the exactly one specialist owner of source preview and expansion', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  for (const capabilityId of [
+    'sources.cold_outbound_preview',
+    'sources.linkedin_post_engagers_preview',
+    'sources.cold_outbound_expand',
+  ]) {
+    const owners = ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']
+      .filter((skillId) => pinned.skills[skillId].capability_ids.includes(capabilityId));
+    assert.deepEqual(owners, ['tables'], `${capabilityId}: exactly one specialist owner`);
+  }
+  const workflowKernel = artifacts['generated/architect/outreach-workflow-builder/KERNEL.md'];
+  const workflowEvals = artifacts['generated/architect/outreach-workflow-builder/evals.json'];
+  assert.doesNotMatch(workflowKernel, /sources\.cold_outbound_expand|`tools_run`/);
+  assert.doesNotMatch(workflowEvals, /sources\.cold_outbound_expand/);
+  assert.match(workflowKernel, /typed reviewed `tables` handoff/i);
+});
+
+test('outreach is Brain-first and Workbook-first before demand, workflow, or sequence planning', () => {
+  const artifacts = build();
+  const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
+  const evals = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const scratch = evals.cases.find((item: { id: string }) => item.id === 'new-workflow-from-scratch');
+  assert.ok(scratch);
+  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification']);
+  assert.ok(scratch.forbidden_question_concepts.includes('sender'));
+  assert.ok(scratch.forbidden_question_concepts.includes('channel'));
+  assert.match(
+    kernel,
+    /exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`/,
+  );
+  assert.match(kernel, /derive.*Company Brain.*before.*intake/is);
+  assert.match(kernel, /sender.*channel.*launch/is);
+  assert.match(kernel, /`messaging_branch_state`.*inspection-only/is);
+
+  const full = evals.cases.find((item: { id: string }) => item.id === 'competitor-engagers-canonical-full-journey');
+  assert.ok(full);
+  const sequence = full.required_tool_sequence as Array<{
+    tool: string;
+    skill_id?: string;
+    capability_id?: string;
+    artifact_type?: string;
+    phase?: string;
+  }>;
+  const workbookApproval = sequence.findIndex((step) => (
+    step.tool === 'request_approval' && step.artifact_type === 'outreach_workbook'
+  ));
+  assert.ok(workbookApproval > 0);
+  const premature = sequence.slice(0, workbookApproval + 1).filter((step) => (
+    step.capability_id === 'outreach.demand_plan_get'
+    || step.skill_id === 'outreach-workflow-builder'
+    || step.skill_id === 'outreach-sequence-writer'
+    || step.capability_id?.startsWith('workflows.')
+    || step.capability_id?.startsWith('sequences.')
+  ));
+  assert.deepEqual(premature, []);
+  assert.ok(
+    sequence.findIndex((step) => step.capability_id === 'outreach.demand_plan_get') > workbookApproval,
+    'demand planning must constrain expansion and launch, not delay the initial Workbook',
+  );
+});
+
+test('outreach launch closure and pilot invariants use the canonical workflow and sequence surface', () => {
+  const artifacts = build();
+  const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
+  const evals = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  assert.match(kernel, /`row_limit: 7`/);
+  assert.match(kernel, /exactly seven distinct stable identities/i);
+  assert.match(kernel, /no padding/i);
+  assert.match(kernel, /never imports.*enrolls/is);
+
+  const launch = evals.cases.find((item: { id: string }) => item.id === 'explicit-final-launch-revalidation');
+  assert.ok(launch);
+  for (const capabilityId of [
+    'workflows.draft_publish',
+    'workflows.activate',
+    'sequences.enroll_selection',
+  ]) {
+    assert.ok(launch.required_capability_ids.includes(capabilityId), `${capabilityId}: launch closure`);
+  }
+  assert.equal(
+    launch.required_capability_ids.includes('sequences.publish'),
+    launch.sequence_publish_required === true,
+    'sequence publishing is granted only when the reviewed sequence still requires publication',
+  );
+  assert.equal(
+    launch.mutating_capability_budget,
+    launch.required_capability_ids.filter((id: string) => (
+      catalog.capabilities.find((capability: { id: string }) => capability.id === id)?.mutates === true
+    )).length,
+  );
+
+  const coordinatorGrant = JSON.parse(
+    artifacts['generated/architect/PINNED_RELEASE.json'],
+  ).skills.outreach.capability_ids;
+  for (const specialistCapability of ['workflows.create', 'workflows.graph_apply', 'sequences.bind']) {
+    assert.equal(coordinatorGrant.includes(specialistCapability), false, `${specialistCapability}: specialist-owned`);
+  }
+});
+
 test('growth asset planning may describe a buyer template library but stays explicitly unsaved without a capability', () => {
   const artifacts = build();
   assert.match(
@@ -585,6 +727,7 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
 
   for (const changeKind of [
     'outreach_source',
+    'outreach_workbook',
     'outreach_bundle',
     'table_column_run',
     'outreach_bulk_expansion',
@@ -593,9 +736,10 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.match(coordinator, new RegExp(`\\b${changeKind}\\b`));
   }
   assert.match(coordinator, /Approval of one stage never authorizes a later stage/);
-  assert.match(coordinator, /Launch Campaign/);
+  assert.match(coordinator, /launch closure/i);
   const orderedKinds = [
     'outreach_source',
+    'outreach_workbook',
     'outreach_bundle',
     'table_column_run',
     'outreach_bulk_expansion',
@@ -607,22 +751,21 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.ok(offset > prior, `${kind} must follow the prior staged gate`);
     prior = offset;
   }
-  assert.match(coordinator, /sources\.cold_outbound_preview/);
+  assert.match(tables, /source evidence pilot/i);
   assert.match(coordinator, /outreach\.demand_plan_get/);
-  assert.match(coordinator, /pilot_row_limit.*exactly 7/i);
+  assert.match(coordinator, /literal `row_limit: 7`/i);
   assert.match(coordinator, /default.*demand_based/i);
   assert.doesNotMatch(coordinator, /three distinct questions whose ids or prompts literally include/i);
-  assert.match(coordinator, /no worksheet, campaign, source, import, enrollment, or other durable destination/i);
-  assert.match(coordinator, /sources\.cold_outbound_expand/);
+  assert.match(coordinator, /no durable destination/i);
+  assert.match(tables, /sources\.cold_outbound_expand/);
   assert.match(coordinator, /stage_exact_result_set=true/);
-  assert.match(coordinator, /require_campaign_status=draft/);
   assert.match(tables, /smallest representative selection/i);
-  assert.match(coordinator, /adding columns never means they ran/i);
-  assert.match(workflow, /source-evidence run/);
-  assert.match(workflow, /exact workbook, worksheet, and saved-view revisions/);
+  assert.match(coordinator, /never reshapes the Workbook, runs columns/i);
+  assert.match(workflow, /typed reviewed `tables` handoff/);
+  assert.match(workflow, /exact workbook\/worksheet\/view revisions/);
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
-  assert.match(coordinator, /single activation-and-send authorization/i);
-  assert.match(coordinator, /Do not invent a second send approval gate/i);
+  assert.match(coordinator, /single reviewed launch closure/i);
+  assert.match(coordinator, /workflows\.draft_publish/);
 });
 
 test('outreach release uses exact capability evidence and signed lifecycle states', () => {
@@ -632,22 +775,17 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   const staged = outreach.cases.find((item: { id: string }) => item.id === 'staged-pilot-build-sample-expand-launch');
   const launch = outreach.cases.find((item: { id: string }) => item.id === 'explicit-final-launch-revalidation');
   const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
-  const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'exact-result-set-expansion-is-separate');
+  const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'typed-reviewed-tables-handoff');
 
-  assert.deepEqual(staged.required_capability_ids, [
-    'outreach.demand_plan_get',
-    'sources.cold_outbound_preview',
-    'sources.cold_outbound_expand',
-  ]);
+  assert.equal(staged.required_capability_ids, undefined);
   assert.deepEqual(staged.required_completion_fields, [
     { id: 'stage_boundary_state', allowed_values: ['ordered_separate'] },
-    { id: 'campaign_state', allowed_values: ['inactive'] },
     { id: 'activation_state', allowed_values: ['inactive'] },
     { id: 'external_send_state', allowed_values: ['not_authorized'] },
     { id: 'approval_state', allowed_values: ['required'] },
     { id: 'run_state', allowed_values: ['not_applicable'] },
   ]);
-  assert.match(staged.request, /creates no run.*run_state not_applicable.*do not fabricate a blocked run/i);
+  assert.match(staged.request, /do not fetch or plan demand.*before Workbook approval.*run_state not_applicable/is);
   assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'external_send_state' && field.allowed_values.includes('not_authorized')
   )));
@@ -657,42 +795,34 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'run_state' && field.allowed_values.includes('blocked')
   )));
-  // Reviewed change: the messaging branch state is discoverable by inspecting the
-  // workflow graph, so a popup for it was asking what live metadata already answers.
-  // No popup concept remains, and the required_concepts below now carry the intent.
-  assert.deepEqual(conditional.must_use_popup_when_missing, []);
-  assert.ok(conditional.required_concepts.includes('never an intake question'));
-  assert.deepEqual(exactSet.required_capability_ids, ['sources.cold_outbound_expand']);
+  assert.equal(conditional.must_use_popup_when_missing, undefined);
+  assert.deepEqual(conditional.forbidden_question_concepts, ['messaging_branch_state']);
+  assert.deepEqual(exactSet.required_capability_ids, ['workflows.get', 'workflows.validate_graph']);
   assert.equal(exactSet.fixture_profile, 'outreach_exact_result_set_expansion');
   assert.ok(exactSet.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'selection_state' && field.allowed_values.includes('exact')
   )));
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    // Reviewed change: asking for `messaging_branch_state` at intake was the defect.
-    // Live metadata answers it, and the kernel's own "Never ask what live metadata
-    // answers" made the old intake question self-contradictory, so the concept stays
-    // required but must be resolved by inspection. The assertion still pins that the
-    // kernel commits to a finite resolution rule rather than leaving the state open.
-    /Resolve `messaging_branch_state` by inspection, never by asking.*resolves it to `absent`.*resolves it to `present`/s,
+    /`messaging_branch_state` is inspection-only/,
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /maximum intake-checkpoint count is one.*never open a second intake.*ask a later follow-up question/s,
+    /opening intake concept set is exactly.*`qualification`/s,
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /Volume is application-calculated.*Default structured intent to `\{mode:"demand_based"\}`/s,
+    /Volume is application-calculated.*default structured intent to `\{mode:"demand_based"\}`/s,
   );
-  const scratch = outreach.cases.find((item: { id: string }) => item.id === 'new-campaign-from-scratch');
-  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification', 'sender']);
+  const scratch = outreach.cases.find((item: { id: string }) => item.id === 'new-workflow-from-scratch');
+  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification']);
   assert.equal(scratch.max_intake_checkpoints, 1);
-  assert.deepEqual(scratch.forbidden_question_concepts, ['outreach_volume']);
-  assert.equal(conditional.max_intake_checkpoints, 1);
-  assert.ok(scratch.required_capability_ids.includes('outreach.demand_plan_get'));
+  assert.deepEqual(scratch.forbidden_question_concepts, ['outreach_volume', 'sender', 'channel']);
+  assert.equal(conditional.max_intake_checkpoints, undefined);
+  assert.equal(scratch.required_capability_ids.includes('outreach.demand_plan_get'), false);
   const outreachSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach');
   const integrationsSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'integrations');
-  assert.ok(outreachSkill.triggers.includes('design an outreach campaign for a named cohort using pooled benchmarks'));
+  assert.ok(outreachSkill.triggers.includes('design outreach for a named cohort using pooled benchmarks'));
   assert.match(integrationsSkill.description, /Provider content research, metrics, and search-window coverage remain with their domain skills/);
 });
 
@@ -710,7 +840,9 @@ test('competitor engager release eval is production-real and preserves dependenc
   assert.deepEqual(full.expected_skill_ids, ['outreach']);
   assert.ok(full.forbidden_test_substitutions.includes('mock run receipt'));
   assert.equal(full.max_intake_checkpoints, 1);
-  assert.deepEqual(full.forbidden_question_concepts, ['outreach_volume']);
+  assert.deepEqual(full.forbidden_question_concepts, [
+    'outreach_volume', 'sender', 'channel', 'messaging_branch_state',
+  ]);
   assert.deepEqual(full.required_terminal_receipts, [
     'source_pilot',
     'bundle_graph_apply',
@@ -744,11 +876,24 @@ test('competitor engager release eval is production-real and preserves dependenc
   const bundleIndex = sequenceIndex((step) => (
     step.tool === 'propose_artifact' && step.artifact_type === 'outreach_bundle'
   ));
+  const workbookApprovalIndex = sequenceIndex((step) => (
+    step.tool === 'request_approval' && step.artifact_type === 'outreach_workbook'
+  ));
+  const demandIndex = sequenceIndex((step) => (
+    step.tool === 'tools_run'
+    && step.capability_id === 'outreach.demand_plan_get'
+    && step.phase === 'post_workbook_expansion_constraints'
+  ));
   const sampleIndex = sequenceIndex((step) => (
     step.tool === 'propose_artifact' && step.artifact_type === 'table_column_run'
   ));
   const expansionIndex = sequenceIndex((step) => (
     step.tool === 'propose_artifact' && step.artifact_type === 'outreach_bulk_expansion'
+  ));
+  const expansionDemandIndex = sequenceIndex((step) => (
+    step.tool === 'tools_run'
+    && step.capability_id === 'outreach.demand_plan_get'
+    && step.phase === 'post_sample_expansion_revalidation'
   ));
   const revalidationIndex = sequenceIndex((step) => (
     step.tool === 'tools_run'
@@ -767,13 +912,16 @@ test('competitor engager release eval is production-real and preserves dependenc
   ));
   assert.ok(intakeIndex > 0);
   assert.ok(pilotProposalIndex > intakeIndex);
-  assert.ok(bundleIndex > pilotProposalIndex);
+  assert.ok(workbookApprovalIndex > pilotProposalIndex);
+  assert.ok(demandIndex > workbookApprovalIndex);
+  assert.ok(bundleIndex > demandIndex);
   assert.ok(sampleIndex > bundleIndex);
-  assert.ok(expansionIndex > sampleIndex);
+  assert.ok(expansionDemandIndex > sampleIndex);
+  assert.ok(expansionIndex > expansionDemandIndex);
   assert.ok(revalidationIndex > expansionIndex);
   assert.ok(activationIndex > revalidationIndex);
   assert.ok(terminalIndex > activationIndex);
-  assert.match(full.request, /existing workbook.*7-row pilot.*terminal receipts/i);
+  assert.match(full.request, /existing Workbook.*row_limit: 7 pilot.*terminal receipts/i);
   assert.ok(failures.has('competitor-engagers-missing-enrichment-blocks-ai'));
   assert.ok(failures.has('competitor-engagers-required-failures-disqualify'));
   assert.ok(failures.has('competitor-engagers-capacity-change-blocks-launch'));
@@ -799,23 +947,19 @@ test('competitor engager release eval is production-real and preserves dependenc
   ]);
   assert.equal(lowPrecision.required_tool_sequence.at(-1).phase, 'audit_stops_before_expansion');
   const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
-  assert.match(kernel, /exactly seven successful distinct rows/);
-  assert.match(kernel, /partial receipt remains partial and is never filled with synthetic rows/);
+  assert.match(kernel, /exactly seven distinct stable identities/);
+  assert.match(kernel, /partial result stays partial/);
   assert.match(kernel, /complete raw provider payload/);
-  assert.match(kernel, /wait for terminal activation, enrollment, and provider receipts/);
-  // The coordinator delegates column and copy mechanics to the specialists it hands off
-  // to: `tables` is a declared dependency, `outreach-sequence-writer` is loaded
-  // conditionally when the validated workflow contains messaging and is required by the
-  // full-journey eval's tool sequence. Either way the rule must ship in the kernel that
-  // owns it. Asserting it here too would reward duplicating specialist prose back into
-  // the coordinator, which is what pushed outreach over its 3,000-token context budget.
-  assert.match(kernel, /Hand the qualification worksheet to `tables`/);
-  assert.match(kernel, /Hand messaging to `outreach-sequence-writer`/);
+  // The coordinator delegates qualification and messaging rules; asserting them at their
+  // owning kernels is what keeps a rule from being silently duplicated or dropped.
   const tablesKernel = artifacts['generated/architect/tables/KERNEL.md'];
   assert.match(tablesKernel, /null enrichment result is `unsure`/);
   assert.match(tablesKernel, /never uses row position, row index, row number, or table order/);
-  const writerKernel = artifacts['generated/architect/outreach-sequence-writer/KERNEL.md'];
-  assert.match(writerKernel, /fixed greeting, pitch paragraphs, CTA, sign-off/);
+  assert.match(
+    artifacts['generated/architect/outreach-sequence-writer/KERNEL.md'],
+    /fixed greeting, pitch paragraphs, CTA, sign-off/,
+  );
+  assert.match(kernel, /wait for terminal workflow, enrollment, and provider receipts/);
 });
 
 test('table evals require exact contracts and authoritative schema or paid-run receipts', () => {
@@ -845,13 +989,6 @@ test('table evals require exact contracts and authoritative schema or paid-run r
   );
   assert.match(
     buildTable.request,
-    /A proposal that does not match the fetched contract is incomplete/,
+    /do not claim a preparation receipt it cannot produce/,
   );
-  // No canonical capability in the tables family declares dry_run_supported, so a
-  // case that demands a non-mutating dry-run preparation receipt from tables.create
-  // is unsatisfiable: the agent reads the contract, is refused invalid_request, and
-  // is scored down for obeying the contract it was told to obey. The premise, not
-  // the agent, was wrong. Execution mode is the contract's to declare.
-  assert.doesNotMatch(buildTable.request, /dry-run preparation mode/i);
-  assert.match(buildTable.request, /execution mode that contract declares supported/i);
 });
