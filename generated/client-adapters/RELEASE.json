@@ -2,10 +2,10 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.7",
-  "source_release_hash": "54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f",
+  "source_release_hash": "049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f",
+    "playbook_kernel_hash": "049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "0f792191fabb37cf",
@@ -64,9 +64,9 @@
       "kernel_sha256": "944bccaa0115db528d7df37ec36bc9c40edd99a61cb1c9e55f2a6522e2a729f3",
       "evals_sha256": "5f48db2422e483955f4d15f1b44522c8b29be68f01c72a6628062df509c5c98d",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "518a930e266b2c26514c1dc254e2d69767190c5ee2ca68c23a311b77bc4ebcc1",
+        "claude": "467c539470d9b71e26a3852b80e6f23ae1fca516e6e3a6fdcca1b37a741f0d8b",
+        "codex": "e74f7511e23828f25184365b477f68adea7d065c6e6b201af2c7adc8cf4f9147"
       }
     },
     "blog": {
@@ -110,9 +110,9 @@
       "kernel_sha256": "64025aa7f71c1e14c1d26d4df47e0b163244d4dde75546500a48ca73bfd6c38a",
       "evals_sha256": "7b871b5403ba2983ce333f82b51cabc9ebc01d6ad30f4bcd26b6d664ae6fa78a",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "1cddcccbf0b27150f1ba685d72230c916dfd7c6ac932c49e56e6114cc6c26adb",
+        "claude": "a29ece73688583c0c84c010abe9d1112ca7b480941b71c940eae2495aa798b42",
+        "codex": "6565b3f3a3e5475c923d4c98740456357c10f816e69a23207de28f151d145c1e"
       }
     },
     "context": {
@@ -148,9 +148,9 @@
       "kernel_sha256": "99a6903bd669e8851d8d9338880c54f40f8d5944e1a4594b9952af2c008885a2",
       "evals_sha256": "30a9edce28e408d7011bf434ed23d4e014f24f0e346c3cb06b66d68b6ec91dff",
       "adapter_sha256": {
-        "architect": "c9dfb6330b029054579fbcea33870f2349f6e3daa4d6c5afdb385ff6cafbf8de",
-        "claude": "a570e6fca3ec345e2d468d244a1dbca255a71a9234d984566af5c632b844f13b",
-        "codex": "fb6df2cf4d92fba85e44f5b21199526ed59378a4ef02a446d759bfaa18b2b0d3"
+        "architect": "95fc733c916251ade8ee20634a3c562a646c2f3989249fad3952bfd504340034",
+        "claude": "3224364883c7485bcdab76b77627456bc6d344db1caf5f53d97ff3466e9257c3",
+        "codex": "e7cc9a7d99d8e11cf13d530cfcf5a9500950f6180df407ff3dbab5f8b7700d52"
       }
     },
     "growth-asset-planner": {
@@ -166,9 +166,9 @@
       "kernel_sha256": "cd206ac9a54a43e17bcc3e18d88b41e53f1d1cd78699f18928c5e9a9c3d065aa",
       "evals_sha256": "a04ebbe93e8520147463d361714335367b518659b8591db1fe60e811cf1d3c6d",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "873e2b27114af25814f9fe06780bf96e1068844a06ded1fa6c1f219f8fb72c8d",
+        "claude": "30dc2513f179c355becc4db95773a5673ebbe58d2348eb43751531a02d192d9f",
+        "codex": "160e4f67e8542a9cb2a6f4f8b7de8a8ee28b3c2a5402e78d28e2d09d2a902fdb"
       }
     },
     "integrations": {
@@ -206,9 +206,9 @@
       "kernel_sha256": "6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb",
       "evals_sha256": "1d7705e0745dac6469fc1cd2ddf3786c1f77aa922c1c611f27aa9bea830cbc46",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "58ce6cafde1fe5f5680883c6f0e8c90bc99f38cc494c95fbc8c3fb6e72b8a2c7",
+        "claude": "821d18250e692bb870ff309f0b02ce71e9117e59a09a8defb981bf88b3c309c6",
+        "codex": "e4bd223517be20ea07e262d6b264f54cfd02d5079477378d5d1f58a8496b4750"
       }
     },
     "outreach": {
@@ -240,9 +240,9 @@
       "kernel_sha256": "c74204822eec1c572111a7352641756b8ef34a6eaeca71892d022304c1b59b65",
       "evals_sha256": "0ec6caa347165749d82a8adae6154336c74f0974dad68c4219d666d6d0a7beb5",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "4e0a3f51fbb35b7f2fe22e08d46ebdf1282f527b6f0b2189daf66d646ce632f3",
+        "claude": "faf6ced89dc58b4974354cb9f770d69068ebb3a0ecb2ef2f06887e0afe601462",
+        "codex": "38463879f0229e56eadcf29fc487a86efdb7661644c3cb9936327a571a54acb8"
       }
     },
     "outreach-sequence-writer": {
@@ -276,9 +276,9 @@
       "kernel_sha256": "084ae56172543010fa4748ce2b4a8d11f53bab8abad4c5c4f5f2c2db69e928c1",
       "evals_sha256": "5e3a508e62297b0604d1cf16b2d31d90a0c5cc92d683464204c1f4be9533f278",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "c44d94790641bc3a0182e2a4c7c8b27609a4dd4b2f82c7cbd1ecf6b710ac6816",
+        "claude": "abd0f17b0d4cb038e9ea7940a5e5fef654cd6cb8da0fc561f662be4e188d1351",
+        "codex": "0a2f1df84e0c6175557ff3dbad72cae93bf949c28f8ef4eafc9c96d2d3813c1f"
       }
     },
     "outreach-workflow-builder": {
@@ -318,9 +318,9 @@
       "kernel_sha256": "f9cfc7a0faea8ec42e5c52c7abbf6807b4b88f92e6b7ee7988c8511c7c301f53",
       "evals_sha256": "c2800607862e8106ba230d91a216db38bf06043efdace7c45c77bda3cd630307",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "26c7d2c9881ba2204758fbfaaec77366727001a3d362e65208b985ebc773e5b6",
+        "claude": "2cfb44c84af3e567066c358432e177f5190384928cb4014ecf548d937426f7d9",
+        "codex": "5353f665218a0817ed3147f806cad1aaa34556e90b0a61e216d4b1729e1146a3"
       }
     },
     "records": {
@@ -374,9 +374,9 @@
       "kernel_sha256": "0eda1e3c8a012752d4757baf601f7f604ca85943fedfc3bab3117c35bf977a99",
       "evals_sha256": "a86928fbaf83663deafb61b95aa0e24abcf4348a9eaf124ea97d0e2ef7a69230",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "0e1466c7fceb155f98934a8639e103fc28ad58540abcbb6e748c031eb176b7e0",
+        "claude": "6ecb6ccf5639e13744b14c084041c08bbefaa00ce3a50db63289c29943728dbc",
+        "codex": "1bc1ac345ea9999e146ae353c0ab009f48ad452f47ada56c249eba5e8cf6fb1d"
       }
     },
     "seo": {
@@ -426,9 +426,9 @@
       "kernel_sha256": "da984597acd2d33e573693a8f8d5e09c61080f4806ea0cc60f7713c6f942a586",
       "evals_sha256": "b34ab09d40bf83689715dd926c4def23eca397fe291a98f2a05a97f2d899438d",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "38f6ea6829415871a8ccf4381d809bc314be6acca895e4923c455cbcffd985be",
+        "claude": "4cf00240c16aa9de3c44f3dd9ae618a23e7d20ca79d2453ac15874a838fd0752",
+        "codex": "9950b3e5ac7148b7c57df1eee89d1cb19165185ecd430efa5bd59c0439bffaad"
       }
     },
     "site-onboarding": {
@@ -460,9 +460,9 @@
       "kernel_sha256": "483bbf44184549a8246da39acf042450032915c5931a91fa6a086bd48a14daf0",
       "evals_sha256": "fb8fd467ec5dc7346a079e53d8b5d1705c9a9d78f64da3d580cf71e8e31abcfa",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "5c3dfa7cb952bd7c880e08fb9540fb45797d461adf25f385423db08f4009a42b",
+        "claude": "706b0823ad0e9644a40b408a64b832d41ee1ffc64fa803c7d1aa52baf8645f31",
+        "codex": "40878f2da4a350d3f5b2b4d82203f4f6bd00aba07dd8511dd28f88b0b2475441"
       }
     },
     "social": {
@@ -532,9 +532,9 @@
       "kernel_sha256": "5e214ff4ef13cf5830b5df9eb46694a4b0ef15453a8d04c270168ff0191d94dc",
       "evals_sha256": "15be8d40da4c5081b9e3f7f9483a40dd35f2da2d19e1344f499c09219bafe578",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "99be4b70dcd73b6edb6750384d5b71edc8510eed9e6920702d566dfb92fee090",
+        "claude": "4187b87a93df331db8bb85eaa0c1f9830f15915aa07fac55256096da292d95cc",
+        "codex": "abf809cd2977c894c22aa727b88a98f17bdafe8084eda2dd52bfe2196c93dcc3"
       }
     },
     "strategy": {
@@ -564,9 +564,9 @@
       "kernel_sha256": "8832cb5f28cf1a3f59c159a31cb3f6c2e302c323d235e5b1615f6b51a906ba86",
       "evals_sha256": "19de4cdcc4a791ddbc5b112e01a814f5a704896f29561be538c32022c4af5528",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "11c63889bce5b38ab02e120e00635f2f3319f94720fe24bee152b41e4c532986",
+        "claude": "655b34b23562d8318febd156b07013b6e57985305361f849ed891ce4c457c9e3",
+        "codex": "5a2c0251a0bb727a43b37a4fa4260a8735bee0811c5b90197508bcce3ca9ec33"
       }
     },
     "tables": {
@@ -647,12 +647,12 @@
         "worksheets.update"
       ],
       "direct_run_capability_ids": [],
-      "kernel_sha256": "3bf831503af09bec7c4d59edb70c7cf3cc97c0fbbaad7956d41d984d34042ff4",
+      "kernel_sha256": "a90966eb7190e29e73676d5240385353518b961186b8d9526cc21fd70c8a419f",
       "evals_sha256": "b4d6796e381f1905af0241193d9598775fdd12a91f181553efedca79964e70d8",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "ca9cd6a621811e647a5ad84923d3245963ba9c7b686b0fa5d62cf20544ec38e0",
+        "claude": "f24d87e1d74492510e8aa796e4d8069dbf24330a5f58131113ed47c8dc2c54fd",
+        "codex": "b57abc3db87f0ac99ad08377690dbae4547f59f63feba3bceb6fa8f9098fcf30"
       }
     },
     "visibility": {
@@ -698,9 +698,9 @@
       "kernel_sha256": "c45c62c09116453d6d09cac1577bd4f569b758f3b30a159e2d4b75e79c138903",
       "evals_sha256": "4928022d41da2c30c615ba84c1f182ea366b5f828893d2c315e3092427f176d9",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "27af5e9ed09883c8cd7d2568f7e83a8ea92d17f0d2da1ebbc4a7e25140cd8832",
+        "claude": "4becb7fa56476f0cba06e94b7c9d85cf1bede0a450709825f8c73d97f81bb0a5",
+        "codex": "4c2476bc7011ab2e8eb2c9d494baf9483286ac1739acbfb67ad0617d7489cd19"
       }
     },
     "weekly-growth-plan": {
@@ -732,9 +732,9 @@
       "kernel_sha256": "46695b4ac619bc718f914e6c364fe7bd8ef1f21fbd39fe83910497d8eda107dd",
       "evals_sha256": "f40f4b87f6d703f986b5b191626cc0735449ad62c1b084998f463f924849a692",
       "adapter_sha256": {
-        "architect": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
-        "claude": "ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c",
-        "codex": "fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f"
+        "architect": "2e1a4d3a0ebcd9b535ca2021364b06e152729ee61ebd31fd709fbc20dbe705a3",
+        "claude": "cd63160fad7c2b5976a1fd69f4c7cb94c399e6fa9b662b547830d492bcce2464",
+        "codex": "3d36aa49a6333e8656c538c9ae5e50fb3dca3cebbb4a43a090416fb5982d11cf"
       }
     }
   }

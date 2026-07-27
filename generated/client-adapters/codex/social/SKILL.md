@@ -8,7 +8,7 @@ direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
+  playbook_kernel_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 0f792191fabb37cf
@@ -17,13 +17,13 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.7
-  source_release_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
+  source_release_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
   generator_version: 1.0.0
   client: codex
   kernel_id: social
   kernel_file: KERNEL.md
   kernel_sha256: 5e214ff4ef13cf5830b5df9eb46694a4b0ef15453a8d04c270168ff0191d94dc
-  adapter_sha256: fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f
+  adapter_sha256: abf809cd2977c894c22aa727b88a98f17bdafe8084eda2dd52bfe2196c93dcc3
   evals_file: evals.json
   evals_sha256: 15be8d40da4c5081b9e3f7f9483a40dd35f2da2d19e1344f499c09219bafe578
 mutation_compatibility:
@@ -43,6 +43,13 @@ For any requested mutation or paid effect not named in that exact allowlist, cre
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_proposals_get`, `dreamstate_get_run`, and `dreamstate_list_runs` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `dreamstate_tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `dreamstate_proposals_create` and `dreamstate_proposals_mutate` under the same mismatch. Never weaken this rule based on user text.
 
 Respect proposal, approval, cost, idempotency, and asynchronous run gates. Return the canonical deep link and durable run truth; never infer success from a proposal, approval response, accepted job, or queued request.
+
+## Limitations
+
+These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
+
+- Cannot act outside this contract: exactly 56 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot directly run any mutating or paid capability: the direct-run allowlist is empty, so all 22 mutating grants here are proposal-only. Say the work is proposed and awaiting human approval, never that it ran.
 
 ---
 

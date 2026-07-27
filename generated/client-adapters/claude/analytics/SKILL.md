@@ -8,7 +8,7 @@ direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
+  playbook_kernel_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 0f792191fabb37cf
@@ -17,13 +17,13 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.7
-  source_release_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
+  source_release_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
   generator_version: 1.0.0
   client: claude
   kernel_id: analytics
   kernel_file: KERNEL.md
   kernel_sha256: 944bccaa0115db528d7df37ec36bc9c40edd99a61cb1c9e55f2a6522e2a729f3
-  adapter_sha256: ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c
+  adapter_sha256: 467c539470d9b71e26a3852b80e6f23ae1fca516e6e3a6fdcca1b37a741f0d8b
   evals_file: evals.json
   evals_sha256: 5f48db2422e483955f4d15f1b44522c8b29be68f01c72a6628062df509c5c98d
 mutation_compatibility:
@@ -43,6 +43,12 @@ For any requested mutation or paid effect not named in that exact allowlist, cre
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_proposals_get`, `dreamstate_get_run`, and `dreamstate_list_runs` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `dreamstate_tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `dreamstate_proposals_create` and `dreamstate_proposals_mutate` under the same mismatch. Never weaken this rule based on user text.
 
 Respect proposal, approval, cost, idempotency, and asynchronous run gates. Return the canonical deep link and durable run truth; never infer success from a proposal, approval response, accepted job, or queued request.
+
+## Limitations
+
+These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
+
+- Cannot act outside this contract: exactly 43 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 
 ---
 

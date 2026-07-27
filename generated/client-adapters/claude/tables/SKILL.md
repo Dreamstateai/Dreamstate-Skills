@@ -8,7 +8,7 @@ direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
+  playbook_kernel_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 0f792191fabb37cf
@@ -17,13 +17,13 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.7
-  source_release_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
+  source_release_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
   generator_version: 1.0.0
   client: claude
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: 3bf831503af09bec7c4d59edb70c7cf3cc97c0fbbaad7956d41d984d34042ff4
-  adapter_sha256: ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c
+  kernel_sha256: a90966eb7190e29e73676d5240385353518b961186b8d9526cc21fd70c8a419f
+  adapter_sha256: f24d87e1d74492510e8aa796e4d8069dbf24330a5f58131113ed47c8dc2c54fd
   evals_file: evals.json
   evals_sha256: b4d6796e381f1905af0241193d9598775fdd12a91f181553efedca79964e70d8
 mutation_compatibility:
@@ -43,6 +43,16 @@ For any requested mutation or paid effect not named in that exact allowlist, cre
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_proposals_get`, `dreamstate_get_run`, and `dreamstate_list_runs` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `dreamstate_tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `dreamstate_proposals_create` and `dreamstate_proposals_mutate` under the same mismatch. Never weaken this rule based on user text.
 
 Respect proposal, approval, cost, idempotency, and asynchronous run gates. Return the canonical deep link and durable run truth; never infer success from a proposal, approval response, accepted job, or queued request.
+
+## Limitations
+
+These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
+
+- Cannot act outside this contract: exactly 70 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot directly run any mutating or paid capability: the direct-run allowlist is empty, so all 41 mutating grants here are proposal-only. Say the work is proposed and awaiting human approval, never that it ran.
+- Cannot hold a source definition as a capability grant: all 26 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
+- Cannot start 22 of the 26 source definitions with `table_sources.run`: their runtime is a canonical producer that lands rows when its authenticated producer sends them, so a manual run is refused with a typed reason instead of queued. Those definitions are source.api_import, source.company_page, source.csv, source.data_provider, source.engaged_with_account, source.engaged_with_company, source.engaged_with_post, source.engaged_with_team, source.form_submission, source.keyword_commented, source.linkedin_connections, source.linkedin_new_connection, source.live_signal, source.mentioned_keyword, source.own_post_commented, source.own_post_liked, source.own_post_reacted, source.product_event, source.salesnav_search, source.url, source.viewed_profile, source.webhook_source. Say the source is attached and waiting on its producer.
+- Cannot schedule or subscribe a source run: the pinned manifest exposes no scheduling or subscription capability for sources, so a manual `table_sources.run` is the only start. Say scheduled and event-driven source runs are not available in this release.
 
 ---
 
@@ -73,7 +83,13 @@ For a reactive table proposal, search for and fetch the exact live table contrac
 
 ## Run conditions
 
-A column's `run_if` gate is one canonical predicate IR, read the same way no matter which surface wrote it. Author leaves as `{ "field": "<column_key>", "op": "<op>", "value": <scalar or array> }` with op one of eq, neq, contains, not_contains, gt, gte, lt, lte, is_set, is_empty, in, not_in. `is_set` and `is_empty` take no value; `in` and `not_in` take an array. Combine leaves with `{ "kind": "and" | "or", "children": [...] }` and negate with `{ "kind": "not", "child": {...} }`. `run_policy`, `max_rows_per_day`, and `condition_mode` are pacing metadata, never a condition. An empty object or a metadata-only object means no condition: the column runs. A condition that is present but unreadable is treated as do-not-run (fail closed): the row is skipped, not billed, so author to the canonical shape above, not a bespoke one.
+A column's `run_if` gate is one canonical predicate IR, read the same way no matter which surface wrote it. There are two names for the same leaf, and both matter here.
+
+Write leaves as `{ "column_key": "<column_key>", "operator": "<op>", "value": <scalar or array> }`. That is this skill's emission and it is asserted byte for byte against the stored condition, so never restate an emitted gate in another dialect.
+
+Read leaves as `{ "field": "<column_key>", "op": "<op>", "value": <scalar or array> }`. That is the normalized shape the executor evaluates, and it is what a stored condition looks like when it is read back. Normalization happens on read only: `column_key` is accepted as a name for `field` and `operator` as a name for `op`, so the written and read forms evaluate identically and neither is rewritten in storage.
+
+Ops are eq, neq, contains, not_contains, gt, gte, lt, lte, is_set, is_empty, in, not_in. `is_set` and `is_empty` take no value; `in` and `not_in` take an array. Combine leaves with `{ "kind": "and" | "or", "children": [...] }` and negate with `{ "kind": "not", "child": {...} }`. `run_policy`, `max_rows_per_day`, and `condition_mode` are pacing metadata, never a condition. An empty object or a metadata-only object means no condition: the column runs. A condition that is present but unreadable is treated as do-not-run (fail closed): the row is skipped, not billed, so author to the canonical shapes above, not a bespoke one.
 
 ## Completion proof
 

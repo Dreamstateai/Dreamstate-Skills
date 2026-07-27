@@ -2,11 +2,11 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.7",
-  "source_release_hash": "54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f",
+  "source_release_hash": "049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f",
+    "playbook_kernel_hash": "049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "0f792191fabb37cf",
@@ -63,7 +63,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "944bccaa0115db528d7df37ec36bc9c40edd99a61cb1c9e55f2a6522e2a729f3",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "518a930e266b2c26514c1dc254e2d69767190c5ee2ca68c23a311b77bc4ebcc1",
       "evals_sha256": "5f48db2422e483955f4d15f1b44522c8b29be68f01c72a6628062df509c5c98d"
     },
     "blog": {
@@ -105,7 +105,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "64025aa7f71c1e14c1d26d4df47e0b163244d4dde75546500a48ca73bfd6c38a",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "1cddcccbf0b27150f1ba685d72230c916dfd7c6ac932c49e56e6114cc6c26adb",
       "evals_sha256": "7b871b5403ba2983ce333f82b51cabc9ebc01d6ad30f4bcd26b6d664ae6fa78a"
     },
     "context": {
@@ -139,7 +139,7 @@
         "brand.context_url_analyze"
       ],
       "kernel_sha256": "99a6903bd669e8851d8d9338880c54f40f8d5944e1a4594b9952af2c008885a2",
-      "adapter_sha256": "c9dfb6330b029054579fbcea33870f2349f6e3daa4d6c5afdb385ff6cafbf8de",
+      "adapter_sha256": "95fc733c916251ade8ee20634a3c562a646c2f3989249fad3952bfd504340034",
       "evals_sha256": "30a9edce28e408d7011bf434ed23d4e014f24f0e346c3cb06b66d68b6ec91dff"
     },
     "growth-asset-planner": {
@@ -153,7 +153,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "cd206ac9a54a43e17bcc3e18d88b41e53f1d1cd78699f18928c5e9a9c3d065aa",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "873e2b27114af25814f9fe06780bf96e1068844a06ded1fa6c1f219f8fb72c8d",
       "evals_sha256": "a04ebbe93e8520147463d361714335367b518659b8591db1fe60e811cf1d3c6d"
     },
     "integrations": {
@@ -189,7 +189,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "58ce6cafde1fe5f5680883c6f0e8c90bc99f38cc494c95fbc8c3fb6e72b8a2c7",
       "evals_sha256": "1d7705e0745dac6469fc1cd2ddf3786c1f77aa922c1c611f27aa9bea830cbc46"
     },
     "outreach": {
@@ -219,7 +219,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "c74204822eec1c572111a7352641756b8ef34a6eaeca71892d022304c1b59b65",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "4e0a3f51fbb35b7f2fe22e08d46ebdf1282f527b6f0b2189daf66d646ce632f3",
       "evals_sha256": "0ec6caa347165749d82a8adae6154336c74f0974dad68c4219d666d6d0a7beb5"
     },
     "outreach-sequence-writer": {
@@ -251,7 +251,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "084ae56172543010fa4748ce2b4a8d11f53bab8abad4c5c4f5f2c2db69e928c1",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "c44d94790641bc3a0182e2a4c7c8b27609a4dd4b2f82c7cbd1ecf6b710ac6816",
       "evals_sha256": "5e3a508e62297b0604d1cf16b2d31d90a0c5cc92d683464204c1f4be9533f278"
     },
     "outreach-workflow-builder": {
@@ -289,7 +289,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "f9cfc7a0faea8ec42e5c52c7abbf6807b4b88f92e6b7ee7988c8511c7c301f53",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "26c7d2c9881ba2204758fbfaaec77366727001a3d362e65208b985ebc773e5b6",
       "evals_sha256": "c2800607862e8106ba230d91a216db38bf06043efdace7c45c77bda3cd630307"
     },
     "records": {
@@ -341,7 +341,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "0eda1e3c8a012752d4757baf601f7f604ca85943fedfc3bab3117c35bf977a99",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "0e1466c7fceb155f98934a8639e103fc28ad58540abcbb6e748c031eb176b7e0",
       "evals_sha256": "a86928fbaf83663deafb61b95aa0e24abcf4348a9eaf124ea97d0e2ef7a69230"
     },
     "seo": {
@@ -389,7 +389,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "da984597acd2d33e573693a8f8d5e09c61080f4806ea0cc60f7713c6f942a586",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "38f6ea6829415871a8ccf4381d809bc314be6acca895e4923c455cbcffd985be",
       "evals_sha256": "b34ab09d40bf83689715dd926c4def23eca397fe291a98f2a05a97f2d899438d"
     },
     "site-onboarding": {
@@ -419,7 +419,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "483bbf44184549a8246da39acf042450032915c5931a91fa6a086bd48a14daf0",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "5c3dfa7cb952bd7c880e08fb9540fb45797d461adf25f385423db08f4009a42b",
       "evals_sha256": "fb8fd467ec5dc7346a079e53d8b5d1705c9a9d78f64da3d580cf71e8e31abcfa"
     },
     "social": {
@@ -487,7 +487,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "5e214ff4ef13cf5830b5df9eb46694a4b0ef15453a8d04c270168ff0191d94dc",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "99be4b70dcd73b6edb6750384d5b71edc8510eed9e6920702d566dfb92fee090",
       "evals_sha256": "15be8d40da4c5081b9e3f7f9483a40dd35f2da2d19e1344f499c09219bafe578"
     },
     "strategy": {
@@ -515,7 +515,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "8832cb5f28cf1a3f59c159a31cb3f6c2e302c323d235e5b1615f6b51a906ba86",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "11c63889bce5b38ab02e120e00635f2f3319f94720fe24bee152b41e4c532986",
       "evals_sha256": "19de4cdcc4a791ddbc5b112e01a814f5a704896f29561be538c32022c4af5528"
     },
     "tables": {
@@ -596,8 +596,8 @@
         "worksheets.update"
       ],
       "direct_run_capability_ids": [],
-      "kernel_sha256": "3bf831503af09bec7c4d59edb70c7cf3cc97c0fbbaad7956d41d984d34042ff4",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "kernel_sha256": "a90966eb7190e29e73676d5240385353518b961186b8d9526cc21fd70c8a419f",
+      "adapter_sha256": "ca9cd6a621811e647a5ad84923d3245963ba9c7b686b0fa5d62cf20544ec38e0",
       "evals_sha256": "b4d6796e381f1905af0241193d9598775fdd12a91f181553efedca79964e70d8"
     },
     "visibility": {
@@ -641,7 +641,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "c45c62c09116453d6d09cac1577bd4f569b758f3b30a159e2d4b75e79c138903",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "27af5e9ed09883c8cd7d2568f7e83a8ea92d17f0d2da1ebbc4a7e25140cd8832",
       "evals_sha256": "4928022d41da2c30c615ba84c1f182ea366b5f828893d2c315e3092427f176d9"
     },
     "weekly-growth-plan": {
@@ -671,7 +671,7 @@
       ],
       "direct_run_capability_ids": [],
       "kernel_sha256": "46695b4ac619bc718f914e6c364fe7bd8ef1f21fbd39fe83910497d8eda107dd",
-      "adapter_sha256": "a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1",
+      "adapter_sha256": "2e1a4d3a0ebcd9b535ca2021364b06e152729ee61ebd31fd709fbc20dbe705a3",
       "evals_sha256": "f40f4b87f6d703f986b5b191626cc0735449ad62c1b084998f463f924849a692"
     }
   }

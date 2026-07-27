@@ -25,7 +25,13 @@ For a reactive table proposal, search for and fetch the exact live table contrac
 
 ## Run conditions
 
-A column's `run_if` gate is one canonical predicate IR, read the same way no matter which surface wrote it. Author leaves as `{ "field": "<column_key>", "op": "<op>", "value": <scalar or array> }` with op one of eq, neq, contains, not_contains, gt, gte, lt, lte, is_set, is_empty, in, not_in. `is_set` and `is_empty` take no value; `in` and `not_in` take an array. Combine leaves with `{ "kind": "and" | "or", "children": [...] }` and negate with `{ "kind": "not", "child": {...} }`. `run_policy`, `max_rows_per_day`, and `condition_mode` are pacing metadata, never a condition. An empty object or a metadata-only object means no condition: the column runs. A condition that is present but unreadable is treated as do-not-run (fail closed): the row is skipped, not billed, so author to the canonical shape above, not a bespoke one.
+A column's `run_if` gate is one canonical predicate IR, read the same way no matter which surface wrote it. There are two names for the same leaf, and both matter here.
+
+Write leaves as `{ "column_key": "<column_key>", "operator": "<op>", "value": <scalar or array> }`. That is this skill's emission and it is asserted byte for byte against the stored condition, so never restate an emitted gate in another dialect.
+
+Read leaves as `{ "field": "<column_key>", "op": "<op>", "value": <scalar or array> }`. That is the normalized shape the executor evaluates, and it is what a stored condition looks like when it is read back. Normalization happens on read only: `column_key` is accepted as a name for `field` and `operator` as a name for `op`, so the written and read forms evaluate identically and neither is rewritten in storage.
+
+Ops are eq, neq, contains, not_contains, gt, gte, lt, lte, is_set, is_empty, in, not_in. `is_set` and `is_empty` take no value; `in` and `not_in` take an array. Combine leaves with `{ "kind": "and" | "or", "children": [...] }` and negate with `{ "kind": "not", "child": {...} }`. `run_policy`, `max_rows_per_day`, and `condition_mode` are pacing metadata, never a condition. An empty object or a metadata-only object means no condition: the column runs. A condition that is present but unreadable is treated as do-not-run (fail closed): the row is skipped, not billed, so author to the canonical shapes above, not a bespoke one.
 
 ## Completion proof
 
