@@ -62,6 +62,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["records.create"],
+      "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
       "expected_workspace_outcome": [
@@ -83,6 +85,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["records.create"],
+      "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
       "expected_workspace_outcome": [
@@ -104,6 +108,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["records.create"],
+      "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
       "expected_workspace_outcome": [
@@ -125,6 +131,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["record_objects.create", "record_objects.record_create"],
+      "approved_mutation_max_changes": 2,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
       "expected_workspace_outcome": [

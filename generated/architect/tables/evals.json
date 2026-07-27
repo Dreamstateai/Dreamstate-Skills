@@ -243,6 +243,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
       "expected_skill_ids": ["tables"],
       "expected_workspace_outcome": [
@@ -269,6 +271,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
       "expected_skill_ids": ["tables"],
       "expected_workspace_outcome": [
@@ -295,6 +299,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
       "expected_skill_ids": ["tables"],
       "expected_workspace_outcome": [
@@ -321,6 +327,8 @@
     },
     {
       "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
       "expected_skill_ids": ["tables"],
       "expected_workspace_outcome": [

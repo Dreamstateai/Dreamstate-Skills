@@ -8,7 +8,7 @@ direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: d45d7adbe98702528c96e9362e40bc633b3ed4fc4819ef668d4ac2206b22b193
+  playbook_kernel_hash: 3010420c5a656d51ad106f397d974fe48a9e9232b451bd99fe4e4f682df2c6a2
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 0f792191fabb37cf
@@ -17,7 +17,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.6
-  source_release_hash: d45d7adbe98702528c96e9362e40bc633b3ed4fc4819ef668d4ac2206b22b193
+  source_release_hash: 3010420c5a656d51ad106f397d974fe48a9e9232b451bd99fe4e4f682df2c6a2
   generator_version: 1.0.0
   client: codex
   kernel_id: integrations
