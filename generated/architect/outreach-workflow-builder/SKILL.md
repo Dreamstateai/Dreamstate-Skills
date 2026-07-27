@@ -5,12 +5,12 @@ description: Build validated row workflows with triggers, typed branches, action
 triggers: ["build an outreach workflow","branch on qualification or priority","automate row processing","define enrollment eligibility","separate workflow persistence, exact result-set expansion, enrollment, and activation"]
 dependencies: []
 capability_domains: ["outreach"]
-capability_ids: ["sources.cold_outbound_expand","workflows.get","workflows.graph_apply","workflows.node_registry","workflows.validate_graph"]
+capability_ids: ["sources.cold_outbound_expand","workflows.create","workflows.get","workflows.graph_apply","workflows.node_registry","workflows.validate_graph"]
 max_context_tokens: 5000
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 6103e04952f59cffb45b75e6c30be5396a19b6f5ef9c027878a63567d6767e2a
+  playbook_kernel_hash: 95f7c880002e92c15eedc7c5381526ed619b3cf67c7cc55ccf2bd6ea184921e4
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 6103e04952f59cffb45b75e6c30be5396a19b6f5ef9c027878a63567d6767e2a
+  source_release_hash: 95f7c880002e92c15eedc7c5381526ed619b3cf67c7cc55ccf2bd6ea184921e4
   generator_version: 1.0.0
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: c1531d5c3874cdea40863ea0a6d38c42133946f61e737158eccda43502d9b1a0
+  kernel_sha256: 30f955c2db4a07643d10e0381b2c037632c0806ec1e2033abcf3a78b1e850867
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: ba11f6e460efc9d4b57ca221080b06c6b1d79cbed60be682c5f47786e2522884
+  evals_sha256: 805845da55e3e406e3a99877970ea0eb6bd4778d54c738bdf5cafe8328c01b97
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

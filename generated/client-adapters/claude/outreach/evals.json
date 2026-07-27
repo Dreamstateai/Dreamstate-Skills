@@ -455,6 +455,21 @@
         },
         {
           "tool": "tools_search",
+          "capability_id": "outreach.demand_plan_get",
+          "phase": "post_sample_expansion_revalidation"
+        },
+        {
+          "tool": "tools_get",
+          "capability_id": "outreach.demand_plan_get",
+          "phase": "post_sample_expansion_revalidation"
+        },
+        {
+          "tool": "tools_run",
+          "capability_id": "outreach.demand_plan_get",
+          "phase": "post_sample_expansion_revalidation"
+        },
+        {
+          "tool": "tools_search",
           "capability_id": "sources.cold_outbound_expand"
         },
         {

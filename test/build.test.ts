@@ -256,7 +256,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
       'workflows.get',
     ],
     'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
-    'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
+    'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.create', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
     seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
     social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
     strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
@@ -358,6 +358,7 @@ test('signed capability domains stay identical across source, Architect, Claude,
   }
   const exactCapabilityIds = [
     'sources.cold_outbound_expand',
+    'workflows.create',
     'workflows.get',
     'workflows.graph_apply',
     'workflows.node_registry',
@@ -499,6 +500,7 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
 test('active Architect outreach sources are campaign-free and reject retired campaign contracts', () => {
   const artifacts = build();
   const campaignLanguage = /\bcampaigns?\b|campaign_state/i;
+  const retiredEvalLanguage = /campaigns\.|campaign_state|campaign_id|outreach_campaigns|\bLaunch Campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
   for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
     assert.doesNotMatch(
       artifacts[`generated/architect/${id}/KERNEL.md`],
@@ -509,7 +511,7 @@ test('active Architect outreach sources are campaign-free and reject retired cam
 
   for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
     const evals = JSON.parse(artifacts[`generated/architect/${id}/evals.json`]);
-    assert.doesNotMatch(JSON.stringify(evals), /campaigns\.|campaign_state/i, `${id}: retired eval authority`);
+    assert.doesNotMatch(JSON.stringify(evals), retiredEvalLanguage, `${id}: retired eval identity or authority`);
   }
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   for (const id of Object.keys(pinned.skills)) {
@@ -531,6 +533,55 @@ test('active Architect outreach sources are campaign-free and reject retired cam
   } finally {
     writeFileSync(path, original);
   }
+
+  const evalPath = join(ROOT, 'architect-kernels', 'outreach', 'evals.json');
+  const originalEvals = readFileSync(evalPath, 'utf8');
+  const driftedEvals = JSON.parse(originalEvals);
+  driftedEvals.cases[0].request = 'Bind campaign_id and propose Launch Campaign.';
+  try {
+    writeFileSync(evalPath, `${JSON.stringify(driftedEvals, null, 2)}\n`);
+    assert.throws(
+      () => buildArchitectArtifacts(catalog),
+      /outreach.*retired campaign.*(?:identity|terminology|capability|state)/i,
+    );
+  } finally {
+    writeFileSync(evalPath, originalEvals);
+  }
+
+  const manifestPath = join(ROOT, 'architect-kernels', 'skills.json');
+  const originalManifest = readFileSync(manifestPath, 'utf8');
+  const driftedManifest = JSON.parse(originalManifest);
+  driftedManifest.skills.find((skill: { id: string }) => skill.id === 'outreach')
+    .triggers.push('Launch Campaign');
+  try {
+    writeFileSync(manifestPath, `${JSON.stringify(driftedManifest, null, 2)}\n`);
+    assert.throws(
+      () => buildArchitectArtifacts(catalog),
+      /outreach.*retired campaign.*(?:artifact|identity|terminology)/i,
+    );
+  } finally {
+    writeFileSync(manifestPath, originalManifest);
+  }
+});
+
+test('outreach specialists own every mutating authoring capability while the coordinator does not', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  const mutating = new Set(catalog.capabilities
+    .filter((capability: { mutates: boolean }) => capability.mutates)
+    .map((capability: { id: string }) => capability.id));
+  for (const specialistId of ['outreach-workflow-builder', 'outreach-sequence-writer']) {
+    const evals = JSON.parse(artifacts[`generated/architect/${specialistId}/evals.json`]);
+    const requiredMutations = [...new Set(evals.cases.flatMap(
+      (item: { required_capability_ids?: string[] }) => item.required_capability_ids ?? [],
+    ))].filter((id) => mutating.has(id));
+    for (const capabilityId of requiredMutations) {
+      assert.ok(pinned.skills[specialistId].capability_ids.includes(capabilityId), `${specialistId}: ${capabilityId}`);
+      assert.equal(pinned.skills.outreach.capability_ids.includes(capabilityId), false, `coordinator: ${capabilityId}`);
+    }
+  }
+  assert.ok(pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.create'));
+  assert.ok(pinned.skills['outreach-sequence-writer'].capability_ids.includes('sequences.bind'));
 });
 
 test('outreach is Brain-first and Workbook-first before demand, workflow, or sequence planning', () => {
@@ -797,6 +848,11 @@ test('competitor engager release eval is production-real and preserves dependenc
   const expansionIndex = sequenceIndex((step) => (
     step.tool === 'propose_artifact' && step.artifact_type === 'outreach_bulk_expansion'
   ));
+  const expansionDemandIndex = sequenceIndex((step) => (
+    step.tool === 'tools_run'
+    && step.capability_id === 'outreach.demand_plan_get'
+    && step.phase === 'post_sample_expansion_revalidation'
+  ));
   const revalidationIndex = sequenceIndex((step) => (
     step.tool === 'tools_run'
     && step.capability_id === 'outreach.demand_plan_get'
@@ -818,7 +874,8 @@ test('competitor engager release eval is production-real and preserves dependenc
   assert.ok(demandIndex > workbookApprovalIndex);
   assert.ok(bundleIndex > demandIndex);
   assert.ok(sampleIndex > bundleIndex);
-  assert.ok(expansionIndex > sampleIndex);
+  assert.ok(expansionDemandIndex > sampleIndex);
+  assert.ok(expansionIndex > expansionDemandIndex);
   assert.ok(revalidationIndex > expansionIndex);
   assert.ok(activationIndex > revalidationIndex);
   assert.ok(terminalIndex > activationIndex);

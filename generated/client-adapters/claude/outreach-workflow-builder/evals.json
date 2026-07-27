@@ -4,7 +4,7 @@
       "expected_skill_ids": ["outreach-workflow-builder"],
       "id": "priority-branch-and-actions",
       "request": "Build a workflow that branches on the priority column, enriches qualified rows, and stops before outreach when required evidence is missing.",
-      "required_capability_ids": ["workflows.get", "workflows.node_registry", "workflows.validate_graph", "workflows.graph_apply"]
+      "required_capability_ids": ["workflows.get", "workflows.create", "workflows.node_registry", "workflows.validate_graph", "workflows.graph_apply"]
     },
     {
       "expected_skill_ids": ["outreach-workflow-builder"],

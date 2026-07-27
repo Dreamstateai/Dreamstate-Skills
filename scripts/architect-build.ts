@@ -26,7 +26,8 @@ const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
   'outreach-workflow-builder',
 ]);
 const OUTREACH_SHORTCUT_LANGUAGE = /\b(?:templates?|presets?|reusable|reuse)\b/i;
-const RETIRED_CAMPAIGN_CAPABILITY_OR_STATE = /campaigns\.|campaign_state/i;
+const RETIRED_CAMPAIGN_CAPABILITY_OR_STATE =
+  /campaigns\.|campaign_state|campaign_id|outreach_campaigns|\blaunch campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
 const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE = /\bcampaigns?\b/i;
 
 function hasOutreachShortcutLanguage(value: string): boolean {
@@ -169,6 +170,17 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
     if (skill.capability_domains.some((domain) => !CAPABILITY_DOMAIN.test(domain))) {
       throw new Error(`${skill.id}.capability_domains contains an invalid domain`);
     }
+    if (
+      ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id)
+      && RETIRED_CAMPAIGN_CAPABILITY_OR_STATE.test(JSON.stringify({
+        name: skill.name,
+        description: skill.description,
+        triggers: skill.triggers,
+        completion_contract: skill.completion_contract,
+      }))
+    ) {
+      throw new Error(`${skill.id}: active outreach artifact metadata contains retired campaign identity or terminology`);
+    }
     if ('capability_ids' in skill) {
       throw new Error(
         `${skill.id}.capability_ids is generated from kernel/eval references and must not be hand-authored`,
@@ -287,7 +299,7 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
       throw new Error(`${skill.id}: active outreach kernel contains retired campaign terminology`);
     }
     if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_CAMPAIGN_CAPABILITY_OR_STATE.test(evals)) {
-      throw new Error(`${skill.id}: active outreach eval contains a retired campaign capability or state`);
+      throw new Error(`${skill.id}: active outreach eval contains a retired campaign identity, terminology, capability, or state`);
     }
     const namedCapabilityIds = new Set<string>();
     for (const testCase of evalDocument.cases) {
