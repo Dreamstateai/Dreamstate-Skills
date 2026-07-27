@@ -5,13 +5,13 @@ description: Design a buyer-facing resource and its evidence, structure, CTA, di
 triggers: ["design a lead magnet","create a buyer checklist or playbook","plan an audit or SOP","design a resource hub"]
 dependencies: []
 capability_domains: []
-capability_ids: ["brain.context.get","brain.context.search","command_center.assets.create","command_center.assets.list"]
+capability_ids: ["brain.context.get","brain.context.search","brain.evidence.search","command_center.assets.create","command_center.assets.list"]
 direct_run_capability_ids: []
 max_context_tokens: 3500
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  playbook_kernel_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 779304f4256ec197
@@ -19,15 +19,15 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.4
-  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  source_release: 0.5.5
+  source_release_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   generator_version: 1.0.0
   kernel_id: growth-asset-planner
   kernel_file: KERNEL.md
-  kernel_sha256: 8b688590bd8b69015d4d3c338795e355d499945ff417841baf7ce84776f1be91
+  kernel_sha256: cd206ac9a54a43e17bcc3e18d88b41e53f1d1cd78699f18928c5e9a9c3d065aa
   adapter_sha256: a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1
   evals_file: evals.json
-  evals_sha256: d09247e03084f11438adac2226d086f940435e8c7a8b3eea9abc49dc57ef4334
+  evals_sha256: a04ebbe93e8520147463d361714335367b518659b8591db1fe60e811cf1d3c6d
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

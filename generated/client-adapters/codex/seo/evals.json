@@ -1,24 +1,181 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["seo"],
+      "expected_skill_ids": [
+        "seo"
+      ],
       "id": "agency-keywords-pooled-benchmark",
       "fixture_profile": "seo_benchmark_privacy",
       "resume_after_elicitation": "recommended",
-      "required_completion_fields": [{"id":"benchmark_state","allowed_values":["insufficient_evidence"]},{"id":"sample_state","allowed_values":["disclosed"]},{"id":"confidence_state","allowed_values":["disclosed"]},{"id":"privacy_state","allowed_values":["cohort_only"]}],
-      "required_concepts": ["brain.learning.query_benchmarks", "agencies", "keyword-specific", "never raw cross-workspace rows"],
+      "required_completion_fields": [
+        {
+          "id": "benchmark_state",
+          "allowed_values": [
+            "insufficient_evidence"
+          ]
+        },
+        {
+          "id": "sample_state",
+          "allowed_values": [
+            "disclosed"
+          ]
+        },
+        {
+          "id": "confidence_state",
+          "allowed_values": [
+            "disclosed"
+          ]
+        },
+        {
+          "id": "privacy_state",
+          "allowed_values": [
+            "cohort_only"
+          ]
+        }
+      ],
+      "required_concepts": [
+        "brain.learning.query_benchmarks",
+        "agencies",
+        "keyword-specific",
+        "never raw cross-workspace rows"
+      ],
       "request": "For owninfluence.com's Dreamstate social-content product, target US-English marketing agencies and demo bookings. Before designing the keyword plan, consult the pooled benchmark lattice. Cite releasable cohort-level evidence with sample band and confidence only if it supports a keyword-specific conversion claim. If it cannot, state insufficient_evidence. Never expose raw cross-workspace rows. Return a read-only plan; do not publish.",
-      "required_capability_ids": ["brain.learning.query_benchmarks", "visibility.workspace_site_get", "visibility.keywords_get"]
+      "required_capability_ids": [
+        "brain.learning.query_benchmarks",
+        "visibility.workspace_site_get",
+        "visibility.keywords_get"
+      ]
     },
     {
-      "expected_skill_ids": ["seo"],
+      "expected_skill_ids": [
+        "seo"
+      ],
       "id": "technical-and-content-plan",
       "fixture_profile": "seo_technical_observation",
       "resume_after_elicitation": "recommended",
-      "required_completion_fields": [{"id":"observation_state","allowed_values":["observed"]},{"id":"target_conversion","allowed_values":["defined"]},{"id":"plan_state","allowed_values":["prioritized"]},{"id":"approval_state","allowed_values":["not_applicable"]},{"id":"run_state","allowed_values":["terminal"]}],
+      "required_completion_fields": [
+        {
+          "id": "observation_state",
+          "allowed_values": [
+            "observed"
+          ]
+        },
+        {
+          "id": "target_conversion",
+          "allowed_values": [
+            "defined"
+          ]
+        },
+        {
+          "id": "plan_state",
+          "allowed_values": [
+            "prioritized"
+          ]
+        },
+        {
+          "id": "approval_state",
+          "allowed_values": [
+            "not_applicable"
+          ]
+        },
+        {
+          "id": "run_state",
+          "allowed_values": [
+            "terminal"
+          ]
+        }
+      ],
       "required_concepts": [],
       "request": "Run a read-only fast-triage SEO audit of owninfluence.com for US-English marketing agencies, using demo bookings as the target conversion and buffer.com plus hootsuite.com as competitors. Use public crawl and cached analytics/search evidence when available. Prioritize technical and content gaps and outline what should be fixed or proposed first; do not publish.",
-      "required_capability_ids": ["visibility.workspace_site_get", "seo.robots_audit", "visibility.overview", "visibility.citations"]
+      "required_capability_ids": [
+        "visibility.workspace_site_get",
+        "seo.robots_audit",
+        "visibility.overview",
+        "visibility.citations"
+      ]
+    },
+    {
+      "id": "deployed-brain-surface-coverage",
+      "request": "Inspect the complete brain capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "seo"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brain.context.get",
+        "brain.context.search"
+      ]
+    },
+    {
+      "id": "deployed-integrations-surface-coverage",
+      "request": "Inspect the complete integrations capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "seo"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "integrations.gsc.properties",
+        "integrations.gsc.properties_list",
+        "integrations.gsc.property_primary_set",
+        "integrations.gsc.property_select",
+        "integrations.gsc.search_analytics_get",
+        "integrations.gsc.search_analytics_refresh",
+        "integrations.gsc.sitemaps_import",
+        "integrations.gsc.status"
+      ]
+    },
+    {
+      "id": "deployed-seo-surface-coverage",
+      "request": "Inspect the complete seo capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "seo"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "seo.agent_readiness_history",
+        "seo.agent_readiness_latest",
+        "seo.agent_readiness_scan",
+        "seo.llms_txt_generate",
+        "seo.llms_txt_get",
+        "seo.serp_snapshot_resolve",
+        "seo.serp_spend_get"
+      ]
+    },
+    {
+      "id": "deployed-tools-surface-coverage",
+      "request": "Inspect the complete tools capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "seo"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "tools.llms_txt_generate"
+      ]
+    },
+    {
+      "id": "deployed-visibility-surface-coverage",
+      "request": "Inspect the complete visibility capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "seo"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "visibility.geo_queries_list",
+        "visibility.html_analysis_get",
+        "visibility.pagespeed_get",
+        "visibility.prompt_metrics_list",
+        "visibility.sentiment_trend",
+        "visibility.site_files_get",
+        "visibility.site_scan",
+        "visibility.sitemap_get",
+        "visibility.workspace_site_ensure",
+        "visibility.workspace_site_update"
+      ]
     }
   ],
   "schema_version": 1,

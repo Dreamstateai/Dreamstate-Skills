@@ -1,10 +1,88 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["blog"],
+      "expected_skill_ids": [
+        "blog"
+      ],
       "id": "grounded-blog-draft",
       "request": "Draft a cited blog article in our voice and put it into editorial review.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "content.article_get", "content.article_update", "content.submit_review", "content.article_create_schedule", "content.article_delivery_create", "content.delivery_publish"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "content.article_get",
+        "content.article_update",
+        "content.submit_review",
+        "content.article_create_schedule",
+        "content.article_delivery_create",
+        "content.delivery_publish"
+      ]
+    },
+    {
+      "id": "deployed-brain-surface-coverage",
+      "request": "Inspect the complete brain capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "blog"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brain.content.get",
+        "brain.content.search",
+        "brain.evidence.search"
+      ]
+    },
+    {
+      "id": "deployed-content-surface-coverage-1",
+      "request": "Inspect the complete content capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "blog"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "content.article_archive",
+        "content.article_asset_import",
+        "content.article_asset_register",
+        "content.article_asset_upload",
+        "content.article_deliveries_list",
+        "content.article_delivery_payload_get",
+        "content.article_distribution_get",
+        "content.article_duplicate",
+        "content.article_enabled_get",
+        "content.article_list",
+        "content.article_selection_edit",
+        "content.destination_test",
+        "content.destinations_list",
+        "content.schedule",
+        "content.unschedule",
+        "content.version_create"
+      ]
+    },
+    {
+      "id": "deployed-content-surface-coverage-2",
+      "request": "Inspect the complete content capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "blog"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "content.version_diff_get",
+        "content.version_get",
+        "content.versions_list"
+      ]
+    },
+    {
+      "id": "deployed-research-surface-coverage",
+      "request": "Inspect the complete research capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "blog"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "research.urls_fetch"
+      ]
     }
   ],
   "schema_version": 1,

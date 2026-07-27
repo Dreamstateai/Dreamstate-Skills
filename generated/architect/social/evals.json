@@ -1,27 +1,186 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["social"],
+      "expected_skill_ids": [
+        "social"
+      ],
       "id": "authored-reddit-post",
-      "must_not_load": ["social.reddit"],
+      "must_not_load": [
+        "social.reddit"
+      ],
       "request": "Write an authored Reddit post for our company and put it on next Tuesday's calendar.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "content.artifact_create", "content.artifact_generate", "content.schedule", "content.delivery_publish"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "content.artifact_create",
+        "content.artifact_generate",
+        "content.schedule",
+        "content.delivery_publish"
+      ]
     },
     {
-      "expected_skill_ids": ["social"],
+      "expected_skill_ids": [
+        "social"
+      ],
       "id": "linkedin-and-x-calendar",
-      "must_use_popup_when_missing": ["publishing_accounts", "schedule"],
+      "must_use_popup_when_missing": [
+        "publishing_accounts",
+        "schedule"
+      ],
       "request": "Draft one week of LinkedIn and X posts using our Company Brain.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "content.artifact_create", "content.artifact_generate", "content.schedule", "content.delivery_publish"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "content.artifact_create",
+        "content.artifact_generate",
+        "content.schedule",
+        "content.delivery_publish"
+      ]
     },
     {
-      "expected_skill_ids": ["social"],
+      "expected_skill_ids": [
+        "social"
+      ],
       "id": "founder-posts-pooled-benchmark",
       "resume_after_elicitation": "recommended",
-      "required_completion_fields": [{"id":"evidence_state","allowed_values":["verified","partial","unavailable"]}],
-      "required_concepts": ["brain.learning.query_benchmarks", "founders", "cohort-level evidence", "sample band", "confidence", "insufficient_evidence", "never raw cross-workspace rows"],
+      "required_completion_fields": [
+        {
+          "id": "evidence_state",
+          "allowed_values": [
+            "verified",
+            "partial",
+            "unavailable"
+          ]
+        }
+      ],
+      "required_concepts": [
+        "brain.learning.query_benchmarks",
+        "founders",
+        "cohort-level evidence",
+        "sample band",
+        "confidence",
+        "insufficient_evidence",
+        "never raw cross-workspace rows"
+      ],
       "request": "What posts work for founders? Before planning content for that named audience, consult the pooled benchmark lattice. Cite only releasable cohort-level evidence with sample band and confidence, or state insufficient_evidence. Never expose raw cross-workspace rows.",
-      "required_capability_ids": ["brain.learning.query_benchmarks"]
+      "required_capability_ids": [
+        "brain.learning.query_benchmarks"
+      ]
+    },
+    {
+      "id": "deployed-brain-surface-coverage",
+      "request": "Inspect the complete brain capability family used by deployed social workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brain.content.get",
+        "brain.content.search",
+        "brain.social.benchmarks.query",
+        "brain.social.patterns.compare"
+      ]
+    },
+    {
+      "id": "deployed-content-surface-coverage-1",
+      "request": "Inspect the complete content capability family used by deployed social workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "content.artifact_archive",
+        "content.artifact_get",
+        "content.artifact_list",
+        "content.artifact_update",
+        "content.assist",
+        "content.compose",
+        "content.destination_test",
+        "content.destinations_list",
+        "content.generate",
+        "content.generate_hooks",
+        "content.hook_batch_get",
+        "content.labels_get",
+        "content.labels_list",
+        "content.regenerate_hooks",
+        "content.submit_review",
+        "content.unschedule"
+      ]
+    },
+    {
+      "id": "deployed-content-surface-coverage-2",
+      "request": "Inspect the complete content capability family used by deployed social workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "content.version_create",
+        "content.version_diff_get",
+        "content.version_get",
+        "content.version_rollback",
+        "content.versions_list"
+      ]
+    },
+    {
+      "id": "deployed-social-surface-coverage-1",
+      "request": "Inspect the complete social capability family used by deployed social workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "social.accounts_list",
+        "social.analytics_query",
+        "social.analytics_rollup_get",
+        "social.audience_analytics",
+        "social.brand_voice_get",
+        "social.draft_score",
+        "social.metric_definitions",
+        "social.performance_analysis_get",
+        "social.performance_snapshot_get",
+        "social.post_analysis_job_create",
+        "social.post_analytics",
+        "social.post_format_hooks_list"
+      ]
+    },
+    {
+      "id": "deployed-social-surface-coverage-2",
+      "request": "Inspect the complete social capability family used by deployed social workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "social.strategy_activity_calendar",
+        "social.strategy_weekly_post_action",
+        "social.strategy_weekly_post_materialize",
+        "social.weekly_plan_item_create",
+        "social.weekly_plan_item_transition",
+        "social.weekly_plan_item_update",
+        "social.weekly_plan_items_list"
+      ]
+    },
+    {
+      "id": "deployed-tools-surface-coverage",
+      "request": "Inspect the complete tools capability family used by deployed social workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "tools.linkedin_headline_generate",
+        "tools.linkedin_hook_generate",
+        "tools.linkedin_post_generate",
+        "tools.x_hook_generate",
+        "tools.x_post_generate"
+      ]
     }
   ],
   "schema_version": 1,

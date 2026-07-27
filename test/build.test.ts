@@ -268,34 +268,18 @@ test('Architect generation rejects signed capability IDs absent from the pinned 
 test('Architect exact grants are derived only from machine-readable eval operation contracts', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  const expected = {
-    analytics: ['social.analytics_query', 'social.post_analytics'],
-    blog: ['brain.context.get', 'brain.context.search', 'content.article_create_schedule', 'content.article_delivery_create', 'content.article_get', 'content.article_update', 'content.delivery_publish', 'content.submit_review'],
-    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search', 'brand.context_url_analyze'],
-    'growth-asset-planner': ['brain.context.get', 'brain.context.search', 'command_center.assets.create', 'command_center.assets.list'],
-    integrations: ['integrations.outreach_connectors_list', 'integrations.scheduler_status_get', 'integrations.unipile_status_get'],
-    outreach: [
-      'brain.context.get',
-      'brain.context.search',
-      'brain.learning.query_benchmarks',
-      'outreach.demand_plan_get',
-      'sequences.enroll_selection',
-      'sequences.publish',
-      'workflows.activate',
-      'workflows.draft_publish',
-      'workflows.get',
-    ],
-    'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
-    'outreach-workflow-builder': ['workflows.create', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
-    records: ['notifications.preferences_get', 'notifications.preferences_update', 'record_attributes.create', 'record_attributes.list', 'record_deals.board_get', 'record_deals.create', 'record_deals.stage_move', 'record_deals.update', 'record_files.list', 'record_files.upload', 'record_imports.create', 'record_imports.errors_list', 'record_imports.get', 'record_objects.attribute_create', 'record_objects.attribute_update', 'record_objects.attributes_list', 'record_objects.create', 'record_objects.layout_get', 'record_objects.layout_update', 'record_objects.list', 'record_objects.permission_get', 'record_objects.record_create', 'record_objects.update', 'record_relationships.create', 'record_relationships.list', 'records.companies_list', 'records.create', 'records.field_set', 'records.get', 'records.list', 'records.list_add', 'records.list_remove', 'records.lists_get', 'records.message_channels_get', 'records.message_send', 'records.note_add', 'records.people_list', 'records.references_resolve', 'records.search', 'records.source_lookup', 'records.value_retire'],
-    seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
-    'site-onboarding': ['brain.context.get', 'brain.context.propose_document', 'brain.context.search', 'brand.context_documents_generate', 'brand.context_website_update', 'products.website_refresh', 'products.website_scrape', 'seo.agent_readiness_scan', 'seo.llms_txt_generate', 'seo.llms_txt_get', 'seo.robots_audit', 'visibility.site_files_get', 'visibility.site_scan', 'visibility.sitemap_get', 'visibility.workspace_site_ensure', 'visibility.workspace_site_get', 'visibility.workspace_site_update'],
-    social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
-    strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
-    tables: ['columns.add', 'columns.archive', 'columns.list', 'columns.run', 'columns.run_all', 'columns.update', 'records.field_set', 'records.get', 'rows.delete', 'rows.get', 'rows.query', 'rows.restore', 'rows.upsert', 'selection_snapshots.create', 'selection_snapshots.get', 'sources.cold_outbound_expand', 'sources.cold_outbound_preview', 'sources.linkedin_post_engagers_preview', 'table_runs.cancel', 'table_runs.failure_report', 'table_runs.get', 'table_runs.list', 'table_runs.preview_cost', 'table_runs.reconcile_column', 'table_runs.resume', 'table_runs.retry', 'table_sources.attach', 'table_sources.detach', 'table_sources.list', 'table_sources.preview_sync', 'table_sources.reset_frontier', 'table_sources.restore_frontier', 'table_sources.run', 'table_sources.update', 'tables.archive', 'tables.create', 'tables.get', 'tables.list', 'tables.update', 'views.archive', 'views.create', 'views.get', 'views.list', 'views.update', 'workbooks.archive', 'workbooks.create', 'workbooks.duplicate', 'workbooks.get', 'workbooks.list', 'workbooks.overview', 'workbooks.update', 'workbooks.update_user_state', 'worksheets.archive', 'worksheets.create', 'worksheets.duplicate', 'worksheets.list', 'worksheets.reorder', 'worksheets.update'],
-    visibility: ['visibility.citations', 'visibility.overview', 'visibility.prompt_metrics_list', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
-    'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview', 'workflows.list'],
-  };
+  const expected = Object.fromEntries(
+    architectSource.skills.map((skill: { id: string }) => {
+      const evals = JSON.parse(readFileSync(
+        join(ROOT, 'architect-kernels', skill.id, 'evals.json'),
+        'utf8',
+      ));
+      const capabilityIds = [...new Set(evals.cases.flatMap(
+        (item: { required_capability_ids?: string[] }) => item.required_capability_ids ?? [],
+      ))].sort();
+      return [skill.id, capabilityIds];
+    }),
+  );
 
   for (const [skillId, capabilityIds] of Object.entries(expected)) {
     assert.deepEqual(pinned.skills[skillId].capability_ids, capabilityIds);
@@ -390,13 +374,12 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
-  const exactCapabilityIds = [
-    'workflows.create',
-    'workflows.get',
-    'workflows.graph_apply',
-    'workflows.node_registry',
-    'workflows.validate_graph',
-  ];
+  const workflowEvals = JSON.parse(
+    artifacts['generated/architect/outreach-workflow-builder/evals.json'],
+  );
+  const exactCapabilityIds = [...new Set(workflowEvals.cases.flatMap(
+    (item: { required_capability_ids?: string[] }) => item.required_capability_ids ?? [],
+  ))].sort();
   assert.equal(
     'capability_ids' in architectSource.skills.find(
       (skill: { id: string }) => skill.id === 'outreach-workflow-builder',

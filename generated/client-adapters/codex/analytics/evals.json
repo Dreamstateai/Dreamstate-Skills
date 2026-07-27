@@ -1,12 +1,165 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["analytics"],
+      "expected_skill_ids": [
+        "analytics"
+      ],
       "id": "measured-social-diagnosis",
-      "must_not_load": ["seo", "visibility"],
+      "must_not_load": [
+        "seo",
+        "visibility"
+      ],
       "request": "Explain why LinkedIn engagement fell this month using the metrics we actually have.",
-      "required_capability_ids": ["social.analytics_query", "social.post_analytics"],
-      "required_concepts": ["impressions", "812", "reactions", "41"]
+      "required_capability_ids": [
+        "social.analytics_query",
+        "social.post_analytics"
+      ],
+      "required_concepts": [
+        "impressions",
+        "812",
+        "reactions",
+        "41"
+      ]
+    },
+    {
+      "id": "deployed-analytics-surface-coverage",
+      "request": "Inspect the complete analytics capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "analytics.attribution_health_get",
+        "analytics.ga4.attribution",
+        "analytics.ga4.browsers",
+        "analytics.ga4.devices",
+        "analytics.ga4.geo",
+        "analytics.ga4.hostnames",
+        "analytics.ga4.operating_systems",
+        "analytics.ga4.overview",
+        "analytics.ga4.pages",
+        "analytics.ga4.referrers",
+        "analytics.ga4.utm"
+      ]
+    },
+    {
+      "id": "deployed-attribution-surface-coverage",
+      "request": "Inspect the complete attribution capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "attribution.companies_list",
+        "attribution.devices_get",
+        "attribution.links_list",
+        "attribution.locations_list",
+        "attribution.overview_get",
+        "attribution.profiles_list",
+        "attribution.referers_list"
+      ]
+    },
+    {
+      "id": "deployed-command-center-surface-coverage",
+      "request": "Inspect the complete command center capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "command_center.overview.get"
+      ]
+    },
+    {
+      "id": "deployed-gtm-surface-coverage",
+      "request": "Inspect the complete gtm capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "gtm.runs.metrics_get"
+      ]
+    },
+    {
+      "id": "deployed-outreach-surface-coverage",
+      "request": "Inspect the complete outreach capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.analytics_framework_aggregate_get",
+        "outreach.analytics_step_aggregate_get",
+        "outreach.channel_stats_get",
+        "outreach.monthly_rollup_get",
+        "outreach.reply_insights_get",
+        "outreach.workspace_stats_get"
+      ]
+    },
+    {
+      "id": "deployed-page-analytics-surface-coverage",
+      "request": "Inspect the complete page analytics capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "page_analytics.authors_list",
+        "page_analytics.post_attribution_get",
+        "page_analytics.posts_list",
+        "page_analytics.profile_links_get"
+      ]
+    },
+    {
+      "id": "deployed-social-surface-coverage",
+      "request": "Inspect the complete social capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "social.analytics_rollup_get",
+        "social.audience_analytics",
+        "social.metric_definitions",
+        "social.performance_analysis_get",
+        "social.performance_snapshot_get",
+        "social.strategy_activity_calendar",
+        "social.strategy_plan_progress"
+      ]
+    },
+    {
+      "id": "deployed-visibility-surface-coverage",
+      "request": "Inspect the complete visibility capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "visibility.overview"
+      ]
+    },
+    {
+      "id": "deployed-workflows-surface-coverage",
+      "request": "Inspect the complete workflows capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "workflows.analytics_by_workflow",
+        "workflows.analytics_overview",
+        "workflows.metrics_get"
+      ]
     }
   ],
   "schema_version": 1,

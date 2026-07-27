@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.5 - 2026-07-27
+
+- Backfilled machine-readable Architect eval authority after the eval-union build gate exposed an incomplete migration. Distinct signed coverage is 365 capabilities across the 1137-capability runtime manifest; analytics, social, SEO, visibility, context, integrations, tables, Records, and site onboarding retain production reach without restoring coordinator-owned shortcuts.
+- Preserved specialist ownership: Tables alone owns source preview/expansion, workflow and sequence mutations stay with their specialist kernels, and the outreach coordinator reaches workspace sources, ICPs, sender context, credit state, and workflow state through its loaded closure.
+- Retired six IDs absent from the canonical manifest, with replacements: `columns.sample` → `table_runs.preview_cost` + `selection_snapshots.create` + `columns.run` + `table_runs.get`; `sequences.get` → `sequences.definition_get`; `sequences.add_step`, `sequences.edit_step`, and `sequences.remove_step` → version-bound full-definition `sequences.bind`; `workflows.analytics_by_campaign` → `workflows.analytics_by_workflow`.
+- Deliberately removed ten still-live but out-of-contract shortcuts: `outreach.ai_write_template_create`, `outreach.ai_write_template_update`, `outreach.ai_write_templates_list`, `outreach.message_templates_list`, the campaign-named `outreach.dashboard_top_campaigns_get`, and reply/mention actions `social.comment_publish`, `social.linkedin_mentions_search`, `social.linkedin_notifications_list`, `social.reddit_comment_publish`, `social.x_mentions_search`.
+
 ## 0.5.3 - 2026-07-25
 
 - Merged the 0.5.0 safety-release line into the reconciled 0.5.2 line, keeping both histories. The 0.5.2 canonical reconciliation and its `manifest_digest` generator support are authoritative; 0.5.0's canonical-only wording cut in the skill blueprints is preserved.

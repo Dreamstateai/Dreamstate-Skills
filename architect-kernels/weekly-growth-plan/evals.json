@@ -1,17 +1,133 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["weekly-growth-plan"],
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
       "id": "cross-channel-week",
       "must_not_execute": true,
       "request": "Plan my week across LinkedIn, Reddit, SEO, and outbound.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "social.strategy_overview", "social.weekly_plan_items_list", "workflows.list", "visibility.overview"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "social.strategy_overview",
+        "social.weekly_plan_items_list",
+        "workflows.list",
+        "visibility.overview"
+      ]
     },
     {
-      "expected_skill_ids": ["social"],
+      "expected_skill_ids": [
+        "social"
+      ],
       "id": "social-calendar-not-weekly-plan",
-      "must_not_load": ["weekly-growth-plan"],
+      "must_not_load": [
+        "weekly-growth-plan"
+      ],
       "request": "Put five authored posts onto next week's social calendar."
+    },
+    {
+      "id": "deployed-calendar-surface-coverage",
+      "request": "Inspect the complete calendar capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "calendar.events_list"
+      ]
+    },
+    {
+      "id": "deployed-command-center-surface-coverage",
+      "request": "Inspect the complete command center capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "command_center.action_items.list",
+        "command_center.feed.list",
+        "command_center.goals.get",
+        "command_center.overview.get"
+      ]
+    },
+    {
+      "id": "deployed-content-surface-coverage",
+      "request": "Inspect the complete content capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "content.article_list",
+        "content.artifact_list"
+      ]
+    },
+    {
+      "id": "deployed-gtm-surface-coverage",
+      "request": "Inspect the complete gtm capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "gtm.goals_list",
+        "gtm.tasks.list"
+      ]
+    },
+    {
+      "id": "deployed-outreach-surface-coverage",
+      "request": "Inspect the complete outreach capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.workspace_stats_get"
+      ]
+    },
+    {
+      "id": "deployed-sequences-surface-coverage",
+      "request": "Inspect the complete sequences capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "sequences.list"
+      ]
+    },
+    {
+      "id": "deployed-social-surface-coverage",
+      "request": "Inspect the complete social capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "social.analytics_query",
+        "social.strategy_activity_calendar",
+        "social.strategy_plan_progress"
+      ]
+    },
+    {
+      "id": "deployed-workbooks-surface-coverage",
+      "request": "Inspect the complete workbooks capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "workbooks.list"
+      ]
     }
   ],
   "schema_version": 1,

@@ -3,12 +3,12 @@ id: outreach-sequence-writer
 name: outreach-sequence-writer
 description: "Design custom channel steps, cadence, sender constraints, variable lineage, and real-row previews only for workflows that contain messaging."
 capability_domains: ["outreach"]
-capability_ids: ["brain.context.get","brain.context.search","sequences.bind","sequences.definition_get","sequences.step_options","sequences.validate"]
+capability_ids: ["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.mailboxes_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.archive","sequences.bind","sequences.definition_get","sequences.list","sequences.step_options","sequences.validate"]
 direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  playbook_kernel_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 779304f4256ec197
@@ -16,16 +16,16 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.4
-  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  source_release: 0.5.5
+  source_release_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach-sequence-writer
   kernel_file: KERNEL.md
-  kernel_sha256: bb1dd87708d5a210df27ea07b5f5367f101dba5e8681a30c67877194b671c22a
+  kernel_sha256: 084ae56172543010fa4748ce2b4a8d11f53bab8abad4c5c4f5f2c2db69e928c1
   adapter_sha256: fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f
   evals_file: evals.json
-  evals_sha256: 0a1d30554f1b42b517a7f5b0644b3600c83bd83ba58ef295c63c57b5628f51f6
+  evals_sha256: 5e3a508e62297b0604d1cf16b2d31d90a0c5cc92d683464204c1f4be9533f278
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -48,7 +48,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 # Custom outreach sequence writer
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","sequences.bind","sequences.definition_get","sequences.step_options","sequences.validate"]}
+{"required_capability_ids":["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.mailboxes_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.archive","sequences.bind","sequences.definition_get","sequences.list","sequences.step_options","sequences.validate"]}
 -->
 
 ## Job boundary

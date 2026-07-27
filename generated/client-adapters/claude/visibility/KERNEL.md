@@ -1,6 +1,6 @@
 # AI visibility
 <!-- architect-operation-contract
-{"required_capability_ids": ["visibility.citations", "visibility.overview", "visibility.prompt_metrics_list", "visibility.refresh", "visibility.tracked_prompts.list", "visibility.workspace_site_get"]}
+{"required_capability_ids":["visibility.ai_bot_fetch_get","visibility.ai_traffic","visibility.citations","visibility.geo_queries_list","visibility.html_analysis_get","visibility.keywords_get","visibility.overview","visibility.pagespeed_get","visibility.pagespeed_refresh","visibility.probe.latest","visibility.probe.recommendations","visibility.probe.results","visibility.probe.run_get","visibility.probe.runs_list","visibility.probe.start","visibility.probe.status","visibility.probe.today","visibility.prompt_metrics_list","visibility.refresh","visibility.sentiment_trend","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.tracked_prompts.create","visibility.tracked_prompts.generate","visibility.tracked_prompts.list","visibility.tracked_prompts.save","visibility.tracked_prompts.status","visibility.tracked_prompts.tags","visibility.tracked_prompts.update","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]}
 -->
 
 Own AI-answer visibility measurement, citation inspection, gap diagnosis, supported refresh runs, and the visibility canvas. Establish the brand, market, questions, competitors, locale, and comparison period from canonical context; ask one structured popup only when a missing scope materially changes the audit.

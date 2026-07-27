@@ -1,6 +1,6 @@
 # Growth strategy
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","social.strategy_overview","social.strategy_update"]}
+{"required_capability_ids":["brain.companies.answer","brain.companies.get","brain.context.get","brain.context.search","brain.learning.query_benchmarks","brain.outreach.compare","brand.context_list","command_center.goals.get","gtm.goals_list","identity.content_pillars_generate","social.strategy_archetype_benchmark","social.strategy_archetype_get","social.strategy_format_targets_suggest","social.strategy_overview","social.strategy_plan_progress","social.strategy_update"]}
 -->
 
 Create or revise durable growth strategy: ICP, problem, positioning, proof, channel roles, constraints, objectives, tradeoffs, and measurement. Strategy decides where and why to play; it does not execute a campaign or weekly task list.

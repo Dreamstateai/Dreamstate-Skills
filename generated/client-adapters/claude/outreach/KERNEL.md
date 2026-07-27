@@ -1,6 +1,6 @@
 # Outreach coordinator
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","outreach.demand_plan_get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.draft_publish","workflows.get"]}
+{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","outreach.access_get","outreach.activity_list","outreach.credit_usage_get","outreach.demand_plan_get","outreach.enrichment_sequence_get","outreach.global_pause_set","outreach.icps_list","outreach.sender_context_accounts_list","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.draft_publish","workflows.get","workflows.list"]}
 -->
 
 ## Job boundary

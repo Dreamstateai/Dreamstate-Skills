@@ -1,16 +1,104 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["strategy"],
+      "expected_skill_ids": [
+        "strategy"
+      ],
       "id": "channel-strategy",
       "request": "Revise our ICP and decide the roles of content, community, and outbound.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "social.strategy_overview", "social.strategy_update"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "social.strategy_overview",
+        "social.strategy_update"
+      ]
     },
     {
-      "expected_skill_ids": ["strategy"],
+      "expected_skill_ids": [
+        "strategy"
+      ],
       "id": "named-cohort-strategy-benchmark",
       "request": "Design a growth strategy for B2B SaaS founders. Consult the pooled benchmark lattice first and report only releasable cohort-level evidence, sample band, confidence, or insufficient_evidence; never raw cross-workspace rows.",
-      "required_capability_ids": ["brain.learning.query_benchmarks"]
+      "required_capability_ids": [
+        "brain.learning.query_benchmarks"
+      ]
+    },
+    {
+      "id": "deployed-brain-surface-coverage",
+      "request": "Inspect the complete brain capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "strategy"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brain.companies.answer",
+        "brain.companies.get",
+        "brain.outreach.compare"
+      ]
+    },
+    {
+      "id": "deployed-brand-surface-coverage",
+      "request": "Inspect the complete brand capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "strategy"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brand.context_list"
+      ]
+    },
+    {
+      "id": "deployed-command-center-surface-coverage",
+      "request": "Inspect the complete command center capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "strategy"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "command_center.goals.get"
+      ]
+    },
+    {
+      "id": "deployed-gtm-surface-coverage",
+      "request": "Inspect the complete gtm capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "strategy"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "gtm.goals_list"
+      ]
+    },
+    {
+      "id": "deployed-identity-surface-coverage",
+      "request": "Inspect the complete identity capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "strategy"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "identity.content_pillars_generate"
+      ]
+    },
+    {
+      "id": "deployed-social-surface-coverage",
+      "request": "Inspect the complete social capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "strategy"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "social.strategy_archetype_benchmark",
+        "social.strategy_archetype_get",
+        "social.strategy_format_targets_suggest",
+        "social.strategy_plan_progress"
+      ]
     }
   ],
   "schema_version": 1,

@@ -1,11 +1,85 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["integrations"],
+      "expected_skill_ids": [
+        "integrations"
+      ],
       "id": "safe-connect-resume",
       "must_not_request_secrets": true,
       "request": "Connect the account needed for this publish operation and resume safely.",
-      "required_capability_ids": ["integrations.unipile_status_get", "integrations.scheduler_status_get", "integrations.outreach_connectors_list"]
+      "required_capability_ids": [
+        "integrations.unipile_status_get",
+        "integrations.scheduler_status_get",
+        "integrations.outreach_connectors_list"
+      ]
+    },
+    {
+      "id": "deployed-integrations-surface-coverage-1",
+      "request": "Inspect the complete integrations capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "integrations"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "integrations.attribution_status_get",
+        "integrations.crm_import_job_get",
+        "integrations.crm_importable_lists_get",
+        "integrations.ga4.connect_start",
+        "integrations.ga4.properties",
+        "integrations.ga4.status",
+        "integrations.github_repositories_list",
+        "integrations.gsc.connect_start",
+        "integrations.gsc.properties",
+        "integrations.gsc.properties_list",
+        "integrations.gsc.status",
+        "integrations.hubspot_deal_rule_get",
+        "integrations.linkedin_parameters_search",
+        "integrations.scheduler_connections_list",
+        "integrations.scheduler_event_types_list",
+        "integrations.slack_channels_list"
+      ]
+    },
+    {
+      "id": "deployed-integrations-surface-coverage-2",
+      "request": "Inspect the complete integrations capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "integrations"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "integrations.slack_notification_routing_get",
+        "integrations.stripe_status_get"
+      ]
+    },
+    {
+      "id": "deployed-mailboxes-surface-coverage",
+      "request": "Inspect the complete mailboxes capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "integrations"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "mailboxes.deliverability_get"
+      ]
+    },
+    {
+      "id": "deployed-outreach-surface-coverage",
+      "request": "Inspect the complete outreach capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "integrations"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.access_get",
+        "outreach.mailboxes_list",
+        "outreach.pr_mailboxes_list",
+        "outreach.senders_list",
+        "outreach.settings_get"
+      ]
     }
   ],
   "schema_version": 1,

@@ -1,18 +1,87 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["visibility"],
+      "expected_skill_ids": [
+        "visibility"
+      ],
       "id": "citation-audit",
-      "must_not_load": ["analytics", "seo"],
+      "must_not_load": [
+        "analytics",
+        "seo"
+      ],
       "request": "Audit whether AI assistants cite us for our core buyer questions and show the evidence gaps.",
-      "required_capability_ids": ["visibility.workspace_site_get", "visibility.overview", "visibility.citations", "visibility.tracked_prompts.list", "visibility.prompt_metrics_list"],
-      "required_concepts": ["tracked prompt", "best linkedin outreach tool", "how to automate linkedin dms", "recommend"]
+      "required_capability_ids": [
+        "visibility.workspace_site_get",
+        "visibility.overview",
+        "visibility.citations",
+        "visibility.tracked_prompts.list",
+        "visibility.prompt_metrics_list"
+      ],
+      "required_concepts": [
+        "tracked prompt",
+        "best linkedin outreach tool",
+        "how to automate linkedin dms",
+        "recommend"
+      ]
     },
     {
-      "expected_skill_ids": ["visibility"],
+      "expected_skill_ids": [
+        "visibility"
+      ],
       "id": "approved-citation-refresh",
       "request": "Refresh the approved AI citation measurement after the credit-bearing consequence is reviewed, then report its durable run state.",
-      "required_capability_ids": ["visibility.refresh"]
+      "required_capability_ids": [
+        "visibility.refresh"
+      ]
+    },
+    {
+      "id": "deployed-visibility-surface-coverage-1",
+      "request": "Inspect the complete visibility capability family used by deployed visibility workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "visibility"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "visibility.ai_bot_fetch_get",
+        "visibility.ai_traffic",
+        "visibility.geo_queries_list",
+        "visibility.html_analysis_get",
+        "visibility.keywords_get",
+        "visibility.pagespeed_get",
+        "visibility.pagespeed_refresh",
+        "visibility.probe.latest",
+        "visibility.probe.recommendations",
+        "visibility.probe.results",
+        "visibility.probe.run_get",
+        "visibility.probe.runs_list",
+        "visibility.probe.start",
+        "visibility.probe.status",
+        "visibility.probe.today",
+        "visibility.sentiment_trend"
+      ]
+    },
+    {
+      "id": "deployed-visibility-surface-coverage-2",
+      "request": "Inspect the complete visibility capability family used by deployed visibility workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "visibility"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "visibility.site_files_get",
+        "visibility.site_scan",
+        "visibility.sitemap_get",
+        "visibility.tracked_prompts.create",
+        "visibility.tracked_prompts.generate",
+        "visibility.tracked_prompts.save",
+        "visibility.tracked_prompts.status",
+        "visibility.tracked_prompts.tags",
+        "visibility.tracked_prompts.update",
+        "visibility.workspace_site_ensure",
+        "visibility.workspace_site_update"
+      ]
     }
   ],
   "schema_version": 1,

@@ -3,12 +3,12 @@ id: strategy
 name: strategy
 description: "Create or revise evidence-backed ICP, positioning, channel roles, objectives, tradeoffs, and durable strategy proposals."
 capability_domains: ["brain","context"]
-capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","social.strategy_overview","social.strategy_update"]
+capability_ids: ["brain.companies.answer","brain.companies.get","brain.context.get","brain.context.search","brain.learning.query_benchmarks","brain.outreach.compare","brand.context_list","command_center.goals.get","gtm.goals_list","identity.content_pillars_generate","social.strategy_archetype_benchmark","social.strategy_archetype_get","social.strategy_format_targets_suggest","social.strategy_overview","social.strategy_plan_progress","social.strategy_update"]
 direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  playbook_kernel_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 779304f4256ec197
@@ -16,16 +16,16 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.4
-  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  source_release: 0.5.5
+  source_release_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   generator_version: 1.0.0
   client: claude
   kernel_id: strategy
   kernel_file: KERNEL.md
-  kernel_sha256: efdf0aedf75a26cf833e9adb8d6765d0a4e7c4c9999aabcd4f73443672de9d38
+  kernel_sha256: 8832cb5f28cf1a3f59c159a31cb3f6c2e302c323d235e5b1615f6b51a906ba86
   adapter_sha256: ed1251105b794ec02978e1d6a1edca907f53a555b2f182503242493e014c5f4c
   evals_file: evals.json
-  evals_sha256: e721f2fcb0e2ab9457066c4f686f20ec48bed1b5cf994733bd7082da157d690b
+  evals_sha256: 19de4cdcc4a791ddbc5b112e01a814f5a704896f29561be538c32022c4af5528
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -48,7 +48,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 # Growth strategy
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","social.strategy_overview","social.strategy_update"]}
+{"required_capability_ids":["brain.companies.answer","brain.companies.get","brain.context.get","brain.context.search","brain.learning.query_benchmarks","brain.outreach.compare","brand.context_list","command_center.goals.get","gtm.goals_list","identity.content_pillars_generate","social.strategy_archetype_benchmark","social.strategy_archetype_get","social.strategy_format_targets_suggest","social.strategy_overview","social.strategy_plan_progress","social.strategy_update"]}
 -->
 
 Create or revise durable growth strategy: ICP, problem, positioning, proof, channel roles, constraints, objectives, tradeoffs, and measurement. Strategy decides where and why to play; it does not execute a campaign or weekly task list.

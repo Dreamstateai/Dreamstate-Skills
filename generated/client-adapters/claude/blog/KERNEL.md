@@ -1,6 +1,6 @@
 # Blog artifact lifecycle
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","content.article_create_schedule","content.article_delivery_create","content.article_get","content.article_update","content.delivery_publish","content.submit_review"]}
+{"required_capability_ids":["brain.content.get","brain.content.search","brain.context.get","brain.context.search","brain.evidence.search","content.article_archive","content.article_asset_import","content.article_asset_register","content.article_asset_upload","content.article_create_schedule","content.article_deliveries_list","content.article_delivery_create","content.article_delivery_payload_get","content.article_distribution_get","content.article_duplicate","content.article_enabled_get","content.article_get","content.article_list","content.article_selection_edit","content.article_update","content.delivery_publish","content.destination_test","content.destinations_list","content.schedule","content.submit_review","content.unschedule","content.version_create","content.version_diff_get","content.version_get","content.versions_list","research.urls_fetch"]}
 -->
 
 Own blog research, grounded draft creation, editorial review, revision, scheduling, and publication destination. A generic buyer resource belongs to `growth-asset-planner`; visibility measurement belongs to `visibility`; durable positioning belongs to `strategy`.

@@ -5,13 +5,13 @@ description: Manage grounded blog research, draft, editorial review, revision, s
 triggers: ["research or draft a blog post","revise an article","send a blog to review","schedule or publish a blog"]
 dependencies: []
 capability_domains: ["content"]
-capability_ids: ["brain.context.get","brain.context.search","content.article_create_schedule","content.article_delivery_create","content.article_get","content.article_update","content.delivery_publish","content.submit_review"]
+capability_ids: ["brain.content.get","brain.content.search","brain.context.get","brain.context.search","brain.evidence.search","content.article_archive","content.article_asset_import","content.article_asset_register","content.article_asset_upload","content.article_create_schedule","content.article_deliveries_list","content.article_delivery_create","content.article_delivery_payload_get","content.article_distribution_get","content.article_duplicate","content.article_enabled_get","content.article_get","content.article_list","content.article_selection_edit","content.article_update","content.delivery_publish","content.destination_test","content.destinations_list","content.schedule","content.submit_review","content.unschedule","content.version_create","content.version_diff_get","content.version_get","content.versions_list","research.urls_fetch"]
 direct_run_capability_ids: []
 max_context_tokens: 3500
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  playbook_kernel_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 779304f4256ec197
@@ -19,15 +19,15 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.4
-  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  source_release: 0.5.5
+  source_release_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   generator_version: 1.0.0
   kernel_id: blog
   kernel_file: KERNEL.md
-  kernel_sha256: 466b0f0837d60107b14c4b5bed89a8df152baf9a4a6d881fba16130f3049c9db
+  kernel_sha256: 64025aa7f71c1e14c1d26d4df47e0b163244d4dde75546500a48ca73bfd6c38a
   adapter_sha256: a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1
   evals_file: evals.json
-  evals_sha256: b419b7fa9101ec22b58e03eac1a7b1711bef7d2ff970a56b96a7f0ddb55837fe
+  evals_sha256: 7b871b5403ba2983ce333f82b51cabc9ebc01d6ad30f4bcd26b6d664ae6fa78a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

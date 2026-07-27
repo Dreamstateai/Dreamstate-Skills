@@ -1,17 +1,40 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["growth-asset-planner"],
+      "expected_skill_ids": [
+        "growth-asset-planner"
+      ],
       "id": "unsaved-asset-proposal",
       "must_state_unsaved_without_capability": true,
       "request": "Create a downloadable ICP audit checklist for our buyers.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "command_center.assets.list", "command_center.assets.create"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "command_center.assets.list",
+        "command_center.assets.create"
+      ]
     },
     {
-      "expected_skill_ids": ["blog"],
+      "expected_skill_ids": [
+        "blog"
+      ],
       "id": "blog-is-not-growth-asset",
-      "must_not_load": ["growth-asset-planner"],
+      "must_not_load": [
+        "growth-asset-planner"
+      ],
       "request": "Draft a blog article and send it to editorial review."
+    },
+    {
+      "id": "deployed-brain-surface-coverage",
+      "request": "Inspect the complete brain capability family used by deployed growth-asset-planner workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "growth-asset-planner"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brain.evidence.search"
+      ]
     }
   ],
   "schema_version": 1,

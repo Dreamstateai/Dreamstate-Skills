@@ -1,24 +1,90 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["outreach-sequence-writer"],
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
       "id": "custom-messaging-with-lineage",
       "request": "Write custom LinkedIn and email steps whose variables resolve from the qualified table outputs, then preview them on real rows.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "sequences.definition_get", "sequences.step_options", "sequences.validate", "sequences.bind"]
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "sequences.definition_get",
+        "sequences.step_options",
+        "sequences.validate",
+        "sequences.bind"
+      ]
     },
     {
       "expected_skill_ids": [],
       "id": "skip-without-messaging",
-      "must_not_load": ["outreach-sequence-writer"],
+      "must_not_load": [
+        "outreach-sequence-writer"
+      ],
       "request": "The workflow only scores and routes leads; it sends no messages."
     },
     {
-      "expected_skill_ids": ["outreach-sequence-writer"],
-      "forbidden_question_concepts": ["preview_count"],
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
+      "forbidden_question_concepts": [
+        "preview_count"
+      ],
       "id": "preview-count-never-asked",
       "max_intake_checkpoints": 0,
-      "required_concepts": ["preview count is the coordinator's literal pilot integer", "preview exactly the approved sample rows"],
+      "required_concepts": [
+        "preview count is the coordinator's literal pilot integer",
+        "preview exactly the approved sample rows"
+      ],
       "request": "Preview the custom steps on the approved sample rows the coordinator already handed you. Do not ask me how many previews to generate."
+    },
+    {
+      "id": "deployed-outreach-surface-coverage",
+      "request": "Inspect the complete outreach capability family used by deployed outreach-sequence-writer workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.ai_spintax_generate",
+        "outreach.ai_write_generate",
+        "outreach.ai_write_resolve",
+        "outreach.mailboxes_list",
+        "outreach.opener_sample_generate",
+        "outreach.opener_styles_list",
+        "outreach.personalization_generate",
+        "outreach.send_schedules.get",
+        "outreach.send_schedules.list",
+        "outreach.senders_list",
+        "outreach.settings_get"
+      ]
+    },
+    {
+      "id": "deployed-rows-surface-coverage",
+      "request": "Inspect the complete rows capability family used by deployed outreach-sequence-writer workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "rows.get",
+        "rows.query"
+      ]
+    },
+    {
+      "id": "deployed-sequences-surface-coverage",
+      "request": "Inspect the complete sequences capability family used by deployed outreach-sequence-writer workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "sequences.archive",
+        "sequences.list"
+      ]
     }
   ],
   "schema_version": 1,

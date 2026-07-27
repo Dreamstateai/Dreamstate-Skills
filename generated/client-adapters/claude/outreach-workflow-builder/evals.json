@@ -1,42 +1,219 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["outreach-workflow-builder"],
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
       "id": "priority-branch-and-actions",
       "request": "Build a workflow that branches on the priority column, enriches qualified rows, and stops before outreach when required evidence is missing.",
-      "required_capability_ids": ["workflows.get", "workflows.create", "workflows.node_registry", "workflows.validate_graph", "workflows.graph_apply"]
+      "required_capability_ids": [
+        "workflows.get",
+        "workflows.create",
+        "workflows.node_registry",
+        "workflows.validate_graph",
+        "workflows.graph_apply"
+      ]
     },
     {
-      "expected_skill_ids": ["outreach-workflow-builder"],
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
       "id": "no-message-workflow",
-      "must_not_load": ["outreach-sequence-writer"],
+      "must_not_load": [
+        "outreach-sequence-writer"
+      ],
       "request": "Create a qualification-only workflow with no messaging.",
-      "required_capability_ids": ["workflows.node_registry", "workflows.validate_graph", "workflows.graph_apply"]
+      "required_capability_ids": [
+        "workflows.node_registry",
+        "workflows.validate_graph",
+        "workflows.graph_apply"
+      ]
     },
     {
-      "expected_skill_ids": ["outreach-workflow-builder"],
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
       "id": "typed-reviewed-tables-handoff",
       "fixture_profile": "outreach_exact_result_set_expansion",
-      "required_capability_ids": ["workflows.get", "workflows.validate_graph"],
-      "required_completion_fields": [{"id":"durability_state","allowed_values":["proposal_only"]},{"id":"selection_state","allowed_values":["exact"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"run_state","allowed_values":["blocked"]}],
-      "required_concepts": ["typed reviewed tables handoff", "source-evidence run", "terminal exact-selection receipt"],
+      "required_capability_ids": [
+        "workflows.get",
+        "workflows.validate_graph"
+      ],
+      "required_completion_fields": [
+        {
+          "id": "durability_state",
+          "allowed_values": [
+            "proposal_only"
+          ]
+        },
+        {
+          "id": "selection_state",
+          "allowed_values": [
+            "exact"
+          ]
+        },
+        {
+          "id": "activation_state",
+          "allowed_values": [
+            "inactive"
+          ]
+        },
+        {
+          "id": "run_state",
+          "allowed_values": [
+            "blocked"
+          ]
+        }
+      ],
+      "required_concepts": [
+        "typed reviewed tables handoff",
+        "source-evidence run",
+        "terminal exact-selection receipt"
+      ],
       "request": "Consume the typed reviewed tables handoff for source-evidence run_eval_source_001 and its terminal exact-selection receipt. Bind workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, and draft workflow wf_eval_001 revision 3. Validate only the workflow eligibility binding. Do not search, fetch, validate, propose, dry-run, or execute source expansion; do not import, enroll, activate, or send."
     },
     {
-      "expected_skill_ids": ["outreach-workflow-builder"],
-      "forbidden_question_concepts": ["messaging branch"],
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "forbidden_question_concepts": [
+        "messaging branch"
+      ],
       "id": "conditional-messaging-resolved-by-inspection",
       "max_intake_checkpoints": 0,
-      "must_not_load": ["outreach-sequence-writer"],
+      "must_not_load": [
+        "outreach-sequence-writer"
+      ],
       "request": "Add messaging only if the inspected workflow graph already has a messaging branch. This graph has scoring and routing nodes and no messaging node, so record the branch as absent instead of asking me.",
-      "required_capability_ids": ["workflows.get"]
+      "required_capability_ids": [
+        "workflows.get"
+      ]
     },
     {
-      "expected_skill_ids": ["outreach-workflow-builder"],
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
       "id": "exact-result-set-expansion-is-separate",
-      "required_capability_ids": ["workflows.get"],
-      "required_concepts": ["Tables-owned exact-result expansion", "terminal receipt", "workflow eligibility binding", "no source execution"],
+      "required_capability_ids": [
+        "workflows.get"
+      ],
+      "required_concepts": [
+        "Tables-owned exact-result expansion",
+        "terminal receipt",
+        "workflow eligibility binding",
+        "no source execution"
+      ],
       "request": "Bind the completed Tables-owned exact-result expansion receipt to this workflow's eligibility input. Inspect the workflow and preserve the exact selection, but do not search, fetch, propose, dry-run, or execute a source capability here."
+    },
+    {
+      "id": "deployed-columns-surface-coverage",
+      "request": "Inspect the complete columns capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "columns.list"
+      ]
+    },
+    {
+      "id": "deployed-rows-surface-coverage",
+      "request": "Inspect the complete rows capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "rows.get",
+        "rows.query"
+      ]
+    },
+    {
+      "id": "deployed-table-sources-surface-coverage",
+      "request": "Inspect the complete table sources capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "table_sources.list"
+      ]
+    },
+    {
+      "id": "deployed-tables-surface-coverage",
+      "request": "Inspect the complete tables capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "tables.get",
+        "tables.list"
+      ]
+    },
+    {
+      "id": "deployed-views-surface-coverage",
+      "request": "Inspect the complete views capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "views.get",
+        "views.list"
+      ]
+    },
+    {
+      "id": "deployed-workbooks-surface-coverage",
+      "request": "Inspect the complete workbooks capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "workbooks.get",
+        "workbooks.list"
+      ]
+    },
+    {
+      "id": "deployed-workflows-surface-coverage",
+      "request": "Inspect the complete workflows capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "workflows.archive",
+        "workflows.call_child",
+        "workflows.draft_save",
+        "workflows.list",
+        "workflows.node_inspect",
+        "workflows.node_options",
+        "workflows.run_trace_get",
+        "workflows.runs_list",
+        "workflows.trigger_create",
+        "workflows.trigger_delete",
+        "workflows.triggers_list"
+      ]
+    },
+    {
+      "id": "deployed-worksheets-surface-coverage",
+      "request": "Inspect the complete worksheets capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "worksheets.list"
+      ]
     }
   ],
   "schema_version": 1,

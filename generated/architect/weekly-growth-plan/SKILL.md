@@ -5,13 +5,13 @@ description: Prioritize a one-week cross-channel operating plan with owners, del
 triggers: ["plan my growth week","prioritize work across channels","create a weekly operating plan","decide what the team should do next"]
 dependencies: []
 capability_domains: []
-capability_ids: ["brain.context.get","brain.context.search","social.strategy_overview","social.weekly_plan_items_list","visibility.overview","workflows.list"]
+capability_ids: ["brain.context.get","brain.context.search","calendar.events_list","command_center.action_items.list","command_center.feed.list","command_center.goals.get","command_center.overview.get","content.article_list","content.artifact_list","gtm.goals_list","gtm.tasks.list","outreach.workspace_stats_get","sequences.list","social.analytics_query","social.strategy_activity_calendar","social.strategy_overview","social.strategy_plan_progress","social.weekly_plan_items_list","visibility.overview","workbooks.list","workflows.list"]
 direct_run_capability_ids: []
 max_context_tokens: 3500
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  playbook_kernel_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 779304f4256ec197
@@ -19,15 +19,15 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.4
-  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
+  source_release: 0.5.5
+  source_release_hash: 6425806fd6c3948bbf661bf6dfe61479022f86123e3b5ec0d869365b80d6892b
   generator_version: 1.0.0
   kernel_id: weekly-growth-plan
   kernel_file: KERNEL.md
-  kernel_sha256: 51416e62fc46f2ee38525c4eab35e55fe4ad3fd6b138caa842da30c3100c83c3
+  kernel_sha256: 46695b4ac619bc718f914e6c364fe7bd8ef1f21fbd39fe83910497d8eda107dd
   adapter_sha256: a7c18277f6dcbb42eb3ca03f5471699e8d52aee4ce0e2dbb3bc1f8846a58c2b1
   evals_file: evals.json
-  evals_sha256: 1a7ab87f6b25b1448c08ca5a2bfe26aa29b9320aac910712131ad059a54df0da
+  evals_sha256: f40f4b87f6d703f986b5b191626cc0735449ad62c1b084998f463f924849a692
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

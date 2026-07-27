@@ -774,6 +774,48 @@
         "never raw cross-workspace rows"
       ],
       "request": "Our acting workspace has zero outreach history for restaurant owners. Search for, fetch, and call the exact brain.learning.query_benchmarks contract before designing outreach. Report its cohort-level evidence boundary, messaging archetype availability, sample band, confidence, and insufficient_evidence state exactly from the canonical receipt. State the privacy boundary verbatim: never raw cross-workspace rows. Do not create or launch a workflow."
+    },
+    {
+      "id": "deployed-outreach-surface-coverage",
+      "request": "Inspect the complete outreach capability family used by deployed outreach workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.access_get",
+        "outreach.activity_list",
+        "outreach.credit_usage_get",
+        "outreach.enrichment_sequence_get",
+        "outreach.global_pause_set",
+        "outreach.icps_list",
+        "outreach.sender_context_accounts_list"
+      ]
+    },
+    {
+      "id": "deployed-selection-snapshots-surface-coverage",
+      "request": "Inspect the complete selection snapshots capability family used by deployed outreach workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "selection_snapshots.get"
+      ]
+    },
+    {
+      "id": "deployed-workflows-surface-coverage",
+      "request": "Inspect the complete workflows capability family used by deployed outreach workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "workflows.list"
+      ]
     }
   ],
   "schema_version": 1,
