@@ -1,18 +1,18 @@
 ---
 name: campaign-optimizer
-description: "Diagnose and tune a running outreach campaign: read its analytics, find what's underperforming, and act, pause weak campaigns, fix sequence steps, re-status stuck threads. Use whenever the user asks 'why isn't my campaign working', 'improve my reply rate', 'my outreach is flat', wants to optimize, pause, or audit a live campaign. The lever for a launched campaign is rarely volume; it's the opener, the targeting, or the cadence. You read the data and decide; Dreamstate makes the change under its caps."
+description: "Diagnose and tune a running outreach sequence: read its analytics, find what's underperforming, pause weak motions, fix workflow nodes, and re-status stuck threads. Use whenever the user asks why outreach is not working, wants to improve reply rate, optimize, pause, or audit a live sequence."
 platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [sequences.list, outreach.workspace_stats_get, outreach.channel_stats_get, outreach.analytics_step_aggregate_get, rows.query, sequences.get, sequences.step_options, sequences.edit_step, outreach.global_pause_set, outreach.dm_conversation_status_update]
+capability_ids: [sequences.list, outreach.workspace_stats_get, outreach.channel_stats_get, outreach.analytics_step_aggregate_get, rows.query, sequences.definition_get, sequences.step_options, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, outreach.global_pause_set, outreach.dm_conversation_status_update]
 ---
 
-# Campaign Optimizer
+# Sequence Optimizer
 
-Launching is the easy part; a campaign earns its keep only if you read it and adjust. This
-skill takes a live campaign, finds where it leaks, and fixes the cause rather than cranking
+Launching is the easy part; a sequence earns its keep only if you read it and adjust. This
+skill takes a live sequence, finds where it leaks, and fixes the cause rather than cranking
 volume on a message that is not landing. You bring the read on what "good" looks like and
 what to change; Dreamstate holds the data and applies the change under its caps.
 
@@ -22,7 +22,7 @@ The dotted names below are canonical capability IDs. Inspect their live contract
 `dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
 with `dreamstate_get_run`.
 
-## Step 1: Pick the campaign and read the numbers
+## Step 1: Pick the sequence and read the numbers
 
 List sequences with `sequences.list` and pick the one the user means (or scan the active
 ones). Pull `outreach.workspace_stats_get`, `outreach.channel_stats_get`, and the selected
@@ -45,8 +45,8 @@ State which bucket this campaign is in before changing anything.
 
 ## Step 2: Confirm the cause in the data
 
-Do not guess. Pull `rows.query` for the campaign's frozen worksheet/view to see the contacts
-and where they are stalling, and `sequences.get` for the current step graph and its
+Do not guess. Pull `rows.query` for the sequence's frozen worksheet/view to see the contacts
+and where they are stalling, and `sequences.definition_get` for the current step graph and its
 `graph_version`. Read `sequences.step_options` for the step subtypes and opener frameworks available. If a
 segment (`metric: "icp"`) is dragging the average down, that is a targeting problem, not a
 copy problem; say so.
@@ -55,10 +55,10 @@ copy problem; say so.
 
 Take the smallest change that addresses the bucket:
 
-- **Opener is weak** → edit the DM step's copy with `sequences.edit_step` (pass the
-  `campaign_id`, `step_id`, the replacement `data`, and the current `graph_version`; on
-  `graph_version_conflict`, re-read with `sequences.get` and retry). Shorter, more
-  specific, more about them.
+- **Opener is weak** → read the owning workflow with `workflows.get`, inspect the live
+  node shape with `workflows.node_registry`, apply the smallest copy-only graph patch with
+  `workflows.graph_apply` against the exact revision, and validate it with
+  `workflows.validate_graph`. Shorter, more specific, more about them.
 - **The motion is structurally off** (wrong audience, burning sender reputation, or being
   replaced) → `outreach.global_pause_set`. This runs the in-app kill-switch
   cascade so in-flight sends actually stop, not just a row flip. Pause, fix the targeting on

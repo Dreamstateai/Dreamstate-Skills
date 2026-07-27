@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [workbooks.create, tables.create, sources.find_leads, contacts.enrich, workflows.create, sequences.add_step, sequences.enroll_selection, workflows.activate, content.artifact_generate, content.schedule, social.accounts_list, outreach.workspace_stats_get]
+capability_ids: [workbooks.create, tables.create, sources.find_leads, contacts.enrich, workflows.create, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, sequences.enroll_selection, workflows.activate, content.artifact_generate, content.schedule, social.accounts_list, outreach.workspace_stats_get]
 ---
 
 # Multichannel
@@ -45,8 +45,9 @@ enrich selected contacts with `contacts.enrich`.
 
 ## Step 2: Direct motion (LinkedIn sequence)
 
-Run the core of `/outbound`: `workflows.create` -> `sequences.add_step` -> build and
-validate the sequence -> `sequences.enroll_selection` using a frozen workbook/worksheet/view
+Run the core of `/outbound`: `workflows.create` -> inspect `workflows.node_registry` -> apply
+the reviewed cadence with `workflows.graph_apply` -> validate with `workflows.validate_graph`
+-> `sequences.enroll_selection` using a frozen workbook/worksheet/view
 snapshot -> `workflows.activate`. If
 the full outbound skill is installed, defer to it for the sequence detail rather than
 duplicating steps here.
@@ -73,5 +74,5 @@ outreach, so judge them together, not in isolation.
 
 Today Dreamstate's send channels here are LinkedIn (sequence) and social/blog content. If
 the user asks for cold email specifically, check which sending channels their workspace has
-enabled via `/connect`; route email through whatever email campaign capability is exposed
+enabled via `/connect`; route email through the available email sending capability
 there rather than assuming it exists.

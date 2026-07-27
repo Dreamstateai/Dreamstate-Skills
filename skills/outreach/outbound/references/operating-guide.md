@@ -2,7 +2,7 @@
 
 ## Promise
 
-Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.
+Run a full LinkedIn outbound motion end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, start an outreach motion, book demos, or generate pipeline.
 
 ## Execution boundary
 
@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `cells.settle`, `columns.add`, `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `outreach.workspace_stats_get`, `rows.query`, `sequences.add_step`, `sequences.enroll_selection`, `sequences.get`, `sequences.step_options`, `sequences.validate`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`, `workflows.activate`, `workflows.create`
+Declared capabilities: `cells.settle`, `columns.add`, `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `outreach.workspace_stats_get`, `rows.query`, `sequences.definition_get`, `sequences.enroll_selection`, `sequences.step_options`, `sequences.validate`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`, `workflows.activate`, `workflows.create`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 
-Required scopes: `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`, `workflows:write`
+Required scopes: `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`, `workflows:read`, `workflows:write`
 
 ## Evidence checklist
 

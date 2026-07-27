@@ -2,7 +2,7 @@
   "schema_version": 2,
   "slug": "outbound",
   "name": "Outbound",
-  "short_description": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.",
+  "short_description": "Run a full LinkedIn outbound motion end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, start an outreach motion, book demos, or generate pipeline.",
   "domain": "outreach",
   "category": "Outreach",
   "tags": [
@@ -28,9 +28,8 @@
     "contacts.list",
     "outreach.workspace_stats_get",
     "rows.query",
-    "sequences.add_step",
+    "sequences.definition_get",
     "sequences.enroll_selection",
-    "sequences.get",
     "sequences.step_options",
     "sequences.validate",
     "social.accounts_list",
@@ -39,7 +38,11 @@
     "tables.list",
     "workbooks.create",
     "workflows.activate",
-    "workflows.create"
+    "workflows.create",
+    "workflows.get",
+    "workflows.graph_apply",
+    "workflows.node_registry",
+    "workflows.validate_graph"
   ],
   "mcp_tools": [
     "dreamstate_tools_search",
@@ -55,10 +58,11 @@
     "outreach:write",
     "tables:read",
     "tables:write",
+    "workflows:read",
     "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "01002d9587befbf3",
+  "verified_capability_hash": "779304f4256ec197",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/outbound/SKILL.md",
   "install_command": "dreamstate skills install outbound",

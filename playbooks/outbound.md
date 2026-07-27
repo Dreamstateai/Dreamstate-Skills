@@ -1,18 +1,18 @@
 ---
 name: outbound
-description: "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits."
+description: "Run a full LinkedIn outbound motion end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, start an outreach motion, book demos, or generate pipeline."
 platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [social.accounts_list, workbooks.create, tables.create, tables.list, sources.find_leads, contacts.list, contacts.get, contacts.enrich, rows.query, columns.add, cells.settle, workflows.create, sequences.add_step, sequences.get, sequences.step_options, sequences.validate, contacts.draft_opener, sequences.enroll_selection, workflows.activate, outreach.workspace_stats_get]
+capability_ids: [social.accounts_list, workbooks.create, tables.create, tables.list, sources.find_leads, contacts.list, contacts.get, contacts.enrich, rows.query, columns.add, cells.settle, workflows.create, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, sequences.definition_get, sequences.step_options, sequences.validate, contacts.draft_opener, sequences.enroll_selection, workflows.activate, outreach.workspace_stats_get]
 ---
 
 # Outbound
 
 This is the orchestrator: turn a target audience into a live, personalized LinkedIn
-campaign that sends safely. It runs the pipeline stages in order, each of which is also a
+outreach motion that sends safely. It runs the pipeline stages in order, each of which is also a
 standalone skill you can drop to for detail. You bring the judgment (who to target, what
 makes a good opener, when to launch); Dreamstate brings the hands (sourcing, enrichment,
 sending under per-account caps you cannot bypass).
@@ -74,16 +74,16 @@ weak rows cost real sends.
 ## Step 4: Write openers (→ /hook-writer)
 
 For the top tier, draft a personalized opener with `contacts.draft_opener` (an opener
-`framework_id` from `sequences.step_options`, plus the `campaign_id`) and save it to an
+`framework_id` from `sequences.step_options`, plus the sequence identity) and save it to an
 `opener` column. Show the user the first few to calibrate voice.
 
 ## Step 5: Build and validate the sequence (→ /sequence-builder)
 
-Create the workflow (`workflows.create`, bound to the frozen worksheet/view selection), then lay
-down the first cadence step with `sequences.add_step` and wire the rest, threading
-the `graph_version` from `sequences.get` forward and retrying on
-`graph_version_conflict`. A solid cold cadence: connection_request → wait → DM (opener) →
-wait → DM (follow-up). Run `sequences.validate` and fix anything it flags.
+Create the workflow (`workflows.create`, bound to the frozen worksheet/view selection), inspect
+`workflows.node_registry`, then apply the cadence graph with `workflows.graph_apply` against the
+exact revision returned by `workflows.get`. A solid cold cadence is connection_request → wait →
+DM (opener) → wait → DM (follow-up). Run `workflows.validate_graph` and
+`sequences.validate`, and fix anything either validator flags.
 
 ## Step 6: Enroll and launch
 

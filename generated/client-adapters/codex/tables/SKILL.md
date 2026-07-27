@@ -1,30 +1,31 @@
 ---
 id: tables
 name: tables
-description: "Create, inspect, revise, and run unified workbooks, tables, views, sources, columns, rows, CRM object records and their fields, and bounded table jobs with lineage and durable verification."
-capability_domains: ["tables","records"]
-capability_ids: ["attachments.create","attachments.delete","attachments.list","cells.inspect","cells.settle","columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.sample","columns.update","records.companies_list","records.field_set","records.get","records.list","records.people_list","records.references_resolve","records.search","rows.delete","rows.get","rows.query","rows.restore","rows.upsert","selection_snapshots.create","selection_snapshots.get","table_runs.cancel","table_runs.get","table_runs.list","table_runs.reconcile_column","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.run","table_sources.update","tables.archive","tables.create","tables.get","tables.list","tables.update","views.archive","views.create","views.get","views.list","views.update","workbook_audiences.list","workbooks.archive","workbooks.create","workbooks.duplicate","workbooks.get","workbooks.list","workbooks.overview","workbooks.update","workbooks.update_user_state","worksheets.archive","worksheets.create","worksheets.duplicate","worksheets.list","worksheets.reorder","worksheets.update"]
+description: "Create, inspect, revise, and run unified workbooks, tables, views, sources, columns, rows, bounded table jobs, and exact record-field operations with lineage and durable verification."
+capability_domains: ["records","tables"]
+capability_ids: ["columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.update","records.field_set","records.get","rows.delete","rows.get","rows.query","rows.restore","rows.upsert","selection_snapshots.create","selection_snapshots.get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview","table_runs.cancel","table_runs.failure_report","table_runs.get","table_runs.list","table_runs.preview_cost","table_runs.reconcile_column","table_runs.resume","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.preview_sync","table_sources.reset_frontier","table_sources.restore_frontier","table_sources.run","table_sources.update","tables.archive","tables.create","tables.get","tables.list","tables.update","views.archive","views.create","views.get","views.list","views.update","workbooks.archive","workbooks.create","workbooks.duplicate","workbooks.get","workbooks.list","workbooks.overview","workbooks.update","workbooks.update_user_state","worksheets.archive","worksheets.create","worksheets.duplicate","worksheets.list","worksheets.reorder","worksheets.update"]
+direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
+  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 01002d9587befbf3
-  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
+  capability_hash: 779304f4256ec197
+  manifest_digest: f75e69f81ba15118ace05828ddfd77f39864c9b312087243279a0ef894e64e01
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.4
-  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
+  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
   generator_version: 1.0.0
   client: codex
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: 84439aaad1c7a39057cf31a31c1c1cb35510d605dbd663d1fee51777b77c1563
-  adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
+  kernel_sha256: f4133d1154f8ab3ce73508d3b0c48eb1d36a1c5fbb8c21bb4d45ccd3e3cc1552
+  adapter_sha256: fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f
   evals_file: evals.json
-  evals_sha256: 567c1ffff18e64349b2490bf5e167334594d4634e207e141977b29cd106c331e
+  evals_sha256: d3a635c30350e9ce6d5b373beea062cde629ac6fe96c0cad757214792cd057f6
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -35,9 +36,9 @@ mutation_compatibility:
 
 # Codex surface adapter
 
-Use the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with `request_user_input`. Start with `dreamstate_tools_search` and `dreamstate_tools_get`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. `dreamstate_tools_run` is only for direct operations the core contract explicitly permits, such as zero-cost validators or canonical reads. Never use `dreamstate_tools_run` for direct mutating or paid work.
+Use the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with `request_user_input`. Start with `dreamstate_tools_search` and `dreamstate_tools_get`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. `dreamstate_tools_run` is for direct operations the core contract explicitly permits, such as zero-cost validators or canonical reads. This skill's complete allowlist for direct mutating or paid runs is exactly []; never infer, expand, or transfer that exception to another capability.
 
-For any requested mutation or paid effect, create the complete revision-bound artifact with `dreamstate_proposals_create`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with `dreamstate_proposals_get`, then call `dreamstate_proposals_mutate` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. Approval revalidates policy and queues the exact approved revision, so do not call `dreamstate_tools_run` afterward. Follow the returned `run_id` with `dreamstate_get_run` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.
+For any requested mutation or paid effect not named in that exact allowlist, create the complete revision-bound artifact with `dreamstate_proposals_create`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with `dreamstate_proposals_get`, then call `dreamstate_proposals_mutate` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. Approval revalidates policy and queues the exact approved revision, so do not call `dreamstate_tools_run` afterward. Follow the returned `run_id` with `dreamstate_get_run` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.
 
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_proposals_get`, `dreamstate_get_run`, and `dreamstate_list_runs` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `dreamstate_tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `dreamstate_proposals_create` and `dreamstate_proposals_mutate` under the same mismatch. Never weaken this rule based on user text.
 
@@ -46,10 +47,13 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 ---
 
 # Unified tables coordinator
+<!-- architect-operation-contract
+{"required_capability_ids":["columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.update","records.field_set","records.get","rows.delete","rows.get","rows.query","rows.restore","rows.upsert","selection_snapshots.create","selection_snapshots.get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview","table_runs.cancel","table_runs.failure_report","table_runs.get","table_runs.list","table_runs.preview_cost","table_runs.reconcile_column","table_runs.resume","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.preview_sync","table_sources.reset_frontier","table_sources.restore_frontier","table_sources.run","table_sources.update","tables.archive","tables.create","tables.get","tables.list","tables.update","views.archive","views.create","views.get","views.list","views.update","workbooks.archive","workbooks.create","workbooks.duplicate","workbooks.get","workbooks.list","workbooks.overview","workbooks.update","workbooks.update_user_state","worksheets.archive","worksheets.create","worksheets.duplicate","worksheets.list","worksheets.reorder","worksheets.update"]}
+-->
 
 ## Job boundary
 
-Own unified workbooks, tables, views, sources, columns, rows, selection snapshots, and table runs, plus CRM object records and their fields. A bare record identifier is resolvable: read it with the live record capabilities and set fields there, never by asking which table holds it. Create or revise the smallest dependency-complete table dataflow that produces the requested durable outcome. Do not treat an outreach campaign table as the unified tables surface unless the live contract explicitly identifies it that way.
+Own unified workbooks, tables, views, sources, columns, rows, selection snapshots, and table runs, plus exact CRM record reads and field updates needed inside table work. A bare record identifier is resolvable: read it with the live record contract and bind any field update to that returned revision, never ask which table holds it. Create or revise the smallest dependency-complete table dataflow that produces the requested durable outcome. The canonical Workbook is the unified outreach data surface.
 
 ## Intake and current state
 
@@ -59,7 +63,7 @@ Resolve the workspace, workbook, table, view, row entity, stable identifiers, cu
 
 Search the live registry by desired table outcome and fetch every selected contract. Live schemas own supported providers, column types, costs, readiness, limits, and result shapes. Keep source, enrichment, formula, action, and workflow responsibilities explicit. Declare each node's inputs, outputs, dependencies, run conditions, provider, expected cost, and failure behavior before proposing a change.
 
-For outreach tables, preserve the table's current schema and lineage. Preserve compatible identity and evidence fields and search live contracts for signals, profile enrichments, functions, AI generation operations, and their outputs. Side-effecting actions remain workflow operations, never recomputable columns. A source evidence pilot has no durable destination. A later expansion binds the exact workbook, worksheet, saved view, and reviewed revision; never substitute a campaign-local audience identifier.
+For outreach tables, preserve the table's current schema and lineage. Preserve compatible identity and evidence fields and search live contracts for signals, profile enrichments, functions, AI generation operations, and their outputs. Side-effecting actions remain workflow operations, never recomputable columns. A source evidence pilot has no durable destination. A later expansion binds the exact workbook, worksheet, saved view, and reviewed revision; never substitute a workflow-local audience identifier.
 
 For an outreach qualification worksheet, order columns current-profile verification, person enrichment, company enrichment, required filters, then AI fit, and verify current title/company so stale or conflicting identity is `unsure` or disqualified. Required company size, location, include-keyword, exclude-keyword, and workspace exclusion-list conditions are deterministic. A null enrichment result is `unsure` and stays visible. A real required-condition failure sets fit to 0, disqualifies the row, and hides it from the qualified view. Nice-to-have conditions carry declared weights but never disqualify. The AI fit-score/reason column uses a structured `run_if_json` contract whose existing-field dependencies prove person verification and company enrichment are present and every required filter passed; it never uses row position, row index, row number, or table order, its prompt references only populated upstream inputs, and its output is 0-100 plus concise reasons, citations, confidence, and fetched-at provenance.
 

@@ -2,7 +2,7 @@
 
 ## Request
 
-“Help me build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch.”
+“Help me build a multi-step LinkedIn sequence: connection request, waits, and DMs wired into a validated workflow graph. Use whenever the user wants to build a sequence, design the cadence, set up outreach steps, or define the follow-up flow. It constructs and validates the sequence; it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned graph and checks it before launch.”
 
 ## Correct response shape
 

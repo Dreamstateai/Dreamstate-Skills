@@ -15,7 +15,7 @@
   "requires_skills": [
     "setup"
   ],
-  "description": "Run a full LinkedIn outbound campaign end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, 'start a campaign', book demos, or generate pipeline. This is the orchestrator over the pipeline stages; it routes every real action through Dreamstate, which sends at scale within deliverability limits.",
+  "description": "Run a full LinkedIn outbound motion end to end through Dreamstate: source leads, build the lead table, enrich and score against an ICP, write personalized openers, build the sequence, and launch under safe per-account caps. Use whenever the user wants cold outreach, to prospect on LinkedIn, build a lead list, start an outreach motion, book demos, or generate pipeline.",
   "domain": "outreach",
   "execution_mode": "executable",
   "maturity": "stable",
@@ -31,8 +31,9 @@
     "outreach:write",
     "tables:read",
     "tables:write",
+    "workflows:read",
     "workflows:write"
   ],
-  "capability_hash": "01002d9587befbf3",
+  "capability_hash": "779304f4256ec197",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

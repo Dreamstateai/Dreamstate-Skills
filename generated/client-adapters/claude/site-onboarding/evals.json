@@ -1,0 +1,30 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["site-onboarding", "context"],
+      "id": "fresh-site-to-cited-brain-markdown",
+      "request": "Onboard https://example.com as our exact workspace site, crawl it, extract cited company facts and conflicts, and create reviewable Brain and Markdown proposals without publishing them.",
+      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_ensure", "products.website_scrape", "visibility.site_scan", "brain.context.search", "brain.context.get", "brain.context.propose_document", "brand.context_documents_generate"]
+    },
+    {
+      "expected_skill_ids": ["site-onboarding"],
+      "id": "site-revision-safe-refresh",
+      "request": "Refresh our existing site only if its exact revision is current, preserve redirects and source digests, and update cited website context without erasing contradictions.",
+      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_update", "products.website_refresh", "brand.context_website_update"]
+    },
+    {
+      "expected_skill_ids": ["site-onboarding"],
+      "id": "site-files-sitemap-robots",
+      "request": "Inspect this site's current files, sitemap, and robots evidence and distinguish missing, blocked, stale, and valid empty states.",
+      "required_capability_ids": ["visibility.site_files_get", "visibility.sitemap_get", "seo.robots_audit"]
+    },
+    {
+      "expected_skill_ids": ["site-onboarding"],
+      "id": "agent-readiness-llms-proposal",
+      "request": "Run an AI-agent readiness scan for the exact onboarded site and prepare a reviewable llms.txt proposal, then read back its durable state without claiming publication.",
+      "required_capability_ids": ["seo.agent_readiness_scan", "seo.llms_txt_generate", "seo.llms_txt_get"]
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "site-onboarding"
+}

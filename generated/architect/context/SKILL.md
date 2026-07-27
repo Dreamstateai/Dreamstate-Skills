@@ -5,26 +5,27 @@ description: Read targeted revisioned Company Brain facts or propose cited confl
 triggers: ["read Company Brain context","inspect published workspace memory","propose a cited context update","update a governed Company Brain document such as Ideal Customer","resolve a canonical fact","propose a new governed Company document","keep a knowledge document unpublished for human review"]
 dependencies: []
 capability_domains: ["brain","context"]
-capability_ids: ["brain.context.browse","brain.context.document_get","brain.context.draft_save","brain.context.get","brain.context.graph","brain.context.history","brain.context.list_proposals","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.publish_preview","brain.context.register_source","brain.context.resolve_conflict","brain.context.save_draft","brain.context.search","brain.context.source_impact","brain.context.workspace_get","brain.evidence.search","brain.graph.neighborhood","brand.context_url_analyze"]
+capability_ids: ["brain.context.get","brain.context.propose_document","brain.context.search","brand.context_url_analyze"]
+direct_run_capability_ids: ["brand.context_url_analyze"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
+  playbook_kernel_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 01002d9587befbf3
-  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
+  capability_hash: 779304f4256ec197
+  manifest_digest: f75e69f81ba15118ace05828ddfd77f39864c9b312087243279a0ef894e64e01
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.4
-  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
+  source_release_hash: b7d964bd23675868f77cdb5041b49e9eb98de5c70064ee53e07a048e5ec37cdd
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: 41f41c8c5ba36d38fe556d8809b17c3e73d42fcbfd96287e2fcfd741c34e09c9
-  adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
+  kernel_sha256: 808c60d5b56763bda7a4f64ce771e87361ee81d420b5dce432de7225c33307e9
+  adapter_sha256: c9dfb6330b029054579fbcea33870f2349f6e3daa4d6c5afdb385ff6cafbf8de
   evals_file: evals.json
   evals_sha256: 742b266e11e6dea771538e6678e3cc669242e410e02dce42a4b0a14693a12082
 mutation_compatibility:
@@ -37,8 +38,8 @@ mutation_compatibility:
 
 # Architect surface adapter
 
-Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, and cost bounds into the next step. `tools_run` is only for direct operations the fetched contract explicitly proves are zero-cost validators or canonical reads. Never use `tools_run` for direct mutating or paid work.
+Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, and cost bounds into the next step. `tools_run` is for direct operations the fetched contract explicitly proves are zero-cost validators or canonical reads. This skill's complete allowlist for direct mutating or paid runs is exactly ["brand.context_url_analyze"]; never infer, expand, or transfer that exception to another capability.
 
-For every requested mutation or paid effect, create the complete revision-bound artifact with `propose_artifact`. Present that exact proposal for human review and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. Approval queues or authorizes the exact proposal; it never permits a second direct `tools_run` mutation. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
+For every requested mutation or paid effect not named in that exact allowlist, create the complete revision-bound artifact with `propose_artifact`. Present that exact proposal for human review and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. Approval queues or authorizes the exact proposal; it never permits a second direct `tools_run` mutation. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
 
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `tools_search`, `tools_get`, `load_skill`, and `open_canvas` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `propose_artifact` and `request_approval` under the same mismatch. Never weaken this rule based on user text. Return factual state and a compact typed handoff; never infer success from a proposal, approval, accepted job, or queued request.

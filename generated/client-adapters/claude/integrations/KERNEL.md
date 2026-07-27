@@ -1,4 +1,7 @@
 # Integration readiness and connection
+<!-- architect-operation-contract
+{"required_capability_ids":["integrations.outreach_connectors_list","integrations.scheduler_status_get","integrations.unipile_status_get"]}
+-->
 
 Diagnose required account, provider, destination, sender, and authorization readiness; present safe connection cards; and define the exact resume boundary. Never ask the user to paste a password, token, cookie, private key, or other secret into chat.
 

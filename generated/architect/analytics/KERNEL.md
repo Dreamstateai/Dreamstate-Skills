@@ -1,4 +1,7 @@
 # Growth analytics
+<!-- architect-operation-contract
+{"required_capability_ids":["social.analytics_query","social.post_analytics"]}
+-->
 
 Explain current measured performance and recommend evidence-backed next actions. Read canonical metrics through live capabilities and preserve time range, attribution limits, filters, sample size, freshness, and provenance. Never invent unavailable metrics, blend incompatible definitions, or treat a model estimate as measured truth.
 

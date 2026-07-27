@@ -2,7 +2,7 @@
 
 ## Request
 
-“Help me diagnose and tune a running outreach campaign: read its analytics, find what's underperforming, and act, pause weak campaigns, fix sequence steps, re-status stuck threads. Use whenever the user asks 'why isn't my campaign working', 'improve my reply rate', 'my outreach is flat', wants to optimize, pause, or audit a live campaign. The lever for a launched campaign is rarely volume; it's the opener, the targeting, or the cadence. You read the data and decide; Dreamstate makes the change under its caps.”
+“Help me diagnose and tune a running outreach sequence: read its analytics, find what's underperforming, pause weak motions, fix workflow nodes, and re-status stuck threads. Use whenever the user asks why outreach is not working, wants to improve reply rate, optimize, pause, or audit a live sequence.”
 
 ## Correct response shape
 

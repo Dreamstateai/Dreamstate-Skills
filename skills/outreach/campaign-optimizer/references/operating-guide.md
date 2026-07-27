@@ -2,7 +2,7 @@
 
 ## Promise
 
-Diagnose and tune a running outreach campaign: read its analytics, find what's underperforming, and act, pause weak campaigns, fix sequence steps, re-status stuck threads. Use whenever the user asks 'why isn't my campaign working', 'improve my reply rate', 'my outreach is flat', wants to optimize, pause, or audit a live campaign. The lever for a launched campaign is rarely volume; it's the opener, the targeting, or the cadence. You read the data and decide; Dreamstate makes the change under its caps.
+Diagnose and tune a running outreach sequence: read its analytics, find what's underperforming, pause weak motions, fix workflow nodes, and re-status stuck threads. Use whenever the user asks why outreach is not working, wants to improve reply rate, optimize, pause, or audit a live sequence.
 
 ## Execution boundary
 
@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `outreach.analytics_step_aggregate_get`, `outreach.channel_stats_get`, `outreach.dm_conversation_status_update`, `outreach.global_pause_set`, `outreach.workspace_stats_get`, `rows.query`, `sequences.edit_step`, `sequences.get`, `sequences.list`, `sequences.step_options`
+Declared capabilities: `outreach.analytics_step_aggregate_get`, `outreach.channel_stats_get`, `outreach.dm_conversation_status_update`, `outreach.global_pause_set`, `outreach.workspace_stats_get`, `rows.query`, `sequences.definition_get`, `sequences.list`, `sequences.step_options`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 
-Required scopes: `outreach:read`, `outreach:write`, `tables:read`
+Required scopes: `outreach:read`, `outreach:write`, `tables:read`, `workflows:read`, `workflows:write`
 
 ## Evidence checklist
 

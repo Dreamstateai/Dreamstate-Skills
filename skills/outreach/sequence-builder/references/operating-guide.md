@@ -2,7 +2,7 @@
 
 ## Promise
 
-Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch.
+Build a multi-step LinkedIn sequence: connection request, waits, and DMs wired into a validated workflow graph. Use whenever the user wants to build a sequence, design the cadence, set up outreach steps, or define the follow-up flow. It constructs and validates the sequence; it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned graph and checks it before launch.
 
 ## Execution boundary
 
@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `outreach.triggers_supported_list`, `sequences.add_step`, `sequences.edit_step`, `sequences.get`, `sequences.list`, `sequences.remove_step`, `sequences.step_options`, `sequences.validate`, `workflows.create`
+Declared capabilities: `outreach.triggers_supported_list`, `sequences.definition_get`, `sequences.list`, `sequences.step_options`, `sequences.validate`, `workflows.create`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 
-Required scopes: `outreach:read`, `outreach:write`, `workflows:write`
+Required scopes: `outreach:read`, `workflows:read`, `workflows:write`
 
 ## Evidence checklist
 

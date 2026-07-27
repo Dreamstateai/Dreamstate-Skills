@@ -1,0 +1,66 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": ["records"],
+      "id": "inspect-person-all-attributes",
+      "request": "Find the exact person record for this buyer and show every available attribute, relationship, source, conflict, and revision without inventing missing values.",
+      "required_capability_ids": ["record_objects.list", "record_objects.attributes_list", "record_attributes.list", "records.people_list", "records.list", "records.search", "records.get", "records.references_resolve", "records.source_lookup", "record_relationships.list"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "inspect-company-deal-and-stage",
+      "request": "Open this company and its active deals, show the current canonical stage and linked people, and cite exact record identities.",
+      "required_capability_ids": ["records.companies_list", "records.get", "record_deals.board_get", "record_relationships.list"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "custom-object-schema-and-record",
+      "request": "Create a reviewable custom Partner object with typed attributes, inspect its layout and permissions, then create one exact record only after approval.",
+      "required_capability_ids": ["record_objects.list", "record_objects.create", "record_objects.update", "record_objects.attribute_create", "record_objects.attribute_update", "record_objects.layout_get", "record_objects.layout_update", "record_objects.permission_get", "record_objects.record_create"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "revision-safe-field-update",
+      "request": "Update this person's title only if the exact record and field revision are still current, preserving the prior value and source history.",
+      "required_capability_ids": ["records.get", "record_objects.attributes_list", "records.field_set", "records.value_retire"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "record-list-file-note",
+      "request": "Add these exact records to the selected list, attach the approved file and note to each, then verify durable membership and attachments.",
+      "required_capability_ids": ["records.lists_get", "records.list_add", "records.list_remove", "record_files.upload", "record_files.list", "records.note_add"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "record-import-with-mapping-errors",
+      "request": "Import this CRM file using an explicit field mapping, then report exact created records, rejected rows, and mapping errors without hiding partial results.",
+      "required_capability_ids": ["record_objects.list", "record_objects.attributes_list", "record_imports.create", "record_imports.get", "record_imports.errors_list"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "record-message-provider-receipt",
+      "request": "Show eligible message channels for this exact person and send the approved message from the selected sender only with a terminal provider receipt.",
+      "required_capability_ids": ["records.get", "records.message_channels_get", "records.message_send"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "record-notification-preference",
+      "request": "Show my current record notification preferences and propose disabling only deal-stage alerts while preserving every unrelated preference.",
+      "required_capability_ids": ["notifications.preferences_get", "notifications.preferences_update"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "create-standard-record-and-relationship",
+      "request": "Create the approved person and company with typed canonical attributes, then link them with the exact reviewed relationship and verify both records.",
+      "required_capability_ids": ["record_attributes.create", "records.create", "record_relationships.create", "records.get"]
+    },
+    {
+      "expected_skill_ids": ["records"],
+      "id": "deal-create-update-stage",
+      "request": "Create the approved deal for this company, update its exact value revision, and move it to the reviewed pipeline stage without skipping stage authority.",
+      "required_capability_ids": ["record_deals.board_get", "record_deals.create", "record_deals.update", "record_deals.stage_move"]
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "records"
+}

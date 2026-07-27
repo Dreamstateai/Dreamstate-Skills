@@ -6,7 +6,7 @@
     {
       "name": "routes-to-correct-skill",
       "input": {
-        "request": "Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch."
+        "request": "Build a multi-step LinkedIn sequence: connection request, waits, and DMs wired into a validated workflow graph. Use whenever the user wants to build a sequence, design the cadence, set up outreach steps, or define the follow-up flow. It constructs and validates the sequence; it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned graph and checks it before launch."
       },
       "expected": {
         "selected_skill": "sequence-builder"
@@ -16,7 +16,7 @@
     {
       "name": "respects-execution-mode",
       "input": {
-        "request": "Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch.",
+        "request": "Build a multi-step LinkedIn sequence: connection request, waits, and DMs wired into a validated workflow graph. Use whenever the user wants to build a sequence, design the cadence, set up outreach steps, or define the follow-up flow. It constructs and validates the sequence; it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned graph and checks it before launch.",
         "capability_available": true
       },
       "expected": {
@@ -28,7 +28,7 @@
     {
       "name": "uses-declared-contracts-only",
       "input": {
-        "request": "Build the multi-step LinkedIn sequence for a Dreamstate campaign: connection request, waits, and DMs wired into a validated graph. Use whenever the user wants to 'build a sequence', 'design the cadence', set up campaign steps, or define the follow-up flow. Stage 5 of the pipeline: it constructs and validates the sequence, it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned step graph and checks it before launch."
+        "request": "Build a multi-step LinkedIn sequence: connection request, waits, and DMs wired into a validated workflow graph. Use whenever the user wants to build a sequence, design the cadence, set up outreach steps, or define the follow-up flow. It constructs and validates the sequence; it does not enroll or send. You design the cadence; Dreamstate stores it as a versioned graph and checks it before launch."
       },
       "expected": {
         "allowed_tools": [
@@ -39,14 +39,15 @@
         ],
         "allowed_capability_ids": [
           "outreach.triggers_supported_list",
-          "sequences.add_step",
-          "sequences.edit_step",
-          "sequences.get",
+          "sequences.definition_get",
           "sequences.list",
-          "sequences.remove_step",
           "sequences.step_options",
           "sequences.validate",
-          "workflows.create"
+          "workflows.create",
+          "workflows.get",
+          "workflows.graph_apply",
+          "workflows.node_registry",
+          "workflows.validate_graph"
         ]
       },
       "check": "tool_trace_subset"

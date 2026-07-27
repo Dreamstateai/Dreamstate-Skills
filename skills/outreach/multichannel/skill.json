@@ -24,14 +24,17 @@
     "content.artifact_generate",
     "content.schedule",
     "outreach.workspace_stats_get",
-    "sequences.add_step",
     "sequences.enroll_selection",
     "social.accounts_list",
     "sources.find_leads",
     "tables.create",
     "workbooks.create",
     "workflows.activate",
-    "workflows.create"
+    "workflows.create",
+    "workflows.get",
+    "workflows.graph_apply",
+    "workflows.node_registry",
+    "workflows.validate_graph"
   ],
   "mcp_tools": [
     "dreamstate_tools_search",
@@ -47,10 +50,11 @@
     "outreach:read",
     "outreach:write",
     "tables:write",
+    "workflows:read",
     "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "01002d9587befbf3",
+  "verified_capability_hash": "779304f4256ec197",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/multichannel/SKILL.md",
   "install_command": "dreamstate skills install multichannel",

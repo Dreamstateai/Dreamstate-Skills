@@ -42,14 +42,17 @@
           "content.artifact_generate",
           "content.schedule",
           "outreach.workspace_stats_get",
-          "sequences.add_step",
           "sequences.enroll_selection",
           "social.accounts_list",
           "sources.find_leads",
           "tables.create",
           "workbooks.create",
           "workflows.activate",
-          "workflows.create"
+          "workflows.create",
+          "workflows.get",
+          "workflows.graph_apply",
+          "workflows.node_registry",
+          "workflows.validate_graph"
         ]
       },
       "check": "tool_trace_subset"

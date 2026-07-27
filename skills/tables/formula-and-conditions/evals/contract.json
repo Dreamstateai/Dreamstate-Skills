@@ -40,7 +40,6 @@
         "allowed_capability_ids": [
           "columns.add",
           "columns.run",
-          "columns.sample",
           "columns.update"
         ]
       },

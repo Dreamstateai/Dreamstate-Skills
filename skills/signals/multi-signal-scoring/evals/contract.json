@@ -44,7 +44,6 @@
           "columns.add",
           "columns.run",
           "columns.run_all",
-          "columns.sample",
           "runs.column_get"
         ]
       },

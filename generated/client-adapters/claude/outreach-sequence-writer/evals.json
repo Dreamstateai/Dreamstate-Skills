@@ -11,6 +11,14 @@
       "id": "skip-without-messaging",
       "must_not_load": ["outreach-sequence-writer"],
       "request": "The workflow only scores and routes leads; it sends no messages."
+    },
+    {
+      "expected_skill_ids": ["outreach-sequence-writer"],
+      "forbidden_question_concepts": ["preview_count"],
+      "id": "preview-count-never-asked",
+      "max_intake_checkpoints": 0,
+      "required_concepts": ["preview count is the coordinator's literal pilot integer", "preview exactly the approved sample rows"],
+      "request": "Preview the custom steps on the approved sample rows the coordinator already handed you. Do not ask me how many previews to generate."
     }
   ],
   "schema_version": 1,

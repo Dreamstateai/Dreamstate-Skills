@@ -11,7 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = 'f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0';
+const CANONICAL_MANIFEST_DIGEST = 'f75e69f81ba15118ace05828ddfd77f39864c9b312087243279a0ef894e64e01';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -144,7 +144,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   assert.deepEqual(clients.compatibility, pinned.compatibility);
 
   const ids = Object.keys(pinned.skills).sort();
-  assert.equal(ids.length, 14);
+  assert.equal(ids.length, 16);
   for (const id of ids) {
     const architectRoot = `generated/architect/${id}`;
     const architect = artifacts[`${architectRoot}/SKILL.md`];
@@ -162,9 +162,11 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       /denied_operations: \[tools_run, propose_artifact, request_approval\]/,
     );
     const expectedDirectRunIds = id === 'context' ? ['brand.context_url_analyze'] : [];
-    assert.match(
-      architect,
-      new RegExp(`^direct_run_capability_ids: ${JSON.stringify(expectedDirectRunIds)}$`, 'm'),
+    assert.ok(
+      architect.split('\n').includes(
+        `direct_run_capability_ids: ${JSON.stringify(expectedDirectRunIds)}`,
+      ),
+      `${id}: direct-run allowlist must be exact`,
     );
     assert.match(
       architect,
@@ -188,9 +190,11 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, new RegExp(`^  adapter_sha256: ${clients.skills[id].adapter_sha256[client]}$`, 'm'));
       assert.match(standalone, /mismatch_behavior: deny_run/);
       assert.match(standalone, /manifest_digest_match: exact_sha256/);
-      assert.match(
-        standalone,
-        new RegExp(`^direct_run_capability_ids: ${JSON.stringify(expectedDirectRunIds)}$`, 'm'),
+      assert.ok(
+        standalone.split('\n').includes(
+          `direct_run_capability_ids: ${JSON.stringify(expectedDirectRunIds)}`,
+        ),
+        `${client}/${id}: direct-run allowlist must be exact`,
       );
       assert.match(
         standalone,
@@ -208,7 +212,10 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, /`dreamstate_proposals_mutate`/);
       assert.match(standalone, /expected revision and state version/i);
       assert.match(standalone, /revise, approve, or reject/i);
-      assert.match(standalone, /Never use `dreamstate_tools_run` for direct mutating or paid work/);
+      assert.match(
+        standalone,
+        /For any requested mutation or paid effect not named in that exact allowlist/,
+      );
       assert.match(standalone, /returned `run_id`/);
       assert.match(standalone, /`dreamstate_get_run`/);
       assert.match(standalone, /^completion_contract: \{"version":1,"fields":\[/m);
@@ -264,7 +271,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
   const expected = {
     analytics: ['social.analytics_query', 'social.post_analytics'],
     blog: ['brain.context.get', 'brain.context.search', 'content.article_create_schedule', 'content.article_delivery_create', 'content.article_get', 'content.article_update', 'content.delivery_publish', 'content.submit_review'],
-    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search'],
+    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search', 'brand.context_url_analyze'],
     'growth-asset-planner': ['brain.context.get', 'brain.context.search', 'command_center.assets.create', 'command_center.assets.list'],
     integrations: ['integrations.outreach_connectors_list', 'integrations.scheduler_status_get', 'integrations.unipile_status_get'],
     outreach: [
@@ -280,10 +287,12 @@ test('Architect exact grants are derived only from machine-readable eval operati
     ],
     'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
     'outreach-workflow-builder': ['workflows.create', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
+    records: ['notifications.preferences_get', 'notifications.preferences_update', 'record_attributes.create', 'record_attributes.list', 'record_deals.board_get', 'record_deals.create', 'record_deals.stage_move', 'record_deals.update', 'record_files.list', 'record_files.upload', 'record_imports.create', 'record_imports.errors_list', 'record_imports.get', 'record_objects.attribute_create', 'record_objects.attribute_update', 'record_objects.attributes_list', 'record_objects.create', 'record_objects.layout_get', 'record_objects.layout_update', 'record_objects.list', 'record_objects.permission_get', 'record_objects.record_create', 'record_objects.update', 'record_relationships.create', 'record_relationships.list', 'records.companies_list', 'records.create', 'records.field_set', 'records.get', 'records.list', 'records.list_add', 'records.list_remove', 'records.lists_get', 'records.message_channels_get', 'records.message_send', 'records.note_add', 'records.people_list', 'records.references_resolve', 'records.search', 'records.source_lookup', 'records.value_retire'],
     seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
+    'site-onboarding': ['brain.context.get', 'brain.context.propose_document', 'brain.context.search', 'brand.context_documents_generate', 'brand.context_website_update', 'products.website_refresh', 'products.website_scrape', 'seo.agent_readiness_scan', 'seo.llms_txt_generate', 'seo.llms_txt_get', 'seo.robots_audit', 'visibility.site_files_get', 'visibility.site_scan', 'visibility.sitemap_get', 'visibility.workspace_site_ensure', 'visibility.workspace_site_get', 'visibility.workspace_site_update'],
     social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
     strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
-    tables: ['columns.sample', 'sources.cold_outbound_expand', 'sources.cold_outbound_preview', 'sources.linkedin_post_engagers_preview', 'tables.create'],
+    tables: ['columns.add', 'columns.archive', 'columns.list', 'columns.run', 'columns.run_all', 'columns.update', 'records.field_set', 'records.get', 'rows.delete', 'rows.get', 'rows.query', 'rows.restore', 'rows.upsert', 'selection_snapshots.create', 'selection_snapshots.get', 'sources.cold_outbound_expand', 'sources.cold_outbound_preview', 'sources.linkedin_post_engagers_preview', 'table_runs.cancel', 'table_runs.failure_report', 'table_runs.get', 'table_runs.list', 'table_runs.preview_cost', 'table_runs.reconcile_column', 'table_runs.resume', 'table_runs.retry', 'table_sources.attach', 'table_sources.detach', 'table_sources.list', 'table_sources.preview_sync', 'table_sources.reset_frontier', 'table_sources.restore_frontier', 'table_sources.run', 'table_sources.update', 'tables.archive', 'tables.create', 'tables.get', 'tables.list', 'tables.update', 'views.archive', 'views.create', 'views.get', 'views.list', 'views.update', 'workbooks.archive', 'workbooks.create', 'workbooks.duplicate', 'workbooks.get', 'workbooks.list', 'workbooks.overview', 'workbooks.update', 'workbooks.update_user_state', 'worksheets.archive', 'worksheets.create', 'worksheets.duplicate', 'worksheets.list', 'worksheets.reorder', 'worksheets.update'],
     visibility: ['visibility.citations', 'visibility.overview', 'visibility.prompt_metrics_list', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
     'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview', 'workflows.list'],
   };
@@ -308,7 +317,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
 test('every kernel compliance contract exactly covers its eval-declared operation authority', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  assert.equal(Object.keys(pinned.skills).length, 14);
+  assert.equal(Object.keys(pinned.skills).length, 16);
 
   const path = join(ROOT, 'architect-kernels', 'strategy', 'KERNEL.md');
   const original = readFileSync(path, 'utf8');
@@ -348,10 +357,12 @@ test('signed capability domains stay identical across source, Architect, Claude,
     outreach: ['brain', 'outreach'],
     'outreach-sequence-writer': ['outreach'],
     'outreach-workflow-builder': ['outreach'],
+    records: ['records'],
     seo: ['brain', 'content', 'tables', 'visibility'],
+    'site-onboarding': ['brain', 'content', 'visibility'],
     social: ['brain', 'content'],
     strategy: ['brain', 'context'],
-    tables: ['tables'],
+    tables: ['records', 'tables'],
     visibility: ['visibility'],
     'weekly-growth-plan': [],
   };
@@ -976,7 +987,12 @@ test('table evals require exact contracts and authoritative schema or paid-run r
     { id: 'durability_state', allowed_values: ['proposal_only', 'durable'] },
   ]);
   assert.equal(paidSample.fixture_profile, 'tables_bounded_paid_sample');
-  assert.deepEqual(paidSample.required_capability_ids, ['columns.sample']);
+  assert.deepEqual(paidSample.required_capability_ids, [
+    'table_runs.preview_cost',
+    'selection_snapshots.create',
+    'columns.run',
+    'table_runs.get',
+  ]);
   assert.deepEqual(paidSample.required_completion_fields, [
     { id: 'execution_bounds_state', allowed_values: ['representative_capped_credits'] },
     { id: 'cell_state', allowed_values: ['settled', 'partial', 'failed'] },
