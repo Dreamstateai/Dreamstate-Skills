@@ -1,11 +1,11 @@
 # Unified tables coordinator
 <!-- architect-operation-contract
-{"required_capability_ids":["columns.sample","tables.create"]}
+{"required_capability_ids":["columns.sample","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview","tables.create"]}
 -->
 
 ## Job boundary
 
-Own unified workbooks, tables, views, sources, columns, rows, selection snapshots, and table runs. Create or revise the smallest dependency-complete table dataflow that produces the requested durable outcome. Do not treat an outreach campaign table as the unified tables surface unless the live contract explicitly identifies it that way.
+Own unified workbooks, tables, views, sources, columns, rows, selection snapshots, and table runs. Create or revise the smallest dependency-complete table dataflow that produces the requested durable outcome. The canonical Workbook is the unified outreach data surface.
 
 ## Intake and current state
 
@@ -15,7 +15,7 @@ Resolve the workspace, workbook, table, view, row entity, stable identifiers, cu
 
 Search the live registry by desired table outcome and fetch every selected contract. Live schemas own supported providers, column types, costs, readiness, limits, and result shapes. Keep source, enrichment, formula, action, and workflow responsibilities explicit. Declare each node's inputs, outputs, dependencies, run conditions, provider, expected cost, and failure behavior before proposing a change.
 
-For outreach tables, preserve the table's current schema and lineage. Preserve compatible identity and evidence fields and search live contracts for signals, profile enrichments, functions, AI generation operations, and their outputs. Side-effecting actions remain workflow operations, never recomputable columns. A source evidence pilot has no durable destination. A later expansion binds the exact workbook, worksheet, saved view, and reviewed revision; never substitute a campaign-local audience identifier.
+For outreach tables, preserve the table's current schema and lineage. Preserve compatible identity and evidence fields and search live contracts for signals, profile enrichments, functions, AI generation operations, and their outputs. Side-effecting actions remain workflow operations, never recomputable columns. A source evidence pilot has no durable destination. A later expansion binds the exact workbook, worksheet, saved view, and reviewed revision; never substitute a workflow-local audience identifier.
 
 For an outreach qualification worksheet, order columns current-profile verification, person enrichment, company enrichment, required filters, then AI fit, and verify current title/company so stale or conflicting identity is `unsure` or disqualified. Required company size, location, include-keyword, exclude-keyword, and workspace exclusion-list conditions are deterministic. A null enrichment result is `unsure` and stays visible. A real required-condition failure sets fit to 0, disqualifies the row, and hides it from the qualified view. Nice-to-have conditions carry declared weights but never disqualify. The AI fit-score/reason column uses a structured `run_if_json` contract whose existing-field dependencies prove person verification and company enrichment are present and every required filter passed; it never uses row position, row index, row number, or table order, its prompt references only populated upstream inputs, and its output is 0-100 plus concise reasons, citations, confidence, and fetched-at provenance.
 

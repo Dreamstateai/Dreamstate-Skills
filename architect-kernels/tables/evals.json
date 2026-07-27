@@ -17,6 +17,23 @@
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [{"id":"execution_bounds_state","allowed_values":["representative_capped_credits"]},{"id":"cell_state","allowed_values":["settled","partial","failed"]},{"id":"approval_state","allowed_values":["required","approved"]},{"id":"run_state","allowed_values":["terminal"]}],
       "request": "Use the exact live columns.sample contract for the existing table selection. Run only the canonical representative sample with its explicit 10-row cap and 25-credit ceiling. The canonical runner must verify the current table revision, exact approved selection, and grant before execution. Follow the durable run to terminal settled-cell evidence, then report completed, failed, and blocked cells without retrying failures."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "fixture_profile": "outreach_source_pilot",
+      "id": "exact-seven-row-source-pilot",
+      "required_proposal_fields": {"row_limit": 7},
+      "required_capability_ids": ["sources.cold_outbound_preview", "sources.linkedin_post_engagers_preview"],
+      "required_concepts": ["literal row_limit: 7", "exactly seven distinct stable identities", "no padding", "no import", "no enrollment"],
+      "request": "Prepare the source-evidence pilot for a reviewable outreach Workbook. Select the exact cold-outbound or LinkedIn-engager preview contract from the requested source. The proposal must use literal row_limit: 7. Accept only a terminal receipt with exactly seven distinct stable identities and complete provider provenance. Keep any partial result partial: no padding, import, Workbook insertion, enrollment, activation, or send."
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "fixture_profile": "outreach_exact_result_set_expansion",
+      "id": "exact-result-set-expansion",
+      "required_capability_ids": ["sources.cold_outbound_expand"],
+      "required_concepts": ["approved Workbook revision", "post-approval demand plan", "stage_exact_result_set=true"],
+      "request": "Prepare a separately reviewed exact-result-set expansion after the Workbook and bounded sample are approved. Bind the source-evidence receipt, exact Workbook, worksheet, saved-view and workflow revisions, configured source, unchanged targeting, post-approval demand-plan cap, and stage_exact_result_set=true. Do not enroll, activate, or send."
     }
   ],
   "schema_version": 1,

@@ -2,10 +2,10 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.3",
-  "source_release_hash": "361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc",
+  "source_release_hash": "6103e04952f59cffb45b75e6c30be5396a19b6f5ef9c027878a63567d6767e2a",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc",
+    "playbook_kernel_hash": "6103e04952f59cffb45b75e6c30be5396a19b6f5ef9c027878a63567d6767e2a",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "01002d9587befbf3",
@@ -109,16 +109,13 @@
         "brain.learning.query_benchmarks",
         "outreach.demand_plan_get",
         "sequences.enroll_selection",
-        "sources.cold_outbound_expand",
-        "sources.cold_outbound_preview",
-        "sources.linkedin_post_engagers_preview",
+        "sequences.publish",
         "workflows.activate",
-        "workflows.create",
-        "workflows.get",
-        "workflows.graph_apply"
+        "workflows.draft_publish",
+        "workflows.get"
       ],
-      "kernel_sha256": "45c62a0a2f167ed77274e1119ca141b302b4762fde7194dd580b10ae74e93da4",
-      "evals_sha256": "c9d4bf68a1ef96b93ab3ecb6d8c5680c67571ba2f9a3532a8684cdc8c348183a",
+      "kernel_sha256": "61a1a746b90ca08e17de4184c416b2c7c7fdbb89a8e071055a46c743f182120d",
+      "evals_sha256": "5cf197f3a074bed2e63912f9976f1ef8f815787924a5cbc94fe5c69efd3477e7",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -137,7 +134,7 @@
         "sequences.step_options",
         "sequences.validate"
       ],
-      "kernel_sha256": "f750d15e753d8292a62cbea47878c2057fc7702413529bd542d3dffae4b49f36",
+      "kernel_sha256": "edcefc66f1ba7c6066ea2c83ddd977c82f9b405ff3849f95af38f00645212888",
       "evals_sha256": "f743122906bb76a5bd95e62630960aa0b15b0b4b2e5b3aac42ac5b6f9e5d6b03",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
@@ -156,8 +153,8 @@
         "workflows.node_registry",
         "workflows.validate_graph"
       ],
-      "kernel_sha256": "ff8ff0535cc74d1332412d9e29d43c84d58fe35bd3112112bd74ca1da7a6dab3",
-      "evals_sha256": "b9a91259c05be30780b42e41f79f930476bf6ab5d433fc23b6bc1748e83f4207",
+      "kernel_sha256": "c1531d5c3874cdea40863ea0a6d38c42133946f61e737158eccda43502d9b1a0",
+      "evals_sha256": "ba11f6e460efc9d4b57ca221080b06c6b1d79cbed60be682c5f47786e2522884",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -235,10 +232,13 @@
       ],
       "capability_ids": [
         "columns.sample",
+        "sources.cold_outbound_expand",
+        "sources.cold_outbound_preview",
+        "sources.linkedin_post_engagers_preview",
         "tables.create"
       ],
-      "kernel_sha256": "b155793f0095c5bee9acee17ba6078596c87c1a026e5fe03d45f3cfce7d6ce43",
-      "evals_sha256": "567c1ffff18e64349b2490bf5e167334594d4634e207e141977b29cd106c331e",
+      "kernel_sha256": "9066a9c9f75131182167ea4114c56b7713b7408438901769524944dc1d9759bf",
+      "evals_sha256": "9912398f2ea999c0b3c875b18c9003bf967db65070a4281d8fb882f690417aab",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",
@@ -275,7 +275,7 @@
         "visibility.overview",
         "workflows.list"
       ],
-      "kernel_sha256": "3854b74f38da0d20bb6026e0b7a770a475ad5c8543ba8cd4445be9a96148e94a",
+      "kernel_sha256": "51416e62fc46f2ee38525c4eab35e55fe4ad3fd6b138caa842da30c3100c83c3",
       "evals_sha256": "1a7ab87f6b25b1448c08ca5a2bfe26aa29b9320aac910712131ad059a54df0da",
       "adapter_sha256": {
         "architect": "ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d",

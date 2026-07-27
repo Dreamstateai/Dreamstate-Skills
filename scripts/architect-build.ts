@@ -19,7 +19,15 @@ const OUTREACH_POLICY_IDS = new Set([
   'outreach-sequence-writer',
   'outreach-workflow-builder',
 ]);
+const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
+  'outreach',
+  'tables',
+  'outreach-sequence-writer',
+  'outreach-workflow-builder',
+]);
 const OUTREACH_SHORTCUT_LANGUAGE = /\b(?:templates?|presets?|reusable|reuse)\b/i;
+const RETIRED_CAMPAIGN_CAPABILITY_OR_STATE = /campaigns\.|campaign_state/i;
+const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE = /\bcampaigns?\b/i;
 
 function hasOutreachShortcutLanguage(value: string): boolean {
   return OUTREACH_SHORTCUT_LANGUAGE.test(value);
@@ -274,6 +282,12 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
     }
     if (OUTREACH_POLICY_IDS.has(skill.id) && hasOutreachShortcutLanguage(`${kernel}\n${evals}`)) {
       throw new Error(`${skill.id}: Architect outreach source contains forbidden shortcut language`);
+    }
+    if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(kernel)) {
+      throw new Error(`${skill.id}: active outreach kernel contains retired campaign terminology`);
+    }
+    if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_CAMPAIGN_CAPABILITY_OR_STATE.test(evals)) {
+      throw new Error(`${skill.id}: active outreach eval contains a retired campaign capability or state`);
     }
     const namedCapabilityIds = new Set<string>();
     for (const testCase of evalDocument.cases) {

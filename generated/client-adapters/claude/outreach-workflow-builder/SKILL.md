@@ -4,10 +4,10 @@ name: outreach-workflow-builder
 description: "Build validated row workflows with triggers, typed branches, action handoffs, stop logic, eligibility, and explicit workflow-versus-expansion-versus-activation consequence boundaries."
 capability_domains: ["outreach"]
 capability_ids: ["sources.cold_outbound_expand","workflows.get","workflows.graph_apply","workflows.node_registry","workflows.validate_graph"]
-completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
+completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc
+  playbook_kernel_hash: 6103e04952f59cffb45b75e6c30be5396a19b6f5ef9c027878a63567d6767e2a
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 361c194274ebb13bae230ae9dc43a6aab97cfb8353b9cb68871f105b892308bc
+  source_release_hash: 6103e04952f59cffb45b75e6c30be5396a19b6f5ef9c027878a63567d6767e2a
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: ff8ff0535cc74d1332412d9e29d43c84d58fe35bd3112112bd74ca1da7a6dab3
+  kernel_sha256: c1531d5c3874cdea40863ea0a6d38c42133946f61e737158eccda43502d9b1a0
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
-  evals_sha256: b9a91259c05be30780b42e41f79f930476bf6ab5d433fc23b6bc1748e83f4207
+  evals_sha256: ba11f6e460efc9d4b57ca221080b06c6b1d79cbed60be682c5f47786e2522884
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -65,22 +65,22 @@ Require the tables handoff or an inspected existing worksheet and saved view wit
 3. Branch on explicit typed values, including the list's prioritization output. Preserve the comparison type, missing-value path, and reason for each branch.
 4. Search the live registry for each required condition, enrichment handoff, internal action, or external action. Fetch exact contracts and use their declared inputs, outputs, costs, readiness, retries, idempotency, and side effects.
 5. Wire every input to a concrete source output or prior node output. Validate that all paths terminate, unreachable nodes are absent, and retry paths cannot duplicate side effects.
-6. Define stop conditions for disqualification, missing consent, sender or integration failure, reply, bounce, unsubscribe, campaign pause, cost cap, and terminal completion only when supported by live contracts.
+6. Define stop conditions for disqualification, missing consent, sender or integration failure, reply, bounce, unsubscribe, workflow pause, cost cap, and terminal completion only when supported by live contracts.
 7. Separate eligibility from enrollment and enrollment from activation. A qualifying branch may make a row eligible; it does not itself authorize external outreach.
 
 Validate the graph through live zero-cost or dry-run capabilities before proposing persistence. Use only a separately approved bounded `table_column_run` for real-row test execution and preserve per-node evidence.
 
 Keep the lifecycle boundaries explicit in the handoff:
 
-1. Workflow persistence saves the reviewed graph only. A workflow proposal cannot run columns or enroll contacts. It also cannot expand a source, import contacts, or activate a campaign.
-2. After pilot and column-sample inspection, `outreach_bulk_expansion` is a separate proposal using the exact `sources.cold_outbound_expand` contract. Bind the source-evidence run, draft campaign, exact workbook, worksheet, and saved-view revisions, configured source id, unchanged targeting, integer eleven-through-fifty row cap, `stage_exact_result_set=true`, and required draft status. It imports and stages only that capped resolved set; the campaign remains inactive. Never represent a filter or future query as an enrolled audience.
+1. Workflow persistence saves the reviewed graph only. A workflow proposal cannot run columns or enroll contacts. It also cannot expand a source, import contacts, or activate a workflow.
+2. After pilot and column-sample inspection, `outreach_bulk_expansion` is a separate proposal using the exact `sources.cold_outbound_expand` contract. Bind the source-evidence run, draft workflow, exact workbook, worksheet, and saved-view revisions, configured source id, unchanged targeting, integer eleven-through-fifty row cap, and `stage_exact_result_set=true`. It imports and stages only that capped resolved set; the workflow remains inactive. Never represent a filter or future query as an enrolled audience.
 3. Activation remains a later coordinator-owned consequence with its own approval boundary.
 
 Revalidate graph revision, table outputs, exclusions, action readiness, sender/account state, and cost before the bulk-expansion proposal.
 
 Before a terminal exact-result-set handoff, call `tools_search` and then `tools_get` for `sources.cold_outbound_expand` in the active tool turn. A remembered or prose-only capability id is not contract evidence. If the exact live schema is unavailable, return that blocker and do not claim the expansion proposal is ready.
 
-When the source-evidence run and every immutable workbook, worksheet, saved-view, source, campaign, targeting revision, and row-cap binding are supplied, do not ask for them again. Use the fetched `sources.cold_outbound_expand` contract in a canonical `tools_run` dry run. The dry run may validate and return proposal evidence only: it must not import, enroll, activate, or send. Preserve its receipt as the source-evidence run, keep `durability_state=proposal_only`, `selection_state=exact`, `campaign_state=inactive`, `activation_state=inactive`, and `run_state=blocked` until a separately approved mutation is executed.
+When the source-evidence run and every immutable workbook, worksheet, saved-view, source, workflow, targeting revision, and row-cap binding are supplied, do not ask for them again. Use the fetched `sources.cold_outbound_expand` contract in a canonical `tools_run` dry run. The dry run may validate and return proposal evidence only: it must not import, enroll, activate, or send. Preserve its receipt as the source-evidence run; keep `durability_state=proposal_only`, `selection_state=exact`, `activation_state=inactive`, and `run_state=blocked` until a separately approved mutation is executed.
 
 In the typed completion handoff, `activation_state` reports only whether activation actually occurred. Use `inactive` whenever it did not; any blocked work belongs in `run_state`.
 

@@ -250,20 +250,17 @@ test('Architect exact grants are derived only from machine-readable eval operati
       'brain.learning.query_benchmarks',
       'outreach.demand_plan_get',
       'sequences.enroll_selection',
-      'sources.cold_outbound_expand',
-      'sources.cold_outbound_preview',
-      'sources.linkedin_post_engagers_preview',
+      'sequences.publish',
       'workflows.activate',
-      'workflows.create',
+      'workflows.draft_publish',
       'workflows.get',
-      'workflows.graph_apply',
     ],
     'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
     'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
     seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
     social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
     strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
-    tables: ['columns.sample', 'tables.create'],
+    tables: ['columns.sample', 'sources.cold_outbound_expand', 'sources.cold_outbound_preview', 'sources.linkedin_post_engagers_preview', 'tables.create'],
     visibility: ['visibility.citations', 'visibility.overview', 'visibility.prompt_metrics_list', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
     'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview', 'workflows.list'],
   };
@@ -409,7 +406,7 @@ test('audience planning kernels require privacy-safe pooled benchmark evidence',
   }
   const seoKernel = artifacts['generated/architect/seo/KERNEL.md'];
   assert.match(seoKernel, /Every benchmark handoff, including a blocked or unavailable one/);
-  assert.match(artifacts['generated/architect/outreach/KERNEL.md'], /Do not terminate after discovery or contract inspection/);
+  assert.match(artifacts['generated/architect/outreach/KERNEL.md'], /do not terminate after discovery or contract inspection/i);
   assert.match(seoKernel, /exact capability id `brain\.learning\.query_benchmarks`/);
   assert.match(seoKernel, /privacy boundary: never raw cross-workspace rows/);
 });
@@ -499,6 +496,125 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
   assert.doesNotMatch(artifacts['generated/site/skills-catalog.json'], /outreach_apply_template|intent:outreach\.apply_template|outreach\.apply_template/);
 });
 
+test('active Architect outreach sources are campaign-free and reject retired campaign contracts', () => {
+  const artifacts = build();
+  const campaignLanguage = /\bcampaigns?\b|campaign_state/i;
+  for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
+    assert.doesNotMatch(
+      artifacts[`generated/architect/${id}/KERNEL.md`],
+      campaignLanguage,
+      `${id}: active model-visible kernel language must use workbook, workflow, and sequence identities`,
+    );
+  }
+
+  for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
+    const evals = JSON.parse(artifacts[`generated/architect/${id}/evals.json`]);
+    assert.doesNotMatch(JSON.stringify(evals), /campaigns\.|campaign_state/i, `${id}: retired eval authority`);
+  }
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  for (const id of Object.keys(pinned.skills)) {
+    assert.equal(
+      pinned.skills[id].capability_ids.some((capabilityId: string) => capabilityId.startsWith('campaigns.')),
+      false,
+      `${id}: retired campaign grant`,
+    );
+  }
+
+  const path = join(ROOT, 'architect-kernels', 'outreach-sequence-writer', 'KERNEL.md');
+  const original = readFileSync(path, 'utf8');
+  try {
+    writeFileSync(path, `${original}\nRetired campaign wording.\n`);
+    assert.throws(
+      () => buildArchitectArtifacts(catalog),
+      /outreach-sequence-writer.*campaign terminology/i,
+    );
+  } finally {
+    writeFileSync(path, original);
+  }
+});
+
+test('outreach is Brain-first and Workbook-first before demand, workflow, or sequence planning', () => {
+  const artifacts = build();
+  const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
+  const evals = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  const scratch = evals.cases.find((item: { id: string }) => item.id === 'new-workflow-from-scratch');
+  assert.ok(scratch);
+  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification']);
+  assert.ok(scratch.forbidden_question_concepts.includes('sender'));
+  assert.ok(scratch.forbidden_question_concepts.includes('channel'));
+  assert.match(
+    kernel,
+    /exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`/,
+  );
+  assert.match(kernel, /derive.*Company Brain.*before.*intake/is);
+  assert.match(kernel, /sender.*channel.*launch/is);
+  assert.match(kernel, /`messaging_branch_state`.*inspection-only/is);
+
+  const full = evals.cases.find((item: { id: string }) => item.id === 'competitor-engagers-canonical-full-journey');
+  assert.ok(full);
+  const sequence = full.required_tool_sequence as Array<{
+    tool: string;
+    skill_id?: string;
+    capability_id?: string;
+    artifact_type?: string;
+    phase?: string;
+  }>;
+  const workbookApproval = sequence.findIndex((step) => (
+    step.tool === 'request_approval' && step.artifact_type === 'outreach_workbook'
+  ));
+  assert.ok(workbookApproval > 0);
+  const premature = sequence.slice(0, workbookApproval + 1).filter((step) => (
+    step.capability_id === 'outreach.demand_plan_get'
+    || step.skill_id === 'outreach-workflow-builder'
+    || step.skill_id === 'outreach-sequence-writer'
+    || step.capability_id?.startsWith('workflows.')
+    || step.capability_id?.startsWith('sequences.')
+  ));
+  assert.deepEqual(premature, []);
+  assert.ok(
+    sequence.findIndex((step) => step.capability_id === 'outreach.demand_plan_get') > workbookApproval,
+    'demand planning must constrain expansion and launch, not delay the initial Workbook',
+  );
+});
+
+test('outreach launch closure and pilot invariants use the canonical workflow and sequence surface', () => {
+  const artifacts = build();
+  const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
+  const evals = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
+  assert.match(kernel, /`row_limit: 7`/);
+  assert.match(kernel, /exactly seven distinct stable identities/i);
+  assert.match(kernel, /no padding/i);
+  assert.match(kernel, /never imports.*enrolls/is);
+
+  const launch = evals.cases.find((item: { id: string }) => item.id === 'explicit-final-launch-revalidation');
+  assert.ok(launch);
+  for (const capabilityId of [
+    'workflows.draft_publish',
+    'workflows.activate',
+    'sequences.enroll_selection',
+  ]) {
+    assert.ok(launch.required_capability_ids.includes(capabilityId), `${capabilityId}: launch closure`);
+  }
+  assert.equal(
+    launch.required_capability_ids.includes('sequences.publish'),
+    launch.sequence_publish_required === true,
+    'sequence publishing is granted only when the reviewed sequence still requires publication',
+  );
+  assert.equal(
+    launch.mutating_capability_budget,
+    launch.required_capability_ids.filter((id: string) => (
+      catalog.capabilities.find((capability: { id: string }) => capability.id === id)?.mutates === true
+    )).length,
+  );
+
+  const coordinatorGrant = JSON.parse(
+    artifacts['generated/architect/PINNED_RELEASE.json'],
+  ).skills.outreach.capability_ids;
+  for (const specialistCapability of ['workflows.create', 'workflows.graph_apply', 'sequences.bind']) {
+    assert.equal(coordinatorGrant.includes(specialistCapability), false, `${specialistCapability}: specialist-owned`);
+  }
+});
+
 test('growth asset planning may describe a buyer template library but stays explicitly unsaved without a capability', () => {
   const artifacts = build();
   assert.match(
@@ -518,6 +634,7 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
 
   for (const changeKind of [
     'outreach_source',
+    'outreach_workbook',
     'outreach_bundle',
     'table_column_run',
     'outreach_bulk_expansion',
@@ -526,9 +643,10 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.match(coordinator, new RegExp(`\\b${changeKind}\\b`));
   }
   assert.match(coordinator, /Approval of one stage never authorizes a later stage/);
-  assert.match(coordinator, /Launch Campaign/);
+  assert.match(coordinator, /launch closure/i);
   const orderedKinds = [
     'outreach_source',
+    'outreach_workbook',
     'outreach_bundle',
     'table_column_run',
     'outreach_bulk_expansion',
@@ -540,22 +658,21 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
     assert.ok(offset > prior, `${kind} must follow the prior staged gate`);
     prior = offset;
   }
-  assert.match(coordinator, /sources\.cold_outbound_preview/);
+  assert.match(tables, /source evidence pilot/i);
   assert.match(coordinator, /outreach\.demand_plan_get/);
-  assert.match(coordinator, /pilot_row_limit.*exactly 7/i);
+  assert.match(coordinator, /literal `row_limit: 7`/i);
   assert.match(coordinator, /default.*demand_based/i);
   assert.doesNotMatch(coordinator, /three distinct questions whose ids or prompts literally include/i);
-  assert.match(coordinator, /no worksheet, campaign, source, import, enrollment, or other durable destination/i);
-  assert.match(coordinator, /sources\.cold_outbound_expand/);
+  assert.match(coordinator, /no durable destination/i);
+  assert.match(tables, /sources\.cold_outbound_expand/);
   assert.match(coordinator, /stage_exact_result_set=true/);
-  assert.match(coordinator, /require_campaign_status=draft/);
   assert.match(tables, /smallest representative selection/i);
-  assert.match(coordinator, /adding columns never means they ran/i);
+  assert.match(coordinator, /never reshapes the Workbook, runs columns/i);
   assert.match(workflow, /source-evidence run/);
   assert.match(workflow, /exact workbook, worksheet, and saved-view revisions/);
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
-  assert.match(coordinator, /single activation-and-send authorization/i);
-  assert.match(coordinator, /no second gate remains/i);
+  assert.match(coordinator, /single reviewed launch closure/i);
+  assert.match(coordinator, /workflows\.draft_publish/);
 });
 
 test('outreach release uses exact capability evidence and signed lifecycle states', () => {
@@ -567,20 +684,15 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
   const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'exact-result-set-expansion-is-separate');
 
-  assert.deepEqual(staged.required_capability_ids, [
-    'outreach.demand_plan_get',
-    'sources.cold_outbound_preview',
-    'sources.cold_outbound_expand',
-  ]);
+  assert.equal(staged.required_capability_ids, undefined);
   assert.deepEqual(staged.required_completion_fields, [
     { id: 'stage_boundary_state', allowed_values: ['ordered_separate'] },
-    { id: 'campaign_state', allowed_values: ['inactive'] },
     { id: 'activation_state', allowed_values: ['inactive'] },
     { id: 'external_send_state', allowed_values: ['not_authorized'] },
     { id: 'approval_state', allowed_values: ['required'] },
     { id: 'run_state', allowed_values: ['not_applicable'] },
   ]);
-  assert.match(staged.request, /creates no run.*run_state not_applicable.*do not fabricate a blocked run/i);
+  assert.match(staged.request, /do not fetch or plan demand.*before Workbook approval.*run_state not_applicable/is);
   assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'external_send_state' && field.allowed_values.includes('not_authorized')
   )));
@@ -590,7 +702,8 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'run_state' && field.allowed_values.includes('blocked')
   )));
-  assert.deepEqual(conditional.must_use_popup_when_missing, ['messaging branch']);
+  assert.equal(conditional.must_use_popup_when_missing, undefined);
+  assert.deepEqual(conditional.forbidden_question_concepts, ['messaging_branch_state']);
   assert.deepEqual(exactSet.required_capability_ids, ['sources.cold_outbound_expand']);
   assert.equal(exactSet.fixture_profile, 'outreach_exact_result_set_expansion');
   assert.ok(exactSet.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
@@ -598,25 +711,25 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   )));
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /include the finite `messaging_branch_state` choice \(`present` or `absent`\) in the same one complete intake/,
+    /`messaging_branch_state` is inspection-only/,
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /maximum intake-checkpoint count is one.*never open a second intake.*ask a later follow-up question/s,
+    /opening intake concept set is exactly.*`qualification`/s,
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /Volume is application-calculated.*Default structured intent to `\{mode:"demand_based"\}`/s,
+    /Volume is application-calculated.*default structured intent to `\{mode:"demand_based"\}`/s,
   );
-  const scratch = outreach.cases.find((item: { id: string }) => item.id === 'new-campaign-from-scratch');
-  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification', 'sender']);
+  const scratch = outreach.cases.find((item: { id: string }) => item.id === 'new-workflow-from-scratch');
+  assert.deepEqual(scratch.must_use_popup_when_missing, ['qualification']);
   assert.equal(scratch.max_intake_checkpoints, 1);
-  assert.deepEqual(scratch.forbidden_question_concepts, ['outreach_volume']);
-  assert.equal(conditional.max_intake_checkpoints, 1);
-  assert.ok(scratch.required_capability_ids.includes('outreach.demand_plan_get'));
+  assert.deepEqual(scratch.forbidden_question_concepts, ['outreach_volume', 'sender', 'channel']);
+  assert.equal(conditional.max_intake_checkpoints, undefined);
+  assert.equal(scratch.required_capability_ids.includes('outreach.demand_plan_get'), false);
   const outreachSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'outreach');
   const integrationsSkill = architectSource.skills.find((skill: { id: string }) => skill.id === 'integrations');
-  assert.ok(outreachSkill.triggers.includes('design an outreach campaign for a named cohort using pooled benchmarks'));
+  assert.ok(outreachSkill.triggers.includes('design outreach for a named cohort using pooled benchmarks'));
   assert.match(integrationsSkill.description, /Provider content research, metrics, and search-window coverage remain with their domain skills/);
 });
 
@@ -634,7 +747,9 @@ test('competitor engager release eval is production-real and preserves dependenc
   assert.deepEqual(full.expected_skill_ids, ['outreach']);
   assert.ok(full.forbidden_test_substitutions.includes('mock run receipt'));
   assert.equal(full.max_intake_checkpoints, 1);
-  assert.deepEqual(full.forbidden_question_concepts, ['outreach_volume']);
+  assert.deepEqual(full.forbidden_question_concepts, [
+    'outreach_volume', 'sender', 'channel', 'messaging_branch_state',
+  ]);
   assert.deepEqual(full.required_terminal_receipts, [
     'source_pilot',
     'bundle_graph_apply',
@@ -668,6 +783,14 @@ test('competitor engager release eval is production-real and preserves dependenc
   const bundleIndex = sequenceIndex((step) => (
     step.tool === 'propose_artifact' && step.artifact_type === 'outreach_bundle'
   ));
+  const workbookApprovalIndex = sequenceIndex((step) => (
+    step.tool === 'request_approval' && step.artifact_type === 'outreach_workbook'
+  ));
+  const demandIndex = sequenceIndex((step) => (
+    step.tool === 'tools_run'
+    && step.capability_id === 'outreach.demand_plan_get'
+    && step.phase === 'post_workbook_expansion_constraints'
+  ));
   const sampleIndex = sequenceIndex((step) => (
     step.tool === 'propose_artifact' && step.artifact_type === 'table_column_run'
   ));
@@ -691,13 +814,15 @@ test('competitor engager release eval is production-real and preserves dependenc
   ));
   assert.ok(intakeIndex > 0);
   assert.ok(pilotProposalIndex > intakeIndex);
-  assert.ok(bundleIndex > pilotProposalIndex);
+  assert.ok(workbookApprovalIndex > pilotProposalIndex);
+  assert.ok(demandIndex > workbookApprovalIndex);
+  assert.ok(bundleIndex > demandIndex);
   assert.ok(sampleIndex > bundleIndex);
   assert.ok(expansionIndex > sampleIndex);
   assert.ok(revalidationIndex > expansionIndex);
   assert.ok(activationIndex > revalidationIndex);
   assert.ok(terminalIndex > activationIndex);
-  assert.match(full.request, /existing workbook.*7-row pilot.*terminal receipts/i);
+  assert.match(full.request, /existing Workbook.*row_limit: 7 pilot.*terminal receipts/i);
   assert.ok(failures.has('competitor-engagers-missing-enrichment-blocks-ai'));
   assert.ok(failures.has('competitor-engagers-required-failures-disqualify'));
   assert.ok(failures.has('competitor-engagers-capacity-change-blocks-launch'));
@@ -723,8 +848,8 @@ test('competitor engager release eval is production-real and preserves dependenc
   ]);
   assert.equal(lowPrecision.required_tool_sequence.at(-1).phase, 'audit_stops_before_expansion');
   const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
-  assert.match(kernel, /exactly seven successful distinct rows/);
-  assert.match(kernel, /partial receipt remains partial and is never filled with synthetic rows/);
+  assert.match(kernel, /exactly seven distinct stable identities/);
+  assert.match(kernel, /partial result stays partial/);
   assert.match(kernel, /complete raw provider payload/);
   // The coordinator delegates qualification and messaging rules; asserting them at their
   // owning kernels is what keeps a rule from being silently duplicated or dropped.
@@ -735,7 +860,7 @@ test('competitor engager release eval is production-real and preserves dependenc
     artifacts['generated/architect/outreach-sequence-writer/KERNEL.md'],
     /fixed greeting, pitch paragraphs, CTA, sign-off/,
   );
-  assert.match(kernel, /wait for terminal activation, enrollment, and provider receipts/);
+  assert.match(kernel, /wait for terminal workflow, enrollment, and provider receipts/);
 });
 
 test('table evals require exact contracts and authoritative schema or paid-run receipts', () => {
