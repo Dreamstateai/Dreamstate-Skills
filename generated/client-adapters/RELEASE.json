@@ -2,10 +2,10 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.3",
-  "source_release_hash": "d79499f42c8fd6928357fe975180b0bfae3d3a97c71f89554c80223b16d1f160",
+  "source_release_hash": "a93e020d70c2da5e3ab05b7c9edbd35d7e88c7e5293e2fcaee9d7955fa870a95",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "d79499f42c8fd6928357fe975180b0bfae3d3a97c71f89554c80223b16d1f160",
+    "playbook_kernel_hash": "a93e020d70c2da5e3ab05b7c9edbd35d7e88c7e5293e2fcaee9d7955fa870a95",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "01002d9587befbf3",
@@ -157,8 +157,8 @@
         "workflows.node_registry",
         "workflows.validate_graph"
       ],
-      "kernel_sha256": "ff8ff0535cc74d1332412d9e29d43c84d58fe35bd3112112bd74ca1da7a6dab3",
-      "evals_sha256": "b9a91259c05be30780b42e41f79f930476bf6ab5d433fc23b6bc1748e83f4207",
+      "kernel_sha256": "62c003cd21c94bbcd54bf45f68c030193651b1d867752e80254ff1b67a3ee5de",
+      "evals_sha256": "23fe0e62a2fe46b8c8b1860e76ecdac5197b75d0f0cbcc05f0649f4ba30a2284",
       "adapter_sha256": {
         "architect": "fff181fcc4c16a1050a9ebce768287d7eab35c4157feff448beab729d10a1fe9",
         "claude": "9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d",

@@ -15,6 +15,15 @@
     },
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
+      "forbidden_question_concepts": ["messaging branch"],
+      "id": "conditional-messaging-resolved-by-inspection",
+      "max_intake_checkpoints": 0,
+      "must_not_load": ["outreach-sequence-writer"],
+      "request": "Add messaging to this workflow only if its graph already has a messaging branch. The graph I gave you has scoring and routing nodes and no messaging node, so resolve the branch state from it instead of asking me.",
+      "required_capability_ids": ["workflows.get"]
+    },
+    {
+      "expected_skill_ids": ["outreach-workflow-builder"],
       "id": "exact-result-set-expansion-is-separate",
       "fixture_profile": "outreach_exact_result_set_expansion",
       "required_capability_ids": ["sources.cold_outbound_expand"],
