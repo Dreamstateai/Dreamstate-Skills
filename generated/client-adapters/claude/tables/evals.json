@@ -11,6 +11,18 @@
     },
     {
       "expected_skill_ids": ["tables"],
+      "id": "record-field-read-returns-real-values",
+      "request": "Open record rec-1 and tell me every field it currently holds, with the actual saved values. Do not describe what the record probably contains and do not ask me to paste it.",
+      "required_capability_ids": ["records.get"]
+    },
+    {
+      "expected_skill_ids": ["tables"],
+      "id": "record-field-write-binds-to-the-read-revision",
+      "request": "Change the owner field on record rec-1 to Dana. Read the record first, show me the old value, and bind the proposed change to the revision that read returned.",
+      "required_capability_ids": ["records.get", "records.field_set"]
+    },
+    {
+      "expected_skill_ids": ["tables"],
       "fixture_profile": "tables_bounded_paid_sample",
       "id": "bounded-paid-run",
       "required_capability_ids": ["columns.sample"],

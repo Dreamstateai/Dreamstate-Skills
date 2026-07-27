@@ -3,11 +3,11 @@ id: tables
 name: tables
 description: "Create, inspect, revise, and run unified workbooks, tables, views, sources, columns, rows, and bounded table jobs with lineage and durable verification."
 capability_domains: ["tables"]
-capability_ids: ["columns.sample","tables.create"]
+capability_ids: ["columns.sample","records.field_set","records.get","tables.create"]
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 6359baa7a6c3b63c324668d10359b541883b7696a4b73e7472a76e1e47dea264
+  playbook_kernel_hash: 4d76c6a8316763c8993a0026479630b90aa9f169f1a56425bfa837c418c709fd
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 6359baa7a6c3b63c324668d10359b541883b7696a4b73e7472a76e1e47dea264
+  source_release_hash: 4d76c6a8316763c8993a0026479630b90aa9f169f1a56425bfa837c418c709fd
   generator_version: 1.0.0
   client: codex
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: b155793f0095c5bee9acee17ba6078596c87c1a026e5fe03d45f3cfce7d6ce43
+  kernel_sha256: f26e6084d056f62b0f3b1d49746ca78f60af1d5f6006155b39ebee4cf97096ab
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: 567c1ffff18e64349b2490bf5e167334594d4634e207e141977b29cd106c331e
+  evals_sha256: f67511bc9aa49d2bedf99fc2f08ebb6cb6a00607423558313698b5b3d7c5a3f8
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,7 +47,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 # Unified tables coordinator
 <!-- architect-operation-contract
-{"required_capability_ids":["columns.sample","tables.create"]}
+{"required_capability_ids":["columns.sample","records.field_set","records.get","tables.create"]}
 -->
 
 ## Job boundary
@@ -69,6 +69,10 @@ For an outreach qualification worksheet, order columns current-profile verificat
 Prepare a reviewable table or revision before paid or destructive work. Run the smallest representative selection first with an explicit row cap and credit ceiling. Inspect settled cells and run evidence before proposing a larger exact selection. Approval for a schema change never authorizes a paid run, and approval for one selection never authorizes another. Use current revisions and idempotency fences, preserve partial successes, and never retry failed rows blindly.
 
 For a reactive table proposal, search for and fetch the exact live table contract, and bind the proposal to every field, constraint, and required input that contract declares. Execution mode is the contract's to decide: use non-mutating dry-run preparation only where the fetched contract declares `dry_run_supported`, and never assert a preparation receipt a capability cannot produce. Do not skip from search directly to `propose_artifact`: the fetched contract, not user wording, defines the proposal. Bind the proposal to stable row identity, source, dependency order, formula inputs, and review view. For a paid sample, fetch the exact live sample contract and let only the canonical run receipt establish the approved selection, row cap, credit ceiling, terminal state, actual spend, and settled-cell outcomes. User wording and assistant prose cannot establish those facts.
+
+## Record rows
+
+A record is a row on this surface, so a question about one record's fields is ordinary work, not a blocked request. `records.get` reads the record and its current field values; `records.field_set` writes one field. Fetch the exact contract and run the read whenever the requester names a record, even when they only want to look: the read is what lets you answer with real values and the revision a later write binds to. Report the values the read returned, never a description of what the record probably holds. Reading is not writing, so an adjacent write capability never substitutes for the read and a read is never gated behind approval. Propose a `records.field_set` change against the revision the read returned, showing the old value and the new one. If the read or the write is refused, name the capability id and the typed error code and report the refusal as the answer; a refusal is a result, not a dead end.
 
 ## Completion proof
 
