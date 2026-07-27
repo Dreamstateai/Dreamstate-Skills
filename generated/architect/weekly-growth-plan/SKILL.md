@@ -10,7 +10,7 @@ max_context_tokens: 3500
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 95f7c880002e92c15eedc7c5381526ed619b3cf67c7cc55ccf2bd6ea184921e4
+  playbook_kernel_hash: 6423388055635c1165478e3f53927285905c07ff804de5e68f1d25f3d78e5a64
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 01002d9587befbf3
@@ -19,7 +19,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.3
-  source_release_hash: 95f7c880002e92c15eedc7c5381526ed619b3cf67c7cc55ccf2bd6ea184921e4
+  source_release_hash: 6423388055635c1165478e3f53927285905c07ff804de5e68f1d25f3d78e5a64
   generator_version: 1.0.0
   kernel_id: weekly-growth-plan
   kernel_file: KERNEL.md

@@ -27,7 +27,7 @@ const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
 ]);
 const OUTREACH_SHORTCUT_LANGUAGE = /\b(?:templates?|presets?|reusable|reuse)\b/i;
 const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE =
-  /campaigns\.|campaign_state|campaign_id|outreach_campaigns|\blaunch campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
+  /campaigns\.|campaign_state|campaign_id|outreach_campaigns|campaignId|outreachCampaignId|\blaunch campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
 
 function hasOutreachShortcutLanguage(value: string): boolean {
   return OUTREACH_SHORTCUT_LANGUAGE.test(value);

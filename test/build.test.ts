@@ -231,7 +231,7 @@ test('Architect generation rejects signed capability IDs absent from the pinned 
   };
   assert.throws(
     () => buildArchitectArtifacts(withoutRequiredCapability),
-    /(?:outreach|outreach-workflow-builder).*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
+    /tables.*capability id sources\.cold_outbound_expand.*pinned capability manifest/i,
   );
 });
 
@@ -256,7 +256,7 @@ test('Architect exact grants are derived only from machine-readable eval operati
       'workflows.get',
     ],
     'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
-    'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.create', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
+    'outreach-workflow-builder': ['workflows.create', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
     seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
     social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
     strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
@@ -357,7 +357,6 @@ test('signed capability domains stay identical across source, Architect, Claude,
     }
   }
   const exactCapabilityIds = [
-    'sources.cold_outbound_expand',
     'workflows.create',
     'workflows.get',
     'workflows.graph_apply',
@@ -499,7 +498,7 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
 
 test('active Architect outreach sources are campaign-free and reject retired campaign contracts', () => {
   const artifacts = build();
-  const retiredEvalLanguage = /campaigns\.|campaign_state|campaign_id|outreach_campaigns|\bLaunch Campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
+  const retiredEvalLanguage = /campaigns\.|campaign_state|campaign_id|outreach_campaigns|campaignId|outreachCampaignId|\bLaunch Campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
   for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
     assert.doesNotMatch(
       artifacts[`generated/architect/${id}/KERNEL.md`],
@@ -523,7 +522,7 @@ test('active Architect outreach sources are campaign-free and reject retired cam
 
   const path = join(ROOT, 'architect-kernels', 'outreach-sequence-writer', 'KERNEL.md');
   const original = readFileSync(path, 'utf8');
-  for (const retiredIdentity of ['campaign_id', 'outreach_campaigns']) {
+  for (const retiredIdentity of ['campaign_id', 'outreach_campaigns', 'campaignId', 'outreachCampaignId']) {
     try {
       writeFileSync(path, `${original}\nRetired identity: ${retiredIdentity}.\n`);
       assert.throws(
@@ -583,6 +582,25 @@ test('outreach specialists own every mutating authoring capability while the coo
   }
   assert.ok(pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.create'));
   assert.ok(pinned.skills['outreach-sequence-writer'].capability_ids.includes('sequences.bind'));
+});
+
+test('tables is the exactly one specialist owner of source preview and expansion', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
+  for (const capabilityId of [
+    'sources.cold_outbound_preview',
+    'sources.linkedin_post_engagers_preview',
+    'sources.cold_outbound_expand',
+  ]) {
+    const owners = ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']
+      .filter((skillId) => pinned.skills[skillId].capability_ids.includes(capabilityId));
+    assert.deepEqual(owners, ['tables'], `${capabilityId}: exactly one specialist owner`);
+  }
+  const workflowKernel = artifacts['generated/architect/outreach-workflow-builder/KERNEL.md'];
+  const workflowEvals = artifacts['generated/architect/outreach-workflow-builder/evals.json'];
+  assert.doesNotMatch(workflowKernel, /sources\.cold_outbound_expand|`tools_run`/);
+  assert.doesNotMatch(workflowEvals, /sources\.cold_outbound_expand/);
+  assert.match(workflowKernel, /typed reviewed `tables` handoff/i);
 });
 
 test('outreach is Brain-first and Workbook-first before demand, workflow, or sequence planning', () => {
@@ -720,8 +738,8 @@ test('outreach kernels keep evidence pilot, build, sample, bulk expansion, and l
   assert.match(coordinator, /stage_exact_result_set=true/);
   assert.match(tables, /smallest representative selection/i);
   assert.match(coordinator, /never reshapes the Workbook, runs columns/i);
-  assert.match(workflow, /source-evidence run/);
-  assert.match(workflow, /exact workbook, worksheet, and saved-view revisions/);
+  assert.match(workflow, /typed reviewed `tables` handoff/);
+  assert.match(workflow, /exact workbook\/worksheet\/view revisions/);
   assert.match(workflow, /workflow proposal cannot run columns or enroll contacts/i);
   assert.match(coordinator, /single reviewed launch closure/i);
   assert.match(coordinator, /workflows\.draft_publish/);
@@ -734,7 +752,7 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   const staged = outreach.cases.find((item: { id: string }) => item.id === 'staged-pilot-build-sample-expand-launch');
   const launch = outreach.cases.find((item: { id: string }) => item.id === 'explicit-final-launch-revalidation');
   const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
-  const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'exact-result-set-expansion-is-separate');
+  const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'typed-reviewed-tables-handoff');
 
   assert.equal(staged.required_capability_ids, undefined);
   assert.deepEqual(staged.required_completion_fields, [
@@ -756,7 +774,7 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   )));
   assert.equal(conditional.must_use_popup_when_missing, undefined);
   assert.deepEqual(conditional.forbidden_question_concepts, ['messaging_branch_state']);
-  assert.deepEqual(exactSet.required_capability_ids, ['sources.cold_outbound_expand']);
+  assert.deepEqual(exactSet.required_capability_ids, ['workflows.get', 'workflows.validate_graph']);
   assert.equal(exactSet.fixture_profile, 'outreach_exact_result_set_expansion');
   assert.ok(exactSet.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'selection_state' && field.allowed_values.includes('exact')

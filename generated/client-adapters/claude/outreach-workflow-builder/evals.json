@@ -15,12 +15,12 @@
     },
     {
       "expected_skill_ids": ["outreach-workflow-builder"],
-      "id": "exact-result-set-expansion-is-separate",
+      "id": "typed-reviewed-tables-handoff",
       "fixture_profile": "outreach_exact_result_set_expansion",
-      "required_capability_ids": ["sources.cold_outbound_expand"],
+      "required_capability_ids": ["workflows.get", "workflows.validate_graph"],
       "required_completion_fields": [{"id":"durability_state","allowed_values":["proposal_only"]},{"id":"selection_state","allowed_values":["exact"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"run_state","allowed_values":["blocked"]}],
-      "required_concepts": ["source-evidence run"],
-      "request": "Prepare a reviewable proposal-only exact-result-set expansion. The reviewed source-evidence run is run_eval_source_001. Bind configured source src_eval_001, workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, draft workflow wf_eval_001 revision 3, unchanged targeting revision 4, and cap 25. Search, fetch, and dry-run the exact sources.cold_outbound_expand contract. Use stage_exact_result_set=true. Do not import, enroll, activate, or send; the workflow must remain inactive. Explain workflow persistence, bulk expansion, and activation as separate boundaries."
+      "required_concepts": ["typed reviewed tables handoff", "source-evidence run", "terminal exact-selection receipt"],
+      "request": "Consume the typed reviewed tables handoff for source-evidence run_eval_source_001 and its terminal exact-selection receipt. Bind workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, and draft workflow wf_eval_001 revision 3. Validate only the workflow eligibility binding. Do not search, fetch, validate, propose, dry-run, or execute source expansion; do not import, enroll, activate, or send."
     }
   ],
   "schema_version": 1,
