@@ -26,9 +26,8 @@ const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
   'outreach-workflow-builder',
 ]);
 const OUTREACH_SHORTCUT_LANGUAGE = /\b(?:templates?|presets?|reusable|reuse)\b/i;
-const RETIRED_CAMPAIGN_CAPABILITY_OR_STATE =
+const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE =
   /campaigns\.|campaign_state|campaign_id|outreach_campaigns|\blaunch campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
-const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE = /\bcampaigns?\b/i;
 
 function hasOutreachShortcutLanguage(value: string): boolean {
   return OUTREACH_SHORTCUT_LANGUAGE.test(value);
@@ -172,7 +171,7 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
     }
     if (
       ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id)
-      && RETIRED_CAMPAIGN_CAPABILITY_OR_STATE.test(JSON.stringify({
+      && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(JSON.stringify({
         name: skill.name,
         description: skill.description,
         triggers: skill.triggers,
@@ -298,7 +297,7 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
     if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(kernel)) {
       throw new Error(`${skill.id}: active outreach kernel contains retired campaign terminology`);
     }
-    if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_CAMPAIGN_CAPABILITY_OR_STATE.test(evals)) {
+    if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(evals)) {
       throw new Error(`${skill.id}: active outreach eval contains a retired campaign identity, terminology, capability, or state`);
     }
     const namedCapabilityIds = new Set<string>();

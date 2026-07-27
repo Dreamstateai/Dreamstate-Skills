@@ -499,12 +499,11 @@ test('generated Architect outreach packages contain no shortcut terminology', ()
 
 test('active Architect outreach sources are campaign-free and reject retired campaign contracts', () => {
   const artifacts = build();
-  const campaignLanguage = /\bcampaigns?\b|campaign_state/i;
   const retiredEvalLanguage = /campaigns\.|campaign_state|campaign_id|outreach_campaigns|\bLaunch Campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
   for (const id of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
     assert.doesNotMatch(
       artifacts[`generated/architect/${id}/KERNEL.md`],
-      campaignLanguage,
+      retiredEvalLanguage,
       `${id}: active model-visible kernel language must use workbook, workflow, and sequence identities`,
     );
   }
@@ -524,14 +523,16 @@ test('active Architect outreach sources are campaign-free and reject retired cam
 
   const path = join(ROOT, 'architect-kernels', 'outreach-sequence-writer', 'KERNEL.md');
   const original = readFileSync(path, 'utf8');
-  try {
-    writeFileSync(path, `${original}\nRetired campaign wording.\n`);
-    assert.throws(
-      () => buildArchitectArtifacts(catalog),
-      /outreach-sequence-writer.*campaign terminology/i,
-    );
-  } finally {
-    writeFileSync(path, original);
+  for (const retiredIdentity of ['campaign_id', 'outreach_campaigns']) {
+    try {
+      writeFileSync(path, `${original}\nRetired identity: ${retiredIdentity}.\n`);
+      assert.throws(
+        () => buildArchitectArtifacts(catalog),
+        /outreach-sequence-writer.*retired campaign.*(?:identity|terminology)/i,
+      );
+    } finally {
+      writeFileSync(path, original);
+    }
   }
 
   const evalPath = join(ROOT, 'architect-kernels', 'outreach', 'evals.json');
