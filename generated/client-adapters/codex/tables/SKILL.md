@@ -8,7 +8,7 @@ direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b6e9362bf41e1fd802974e801d5c88923ee5999e99113876ddbc5faba2440760
+  playbook_kernel_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 0f792191fabb37cf
@@ -16,13 +16,13 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.6
-  source_release_hash: b6e9362bf41e1fd802974e801d5c88923ee5999e99113876ddbc5faba2440760
+  source_release: 0.5.7
+  source_release_hash: 54008fe418f162d8c727d9fd389acc9240a1ab0f5d07fe63dd5cae203138009f
   generator_version: 1.0.0
   client: codex
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: 859c8bfafb18dea3fa819e6e50c42e0817a9e49e6ee0f64e91afc2c97a377fc9
+  kernel_sha256: 3bf831503af09bec7c4d59edb70c7cf3cc97c0fbbaad7956d41d984d34042ff4
   adapter_sha256: fae9e1ffb5053b110d8fee49a8f5a3a0292d0378e44b8797c615e136e529c48f
   evals_file: evals.json
   evals_sha256: b4d6796e381f1905af0241193d9598775fdd12a91f181553efedca79964e70d8
@@ -70,6 +70,10 @@ For an outreach qualification worksheet, order columns current-profile verificat
 Prepare a reviewable table or revision before paid or destructive work. Run the smallest representative selection first with an explicit row cap and credit ceiling. Inspect settled cells and run evidence before proposing a larger exact selection. Approval for a schema change never authorizes a paid run, and approval for one selection never authorizes another. Use current revisions and idempotency fences, preserve partial successes, and never retry failed rows blindly.
 
 For a reactive table proposal, search for and fetch the exact live table contract, and bind the proposal to every field, constraint, and required input that contract declares. Execution mode is the contract's to decide: use non-mutating dry-run preparation only where the fetched contract declares `dry_run_supported`, and never assert a preparation receipt a capability cannot produce. Do not skip from search directly to `propose_artifact`: the fetched contract, not user wording, defines the proposal. Bind the proposal to stable row identity, source, dependency order, formula inputs, and review view. For a paid sample, fetch the exact live sample contract and let only the canonical run receipt establish the approved selection, row cap, credit ceiling, terminal state, actual spend, and settled-cell outcomes. User wording and assistant prose cannot establish those facts.
+
+## Run conditions
+
+A column's `run_if` gate is one canonical predicate IR, read the same way no matter which surface wrote it. Author leaves as `{ "field": "<column_key>", "op": "<op>", "value": <scalar or array> }` with op one of eq, neq, contains, not_contains, gt, gte, lt, lte, is_set, is_empty, in, not_in. `is_set` and `is_empty` take no value; `in` and `not_in` take an array. Combine leaves with `{ "kind": "and" | "or", "children": [...] }` and negate with `{ "kind": "not", "child": {...} }`. `run_policy`, `max_rows_per_day`, and `condition_mode` are pacing metadata, never a condition. An empty object or a metadata-only object means no condition: the column runs. A condition that is present but unreadable is treated as do-not-run (fail closed): the row is skipped, not billed, so author to the canonical shape above, not a bespoke one.
 
 ## Completion proof
 

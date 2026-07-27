@@ -23,6 +23,10 @@ Prepare a reviewable table or revision before paid or destructive work. Run the 
 
 For a reactive table proposal, search for and fetch the exact live table contract, and bind the proposal to every field, constraint, and required input that contract declares. Execution mode is the contract's to decide: use non-mutating dry-run preparation only where the fetched contract declares `dry_run_supported`, and never assert a preparation receipt a capability cannot produce. Do not skip from search directly to `propose_artifact`: the fetched contract, not user wording, defines the proposal. Bind the proposal to stable row identity, source, dependency order, formula inputs, and review view. For a paid sample, fetch the exact live sample contract and let only the canonical run receipt establish the approved selection, row cap, credit ceiling, terminal state, actual spend, and settled-cell outcomes. User wording and assistant prose cannot establish those facts.
 
+## Run conditions
+
+A column's `run_if` gate is one canonical predicate IR, read the same way no matter which surface wrote it. Author leaves as `{ "field": "<column_key>", "op": "<op>", "value": <scalar or array> }` with op one of eq, neq, contains, not_contains, gt, gte, lt, lte, is_set, is_empty, in, not_in. `is_set` and `is_empty` take no value; `in` and `not_in` take an array. Combine leaves with `{ "kind": "and" | "or", "children": [...] }` and negate with `{ "kind": "not", "child": {...} }`. `run_policy`, `max_rows_per_day`, and `condition_mode` are pacing metadata, never a condition. An empty object or a metadata-only object means no condition: the column runs. A condition that is present but unreadable is treated as do-not-run (fail closed): the row is skipped, not billed, so author to the canonical shape above, not a bespoke one.
+
 ## Completion proof
 
 Follow accepted jobs to a terminal state. Return durable workbook, table, view, source, column, row, selection, and run identifiers as applicable; actual costs; completed, failed, and blocked cells; lineage; and a safe resume path. A queued run or accepted proposal is not completion.
