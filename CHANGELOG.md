@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.6 - 2026-07-27
+
+- Add eight production-real, workspace-local Workbook and Records journeys that require exact owner approval and durable present-state verification.
+- Keep all new certification journeys local-only: no sources, enrichments, enrollments, publishing, activation, providers, or sends.
+
 ## 0.5.5 - 2026-07-27
 
 - Backfilled machine-readable Architect eval authority after the eval-union build gate exposed an incomplete migration. Distinct signed coverage is 365 capabilities across the 1137-capability runtime manifest; analytics, social, SEO, visibility, context, integrations, tables, Records, and site onboarding retain production reach without restoring coordinator-owned shortcuts.

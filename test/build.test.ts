@@ -991,3 +991,25 @@ test('table evals require exact contracts and authoritative schema or paid-run r
     /do not claim a preparation receipt it cannot produce/,
   );
 });
+
+test('workspace-local production evals require exact approval and durable present outcomes', () => {
+  const artifacts = build();
+  const tables = JSON.parse(artifacts['generated/architect/tables/evals.json']);
+  const records = JSON.parse(artifacts['generated/architect/records/evals.json']);
+  const production = [...tables.cases, ...records.cases]
+    .filter((item: { id: string }) => item.id.startsWith('production-local-'));
+
+  assert.equal(production.length, 8);
+  assert.equal(production.filter((item: { skill_id?: string }) => item.skill_id === undefined).length, 8);
+  for (const item of production) {
+    assert.equal(item.execution_profile, 'production_real');
+    assert.equal(item.fixture_profile, 'workspace_local_approved_mutation');
+    assert.equal(item.resume_after_approval, 'owner_exact');
+    assert.deepEqual(item.allowed_consequence_levels, ['draft_write']);
+    assert.equal(item.required_tool_sequence, undefined);
+    assert.ok(item.expected_workspace_outcome.some(
+      (outcome: { expected?: string }) => outcome.expected === 'present',
+    ));
+    assert.match(item.request, /do not (?:attach|run|message|enrich|import|sync|enroll|send)/i);
+  }
+});

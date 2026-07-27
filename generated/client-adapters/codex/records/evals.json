@@ -59,6 +59,90 @@
       "id": "deal-create-update-stage",
       "request": "Create the approved deal for this company, update its exact value revision, and move it to the reviewed pipeline stage without skipping stage authority.",
       "required_capability_ids": ["record_deals.board_get", "record_deals.create", "record_deals.update", "record_deals.stage_move"]
+    },
+    {
+      "allowed_consequence_levels": ["draft_write"],
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["records"],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "person",
+          "record_display_name": "T25 Ada Lovelace"
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "id": "production-local-person-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": ["records.create"],
+      "request": "Create one standard person record named T25 Ada Lovelace with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "allowed_consequence_levels": ["draft_write"],
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["records"],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "company",
+          "record_display_name": "T25 Analytical Engines"
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "id": "production-local-company-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": ["records.create"],
+      "request": "Create one standard company record named T25 Analytical Engines with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "allowed_consequence_levels": ["draft_write"],
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["records"],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "deal",
+          "record_display_name": "T25 Expansion Review"
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "id": "production-local-deal-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": ["records.create"],
+      "request": "Create one standard deal record named T25 Expansion Review with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, move stages, publish, activate, enroll, or send anything.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "allowed_consequence_levels": ["draft_write"],
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["records"],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "partner",
+          "record_display_name": "T25 Northstar Partner"
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "id": "production-local-custom-partner-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": ["record_objects.create", "record_objects.record_create"],
+      "request": "Create a custom object with key partner, singular label Partner, plural label Partners, and no icon; then create one record named T25 Northstar Partner with no optional values. Save the exact dependency-complete proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "resume_after_approval": "owner_exact"
     }
   ],
   "schema_version": 1,
