@@ -137,6 +137,23 @@ function kernelOperationContract(skillId: string, kernel: string): string[] {
   return [...ids].sort();
 }
 
+// The operation contract is authoring metadata, not model context. Its ids are
+// already published verbatim as the package's capability_ids frontmatter, which
+// is what skill_registry loads, so shipping the comment too spent the skill's
+// context budget on a duplicate the runtime never reads: on outreach it was 311
+// tokens of a 3000-token cap. Worse, handing the model a raw grant list invites
+// it to skip the tools_search -> tools_get discovery the kernel requires.
+function publishedKernel(skillId: string, kernel: string): string {
+  const start = kernel.indexOf(OPERATION_CONTRACT_START);
+  const end = kernel.indexOf(OPERATION_CONTRACT_END, start + OPERATION_CONTRACT_START.length);
+  if (start < 0 || end < 0) {
+    throw new Error(`${skillId}: kernel operation contract is not strippable`);
+  }
+  const before = kernel.slice(0, start);
+  const after = kernel.slice(end + OPERATION_CONTRACT_END.length);
+  return `${before.trimEnd()}\n${after.replace(/^\n+/, '\n')}`;
+}
+
 function assertSourceManifest(value: ArchitectSourceManifest): void {
   if (value.schema_version !== 1) throw new Error('architect-kernels/skills.json: unsupported schema');
   if (!/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(value.source_release)) {
@@ -290,20 +307,28 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
       }
     }
     const evalCapabilityIds = [...namedCapabilityIds].sort();
-    const complianceCapabilityIds = kernelOperationContract(skill.id, kernel);
-    if (JSON.stringify(complianceCapabilityIds) !== JSON.stringify(evalCapabilityIds)) {
+    const authorityCapabilityIds = kernelOperationContract(skill.id, kernel);
+    const published = publishedKernel(skill.id, kernel);
+    const undeclared = evalCapabilityIds.filter((id) => !authorityCapabilityIds.includes(id));
+    if (undeclared.length) {
       throw new Error(
-        `${skill.id}: kernel operation contract must exactly match eval-declared capability authority`,
+        `${skill.id}: evals declare capability ids the kernel operation contract does not grant: ${undeclared.join(', ')}`,
       );
     }
     return {
       ...skill,
-      // Runtime authority is derived only from eval operation declarations.
-      // The kernel contract above is a compliance assertion, never a grant.
-      capability_ids: evalCapabilityIds,
-      kernel,
+      // The kernel operation contract is the authored runtime grant. skill_registry
+      // loads this list verbatim as SkillDescriptor.capabilities and tools_run denies
+      // any id absent from it, so emitting the eval-declared ids instead made a skill's
+      // authority equal to whatever its cases happened to assert on: `tables` could
+      // create a table and sample a column but never add one. Evals must stay a subset
+      // of authority, never its source.
+      capability_ids: authorityCapabilityIds,
+      // Hash what is published, not what was authored: skill_registry recomputes
+      // this over the KERNEL.md it actually reads and fails closed on any drift.
+      kernel: published,
       evals,
-      kernel_sha256: sha256(kernel),
+      kernel_sha256: sha256(published),
       evals_sha256: sha256(evals),
     };
   });

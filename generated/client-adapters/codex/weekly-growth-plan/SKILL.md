@@ -3,28 +3,28 @@ id: weekly-growth-plan
 name: weekly-growth-plan
 description: "Prioritize a one-week cross-channel operating plan with owners, deliverables, measures, and explicit delegation without silently executing it."
 capability_domains: []
-capability_ids: ["brain.context.get","brain.context.search","campaigns.list","social.strategy_overview","social.weekly_plan_items_list","visibility.overview"]
+capability_ids: ["brain.context.get","brain.context.search","calendar.events_list","command_center.action_items.list","command_center.feed.list","command_center.goals.get","command_center.overview.get","content.article_list","content.artifact_list","gtm.goals_list","gtm.tasks.list","outreach.workspace_stats_get","sequences.list","social.analytics_query","social.strategy_activity_calendar","social.strategy_overview","social.strategy_plan_progress","social.weekly_plan_items_list","visibility.overview","workbooks.list","workflows.list"]
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   client: codex
   kernel_id: weekly-growth-plan
   kernel_file: KERNEL.md
-  kernel_sha256: 071bf4e4cf03ef08d6466ecb02de7e34ce5851d9140efd3b66c972ccf03866aa
+  kernel_sha256: 5156685bb3d677cb310874ccbcdfdb45a73a968c6bbf62fc1cb2f3bef4d0649c
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
-  evals_sha256: 853796159a961cb88732c13861539bdee696446f047e8c2c5d8c58a34db12c53
+  evals_sha256: 1a7ab87f6b25b1448c08ca5a2bfe26aa29b9320aac910712131ad059a54df0da
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -46,9 +46,6 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 ---
 
 # Weekly cross-channel growth plan
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","campaigns.list","social.strategy_overview","social.weekly_plan_items_list","visibility.overview"]}
--->
 
 Build one evidence-backed operating plan for the next week across the channels the user selects. This is a prioritization and delegation layer, not a social calendar and not an execution shortcut.
 

@@ -3,28 +3,28 @@ id: analytics
 name: analytics
 description: "Diagnose current measured performance with explicit time ranges, provenance, limitations, confidence, and evidence-backed recommendations."
 capability_domains: []
-capability_ids: ["social.analytics_query","social.post_analytics"]
+capability_ids: ["analytics.attribution_health_get","analytics.ga4.attribution","analytics.ga4.browsers","analytics.ga4.devices","analytics.ga4.geo","analytics.ga4.hostnames","analytics.ga4.operating_systems","analytics.ga4.overview","analytics.ga4.pages","analytics.ga4.referrers","analytics.ga4.utm","attribution.companies_list","attribution.devices_get","attribution.links_list","attribution.locations_list","attribution.overview_get","attribution.profiles_list","attribution.referers_list","command_center.overview.get","gtm.runs.metrics_get","outreach.analytics_framework_aggregate_get","outreach.analytics_step_aggregate_get","outreach.channel_stats_get","outreach.monthly_rollup_get","outreach.reply_insights_get","outreach.workspace_stats_get","page_analytics.authors_list","page_analytics.post_attribution_get","page_analytics.posts_list","page_analytics.profile_links_get","social.analytics_query","social.analytics_rollup_get","social.audience_analytics","social.metric_definitions","social.performance_analysis_get","social.performance_snapshot_get","social.post_analytics","social.strategy_activity_calendar","social.strategy_plan_progress","visibility.overview","workflows.analytics_by_campaign","workflows.analytics_overview","workflows.metrics_get"]
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   client: claude
   kernel_id: analytics
   kernel_file: KERNEL.md
-  kernel_sha256: a48b98769962cb685e655db06ee27e04b8a858986bc61ba8d0b665192814b2e6
+  kernel_sha256: 96fd892afd003574891219e0bf9afa329988caa6b0874e078ca24492e4e51bb9
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
-  evals_sha256: 8b763307e1dcb9abe3fbe909dbcd3c92f222ebe1ce947524d2771188eed60836
+  evals_sha256: d815f6c1c23673c342ceb15287c29db3e0ac044f5ec5c2fda873f2cd67f6ec7e
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -46,12 +46,11 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 ---
 
 # Growth analytics
-<!-- architect-operation-contract
-{"required_capability_ids":["social.analytics_query","social.post_analytics"]}
--->
 
 Explain current measured performance and recommend evidence-backed next actions. Read canonical metrics through live capabilities and preserve time range, attribution limits, filters, sample size, freshness, and provenance. Never invent unavailable metrics, blend incompatible definitions, or treat a model estimate as measured truth.
 
 Derive the decision the user is trying to make. Ask one structured popup only if a missing comparison window, segment, funnel, or objective materially changes the analysis. Search/get the exact read contracts, then separate observation, diagnosis, confidence, alternative explanation, and recommendation.
+
+Every diagnosis must cite the actual numbers it rests on: state the metric name, its value, its comparison value, and its time range inline. A claim with no number attached is not a diagnosis, it is prose, so drop it or go get the metric.
 
 Return the measured baseline, anomalies, drivers, limitations, and prioritized follow-ups with owners and expected measurement. Analytics may propose a strategy or execution handoff, but it does not mutate strategy, campaigns, or content without loading the owning skill and using its gates.

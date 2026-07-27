@@ -3,25 +3,25 @@ id: growth-asset-planner
 name: growth-asset-planner
 description: "Design a buyer-facing resource and its evidence, structure, CTA, distribution, and follow-up path while remaining explicitly unsaved until live persistence exists."
 capability_domains: []
-capability_ids: ["brain.context.get","brain.context.search","command_center.assets.create","command_center.assets.list"]
+capability_ids: ["brain.context.get","brain.context.search","brain.evidence.search","command_center.assets.create","command_center.assets.list"]
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   client: claude
   kernel_id: growth-asset-planner
   kernel_file: KERNEL.md
-  kernel_sha256: 8b688590bd8b69015d4d3c338795e355d499945ff417841baf7ce84776f1be91
+  kernel_sha256: 5499e4fa692558dd4a98019503d0c1afa9e2e5731be5be8de80529301c8c75fc
   adapter_sha256: 9a9787b28edc13075be6707d56efef6053b71e45210ddd9a908c4d788e9b147d
   evals_file: evals.json
   evals_sha256: d09247e03084f11438adac2226d086f940435e8c7a8b3eea9abc49dc57ef4334
@@ -46,9 +46,6 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 ---
 
 # Buyer-facing growth asset planner
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","command_center.assets.create","command_center.assets.list"]}
--->
 
 Design a lead magnet, playbook, checklist, audit, SOP, resource library, resource hub, or buyer-facing template library that helps a defined buyer make progress and leads naturally to the next action. Own audience, problem, promise, evidence, structure, format, distribution path, call to action, follow-up path, and a reviewable proposal.
 

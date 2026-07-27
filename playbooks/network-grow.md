@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [social.accounts_list, workbooks.create, tables.create, tables.list, sources.find_leads, contacts.list, contacts.get, contacts.enrich, campaigns.create, contacts.draft_opener, contacts.send_connection]
+capability_ids: [social.accounts_list, workbooks.create, tables.create, tables.list, sources.find_leads, contacts.list, contacts.get, contacts.enrich, workflows.create, contacts.draft_opener, contacts.send_connection]
 ---
 
 # Network Grow
@@ -38,11 +38,11 @@ titles/companies to personalize the note well.
 
 ## Step 2: A connection campaign is the vehicle
 
-`contacts.send_connection` is enroll-only: it queues each invite through a connection campaign,
+`contacts.send_connection` is enroll-only: it queues each invite through a connection workflow,
 and the engine reserves the slot and fires it under its own ramp cap at dispatch (it never
-sends directly, and you cannot raise that cap from here). So create a lightweight campaign with
-`campaigns.create` bound to a frozen worksheet/view to act as the sender vehicle, or reuse an existing
-connection campaign. Keep its `campaign_id`.
+sends directly, and you cannot raise that cap from here). So create a lightweight workflow with
+`workflows.create` bound to a frozen worksheet/view to act as the sender vehicle, or reuse an existing
+connection workflow. Keep its identifier.
 
 ## Step 3: Write a note worth accepting
 

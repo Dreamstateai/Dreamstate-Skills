@@ -38,12 +38,12 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.list",
           "outreach.dm_conversation_get",
           "outreach.dm_conversation_read",
           "outreach.dm_conversation_status_update",
           "outreach.dm_conversations_list",
-          "outreach.workspace_stats_get"
+          "outreach.workspace_stats_get",
+          "sequences.list"
         ]
       },
       "check": "tool_trace_subset"

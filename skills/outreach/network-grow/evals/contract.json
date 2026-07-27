@@ -38,7 +38,6 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.create",
           "contacts.draft_opener",
           "contacts.enrich",
           "contacts.get",
@@ -48,7 +47,8 @@
           "sources.find_leads",
           "tables.create",
           "tables.list",
-          "workbooks.create"
+          "workbooks.create",
+          "workflows.create"
         ]
       },
       "check": "tool_trace_subset"

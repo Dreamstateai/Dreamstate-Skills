@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: capability
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [campaigns.list, outreach.dm_conversations_list, outreach.dm_conversation_get, outreach.dm_conversation_status_update, outreach.dm_conversation_read, outreach.workspace_stats_get]
+capability_ids: [sequences.list, outreach.dm_conversations_list, outreach.dm_conversation_get, outreach.dm_conversation_status_update, outreach.dm_conversation_read, outreach.workspace_stats_get]
 ---
 
 # Reply Classifier
@@ -24,7 +24,7 @@ with `dreamstate_get_run`.
 
 ## Step 1: Gather the open threads
 
-List campaigns with `campaigns.list` and pick the one the user means (or all active).
+List sequences with `sequences.list` and pick the one the user means (or all active).
 Use `outreach.dm_conversations_list` to find open threads, and
 `outreach.dm_conversation_get` for each thread's context (`conversation_urn`, last messages).
 

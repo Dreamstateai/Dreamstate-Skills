@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `campaigns.activate`, `campaigns.create`, `campaigns.template_apply`, `contacts.enrich`, `content.artifact_generate`, `content.schedule`, `outreach.workspace_stats_get`, `sequences.enroll_selection`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `workbooks.create`
+Declared capabilities: `contacts.enrich`, `content.artifact_generate`, `content.schedule`, `outreach.workspace_stats_get`, `sequences.add_step`, `sequences.enroll_selection`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `workbooks.create`, `workflows.activate`, `workflows.create`
 
-Required scopes: `actions`, `content:read`, `content:write`, `outreach:read`, `outreach:write`, `tables:write`
+Required scopes: `content:read`, `content:write`, `outreach:read`, `outreach:write`, `tables:write`, `workflows:write`
 
 ## Evidence checklist
 

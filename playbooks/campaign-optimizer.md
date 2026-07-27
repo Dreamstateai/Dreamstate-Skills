@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [campaigns.list, outreach.workspace_stats_get, outreach.channel_stats_get, campaigns.variant_metrics_get, rows.query, sequences.get, sequences.step_options, sequences.edit_step, campaigns.pause, outreach.dm_conversation_status_update]
+capability_ids: [sequences.list, outreach.workspace_stats_get, outreach.channel_stats_get, outreach.analytics_step_aggregate_get, rows.query, sequences.get, sequences.step_options, sequences.edit_step, outreach.global_pause_set, outreach.dm_conversation_status_update]
 ---
 
 # Campaign Optimizer
@@ -24,9 +24,9 @@ with `dreamstate_get_run`.
 
 ## Step 1: Pick the campaign and read the numbers
 
-List campaigns with `campaigns.list` and pick the one the user means (or scan the active
+List sequences with `sequences.list` and pick the one the user means (or scan the active
 ones). Pull `outreach.workspace_stats_get`, `outreach.channel_stats_get`, and the selected
-campaign's `campaigns.variant_metrics_get` evidence:
+sequence's `outreach.analytics_step_aggregate_get` evidence:
 
 - `metric: "overview"` — sends, acceptance rate, reply rate, positive reply rate, demos.
 - `metric: "icp"` or `"signal_source"` — which segment is actually responding.
@@ -59,10 +59,10 @@ Take the smallest change that addresses the bucket:
   `campaign_id`, `step_id`, the replacement `data`, and the current `graph_version`; on
   `graph_version_conflict`, re-read with `sequences.get` and retry). Shorter, more
   specific, more about them.
-- **Campaign is structurally off** (wrong audience, burning sender reputation, or being
-  replaced) → `campaigns.pause` (`campaign_id`). This runs the in-app kill-switch
-  cascade so in-flight instances actually stop, not just a row flip. Pause, fix the targeting
-  in a new or reconfigured campaign, relaunch.
+- **The motion is structurally off** (wrong audience, burning sender reputation, or being
+  replaced) → `outreach.global_pause_set`. This runs the in-app kill-switch
+  cascade so in-flight sends actually stop, not just a row flip. Pause, fix the targeting on
+  the selection binding or rebuild the sequence steps, then unpause.
 - **Threads stuck in the wrong state** → `outreach.dm_conversation_status_update` to move replied or dead
   conversations out of the active view so the metrics reflect reality.
 

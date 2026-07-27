@@ -1,7 +1,4 @@
 # Blog artifact lifecycle
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","content.article_create_schedule","content.article_delivery_create","content.article_get","content.article_update","content.delivery_publish","content.submit_review"]}
--->
 
 Own blog research, grounded draft creation, editorial review, revision, scheduling, and publication destination. A generic buyer resource belongs to `growth-asset-planner`; visibility measurement belongs to `visibility`; durable positioning belongs to `strategy`.
 

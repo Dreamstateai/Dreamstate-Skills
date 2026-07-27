@@ -5,25 +5,25 @@ description: Build validated row workflows with triggers, typed branches, action
 triggers: ["build an outreach workflow","branch on qualification or priority","automate row processing","define enrollment eligibility","separate workflow persistence, exact result-set expansion, enrollment, and activation"]
 dependencies: []
 capability_domains: ["outreach"]
-capability_ids: ["sources.cold_outbound_expand","workflows.get","workflows.graph_apply","workflows.node_registry","workflows.validate_graph"]
+capability_ids: ["columns.list","rows.get","rows.query","sources.cold_outbound_expand","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]
 max_context_tokens: 5000
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: ff8ff0535cc74d1332412d9e29d43c84d58fe35bd3112112bd74ca1da7a6dab3
+  kernel_sha256: 31382e496ec2befe83711035ce947bf50ed1d0d9af21a6b9bee6a36b3b01453c
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
   evals_sha256: b9a91259c05be30780b42e41f79f930476bf6ab5d433fc23b6bc1748e83f4207

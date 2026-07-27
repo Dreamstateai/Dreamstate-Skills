@@ -1,6 +1,6 @@
 # Custom outreach sequence writer
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","sequences.bind","sequences.definition_get","sequences.step_options","sequences.validate"]}
+{"required_capability_ids":["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.ai_write_template_create","outreach.ai_write_template_update","outreach.ai_write_templates_list","outreach.mailboxes_list","outreach.message_templates_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.add_step","sequences.bind","sequences.definition_get","sequences.edit_step","sequences.get","sequences.list","sequences.remove_step","sequences.step_options","sequences.validate"]}
 -->
 
 ## Job boundary
@@ -18,7 +18,7 @@ Require the coordinator intake, list handoff, and workflow handoff. The workflow
 3. Define ordered steps with delays and send windows. Each variable maps to one typed upstream output and declares missing-input behavior. Never display unresolved placeholders as a valid preview.
 4. Ground claims in approved Company Brain facts and row evidence. Separate stable campaign copy from per-row generated copy. Preserve generated-output provenance, cost, and model/run identity when returned.
 5. Validate sender/channel constraints, graph reachability, timing, stop-on-reply behavior, duplicate prevention, and per-account safety caps through the live contract.
-6. Generate a bounded preview using real approved sample rows. Audit factuality, variable resolution, specificity, prohibited claims, tone, duplication, and channel fit. A synthetic example cannot substitute for this check when real rows exist.
+6. Generate a bounded preview using real approved sample rows. Preview count is the coordinator's pilot integer, so preview exactly the approved sample rows and never ask the user how many previews to generate. Code owns the fixed greeting, pitch paragraphs, CTA, sign-off, and line breaks; the model fills only bounded personalization slots from verified evidence. When the workflow is valid, use one email plus LinkedIn sequence with threading, waits, windows, cooldowns, caps, and stop-on-reply. Audit factuality, variable resolution, specificity, prohibited claims, tone, duplication, and channel fit. A synthetic example cannot substitute for this check when real rows exist.
 
 ## Handoff and consequence
 

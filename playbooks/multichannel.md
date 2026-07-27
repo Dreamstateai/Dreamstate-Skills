@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [workbooks.create, tables.create, sources.find_leads, contacts.enrich, campaigns.create, campaigns.template_apply, sequences.enroll_selection, campaigns.activate, content.artifact_generate, content.schedule, social.accounts_list, outreach.workspace_stats_get]
+capability_ids: [workbooks.create, tables.create, sources.find_leads, contacts.enrich, workflows.create, sequences.add_step, sequences.enroll_selection, workflows.activate, content.artifact_generate, content.schedule, social.accounts_list, outreach.workspace_stats_get]
 ---
 
 # Multichannel
@@ -45,9 +45,9 @@ enrich selected contacts with `contacts.enrich`.
 
 ## Step 2: Direct motion (LinkedIn sequence)
 
-Run the core of `/outbound`: `campaigns.create` -> `campaigns.template_apply` -> build and
+Run the core of `/outbound`: `workflows.create` -> `sequences.add_step` -> build and
 validate the sequence -> `sequences.enroll_selection` using a frozen workbook/worksheet/view
-snapshot -> `campaigns.activate`. If
+snapshot -> `workflows.activate`. If
 the full outbound skill is installed, defer to it for the sequence detail rather than
 duplicating steps here.
 

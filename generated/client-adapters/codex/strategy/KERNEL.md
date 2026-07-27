@@ -1,7 +1,4 @@
 # Growth strategy
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","social.strategy_overview","social.strategy_update"]}
--->
 
 Create or revise durable growth strategy: ICP, problem, positioning, proof, channel roles, constraints, objectives, tradeoffs, and measurement. Strategy decides where and why to play; it does not execute a campaign or weekly task list.
 

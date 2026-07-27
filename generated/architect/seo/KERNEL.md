@@ -1,7 +1,4 @@
 # SEO coordinator
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.learning.query_benchmarks","seo.robots_audit","visibility.citations","visibility.keywords_get","visibility.overview","visibility.workspace_site_get"]}
--->
 
 ## Job boundary
 

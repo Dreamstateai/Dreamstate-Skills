@@ -38,18 +38,18 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.activate",
-          "campaigns.create",
-          "campaigns.template_apply",
           "contacts.enrich",
           "content.artifact_generate",
           "content.schedule",
           "outreach.workspace_stats_get",
+          "sequences.add_step",
           "sequences.enroll_selection",
           "social.accounts_list",
           "sources.find_leads",
           "tables.create",
-          "workbooks.create"
+          "workbooks.create",
+          "workflows.activate",
+          "workflows.create"
         ]
       },
       "check": "tool_trace_subset"

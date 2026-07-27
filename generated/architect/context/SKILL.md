@@ -5,28 +5,28 @@ description: Read targeted revisioned Company Brain facts or propose cited confl
 triggers: ["read Company Brain context","inspect published workspace memory","propose a cited context update","update a governed Company Brain document such as Ideal Customer","resolve a canonical fact","propose a new governed Company document","keep a knowledge document unpublished for human review"]
 dependencies: []
 capability_domains: ["brain","context"]
-capability_ids: ["brain.context.get","brain.context.propose_document","brain.context.search"]
+capability_ids: ["brain.context.browse","brain.context.document_get","brain.context.draft_save","brain.context.get","brain.context.graph","brain.context.history","brain.context.list_proposals","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.publish_preview","brain.context.register_source","brain.context.resolve_conflict","brain.context.save_draft","brain.context.search","brain.context.source_impact","brain.context.workspace_get","brain.evidence.search","brain.graph.neighborhood","brand.context_url_analyze"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: 2589933d81e1c812f22ea752fb6279c1b0340037e660031135b6c5410bf112ff
+  kernel_sha256: 41f41c8c5ba36d38fe556d8809b17c3e73d42fcbfd96287e2fcfd741c34e09c9
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: 364106a25a6d8c017e32b2300b04ec9a5627e886b1b61bc911723ef30f6ba3da
+  evals_sha256: 742b266e11e6dea771538e6678e3cc669242e410e02dce42a4b0a14693a12082
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

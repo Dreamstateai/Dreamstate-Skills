@@ -5,28 +5,28 @@ description: Open an existing campaign or coordinate a new custom campaign from 
 triggers: ["open or revise an outreach campaign","build a campaign from scratch","design an outreach campaign for a named cohort using pooled benchmarks","create a prospecting system","build a list workflow and sequence","decide whether a list workflow needs messaging"]
 dependencies: ["tables","outreach-workflow-builder"]
 capability_domains: ["brain","outreach"]
-capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","campaigns.activate","campaigns.create","campaigns.get","campaigns.graph_apply","outreach.demand_plan_get","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview"]
+capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","columns.list","outreach.access_get","outreach.activity_list","outreach.analytics_step_aggregate_get","outreach.credit_usage_get","outreach.dashboard_top_campaigns_get","outreach.demand_plan_get","outreach.enrichment_sequence_get","outreach.global_pause_set","outreach.icps_list","outreach.mailboxes_list","outreach.sender_context_accounts_list","outreach.senders_list","outreach.settings_get","outreach.workspace_stats_get","rows.get","rows.query","selection_snapshots.get","sequences.add_step","sequences.archive","sequences.bind","sequences.definition_get","sequences.edit_step","sequences.enroll_selection","sequences.get","sequences.list","sequences.publish","sequences.remove_step","sequences.step_options","sequences.validate","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.linkedin_post_engagers_preview","sources.list","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.activate","workflows.analytics_overview","workflows.create","workflows.get","workflows.list","workflows.metrics_get","worksheets.list"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered campaign-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether campaign activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Validated workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]},{"id":"campaign_state","description":"Campaign lifecycle state at the current boundary.","allowed_values":["inactive","active","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: a47f562276fea4c5842b7952170c913cdf99f98b1cd82e0b54d7d0bc6c9a5458
+  kernel_sha256: 7e55ab082e1a8204cbb8c9ee6ad6729f79889944a07b1c0397323bbcfd4439b9
   adapter_sha256: ecd475ca0450067312a912d3d5800ccc94ce008d768fc7176e14adaaedf1a36d
   evals_file: evals.json
-  evals_sha256: 33cf2f7eac3a23d49d0c7306d77f91aff7e6daaf6e18d5a3269ed61c5358f54f
+  evals_sha256: edd8cd5ea31d367e2edf078908a6a7d6b9106e0c6e380262fc775106c0005799
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

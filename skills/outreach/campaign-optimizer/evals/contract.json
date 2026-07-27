@@ -38,15 +38,15 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.list",
-          "campaigns.pause",
-          "campaigns.variant_metrics_get",
+          "outreach.analytics_step_aggregate_get",
           "outreach.channel_stats_get",
           "outreach.dm_conversation_status_update",
+          "outreach.global_pause_set",
           "outreach.workspace_stats_get",
           "rows.query",
           "sequences.edit_step",
           "sequences.get",
+          "sequences.list",
           "sequences.step_options"
         ]
       },

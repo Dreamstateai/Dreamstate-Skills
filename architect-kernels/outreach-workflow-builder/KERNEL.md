@@ -1,6 +1,6 @@
 # Outreach workflow builder
 <!-- architect-operation-contract
-{"required_capability_ids":["sources.cold_outbound_expand","workflows.get","workflows.graph_apply","workflows.node_registry","workflows.validate_graph"]}
+{"required_capability_ids":["columns.list","rows.get","rows.query","sources.cold_outbound_expand","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]}
 -->
 
 ## Job boundary

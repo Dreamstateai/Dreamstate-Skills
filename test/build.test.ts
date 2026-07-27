@@ -11,7 +11,10 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = 'c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034';
+const reviewedGrants: Record<string, string[]> = JSON.parse(
+  readFileSync(join(ROOT, 'test', 'fixtures', 'architect-capability-grants.json'), 'utf8'),
+);
+const CANONICAL_MANIFEST_DIGEST = 'ba82767c025e7490994804262df9849a3ce74cb8104aa8e531ee30702c81f0a9';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -235,56 +238,127 @@ test('Architect generation rejects signed capability IDs absent from the pinned 
   );
 });
 
-test('Architect exact grants are derived only from machine-readable eval operation contracts', () => {
+function kernelGrants(skillId: string): string[] {
+  const kernel = readFileSync(join(ROOT, 'architect-kernels', skillId, 'KERNEL.md'), 'utf8');
+  const body = kernel.split('<!-- architect-operation-contract\n')[1].split('\n-->')[0];
+  return JSON.parse(body).required_capability_ids;
+}
+
+test('Architect exact grants are the authored kernel operation contract, propagated verbatim', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  const expected = {
-    analytics: ['social.analytics_query', 'social.post_analytics'],
-    blog: ['brain.context.get', 'brain.context.search', 'content.article_create_schedule', 'content.article_delivery_create', 'content.article_get', 'content.article_update', 'content.delivery_publish', 'content.submit_review'],
-    context: ['brain.context.get', 'brain.context.propose_document', 'brain.context.search'],
-    'growth-asset-planner': ['brain.context.get', 'brain.context.search', 'command_center.assets.create', 'command_center.assets.list'],
-    integrations: ['integrations.outreach_connectors_list', 'integrations.scheduler_status_get', 'integrations.unipile_status_get'],
-    outreach: [
-      'brain.context.get',
-      'brain.context.search',
-      'brain.learning.query_benchmarks',
-      'campaigns.activate',
-      'campaigns.create',
-      'campaigns.get',
-      'campaigns.graph_apply',
-      'outreach.demand_plan_get',
-      'sources.cold_outbound_expand',
-      'sources.cold_outbound_preview',
-      'sources.linkedin_post_engagers_preview',
-    ],
-    'outreach-sequence-writer': ['brain.context.get', 'brain.context.search', 'sequences.bind', 'sequences.definition_get', 'sequences.step_options', 'sequences.validate'],
-    'outreach-workflow-builder': ['sources.cold_outbound_expand', 'workflows.get', 'workflows.graph_apply', 'workflows.node_registry', 'workflows.validate_graph'],
-    seo: ['brain.learning.query_benchmarks', 'seo.robots_audit', 'visibility.citations', 'visibility.keywords_get', 'visibility.overview', 'visibility.workspace_site_get'],
-    social: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'content.artifact_create', 'content.artifact_generate', 'content.delivery_publish', 'content.schedule'],
-    strategy: ['brain.context.get', 'brain.context.search', 'brain.learning.query_benchmarks', 'social.strategy_overview', 'social.strategy_update'],
-    tables: ['columns.sample', 'tables.create'],
-    visibility: ['visibility.citations', 'visibility.overview', 'visibility.refresh', 'visibility.tracked_prompts.list', 'visibility.workspace_site_get'],
-    'weekly-growth-plan': ['brain.context.get', 'brain.context.search', 'campaigns.list', 'social.strategy_overview', 'social.weekly_plan_items_list', 'visibility.overview'],
-  };
+  const catalogIds = new Set(catalog.capabilities.map((capability: { id: string }) => capability.id));
 
-  for (const [skillId, capabilityIds] of Object.entries(expected)) {
-    assert.deepEqual(pinned.skills[skillId].capability_ids, capabilityIds);
+  // The kernel operation contract is the single authored grant. skill_registry loads
+  // this list verbatim as SkillDescriptor.capabilities and tools_run denies any id
+  // absent from it, so a skill's runtime reach must equal what its kernel authored,
+  // never the incidental union of whatever its eval cases happen to assert on.
+  assert.deepEqual(
+    Object.keys(reviewedGrants).sort(),
+    Object.keys(pinned.skills).sort(),
+    'every Architect skill must have a reviewed grant snapshot',
+  );
+  for (const skillId of Object.keys(pinned.skills)) {
+    const capabilityIds = kernelGrants(skillId);
+
+    // Widening or narrowing a skill's runtime authority is a security decision, so it
+    // has to be a deliberate two-file change. Comparing the pipeline against KERNEL.md
+    // alone cannot catch a typo or bad merge inside KERNEL.md itself: both sides would
+    // re-derive from the same edited bytes. The snapshot is the independent record of
+    // what was actually reviewed.
+    assert.deepEqual(
+      capabilityIds,
+      reviewedGrants[skillId],
+      `${skillId}: kernel operation contract changed without updating the reviewed grant snapshot`,
+    );
+
+    // Grant order is signed into PINNED_RELEASE, so the build must impose a canonical
+    // order rather than inherit whatever order a kernel happened to be authored in.
+    assert.deepEqual(
+      pinned.skills[skillId].capability_ids,
+      [...pinned.skills[skillId].capability_ids].sort(),
+      `${skillId}: pinned grants must be sorted, or the release digest is authoring-order dependent`,
+    );
+    assert.deepEqual(pinned.skills[skillId].capability_ids, [...capabilityIds].sort());
     assert.match(
       artifacts[`generated/architect/${skillId}/SKILL.md`],
-      new RegExp(`^capability_ids: ${JSON.stringify(capabilityIds).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'),
+      new RegExp(`^capability_ids: ${JSON.stringify([...capabilityIds].sort()).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'),
+    );
+    for (const capabilityId of capabilityIds) {
+      assert.ok(catalogIds.has(capabilityId), `${skillId}: ${capabilityId} is not in the pinned capability manifest`);
+    }
+    const evalIds: string[] = JSON.parse(artifacts[`generated/architect/${skillId}/evals.json`]).cases
+      .flatMap((item: { required_capability_ids?: string[] }) => item.required_capability_ids ?? []);
+    for (const capabilityId of evalIds) {
+      assert.ok(capabilityIds.includes(capabilityId), `${skillId}: eval asserts ungranted ${capabilityId}`);
+    }
+  }
+
+  // A skill must actually reach the surface its kernel claims to own, or the
+  // journey it coordinates cannot complete.
+  for (const capabilityId of ['columns.add', 'columns.run', 'workbooks.create', 'worksheets.create', 'views.create']) {
+    assert.ok(pinned.skills.tables.capability_ids.includes(capabilityId));
+  }
+  assert.ok(pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.create'));
+  for (const capabilityId of ['sequences.add_step', 'sequences.edit_step', 'sequences.remove_step']) {
+    assert.ok(pinned.skills['outreach-sequence-writer'].capability_ids.includes(capabilityId));
+  }
+
+  // A capability named only in a kernel's prohibition must never become authority.
+  assert.ok(
+    !pinned.skills.context.capability_ids.includes('brain.context.publish'),
+    'context: "Never call brain.context.publish from this agent skill"',
+  );
+  for (const capabilityId of ['sequences.enroll_selection', 'sequences.publish']) {
+    assert.ok(
+      !pinned.skills['outreach-sequence-writer'].capability_ids.includes(capabilityId),
+      'outreach-sequence-writer: "Never activate, enroll, or send"',
     );
   }
+  assert.ok(
+    !pinned.skills['outreach-workflow-builder'].capability_ids.includes('workflows.activate'),
+    'outreach-workflow-builder: "Activation remains a later coordinator-owned consequence"',
+  );
+  const mutating = new Set(
+    catalog.capabilities
+      .filter((capability: { mutates?: boolean }) => capability.mutates === true)
+      .map((capability: { id: string }) => capability.id),
+  );
+  assert.ok(mutating.has('columns.add'), 'manifest mutation flag must be readable, or this check is vacuous');
+  for (const capabilityId of pinned.skills.analytics.capability_ids) {
+    assert.ok(!mutating.has(capabilityId), `analytics must not mutate: ${capabilityId}`);
+  }
+
+  // Grants are authored in the kernel operation contract, and evals are only a
+  // subset of that authority, so nothing else bounds how far a skill's destructive
+  // surface can grow. This pins the mutating count per skill: widening it is always
+  // a visible number change in a reviewed fixture, never a silent kernel edit.
+  const mutatingBudget = JSON.parse(
+    readFileSync(new URL('./fixtures/architect-mutating-grant-budget.json', import.meta.url), 'utf8'),
+  ) as Record<string, number>;
+  assert.deepStrictEqual(
+    Object.keys(mutatingBudget).sort(),
+    Object.keys(pinned.skills).sort(),
+    'every pinned skill needs a reviewed mutating-grant budget',
+  );
+  for (const [skillId, skill] of Object.entries(pinned.skills)) {
+    const actual = (skill as { capability_ids: string[] }).capability_ids.filter((id) =>
+      mutating.has(id),
+    );
+    assert.strictEqual(
+      actual.length,
+      mutatingBudget[skillId],
+      `${skillId}: mutating grant count changed without updating the reviewed budget (${actual.join(', ')})`,
+    );
+  }
+
   assert.ok(
     architectSource.skills.every((skill: Record<string, unknown>) => !('capability_ids' in skill)),
     'source manifests must not carry a second hand-maintained grant list',
   );
-  assert.ok(
-    !pinned.skills.context.capability_ids.includes('brain.context.publish'),
-    'a canonical id mentioned only in negative kernel prose must never become authority',
-  );
 });
 
-test('every kernel compliance contract exactly covers its eval-declared operation authority', () => {
+test('every kernel operation contract must cover its eval-declared operation authority', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   assert.equal(Object.keys(pinned.skills).length, 14);
@@ -300,7 +374,7 @@ test('every kernel compliance contract exactly covers its eval-declared operatio
     writeFileSync(path, drifted);
     assert.throws(
       () => buildArchitectArtifacts(catalog),
-      /strategy.*operation contract.*eval-declared capability authority/i,
+      /strategy.*evals declare capability ids.*does not grant/i,
     );
   } finally {
     writeFileSync(path, original);
@@ -330,7 +404,7 @@ test('signed capability domains stay identical across source, Architect, Claude,
     seo: ['brain', 'content', 'tables', 'visibility'],
     social: ['brain', 'content'],
     strategy: ['brain', 'context'],
-    tables: ['tables'],
+    tables: ['tables', 'records'],
     visibility: ['visibility'],
     'weekly-growth-plan': [],
   };
@@ -358,13 +432,7 @@ test('signed capability domains stay identical across source, Architect, Claude,
       );
     }
   }
-  const exactCapabilityIds = [
-    'sources.cold_outbound_expand',
-    'workflows.get',
-    'workflows.graph_apply',
-    'workflows.node_registry',
-    'workflows.validate_graph',
-  ];
+  const exactCapabilityIds = kernelGrants('outreach-workflow-builder');
   assert.equal(
     'capability_ids' in architectSource.skills.find(
       (skill: { id: string }) => skill.id === 'outreach-workflow-builder',
@@ -589,7 +657,11 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'run_state' && field.allowed_values.includes('blocked')
   )));
-  assert.deepEqual(conditional.must_use_popup_when_missing, ['messaging branch']);
+  // Reviewed change: the messaging branch state is discoverable by inspecting the
+  // workflow graph, so a popup for it was asking what live metadata already answers.
+  // No popup concept remains, and the required_concepts below now carry the intent.
+  assert.deepEqual(conditional.must_use_popup_when_missing, []);
+  assert.ok(conditional.required_concepts.includes('never an intake question'));
   assert.deepEqual(exactSet.required_capability_ids, ['sources.cold_outbound_expand']);
   assert.equal(exactSet.fixture_profile, 'outreach_exact_result_set_expansion');
   assert.ok(exactSet.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
@@ -597,7 +669,12 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   )));
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
-    /include the finite `messaging_branch_state` choice \(`present` or `absent`\) in the same one complete intake/,
+    // Reviewed change: asking for `messaging_branch_state` at intake was the defect.
+    // Live metadata answers it, and the kernel's own "Never ask what live metadata
+    // answers" made the old intake question self-contradictory, so the concept stays
+    // required but must be resolved by inspection. The assertion still pins that the
+    // kernel commits to a finite resolution rule rather than leaving the state open.
+    /Resolve `messaging_branch_state` by inspection, never by asking.*resolves it to `absent`.*resolves it to `present`/s,
   );
   assert.match(
     artifacts['generated/architect/outreach/KERNEL.md'],
@@ -725,10 +802,20 @@ test('competitor engager release eval is production-real and preserves dependenc
   assert.match(kernel, /exactly seven successful distinct rows/);
   assert.match(kernel, /partial receipt remains partial and is never filled with synthetic rows/);
   assert.match(kernel, /complete raw provider payload/);
-  assert.match(kernel, /null enrichment result is `unsure`/);
-  assert.match(kernel, /never uses row position, row index, row number, or table order/);
-  assert.match(kernel, /fixed greeting, pitch paragraphs, CTA, sign-off/);
   assert.match(kernel, /wait for terminal activation, enrollment, and provider receipts/);
+  // The coordinator delegates column and copy mechanics to the specialists it hands off
+  // to: `tables` is a declared dependency, `outreach-sequence-writer` is loaded
+  // conditionally when the validated workflow contains messaging and is required by the
+  // full-journey eval's tool sequence. Either way the rule must ship in the kernel that
+  // owns it. Asserting it here too would reward duplicating specialist prose back into
+  // the coordinator, which is what pushed outreach over its 3,000-token context budget.
+  assert.match(kernel, /Hand the qualification worksheet to `tables`/);
+  assert.match(kernel, /Hand messaging to `outreach-sequence-writer`/);
+  const tablesKernel = artifacts['generated/architect/tables/KERNEL.md'];
+  assert.match(tablesKernel, /null enrichment result is `unsure`/);
+  assert.match(tablesKernel, /never uses row position, row index, row number, or table order/);
+  const writerKernel = artifacts['generated/architect/outreach-sequence-writer/KERNEL.md'];
+  assert.match(writerKernel, /fixed greeting, pitch paragraphs, CTA, sign-off/);
 });
 
 test('table evals require exact contracts and authoritative schema or paid-run receipts', () => {
@@ -758,6 +845,13 @@ test('table evals require exact contracts and authoritative schema or paid-run r
   );
   assert.match(
     buildTable.request,
-    /A proposal without the tools_run preparation receipt is incomplete/,
+    /A proposal that does not match the fetched contract is incomplete/,
   );
+  // No canonical capability in the tables family declares dry_run_supported, so a
+  // case that demands a non-mutating dry-run preparation receipt from tables.create
+  // is unsatisfiable: the agent reads the contract, is refused invalid_request, and
+  // is scored down for obeying the contract it was told to obey. The premise, not
+  // the agent, was wrong. Execution mode is the contract's to declare.
+  assert.doesNotMatch(buildTable.request, /dry-run preparation mode/i);
+  assert.match(buildTable.request, /execution mode that contract declares supported/i);
 });

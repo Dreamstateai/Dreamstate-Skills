@@ -3,8 +3,10 @@
     {
       "expected_skill_ids": ["visibility"],
       "id": "citation-audit",
+      "must_not_load": ["analytics", "seo"],
       "request": "Audit whether AI assistants cite us for our core buyer questions and show the evidence gaps.",
-      "required_capability_ids": ["visibility.workspace_site_get", "visibility.overview", "visibility.citations", "visibility.tracked_prompts.list"]
+      "required_capability_ids": ["visibility.workspace_site_get", "visibility.overview", "visibility.citations", "visibility.tracked_prompts.list", "visibility.prompt_metrics_list"],
+      "required_concepts": ["tracked prompt", "best linkedin outreach tool", "how to automate linkedin dms", "recommend"]
     },
     {
       "expected_skill_ids": ["visibility"],

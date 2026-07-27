@@ -3,25 +3,25 @@ id: blog
 name: blog
 description: "Manage grounded blog research, draft, editorial review, revision, scheduling, publication, and canonical editor inspection."
 capability_domains: ["content"]
-capability_ids: ["brain.context.get","brain.context.search","content.article_create_schedule","content.article_delivery_create","content.article_get","content.article_update","content.delivery_publish","content.submit_review"]
+capability_ids: ["brain.content.get","brain.content.search","brain.context.get","brain.context.search","brain.evidence.search","content.article_archive","content.article_asset_import","content.article_asset_register","content.article_asset_upload","content.article_create_schedule","content.article_deliveries_list","content.article_delivery_create","content.article_delivery_payload_get","content.article_distribution_get","content.article_duplicate","content.article_enabled_get","content.article_get","content.article_list","content.article_selection_edit","content.article_update","content.delivery_publish","content.destination_test","content.destinations_list","content.schedule","content.submit_review","content.unschedule","content.version_create","content.version_diff_get","content.version_get","content.versions_list","research.urls_fetch"]
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  playbook_kernel_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 70acbffd5d943747
-  manifest_digest: c96369c54f9a7ac91ef0c4e47fedf77ed78dc50c242c04d7478a26f06e04c034
+  capability_hash: 01002d9587befbf3
+  manifest_digest: f91ed1b74ebe129ef522f45fdcaec299626b3b5f1d0209e2d0a44bf4684f9ab0
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.3
-  source_release_hash: 15472f68c443fe99509c5ddd2d098fe1779e168b6eecc73bb1c24e0d8fb98124
+  source_release: 0.5.4
+  source_release_hash: df51ecbf0efb3747519d8039f568ef404292ea2cbae5e71256ccaf0554949c95
   generator_version: 1.0.0
   client: codex
   kernel_id: blog
   kernel_file: KERNEL.md
-  kernel_sha256: 466b0f0837d60107b14c4b5bed89a8df152baf9a4a6d881fba16130f3049c9db
+  kernel_sha256: b1be72b982064d20fd7b591678493185ba8a5ee1a39f820afe249fe1ef60d151
   adapter_sha256: 5ae4590e6d1ad3b7e3bda4638e899f5967e3fc790928b2dbf4cb5b2f43b3c2d2
   evals_file: evals.json
   evals_sha256: b419b7fa9101ec22b58e03eac1a7b1711bef7d2ff970a56b96a7f0ddb55837fe
@@ -46,9 +46,6 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 ---
 
 # Blog artifact lifecycle
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","content.article_create_schedule","content.article_delivery_create","content.article_get","content.article_update","content.delivery_publish","content.submit_review"]}
--->
 
 Own blog research, grounded draft creation, editorial review, revision, scheduling, and publication destination. A generic buyer resource belongs to `growth-asset-planner`; visibility measurement belongs to `visibility`; durable positioning belongs to `strategy`.
 

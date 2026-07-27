@@ -38,16 +38,15 @@
           "dreamstate_get_run"
         ],
         "allowed_capability_ids": [
-          "campaigns.create",
-          "campaigns.list",
-          "campaigns.template_apply",
           "outreach.triggers_supported_list",
           "sequences.add_step",
           "sequences.edit_step",
           "sequences.get",
+          "sequences.list",
           "sequences.remove_step",
           "sequences.step_options",
-          "sequences.validate"
+          "sequences.validate",
+          "workflows.create"
         ]
       },
       "check": "tool_trace_subset"

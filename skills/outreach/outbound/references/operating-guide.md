@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `campaigns.activate`, `campaigns.create`, `campaigns.template_apply`, `cells.settle`, `columns.add`, `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `outreach.workspace_stats_get`, `rows.query`, `sequences.add_step`, `sequences.enroll_selection`, `sequences.get`, `sequences.step_options`, `sequences.validate`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`
+Declared capabilities: `cells.settle`, `columns.add`, `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `outreach.workspace_stats_get`, `rows.query`, `sequences.add_step`, `sequences.enroll_selection`, `sequences.get`, `sequences.step_options`, `sequences.validate`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`, `workflows.activate`, `workflows.create`
 
-Required scopes: `actions`, `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`
+Required scopes: `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`, `workflows:write`
 
 ## Evidence checklist
 

@@ -8,24 +8,36 @@
       "max_intake_checkpoints": 1,
       "must_use_popup_when_missing": ["qualification", "sender"],
       "request": "Build and launch a new outbound campaign for US B2B founders from scratch. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Resolve every remaining material choice in one structured popup, default the structured volume intent to demand_based, then continue the work without a second intake.",
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.create", "outreach.demand_plan_get"]
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "workflows.create", "outreach.demand_plan_get"]
+    },
+    {
+      "expected_skill_ids": ["outreach"],
+      "forbidden_question_concepts": ["outreach_volume", "messaging_tone", "messaging_copy_angle", "messaging_cta", "channel_motion", "messaging_cadence"],
+      "expected_workspace_outcome": [{"check":"workbook_enrolled","expected":"absent","target":"any","reason":"the request forbids enrollment before workbook approval, so a self-reported boundary is verified against the workspace; scoped workspace-wide from this turn's start"}],
+      "id": "workbook-first-before-any-bundle",
+      "max_intake_checkpoints": 1,
+      "must_use_popup_when_missing": ["job_titles", "company_keywords"],
+      "required_capability_ids": ["outreach.demand_plan_get"],
+      "required_concepts": ["standalone workbook proposal", "stop for the user's response", "revise columns and filters across turns", "no workflow, sequence, or bundle contracts fetched while the workbook is unapproved", "bundle binds the approved workbook revision", "enrollment only after workbook approval"],
+      "request": "Build an outreach campaign. Ask every required intake concept once, including target job titles and company keywords, and never ask me about volume, tone, copy angle, call to action, or channel motion. Then propose only the workbook so I can add and change columns and filters over several turns. Do not fetch or plan the workflow, sequence, or bundle contracts until I approve the workbook, and enroll nobody before then."
     },
     {
       "expected_skill_ids": ["outreach"],
       "id": "existing-campaign-complex-table",
       "request": "Open my existing founder campaign, add signals, profile enrichment, a derived priority score and AI opener, then update its workflow.",
-      "required_capability_ids": ["campaigns.get", "campaigns.graph_apply"]
+      "required_capability_ids": ["workflows.get"]
     },
     {
       "conditional_skill_id": "outreach-sequence-writer",
       "id": "sequence-only-when-messaging",
       "max_intake_checkpoints": 1,
-      "must_use_popup_when_missing": ["messaging branch"],
-      "required_concepts": ["inspect before intake", "same one complete intake", "no later ask_user", "unresolved after intake is blocked"],
-      "request": "Update my current workflow to include custom outreach messages only if its inspected graph has a messaging branch. Inspect before intake; if the branch state is still unknown, include that choice in the same one complete intake and never ask a later follow-up."
+      "must_use_popup_when_missing": [],
+      "required_concepts": ["inspect before intake", "resolve branch state by inspection", "never an intake question", "no later ask_user", "unresolved after intake is blocked"],
+      "request": "Update my current workflow to include custom outreach messages only if its inspected graph has a messaging branch. Inspect before intake and resolve the branch state from what inspection returns; never put that state in the intake popup and never ask a later follow-up."
     },
     {
       "expected_skill_ids": ["outreach"],
+      "expected_workspace_outcome": [{"check":"workbook_exists","expected":"absent","reason":"a proposal-only turn must not build the workbook, so campaign_state inactive is verified against the workspace instead of trusted from the completion contract; scoped workspace-wide from this turn's start"},{"check":"workbook_enrolled","expected":"absent","target":"any","reason":"a proposal-only turn must not enroll anyone, which is what activation_state inactive claims; scoped workspace-wide from this turn's start"}],
       "id": "staged-pilot-build-sample-expand-launch",
       "resume_after_elicitation": "recommended",
       "required_capability_ids": ["outreach.demand_plan_get", "sources.cold_outbound_preview", "sources.cold_outbound_expand"],
@@ -34,13 +46,14 @@
     },
     {
       "expected_skill_ids": ["outreach"],
+      "expected_workspace_outcome": [{"check":"workbook_enrolled","expected":"absent","target":"any","reason":"the turn must report launch blocked, so nothing may be enrolled or activated; scoped workspace-wide from this turn's start"}],
       "id": "explicit-final-launch-revalidation",
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [{"id":"stage_boundary_state","allowed_values":["ordered_separate"]},{"id":"activation_state","allowed_values":["inactive"]},{"id":"external_send_state","allowed_values":["not_authorized"]},{"id":"selection_state","allowed_values":["missing"]},{"id":"approval_state","allowed_values":["required"]},{"id":"run_state","allowed_values":["blocked"]}],
       "required_concepts": ["Launch Campaign", "outreach.demand_plan_get", "launch_revalidation", "sender binding", "exclusions", "cost", "readiness"],
       "must_disclose_external_sends": true,
       "request": "The source pilot, draft, column sample, and bulk expansion are described as complete, and I explicitly state launch intent. No approval-to-grant binding, canonical sender-binding evidence, exact selection receipt, or readiness receipt is attached. Do not activate or send. Explain the Launch Campaign preflight: run outreach.demand_plan_get with phase launch_revalidation and the prior plan, then revalidate sender binding, exclusions, exact selection, cost ceiling, readiness, revisions, capability digests, and approval evidence. State that launch approval, once validly bound, is the single capped-and-paced external-send authorization, but report this request blocked and not authorized.",
-      "required_capability_ids": ["campaigns.get", "campaigns.activate", "outreach.demand_plan_get"]
+      "required_capability_ids": ["workflows.get", "workflows.activate", "outreach.demand_plan_get"]
     },
     {
       "expected_skill_ids": ["outreach"],
@@ -60,7 +73,7 @@
       "forbidden_question_concepts": ["outreach_volume"],
       "id": "competitor-engagers-canonical-full-journey",
       "max_intake_checkpoints": 1,
-      "required_capability_ids": ["brain.context.search", "brain.context.get", "campaigns.get", "campaigns.create", "campaigns.graph_apply", "outreach.demand_plan_get", "sources.linkedin_post_engagers_preview", "sources.cold_outbound_expand", "campaigns.activate"],
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "workflows.get", "workflows.create", "outreach.demand_plan_get", "sources.linkedin_post_engagers_preview", "sources.cold_outbound_expand", "workflows.activate"],
       "required_concepts": ["one complete intake", "no second ask_user", "linkedin.post_engagers", "exactly 7 successful distinct pilot rows", "raw provider payload", "provider payload digest", "fetched-at", "profile verification", "company enrichment", "required filters", "null is unsure", "required fail sets fit to 0", "nice-to-have weight", "structured run_if_json", "no row position", "fixed scaffold", "personalization slots", "qualification rate", "cost per qualified", "Launch Campaign", "fresh demand revalidation", "manual_resume", "durable same-job checkpoint", "server-issued launch authorization", "auth-ID-only activation", "crash-safe post-approval resume"],
       "required_terminal_receipts": ["source_pilot", "bundle_graph_apply", "column_sample", "bulk_expansion", "launch_revalidation"],
       "required_tool_sequence": [
@@ -71,9 +84,9 @@
         {"tool":"tools_search","capability_id":"brain.context.get"},
         {"tool":"tools_get","capability_id":"brain.context.get"},
         {"tool":"tools_run","capability_id":"brain.context.get","phase":"company_brain_get"},
-        {"tool":"tools_search","capability_id":"campaigns.get"},
-        {"tool":"tools_get","capability_id":"campaigns.get"},
-        {"tool":"tools_run","capability_id":"campaigns.get","phase":"inspect_existing_canonical_campaign_graph"},
+        {"tool":"tools_search","capability_id":"workflows.get"},
+        {"tool":"tools_get","capability_id":"workflows.get"},
+        {"tool":"tools_run","capability_id":"workflows.get","phase":"inspect_existing_canonical_campaign_graph"},
         {"tool":"ask_user","phase":"one_complete_intake"},
         {"tool":"tools_search","capability_id":"outreach.demand_plan_get"},
         {"tool":"tools_get","capability_id":"outreach.demand_plan_get"},
@@ -83,13 +96,15 @@
         {"tool":"tools_get","capability_id":"sources.linkedin_post_engagers_preview"},
         {"tool":"propose_artifact","artifact_type":"outreach_source","phase":"exact_7_row_source_evidence_pilot"},
         {"tool":"request_approval","artifact_type":"outreach_source","phase":"exact_7_row_pilot_authorization"},
+        {"tool":"propose_artifact","artifact_type":"outreach_workbook","phase":"canonical_workbook_worksheet_view_only"},
+        {"tool":"request_approval","artifact_type":"outreach_workbook","phase":"workbook_iteration_and_approval"},
         {"tool":"load_skill","skill_id":"outreach-workflow-builder"},
         {"tool":"load_skill","skill_id":"outreach-sequence-writer"},
-        {"tool":"tools_search","capability_id":"campaigns.create"},
-        {"tool":"tools_get","capability_id":"campaigns.create"},
-        {"tool":"tools_search","capability_id":"campaigns.graph_apply"},
-        {"tool":"tools_get","capability_id":"campaigns.graph_apply"},
-        {"tool":"propose_artifact","artifact_type":"outreach_bundle","phase":"canonical_workbook_worksheet_view_workflow_campaign_sequence_graph"},
+        {"tool":"tools_search","capability_id":"workflows.create"},
+        {"tool":"tools_get","capability_id":"workflows.create"},
+        {"tool":"tools_search","capability_id":"workflows.graph_apply"},
+        {"tool":"tools_get","capability_id":"workflows.graph_apply"},
+        {"tool":"propose_artifact","artifact_type":"outreach_bundle","phase":"workflow_campaign_sequence_graph_bound_to_approved_workbook"},
         {"tool":"request_approval","artifact_type":"outreach_bundle","phase":"draft_structure_apply_authorization"},
         {"tool":"propose_artifact","artifact_type":"table_column_run","phase":"dependency_ordered_real_row_sample"},
         {"tool":"request_approval","artifact_type":"table_column_run","phase":"sample_and_message_preview_authorization"},
@@ -100,12 +115,12 @@
         {"tool":"tools_search","capability_id":"outreach.demand_plan_get","phase":"launch_revalidation"},
         {"tool":"tools_get","capability_id":"outreach.demand_plan_get","phase":"launch_revalidation"},
         {"tool":"tools_run","capability_id":"outreach.demand_plan_get","phase":"launch_revalidation"},
-        {"tool":"tools_search","capability_id":"campaigns.activate"},
-        {"tool":"tools_get","capability_id":"campaigns.activate"},
+        {"tool":"tools_search","capability_id":"workflows.activate"},
+        {"tool":"tools_get","capability_id":"workflows.activate"},
         {"tool":"propose_artifact","artifact_type":"outreach_activation","phase":"single_launch_approval_qualified_only_activation_enrollment_paced_send"},
         {"tool":"request_approval","artifact_type":"outreach_activation","phase":"single_launch_authorization"}
       ],
-      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing workbook and schema; use the exact competitor-engager source; show one complete intake with no volume question; then execute the canonical 7-row pilot, dependency-ordered verification/enrichment/filter/scoring sample, real-prospect fixed-scaffold message preview, canonical workbook/workflow/campaign/sequence bundle, cost and qualification audit, single launch approval, fresh demand revalidation, qualified-only staging, activation, paced multi-channel sends, and terminal receipts."
+      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing workbook and schema; use the exact competitor-engager source; show one complete intake with no volume question; then execute the canonical 7-row pilot, dependency-ordered verification/enrichment/filter/scoring sample, real-prospect fixed-scaffold message preview, a standalone canonical workbook proposal I can revise before anything else is built, then the workflow/campaign/sequence bundle bound to that approved workbook, cost and qualification audit, single launch approval, fresh demand revalidation, qualified-only staging, activation, paced multi-channel sends, and terminal receipts."
     },
     {
       "execution_profile": "production_real",
@@ -142,7 +157,7 @@
       "expected_skill_ids": ["outreach"],
       "fixture_profile": "competitor_engagers_capacity_race",
       "id": "competitor-engagers-capacity-change-blocks-launch",
-      "required_capability_ids": ["outreach.demand_plan_get", "campaigns.activate"],
+      "required_capability_ids": ["outreach.demand_plan_get", "workflows.activate"],
       "required_concepts": ["prior demand plan", "launch_revalidation", "fresh sender headroom", "capacity changed", "exact qualified selection exceeds capacity", "blocked", "replanned", "campaign remains inactive", "no outreach_activation proposal", "no activation receipt", "no enrollment receipt", "no send receipt"],
       "required_terminal_receipts": ["launch_revalidation"],
       "required_tool_sequence": [

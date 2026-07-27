@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [campaigns.list, outreach.dm_conversations_list, outreach.dm_conversation_get, social.accounts_list, outreach.dm_message_send, outreach.dm_conversation_status_update, outreach.dm_conversation_assign, outreach.dm_conversation_read, outreach.workspace_stats_get]
+capability_ids: [sequences.list, outreach.dm_conversations_list, outreach.dm_conversation_get, social.accounts_list, outreach.dm_message_send, outreach.dm_conversation_status_update, outreach.dm_conversation_assign, outreach.dm_conversation_read, outreach.workspace_stats_get]
 ---
 
 # Reply Triage
@@ -26,7 +26,7 @@ with `dreamstate_get_run`.
 
 ## Step 1: Find the live conversations
 
-List campaigns with `campaigns.list` and pick the one the user means (or all active).
+List sequences with `sequences.list` and pick the one the user means (or all active).
 Use `outreach.dm_conversations_list` to find open threads, and
 `outreach.dm_conversation_get` for each thread's context. Get the sending account evidence
 from `social.accounts_list`; the conversation itself remains the authoritative send target.

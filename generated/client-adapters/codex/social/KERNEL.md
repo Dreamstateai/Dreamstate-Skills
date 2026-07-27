@@ -1,7 +1,4 @@
 # Social content coordinator
-<!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","brain.learning.query_benchmarks","content.artifact_create","content.artifact_generate","content.delivery_publish","content.schedule"]}
--->
 
 ## Job boundary
 

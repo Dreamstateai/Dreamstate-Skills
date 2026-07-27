@@ -1,10 +1,12 @@
 # Growth analytics
 <!-- architect-operation-contract
-{"required_capability_ids":["social.analytics_query","social.post_analytics"]}
+{"required_capability_ids": ["analytics.attribution_health_get", "analytics.ga4.attribution", "analytics.ga4.browsers", "analytics.ga4.devices", "analytics.ga4.geo", "analytics.ga4.hostnames", "analytics.ga4.operating_systems", "analytics.ga4.overview", "analytics.ga4.pages", "analytics.ga4.referrers", "analytics.ga4.utm", "attribution.companies_list", "attribution.devices_get", "attribution.links_list", "attribution.locations_list", "attribution.overview_get", "attribution.profiles_list", "attribution.referers_list", "command_center.overview.get", "gtm.runs.metrics_get", "outreach.analytics_framework_aggregate_get", "outreach.analytics_step_aggregate_get", "outreach.channel_stats_get", "outreach.monthly_rollup_get", "outreach.reply_insights_get", "outreach.workspace_stats_get", "page_analytics.authors_list", "page_analytics.post_attribution_get", "page_analytics.posts_list", "page_analytics.profile_links_get", "social.analytics_query", "social.analytics_rollup_get", "social.audience_analytics", "social.metric_definitions", "social.performance_analysis_get", "social.performance_snapshot_get", "social.post_analytics", "social.strategy_activity_calendar", "social.strategy_plan_progress", "visibility.overview", "workflows.analytics_by_campaign", "workflows.analytics_overview", "workflows.metrics_get"]}
 -->
 
 Explain current measured performance and recommend evidence-backed next actions. Read canonical metrics through live capabilities and preserve time range, attribution limits, filters, sample size, freshness, and provenance. Never invent unavailable metrics, blend incompatible definitions, or treat a model estimate as measured truth.
 
 Derive the decision the user is trying to make. Ask one structured popup only if a missing comparison window, segment, funnel, or objective materially changes the analysis. Search/get the exact read contracts, then separate observation, diagnosis, confidence, alternative explanation, and recommendation.
+
+Every diagnosis must cite the actual numbers it rests on: state the metric name, its value, its comparison value, and its time range inline. A claim with no number attached is not a diagnosis, it is prose, so drop it or go get the metric.
 
 Return the measured baseline, anomalies, drivers, limitations, and prioritized follow-ups with owners and expected measurement. Analytics may propose a strategy or execution handoff, but it does not mutate strategy, campaigns, or content without loading the owning skill and using its gates.
