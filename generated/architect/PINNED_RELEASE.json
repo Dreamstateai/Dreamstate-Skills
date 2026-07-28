@@ -2,15 +2,15 @@
   "schema_version": 1,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.7",
-  "source_release_hash": "049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5",
+  "source_release_hash": "085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5",
+    "playbook_kernel_hash": "085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "0f792191fabb37cf",
-    "manifest_digest": "ab47e1dafaa5b0db4a00788025060197b9ddd29bc42bf376ea0313842c31e933",
+    "capability_hash": "dd1a08fc43be0a44",
+    "manifest_digest": "6560065e6813694762fbc17655d9c50e28b5262496f1a4a3e4e2a590c3646276",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -152,7 +152,7 @@
         "command_center.assets.list"
       ],
       "direct_run_capability_ids": [],
-      "kernel_sha256": "cd206ac9a54a43e17bcc3e18d88b41e53f1d1cd78699f18928c5e9a9c3d065aa",
+      "kernel_sha256": "6b1fb2ad7b5427a25334328e76863e07fa30ce27e3a681958f016b781faacc76",
       "adapter_sha256": "873e2b27114af25814f9fe06780bf96e1068844a06ded1fa6c1f219f8fb72c8d",
       "evals_sha256": "a04ebbe93e8520147463d361714335367b518659b8591db1fe60e811cf1d3c6d"
     },
@@ -528,6 +528,7 @@
         "attachments.delete",
         "attachments.list",
         "cells.inspect",
+        "cells.read_page",
         "cells.settle",
         "columns.add",
         "columns.archive",
@@ -535,6 +536,7 @@
         "columns.run",
         "columns.run_all",
         "columns.update",
+        "executable_definitions.list_resolved",
         "records.companies_list",
         "records.field_set",
         "records.get",
@@ -596,9 +598,9 @@
         "worksheets.update"
       ],
       "direct_run_capability_ids": [],
-      "kernel_sha256": "a90966eb7190e29e73676d5240385353518b961186b8d9526cc21fd70c8a419f",
-      "adapter_sha256": "ca9cd6a621811e647a5ad84923d3245963ba9c7b686b0fa5d62cf20544ec38e0",
-      "evals_sha256": "b4d6796e381f1905af0241193d9598775fdd12a91f181553efedca79964e70d8"
+      "kernel_sha256": "1c372537989e2789d7624372c80db85ef3c1410f0ccb5466645fa2ca5f9807f1",
+      "adapter_sha256": "87dc7ba29820d702a6c350736e949fcf2674628271384f703d22a8962ba39b90",
+      "evals_sha256": "5635824790ba5ac3b4e318cc0f394461f19c90298d9a029e11412a8c10dd59a1"
     },
     "visibility": {
       "capability_domains": [

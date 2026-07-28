@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { lstatSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertFrontmatterRoundTrip, assertOptionalFrontmatter } from './frontmatter-guard.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_DIR = join(ROOT, 'architect-kernels');
@@ -256,15 +257,15 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
   for (const id of ids) visit(id);
 }
 
-function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill[]; sourceHash: string } {
-  const manifestPath = join(SOURCE_DIR, 'skills.json');
+function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; skills: SourceSkill[]; sourceHash: string } {
+  const manifestPath = join(sourceDir, 'skills.json');
   if (!lstatSync(manifestPath).isFile()) {
     throw new Error('architect-kernels/skills.json must be a regular file');
   }
   const manifest = readJson<ArchitectSourceManifest>(manifestPath);
   assertSourceManifest(manifest);
   const expectedEntries = ['skills.json', ...manifest.skills.map((skill) => skill.id)].sort();
-  const actualEntries = readdirSync(SOURCE_DIR, { withFileTypes: true });
+  const actualEntries = readdirSync(sourceDir, { withFileTypes: true });
   if (JSON.stringify(actualEntries.map((entry) => entry.name).sort()) !== JSON.stringify(expectedEntries)) {
     throw new Error('architect-kernels exact source set does not match skills.json');
   }
@@ -276,7 +277,7 @@ function loadSources(): { manifest: ArchitectSourceManifest; skills: SourceSkill
     }
   }
   const skills = [...manifest.skills].sort((a, b) => a.id.localeCompare(b.id)).map((skill) => {
-    const directory = join(SOURCE_DIR, skill.id);
+    const directory = join(sourceDir, skill.id);
     const entries = readdirSync(directory).sort();
     if (JSON.stringify(entries) !== JSON.stringify(['KERNEL.md', 'evals.json'])) {
       throw new Error(`${skill.id}: source package must contain exactly KERNEL.md and evals.json`);
@@ -612,7 +613,15 @@ function codingSkillFile(
   return { content, adapterHash };
 }
 
-export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityManifest): Record<string, string> {
+/**
+ * `sourceDir` exists so the emit-time frontmatter guard can be exercised against
+ * a throwaway fixture tree. Production callers never pass it and always build
+ * from the repository's real `architect-kernels/`.
+ */
+export function buildArchitectArtifacts(
+  capabilityManifest: ArchitectCapabilityManifest,
+  sourceDir: string = SOURCE_DIR,
+): Record<string, string> {
   validateCapabilityManifest(capabilityManifest);
   const capabilityIds = new Set(
     capabilityManifest.capabilities.flatMap((capability) => {
@@ -622,7 +631,7 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
     }),
   );
   const facts = manifestFacts(capabilityManifest);
-  const { manifest, skills, sourceHash } = loadSources();
+  const { manifest, skills, sourceHash } = loadSources(sourceDir);
   for (const skill of skills) {
     for (const capabilityId of skill.capability_ids) {
       if (!capabilityIds.has(capabilityId)) {
@@ -658,6 +667,16 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
       facts,
     );
     const architectRoot = `generated/architect/${skill.id}`;
+    // Validate the bytes just produced, not the inputs that produced them. The
+    // authored `name` and `description` are the only unquoted prose in the
+    // block, so they are checked for exact round-trip; everything else only has
+    // to parse.
+    assertFrontmatterRoundTrip(`${architectRoot}/SKILL.md`, architect.content, {
+      id: skill.id,
+      name: skill.name,
+      description: skill.description,
+    });
+    assertOptionalFrontmatter(`${architectRoot}/KERNEL.md`, skill.kernel);
     artifacts[`${architectRoot}/SKILL.md`] = architect.content;
     artifacts[`${architectRoot}/KERNEL.md`] = skill.kernel;
     artifacts[`${architectRoot}/evals.json`] = skill.evals;
@@ -680,6 +699,10 @@ export function buildArchitectArtifacts(capabilityManifest: ArchitectCapabilityM
         sourceHash,
         facts,
       );
+      assertFrontmatterRoundTrip(`${root}/SKILL.md`, adapter.content, {
+        id: skill.id,
+        description: skill.description,
+      });
       artifacts[`${root}/SKILL.md`] = adapter.content;
       artifacts[`${root}/KERNEL.md`] = skill.kernel;
       artifacts[`${root}/evals.json`] = skill.evals;

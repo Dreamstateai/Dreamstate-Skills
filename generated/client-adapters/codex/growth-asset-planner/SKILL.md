@@ -1,28 +1,28 @@
 ---
 id: growth-asset-planner
 name: growth-asset-planner
-description: "Design a buyer-facing resource and its evidence, structure, CTA, distribution, and follow-up path while remaining explicitly unsaved until live persistence exists."
+description: "Design a buyer-facing reading resource (lead magnet, checklist, playbook, audit, SOP, resource hub) and its evidence, structure, CTA, distribution, and follow-up path, remaining explicitly unsaved until live persistence exists. Never owns workbooks, worksheets, tables, views, columns, or rows. Any durable dataset deliverable belongs to `tables`."
 capability_domains: []
 capability_ids: ["brain.context.get","brain.context.search","brain.evidence.search","command_center.assets.create","command_center.assets.list"]
 direct_run_capability_ids: []
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
+  playbook_kernel_hash: 085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 0f792191fabb37cf
-  manifest_digest: ab47e1dafaa5b0db4a00788025060197b9ddd29bc42bf376ea0313842c31e933
+  capability_hash: dd1a08fc43be0a44
+  manifest_digest: 6560065e6813694762fbc17655d9c50e28b5262496f1a4a3e4e2a590c3646276
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.7
-  source_release_hash: 049993b08c0e2231031195ec573a7535492ffab2a908b775b9d5006b8f38e7f5
+  source_release_hash: 085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8
   generator_version: 1.0.0
   client: codex
   kernel_id: growth-asset-planner
   kernel_file: KERNEL.md
-  kernel_sha256: cd206ac9a54a43e17bcc3e18d88b41e53f1d1cd78699f18928c5e9a9c3d065aa
+  kernel_sha256: 6b1fb2ad7b5427a25334328e76863e07fa30ce27e3a681958f016b781faacc76
   adapter_sha256: 160e4f67e8542a9cb2a6f4f8b7de8a8ee28b3c2a5402e78d28e2d09d2a902fdb
   evals_file: evals.json
   evals_sha256: a04ebbe93e8520147463d361714335367b518659b8591db1fe60e811cf1d3c6d
@@ -62,6 +62,6 @@ Design a lead magnet, playbook, checklist, audit, SOP, resource library, resourc
 
 Ground the asset in targeted published Company Brain facts and cited evidence. Derive the buyer, stage, pain, desired transformation, proof, constraints, and distribution context before asking. Use one structured popup only for material remaining choices such as promise, format, depth, brand posture, or call to action.
 
-Use live search/get to establish whether a durable asset artifact, editor, storage, or publishing capability exists. Until an exact live contract proves it does, this skill is planning-only: return an explicitly unsaved proposal and never claim creation, save, upload, publication, or a working download link. A blog draft belongs to `blog`; an operating plan belongs to `weekly-growth-plan`.
+Use live search/get to establish whether a durable asset artifact, editor, storage, or publishing capability exists. Until an exact live contract proves it does, this skill is planning-only: return an explicitly unsaved proposal and never claim creation, save, upload, publication, or a working download link. A blog draft belongs to `blog`; an operating plan belongs to `weekly-growth-plan`. A workbook, worksheet, table, view, column, or row belongs to `tables`, no matter which buyer, cohort, or audience the request names: this skill produces something a person reads, never a durable dataset, so a request for one is not this skill's job even when the wording overlaps a playbook or worksheet.
 
 The proposal includes a concise positioning statement, title options, reader outcome, evidence map, section outline, examples or worksheets, production requirements, quality criteria, distribution and follow-up path, measurement, risks, and the smallest supported next action. If a durable capability is available, fetch its exact schema and apply the normal proposal and consequence gates before persistence.

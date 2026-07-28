@@ -242,11 +242,18 @@
       "request": "Inspect the Run Center for this Workbook, open the exact failed run and failure report, choose the correct retry, resume, or column reconciliation path, and cancel only a separately approved still-active run."
     },
     {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "columns.add",
+        "workbooks.create"
+      ],
       "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
-      "expected_skill_ids": ["tables"],
+      "expected_skill_ids": [
+        "tables"
+      ],
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
@@ -257,24 +264,43 @@
           "check": "workbook_columns",
           "expected": "present",
           "workbook_name_contains": "T25 Account Qualification",
-          "expected_columns": ["Company Domain", "Company Name", "Employee Count", "ICP Fit Reason"]
+          "expected_columns": [
+            "Company Domain",
+            "Company Name",
+            "Employee Count",
+            "ICP Fit Reason"
+          ]
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only workbook", "invented resource id"],
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only workbook",
+        "invented resource id"
+      ],
       "id": "production-local-account-qualification-workbook",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["workbooks.create", "columns.add"],
+      "required_capability_ids": [
+        "workbooks.create",
+        "columns.add"
+      ],
       "request": "Create a workspace-local Workbook named T25 Account Qualification with first worksheet Companies, company row identity, and columns Company Domain, Company Name, Employee Count, and ICP Fit Reason. Save the exact proposal; after I approve it, execute it and verify durable readback. Do not attach or run a source, enrich, enroll, create a workflow or sequence, publish, activate, or send anything.",
       "resume_after_approval": "owner_exact"
     },
     {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "columns.add",
+        "workbooks.create"
+      ],
       "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
-      "expected_skill_ids": ["tables"],
+      "expected_skill_ids": [
+        "tables"
+      ],
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
@@ -285,24 +311,43 @@
           "check": "workbook_columns",
           "expected": "present",
           "workbook_name_contains": "T25 Buyer Research",
-          "expected_columns": ["Full Name", "Work Email", "Job Title", "Company Domain"]
+          "expected_columns": [
+            "Full Name",
+            "Work Email",
+            "Job Title",
+            "Company Domain"
+          ]
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only workbook", "invented resource id"],
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only workbook",
+        "invented resource id"
+      ],
       "id": "production-local-buyer-research-workbook",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["workbooks.create", "columns.add"],
+      "required_capability_ids": [
+        "workbooks.create",
+        "columns.add"
+      ],
       "request": "Create a workspace-local Workbook named T25 Buyer Research with first worksheet People, person row identity, and columns Full Name, Work Email, Job Title, and Company Domain. Save the exact proposal; after I approve it, execute it and verify durable readback. Do not attach or run a source, enrich, enroll, create a workflow or sequence, publish, activate, or send anything.",
       "resume_after_approval": "owner_exact"
     },
     {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "columns.add",
+        "workbooks.create"
+      ],
       "approved_mutation_max_changes": 5,
       "execution_profile": "production_real",
-      "expected_skill_ids": ["tables"],
+      "expected_skill_ids": [
+        "tables"
+      ],
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
@@ -313,24 +358,43 @@
           "check": "workbook_columns",
           "expected": "present",
           "workbook_name_contains": "T25 Market Map",
-          "expected_columns": ["Company Name", "Company Domain", "Industry", "Headquarters"]
+          "expected_columns": [
+            "Company Name",
+            "Company Domain",
+            "Industry",
+            "Headquarters"
+          ]
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only workbook", "invented resource id"],
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only workbook",
+        "invented resource id"
+      ],
       "id": "production-local-market-map-workbook",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["workbooks.create", "columns.add"],
+      "required_capability_ids": [
+        "workbooks.create",
+        "columns.add"
+      ],
       "request": "Create a workspace-local Workbook named T25 Market Map with first worksheet Companies, company row identity, and columns Company Name, Company Domain, Industry, and Headquarters. Save the exact proposal; after I approve it, execute it and verify durable readback. Do not attach or run a source, enrich, enroll, create a workflow or sequence, publish, activate, or send anything.",
       "resume_after_approval": "owner_exact"
     },
     {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["columns.add", "workbooks.create"],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "columns.add",
+        "workbooks.create"
+      ],
       "approved_mutation_max_changes": 8,
       "execution_profile": "production_real",
-      "expected_skill_ids": ["tables"],
+      "expected_skill_ids": [
+        "tables"
+      ],
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
@@ -341,16 +405,31 @@
           "check": "workbook_columns",
           "expected": "present",
           "workbook_name_contains": "T25 US SaaS Founders",
-          "expected_columns": ["Full Name", "Job Title", "Company", "Company Domain", "Employee Count", "Qualification Status", "Qualification Reason"]
+          "expected_columns": [
+            "Full Name",
+            "Job Title",
+            "Company",
+            "Company Domain",
+            "Employee Count",
+            "Qualification Status",
+            "Qualification Reason"
+          ]
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only workbook", "invented resource id"],
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only workbook",
+        "invented resource id"
+      ],
       "id": "production-local-us-saas-founders-workbook",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["workbooks.create", "columns.add"],
-      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11–200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
+      "required_capability_ids": [
+        "workbooks.create",
+        "columns.add"
+      ],
+      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11\u2013200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -369,7 +448,7 @@
     },
     {
       "id": "deployed-cells-surface-coverage",
-      "request": "Inspect the complete cells capability family used by deployed tables workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Inspect the complete cells capability family used by deployed tables workflows, including reading a bounded page of settled cell values. Verify live contract availability, inputs, read/write boundaries, paging limits, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
       "expected_skill_ids": [
         "tables"
       ],
@@ -377,6 +456,7 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "cells.inspect",
+        "cells.read_page",
         "cells.settle"
       ]
     },
@@ -418,6 +498,18 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "workbook_audiences.list"
+      ]
+    },
+    {
+      "id": "executable-definition-catalog-precedes-column-authoring",
+      "request": "Determine which executable column definitions this workspace can actually run before proposing any new enrichment or AI column. Resolve the live definition catalog, report each definition's required inputs and any credential or readiness blocker, and distinguish a definition that is absent from one that is present but blocked. Do not guess a definition id, do not add a column, and do not execute anything.",
+      "expected_skill_ids": [
+        "tables"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "executable_definitions.list_resolved"
       ]
     }
   ],

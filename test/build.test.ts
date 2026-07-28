@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -11,7 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = 'ab47e1dafaa5b0db4a00788025060197b9ddd29bc42bf376ea0313842c31e933';
+const CANONICAL_MANIFEST_DIGEST = '6560065e6813694762fbc17655d9c50e28b5262496f1a4a3e4e2a590c3646276';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -1024,5 +1024,70 @@ test('workspace-local production evals require exact approval and durable presen
       (outcome: { expected?: string }) => outcome.expected === 'present',
     ));
     assert.match(item.request, /do not (?:attach|run|message|enrich|import|sync|enroll|send)/i);
+  }
+});
+
+// The real incident: a description ending "...rows: any durable dataset
+// deliverable belongs to tables." was emitted unquoted, YAML read `rows:` as a
+// nested mapping, and 28 downstream Python tests died on a file that `npm run
+// build`, 63 upstream tests, the release sync, and the consistency checker had
+// all just declared healthy. The build must now refuse to emit prose it cannot
+// read back.
+test('generated frontmatter is validated at emit time: unquotable prose fails the build', () => {
+  const fixtureRoot = mkdtempSync(join(tmpdir(), 'dreamstate-frontmatter-'));
+  const sourceDir = join(fixtureRoot, 'architect-kernels');
+  const manifestPath = join(sourceDir, 'skills.json');
+  const victim = 'tables';
+  const authored = architectSource.skills.find(
+    (skill: { id: string }) => skill.id === victim,
+  ).description;
+  const withDescription = (description: string) => {
+    const next = structuredClone(architectSource);
+    next.skills.find((skill: { id: string }) => skill.id === victim).description = description;
+    writeFileSync(manifestPath, `${JSON.stringify(next, null, 2)}\n`);
+  };
+  try {
+    cpSync(join(ROOT, 'architect-kernels'), sourceDir, { recursive: true });
+
+    // Control: the unmodified fixture builds, so every failure below is caused
+    // by the description and not by the fixture copy.
+    withDescription(authored);
+    assert.ok(buildArchitectArtifacts(catalog, sourceDir)[`generated/architect/${victim}/SKILL.md`]);
+
+    // Each of these is a character YAML gives a structural meaning to. Every
+    // one must be refused by name, with the field and the character in the
+    // message, rather than written out and discovered by a downstream parser.
+    const rejected: Array<[string, RegExp]> = [
+      ['Route durable rows: any durable dataset deliverable belongs to tables.', /colon followed by a space/],
+      ['- Route durable dataset deliverables to tables.', /leading "-"/],
+      ['#1 destination for durable dataset deliverables.', /leading "#"/],
+      ['Route durable dataset deliverables to tables:', /trailing ":"/],
+      ['Route durable dataset deliverables to tables #canonical', /space followed by "#"/],
+    ];
+    for (const [description, expected] of rejected) {
+      withDescription(description);
+      assert.throws(
+        () => buildArchitectArtifacts(catalog, sourceDir),
+        (error: Error) => {
+          assert.match(error.message, expected, `expected ${JSON.stringify(description)} to be refused`);
+          assert.match(error.message, new RegExp(`generated/architect/${victim}/SKILL\\.md`));
+          assert.match(error.message, /field "description"/);
+          assert.match(error.message, new RegExp(JSON.stringify(JSON.stringify(description)).slice(1, -1)));
+          return true;
+        },
+        `expected the build to refuse ${JSON.stringify(description)}`,
+      );
+    }
+
+    // Prose that is plain-safe still round-trips byte for byte, so the guard
+    // rejects ambiguity rather than punctuation.
+    const safe = 'Route durable dataset deliverables (tables, columns, rows) to tables.';
+    withDescription(safe);
+    const artifacts = buildArchitectArtifacts(catalog, sourceDir);
+    assert.ok(
+      artifacts[`generated/architect/${victim}/SKILL.md`].split('\n').includes(`description: ${safe}`),
+    );
+  } finally {
+    rmSync(fixtureRoot, { recursive: true, force: true });
   }
 });

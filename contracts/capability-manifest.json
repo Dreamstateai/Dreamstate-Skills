@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "0f792191fabb37cf",
+  "capability_hash": "dd1a08fc43be0a44",
   "api_version": "v1",
   "capabilities": [
     {
@@ -37759,6 +37759,14 @@
                     },
                     "maxItems": 100
                   },
+                  "run_if": {
+                    "type": "string",
+                    "enum": [
+                      "true",
+                      "false",
+                      "unsure"
+                    ]
+                  },
                   "lineage": {
                     "type": "object",
                     "properties": {
@@ -38335,6 +38343,14 @@
                         "maxLength": 2000
                       },
                       "maxItems": 100
+                    },
+                    "run_if": {
+                      "type": "string",
+                      "enum": [
+                        "true",
+                        "false",
+                        "unsure"
+                      ]
                     },
                     "lineage": {
                       "type": "object",
@@ -38954,6 +38970,14 @@
                 },
                 "maxItems": 100
               },
+              "run_if": {
+                "type": "string",
+                "enum": [
+                  "true",
+                  "false",
+                  "unsure"
+                ]
+              },
               "lineage": {
                 "type": "object",
                 "properties": {
@@ -39304,6 +39328,14 @@
                       "maxLength": 2000
                     },
                     "maxItems": 100
+                  },
+                  "run_if": {
+                    "type": "string",
+                    "enum": [
+                      "true",
+                      "false",
+                      "unsure"
+                    ]
                   },
                   "lineage": {
                     "type": "object",
@@ -39670,6 +39702,12 @@
           "type": "object",
           "required": false,
           "description": "binding"
+        },
+        {
+          "name": "binding_spec",
+          "type": "object",
+          "required": false,
+          "description": "binding_spec"
         }
       ],
       "input_json_schema": {
@@ -41077,6 +41115,63 @@
             "additionalProperties": false,
             "nullable": true,
             "default": null
+          },
+          "binding_spec": {
+            "type": "object",
+            "properties": {
+              "definition_id": {
+                "type": "string",
+                "pattern": "^(provider|source|column|action)\\.[a-z0-9_.-]+$"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/properties/binding/properties/input_bindings/additionalProperties"
+                },
+                "default": {}
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "shape": {
+                    "type": "string",
+                    "enum": [
+                      "scalar",
+                      "object",
+                      "rows",
+                      "action"
+                    ]
+                  },
+                  "value_type": {
+                    "$ref": "#/properties/binding/properties/output_schema/properties/fields/items/properties/value_type"
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/properties/binding/properties/output_schema/properties/fields/items"
+                    },
+                    "maxItems": 500
+                  }
+                },
+                "additionalProperties": false
+              },
+              "run_policy": {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "source_identity": {
+                "$ref": "#/properties/binding/properties/source_identity"
+              }
+            },
+            "required": [
+              "definition_id"
+            ],
+            "additionalProperties": false
           },
           "table_id": {
             "type": "string",
@@ -45161,6 +45256,12 @@
           "type": "object",
           "required": false,
           "description": "binding"
+        },
+        {
+          "name": "binding_spec",
+          "type": "object",
+          "required": false,
+          "description": "binding_spec"
         }
       ],
       "input_json_schema": {
@@ -46572,6 +46673,63 @@
             ],
             "additionalProperties": false,
             "nullable": true
+          },
+          "binding_spec": {
+            "type": "object",
+            "properties": {
+              "definition_id": {
+                "type": "string",
+                "pattern": "^(provider|source|column|action)\\.[a-z0-9_.-]+$"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/properties/binding/properties/input_bindings/additionalProperties"
+                },
+                "default": {}
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "shape": {
+                    "type": "string",
+                    "enum": [
+                      "scalar",
+                      "object",
+                      "rows",
+                      "action"
+                    ]
+                  },
+                  "value_type": {
+                    "$ref": "#/properties/binding/properties/output_schema/properties/fields/items/properties/value_type"
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/properties/binding/properties/output_schema/properties/fields/items"
+                    },
+                    "maxItems": 500
+                  }
+                },
+                "additionalProperties": false
+              },
+              "run_policy": {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "source_identity": {
+                "$ref": "#/properties/binding/properties/source_identity"
+              }
+            },
+            "required": [
+              "definition_id"
+            ],
+            "additionalProperties": false
           },
           "table_id": {
             "type": "string",
@@ -266628,6 +266786,14 @@
                           },
                           "maxItems": 100
                         },
+                        "run_if": {
+                          "type": "string",
+                          "enum": [
+                            "true",
+                            "false",
+                            "unsure"
+                          ]
+                        },
                         "lineage": {
                           "type": "object",
                           "properties": {
@@ -372336,6 +372502,53 @@
                     "mixed"
                   ]
                 },
+                "presentation": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "enum": [
+                        "start",
+                        "import",
+                        "linkedin",
+                        "crm",
+                        "signals",
+                        "enrichment",
+                        "outreach"
+                      ]
+                    },
+                    "icon_key": {
+                      "type": "string",
+                      "enum": [
+                        "table",
+                        "upload",
+                        "search",
+                        "link",
+                        "database",
+                        "webhook",
+                        "form",
+                        "activity",
+                        "sparkles",
+                        "send"
+                      ]
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 40
+                      },
+                      "maxItems": 6
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "icon_key",
+                    "tags"
+                  ],
+                  "additionalProperties": false
+                },
                 "recipe": {
                   "type": "object",
                   "properties": {
@@ -374092,6 +374305,53 @@
                   "record",
                   "mixed"
                 ]
+              },
+              "presentation": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "start",
+                      "import",
+                      "linkedin",
+                      "crm",
+                      "signals",
+                      "enrichment",
+                      "outreach"
+                    ]
+                  },
+                  "icon_key": {
+                    "type": "string",
+                    "enum": [
+                      "table",
+                      "upload",
+                      "search",
+                      "link",
+                      "database",
+                      "webhook",
+                      "form",
+                      "activity",
+                      "sparkles",
+                      "send"
+                    ]
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40
+                    },
+                    "maxItems": 6
+                  }
+                },
+                "required": [
+                  "category",
+                  "icon_key",
+                  "tags"
+                ],
+                "additionalProperties": false
               },
               "recipe": {
                 "type": "object",
@@ -378390,6 +378650,14 @@
                                 "maxLength": 2000
                               },
                               "maxItems": 100
+                            },
+                            "run_if": {
+                              "type": "string",
+                              "enum": [
+                                "true",
+                                "false",
+                                "unsure"
+                              ]
                             },
                             "lineage": {
                               "type": "object",
@@ -386088,5 +386356,5 @@
     "capabilities": 1137,
     "mcp_tools": 11
   },
-  "manifest_digest": "ab47e1dafaa5b0db4a00788025060197b9ddd29bc42bf376ea0313842c31e933"
+  "manifest_digest": "6560065e6813694762fbc17655d9c50e28b5262496f1a4a3e4e2a590c3646276"
 }

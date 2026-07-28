@@ -8,161 +8,1094 @@
       "id": "analytics",
       "name": "Analytics",
       "description": "Diagnose current measured performance with explicit time ranges, provenance, limitations, confidence, and evidence-backed recommendations.",
-      "triggers": ["analyze growth performance", "explain a metric change", "diagnose a funnel", "compare measured channel results"],
+      "triggers": [
+        "analyze growth performance",
+        "explain a metric change",
+        "diagnose a funnel",
+        "compare measured channel results"
+      ],
       "dependencies": [],
       "capability_domains": [],
       "max_context_tokens": 3000,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "metric_state",
+            "description": "Whether metrics are measured, nullable, or unavailable.",
+            "allowed_values": [
+              "measured_nullable",
+              "measured_complete",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "blog",
       "name": "Blog",
       "description": "Manage grounded blog research, draft, editorial review, revision, scheduling, publication, and canonical editor inspection.",
-      "triggers": ["research or draft a blog post", "revise an article", "send a blog to review", "schedule or publish a blog"],
+      "triggers": [
+        "research or draft a blog post",
+        "revise an article",
+        "send a blog to review",
+        "schedule or publish a blog"
+      ],
       "dependencies": [],
-      "capability_domains": ["content"],
+      "capability_domains": [
+        "content"
+      ],
       "max_context_tokens": 3500,
-      "completion_contract": {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "context",
       "name": "Context",
       "description": "Read targeted revisioned Company Brain facts or propose cited conflict-aware updates and new governed documents without treating prompt text as canonical state.",
-      "triggers": ["read Company Brain context", "inspect published workspace memory", "propose a cited context update", "update a governed Company Brain document such as Ideal Customer", "resolve a canonical fact", "propose a new governed Company document", "keep a knowledge document unpublished for human review"],
+      "triggers": [
+        "read Company Brain context",
+        "inspect published workspace memory",
+        "propose a cited context update",
+        "update a governed Company Brain document such as Ideal Customer",
+        "resolve a canonical fact",
+        "propose a new governed Company document",
+        "keep a knowledge document unpublished for human review"
+      ],
       "dependencies": [],
-      "capability_domains": ["brain", "context"],
+      "capability_domains": [
+        "brain",
+        "context"
+      ],
       "max_context_tokens": 3000,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "growth-asset-planner",
       "name": "Growth Asset Planner",
-      "description": "Design a buyer-facing resource and its evidence, structure, CTA, distribution, and follow-up path while remaining explicitly unsaved until live persistence exists.",
-      "triggers": ["design a lead magnet", "create a buyer checklist or playbook", "plan an audit or SOP", "design a resource hub"],
+      "description": "Design a buyer-facing reading resource (lead magnet, checklist, playbook, audit, SOP, resource hub) and its evidence, structure, CTA, distribution, and follow-up path, remaining explicitly unsaved until live persistence exists. Never owns workbooks, worksheets, tables, views, columns, or rows. Any durable dataset deliverable belongs to `tables`.",
+      "triggers": [
+        "design a lead magnet",
+        "create a buyer checklist or playbook",
+        "plan an audit or SOP",
+        "design a resource hub"
+      ],
       "dependencies": [],
       "capability_domains": [],
       "max_context_tokens": 3500,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "integrations",
       "name": "Integrations",
       "description": "Own account connection setup and repair, open safe connection flows, and resume work blocked by a disconnected provider without requesting secrets in chat. Provider content research, metrics, and search-window coverage remain with their domain skills.",
-      "triggers": ["connect an account or provider", "diagnose connection readiness", "fix a disconnected sender or authorization blocker", "resume after connecting"],
+      "triggers": [
+        "connect an account or provider",
+        "diagnose connection readiness",
+        "fix a disconnected sender or authorization blocker",
+        "resume after connecting"
+      ],
       "dependencies": [],
       "capability_domains": [],
       "max_context_tokens": 3000,
-      "completion_contract": {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "connection_status",
+            "description": "Provider connection readiness status.",
+            "allowed_values": [
+              "connected",
+              "disconnected",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "outreach-sequence-writer",
       "name": "Outreach Sequence Writer",
       "description": "Design custom channel steps, cadence, sender constraints, variable lineage, and real-row previews only for workflows that contain messaging.",
-      "triggers": ["write a custom outreach sequence", "add messaging to a validated workflow", "design outreach cadence", "preview personalized steps"],
+      "triggers": [
+        "write a custom outreach sequence",
+        "add messaging to a validated workflow",
+        "design outreach cadence",
+        "preview personalized steps"
+      ],
       "dependencies": [],
-      "capability_domains": ["outreach"],
+      "capability_domains": [
+        "outreach"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "outreach-workflow-builder",
       "name": "Outreach Workflow Builder",
       "description": "Build validated row workflows with triggers, typed branches, action handoffs, stop logic, eligibility, and explicit workflow-versus-expansion-versus-activation consequence boundaries.",
-      "triggers": ["build an outreach workflow", "branch on qualification or priority", "automate row processing", "define enrollment eligibility", "separate workflow persistence, exact result-set expansion, enrollment, and activation"],
+      "triggers": [
+        "build an outreach workflow",
+        "branch on qualification or priority",
+        "automate row processing",
+        "define enrollment eligibility",
+        "separate workflow persistence, exact result-set expansion, enrollment, and activation"
+      ],
       "dependencies": [],
-      "capability_domains": ["outreach"],
+      "capability_domains": [
+        "outreach"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "durability_state",
+            "description": "Durable artifact versus proposal-only state.",
+            "allowed_values": [
+              "durable",
+              "proposal_only",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "selection_state",
+            "description": "Paid-run selection boundary state.",
+            "allowed_values": [
+              "representative",
+              "exact",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "activation_state",
+            "description": "Whether workflow activation has occurred; blocked execution belongs in run_state.",
+            "allowed_values": [
+              "inactive",
+              "active",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "outreach",
       "name": "Outreach",
       "description": "Open an existing outreach workflow or coordinate a new Workbook-first outreach system through ordered evidence-pilot, Workbook, draft-bundle, column-sample, capped-bulk, and activation-and-send gates.",
-      "triggers": ["open or revise an outreach workflow", "build outreach from scratch", "design outreach for a named cohort using pooled benchmarks", "create a prospecting system", "build a Workbook workflow and sequence", "decide whether a workflow needs messaging"],
-      "dependencies": ["tables", "outreach-workflow-builder"],
-      "capability_domains": ["brain", "outreach"],
+      "triggers": [
+        "open or revise an outreach workflow",
+        "build outreach from scratch",
+        "design outreach for a named cohort using pooled benchmarks",
+        "create a prospecting system",
+        "build a Workbook workflow and sequence",
+        "decide whether a workflow needs messaging"
+      ],
+      "dependencies": [
+        "tables",
+        "outreach-workflow-builder"
+      ],
+      "capability_domains": [
+        "brain",
+        "outreach"
+      ],
       "max_context_tokens": 3000,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered outreach-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Inspected workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "durability_state",
+            "description": "Durable artifact versus proposal-only state.",
+            "allowed_values": [
+              "durable",
+              "proposal_only",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "selection_state",
+            "description": "Paid-run selection boundary state.",
+            "allowed_values": [
+              "representative",
+              "exact",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "stage_boundary_state",
+            "description": "Ordered outreach-stage approval boundary state.",
+            "allowed_values": [
+              "ordered_separate",
+              "violated",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "activation_state",
+            "description": "Whether workflow activation has occurred; blocked execution belongs in run_state.",
+            "allowed_values": [
+              "inactive",
+              "active",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "external_send_state",
+            "description": "External-send authorization and pacing state.",
+            "allowed_values": [
+              "not_authorized",
+              "authorized_capped_paced",
+              "completed",
+              "partial",
+              "blocked",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "messaging_branch_state",
+            "description": "Inspected workflow messaging-branch state.",
+            "allowed_values": [
+              "present",
+              "absent",
+              "unresolved",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "records",
       "name": "Records",
       "description": "Inspect and safely maintain canonical people, companies, deals, custom objects, attributes, relationships, layouts, notes, files, lists, imports, messages, and record notification preferences.",
-      "triggers": ["find or inspect a person, company, deal, or custom record", "show all record attributes and relationships", "update CRM records or object settings", "import, organize, message, or attach files to records"],
+      "triggers": [
+        "find or inspect a person, company, deal, or custom record",
+        "show all record attributes and relationships",
+        "update CRM records or object settings",
+        "import, organize, message, or attach files to records"
+      ],
       "dependencies": [],
-      "capability_domains": ["records"],
+      "capability_domains": [
+        "records"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"record_state","description":"Canonical record identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]},{"id":"object_schema_state","description":"Object, attribute, relationship, layout, and permission schema state.","allowed_values":["complete","partial","missing","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "record_state",
+            "description": "Canonical record identity and revision state.",
+            "allowed_values": [
+              "exact_current",
+              "exact_historical",
+              "partial",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "object_schema_state",
+            "description": "Object, attribute, relationship, layout, and permission schema state.",
+            "allowed_values": [
+              "complete",
+              "partial",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "seo",
       "name": "SEO",
       "description": "Coordinate evidence-backed keyword research, technical diagnosis, content planning, AI visibility, and measured follow-up for a site and named audience.",
-      "triggers": ["build a keyword plan", "audit technical SEO", "plan search content", "improve SEO or AI visibility"],
+      "triggers": [
+        "build a keyword plan",
+        "audit technical SEO",
+        "plan search content",
+        "improve SEO or AI visibility"
+      ],
       "dependencies": [],
-      "capability_domains": ["brain", "content", "tables", "visibility"],
+      "capability_domains": [
+        "brain",
+        "content",
+        "tables",
+        "visibility"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"sample_state","description":"Benchmark sample band disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"privacy_state","description":"Cross-workspace privacy boundary state.","allowed_values":["cohort_only","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"target_conversion","description":"Named target conversion state.","allowed_values":["defined","missing"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "benchmark_state",
+            "description": "Pooled benchmark evidence availability.",
+            "allowed_values": [
+              "supported",
+              "insufficient_evidence",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "sample_state",
+            "description": "Benchmark sample band disclosure state.",
+            "allowed_values": [
+              "disclosed",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "confidence_state",
+            "description": "Evidence confidence disclosure state.",
+            "allowed_values": [
+              "disclosed",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "privacy_state",
+            "description": "Cross-workspace privacy boundary state.",
+            "allowed_values": [
+              "cohort_only",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "observation_state",
+            "description": "Observation timestamp and source state.",
+            "allowed_values": [
+              "observed",
+              "cached",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "target_conversion",
+            "description": "Named target conversion state.",
+            "allowed_values": [
+              "defined",
+              "missing"
+            ]
+          },
+          {
+            "id": "plan_state",
+            "description": "Prioritized technical and content plan state.",
+            "allowed_values": [
+              "prioritized",
+              "partial",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "site-onboarding",
       "name": "Site Onboarding",
       "description": "Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, brand facts, cited Company Brain proposals, Markdown, sitemap, robots, and AI-readiness files.",
-      "triggers": ["onboard a new website", "learn our company from this site", "refresh website facts and Company Brain files", "set up SEO and AI visibility for a domain"],
-      "dependencies": ["context"],
-      "capability_domains": ["brain", "content", "visibility"],
+      "triggers": [
+        "onboard a new website",
+        "learn our company from this site",
+        "refresh website facts and Company Brain files",
+        "set up SEO and AI visibility for a domain"
+      ],
+      "dependencies": [
+        "context"
+      ],
+      "capability_domains": [
+        "brain",
+        "content",
+        "visibility"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "observation_state",
+            "description": "Observation timestamp and source state.",
+            "allowed_values": [
+              "observed",
+              "cached",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "site_state",
+            "description": "Canonical site identity, crawl, and file state.",
+            "allowed_values": [
+              "ready",
+              "partial",
+              "stale",
+              "missing",
+              "blocked",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "social",
       "name": "Social",
       "description": "Coordinate authored LinkedIn, X, and Reddit content across drafts, calendars, review, publishing, and measured performance.",
-      "triggers": ["author a social post", "build a social calendar", "schedule or publish authored content", "analyze social performance"],
+      "triggers": [
+        "author a social post",
+        "build a social calendar",
+        "schedule or publish authored content",
+        "analyze social performance"
+      ],
       "dependencies": [],
-      "capability_domains": ["brain", "content"],
+      "capability_domains": [
+        "brain",
+        "content"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "provider_status",
+            "description": "Social provider connection or availability status.",
+            "allowed_values": [
+              "connected",
+              "disconnected",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "metric_state",
+            "description": "Whether metrics are measured, nullable, or unavailable.",
+            "allowed_values": [
+              "measured_nullable",
+              "measured_complete",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "strategy",
       "name": "Strategy",
       "description": "Create or revise evidence-backed ICP, positioning, channel roles, objectives, tradeoffs, and durable strategy proposals.",
-      "triggers": ["create a growth strategy", "revise ICP or positioning", "decide channel roles", "make a durable strategic decision"],
+      "triggers": [
+        "create a growth strategy",
+        "revise ICP or positioning",
+        "decide channel roles",
+        "make a durable strategic decision"
+      ],
       "dependencies": [],
-      "capability_domains": ["brain", "context"],
+      "capability_domains": [
+        "brain",
+        "context"
+      ],
       "max_context_tokens": 3000,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "tables",
       "name": "Tables",
-      "description": "Create, inspect, revise, and run unified workbooks, tables, views, sources, columns, rows, bounded table jobs, and exact record-field operations with lineage and durable verification.",
-      "triggers": ["build a reactive table", "inspect a table dataflow", "add or revise table columns", "run table work safely", "read or update a record field used by a table"],
+      "description": "Own every durable dataset deliverable. Create, inspect, revise, and run unified workbooks, worksheets, tables, views, sources, columns, rows, bounded table jobs, and exact record-field operations with lineage and durable verification. A request naming a workbook routes here whatever audience, buyer, or cohort it names.",
+      "triggers": [
+        "build a workbook",
+        "build a cold outbound or buyer workbook",
+        "build a reactive table",
+        "inspect a table dataflow",
+        "add or revise table columns",
+        "run table work safely",
+        "read or update a record field used by a table"
+      ],
       "dependencies": [],
-      "capability_domains": ["records", "tables"],
+      "capability_domains": [
+        "records",
+        "tables"
+      ],
       "max_context_tokens": 5000,
-      "completion_contract": {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "schema_state",
+            "description": "Combined row identity, source, and dependency schema state.",
+            "allowed_values": [
+              "identity_source_dependencies_ready",
+              "partial",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "durability_state",
+            "description": "Durable artifact versus proposal-only state.",
+            "allowed_values": [
+              "durable",
+              "proposal_only",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "execution_bounds_state",
+            "description": "Selection, row-cap, and credit-ceiling boundary state.",
+            "allowed_values": [
+              "representative_capped_credits",
+              "exact_capped_credits",
+              "missing",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "cell_state",
+            "description": "Canonical settled-cell outcome state.",
+            "allowed_values": [
+              "settled",
+              "partial",
+              "failed",
+              "blocked",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "visibility",
       "name": "Visibility",
       "description": "Run and interpret AI-answer visibility audits with real citations, method limits, gap diagnosis, governed refreshes, and a canonical inspection surface.",
-      "triggers": ["audit AI visibility", "inspect citations in AI answers", "diagnose answer-engine gaps", "refresh visibility measurement"],
+      "triggers": [
+        "audit AI visibility",
+        "inspect citations in AI answers",
+        "diagnose answer-engine gaps",
+        "refresh visibility measurement"
+      ],
       "dependencies": [],
-      "capability_domains": ["visibility"],
+      "capability_domains": [
+        "visibility"
+      ],
       "max_context_tokens": 3000,
-      "completion_contract": {"version":1,"fields":[{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "observation_state",
+            "description": "Observation timestamp and source state.",
+            "allowed_values": [
+              "observed",
+              "cached",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "run_state",
+            "description": "Canonical durable run terminal or blocked state.",
+            "allowed_values": [
+              "terminal",
+              "queued",
+              "blocked",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "weekly-growth-plan",
       "name": "Weekly Growth Plan",
       "description": "Prioritize a one-week cross-channel operating plan with owners, deliverables, measures, and explicit delegation without silently executing it.",
-      "triggers": ["plan my growth week", "prioritize work across channels", "create a weekly operating plan", "decide what the team should do next"],
+      "triggers": [
+        "plan my growth week",
+        "prioritize work across channels",
+        "create a weekly operating plan",
+        "decide what the team should do next"
+      ],
       "dependencies": [],
       "capability_domains": [],
       "max_context_tokens": 3500,
-      "completion_contract": {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "artifact_state",
+            "description": "Durable artifact or reviewable proposal state.",
+            "allowed_values": [
+              "reviewable_proposal_required",
+              "proposal_saved",
+              "existing",
+              "none"
+            ]
+          },
+          {
+            "id": "approval_state",
+            "description": "Exact approval state without bypass inference.",
+            "allowed_values": [
+              "required",
+              "approved",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
     }
   ]
 }

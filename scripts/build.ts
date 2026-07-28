@@ -6,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { SKILL_BLUEPRINTS, type SkillBlueprint } from '../src/skillBlueprints.ts';
 import { buildArchitectArtifacts } from './architect-build.ts';
 import { validateCapabilityManifestExport } from './sync-capability-manifest.ts';
+import { assertOptionalFrontmatter } from './frontmatter-guard.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PLAYBOOKS_DIR = join(ROOT, 'playbooks');
@@ -275,6 +276,12 @@ export function build(options: { capabilityPath?: string } = {}): Record<string,
   artifacts['dist/dreamstate-prompts.generated.ts'] = `// GENERATED. Source: Dreamstate-Skills playbooks and runtime capability manifest.\nexport interface DreamstatePrompt { name: string; title: string; description: string; requiredScopes: string[]; executionMode: string; body: string }\nexport const DREAMSTATE_SKILLS_CAPABILITY_HASH = ${JSON.stringify(capabilityManifest.capability_hash)};\nexport const DREAMSTATE_PROMPTS: DreamstatePrompt[] = ${JSON.stringify(prompts.map((prompt) => ({ name: prompt.name, title: prompt.title, description: prompt.description, requiredScopes: prompt.required_scopes, executionMode: prompt.execution_mode, body: prompt.body })), null, 2)};\n`;
   artifacts['generated/catalog.sha256'] = `${createHash('sha256').update(JSON.stringify(catalog)).digest('hex')}\n`;
   Object.assign(artifacts, buildArchitectArtifacts(capabilityManifest));
+  // Last gate before anything is written: every generated Markdown file that
+  // claims frontmatter must actually parse as frontmatter. A build that emits
+  // YAML it never reads back is a build that ships parse errors downstream.
+  for (const [relative, content] of Object.entries(artifacts)) {
+    if (relative.endsWith('.md')) assertOptionalFrontmatter(relative, content);
+  }
   return artifacts;
 }
 export function writeArtifacts(artifacts: Record<string, string>): number { for (const directory of OWNED) if (existsSync(join(ROOT, directory))) rmSync(join(ROOT, directory), { recursive: true, force: true }); for (const file of OWNED_FILES) if (existsSync(join(ROOT, file))) rmSync(join(ROOT, file), { force: true }); for (const [relative, content] of Object.entries(artifacts)) { const path = join(ROOT, relative); mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, content) } return Object.keys(artifacts).length }
