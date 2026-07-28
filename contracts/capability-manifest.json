@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "6288efc6215d64e6",
+  "capability_hash": "5d0fd03da3726899",
   "api_version": "v1",
   "capabilities": [
     {
@@ -362611,9 +362611,9 @@
       },
       "action_policy": {
         "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": false,
         "credit_class": "free"
       },
       "search": {
@@ -393139,5 +393139,5 @@
     "capabilities": 1117,
     "mcp_tools": 11
   },
-  "manifest_digest": "3ed52e9bafd0b5ee1ab60cfd20cb8b06f2d9322ee1a0dfdc7765d175b800ebdd"
+  "manifest_digest": "c736598d5698918913d924c5887ad5856c88f7dbb735dacb5f2824a5a33039f2"
 }
