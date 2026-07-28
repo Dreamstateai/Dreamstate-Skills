@@ -4,6 +4,21 @@
       "expected_skill_ids": [
         "social"
       ],
+      "id": "refresh-and-diagnose-social-performance",
+      "request": "Refresh the connected LinkedIn and X analytics now, wait for the refresh receipt, then diagnose which posts, formats, and audience signals are working from the fresh account-scoped evidence.",
+      "required_capability_ids": [
+        "social.accounts_list",
+        "social.analytics_refresh",
+        "social.analytics_query",
+        "social.analytics_rollup_get",
+        "social.audience_analytics",
+        "social.performance_analysis_get"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "social"
+      ],
       "id": "authored-reddit-post",
       "must_not_load": [
         "social.reddit"

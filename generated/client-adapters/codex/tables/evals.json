@@ -103,23 +103,27 @@
       "expected_skill_ids": [
         "tables"
       ],
-      "fixture_profile": "outreach_source_pilot",
-      "id": "exact-seven-row-source-pilot",
-      "required_proposal_fields": {
-        "row_limit": 7
-      },
+      "execution_profile": "production_real",
+      "fixture_profile": "outreach_source_probe_variants",
+      "id": "ephemeral-ten-row-source-variants",
       "required_capability_ids": [
-        "sources.cold_outbound_preview",
-        "sources.linkedin_post_engagers_preview"
+        "table_sources.preview"
       ],
       "required_concepts": [
-        "literal row_limit: 7",
-        "exactly seven distinct stable identities",
+        "two or three parameter variants",
+        "scarcest criterion first",
+        "exactly ten distinct stable identities per variant",
+        "receipt-bearing probe evidence persisted",
+        "qualified / (qualified + not_qualified)",
+        "at least six decided",
+        "precision strictly greater than 0.50",
+        "exactly 30 initial nondeliverable rows",
         "no padding",
-        "no import",
-        "no enrollment"
+        "no destination",
+        "no enrollment",
+        "no send"
       ],
-      "request": "Prepare the source-evidence pilot for a reviewable outreach Workbook. Select the exact cold-outbound or LinkedIn-engager preview contract from the requested source. The proposal must use literal row_limit: 7. Accept only a terminal receipt with exactly seven distinct stable identities and complete provider provenance. Keep any partial result partial: no padding, import, Workbook insertion, enrollment, activation, or send."
+      "request": "Before attaching a source, use table_sources.preview to compare two or three scarcest-first parameter variants with exactly ten real provider rows each. Persist receipt-bearing reasoning, provenance, freshness, and cost. Compute precision as qualified divided by qualified plus not_qualified, excluding unsure. Select a variant only with at least six decided rows and precision strictly above 0.50. If it passes, stage exactly 30 nondeliverable rows; do not create a source destination, enroll, activate, or send."
     },
     {
       "expected_skill_ids": [

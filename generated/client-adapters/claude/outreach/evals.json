@@ -54,14 +54,15 @@
         "company_keywords"
       ],
       "required_concepts": [
-        "standalone workbook proposal",
-        "stop for the user's response",
+        "zero-credit reversible workbook creation",
+        "durable Workbook receipt",
+        "open the native Workbook surface",
         "revise columns and filters across turns",
-        "no demand, workflow, sequence, or bundle contracts fetched while the workbook is unapproved",
-        "bundle binds the approved workbook revision",
-        "enrollment only after workbook approval"
+        "no demand, workflow, sequence, or bundle contracts fetched before the Workbook revision is inspected",
+        "bundle binds the inspected workbook revision",
+        "enrollment only after workbook inspection"
       ],
-      "request": "Build outbound outreach. Ask every still-missing opening concept once after Company Brain derivation, including target job titles and company keywords, and never ask me about volume, sender, channel, tone, copy angle, call to action, or channel motion. Then propose only the Workbook so I can add and change columns and filters over several turns. Do not fetch or plan demand, workflow, sequence, or bundle contracts until I approve the Workbook, and enroll nobody before then."
+      "request": "Build outbound outreach. Ask every still-missing opening concept once after Company Brain derivation, including target job titles and company keywords, and never ask me about volume, sender, channel, tone, copy angle, call to action, or channel motion. Then execute the zero-credit reversible Workbook from the server ActionDecision without asking approval, return its durable receipt, and open the native Workbook so I can add and change columns and filters over several turns. Do not fetch or plan demand, workflow, sequence, or bundle contracts until that Workbook revision is inspected, and enroll nobody before then."
     },
     {
       "expected_skill_ids": [
@@ -80,7 +81,7 @@
         "messaging_branch_state"
       ],
       "required_concepts": [
-        "inspect the approved workflow after Workbook approval",
+        "inspect the workflow only after the zero-credit Workbook receipt",
         "inspection-only messaging branch state",
         "never ask the user to classify the graph",
         "unresolved inspection is blocked"
@@ -94,8 +95,8 @@
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
-          "expected": "absent",
-          "reason": "a proposal-only turn must not build the Workbook, so absence is verified against the workspace instead of trusted from the completion contract; scoped workspace-wide from this turn's start"
+          "expected": "present",
+          "reason": "zero-credit reversible Workbook creation executes from the server ActionDecision and is verified against workspace truth"
         },
         {
           "check": "workbook_enrolled",
@@ -105,6 +106,9 @@
         }
       ],
       "id": "staged-pilot-build-sample-expand-launch",
+      "required_capability_ids": [
+        "workbooks.create"
+      ],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [
         {
@@ -128,17 +132,17 @@
         {
           "id": "approval_state",
           "allowed_values": [
-            "required"
+            "not_applicable"
           ]
         },
         {
           "id": "run_state",
           "allowed_values": [
-            "not_applicable"
+            "terminal"
           ]
         }
       ],
-      "request": "Prepare the opening reviewable stage only; do not execute or launch. Use these non-secret planning inputs: US B2B SaaS founders and qualification threshold 80. I supplied no exact cohort quantity, so preserve demand_based intent but do not fetch demand planning yet. Have tables prepare the literal row_limit: 7 source pilot and then show only the canonical Workbook/worksheet/view for revision. Do not fetch or plan demand, workflow, sequence, bundle, expansion, enrollment, or activation before Workbook approval. Report activation_state inactive and approval_state required. Because this request creates no run, report run_state not_applicable."
+      "request": "Prepare the opening reviewable stage only; do not launch. Use these non-secret planning inputs: US B2B SaaS founders and qualification threshold 80. I supplied no exact cohort quantity, so preserve demand_based intent but do not fetch demand planning yet. Have tables compare two or three scarcest-first table_sources.preview variants with exactly ten rows each, then execute the zero-credit reversible canonical Workbook/worksheet/view from the server ActionDecision without asking approval and open it for editing. Do not plan a workflow, sequence, bundle, expansion, enrollment, activation, or send yet. Report activation_state inactive, approval_state not_applicable, and the durable terminal Workbook receipt."
     },
     {
       "expected_skill_ids": [
@@ -240,10 +244,10 @@
     {
       "execution_profile": "production_real",
       "expected_load_order": [
+        "outreach",
         "tables",
         "outreach-workflow-builder",
-        "outreach-sequence-writer",
-        "outreach"
+        "outreach-sequence-writer"
       ],
       "expected_skill_ids": [
         "outreach"
@@ -352,31 +356,35 @@
         },
         {
           "tool": "tools_search",
-          "capability_id": "sources.linkedin_post_engagers_preview"
+          "capability_id": "table_sources.preview"
         },
         {
           "tool": "tools_get",
-          "capability_id": "sources.linkedin_post_engagers_preview"
+          "capability_id": "table_sources.preview"
         },
         {
-          "tool": "propose_artifact",
-          "artifact_type": "outreach_source",
-          "phase": "exact_7_row_source_evidence_pilot"
+          "tool": "tools_run",
+          "capability_id": "table_sources.preview",
+          "phase": "exact_10_row_source_evidence_variants"
         },
         {
-          "tool": "request_approval",
-          "artifact_type": "outreach_source",
-          "phase": "exact_7_row_pilot_authorization"
-        },
-        {
-          "tool": "propose_artifact",
-          "artifact_type": "outreach_workbook",
+          "tool": "tools_search",
+          "capability_id": "workbooks.create",
           "phase": "canonical_workbook_worksheet_view_only"
         },
         {
-          "tool": "request_approval",
-          "artifact_type": "outreach_workbook",
-          "phase": "workbook_iteration_and_approval"
+          "tool": "tools_get",
+          "capability_id": "workbooks.create",
+          "phase": "canonical_workbook_worksheet_view_only"
+        },
+        {
+          "tool": "tools_run",
+          "capability_id": "workbooks.create",
+          "phase": "zero_credit_reversible_action_decision_auto_execute"
+        },
+        {
+          "tool": "open_canvas",
+          "phase": "canonical_workbook_opened"
         },
         {
           "tool": "tools_search",
@@ -434,14 +442,14 @@
           "phase": "inspected_messaging_branch_present"
         },
         {
-          "tool": "propose_artifact",
-          "artifact_type": "outreach_bundle",
-          "phase": "workflow_sequence_graph_bound_to_approved_workbook"
+          "tool": "tools_run",
+          "capability_id": "workflows.create",
+          "phase": "zero_credit_reversible_workflow_draft_create"
         },
         {
-          "tool": "request_approval",
-          "artifact_type": "outreach_bundle",
-          "phase": "draft_structure_apply_authorization"
+          "tool": "tools_run",
+          "capability_id": "workflows.graph_apply",
+          "phase": "zero_credit_reversible_workflow_draft_apply"
         },
         {
           "tool": "propose_artifact",
@@ -546,7 +554,7 @@
           "phase": "single_launch_authorization"
         }
       ],
-      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing Workbook and schema; use the exact competitor-engager source; show one complete eight-concept opening intake with no volume, sender, channel, or messaging-branch question; then execute the literal row_limit: 7 pilot and create a standalone canonical Workbook I can revise before any demand, workflow, or sequence planning. After Workbook approval, run demand planning, build the workflow and conditional sequence through their specialists, run dependency-ordered verification/enrichment/filter/scoring and real-prospect fixed-scaffold preview, audit cost and qualification, stage qualified rows within the demand cap, and close one launch approval with the required workflow publication, draft-sequence publication, exact-selection enrollment, activation, paced multi-channel sends, and terminal receipts."
+      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing Workbook and schema; use table_sources.preview for two or three scarcest-first variants with exactly ten real rows each; show one complete eight-concept opening intake with no volume, sender, channel, or messaging-branch question; then create the zero-credit reversible canonical Workbook immediately from the server ActionDecision without asking approval. After inspecting that Workbook revision, run demand planning, stage exactly 30 nondeliverable initial rows, build the workflow and conditional sequence through their specialists, run dependency-ordered verification/enrichment/filter/scoring and a real-prospect message preview before explicit build, audit cost and qualification, stage qualified rows within the demand cap, and close one launch approval with the required workflow publication, draft-sequence publication, exact-selection enrollment, activation, paced multi-channel sends, and terminal receipts."
     },
     {
       "execution_profile": "production_real",
@@ -700,7 +708,7 @@
       "fixture_profile": "competitor_engagers_stale_profile_and_low_precision",
       "id": "competitor-engagers-stale-and-low-precision-audit",
       "required_concepts": [
-        "exactly 7 successful distinct pilot rows",
+        "exactly 10 successful distinct pilot rows per variant",
         "stale title",
         "current company",
         "unsure or disqualified",
@@ -730,21 +738,16 @@
         },
         {
           "tool": "tools_search",
-          "capability_id": "sources.cold_outbound_preview"
+          "capability_id": "table_sources.preview"
         },
         {
           "tool": "tools_get",
-          "capability_id": "sources.cold_outbound_preview"
+          "capability_id": "table_sources.preview"
         },
         {
-          "tool": "propose_artifact",
-          "artifact_type": "outreach_source",
-          "phase": "exact_7_row_low_precision_pilot"
-        },
-        {
-          "tool": "request_approval",
-          "artifact_type": "outreach_source",
-          "phase": "exact_7_row_low_precision_pilot_authorization"
+          "tool": "tools_run",
+          "capability_id": "table_sources.preview",
+          "phase": "exact_10_row_low_precision_probe"
         },
         {
           "tool": "open_canvas",

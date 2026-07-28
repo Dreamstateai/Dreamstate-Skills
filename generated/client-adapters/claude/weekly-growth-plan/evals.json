@@ -18,6 +18,22 @@
     },
     {
       "expected_skill_ids": [
+        "weekly-growth-plan"
+      ],
+      "id": "customer-follow-up-coordination",
+      "request": "Create the customer follow-up meeting and owner task, attach the briefing to the customer record, and show me everything that was saved.",
+      "required_capability_ids": [
+        "calendar.events_create",
+        "calendar.events_list",
+        "tasks.create",
+        "tasks.get",
+        "record_files.upload",
+        "record_files.list",
+        "records.get"
+      ]
+    },
+    {
+      "expected_skill_ids": [
         "social"
       ],
       "id": "social-calendar-not-weekly-plan",

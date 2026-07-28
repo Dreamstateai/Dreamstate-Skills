@@ -57,7 +57,7 @@
       "capability_domains": [
         "content"
       ],
-      "max_context_tokens": 3500,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -160,7 +160,7 @@
       ],
       "dependencies": [],
       "capability_domains": [],
-      "max_context_tokens": 3500,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -250,7 +250,7 @@
       "capability_domains": [
         "outreach"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -302,7 +302,7 @@
       "capability_domains": [
         "outreach"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -498,18 +498,18 @@
     {
       "id": "records",
       "name": "Records",
-      "description": "Inspect and safely maintain canonical people, companies, deals, custom objects, attributes, relationships, layouts, notes, files, lists, imports, messages, and record notification preferences.",
+      "description": "Inspect and safely maintain canonical people, companies, standard records, fields, history, files, notes, lists, messages, buyer briefs, playbooks, and wiki evidence.",
       "triggers": [
-        "find or inspect a person, company, deal, or custom record",
-        "show all record attributes and relationships",
-        "update CRM records or object settings",
-        "import, organize, message, or attach files to records"
+        "find or inspect a person, company, or standard record",
+        "show all record fields, history, and sources",
+        "update, merge, erase, organize, or message records",
+        "read a buyer brief, record playbook, or wiki evidence"
       ],
       "dependencies": [],
       "capability_domains": [
         "records"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -578,6 +578,85 @@
       }
     },
     {
+      "id": "records-schema",
+      "name": "Records Schema",
+      "description": "Inspect and govern canonical record objects, attributes, relationships, layouts, permissions, notification policy, ordering, and schema impact.",
+      "triggers": ["inspect record schema", "create or revise a custom object", "change record relationships or layout", "change record permissions or notification policy"],
+      "dependencies": [],
+      "capability_domains": ["records"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"schema_definition_state","description":"Canonical object schema and revision state.","allowed_values":["complete","partial","missing","not_applicable"]},
+        {"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "records-pipelines",
+      "name": "Records Pipelines",
+      "description": "Inspect and govern canonical deal boards, pipelines, stages, transitions, lifecycle, ordering, and record templates.",
+      "triggers": ["inspect a deal board or pipeline", "create or update a deal", "change a pipeline or stage", "preview or install a record template"],
+      "dependencies": [],
+      "capability_domains": ["records"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"pipeline_state","description":"Canonical deal, pipeline, and stage identity state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]},
+        {"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "records-transfer",
+      "name": "Records Transfer",
+      "description": "Stage, validate, run, inspect, control, and retrieve canonical record import and export jobs with row-level evidence.",
+      "triggers": ["import records", "stage import rows", "inspect import errors", "create or download a record export"],
+      "dependencies": ["records-schema"],
+      "capability_domains": ["records"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"transfer_run_state","description":"Canonical transfer job terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},
+        {"id":"transfer_evidence_state","description":"Row and artifact evidence status.","allowed_values":["verified","partial","unavailable","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "records-views",
+      "name": "Records Views",
+      "description": "Create, inspect, revise, execute, and delete canonical saved record views with exact filters, projections, runtime revisions, and results.",
+      "triggers": ["list saved record views", "create or update a saved view", "run a saved view", "delete a saved view"],
+      "dependencies": [],
+      "capability_domains": ["records"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"view_artifact_state","description":"Durable saved-view artifact state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},
+        {"id":"view_result_state","description":"Result evidence and pagination status.","allowed_values":["verified","partial","unavailable","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "buyer-research-graph",
+      "name": "Buyer Research Graph",
+      "description": "Research buyers through canonical enrichment evidence and knowledge-graph nodes, relations, traversals, provenance, revisions, lifecycle, and exports.",
+      "triggers": ["research a buyer or company", "read the knowledge graph", "create or update graph facts", "archive or export graph evidence"],
+      "dependencies": ["records"],
+      "capability_domains": ["graph","records"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"graph_evidence_state","description":"Research provenance and confidence state.","allowed_values":["verified","partial","unavailable","not_applicable"]},
+        {"id":"graph_state","description":"Canonical graph identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "experiments",
+      "name": "Governed Experiments",
+      "description": "Create, revise, approve, measure, publish, stop, inspect, and conclude governed growth experiments with immutable evidence and guardrails.",
+      "triggers": ["create a growth experiment", "review or approve an experiment", "record experiment evidence", "stop or conclude an experiment"],
+      "dependencies": ["context","visibility"],
+      "capability_domains": ["growth"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"experiment_artifact_state","description":"Durable governed-experiment state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},
+        {"id":"experiment_evidence_state","description":"Publication and measurement evidence state.","allowed_values":["verified","partial","unavailable","not_applicable"]},
+        {"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}
+      ]}
+    },
+    {
       "id": "seo",
       "name": "SEO",
       "description": "Coordinate evidence-backed keyword research, technical diagnosis, content planning, AI visibility, and measured follow-up for a site and named audience.",
@@ -594,7 +673,7 @@
         "tables",
         "visibility"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -701,7 +780,7 @@
         "content",
         "visibility"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -784,7 +863,7 @@
         "brain",
         "content"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -920,7 +999,7 @@
         "records",
         "tables"
       ],
-      "max_context_tokens": 5000,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [
@@ -1050,6 +1129,84 @@
       }
     },
     {
+      "id": "audiences",
+      "name": "Audiences",
+      "description": "Research, preview, create, update, and archive canonical audience views with exact sources, filters, exclusions, revisions, and nullable behavior.",
+      "triggers": ["list or inspect audiences", "build an audience", "preview targeting", "update or archive an audience"],
+      "dependencies": [],
+      "capability_domains": ["audiences"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},
+        {"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "notifications",
+      "name": "Notifications",
+      "description": "Read and manage notifications, unread state, archives, and personal or workspace notification preferences through canonical scoped operations.",
+      "triggers": ["show notifications", "mark notifications read", "archive a notification", "change notification preferences"],
+      "dependencies": [],
+      "capability_domains": ["notifications"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},
+        {"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]}
+      ]}
+    },
+    {
+      "id": "products",
+      "name": "Products",
+      "description": "Inspect and govern product evidence sources, website captures, document processing, metadata, refreshes, and exact archival with bounded cost.",
+      "triggers": ["inspect product sources", "process a product document", "scrape or refresh a product website", "archive product evidence"],
+      "dependencies": [],
+      "capability_domains": ["products"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},
+        {"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "signals",
+      "name": "Signals",
+      "description": "Inspect and govern signal sources, capture readiness, observed events, radar suggestions, and exact evidence-producing test events.",
+      "triggers": ["inspect signal sources", "create a signal source", "review signal events", "test a signal event"],
+      "dependencies": [],
+      "capability_domains": ["signals"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},
+        {"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "tasks",
+      "name": "Tasks",
+      "description": "Read, create, update, reassign, complete, reopen, cancel, and bulk-manage exact canonical workspace tasks.",
+      "triggers": ["show workspace tasks", "create or update a task", "reassign or complete a task", "bulk change selected tasks"],
+      "dependencies": [],
+      "capability_domains": ["tasks"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},
+        {"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}
+      ]}
+    },
+    {
+      "id": "webhooks",
+      "name": "Webhooks",
+      "description": "Inspect and govern webhook configuration and delivery evidence without exposing secrets, including exact receipt-backed test deliveries.",
+      "triggers": ["list webhooks", "create or delete a webhook", "inspect webhook deliveries", "send a webhook test"],
+      "dependencies": [],
+      "capability_domains": ["webhooks"],
+      "max_context_tokens": 3000,
+      "completion_contract": {"version":1,"fields":[
+        {"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},
+        {"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}
+      ]}
+    },
+    {
       "id": "weekly-growth-plan",
       "name": "Weekly Growth Plan",
       "description": "Prioritize a one-week cross-channel operating plan with owners, deliverables, measures, and explicit delegation without silently executing it.",
@@ -1061,7 +1218,7 @@
       ],
       "dependencies": [],
       "capability_domains": [],
-      "max_context_tokens": 3500,
+      "max_context_tokens": 3000,
       "completion_contract": {
         "version": 1,
         "fields": [

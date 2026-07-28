@@ -28,6 +28,28 @@
       "expected_skill_ids": [
         "visibility"
       ],
+      "id": "overall-score-and-carrying-prompt",
+      "must_not_ask_user": true,
+      "request": "What is my latest overall AI visibility score, and which tracked prompt is carrying performance?",
+      "required_capability_ids": [
+        "visibility.workspace_site_get",
+        "visibility.overview",
+        "visibility.prompt_metrics_list"
+      ],
+      "required_concepts": [
+        "overall score",
+        "observation window",
+        "best-performing prompt",
+        "prompt score",
+        "provider coverage",
+        "timestamp",
+        "do not substitute"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "visibility"
+      ],
       "id": "approved-citation-refresh",
       "request": "Refresh the approved AI citation measurement after the credit-bearing consequence is reviewed, then report its durable run state.",
       "required_capability_ids": [

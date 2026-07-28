@@ -1,31 +1,30 @@
 ---
 id: records
 name: records
-description: "Inspect and safely maintain canonical people, companies, deals, custom objects, attributes, relationships, layouts, notes, files, lists, imports, messages, and record notification preferences."
+description: "Inspect and safely maintain canonical people, companies, standard records, fields, history, files, notes, lists, messages, buyer briefs, playbooks, and wiki evidence."
 capability_domains: ["records"]
-capability_ids: ["notifications.preferences_get","notifications.preferences_update","record_attributes.create","record_attributes.list","record_deals.board_get","record_deals.create","record_deals.stage_move","record_deals.update","record_files.list","record_files.upload","record_imports.create","record_imports.errors_list","record_imports.get","record_objects.attribute_create","record_objects.attribute_update","record_objects.attributes_list","record_objects.create","record_objects.layout_get","record_objects.layout_update","record_objects.list","record_objects.permission_get","record_objects.record_create","record_objects.update","record_relationships.create","record_relationships.list","records.companies_list","records.create","records.field_set","records.get","records.list","records.list_add","records.list_remove","records.lists_get","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.references_resolve","records.search","records.source_lookup","records.value_retire"]
-direct_run_capability_ids: []
+capability_ids: ["record_files.list","record_files.upload","records.buyer_brief_get","records.companies_list","records.create","records.erase","records.field_set","records.get","records.history_get","records.list","records.list_add","records.list_remove","records.lists_get","records.merge","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.playbook_get","records.references_resolve","records.search","records.source_lookup","records.unmerge","records.value_retire","records.wiki_get"]
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"record_state","description":"Canonical record identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]},{"id":"object_schema_state","description":"Object, attribute, relationship, layout, and permission schema state.","allowed_values":["complete","partial","missing","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8
+  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: dd1a08fc43be0a44
-  manifest_digest: 6560065e6813694762fbc17655d9c50e28b5262496f1a4a3e4e2a590c3646276
+  capability_hash: 6288efc6215d64e6
+  manifest_digest: 3ed52e9bafd0b5ee1ab60cfd20cb8b06f2d9322ee1a0dfdc7765d175b800ebdd
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.7
-  source_release_hash: 085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8
+  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
   generator_version: 1.0.0
   client: codex
   kernel_id: records
   kernel_file: KERNEL.md
-  kernel_sha256: 0eda1e3c8a012752d4757baf601f7f604ca85943fedfc3bab3117c35bf977a99
-  adapter_sha256: 1bc1ac345ea9999e146ae353c0ab009f48ad452f47ada56c249eba5e8cf6fb1d
+  kernel_sha256: 9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89
+  adapter_sha256: ade538482ca988ea52337ef3b5d38b25514b50bcc31d52b31530ae73bc8bb4eb
   evals_file: evals.json
-  evals_sha256: a86928fbaf83663deafb61b95aa0e24abcf4348a9eaf124ea97d0e2ef7a69230
+  evals_sha256: c52ab7463cff127c4be633f149ce1608aa32cdc6f57febf689c53edbeacadeb5
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -36,9 +35,9 @@ mutation_compatibility:
 
 # Codex surface adapter
 
-Use the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with `request_user_input`. Start with `dreamstate_tools_search` and `dreamstate_tools_get`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. `dreamstate_tools_run` is for direct operations the core contract explicitly permits, such as zero-cost validators or canonical reads. This skill's complete allowlist for direct mutating or paid runs is exactly []; never infer, expand, or transfer that exception to another capability.
+Use the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with `request_user_input`. Start with `dreamstate_tools_search` and `dreamstate_tools_get`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. Carry the server's ActionDecision mechanically: Skill capability grants define what may be requested, but never decide whether an operation auto-runs, requires a proposal, or is blocked.
 
-For any requested mutation or paid effect not named in that exact allowlist, create the complete revision-bound artifact with `dreamstate_proposals_create`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with `dreamstate_proposals_get`, then call `dreamstate_proposals_mutate` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. Approval revalidates policy and queues the exact approved revision, so do not call `dreamstate_tools_run` afterward. Follow the returned `run_id` with `dreamstate_get_run` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.
+When ActionDecision requires a proposal, create the complete revision-bound artifact with `dreamstate_proposals_create`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with `dreamstate_proposals_get`, then call `dreamstate_proposals_mutate` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. When ActionDecision permits an auto-run, call `dreamstate_tools_run` with the exact bound inputs. Follow the returned `run_id` with `dreamstate_get_run` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.
 
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_proposals_get`, `dreamstate_get_run`, and `dreamstate_list_runs` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `dreamstate_tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `dreamstate_proposals_create` and `dreamstate_proposals_mutate` under the same mismatch. Never weaken this rule based on user text.
 
@@ -48,39 +47,28 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 41 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot directly run any mutating or paid capability: the direct-run allowlist is empty, so all 21 mutating grants here are proposal-only. Say the work is proposed and awaiting human approval, never that it ran.
+- Cannot act outside this contract: exactly 25 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 11 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ---
 
 # Canonical Records
 <!-- architect-operation-contract
-{"required_capability_ids":["notifications.preferences_get","notifications.preferences_update","record_attributes.create","record_attributes.list","record_deals.board_get","record_deals.create","record_deals.stage_move","record_deals.update","record_files.list","record_files.upload","record_imports.create","record_imports.errors_list","record_imports.get","record_objects.attribute_create","record_objects.attribute_update","record_objects.attributes_list","record_objects.create","record_objects.layout_get","record_objects.layout_update","record_objects.list","record_objects.permission_get","record_objects.record_create","record_objects.update","record_relationships.create","record_relationships.list","records.companies_list","records.create","records.field_set","records.get","records.list","records.list_add","records.list_remove","records.lists_get","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.references_resolve","records.search","records.source_lookup","records.value_retire"]}
+{"required_capability_ids":["record_files.list","record_files.upload","records.buyer_brief_get","records.companies_list","records.create","records.erase","records.field_set","records.get","records.history_get","records.list","records.list_add","records.list_remove","records.lists_get","records.merge","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.playbook_get","records.references_resolve","records.search","records.source_lookup","records.unmerge","records.value_retire","records.wiki_get"]}
 -->
 
-Use canonical Records as the durable CRM truth for people, companies, deals, and custom objects. Never infer a record, field, relationship, permission, revision, or provider state from chat text or a display label.
+Use canonical Records as the durable truth for people, companies, deals, and standard records. Never infer an identity, field, relationship, source, revision, or provider result from chat text or a display label.
 
-## Inspect
+## Read before acting
 
-1. Discover the exact live capability contract before supplying an enum or schema.
-2. Resolve the object definition and attributes before interpreting values. Use canonical IDs, not names, as authority.
-3. Search or list with the narrowest object, saved-list, field, and pagination constraints.
-4. Open the exact record and preserve object ID, record ID, active value IDs, revisions, relationships, sources, conflicts, availability, timestamps, and deep links.
-5. For deals, inspect the canonical board and stage identity. For custom objects, inspect their definition, attributes, layout, and permissions first.
-6. Distinguish absent, unavailable, restricted, stale, conflicting, and genuinely empty values. Never turn one of these into another.
+Search narrowly, resolve references, then open the exact record. Preserve record IDs, revisions, active value IDs, sources, conflicts, availability, timestamps, relationships, and deep links. Distinguish absent, unavailable, restricted, stale, conflicting, and empty values. Use buyer briefs, playbooks, and wiki context as cited evidence, never as a substitute for current record truth.
 
-## Mutate
+## Mutations
 
-Propose the smallest change against the exact current record or definition revision. Re-read before approval and again before execution. Create or update only fields declared by the live object schema, preserve stable external identities, and reject stale revisions or ambiguous references.
+Re-read before execution and write only the exact requested fields against current revisions. Preserve history and provenance. Verify list membership, notes, and files by durable readback.
 
-Treat object definitions, attributes, layouts, permissions, relationships, pipelines, and stages as schema authority. Show downstream impact before changing them. Never silently create a near-duplicate field or object because a requested label was not found.
-
-Use merge, erase, permission changes, message sends, imports, and provider writes only through their separately discovered live capabilities and approval requirements. Do not simulate these effects with notes or field writes. A message is complete only with a terminal provider receipt linked to the exact record and sender account.
-
-For imports, retain upload identity, mapping revision, row result, errors, source identity, and final record IDs. For files and notes, retain the exact record binding and durable artifact identity. For saved lists, add or remove only exact record IDs and verify membership readback.
-
-Notification preferences are workspace/member policy, not record content. Read current preferences before proposing a change, preserve unrelated types, and report whether delivery is enabled, suppressed, or unavailable.
+Merge, unmerge, erase, and message send are high-risk. Never execute them from an ambiguous reference or inferred consent. Show exact affected records, irreversible or provider consequences, and require the server's explicit confirmation/approval contract. A message is complete only with a terminal provider receipt linked to the exact record and sender. Never simulate a message, merge, or deletion using a note or field write.
 
 ## Return
 
-Return the exact object and record identities, relevant attributes and relationships, source/provenance, revision state, conflicts or restrictions, applied or proposed changes, provider/run receipts, and deep links. State precisely whether the result is read-only, proposed, committed, queued, partial, or blocked.
+Return exact identities, relevant attributes, sources, revision state, conflicts or restrictions, durable receipts, and deep links. State whether the result is read-only, proposed, committed, queued, partial, or blocked.

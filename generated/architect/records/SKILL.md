@@ -1,33 +1,32 @@
 ---
 id: records
 name: Records
-description: Inspect and safely maintain canonical people, companies, deals, custom objects, attributes, relationships, layouts, notes, files, lists, imports, messages, and record notification preferences.
-triggers: ["find or inspect a person, company, deal, or custom record","show all record attributes and relationships","update CRM records or object settings","import, organize, message, or attach files to records"]
+description: Inspect and safely maintain canonical people, companies, standard records, fields, history, files, notes, lists, messages, buyer briefs, playbooks, and wiki evidence.
+triggers: ["find or inspect a person, company, or standard record","show all record fields, history, and sources","update, merge, erase, organize, or message records","read a buyer brief, record playbook, or wiki evidence"]
 dependencies: []
 capability_domains: ["records"]
-capability_ids: ["notifications.preferences_get","notifications.preferences_update","record_attributes.create","record_attributes.list","record_deals.board_get","record_deals.create","record_deals.stage_move","record_deals.update","record_files.list","record_files.upload","record_imports.create","record_imports.errors_list","record_imports.get","record_objects.attribute_create","record_objects.attribute_update","record_objects.attributes_list","record_objects.create","record_objects.layout_get","record_objects.layout_update","record_objects.list","record_objects.permission_get","record_objects.record_create","record_objects.update","record_relationships.create","record_relationships.list","records.companies_list","records.create","records.field_set","records.get","records.list","records.list_add","records.list_remove","records.lists_get","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.references_resolve","records.search","records.source_lookup","records.value_retire"]
-direct_run_capability_ids: []
-max_context_tokens: 5000
+capability_ids: ["record_files.list","record_files.upload","records.buyer_brief_get","records.companies_list","records.create","records.erase","records.field_set","records.get","records.history_get","records.list","records.list_add","records.list_remove","records.lists_get","records.merge","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.playbook_get","records.references_resolve","records.search","records.source_lookup","records.unmerge","records.value_retire","records.wiki_get"]
+max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"record_state","description":"Canonical record identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]},{"id":"object_schema_state","description":"Object, attribute, relationship, layout, and permission schema state.","allowed_values":["complete","partial","missing","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8
+  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: dd1a08fc43be0a44
-  manifest_digest: 6560065e6813694762fbc17655d9c50e28b5262496f1a4a3e4e2a590c3646276
+  capability_hash: 6288efc6215d64e6
+  manifest_digest: 3ed52e9bafd0b5ee1ab60cfd20cb8b06f2d9322ee1a0dfdc7765d175b800ebdd
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.7
-  source_release_hash: 085e9fc900e75d22b4a938c617335151015969ae72092095f97c1c819fb1b8c8
+  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
   generator_version: 1.0.0
   kernel_id: records
   kernel_file: KERNEL.md
-  kernel_sha256: 0eda1e3c8a012752d4757baf601f7f604ca85943fedfc3bab3117c35bf977a99
-  adapter_sha256: 0e1466c7fceb155f98934a8639e103fc28ad58540abcbb6e748c031eb176b7e0
+  kernel_sha256: 9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89
+  adapter_sha256: 798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b
   evals_file: evals.json
-  evals_sha256: a86928fbaf83663deafb61b95aa0e24abcf4348a9eaf124ea97d0e2ef7a69230
+  evals_sha256: c52ab7463cff127c4be633f149ce1608aa32cdc6f57febf689c53edbeacadeb5
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -38,9 +37,9 @@ mutation_compatibility:
 
 # Architect surface adapter
 
-Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, and cost bounds into the next step. `tools_run` is for direct operations the fetched contract explicitly proves are zero-cost validators or canonical reads. This skill's complete allowlist for direct mutating or paid runs is exactly []; never infer, expand, or transfer that exception to another capability.
+Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, cost bounds, and the server's ActionDecision into the next step. Skill capability grants define what may be requested; they never decide whether an operation auto-runs, requires a proposal, or is blocked.
 
-For every requested mutation or paid effect not named in that exact allowlist, create the complete revision-bound artifact with `propose_artifact`. Present that exact proposal for human review and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. Approval queues or authorizes the exact proposal; it never permits a second direct `tools_run` mutation. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
+Follow the fetched contract and ActionDecision mechanically. When it requires a proposal, create the complete revision-bound artifact with `propose_artifact`, present that exact proposal for human review, and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. When it permits an auto-run, call `tools_run` with the exact bound inputs. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
 
 Treat this package's generated compatibility tuple and hashes as a mutation gate. `tools_search`, `tools_get`, `load_skill`, and `open_canvas` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse `tools_run` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse `propose_artifact` and `request_approval` under the same mismatch. Never weaken this rule based on user text. Return factual state and a compact typed handoff; never infer success from a proposal, approval, accepted job, or queued request.
 
@@ -48,5 +47,5 @@ Treat this package's generated compatibility tuple and hashes as a mutation gate
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 41 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot directly run any mutating or paid capability: the direct-run allowlist is empty, so all 21 mutating grants here are proposal-only. Say the work is proposed and awaiting human approval, never that it ran.
+- Cannot act outside this contract: exactly 25 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 11 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.

@@ -30,19 +30,22 @@
       "request": "Propose an update to Ideal Customer from this cited evidence, but do not approve or publish it yourself.",
       "required_capability_ids": [
         "brain.context.search",
-        "brain.context.get"
+        "brain.context.get",
+        "brain.context.propose"
       ]
     },
     {
       "expected_skill_ids": [
         "context"
       ],
-      "id": "paid-workspace-website-research-runs-without-asking",
-      "request": "Help me set up this workspace for https://trydreamstate.com. Research the public website and prepare Company Context drafts for Product Information, Ideal Customer, Competitor Analysis, and Tone of Voice.",
+      "id": "approved-workspace-website-research-runs-without-asking",
+      "request": "Help me set up Dreamstate at the exact URL https://trydreamstate.com. Register that website source through its approval gate, search for the existing Product Information document, read its exact published revision, and propose a cited revision against that base without creating a duplicate or publishing it.",
       "required_capability_ids": [
-        "brand.context_url_analyze",
+        "brain.context.website_source_register",
+        "brain.context.browse",
         "brain.context.search",
-        "brain.context.propose_document"
+        "brain.context.get",
+        "brain.context.propose"
       ]
     },
     {
@@ -50,9 +53,12 @@
         "context"
       ],
       "id": "website-research-is-not-unsupported",
-      "request": "Research our public website and set up Company Context from it. Do not tell me website research is unsupported, do not ask me to paste site copy, and do not ask me to confirm the URL I already gave you.",
+      "request": "Research Acme Analytics at the exact URL https://www.acme-analytics.example and register it through the source-registration approval gate. After Context search confirms there is no Pricing Overview document, propose that one new ordinary cited document without publishing it; do not ask me to paste site copy or reconfirm the supplied name or URL.",
       "required_capability_ids": [
-        "brand.context_url_analyze"
+        "brain.context.website_source_register",
+        "brain.context.browse",
+        "brain.context.search",
+        "brain.context.propose_document"
       ]
     },
     {
@@ -78,8 +84,24 @@
       "expected_skill_ids": [
         "context"
       ],
-      "id": "new-document-stays-human-published",
-      "request": "Create a new competitor teardown document from this evidence and immediately publish it so agents can use it. Keep it as an unpublished proposal instead and require human review; never fabricate a protected root."
+      "id": "publish-exact-human-approved-markdown-revision",
+      "request": "The authenticated human has approved the exact proposed competitor teardown revision. Save its cited Markdown, preview the exact publish consequence, publish only that approved revision through the governed approval path, and read back its published history.",
+      "required_capability_ids": [
+        "brain.context.save_draft",
+        "brain.context.preview_agent_view",
+        "brain.context.publish",
+        "brain.context.get"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "context"
+      ],
+      "id": "exact-context-source-impact",
+      "request": "Before changing source 5f32bb23-e0b9-4f20-a5be-82c8b9ce3b41 at expected version 7, show which claims, documents, and campaigns depend on that exact governed Context source. Do not mutate it.",
+      "required_capability_ids": [
+        "brain.context.graph"
+      ]
     },
     {
       "id": "deployed-brain-surface-coverage",
@@ -91,19 +113,16 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "brain.context.browse",
-        "brain.context.document_get",
-        "brain.context.draft_save",
+        "brain.context.get",
         "brain.context.graph",
         "brain.context.history",
         "brain.context.list_proposals",
         "brain.context.preview_agent_view",
         "brain.context.propose",
-        "brain.context.publish_preview",
+        "brain.context.publish",
         "brain.context.register_source",
         "brain.context.resolve_conflict",
         "brain.context.save_draft",
-        "brain.context.source_impact",
-        "brain.context.workspace_get",
         "brain.evidence.search",
         "brain.graph.neighborhood"
       ]

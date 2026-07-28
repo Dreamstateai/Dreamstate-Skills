@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "skill_id": "records-views",
+  "cases": [
+    {
+      "id": "saved-view-lifecycle",
+      "request": "List saved record views, create or update the exact reviewed filter and projection, execute it, and show paginated canonical results.",
+      "expected_skill_ids": ["records-views"],
+      "required_capability_ids": ["saved_views.list","saved_views.create","saved_views.update","saved_views.results"]
+    },
+    {
+      "id": "saved-view-v2-runtime",
+      "request": "List v2 views, create this reviewed v2 definition, upsert its exact runtime revision, execute it, and preserve nullable filter behavior.",
+      "expected_skill_ids": ["records-views"],
+      "required_capability_ids": ["saved_views.v2_list","saved_views.v2_create","saved_views.v2_runtime_upsert","saved_views.v2_execute"]
+    },
+    {
+      "id": "confirmed-saved-view-delete",
+      "request": "Show the exact saved view and its current revision, but do not delete it until I explicitly confirm that identity.",
+      "expected_skill_ids": ["records-views"],
+      "required_capability_ids": ["saved_views.list","saved_views.delete"],
+      "must_not_execute": true
+    },
+    {
+      "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["saved_views.create"],
+      "approved_mutation_max_changes": 1,
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["records-views"],
+      "expected_workspace_outcome": [{"check":"saved_view_created","expected":"present","saved_view_name":"T25 Active People Proof"}],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": ["mock saved-view receipt","fixture-only saved view","invented saved-view id","prose-only verification"],
+      "id": "production-local-saved-person-view",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": ["saved_views.list","saved_views.create","saved_views.results"],
+      "request": "List current saved views, then create one object-type Person saved view named T25 Active People Proof with no filters, default layout, and no grouping. Save the exact proposal; after I approve it, execute only that one create, list or execute its canonical results, and return the exact saved-view id, current revision, run-step receipt, result pagination, and deep link. Do not update, delete, import, export, message, enrich, publish, activate, enroll, or send anything.",
+      "resume_after_approval": "owner_exact"
+    }
+  ]
+}

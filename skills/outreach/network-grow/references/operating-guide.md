@@ -2,7 +2,7 @@
 
 ## Promise
 
-Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps.
+Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and launch a connection-only workflow under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a DM cadence. You pick who and the note; Dreamstate enrolls the frozen selection and dispatches through its governed workflow runtime.
 
 ## Execution boundary
 
@@ -10,9 +10,9 @@ Mode: **executable**. The central outcome is supported by released Dreamstate co
 
 Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
 
-Declared capabilities: `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `contacts.send_connection`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`, `workflows.create`
+Declared capabilities: `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `sequences.enroll_selection`, `sequences.step_options`, `sequences.validate`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`, `workflows.activate`, `workflows.create`, `workflows.draft_publish`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 
-Required scopes: `actions`, `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`, `workflows:write`
+Required scopes: `content:read`, `outreach:read`, `outreach:write`, `tables:read`, `tables:write`, `workflows:read`, `workflows:write`
 
 ## Evidence checklist
 

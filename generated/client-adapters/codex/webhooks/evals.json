@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "skill_id": "webhooks",
+  "cases": [
+    {"id":"webhook-read-configure","request":"List existing webhooks and create or delete only this exact zero-credit workspace endpoint without exposing secrets.","expected_skill_ids":["webhooks"],"required_capability_ids":["webhooks.list","webhooks.create","webhooks.delete"]},
+    {"id":"webhook-delivery-evidence","request":"Inspect delivery evidence and send one exact governed test delivery, retaining its external receipt.","expected_skill_ids":["webhooks"],"required_capability_ids":["webhooks.deliveries_list","webhooks.test_delivery"]}
+  ]
+}

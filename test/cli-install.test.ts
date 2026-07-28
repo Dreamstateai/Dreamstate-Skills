@@ -13,6 +13,12 @@ const INDEX_SKILLS = (JSON.parse(readFileSync(join(ROOT, 'skills-index.json'), '
 const UNSAFE_GENERIC_SLUGS = INDEX_SKILLS
   .filter((skill) => ['executable', 'guided-execution'].includes(skill.execution_mode))
   .map((skill) => skill.slug);
+const GOVERNED_ADAPTER_SLUGS = new Set(
+  Object.keys(
+    JSON.parse(readFileSync(join(ROOT, 'generated', 'client-adapters', 'RELEASE.json'), 'utf8'))
+      .skills,
+  ),
+);
 
 function seedInstalledSkills(skillsDir: string, slugs: string[]): void {
   for (const slug of slugs) {
@@ -23,7 +29,14 @@ function seedInstalledSkills(skillsDir: string, slugs: string[]): void {
 
 function assertNoUnsafeGenericSkills(skillsDir: string): void {
   for (const slug of UNSAFE_GENERIC_SLUGS) {
-    assert.equal(existsSync(join(skillsDir, slug)), false, `stale unsafe generic ${slug} survived`);
+    if (GOVERNED_ADAPTER_SLUGS.has(slug)) {
+      assert.ok(
+        !existsSync(join(skillsDir, slug)) || existsSync(join(skillsDir, slug, 'KERNEL.md')),
+        `unsafe generic ${slug} survived instead of being removed or replaced by its governed adapter`,
+      );
+    } else {
+      assert.equal(existsSync(join(skillsDir, slug)), false, `stale unsafe generic ${slug} survived`);
+    }
   }
 }
 
@@ -91,7 +104,15 @@ test('Claude and Codex omit every generic executable or guided package from a fu
       assert.equal(result.status, 0, result.stderr || result.stdout);
       const skillsDir = join(home, `.${client}`, 'skills');
       for (const skill of unsafe) {
-        assert.equal(existsSync(join(skillsDir, skill.slug)), false, `${client} installed unsafe generic ${skill.slug}`);
+        if (GOVERNED_ADAPTER_SLUGS.has(skill.slug)) {
+          assert.deepEqual(
+            readFileSync(join(skillsDir, skill.slug, 'SKILL.md')),
+            readFileSync(join(ROOT, 'generated', 'client-adapters', client, skill.slug, 'SKILL.md')),
+            `${client} installed generic ${skill.slug} instead of its governed adapter`,
+          );
+        } else {
+          assert.equal(existsSync(join(skillsDir, skill.slug)), false, `${client} installed unsafe generic ${skill.slug}`);
+        }
       }
       assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
       assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);

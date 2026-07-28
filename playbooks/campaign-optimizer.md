@@ -6,7 +6,7 @@ min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
 tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
-capability_ids: [sequences.list, outreach.workspace_stats_get, outreach.channel_stats_get, outreach.analytics_step_aggregate_get, rows.query, sequences.definition_get, sequences.step_options, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, outreach.global_pause_set, outreach.dm_conversation_status_update]
+capability_ids: [sequences.list, sequences.analytics_get, outreach.workspace_stats_get, outreach.analytics_step_aggregate_get, rows.query, sequences.definition_get, sequences.step_options, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, outreach.global_pause_set, outreach.dm_conversation_status_update]
 ---
 
 # Sequence Optimizer
@@ -25,7 +25,7 @@ with `dreamstate_get_run`.
 ## Step 1: Pick the sequence and read the numbers
 
 List sequences with `sequences.list` and pick the one the user means (or scan the active
-ones). Pull `outreach.workspace_stats_get`, `outreach.channel_stats_get`, and the selected
+ones). Pull `outreach.workspace_stats_get`, `sequences.analytics_get`, and the selected
 sequence's `outreach.analytics_step_aggregate_get` evidence:
 
 - `metric: "overview"` — sends, acceptance rate, reply rate, positive reply rate, demos.

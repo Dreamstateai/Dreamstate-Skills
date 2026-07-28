@@ -6,7 +6,7 @@
     {
       "name": "routes-to-correct-skill",
       "input": {
-        "request": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps."
+        "request": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and launch a connection-only workflow under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a DM cadence. You pick who and the note; Dreamstate enrolls the frozen selection and dispatches through its governed workflow runtime."
       },
       "expected": {
         "selected_skill": "network-grow"
@@ -16,7 +16,7 @@
     {
       "name": "respects-execution-mode",
       "input": {
-        "request": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps.",
+        "request": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and launch a connection-only workflow under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a DM cadence. You pick who and the note; Dreamstate enrolls the frozen selection and dispatches through its governed workflow runtime.",
         "capability_available": true
       },
       "expected": {
@@ -28,7 +28,7 @@
     {
       "name": "uses-declared-contracts-only",
       "input": {
-        "request": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps."
+        "request": "Grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and launch a connection-only workflow under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a DM cadence. You pick who and the note; Dreamstate enrolls the frozen selection and dispatches through its governed workflow runtime."
       },
       "expected": {
         "allowed_tools": [
@@ -42,13 +42,21 @@
           "contacts.enrich",
           "contacts.get",
           "contacts.list",
-          "contacts.send_connection",
+          "sequences.enroll_selection",
+          "sequences.step_options",
+          "sequences.validate",
           "social.accounts_list",
           "sources.find_leads",
           "tables.create",
           "tables.list",
           "workbooks.create",
-          "workflows.create"
+          "workflows.activate",
+          "workflows.create",
+          "workflows.draft_publish",
+          "workflows.get",
+          "workflows.graph_apply",
+          "workflows.node_registry",
+          "workflows.validate_graph"
         ]
       },
       "check": "tool_trace_subset"

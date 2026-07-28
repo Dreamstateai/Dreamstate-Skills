@@ -1,64 +1,38 @@
 {
+  "schema_version": 1,
+  "skill_id": "records",
   "cases": [
     {
+      "id": "inspect-standard-records-and-context",
+      "request": "Find the exact buyer, company, and related standard records; show all available fields, sources, history, conflicts, references, buyer brief, playbook, and wiki evidence without inventing missing values.",
       "expected_skill_ids": ["records"],
-      "id": "inspect-person-all-attributes",
-      "request": "Find the exact person record for this buyer and show every available attribute, relationship, source, conflict, and revision without inventing missing values.",
-      "required_capability_ids": ["record_objects.list", "record_objects.attributes_list", "record_attributes.list", "records.people_list", "records.list", "records.search", "records.get", "records.references_resolve", "records.source_lookup", "record_relationships.list"]
+      "required_capability_ids": ["records.people_list","records.companies_list","records.list","records.search","records.get","records.history_get","records.references_resolve","records.source_lookup","records.buyer_brief_get","records.playbook_get","records.wiki_get"]
     },
     {
+      "id": "revision-safe-record-write",
+      "request": "Create the approved standard record, update only the exact current field revision, retire its superseded value, add a note and approved file, then verify every durable artifact.",
       "expected_skill_ids": ["records"],
-      "id": "inspect-company-deal-and-stage",
-      "request": "Open this company and its active deals, show the current canonical stage and linked people, and cite exact record identities.",
-      "required_capability_ids": ["records.companies_list", "records.get", "record_deals.board_get", "record_relationships.list"]
+      "required_capability_ids": ["records.create","records.get","records.field_set","records.value_retire","records.note_add","record_files.upload","record_files.list"]
     },
     {
+      "id": "exact-list-membership",
+      "request": "Show the available record lists, add these exact record ids to the selected list, remove only the reviewed ids, and verify final membership.",
       "expected_skill_ids": ["records"],
-      "id": "custom-object-schema-and-record",
-      "request": "Create a reviewable custom Partner object with typed attributes, inspect its layout and permissions, then create one exact record only after approval.",
-      "required_capability_ids": ["record_objects.list", "record_objects.create", "record_objects.update", "record_objects.attribute_create", "record_objects.attribute_update", "record_objects.layout_get", "record_objects.layout_update", "record_objects.permission_get", "record_objects.record_create"]
+      "required_capability_ids": ["records.lists_get","records.list_add","records.list_remove","records.get"]
     },
     {
+      "id": "confirmed-merge-unmerge-erase",
+      "request": "Preview the exact records and surviving values for a merge, unmerge, or erasure, but do not execute any destructive operation without explicit confirmation tied to the current revisions.",
       "expected_skill_ids": ["records"],
-      "id": "revision-safe-field-update",
-      "request": "Update this person's title only if the exact record and field revision are still current, preserving the prior value and source history.",
-      "required_capability_ids": ["records.get", "record_objects.attributes_list", "records.field_set", "records.value_retire"]
+      "required_capability_ids": ["records.get","records.merge","records.unmerge","records.erase"],
+      "must_not_execute": true
     },
     {
+      "id": "confirmed-record-message",
+      "request": "Show eligible channels for this exact person and preview the message and sender, but do not send until the explicit provider-write approval is granted.",
       "expected_skill_ids": ["records"],
-      "id": "record-list-file-note",
-      "request": "Add these exact records to the selected list, attach the approved file and note to each, then verify durable membership and attachments.",
-      "required_capability_ids": ["records.lists_get", "records.list_add", "records.list_remove", "record_files.upload", "record_files.list", "records.note_add"]
-    },
-    {
-      "expected_skill_ids": ["records"],
-      "id": "record-import-with-mapping-errors",
-      "request": "Import this CRM file using an explicit field mapping, then report exact created records, rejected rows, and mapping errors without hiding partial results.",
-      "required_capability_ids": ["record_objects.list", "record_objects.attributes_list", "record_imports.create", "record_imports.get", "record_imports.errors_list"]
-    },
-    {
-      "expected_skill_ids": ["records"],
-      "id": "record-message-provider-receipt",
-      "request": "Show eligible message channels for this exact person and send the approved message from the selected sender only with a terminal provider receipt.",
-      "required_capability_ids": ["records.get", "records.message_channels_get", "records.message_send"]
-    },
-    {
-      "expected_skill_ids": ["records"],
-      "id": "record-notification-preference",
-      "request": "Show my current record notification preferences and propose disabling only deal-stage alerts while preserving every unrelated preference.",
-      "required_capability_ids": ["notifications.preferences_get", "notifications.preferences_update"]
-    },
-    {
-      "expected_skill_ids": ["records"],
-      "id": "create-standard-record-and-relationship",
-      "request": "Create the approved person and company with typed canonical attributes, then link them with the exact reviewed relationship and verify both records.",
-      "required_capability_ids": ["record_attributes.create", "records.create", "record_relationships.create", "records.get"]
-    },
-    {
-      "expected_skill_ids": ["records"],
-      "id": "deal-create-update-stage",
-      "request": "Create the approved deal for this company, update its exact value revision, and move it to the reviewed pipeline stage without skipping stage authority.",
-      "required_capability_ids": ["record_deals.board_get", "record_deals.create", "record_deals.update", "record_deals.stage_move"]
+      "required_capability_ids": ["records.get","records.message_channels_get","records.message_send"],
+      "must_not_execute": true
     },
     {
       "allowed_consequence_levels": ["draft_write"],
@@ -66,20 +40,13 @@
       "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
-      "expected_workspace_outcome": [
-        {
-          "check": "record_created",
-          "expected": "present",
-          "object_key": "person",
-          "record_display_name": "T25 Ada Lovelace"
-        }
-      ],
+      "expected_workspace_outcome": [{"check":"record_created","expected":"present","object_key":"person","record_display_name":"T25 Ada Lovelace"}],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "forbidden_test_substitutions": ["mock run receipt","fixture-only record","invented record id"],
       "id": "production-local-person-record",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["records.create"],
+      "required_capability_ids": ["records.create","records.get"],
       "request": "Create one standard person record named T25 Ada Lovelace with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
       "resume_after_approval": "owner_exact"
     },
@@ -89,20 +56,13 @@
       "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
-      "expected_workspace_outcome": [
-        {
-          "check": "record_created",
-          "expected": "present",
-          "object_key": "company",
-          "record_display_name": "T25 Analytical Engines"
-        }
-      ],
+      "expected_workspace_outcome": [{"check":"record_created","expected":"present","object_key":"company","record_display_name":"T25 Analytical Engines"}],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "forbidden_test_substitutions": ["mock run receipt","fixture-only record","invented record id"],
       "id": "production-local-company-record",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["records.create"],
+      "required_capability_ids": ["records.create","records.get"],
       "request": "Create one standard company record named T25 Analytical Engines with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
       "resume_after_approval": "owner_exact"
     },
@@ -112,47 +72,15 @@
       "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
       "expected_skill_ids": ["records"],
-      "expected_workspace_outcome": [
-        {
-          "check": "record_created",
-          "expected": "present",
-          "object_key": "deal",
-          "record_display_name": "T25 Expansion Review"
-        }
-      ],
+      "expected_workspace_outcome": [{"check":"record_created","expected":"present","object_key":"deal","record_display_name":"T25 Expansion Review"}],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
+      "forbidden_test_substitutions": ["mock run receipt","fixture-only record","invented record id"],
       "id": "production-local-deal-record",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["records.create"],
+      "required_capability_ids": ["records.create","records.get"],
       "request": "Create one standard deal record named T25 Expansion Review with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, move stages, publish, activate, enroll, or send anything.",
       "resume_after_approval": "owner_exact"
-    },
-    {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["record_objects.create", "record_objects.record_create"],
-      "approved_mutation_max_changes": 2,
-      "execution_profile": "production_real",
-      "expected_skill_ids": ["records"],
-      "expected_workspace_outcome": [
-        {
-          "check": "record_created",
-          "expected": "present",
-          "object_key": "partner",
-          "record_display_name": "T25 Northstar Partner"
-        }
-      ],
-      "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt", "fixture-only record", "invented record id"],
-      "id": "production-local-custom-partner-record",
-      "must_not_ask_user": true,
-      "must_not_request_secrets": true,
-      "required_capability_ids": ["record_objects.create", "record_objects.record_create"],
-      "request": "Create a custom object with key partner, singular label Partner, plural label Partners, and no icon; then create one record named T25 Northstar Partner with no optional values. Save the exact dependency-complete proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
-      "resume_after_approval": "owner_exact"
     }
-  ],
-  "schema_version": 1,
-  "skill_id": "records"
+  ]
 }

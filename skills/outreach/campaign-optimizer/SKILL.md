@@ -19,7 +19,7 @@ with `dreamstate_get_run`.
 ## Step 1: Pick the sequence and read the numbers
 
 List sequences with `sequences.list` and pick the one the user means (or scan the active
-ones). Pull `outreach.workspace_stats_get`, `outreach.channel_stats_get`, and the selected
+ones). Pull `outreach.workspace_stats_get`, `sequences.analytics_get`, and the selected
 sequence's `outreach.analytics_step_aggregate_get` evidence:
 
 - `metric: "overview"` — sends, acceptance rate, reply rate, positive reply rate, demos.

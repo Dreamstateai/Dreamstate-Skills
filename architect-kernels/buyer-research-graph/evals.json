@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "skill_id": "buyer-research-graph",
+  "cases": [
+    {
+      "id": "research-buyer-from-graph",
+      "request": "Read the graph contract, find this buyer and company, traverse their exact relationships, inspect edges and enrichment evidence, and cite every material claim.",
+      "expected_skill_ids": ["buyer-research-graph"],
+      "required_capability_ids": ["graph.contract_get","graph.search","graph.traverse","graph.get_node","graph.get_relation","graph.edges_list","record_enrichment.get"]
+    },
+    {
+      "id": "create-revise-enriched-graph-facts",
+      "request": "Create the approved enrichment and canonical buyer nodes and relation, then update only their exact current revisions and verify provenance.",
+      "expected_skill_ids": ["buyer-research-graph"],
+      "required_capability_ids": ["record_enrichment.create","record_enrichment.get","graph.create_node","graph.create_relation","graph.update_node","graph.update_relation"]
+    },
+    {
+      "id": "export-graph-scope",
+      "request": "Export this exact canonical graph scope at its current revision and report any restricted or conflicting evidence.",
+      "expected_skill_ids": ["buyer-research-graph"],
+      "required_capability_ids": ["graph.contract_get","graph.export"]
+    },
+    {
+      "id": "confirmed-graph-archive-restore",
+      "request": "Show the exact node, relation, and downstream edges before archive or node restoration, but do not execute those lifecycle changes without explicit confirmation.",
+      "expected_skill_ids": ["buyer-research-graph"],
+      "required_capability_ids": ["graph.get_node","graph.get_relation","graph.edges_list","graph.archive_node","graph.archive_relation","graph.restore_node"],
+      "must_not_execute": true
+    },
+    {
+      "allowed_consequence_levels": ["draft_write"],
+      "approved_mutation_capability_ids": ["graph.create_node","graph.create_relation"],
+      "approved_mutation_max_changes": 3,
+      "execution_profile": "production_real",
+      "expected_skill_ids": ["buyer-research-graph"],
+      "expected_workspace_outcome": [
+        {"check":"graph_node_created","expected":"present","graph_node_kind":"company","min_count":1},
+        {"check":"graph_relation_created","expected":"present","min_count":1}
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": ["mock graph receipt","fixture-only graph node","invented node or relation id","prose-only verification"],
+      "id": "production-local-buyer-company-graph",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": ["graph.contract_get","graph.create_node","graph.create_relation","graph.get_node","graph.get_relation","graph.edges_list"],
+      "request": "Read the live graph contract. Create one person node labeled T25 Ada Buyer and one company node labeled T25 Analytical Engines, each with reason production-real Architect graph proof and no unsupported evidence; relate the person to the company using the contract-valid employment edge. Save one dependency-complete proposal; after I approve it, execute only those two node creates and one relation create, then re-read both exact nodes, the exact relation, and its edges. Return their durable ids, revisions, provenance, run-step receipts, and deep links. Do not enrich, archive, restore, export, message, publish, activate, enroll, or send anything.",
+      "resume_after_approval": "owner_exact"
+    }
+  ]
+}

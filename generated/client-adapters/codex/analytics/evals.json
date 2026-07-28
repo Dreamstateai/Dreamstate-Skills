@@ -96,10 +96,10 @@
       "required_capability_ids": [
         "outreach.analytics_framework_aggregate_get",
         "outreach.analytics_step_aggregate_get",
-        "outreach.channel_stats_get",
         "outreach.monthly_rollup_get",
         "outreach.reply_insights_get",
-        "outreach.workspace_stats_get"
+        "outreach.workspace_stats_get",
+        "sequences.analytics_get"
       ]
     },
     {

@@ -39,11 +39,11 @@
         ],
         "allowed_capability_ids": [
           "outreach.analytics_step_aggregate_get",
-          "outreach.channel_stats_get",
           "outreach.dm_conversation_status_update",
           "outreach.global_pause_set",
           "outreach.workspace_stats_get",
           "rows.query",
+          "sequences.analytics_get",
           "sequences.definition_get",
           "sequences.list",
           "sequences.step_options",

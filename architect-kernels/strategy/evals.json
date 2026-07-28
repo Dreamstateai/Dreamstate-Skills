@@ -5,8 +5,9 @@
         "strategy"
       ],
       "id": "channel-strategy",
-      "request": "Revise our ICP and decide the roles of content, community, and outbound.",
+      "request": "Review the workspace's current Context document catalog, then read our exact published ICP and revise the roles of content, community, and outbound without inventing a missing strategy document.",
       "required_capability_ids": [
+        "brain.context.browse",
         "brain.context.search",
         "brain.context.get",
         "social.strategy_overview",
@@ -35,18 +36,6 @@
         "brain.companies.answer",
         "brain.companies.get",
         "brain.outreach.compare"
-      ]
-    },
-    {
-      "id": "deployed-brand-surface-coverage",
-      "request": "Inspect the complete brand capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
-      "expected_skill_ids": [
-        "strategy"
-      ],
-      "must_not_ask_user": true,
-      "must_not_execute": true,
-      "required_capability_ids": [
-        "brand.context_list"
       ]
     },
     {

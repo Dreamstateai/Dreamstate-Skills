@@ -182,6 +182,21 @@
       ]
     },
     {
+      "id": "recover-one-failed-workflow-subject-without-replay",
+      "request": "Inspect the failed follow-up automation, identify the exact failed node and event, recover that subject without repeating completed work, and verify the final trace and state.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "required_capability_ids": [
+        "workflows.runs_list",
+        "workflows.run_trace_get",
+        "workflows.node_inspect",
+        "workflows.get",
+        "workflows.metrics_get",
+        "workflows.run_retry"
+      ]
+    },
+    {
       "id": "deployed-workflows-surface-coverage",
       "request": "Inspect the complete workflows capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
       "expected_skill_ids": [
@@ -201,6 +216,34 @@
         "workflows.trigger_create",
         "workflows.trigger_delete",
         "workflows.triggers_list"
+      ]
+    },
+    {
+      "id": "workflow-version-and-run-lifecycle",
+      "request": "Restore the last published workflow graph as a new draft version, replace one node output binding, schedule it for weekdays, pause the currently active run without losing its checkpoint, resume it, cancel it if I confirm, and retry only its failed node without replaying completed effects.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "required_capability_ids": [
+        "runs.get",
+        "runs.pause",
+        "runs.resume",
+        "runs.cancel",
+        "workflows.get",
+        "workflows.draft_save",
+        "workflows.draft_publish",
+        "workflows.trigger_create",
+        "workflows.triggers_list",
+        "workflows.run_trace_get",
+        "workflows.run_retry"
+      ],
+      "required_concepts": [
+        "restore as a new immutable draft version",
+        "output replacement through graph rewiring",
+        "schedule trigger",
+        "checkpoint-preserving resume",
+        "cancel and retry are separate consequences",
+        "completed effects are never replayed"
       ]
     },
     {

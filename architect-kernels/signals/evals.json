@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "skill_id": "signals",
+  "cases": [
+    {"id":"signal-read-suggest","request":"List and inspect current signal sources and events, then show grounded radar suggestions with freshness and completeness.","expected_skill_ids":["signals"],"required_capability_ids":["signal_sources.list","signal_sources.get","signal_sources.events_list","radar.signal_suggestions_get"]},
+    {"id":"signal-source-lifecycle","request":"Create or delete this exact signal source and set its capture key without printing the secret.","expected_skill_ids":["signals"],"required_capability_ids":["signal_sources.create","signal_sources.capture_key_set","signal_sources.delete"]},
+    {"id":"signal-test-event","request":"Send one exact governed test event and retain its durable receipt without claiming future monitoring is proven.","expected_skill_ids":["signals"],"required_capability_ids":["signal_sources.test_event"]}
+  ]
+}

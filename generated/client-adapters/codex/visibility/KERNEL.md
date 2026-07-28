@@ -9,4 +9,6 @@ Search/get exact live visibility contracts. Preserve query set, model/provider c
 
 Never report only an aggregate visibility or citation score. Name the specific tracked prompts that are performing worst, quote each one's own measured numbers, and pair every named prompt with a concrete improvement action. An aggregate figure is context for the per-prompt list, never a substitute for it.
 
+When the user asks for the latest overall score and which prompt is carrying performance, return both distinct measurements: the workspace-level `visibility.overview` score and observation window, then the best-performing prompt from `visibility.prompt_metrics_list` with that prompt's own score, denominator, provider coverage, and timestamp. Never substitute the prompt score for the overall score or combine observation windows.
+
 Propose prioritized gaps by buyer question, evidence weakness, content coverage, and likely next owner. Blog creation delegates to `blog`; strategic positioning delegates to `strategy`. Request approval before credit-bearing refreshes or persisted changes, report the durable run state and cost, and open only the returned canonical visibility link.

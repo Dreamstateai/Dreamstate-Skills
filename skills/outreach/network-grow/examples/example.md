@@ -2,7 +2,7 @@
 
 ## Request
 
-“Help me grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and send connection requests under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a full DM sequence. A lighter motion than /outbound: connections only, no follow-up cadence. You pick who and the note; Dreamstate sends the invites under its caps.”
+“Help me grow a LinkedIn network with the right people: source or take a targeted list, write a short personalized note per person, and launch a connection-only workflow under the per-account ramp cap. Use whenever the user wants to 'grow my network', 'send connection requests', 'connect with' a set of people, or warm an audience without a DM cadence. You pick who and the note; Dreamstate enrolls the frozen selection and dispatches through its governed workflow runtime.”
 
 ## Correct response shape
 

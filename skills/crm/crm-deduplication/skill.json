@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "dd1a08fc43be0a44",
+  "verified_capability_hash": "6288efc6215d64e6",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/crm/crm-deduplication/SKILL.md",
   "install_command": "dreamstate skills install crm-deduplication",
