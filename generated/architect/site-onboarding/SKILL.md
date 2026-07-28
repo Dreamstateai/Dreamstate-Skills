@@ -1,8 +1,8 @@
 ---
 id: site-onboarding
 name: Site Onboarding
-description: Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, brand facts, cited Company Brain proposals, Markdown, sitemap, robots, and AI-readiness files.
-triggers: ["onboard a new website","learn our company from this site","refresh website facts and Company Brain files","set up SEO and AI visibility for a domain"]
+description: Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, derived cited claims, workspace-wiki proposals, Markdown, sitemap, robots, and AI-readiness files.
+triggers: ["onboard a new website","learn our company from this site","refresh website facts and workspace wiki files","set up SEO and AI visibility for a domain"]
 dependencies: ["context"]
 capability_domains: ["brain","content","visibility"]
 capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -18,15 +18,15 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
-  kernel_sha256: 8de0ac56c10ce5d40afcf59bd75637a0ba2b9b8cb84c9ec8c0723c392b9a890a
+  kernel_sha256: ae17d1ee4f471655c9140edc587422900dc18bc723be9943e57d6f1397f5a666
   adapter_sha256: 93bd9e570a72b76936025194d12cd5fb27571882ada230c07862ae4a45c4c4d1
   evals_file: evals.json
-  evals_sha256: 1f9dbf0459ee2ea46f986e76bc5bece44364a5084ae6162213fc303fe673cdb2
+  evals_sha256: bbee998577038bd4494da0d4db33d6ad7f3b33b41ac188e30904de6513191fbc
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

@@ -7,7 +7,7 @@ capability_ids: ["visibility.ai_bot_fetch_get","visibility.ai_traffic","visibili
 completion_contract: {"version":1,"fields":[{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,8 +15,8 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: codex
   kernel_id: visibility

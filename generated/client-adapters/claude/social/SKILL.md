@@ -7,7 +7,7 @@ capability_ids: ["brain.content.get","brain.content.search","brain.context.get",
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,16 +15,16 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: claude
   kernel_id: social
   kernel_file: KERNEL.md
-  kernel_sha256: ec555fc39d5f1403bfb11550648693ca83cebf3810590b3466c64b8c3ed081ef
+  kernel_sha256: 611e4a1444615fba71c20ddd8324990718117486af6a8b788c6f87d2d9154701
   adapter_sha256: 2f7e8cb7e291bcb124dea27d4ad768b2409e225c738f78771335b9cb7096b7a5
   evals_file: evals.json
-  evals_sha256: 1744ee6df70e85e9c0d8e22b1600ddbb693ed9ab601ded8efce4c31703380dd2
+  evals_sha256: 03fb3f240c75046248313ef04376e4c07f3725913452bf4ca517dcd1d32c58e1
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -64,7 +64,7 @@ Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar p
 ## Grounding and intake
 
 1. Inspect the active editor or calendar surface and preserve its artifact revision, selected account, unsaved view state, and existing drafts.
-2. Retrieve only the Company Brain claims, voice guidance, evidence, and goals needed for this content. Keep citations and revision identity with the proposal.
+2. Retrieve only the published workspace-wiki claims, voice guidance, evidence, and goals needed for this content. Keep citations and revision identity with the proposal.
 3. Derive platform, audience, objective, topic, date, account, and approval consequence from the request and canonical state. Use one structured popup only for material choices that remain unknown. Never ask again for a fact already present.
 4. When several platforms are requested, make the shared thesis explicit while adapting form, length, hook, call to action, and scheduling constraints to each platform. Do not mechanically duplicate copy.
 

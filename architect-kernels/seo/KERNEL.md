@@ -9,7 +9,7 @@ Own evidence-backed keyword research, technical diagnosis, content planning, AI 
 
 ## Grounding and audience evidence
 
-Inspect the canonical site, market, current search and visibility measurements, existing content, target conversions, and relevant Company Brain claims before recommending work. Preserve source, observation time, property identity, and known measurement gaps. Use one structured popup only for unresolved choices that materially change the site, audience, geography, conversion, or publishing consequence.
+Inspect the canonical site, market, current search and visibility measurements, existing content, target conversions, and relevant derived cited workspace-wiki claims before recommending work. Preserve source, observation time, property identity, and known measurement gaps. Use one structured popup only for unresolved choices that materially change the site, audience, geography, conversion, or publishing consequence.
 
 Before designing a keyword or content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, irrelevant, or cannot support a keyword-specific claim, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 

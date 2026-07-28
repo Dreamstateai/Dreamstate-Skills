@@ -10,7 +10,7 @@ Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar p
 ## Grounding and intake
 
 1. Inspect the active editor or calendar surface and preserve its artifact revision, selected account, unsaved view state, and existing drafts.
-2. Retrieve only the Company Brain claims, voice guidance, evidence, and goals needed for this content. Keep citations and revision identity with the proposal.
+2. Retrieve only the published workspace-wiki claims, voice guidance, evidence, and goals needed for this content. Keep citations and revision identity with the proposal.
 3. Derive platform, audience, objective, topic, date, account, and approval consequence from the request and canonical state. Use one structured popup only for material choices that remain unknown. Never ask again for a fact already present.
 4. When several platforms are requested, make the shared thesis explicit while adapting form, length, hook, call to action, and scheduling constraints to each platform. Do not mechanically duplicate copy.
 

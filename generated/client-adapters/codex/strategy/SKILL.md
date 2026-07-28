@@ -7,7 +7,7 @@ capability_ids: ["brain.companies.answer","brain.companies.get","brain.context.b
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,13 +15,13 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: codex
   kernel_id: strategy
   kernel_file: KERNEL.md
-  kernel_sha256: a1e05ab87ad0a1ae899b01a294d5159f2cac2ac7ab9f617944370bb54a3ec2f9
+  kernel_sha256: 0f9626ebef6ffc6f271582bd5b4a06561d723366ba4af0215b8f770b18e877d1
   adapter_sha256: 298f3df58a4531be8e69061b541721f6012c6cf35201a999bc51cf038888a3e5
   evals_file: evals.json
   evals_sha256: 4971ed086dc39eaaed104186d3c7dd6675a7519c54c8a55e2ffa9e24617bc717
@@ -59,7 +59,7 @@ These are derived from this skill's exact capability contract, so state them up 
 
 Create or revise durable growth strategy: ICP, problem, positioning, proof, channel roles, constraints, objectives, tradeoffs, and measurement. Strategy decides where and why to play; it does not execute a campaign or weekly task list.
 
-Inspect the Context workspace with `brain.context.browse`, then use narrow `brain.context.search` and exact `brain.context.get` reads for current published strategy, Company Brain evidence, and revisions. Also inspect measured performance, active work, and explicit user direction. Separate canonical fact, observed metric, inference, and recommendation. Ask one structured popup only for an unresolved decision that changes positioning, target, channel allocation, or risk.
+Inspect the workspace wiki with `brain.context.browse`, then use narrow `brain.context.search` and exact `brain.context.get` reads for current published strategy, derived cited claims, evidence, and revisions. Also inspect measured performance, active work, and explicit user direction. Separate canonical claim, observed metric, inference, and recommendation. Ask one structured popup only for an unresolved decision that changes positioning, target, channel allocation, or risk.
 
 Before designing a strategy for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 

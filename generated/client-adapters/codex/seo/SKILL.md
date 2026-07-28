@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","brain.learning.quer
 completion_contract: {"version":1,"fields":[{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"sample_state","description":"Benchmark sample band disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"privacy_state","description":"Cross-workspace privacy boundary state.","allowed_values":["cohort_only","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"target_conversion","description":"Named target conversion state.","allowed_values":["defined","missing"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,13 +15,13 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: codex
   kernel_id: seo
   kernel_file: KERNEL.md
-  kernel_sha256: da984597acd2d33e573693a8f8d5e09c61080f4806ea0cc60f7713c6f942a586
+  kernel_sha256: d8957cc2f65174a3286e7fbab1c53df0a57e57b61724e087ebbd9db9cdef665a
   adapter_sha256: 203c7101b7e891edd2369bb465bfe6ba6cf8fcb99c982cd31722b7ce954b8d8f
   evals_file: evals.json
   evals_sha256: b34ab09d40bf83689715dd926c4def23eca397fe291a98f2a05a97f2d899438d
@@ -63,7 +63,7 @@ Own evidence-backed keyword research, technical diagnosis, content planning, AI 
 
 ## Grounding and audience evidence
 
-Inspect the canonical site, market, current search and visibility measurements, existing content, target conversions, and relevant Company Brain claims before recommending work. Preserve source, observation time, property identity, and known measurement gaps. Use one structured popup only for unresolved choices that materially change the site, audience, geography, conversion, or publishing consequence.
+Inspect the canonical site, market, current search and visibility measurements, existing content, target conversions, and relevant derived cited workspace-wiki claims before recommending work. Preserve source, observation time, property identity, and known measurement gaps. Use one structured popup only for unresolved choices that materially change the site, audience, geography, conversion, or publishing consequence.
 
 Before designing a keyword or content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, irrelevant, or cannot support a keyword-specific claim, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 

@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -18,12 +18,12 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   kernel_id: outreach-sequence-writer
   kernel_file: KERNEL.md
-  kernel_sha256: e0a5813fdaf87bf9b97a715da19be25be32b594d496a9d147fda98ce69abfe00
+  kernel_sha256: a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357
   adapter_sha256: 9e8f39c1a6feb18cf4700007d498a2fdb4f937fe24fd6cb1af1765137437c965
   evals_file: evals.json
   evals_sha256: 5e3a508e62297b0604d1cf16b2d31d90a0c5cc92d683464204c1f4be9533f278

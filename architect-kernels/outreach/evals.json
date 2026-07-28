@@ -19,7 +19,7 @@
       "must_use_popup_when_missing": [
         "qualification"
       ],
-      "request": "Build and launch new outbound outreach for US B2B founders from scratch. Derive the opening intake from Company Brain first. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Ask only qualification in the one opening popup, default structured volume intent to demand_based, defer sender and channel until launch, and deliver only the reviewable Workbook before any demand, workflow, or sequence planning.",
+      "request": "Build and launch new outbound outreach for US B2B founders from scratch. Derive the opening intake from published cited workspace-wiki claims first. I have not supplied a qualification threshold, sender binding, or exact cohort quantity. Ask only qualification in the one opening popup, default structured volume intent to demand_based, defer sender and channel until launch, and deliver only the reviewable Workbook before any demand, workflow, or sequence planning.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get"
@@ -62,7 +62,7 @@
         "bundle binds the inspected workbook revision",
         "enrollment only after workbook inspection"
       ],
-      "request": "Build outbound outreach. Ask every still-missing opening concept once after Company Brain derivation, including target job titles and company keywords, and never ask me about volume, sender, channel, tone, copy angle, call to action, or channel motion. Then execute the zero-credit reversible Workbook from the server ActionDecision without asking approval, return its durable receipt, and open the native Workbook so I can add and change columns and filters over several turns. Do not fetch or plan demand, workflow, sequence, or bundle contracts until that Workbook revision is inspected, and enroll nobody before then."
+      "request": "Build outbound outreach. Ask every still-missing opening concept once after deriving cited workspace-wiki claims, including target job titles and company keywords, and never ask me about volume, sender, channel, tone, copy angle, call to action, or channel motion. Then execute the zero-credit reversible Workbook from the server ActionDecision without asking approval, return its durable receipt, and open the native Workbook so I can add and change columns and filters over several turns. Do not fetch or plan demand, workflow, sequence, or bundle contracts until that Workbook revision is inspected, and enroll nobody before then."
     },
     {
       "expected_skill_ids": [

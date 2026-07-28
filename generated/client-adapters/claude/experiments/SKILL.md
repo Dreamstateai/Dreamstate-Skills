@@ -7,7 +7,7 @@ capability_ids: ["growth.governed_experiment_approve","growth.governed_experimen
 completion_contract: {"version":1,"fields":[{"id":"experiment_artifact_state","description":"Durable governed-experiment state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"experiment_evidence_state","description":"Publication and measurement evidence state.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,8 +15,8 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: claude
   kernel_id: experiments
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 1af58fa508afe884136151c8810eb767a4cdd2472f3fd0b0a104586bceb78007
   adapter_sha256: c6b4a3735b2f3ee203ba1344d58037a6afcc9b8864cd18a55a93abc43e3ef839
   evals_file: evals.json
-  evals_sha256: afbec5e8a0b6226e705cbdb4410f43fb915122dc49dcb8ee58bb29e21b356193
+  evals_sha256: 3109cba0f4f7ae3d506264b257676196a0dd105879b95d5d5446ff18d1612bca
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

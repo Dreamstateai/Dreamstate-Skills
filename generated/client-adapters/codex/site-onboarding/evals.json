@@ -3,7 +3,7 @@
     {
       "expected_skill_ids": ["site-onboarding", "context"],
       "id": "fresh-site-to-cited-brain-markdown",
-      "request": "Onboard Example, Inc. at the exact URL https://example.com as our workspace site, crawl it, register that website as a governed Context source through the required approval gate, then search Company Context. If Product Information already exists, read its exact revision and propose a cited update without creating a duplicate; if the requested Competitor Notes document is genuinely absent, propose it as one new ordinary document. Publish neither proposal.",
+      "request": "Onboard Example, Inc. at the exact URL https://example.com as our workspace site, crawl it, register that website as a governed source through the required approval gate, then search the workspace wiki. Reconcile the derived cited claims against exact existing revisions, propose cited updates without creating duplicates, and propose one useful ordinary file only when the evidence fits no existing document. Publish no proposal.",
       "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_ensure", "products.website_scrape", "visibility.site_scan", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.website_source_register", "brain.context.propose", "brain.context.propose_document"]
     },
     {

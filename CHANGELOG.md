@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.8 - 2026-07-28
+
+- Made the files-first workspace wiki the only Context knowledge surface, with protected roots limited to Sources, Outreach, Social, Website, and Records and private prose retained in owner-bound ordinary folders.
+- Limited the Context agent grant to the 13 read, graph, evidence, source-registration, and proposal capabilities; human document creation, draft persistence, review, conflict resolution, and publication remain outside the agent skill.
+- Regrounded strategy, outreach, SEO, social, site onboarding, blog, weekly planning, experiments, and growth-asset planning in cited workspace-wiki claims instead of retired fixed knowledge trees.
+
 ## 0.5.6 - 2026-07-27
 
 - Add eight production-real, workspace-local Workbook and Records journeys that require exact owner approval and durable present-state verification.

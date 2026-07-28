@@ -42,7 +42,7 @@
         "publishing_accounts",
         "schedule"
       ],
-      "request": "Draft one week of LinkedIn and X posts using our Company Brain.",
+      "request": "Draft one week of LinkedIn and X posts using published cited claims from our workspace wiki.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",

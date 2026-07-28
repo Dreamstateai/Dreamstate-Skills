@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","outreach.ai_spintax
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,13 +15,13 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-sequence-writer
   kernel_file: KERNEL.md
-  kernel_sha256: e0a5813fdaf87bf9b97a715da19be25be32b594d496a9d147fda98ce69abfe00
+  kernel_sha256: a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357
   adapter_sha256: fcbba6f67afdc6a50a7f04d39575006508249dc840679e5aa6f3c688db023b7c
   evals_file: evals.json
   evals_sha256: 5e3a508e62297b0604d1cf16b2d31d90a0c5cc92d683464204c1f4be9533f278
@@ -63,14 +63,14 @@ Create original messaging from the user's requirements only when the validated o
 
 ## Required inputs
 
-Require the coordinator intake, Tables handoff, and workflow handoff. The workflow must identify the messaging branch, eligible-row output, channel intent, stop conditions, and sender consequence. The Tables handoff must provide exact symbolic outputs for every personalization variable. Fetch targeted Company Brain claims and voice guidance with revisioned citations; user text alone is not canonical brand truth.
+Require the coordinator intake, Tables handoff, and workflow handoff. The workflow must identify the messaging branch, eligible-row output, channel intent, stop conditions, and sender consequence. The Tables handoff must provide exact symbolic outputs for every personalization variable. Fetch targeted workspace-wiki claims and voice guidance with revisioned citations; user text alone is not canonical brand truth.
 
 ## Sequence design
 
 1. Resolve sender/account and channel readiness through live capabilities. Ask one structured popup only for a material sender, channel, tone, cadence, or call-to-action choice that cannot be discovered.
 2. Search live sequence and content-generation capabilities by desired channel, inputs, outputs, and allowed side effects. Fetch exact contracts before using any schema or enum.
 3. Define ordered steps with delays and send windows. Each variable maps to one typed upstream output and declares missing-input behavior. Never display unresolved placeholders as a valid preview.
-4. Ground claims in approved Company Brain facts and row evidence. Separate stable sequence copy from per-row generated copy. Preserve generated-output provenance, cost, and model/run identity when returned.
+4. Ground claims in published cited workspace-wiki claims and row evidence. Separate stable sequence copy from per-row generated copy. Preserve generated-output provenance, cost, and model/run identity when returned.
 5. Validate sender/channel constraints, graph reachability, timing, stop-on-reply behavior, duplicate prevention, and per-account safety caps through the live contract.
 6. Before building the sequence, render one complete message with a real eligible prospect and exact variable evidence. Show that native preview and require an explicit build instruction; never substitute a synthetic example when a real row exists. Code owns the fixed greeting, pitch paragraphs, CTA, sign-off, and line breaks; the model fills only bounded personalization slots from verified evidence. After the explicit build instruction, use one email plus LinkedIn sequence with threading, waits, windows, cooldowns, caps, and stop-on-reply. Audit factuality, variable resolution, specificity, prohibited claims, tone, duplication, and channel fit.
 

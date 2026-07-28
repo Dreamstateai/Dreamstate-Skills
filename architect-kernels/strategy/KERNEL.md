@@ -5,7 +5,7 @@
 
 Create or revise durable growth strategy: ICP, problem, positioning, proof, channel roles, constraints, objectives, tradeoffs, and measurement. Strategy decides where and why to play; it does not execute a campaign or weekly task list.
 
-Inspect the Context workspace with `brain.context.browse`, then use narrow `brain.context.search` and exact `brain.context.get` reads for current published strategy, Company Brain evidence, and revisions. Also inspect measured performance, active work, and explicit user direction. Separate canonical fact, observed metric, inference, and recommendation. Ask one structured popup only for an unresolved decision that changes positioning, target, channel allocation, or risk.
+Inspect the workspace wiki with `brain.context.browse`, then use narrow `brain.context.search` and exact `brain.context.get` reads for current published strategy, derived cited claims, evidence, and revisions. Also inspect measured performance, active work, and explicit user direction. Separate canonical claim, observed metric, inference, and recommendation. Ask one structured popup only for an unresolved decision that changes positioning, target, channel allocation, or risk.
 
 Before designing a strategy for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
 

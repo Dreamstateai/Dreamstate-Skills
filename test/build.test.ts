@@ -238,17 +238,67 @@ test('action authority is server-owned and no source or generated package carrie
   }
 });
 
-test('Context resolver metadata covers governed updates to fixed Company documents', () => {
+test('Context is the one files-first wiki with only agent-safe authority', () => {
+  const artifacts = build();
+  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
   assert.ok(context);
-  assert.ok(context.triggers.some((trigger: string) => (
-    /update/i.test(trigger) && /Company Brain/i.test(trigger) && /Ideal Customer/i.test(trigger)
-  )));
-  const artifacts = build();
+
+  const agentCapabilities = [
+    'brain.context.browse',
+    'brain.context.get',
+    'brain.context.graph',
+    'brain.context.history',
+    'brain.context.list_proposals',
+    'brain.context.preview_agent_view',
+    'brain.context.propose',
+    'brain.context.propose_document',
+    'brain.context.register_source',
+    'brain.context.search',
+    'brain.context.website_source_register',
+    'brain.evidence.search',
+    'brain.graph.neighborhood',
+  ].sort();
+  assert.deepEqual(pinned.skills.context.capability_ids, agentCapabilities);
+
+  const contextSource = [
+    JSON.stringify(context),
+    readFileSync(join(ROOT, 'architect-kernels', 'context', 'KERNEL.md'), 'utf8'),
+    readFileSync(join(ROOT, 'architect-kernels', 'context', 'evals.json'), 'utf8'),
+  ].join('\n');
   assert.match(
-    artifacts['generated/architect/context/SKILL.md'],
-    /update a governed Company Brain document such as Ideal Customer/,
+    contextSource,
+    /protected workspace roots are exactly `Sources`, `Outreach`, `Social`, `Website`, and `Records`/,
   );
+  assert.match(contextSource, /private prose.*owner-bound ordinary wiki folders/is);
+  assert.doesNotMatch(
+    contextSource,
+    /Company Brain|Company Context|Personal Context|Product Information|Ideal Customer|Competitor Analysis|Tone of Voice|Marketing Strategy/i,
+  );
+
+  const humanOnlyCapabilities = [
+    'brain.context.create_folder',
+    'brain.context.create_document',
+    'brain.context.save_draft',
+    'brain.context.save_and_publish',
+    'brain.context.publish',
+    'brain.context.reject',
+    'brain.context.resolve_conflict',
+  ];
+  for (const capabilityId of humanOnlyCapabilities) {
+    assert.doesNotMatch(contextSource, new RegExp(capabilityId.replaceAll('.', '\\.')));
+  }
+});
+
+test('Architect kernels and evals ground work in the canonical workspace wiki, not retired Brain trees', () => {
+  const source = [
+    readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'),
+    ...(architectSource.skills as Array<{ id: string }>).flatMap((skill) => [
+      readFileSync(join(ROOT, 'architect-kernels', skill.id, 'KERNEL.md'), 'utf8'),
+      readFileSync(join(ROOT, 'architect-kernels', skill.id, 'evals.json'), 'utf8'),
+    ]),
+  ].join('\n');
+  assert.doesNotMatch(source, /Company Brain|Company Context|Personal Context/i);
 });
 
 test('social analytics refresh authority is earned by a real-user eval', () => {
@@ -324,12 +374,6 @@ test('weekly growth coordination earns calendar and task creation authority from
     'record_files.list',
     'records.get',
   ]);
-});
-
-test('context publication remains in the exact capability grant', () => {
-  const artifacts = build();
-  const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  assert.ok(pinned.skills.context.capability_ids.includes('brain.context.publish'));
 });
 
 test('site onboarding preserves governed Brain document proposal authority', () => {
@@ -689,7 +733,7 @@ test('tables is the only specialist owner of canonical source preview and expans
   assert.match(workflowKernel, /typed reviewed `tables` handoff/i);
 });
 
-test('outreach is Brain-first and Workbook-first before demand, workflow, or sequence planning', () => {
+test('outreach is wiki-first and Workbook-first before demand, workflow, or sequence planning', () => {
   const artifacts = build();
   const kernel = artifacts['generated/architect/outreach/KERNEL.md'];
   const evals = JSON.parse(artifacts['generated/architect/outreach/evals.json']);
@@ -702,7 +746,7 @@ test('outreach is Brain-first and Workbook-first before demand, workflow, or seq
     kernel,
     /exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`/,
   );
-  assert.match(kernel, /derive.*Company Brain.*before.*intake/is);
+  assert.match(kernel, /derive these from published workspace-wiki claims first.*still-missing concepts/is);
   assert.match(kernel, /sender.*channel.*launch/is);
   assert.match(kernel, /`messaging_branch_state`.*inspection-only/is);
 

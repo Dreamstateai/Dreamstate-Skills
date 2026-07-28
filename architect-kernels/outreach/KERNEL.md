@@ -5,13 +5,13 @@
 
 ## Job boundary
 
-Open an existing outreach system or coordinate a new Workbook-first system. Own Brain grounding, opening intake, specialist handoffs, ordered approvals, demand constraints, launch closure, durable run truth, and canvas handoff. `tables` owns sources and the Workbook; `outreach-workflow-builder` owns workflow authoring; `outreach-sequence-writer` owns sequence authoring.
+Open an existing outreach system or coordinate a new Workbook-first system. Own cited workspace-wiki grounding, opening intake, specialist handoffs, ordered approvals, demand constraints, launch closure, durable run truth, and canvas handoff. `tables` owns sources and the Workbook; `outreach-workflow-builder` owns workflow authoring; `outreach-sequence-writer` owns sequence authoring.
 
-## Brain-first intake
+## Wiki-first intake
 
-Before asking anything, retrieve only relevant published Company Brain facts and citations, inspect an existing Workbook/workflow when one was named, and derive every answer live state already supplies. Derive the closed concept set from Company Brain before opening intake. For a named cohort, fetch and call `brain.learning.query_benchmarks`; cite only released cohort-level evidence, sample/contributor bands, tier, and confidence, never raw cross-workspace rows. Sparse, suppressed, unavailable, or irrelevant evidence is `insufficient_evidence`; do not terminate after discovery or contract inspection.
+Before asking anything, retrieve only relevant published workspace-wiki claims and citations, inspect an existing Workbook/workflow when one was named, and derive every answer live state already supplies. Derive the closed concept set from current cited claims before opening intake. For a named cohort, fetch and call `brain.learning.query_benchmarks`; cite only released cohort-level evidence, sample/contributor bands, tier, and confidence, never raw cross-workspace rows. Sparse, suppressed, unavailable, or irrelevant evidence is `insufficient_evidence`; do not terminate after discovery or contract inspection.
 
-The opening intake concept set is exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`. Derive these from Company Brain first, then ask one structured popup containing only the still-missing concepts. Do not ask for volume, cost ceiling, launch intent, sender, channel, tone, copy angle, CTA, cadence, or workflow structure. Sender and channel are launch bindings, deferred until launch. Volume is application-calculated: default structured intent to `{mode:"demand_based"}`; use `{mode:"fixed_cohort",exact_quantity:N}` only when structured request state already supplies an exact cohort quantity.
+The opening intake concept set is exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`. Derive these from published workspace-wiki claims first, then ask one structured popup containing only the still-missing concepts. Do not ask for volume, cost ceiling, launch intent, sender, channel, tone, copy angle, CTA, cadence, or workflow structure. Sender and channel are launch bindings, deferred until launch. Volume is application-calculated: default structured intent to `{mode:"demand_based"}`; use `{mode:"fixed_cohort",exact_quantity:N}` only when structured request state already supplies an exact cohort quantity.
 
 The maximum opening intake-checkpoint count is one. Do not open a second intake or ask a later follow-up before the Workbook. A missing live contract, failed runtime, or uninspectable state is an exact typed blocker, never a question asking the user how to route around the system.
 
@@ -31,7 +31,7 @@ Handoffs are typed, at most 750 tokens, and carry exact revisions, capability di
 
 ## Competitor-engager journey
 
-For competitor engagers, load durable Brain ICP, offer, voice, exclusions, and preferences; inspect the existing Workbook and exclusion mappings; then let `tables` compare bounded named-competitor source variants by returned precision, provenance, freshness, and cost. `tables` owns deterministic filters, `unsure`, dependency order, structured `run_if_json`, and qualification audit. The sequence writer owns the fixed scaffold, bounded personalization slots, and real-row preview.
+For competitor engagers, load durable cited audience, offer, voice, exclusion, and preference claims from the workspace wiki; inspect the existing Workbook and exclusion mappings; then let `tables` compare bounded named-competitor source variants by returned precision, provenance, freshness, and cost. `tables` owns deterministic filters, `unsure`, dependency order, structured `run_if_json`, and qualification audit. The sequence writer owns the fixed scaffold, bounded personalization slots, and real-row preview.
 
 After the approved Workbook and bounded sample have terminal receipts, report qualification rate, top required-filter failure, data-credit cost, action cost, cost per qualified row, stale evidence, and source precision. Below 30% qualification propose the specific filter adjustment; below 10% also propose a different scarce-signal angle; above 30 data credits per qualified row stop expansion for diagnosis.
 

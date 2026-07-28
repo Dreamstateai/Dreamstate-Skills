@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_release": "0.5.7",
+  "source_release": "0.5.8",
   "playbook_kernel_version": "1.0.0",
   "client_adapter_version": "1.0.0",
   "skills": [
@@ -97,15 +97,15 @@
     {
       "id": "context",
       "name": "Context",
-      "description": "Read targeted revisioned Company Brain facts or propose cited conflict-aware updates and new governed documents without treating prompt text as canonical state.",
+      "description": "Read targeted revisioned workspace-wiki claims or propose cited conflict-aware updates and new ordinary files without treating prompt text as canonical state.",
       "triggers": [
-        "read Company Brain context",
-        "inspect published workspace memory",
-        "propose a cited context update",
-        "update a governed Company Brain document such as Ideal Customer",
-        "resolve a canonical fact",
-        "propose a new governed Company document",
-        "keep a knowledge document unpublished for human review"
+        "read the canonical workspace wiki",
+        "inspect published workspace knowledge",
+        "propose a cited wiki update",
+        "revise an existing ordinary wiki document",
+        "trace a cited claim or source",
+        "propose a new ordinary wiki file",
+        "keep a wiki proposal unpublished for human review"
       ],
       "dependencies": [],
       "capability_domains": [
@@ -765,11 +765,11 @@
     {
       "id": "site-onboarding",
       "name": "Site Onboarding",
-      "description": "Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, brand facts, cited Company Brain proposals, Markdown, sitemap, robots, and AI-readiness files.",
+      "description": "Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, derived cited claims, workspace-wiki proposals, Markdown, sitemap, robots, and AI-readiness files.",
       "triggers": [
         "onboard a new website",
         "learn our company from this site",
-        "refresh website facts and Company Brain files",
+        "refresh website facts and workspace wiki files",
         "set up SEO and AI visibility for a domain"
       ],
       "dependencies": [

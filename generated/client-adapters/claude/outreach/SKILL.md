@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","brain.learning.quer
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered outreach-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Inspected workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,16 +15,16 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach
   kernel_file: KERNEL.md
-  kernel_sha256: 640c20cd3cdf38b7669b7c0d5f66587894120af5f7ad646c5bda9c305ae41865
+  kernel_sha256: af9ae1fd57957f795a555907bd9e6243886d925b6c3bd76201bfad55070c0d7f
   adapter_sha256: 179be675f608eaab0ac02bd0c0adedf97082a16c6714d92a588a19f083f9c4f4
   evals_file: evals.json
-  evals_sha256: 23736634974d9e1ec5a830d252da7c2a0f4dd32a5894f3bab38c1adfb2c330e5
+  evals_sha256: ebf9a72b6f31beb7688768f0a7ab35048ee3e3ba9e644606c75bb398b1a93aa0
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -59,13 +59,13 @@ These are derived from this skill's exact capability contract, so state them up 
 
 ## Job boundary
 
-Open an existing outreach system or coordinate a new Workbook-first system. Own Brain grounding, opening intake, specialist handoffs, ordered approvals, demand constraints, launch closure, durable run truth, and canvas handoff. `tables` owns sources and the Workbook; `outreach-workflow-builder` owns workflow authoring; `outreach-sequence-writer` owns sequence authoring.
+Open an existing outreach system or coordinate a new Workbook-first system. Own cited workspace-wiki grounding, opening intake, specialist handoffs, ordered approvals, demand constraints, launch closure, durable run truth, and canvas handoff. `tables` owns sources and the Workbook; `outreach-workflow-builder` owns workflow authoring; `outreach-sequence-writer` owns sequence authoring.
 
-## Brain-first intake
+## Wiki-first intake
 
-Before asking anything, retrieve only relevant published Company Brain facts and citations, inspect an existing Workbook/workflow when one was named, and derive every answer live state already supplies. Derive the closed concept set from Company Brain before opening intake. For a named cohort, fetch and call `brain.learning.query_benchmarks`; cite only released cohort-level evidence, sample/contributor bands, tier, and confidence, never raw cross-workspace rows. Sparse, suppressed, unavailable, or irrelevant evidence is `insufficient_evidence`; do not terminate after discovery or contract inspection.
+Before asking anything, retrieve only relevant published workspace-wiki claims and citations, inspect an existing Workbook/workflow when one was named, and derive every answer live state already supplies. Derive the closed concept set from current cited claims before opening intake. For a named cohort, fetch and call `brain.learning.query_benchmarks`; cite only released cohort-level evidence, sample/contributor bands, tier, and confidence, never raw cross-workspace rows. Sparse, suppressed, unavailable, or irrelevant evidence is `insufficient_evidence`; do not terminate after discovery or contract inspection.
 
-The opening intake concept set is exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`. Derive these from Company Brain first, then ask one structured popup containing only the still-missing concepts. Do not ask for volume, cost ceiling, launch intent, sender, channel, tone, copy angle, CTA, cadence, or workflow structure. Sender and channel are launch bindings, deferred until launch. Volume is application-calculated: default structured intent to `{mode:"demand_based"}`; use `{mode:"fixed_cohort",exact_quantity:N}` only when structured request state already supplies an exact cohort quantity.
+The opening intake concept set is exactly `outcome`, `audience_icp`, `job_titles`, `company_keywords`, `company_size`, `geography`, `exclusions`, and `qualification`. Derive these from published workspace-wiki claims first, then ask one structured popup containing only the still-missing concepts. Do not ask for volume, cost ceiling, launch intent, sender, channel, tone, copy angle, CTA, cadence, or workflow structure. Sender and channel are launch bindings, deferred until launch. Volume is application-calculated: default structured intent to `{mode:"demand_based"}`; use `{mode:"fixed_cohort",exact_quantity:N}` only when structured request state already supplies an exact cohort quantity.
 
 The maximum opening intake-checkpoint count is one. Do not open a second intake or ask a later follow-up before the Workbook. A missing live contract, failed runtime, or uninspectable state is an exact typed blocker, never a question asking the user how to route around the system.
 
@@ -85,7 +85,7 @@ Handoffs are typed, at most 750 tokens, and carry exact revisions, capability di
 
 ## Competitor-engager journey
 
-For competitor engagers, load durable Brain ICP, offer, voice, exclusions, and preferences; inspect the existing Workbook and exclusion mappings; then let `tables` compare bounded named-competitor source variants by returned precision, provenance, freshness, and cost. `tables` owns deterministic filters, `unsure`, dependency order, structured `run_if_json`, and qualification audit. The sequence writer owns the fixed scaffold, bounded personalization slots, and real-row preview.
+For competitor engagers, load durable cited audience, offer, voice, exclusion, and preference claims from the workspace wiki; inspect the existing Workbook and exclusion mappings; then let `tables` compare bounded named-competitor source variants by returned precision, provenance, freshness, and cost. `tables` owns deterministic filters, `unsure`, dependency order, structured `run_if_json`, and qualification audit. The sequence writer owns the fixed scaffold, bounded personalization slots, and real-row preview.
 
 After the approved Workbook and bounded sample have terminal receipts, report qualification rate, top required-filter failure, data-credit cost, action cost, cost per qualified row, stale evidence, and source precision. Below 30% qualification propose the specific filter adjustment; below 10% also propose a different scarce-signal angle; above 30 data credits per qualified row stop expansion for diagnosis.
 

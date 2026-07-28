@@ -1,13 +1,13 @@
 ---
 id: site-onboarding
 name: site-onboarding
-description: "Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, brand facts, cited Company Brain proposals, Markdown, sitemap, robots, and AI-readiness files."
+description: "Onboard or refresh a website from an exact URL into governed site identity, crawl evidence, derived cited claims, workspace-wiki proposals, Markdown, sitemap, robots, and AI-readiness files."
 capability_domains: ["brain","content","visibility"]
 capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,16 +15,16 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: codex
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
-  kernel_sha256: 8de0ac56c10ce5d40afcf59bd75637a0ba2b9b8cb84c9ec8c0723c392b9a890a
+  kernel_sha256: ae17d1ee4f471655c9140edc587422900dc18bc723be9943e57d6f1397f5a666
   adapter_sha256: 1ed98f914f76028efef56cc63669d48ce94c8d2db027278a30ecd0cc6739dfa8
   evals_file: evals.json
-  evals_sha256: 1f9dbf0459ee2ea46f986e76bc5bece44364a5084ae6162213fc303fe673cdb2
+  evals_sha256: bbee998577038bd4494da0d4db33d6ad7f3b33b41ac188e30904de6513191fbc
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -62,25 +62,25 @@ Turn one exact website URL into governed, cited workspace knowledge and measurab
 ## Establish the site
 
 1. Normalize and validate the exact public URL. Do not silently switch domains, subdomains, protocols, or canonical hosts.
-2. Inspect existing workspace site and Company Brain state with `visibility.workspace_site_get`, `brain.context.browse`, and narrow `brain.context.search`/`brain.context.get` reads before writing.
+2. Inspect the existing workspace site and cited workspace-wiki state with `visibility.workspace_site_get`, `brain.context.browse`, and narrow `brain.context.search`/`brain.context.get` reads before writing.
 3. Ensure or update the canonical workspace-site identity only through its live strict contract. Preserve site ID, URL, ownership, revision, provider evidence, and deep link.
 4. Run bounded website scrape and site scan capabilities. For each operation, retain only fields returned by its exact live contract. Mark requested crawl details absent or unavailable when the result does not provide them; never invent redirects, status, content digests, raw evidence references, observation times, completeness, frontier, errors, costs, or any universal crawl tuple.
 5. Read sitemap, robots, and current site-file evidence. Distinguish absent files, fetch failure, stale evidence, blocked crawling, and valid empty results.
 
-## Build governed context
+## Build the governed workspace wiki
 
-Extract candidate product, audience, positioning, proof, competitor, tone, and conversion facts with citations to exact source spans. Search Company Brain first and preserve contradictions.
+Extract candidate product, audience, positioning, proof, competitor, tone, and conversion claims with citations to exact source spans. Search the workspace wiki first and preserve contradictions.
 
-Fetch the exact `brain.context.website_source_register` contract and prepare the exact public URL and stable idempotency key. Use only an authoritative brand name supplied by the requester or returned by the workspace or published Company Context reads. If those reads yield no authoritative name, ask once for the brand name; never infer it from the hostname, page title, or website content. This is a synchronous, mutating draft write that registers an attested website source; execute it only through the manifest's human-approval and proposal gate. Its result is opaque, so preserve the returned canonical result exactly without inventing receipt, source-identity, citation, or status fields. Never describe approval of the source registration as publication of derived knowledge.
+Fetch the exact `brain.context.website_source_register` contract and prepare the exact public URL and stable idempotency key. Use only an authoritative brand name supplied by the requester or returned by workspace reads or derived cited claims. If those reads yield no authoritative name, ask once for the brand name; never infer it from the hostname, page title, or website content. This is a governed mutation that registers an attested website source; execute it only through the manifest's proposal and approval decision. Its result is opaque, so preserve the returned canonical result exactly without inventing receipt, source-identity, citation, or status fields. Never describe approval of the source registration as publication of derived knowledge.
 
-Generate or propose ordinary context documents only from cited evidence. For a genuinely new document, use `brain.context.propose_document` with the exact parent folder, title, cited content and claims, and a stable idempotency key. If the requester asks for Product Information, Ideal Customer, Competitor Analysis, Tone of Voice, or any other useful document, create each missing requested artifact independently; those titles are not a fixed schema or a terminal completeness checklist.
+Propose useful ordinary wiki files only from cited evidence. For a genuinely new document, use `brain.context.propose_document` with the exact existing ordinary parent folder, evidence-derived title, cited content and claims, and a stable idempotency key. Choose file names and organization from the evidence and request; never force a predefined document tree.
 
 For an existing document, never create a duplicate with `brain.context.propose_document`. Read its exact node and published revision, then use `brain.context.propose` with that `node_ref`, `base_revision_id`, cited content, claims, and supporting source versions. Both new-document creation and existing-document revision are synchronous mutating draft writes requiring the manifest's human-approval and proposal gate. Keep every new or changed document unpublished for independent human review. Never overwrite a protected root, erase conflicts, or publish agent-authored context.
 
-Use Markdown as a reviewable artifact, not a second truth store. Include the canonical site ID, crawl observation, citations, conflicts, unknowns, and source digests so it can be reconciled with Brain revisions.
+Use Markdown as a reviewable artifact, not a second truth store. Include the canonical site ID, crawl observation, citations, conflicts, unknowns, and source digests so it can be reconciled with workspace-wiki revisions.
 
 ## Prepare measurement
 
 Run robots and agent-readiness checks against the exact site revision. Generate `llms.txt` only as a reviewable proposal and read back the exact resulting file state. Do not claim publication or search-engine effect without a durable external receipt.
 
-Return the available contract fields for site identity, crawl and file state, cited facts and conflicts, proposed Brain/Markdown artifacts, SEO/AI-readiness findings, and the next human approval. Include costs, receipts, revisions, or deep links only when the exact operation returned them. Mark absent, partial, stale, unavailable, and blocked states explicitly.
+Return the available contract fields for site identity, crawl and file state, cited claims and conflicts, proposed wiki/Markdown artifacts, SEO/AI-readiness findings, and the next human approval. Include costs, receipts, revisions, or deep links only when the exact operation returned them. Mark absent, partial, stale, unavailable, and blocked states explicitly.

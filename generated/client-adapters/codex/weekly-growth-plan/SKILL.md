@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","calendar.events_cre
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d0fd03da3726899
@@ -15,13 +15,13 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.7
-  source_release_hash: e219f4cb29d40614f4ea03cd81d5b6bc8e81fe6f839c63be6806b86bb4cee712
+  source_release: 0.5.8
+  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
   generator_version: 1.0.0
   client: codex
   kernel_id: weekly-growth-plan
   kernel_file: KERNEL.md
-  kernel_sha256: 797a95ee30cb9cc4c7325e3edd745385cd63357362f8db711194884405457942
+  kernel_sha256: 06a6d8eb74bd0e5c6542bc0108550935669c5409d40abe25455eddcfd16ce669
   adapter_sha256: 8f3e3129c2b6ff5b60b0919e8247c90d50a2eebea18a2f4cea79298a65d620ad
   evals_file: evals.json
   evals_sha256: 7fb1a7134692b81c1504b568967e7e4167e22835179288398ab2af64bcc8d302
@@ -59,7 +59,7 @@ These are derived from this skill's exact capability contract, so state them up 
 
 Build one evidence-backed operating plan for the next week across the channels the user selects. This is a prioritization and delegation layer, not a social calendar and not an execution shortcut.
 
-Inspect current goals, published Company Brain strategy, active outreach workflows and content calendars, measured performance, open review items, capacity, deadlines, and active surface. Ask one structured popup only when a missing priority, capacity, owner, or risk tolerance materially changes the week.
+Inspect current goals, published cited workspace-wiki strategy, active outreach workflows and content calendars, measured performance, open review items, capacity, deadlines, and active surface. Ask one structured popup only when a missing priority, capacity, owner, or risk tolerance materially changes the week.
 
 Produce one diagnosis and three to five ranked priorities. Each priority names the outcome, evidence, owner, exact deliverable, channel, dependency, due date, measure, review gate, and smallest useful next action. Explain why lower-ranked work is deferred. Distinguish an authored-content schedule from Reddit community engagement, outreach, visibility, blog, and buyer-facing assets.
 
