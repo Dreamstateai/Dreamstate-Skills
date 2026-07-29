@@ -58,6 +58,22 @@
         "integrations.scheduler_connections_list",
         "integrations.scheduler_event_types_list",
         "integrations.slack_channels_list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "integration_oauth_started",
+          "provider": "ga4",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not create an OAuth authorization state"
+        },
+        {
+          "check": "integration_oauth_started",
+          "provider": "gsc",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not create an OAuth authorization state"
+        }
       ]
     },
     {

@@ -2,10 +2,10 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540",
+  "source_release_hash": "6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540",
+    "playbook_kernel_hash": "6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "3308959ee5a8c299",
@@ -268,7 +268,7 @@
         "outreach.settings_get"
       ],
       "kernel_sha256": "6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb",
-      "evals_sha256": "cf66db3a966a77cb6a7d6847fa172d8d374ab88bfcf57d376e2dd3373828b566",
+      "evals_sha256": "37bd33ae6c01895bf27c9256710d1beef51324a45c2c1c4a9ed828075ff6f1eb",
       "adapter_sha256": {
         "architect": "06abc5ffab4ab5bd45e07459e126d0c96057753293c99d602322a703c2221d49",
         "claude": "536ba1dc58adb21319ca5c30df9f90a273a063e04996fd1034e4b454c9d821ac",
@@ -295,7 +295,7 @@
         "notifications.workspace_type_preferences_update"
       ],
       "kernel_sha256": "933d1bb32fd31ffcd637661ca7c76078b514e71a7decda89a5c60f3d5d3ced9b",
-      "evals_sha256": "e62c8949afb498033b68e1391df36ec1c80bddf53eee54414284b005f2ceae98",
+      "evals_sha256": "30959d985abf74907cb52d2e7a467adc855fd0ea9bf328a6b1bcbf32edfae3a1",
       "adapter_sha256": {
         "architect": "33059304b1a5c411f5ef788bc4537dbb01269f2211ec95d6706d4d8498ccd5f8",
         "claude": "8c400ca96a7181b2a467f77eba9f82a572740a14e60ea696acacfa6cf9e76e9d",
@@ -766,7 +766,7 @@
         "tools.x_post_generate"
       ],
       "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
-      "evals_sha256": "95b9dab267ae3486d8576d35a966f96667f2d10f299e2e478d9c7f17ce2c2f2a",
+      "evals_sha256": "8dd0d13222a8b191c520dfc991d2b5b8f760846c829706767219749e17bf96e6",
       "adapter_sha256": {
         "architect": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
         "claude": "8702c0da6d9408e48d4298a199adaf4b753aa8c2277526bde02f5b836c4f7c0c",
@@ -907,7 +907,7 @@
         "tasks.update"
       ],
       "kernel_sha256": "44823e2209b86385e9d80c2487fd23d6ecc496314a0db574839eded6a44b93e3",
-      "evals_sha256": "2f35e4dbc96d90faaab1a4084bb4e43c442efa61efa345e1648ab4caca07b11d",
+      "evals_sha256": "452497e8f68eb5d6abaa112d4f0bca6bb68d13ede1d62849d1b93b42e8213e9c",
       "adapter_sha256": {
         "architect": "c58e3054b8e7f661275af743f29171ce5817778f07be7aa14ff0163e5e6a910a",
         "claude": "26dbff1d909a5bab889ef12256f8cb22ca8ac253e9bee49b0ee667252e65db6f",
@@ -954,7 +954,7 @@
         "visibility.workspace_site_update"
       ],
       "kernel_sha256": "c743010241b7926d9d12a6960545a1393bfad0644ef09bda46639a5fff360f05",
-      "evals_sha256": "e10848cb5e7bb369e41b42ae0a59d29fd2b5cf40925eff1c16e86def9784a0bf",
+      "evals_sha256": "2ccb9f7dbb759e3f0d5819ff26307d6a6a7a44a7824406ed68f41d44147a7c07",
       "adapter_sha256": {
         "architect": "1154cbe8cae3169555010f8f807692e08c29a65128e588da1927a5c2770c484d",
         "claude": "adb000881aaeb8caac75aade05c015fc2849b73058f945765b5b66dc2b01b2d7",
@@ -973,7 +973,7 @@
         "webhooks.test_delivery"
       ],
       "kernel_sha256": "e2a4d7c0f98421e1f005f3cfd2b65bc4b70d79bbe4ebbb2469351543f5296d81",
-      "evals_sha256": "a67a381921d35fb88b6b32ea6823047f81e208efc0598982eb20412a8e4bf5ef",
+      "evals_sha256": "6ad2d2015e90eb204ab8839b39044fc1dff4763027ee9a0773fffaa3e81a8c27",
       "adapter_sha256": {
         "architect": "c19fcd7442e490b3f3bdfcc3f05d35f9465670a24e3068aae28fced51222c685",
         "claude": "55b3752bf14f4c0912c12b049ba348911b91f9f9f40e98d322018107a5478f92",

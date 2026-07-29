@@ -67,8 +67,18 @@
       ],
       "id": "approved-citation-refresh",
       "request": "Refresh the approved AI citation measurement after the credit-bearing consequence is reviewed, then report its durable run state.",
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_live_reversible_mutation",
       "required_capability_ids": [
         "visibility.refresh"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "visibility_refresh_credited",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "the accepted credit-bearing refresh must settle the exact durable credit ledger row returned by this run"
+        }
       ]
     },
     {
@@ -96,6 +106,22 @@
         "visibility.probe.status",
         "visibility.probe.today",
         "visibility.sentiment_trend"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "visibility_artifact_changed",
+          "artifact_kind": "pagespeed_audit",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not refresh or scan PageSpeed state"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "artifact_kind": "probe_batch",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not enqueue a visibility probe batch"
+        }
       ]
     },
     {
@@ -118,6 +144,29 @@
         "visibility.tracked_prompts.update",
         "visibility.workspace_site_ensure",
         "visibility.workspace_site_update"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "visibility_artifact_changed",
+          "artifact_kind": "pagespeed_audit",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not run a site scan that refreshes PageSpeed rows"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "artifact_kind": "tracked_prompt",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not create, save, or update tracked prompts"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "artifact_kind": "workspace_site",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not ensure or update workspace site state"
+        }
       ]
     }
   ],

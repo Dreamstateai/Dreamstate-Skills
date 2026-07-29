@@ -13,6 +13,14 @@
         "webhooks.create",
         "webhooks.delete"
       ],
+      "expected_workspace_outcome": [
+        {
+          "check": "webhook_subscription_changed",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the correction keeps webhook configuration at the reviewed boundary"
+        }
+      ],
       "follow_up_turns": [
         {
           "request": "Correction: keep this at the reviewed boundary. Do not apply the change or replay any effect that already has a terminal receipt.",
@@ -35,6 +43,14 @@
       "required_capability_ids": [
         "webhooks.deliveries_list",
         "webhooks.test_delivery"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "webhook_test_delivery_enqueued",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "without an exact governed webhook id no durable test delivery may be enqueued"
+        }
       ]
     }
   ]

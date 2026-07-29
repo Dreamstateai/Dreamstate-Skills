@@ -13,6 +13,15 @@
         "social.analytics_rollup_get",
         "social.audience_analytics",
         "social.performance_analysis_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "graph_node_kind": "post",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "analytics refresh must not create or mutate a content artifact"
+        }
       ]
     },
     {
@@ -24,6 +33,8 @@
         "social.reddit"
       ],
       "request": "Write an authored Reddit post for our company and put it on next Tuesday's calendar.",
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_live_reversible_mutation",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
@@ -31,6 +42,21 @@
         "content.artifact_generate",
         "content.schedule",
         "content.delivery_publish"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "putting the authored post on the calendar must leave a durable scheduled content artifact"
+        },
+        {
+          "check": "record_created",
+          "object_key": "published_social_delivery",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "calendar placement does not authorize immediate provider publication"
+        }
       ]
     },
     {
@@ -43,6 +69,8 @@
         "schedule"
       ],
       "request": "Draft one week of LinkedIn and X posts using published cited claims from our workspace wiki.",
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_live_reversible_mutation",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
@@ -50,6 +78,21 @@
         "content.artifact_generate",
         "content.schedule",
         "content.delivery_publish"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "the approved calendar must leave durable scheduled content"
+        },
+        {
+          "check": "record_created",
+          "object_key": "published_social_delivery",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting a calendar does not authorize immediate provider publication"
+        }
       ]
     },
     {
@@ -95,6 +138,12 @@
         "brain.content.search",
         "brain.social.benchmarks.query",
         "brain.social.patterns.compare"
+      ],
+      "required_concepts": [
+        "brain.content.get",
+        "brain.content.search",
+        "brain.social.benchmarks.query",
+        "brain.social.patterns.compare"
       ]
     },
     {
@@ -122,6 +171,15 @@
         "content.regenerate_hooks",
         "content.submit_review",
         "content.unschedule"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "graph_node_kind": "post",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "governed contract inspection must not mutate a post artifact"
+        }
       ]
     },
     {
@@ -138,6 +196,15 @@
         "content.version_get",
         "content.version_rollback",
         "content.versions_list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "graph_node_kind": "post",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "governed contract inspection must not create or roll back a post version"
+        }
       ]
     },
     {
@@ -161,6 +228,15 @@
         "social.post_analysis_job_create",
         "social.post_analytics",
         "social.post_format_hooks_list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "graph_node_kind": "post",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "social contract inspection must not create an analysis anchor or post artifact"
+        }
       ]
     },
     {
@@ -179,6 +255,15 @@
         "social.weekly_plan_item_transition",
         "social.weekly_plan_item_update",
         "social.weekly_plan_items_list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "graph_node_kind": "post",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "social contract inspection must not materialize or mutate a weekly-plan post"
+        }
       ]
     },
     {
@@ -190,6 +275,13 @@
       "must_not_ask_user": true,
       "must_not_execute": true,
       "required_capability_ids": [
+        "tools.linkedin_headline_generate",
+        "tools.linkedin_hook_generate",
+        "tools.linkedin_post_generate",
+        "tools.x_hook_generate",
+        "tools.x_post_generate"
+      ],
+      "required_concepts": [
         "tools.linkedin_headline_generate",
         "tools.linkedin_hook_generate",
         "tools.linkedin_post_generate",
@@ -1142,6 +1234,7 @@
       "must_not_claim_capability_unavailable": true,
       "must_not_repeat_tool_calls": true,
       "must_report_tool_failure": true,
+      "adversarial": true,
       "forbidden_question_concepts": [
         "failure_cause",
         "platform",
@@ -1154,6 +1247,15 @@
       ],
       "required_capability_ids": [
         "content.delivery_publish"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "object_key": "published_social_delivery",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "a provider failure without a provider post id must leave no new published delivery"
+        }
       ]
     },
     {
@@ -1180,6 +1282,15 @@
       ],
       "required_capability_ids": [
         "content.delivery_publish"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "object_key": "published_social_delivery",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "inspecting a terminal receipt must not create a duplicate published delivery in this run"
+        }
       ]
     }
   ],

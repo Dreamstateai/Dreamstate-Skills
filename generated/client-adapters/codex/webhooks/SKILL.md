@@ -7,7 +7,7 @@ capability_ids: ["webhooks.create","webhooks.delete","webhooks.deliveries_list",
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
+  playbook_kernel_hash: 6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 3308959ee5a8c299
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
+  source_release_hash: 6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f
   generator_version: 1.0.0
   client: codex
   kernel_id: webhooks
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: e2a4d7c0f98421e1f005f3cfd2b65bc4b70d79bbe4ebbb2469351543f5296d81
   adapter_sha256: a0631ce5b638be81bb6b7731c191ec870cb17af979a4b0f98faa928d7e830d82
   evals_file: evals.json
-  evals_sha256: a67a381921d35fb88b6b32ea6823047f81e208efc0598982eb20412a8e4bf5ef
+  evals_sha256: 6ad2d2015e90eb204ab8839b39044fc1dff4763027ee9a0773fffaa3e81a8c27
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

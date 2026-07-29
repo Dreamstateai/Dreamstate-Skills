@@ -7,7 +7,7 @@ capability_ids: ["integrations.attribution_status_get","integrations.crm_import_
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
+  playbook_kernel_hash: 6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 3308959ee5a8c299
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
+  source_release_hash: 6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f
   generator_version: 1.0.0
   client: claude
   kernel_id: integrations
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb
   adapter_sha256: 536ba1dc58adb21319ca5c30df9f90a273a063e04996fd1034e4b454c9d821ac
   evals_file: evals.json
-  evals_sha256: cf66db3a966a77cb6a7d6847fa172d8d374ab88bfcf57d376e2dd3373828b566
+  evals_sha256: 37bd33ae6c01895bf27c9256710d1beef51324a45c2c1c4a9ed828075ff6f1eb
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
