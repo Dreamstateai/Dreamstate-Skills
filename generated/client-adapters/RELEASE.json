@@ -2,10 +2,10 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f",
+  "source_release_hash": "bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f",
+    "playbook_kernel_hash": "bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "8ba8c82bd38f553e",
@@ -766,11 +766,64 @@
         "tools.x_post_generate"
       ],
       "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
-      "evals_sha256": "8dd0d13222a8b191c520dfc991d2b5b8f760846c829706767219749e17bf96e6",
+      "evals_sha256": "e5b7037665b18bc4331df69b4cf4e5fc4488df72468eae77dc9a16f42fb4d02b",
       "adapter_sha256": {
         "architect": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
         "claude": "8702c0da6d9408e48d4298a199adaf4b753aa8c2277526bde02f5b836c4f7c0c",
         "codex": "11ddb11dca0d3e0c5e38494a236714392ba1d6a38ef4fd09e5da1be5efa46584"
+      }
+    },
+    "social.linkedin": {
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "capability_ids": [
+        "brain.content.search",
+        "social.accounts_list"
+      ],
+      "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
+      "evals_sha256": "e8d7ecfc2b7b5056e4c6228064d0dfb9fe9ecafb5a0506fe4b1483b5fa0443ae",
+      "adapter_sha256": {
+        "architect": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
+        "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
+        "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
+      }
+    },
+    "social.reddit": {
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "capability_ids": [
+        "brain.content.search"
+      ],
+      "kernel_sha256": "2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3",
+      "evals_sha256": "aa479428a09795bbdb394bf46821ff106bee8cb586de3c497ce6815227f33ba4",
+      "adapter_sha256": {
+        "architect": "645f1ae37684eaa3b2d1cfb8319d56111a4445e598dfd443c553ff01e148c764",
+        "claude": "0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c",
+        "codex": "f413018d24badd59f80ac471f70c3e06142375ef91b3a458df08e38168003ba9"
+      }
+    },
+    "social.x": {
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "capability_ids": [
+        "brain.content.search",
+        "social.accounts_list"
+      ],
+      "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
+      "evals_sha256": "dccb04056b909b2bd2f47c21b8bbea5e1d7361d0a247d4c29baa75de62ef891a",
+      "adapter_sha256": {
+        "architect": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
+        "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
+        "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
       }
     },
     "strategy": {
@@ -883,7 +936,7 @@
         "worksheets.update"
       ],
       "kernel_sha256": "05956a3a5e2005dc090862eb2ac2972181144055d95eab08c96908f7dc67fd05",
-      "evals_sha256": "5f7afdc4bd14e8b57e5a1b6df16bb1cf6bdc03335b58cd5fd013cb9b854f23a2",
+      "evals_sha256": "ec14f4a8c939336b774a42f8fa7928af9532e937ef9c658cfeb34f523fe221d1",
       "adapter_sha256": {
         "architect": "fcb534afafce503f15f3a430782d2a3308a6ba7a0cce5f8fa564385c582ac254",
         "claude": "5c667a4c145f7dba80d7b5992404f31bd194e785f621fbfd9cf57b599efb2d2e",

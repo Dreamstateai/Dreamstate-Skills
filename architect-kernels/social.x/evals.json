@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "skill_id": "social.x",
+  "cases": [
+    {
+      "id": "x-recent-search-window",
+      "request": "Search X for founder-led growth posts from the last seven days. The topic and time window are complete. Use transparent defaults for ranking and output, disclose them, keep unavailable metrics null, and do not block on optional presentation choices.",
+      "fixture_profile": "x_recent_official",
+      "expected_skill_ids": [
+        "social.x"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.x"
+      ],
+      "must_not_load": [
+        "social.linkedin",
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "provider_status",
+          "allowed_values": [
+            "connected"
+          ]
+        },
+        {
+          "id": "source_state",
+          "allowed_values": [
+            "official_api"
+          ]
+        },
+        {
+          "id": "search_window",
+          "allowed_values": [
+            "recent"
+          ]
+        },
+        {
+          "id": "metric_state",
+          "allowed_values": [
+            "measured_nullable",
+            "measured_complete"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_concepts": [
+        "last seven days"
+      ]
+    },
+    {
+      "id": "x-full-archive-entitlement",
+      "request": "For X content research, determine whether the official API can search all historical posts when this project currently has recent-search coverage. This is a read-only search-window coverage check, not a request to connect or repair an account. Return the truthful archive entitlement and cache boundary.",
+      "fixture_profile": "x_recent_only_no_archive",
+      "expected_skill_ids": [
+        "social.x"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.x"
+      ],
+      "must_not_load": [
+        "social.linkedin",
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "archive_entitlement",
+          "allowed_values": [
+            "not_entitled"
+          ]
+        },
+        {
+          "id": "search_window",
+          "allowed_values": [
+            "outside_entitlement"
+          ]
+        },
+        {
+          "id": "cache_state",
+          "allowed_values": [
+            "unavailable"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "social.accounts_list"
+      ],
+      "required_executed_capability_ids": [
+        "social.accounts_list"
+      ],
+      "required_concepts": [
+        "not entitled"
+      ],
+      "must_not": [
+        {
+          "kind": "claimed_success_without_receipt",
+          "capability_id": "x.posts.search"
+        }
+      ],
+      "adversarial": true
+    },
+    {
+      "id": "x-authored-post-respects-length-limit",
+      "request": "Write one X post about how founder-led growth compounds when the founder answers support questions in public. This is X only: do not draft a LinkedIn or a Reddit version. Keep it inside the single-post character limit, or say it does not fit and thread it explicitly. Do not publish it.",
+      "fixture_profile": "x_recent_official",
+      "expected_skill_ids": [
+        "social.x"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.x"
+      ],
+      "must_not_load": [
+        "social.linkedin",
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "draft_length_limits": [
+        {
+          "platform": "x",
+          "max_chars": 280
+        }
+      ],
+      "required_completion_fields": [
+        {
+          "id": "provider_status",
+          "allowed_values": [
+            "connected"
+          ]
+        }
+      ],
+      "required_concepts": [
+        "character count"
+      ]
+    }
+  ]
+}

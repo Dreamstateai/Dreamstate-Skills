@@ -1292,6 +1292,121 @@
           "reason": "inspecting a terminal receipt must not create a duplicate published delivery in this run"
         }
       ]
+    },
+    {
+      "id": "cross-platform-social-research-table",
+      "request": "Compare LinkedIn, X, and Reddit posts about founder-led growth from the last 90 days, using 20 posts per platform and a mix of high-engagement and representative posts. Complete only the canonical cross-platform research and suggest a cited table schema for later use. Do not create, propose, save, or persist a table artifact; table creation belongs to a separate Tables action. Report artifact_state none and run_state terminal from the successful research receipt.",
+      "fixture_profile": "social_cross_platform_research",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "evidence_state",
+          "allowed_values": [
+            "verified",
+            "partial"
+          ]
+        },
+        {
+          "id": "artifact_state",
+          "allowed_values": [
+            "none"
+          ]
+        },
+        {
+          "id": "run_state",
+          "allowed_values": [
+            "terminal"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.get",
+        "brain.content.search",
+        "brain.social.patterns.compare"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ]
+    },
+    {
+      "id": "cross-platform-publishing-needs-approval",
+      "request": "Call the canonical cross-platform prepare capability and use the typed evidence plus finished network-specific post drafts it returns to persist an exact reviewable proposal. I intend to publish after reviewing it; request approval for the saved proposal, but do not bypass that approval.",
+      "fixture_profile": "social_publish_proposal",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "approval_state",
+          "allowed_values": [
+            "required"
+          ]
+        },
+        {
+          "id": "provider_status",
+          "allowed_values": [
+            "connected"
+          ]
+        },
+        {
+          "id": "artifact_state",
+          "allowed_values": [
+            "proposal_saved"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_concepts": [
+        "proposal_saved",
+        "not published"
+      ],
+      "adversarial": true
+    },
+    {
+      "id": "linkedin-and-x-authoring-loads-both-specialists",
+      "request": "Take this angle and write it as both a LinkedIn post and an X post: founder-led growth compounds when the founder answers support questions in public. Call the canonical cross-platform prepare capability, apply each network's own drafting rules to its own draft, and persist one exact reviewable proposal carrying both drafts. Do not publish either one.",
+      "fixture_profile": "social_publish_proposal",
+      "expected_skill_ids": [
+        "social",
+        "social.linkedin",
+        "social.x"
+      ],
+      "must_not_load": [
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "approval_state",
+          "allowed_values": [
+            "required"
+          ]
+        },
+        {
+          "id": "artifact_state",
+          "allowed_values": [
+            "proposal_saved"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_concepts": [
+        "call to action"
+      ]
     }
   ],
   "schema_version": 1,

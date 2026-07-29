@@ -21,7 +21,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PREFIX = 'generated/architect/';
 const PACKAGE_FILES = ['KERNEL.md', 'SKILL.md', 'evals.json'] as const;
 const PINNED_FILE = 'PINNED_RELEASE.json';
-const SKILL_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const SKILL_ID = /^[a-z0-9]+(?:(?:-|\.)[a-z0-9]+)*$/;
 
 export interface SyncArchitectHooks {
   /** Test seam proving a partial stage write cannot mutate the live target. */

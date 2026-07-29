@@ -931,6 +931,235 @@
       }
     },
     {
+      "id": "social.linkedin",
+      "name": "LinkedIn Intelligence",
+      "description": "Research and analyze supported connected-account LinkedIn content with truthful metrics and approval-gated publishing context.",
+      "triggers": [
+        "LinkedIn post research",
+        "LinkedIn pattern analysis",
+        "LinkedIn content opportunities"
+      ],
+      "dependencies": [
+        "social"
+      ],
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "max_context_tokens": 3000,
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "connection_status",
+            "description": "Provider connection readiness status.",
+            "allowed_values": [
+              "connected",
+              "disconnected",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "cache_state",
+            "description": "Cached provider evidence freshness state.",
+            "allowed_values": [
+              "fresh",
+              "stale",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "metric_state",
+            "description": "Whether metrics are measured, nullable, or unavailable.",
+            "allowed_values": [
+              "measured_nullable",
+              "measured_complete",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "evidence_state",
+            "description": "Evidence availability and provenance status.",
+            "allowed_values": [
+              "verified",
+              "partial",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "social.reddit",
+      "name": "Reddit Intelligence",
+      "description": "Research approved OAuth Reddit content, community opportunities, and authored-post context under workspace-only rights.",
+      "triggers": [
+        "Reddit post research",
+        "Reddit community opportunities",
+        "Reddit reply drafts",
+        "authored Reddit content"
+      ],
+      "dependencies": [
+        "social"
+      ],
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "max_context_tokens": 3000,
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "link_state",
+            "description": "Verified real-thread link retrieval state.",
+            "allowed_values": [
+              "verified_links",
+              "none_retrieved",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "evidence_trust",
+            "description": "Untrusted provider evidence handling state.",
+            "allowed_values": [
+              "fenced",
+              "none_retrieved",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "artifact_class",
+            "description": "Authored standalone artifact classification.",
+            "allowed_values": [
+              "authored_standalone",
+              "community_reply",
+              "none"
+            ]
+          },
+          {
+            "id": "review_state",
+            "description": "Human-review readiness state.",
+            "allowed_values": [
+              "reviewable",
+              "not_created",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "rights_state",
+            "description": "Workspace research rights state.",
+            "allowed_values": [
+              "workspace_authorized",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "reply_state",
+            "description": "External Reddit reply execution state.",
+            "allowed_values": [
+              "not_published",
+              "published_with_approval",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "social.x",
+      "name": "X Intelligence",
+      "description": "Research and analyze official X API content and determine truthful recent-search or full-archive coverage. Connection setup and repair belong to Integrations.",
+      "triggers": [
+        "X post research",
+        "X recent-search coverage",
+        "X full-archive entitlement check",
+        "Twitter pattern analysis",
+        "X content opportunities"
+      ],
+      "dependencies": [
+        "social"
+      ],
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "max_context_tokens": 3000,
+      "completion_contract": {
+        "version": 1,
+        "fields": [
+          {
+            "id": "provider_status",
+            "description": "Social provider connection or availability status.",
+            "allowed_values": [
+              "connected",
+              "disconnected",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "source_state",
+            "description": "X evidence source boundary.",
+            "allowed_values": [
+              "official_api",
+              "cache",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "search_window",
+            "description": "Official X search-window coverage state.",
+            "allowed_values": [
+              "recent",
+              "archive",
+              "outside_entitlement",
+              "unavailable"
+            ]
+          },
+          {
+            "id": "archive_entitlement",
+            "description": "Full-archive X entitlement state.",
+            "allowed_values": [
+              "entitled",
+              "not_entitled",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "cache_state",
+            "description": "Cached provider evidence freshness state.",
+            "allowed_values": [
+              "fresh",
+              "stale",
+              "unavailable",
+              "not_applicable"
+            ]
+          },
+          {
+            "id": "metric_state",
+            "description": "Whether metrics are measured, nullable, or unavailable.",
+            "allowed_values": [
+              "measured_nullable",
+              "measured_complete",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "strategy",
       "name": "Strategy",
       "description": "Create or revise evidence-backed ICP, positioning, channel roles, objectives, tradeoffs, and durable strategy proposals.",

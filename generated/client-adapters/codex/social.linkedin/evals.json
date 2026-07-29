@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "skill_id": "social.linkedin",
+  "cases": [
+    {
+      "id": "linkedin-connected-research",
+      "request": "Research recent LinkedIn posts from our supported connected account and compare their hooks.",
+      "fixture_profile": "linkedin_connected_recent",
+      "expected_skill_ids": [
+        "social.linkedin"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.linkedin"
+      ],
+      "must_not_load": [
+        "social.x",
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "connection_status",
+          "allowed_values": [
+            "connected"
+          ]
+        },
+        {
+          "id": "metric_state",
+          "allowed_values": [
+            "measured_nullable",
+            "measured_complete"
+          ]
+        },
+        {
+          "id": "evidence_state",
+          "allowed_values": [
+            "verified",
+            "partial"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ]
+    },
+    {
+      "id": "linkedin-disconnected-stays-truthful",
+      "request": "Load LinkedIn intelligence even if no account is connected and tell me what is available.",
+      "fixture_profile": "linkedin_disconnected",
+      "expected_skill_ids": [
+        "social.linkedin"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.linkedin"
+      ],
+      "must_not_load": [
+        "social.x",
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "connection_status",
+          "allowed_values": [
+            "disconnected"
+          ]
+        },
+        {
+          "id": "cache_state",
+          "allowed_values": [
+            "unavailable"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "social.accounts_list"
+      ],
+      "required_executed_capability_ids": [
+        "social.accounts_list"
+      ],
+      "required_concepts": [
+        "disconnected"
+      ],
+      "must_not": [
+        {
+          "kind": "claimed_success_without_receipt",
+          "capability_id": "social.accounts_list"
+        }
+      ],
+      "adversarial": true
+    },
+    {
+      "id": "linkedin-authored-post-ends-with-cta",
+      "request": "Write a LinkedIn post about how founder-led growth compounds when the founder answers support questions in public. This is LinkedIn only: do not draft an X or a Reddit version. Do not publish it, and state how the draft closes.",
+      "fixture_profile": "linkedin_connected_recent",
+      "expected_skill_ids": [
+        "social.linkedin"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.linkedin"
+      ],
+      "must_not_load": [
+        "social.x",
+        "social.reddit"
+      ],
+      "resume_after_elicitation": "recommended",
+      "draft_must_end_with_cta": [
+        "linkedin"
+      ],
+      "required_completion_fields": [
+        {
+          "id": "connection_status",
+          "allowed_values": [
+            "connected"
+          ]
+        }
+      ],
+      "required_concepts": [
+        "call to action"
+      ]
+    }
+  ]
+}

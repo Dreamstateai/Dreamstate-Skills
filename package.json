@@ -26,13 +26,13 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsx scripts/build.ts",
-    "check": "tsx scripts/build.ts --check",
-    "check:generated-clean": "tsx scripts/verify-generated-clean.ts",
-    "sync:capabilities": "tsx scripts/sync-capability-manifest.ts",
-    "sync:architect": "tsx scripts/sync-architect.ts",
+    "build": "node --import tsx scripts/build.ts",
+    "check": "node --import tsx scripts/build.ts --check",
+    "check:generated-clean": "node --import tsx scripts/verify-generated-clean.ts",
+    "sync:capabilities": "node --import tsx scripts/sync-capability-manifest.ts",
+    "sync:architect": "node --import tsx scripts/sync-architect.ts",
     "compile": "tsc",
-    "test": "tsx --test --test-concurrency=1 test/*.test.ts",
+    "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
     "prepublishOnly": "npm run build && npm run check && npm test && npm run compile"
   },
   "keywords": [

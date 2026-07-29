@@ -676,6 +676,32 @@
           "fact": "capability inputs, side effects, and proposal requirements"
         }
       ]
+    },
+    {
+      "fixture_profile": "crm_record_field_edit",
+      "id": "record-field-edit-reads-then-proposes-the-write",
+      "must_not_ask_before_tools": true,
+      "must_not_claim_capability_unavailable": true,
+      "required_capability_ids": [
+        "records.get",
+        "records.field_set"
+      ],
+      "required_executed_capability_ids": [
+        "records.get"
+      ],
+      "required_concepts": [
+        "review"
+      ],
+      "request": "On person record rec-1, set lifecycle_stage to Customer and update job_title to VP Growth. Read the record first so you know what you are overwriting.",
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "object_key": "person",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "a review-only field-change proposal must not create a duplicate person record or persist the proposed write"
+        }
+      ]
     }
   ],
   "schema_version": 1,

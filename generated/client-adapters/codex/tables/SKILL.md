@@ -7,7 +7,7 @@ capability_ids: ["attachments.create","attachments.delete","attachments.list","c
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f
+  playbook_kernel_hash: bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8ba8c82bd38f553e
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 6611ca355fcc43b1793d30eaf2a59b6c0c2bba5a1ce76a23913c5ee32a9de23f
+  source_release_hash: bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1
   generator_version: 1.0.0
   client: codex
   kernel_id: tables
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 05956a3a5e2005dc090862eb2ac2972181144055d95eab08c96908f7dc67fd05
   adapter_sha256: 2c29d6cb333ba94e74bbd583b7a79ef7b219843d8b0433a9af675e0712e3adf0
   evals_file: evals.json
-  evals_sha256: 5f7afdc4bd14e8b57e5a1b6df16bb1cf6bdc03335b58cd5fd013cb9b854f23a2
+  evals_sha256: ec14f4a8c939336b774a42f8fa7928af9532e937ef9c658cfeb34f523fe221d1
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "skill_id": "social.reddit",
+  "cases": [
+    {
+      "id": "reddit-real-thread-opportunities",
+      "request": "Using the authorized workspace Reddit research source, find real Reddit threads from the last 30 days where founders discuss lead enrichment. Return the 10 most relevant verified links and prepare helpful reply drafts, but do not publish any reply.",
+      "fixture_profile": "reddit_real_threads",
+      "expected_skill_ids": [
+        "social.reddit"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.reddit"
+      ],
+      "must_not_load": [
+        "social.linkedin",
+        "social.x"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "link_state",
+          "allowed_values": [
+            "verified_links"
+          ]
+        },
+        {
+          "id": "evidence_trust",
+          "allowed_values": [
+            "fenced"
+          ]
+        },
+        {
+          "id": "reply_state",
+          "allowed_values": [
+            "not_published"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_concepts": [
+        "verified links",
+        "not published"
+      ]
+    },
+    {
+      "id": "reddit-authored-post-distinction",
+      "request": "Verify these citations through the authorized workspace Reddit research source, then turn the verified themes into one authored standalone company post and save an exact reviewable proposal: (1) founders validate evidence quality before automating enrichment, citation reddit:thread-1, verified URL https://reddit.com/r/startups/comments/thread-1; (2) they want transparent missing-data handling, citation reddit:thread-2, verified URL https://reddit.com/r/sales/comments/thread-2. Do not publish it.",
+      "fixture_profile": "reddit_authored_artifact",
+      "expected_skill_ids": [
+        "social.reddit"
+      ],
+      "expected_load_order": [
+        "social",
+        "social.reddit"
+      ],
+      "must_not_load": [
+        "social.linkedin",
+        "social.x"
+      ],
+      "resume_after_elicitation": "recommended",
+      "required_completion_fields": [
+        {
+          "id": "artifact_class",
+          "allowed_values": [
+            "authored_standalone"
+          ]
+        },
+        {
+          "id": "review_state",
+          "allowed_values": [
+            "reviewable"
+          ]
+        },
+        {
+          "id": "rights_state",
+          "allowed_values": [
+            "workspace_authorized"
+          ]
+        }
+      ],
+      "required_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.content.search"
+      ],
+      "required_concepts": [
+        "authored_standalone"
+      ],
+      "adversarial": true
+    }
+  ]
+}

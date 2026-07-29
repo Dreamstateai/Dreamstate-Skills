@@ -11,9 +11,8 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-// Context gained four direct-write MCP tools, so the reviewed catalog release
-// legitimately has different canonical bytes from the pre-write-parity pin.
-const CANONICAL_MANIFEST_DIGEST = 'caf0df71ed39b2908438094693b00278a571035efd2082af0ab34953c559fcce';
+// Keep release assertions pinned to the reviewed canonical manifest bytes.
+const CANONICAL_MANIFEST_DIGEST = '9f0fd7349ac4b713a023dc91b7b3a1f0e9acbf751667820a99a1845eb3565d95';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -148,7 +147,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   assert.equal(clients.schema_version, 2);
 
   const ids = Object.keys(pinned.skills).sort();
-  assert.equal(ids.length, 28);
+  assert.equal(ids.length, 31);
   for (const id of ids) {
     const architectRoot = `generated/architect/${id}`;
     const architect = artifacts[`${architectRoot}/SKILL.md`];
@@ -437,7 +436,7 @@ test('site onboarding publishes evidence-named Markdown without imposing a docum
 test('every kernel compliance contract exactly covers its eval-declared operation authority', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  assert.equal(Object.keys(pinned.skills).length, 28);
+  assert.equal(Object.keys(pinned.skills).length, 31);
 
   const path = join(ROOT, 'architect-kernels', 'strategy', 'KERNEL.md');
   const original = readFileSync(path, 'utf8');
@@ -491,6 +490,9 @@ test('signed capability domains stay identical across source, Architect, Claude,
     signals: ['signals'],
     'site-onboarding': ['brain', 'content', 'visibility'],
     social: ['brain', 'content'],
+    'social.linkedin': ['brain', 'social', 'tables'],
+    'social.reddit': ['brain', 'social', 'tables'],
+    'social.x': ['brain', 'social', 'tables'],
     strategy: ['brain', 'context'],
     tables: ['records', 'tables'],
     tasks: ['tasks'],
