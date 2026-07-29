@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "5d0fd03da3726899",
+  "capability_hash": "3308959ee5a8c299",
   "api_version": "v1",
   "capabilities": [
     {
@@ -16943,7 +16943,7 @@
           "required": [],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -17146,7 +17146,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -17155,7 +17155,8 @@
       "mcp_tools": [
         "dreamstate_tools_search",
         "dreamstate_tools_get",
-        "dreamstate_tools_run"
+        "dreamstate_tools_run",
+        "dreamstate_context_create_document"
       ],
       "examples": [
         "{\"capability\":\"brain.context.create_document\"}"
@@ -17343,7 +17344,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -17352,7 +17353,8 @@
       "mcp_tools": [
         "dreamstate_tools_search",
         "dreamstate_tools_get",
-        "dreamstate_tools_run"
+        "dreamstate_tools_run",
+        "dreamstate_context_create_folder"
       ],
       "examples": [
         "{\"capability\":\"brain.context.create_folder\"}"
@@ -17407,7 +17409,7 @@
       "domain": "brain",
       "category": "context",
       "label": "Get a canonical wiki node",
-      "description": "Read one permitted canonical Context wiki revision with its typed claims and exact source spans.",
+      "description": "Read one permitted canonical Markdown revision and its file metadata.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -17492,7 +17494,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -17678,7 +17680,7 @@
           "required": [],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -17839,7 +17841,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -18029,7 +18031,7 @@
           "required": [],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -18226,7 +18228,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -18414,7 +18416,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -18474,7 +18476,7 @@
       "domain": "brain",
       "category": "context",
       "label": "Propose a Context wiki edit",
-      "description": "Store an agent-authored wiki document change as an untrusted, human-reviewable proposal with exact source coordinates.",
+      "description": "Store an optional review proposal for a Markdown document change.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -18789,7 +18791,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -19207,7 +19209,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -19273,7 +19275,7 @@
       "domain": "brain",
       "category": "context",
       "label": "Publish an approved Context wiki proposal",
-      "description": "Human-review and publish a wiki proposal against its exact base revision, then rebuild affected claims.",
+      "description": "Publish an optional review proposal against its exact base revision.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -19386,7 +19388,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -19431,315 +19433,6 @@
           "node_ref",
           "proposal_id",
           "expected_base_revision_id"
-        ],
-        "outputs": [
-          "result"
-        ],
-        "side_effects": [
-          "write_brain"
-        ],
-        "prerequisites": [
-          "Runtime readiness is available only from the authenticated live catalog."
-        ],
-        "deprecated": false
-      }
-    },
-    {
-      "id": "brain.context.register_source",
-      "kind": "brain_capability",
-      "domain": "brain",
-      "category": "context",
-      "label": "Register an immutable Context source",
-      "description": "Bind an already-attested private vault object into the canonical Sources tree.",
-      "when_to_use": [
-        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
-      ],
-      "when_not_to_use": [
-        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
-      ],
-      "required_scopes": [
-        "content:write"
-      ],
-      "mutates": true,
-      "idempotency_required": true,
-      "effect_replay": {
-        "strategy": "durable_receipt",
-        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
-      },
-      "cost_policy": {
-        "type": "none",
-        "credits": 0
-      },
-      "async_policy": {
-        "mode": "sync",
-        "timeout_ms": 24000
-      },
-      "required_inputs": [
-        {
-          "key": "parent_node_ref",
-          "required": true
-        },
-        {
-          "key": "title",
-          "required": true
-        },
-        {
-          "key": "source_kind",
-          "required": true
-        },
-        {
-          "key": "media_type",
-          "required": true
-        },
-        {
-          "key": "byte_size",
-          "required": true
-        },
-        {
-          "key": "content_object_id",
-          "required": true
-        },
-        {
-          "key": "content_digest",
-          "required": true
-        },
-        {
-          "key": "idempotency_key",
-          "required": true
-        }
-      ],
-      "input_schema": [
-        {
-          "name": "parent_node_ref",
-          "type": "string",
-          "required": true,
-          "description": "Canonical Sources root node reference."
-        },
-        {
-          "name": "title",
-          "type": "string",
-          "required": true,
-          "description": "Source display title."
-        },
-        {
-          "name": "source_kind",
-          "type": "string",
-          "required": true,
-          "description": "Immutable source kind.",
-          "enum": [
-            "uploaded_file",
-            "website",
-            "url_capture",
-            "crm_import",
-            "provider_payload"
-          ]
-        },
-        {
-          "name": "media_type",
-          "type": "string",
-          "required": true,
-          "description": "Attested content media type."
-        },
-        {
-          "name": "byte_size",
-          "type": "number",
-          "required": true,
-          "description": "Attested content byte size."
-        },
-        {
-          "name": "content_object_id",
-          "type": "string",
-          "required": true,
-          "description": "Finalized private vault object identifier."
-        },
-        {
-          "name": "content_digest",
-          "type": "string",
-          "required": true,
-          "description": "SHA-256 digest of the immutable plaintext source."
-        },
-        {
-          "name": "idempotency_key",
-          "type": "string",
-          "required": true,
-          "description": "Stable idempotency key for this source binding."
-        }
-      ],
-      "input_json_schema": {
-        "type": "object",
-        "properties": {
-          "parent_node_ref": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512
-          },
-          "title": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 300
-          },
-          "source_kind": {
-            "type": "string",
-            "enum": [
-              "uploaded_file",
-              "website",
-              "url_capture",
-              "crm_import",
-              "provider_payload"
-            ]
-          },
-          "media_type": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 255
-          },
-          "byte_size": {
-            "type": "integer",
-            "exclusiveMinimum": true,
-            "minimum": 0,
-            "maximum": 26214400
-          },
-          "content_object_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "content_digest": {
-            "type": "string",
-            "pattern": "^[a-f0-9]{64}$"
-          },
-          "idempotency_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
-          }
-        },
-        "required": [
-          "parent_node_ref",
-          "title",
-          "source_kind",
-          "media_type",
-          "byte_size",
-          "content_object_id",
-          "content_digest",
-          "idempotency_key"
-        ],
-        "additionalProperties": false
-      },
-      "output_manifest": "structured",
-      "provider": null,
-      "source": {
-        "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-15.0",
-        "input_json_schema": {
-          "type": "object",
-          "properties": {
-            "parent_node_ref": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 512
-            },
-            "title": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 300
-            },
-            "source_kind": {
-              "type": "string",
-              "enum": [
-                "uploaded_file",
-                "website",
-                "url_capture",
-                "crm_import",
-                "provider_payload"
-              ]
-            },
-            "media_type": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 255
-            },
-            "byte_size": {
-              "type": "integer",
-              "exclusiveMinimum": true,
-              "minimum": 0,
-              "maximum": 26214400
-            },
-            "content_object_id": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "content_digest": {
-              "type": "string",
-              "pattern": "^[a-f0-9]{64}$"
-            },
-            "idempotency_key": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            }
-          },
-          "required": [
-            "parent_node_ref",
-            "title",
-            "source_kind",
-            "media_type",
-            "byte_size",
-            "content_object_id",
-            "content_digest",
-            "idempotency_key"
-          ],
-          "additionalProperties": false
-        },
-        "citation_required": true
-      },
-      "rest_paths": [
-        "/tools/{id}",
-        "/tools/{id}/run"
-      ],
-      "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run"
-      ],
-      "examples": [
-        "{\"capability\":\"brain.context.register_source\"}"
-      ],
-      "readiness": {
-        "ready": false,
-        "state": "unavailable",
-        "runtime": "brainCapabilityRuntime",
-        "reason": "Runtime readiness is available only from the authenticated live catalog."
-      },
-      "execution": {
-        "status": "active",
-        "executor_id": "brain.context.register_source",
-        "schema_policy": "strict"
-      },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
-        "credit_class": "none"
-      },
-      "search": {
-        "aliases": [
-          "brain.context.register_source",
-          "Register an immutable Context source",
-          "{\"capability\":\"brain.context.register_source\"}"
-        ],
-        "use_cases": [
-          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
-        ],
-        "inputs": [
-          "parent_node_ref",
-          "title",
-          "source_kind",
-          "media_type",
-          "byte_size",
-          "content_object_id",
-          "content_digest",
-          "idempotency_key"
         ],
         "outputs": [
           "result"
@@ -19828,7 +19521,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -20045,7 +19738,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -20111,7 +19804,7 @@
       "domain": "brain",
       "category": "context",
       "label": "Save and publish Context",
-      "description": "Atomically save and publish a human-authored Context revision against the exact published base.",
+      "description": "Atomically save and publish a user- or agent-authored Markdown revision against the exact published base.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -20246,7 +19939,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -20255,7 +19948,8 @@
       "mcp_tools": [
         "dreamstate_tools_search",
         "dreamstate_tools_get",
-        "dreamstate_tools_run"
+        "dreamstate_tools_run",
+        "dreamstate_context_save_and_publish"
       ],
       "examples": [
         "{\"capability\":\"brain.context.save_and_publish\"}"
@@ -20446,7 +20140,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -20455,7 +20149,8 @@
       "mcp_tools": [
         "dreamstate_tools_search",
         "dreamstate_tools_get",
-        "dreamstate_tools_run"
+        "dreamstate_tools_run",
+        "dreamstate_context_save_draft"
       ],
       "examples": [
         "{\"capability\":\"brain.context.save_draft\"}"
@@ -20698,7 +20393,7 @@
           ],
           "additionalProperties": false
         },
-        "citation_required": true
+        "citation_required": false
       },
       "rest_paths": [
         "/tools/{id}",
@@ -20746,183 +20441,6 @@
           "result"
         ],
         "side_effects": [],
-        "prerequisites": [
-          "Runtime readiness is available only from the authenticated live catalog."
-        ],
-        "deprecated": false
-      }
-    },
-    {
-      "id": "brain.context.website_source_register",
-      "kind": "brain_capability",
-      "domain": "brain",
-      "category": "context",
-      "label": "Analyze and register a website Context source",
-      "description": "Analyze a public website server-side, attest the immutable artifact, and register it in canonical Sources.",
-      "when_to_use": [
-        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
-      ],
-      "when_not_to_use": [
-        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
-      ],
-      "required_scopes": [
-        "content:write"
-      ],
-      "mutates": true,
-      "idempotency_required": true,
-      "effect_replay": {
-        "strategy": "durable_receipt",
-        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
-      },
-      "cost_policy": {
-        "type": "none",
-        "credits": 0
-      },
-      "async_policy": {
-        "mode": "sync",
-        "timeout_ms": 24000
-      },
-      "required_inputs": [
-        {
-          "key": "brand_name",
-          "required": true
-        },
-        {
-          "key": "brand_url",
-          "required": true
-        },
-        {
-          "key": "idempotency_key",
-          "required": true
-        }
-      ],
-      "input_schema": [
-        {
-          "name": "brand_name",
-          "type": "string",
-          "required": true,
-          "description": "Display name for the analyzed website."
-        },
-        {
-          "name": "brand_url",
-          "type": "string",
-          "required": true,
-          "description": "Public HTTP(S) website URL."
-        },
-        {
-          "name": "idempotency_key",
-          "type": "string",
-          "required": true,
-          "description": "Stable idempotency key for analysis and source registration."
-        }
-      ],
-      "input_json_schema": {
-        "type": "object",
-        "properties": {
-          "brand_name": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 200
-          },
-          "brand_url": {
-            "type": "string",
-            "format": "uri"
-          },
-          "idempotency_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
-          }
-        },
-        "required": [
-          "brand_name",
-          "brand_url",
-          "idempotency_key"
-        ],
-        "additionalProperties": false
-      },
-      "output_manifest": "structured",
-      "provider": null,
-      "source": {
-        "contract": "dreamstate-unified-brain",
-        "contract_version": "2026-07-15.0",
-        "input_json_schema": {
-          "type": "object",
-          "properties": {
-            "brand_name": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 200
-            },
-            "brand_url": {
-              "type": "string",
-              "format": "uri"
-            },
-            "idempotency_key": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            }
-          },
-          "required": [
-            "brand_name",
-            "brand_url",
-            "idempotency_key"
-          ],
-          "additionalProperties": false
-        },
-        "citation_required": true
-      },
-      "rest_paths": [
-        "/tools/{id}",
-        "/tools/{id}/run"
-      ],
-      "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run"
-      ],
-      "examples": [
-        "{\"capability\":\"brain.context.website_source_register\"}"
-      ],
-      "readiness": {
-        "ready": false,
-        "state": "unavailable",
-        "runtime": "brainCapabilityRuntime",
-        "reason": "Runtime readiness is available only from the authenticated live catalog."
-      },
-      "execution": {
-        "status": "active",
-        "executor_id": "brain.context.website_source_register",
-        "schema_policy": "strict"
-      },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
-        "credit_class": "none"
-      },
-      "search": {
-        "aliases": [
-          "brain.context.website_source_register",
-          "Analyze and register a website Context source",
-          "{\"capability\":\"brain.context.website_source_register\"}"
-        ],
-        "use_cases": [
-          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
-        ],
-        "inputs": [
-          "brand_name",
-          "brand_url",
-          "idempotency_key"
-        ],
-        "outputs": [
-          "result"
-        ],
-        "side_effects": [
-          "write_brain"
-        ],
         "prerequisites": [
           "Runtime readiness is available only from the authenticated live catalog."
         ],
@@ -118708,66 +118226,98 @@
                             "minLength": 1
                           },
                           "enrollment_source": {
-                            "type": "object",
-                            "properties": {
-                              "kind": {
-                                "type": "string",
-                                "enum": [
-                                  "worksheet_selection"
-                                ]
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "worksheet_selection"
+                                    ]
+                                  },
+                                  "workspace_id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "workbook_id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "worksheet_id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "saved_view_id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "selection_snapshot_id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "selection_digest": {
+                                    "type": "string",
+                                    "pattern": "^sha256:[a-f0-9]{64}$"
+                                  },
+                                  "export_id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "export_revision": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": true,
+                                    "minimum": 0
+                                  },
+                                  "eligible_contact_count": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": true,
+                                    "minimum": 0
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "workspace_id",
+                                  "workbook_id",
+                                  "worksheet_id",
+                                  "saved_view_id",
+                                  "selection_snapshot_id",
+                                  "selection_digest",
+                                  "export_id",
+                                  "export_revision",
+                                  "eligible_contact_count"
+                                ],
+                                "additionalProperties": false
                               },
-                              "workspace_id": {
-                                "type": "string",
-                                "format": "uuid"
-                              },
-                              "workbook_id": {
-                                "type": "string",
-                                "format": "uuid"
-                              },
-                              "worksheet_id": {
-                                "type": "string",
-                                "format": "uuid"
-                              },
-                              "saved_view_id": {
-                                "type": "string",
-                                "format": "uuid"
-                              },
-                              "selection_snapshot_id": {
-                                "type": "string",
-                                "format": "uuid"
-                              },
-                              "selection_digest": {
-                                "type": "string",
-                                "pattern": "^sha256:[a-f0-9]{64}$"
-                              },
-                              "export_id": {
-                                "type": "string",
-                                "format": "uuid"
-                              },
-                              "export_revision": {
-                                "type": "integer",
-                                "exclusiveMinimum": true,
-                                "minimum": 0
-                              },
-                              "eligible_contact_count": {
-                                "type": "integer",
-                                "exclusiveMinimum": true,
-                                "minimum": 0
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_source/anyOf/0/properties/kind"
+                                  },
+                                  "workspace_id": {
+                                    "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_source/anyOf/0/properties/workspace_id"
+                                  },
+                                  "workbook_id": {
+                                    "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_source/anyOf/0/properties/workbook_id"
+                                  },
+                                  "worksheet_id": {
+                                    "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_source/anyOf/0/properties/worksheet_id"
+                                  },
+                                  "saved_view_id": {
+                                    "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_source/anyOf/0/properties/saved_view_id"
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "workspace_id",
+                                  "workbook_id",
+                                  "worksheet_id",
+                                  "saved_view_id"
+                                ],
+                                "additionalProperties": false
                               }
-                            },
-                            "required": [
-                              "kind",
-                              "workspace_id",
-                              "workbook_id",
-                              "worksheet_id",
-                              "saved_view_id",
-                              "selection_snapshot_id",
-                              "selection_digest",
-                              "export_id",
-                              "export_revision",
-                              "eligible_contact_count"
                             ],
-                            "additionalProperties": false,
                             "nullable": true
                           },
                           "enrollment_receipt": {
@@ -131488,6 +131038,24 @@
           "type": "boolean",
           "required": false,
           "description": "manual_run_only"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "query"
+        },
+        {
+          "name": "desired_outputs",
+          "type": "array",
+          "required": false,
+          "description": "desired_outputs"
+        },
+        {
+          "name": "available_inputs",
+          "type": "array",
+          "required": false,
+          "description": "available_inputs"
         }
       ],
       "input_json_schema": {
@@ -131522,6 +131090,33 @@
           "manual_run_only": {
             "type": "boolean",
             "default": false
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "nullable": true,
+            "default": null
+          },
+          "desired_outputs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "maxItems": 100,
+            "default": []
+          },
+          "available_inputs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "maxItems": 100,
+            "default": []
           }
         },
         "additionalProperties": false,
@@ -131548,6 +131143,96 @@
                   "type": "string",
                   "minLength": 1,
                   "maxLength": 200
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "provider": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "produced_fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "maxItems": 500
+                },
+                "required_inputs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "maxItems": 100
+                },
+                "cost_class": {
+                  "type": "string",
+                  "enum": [
+                    "free",
+                    "low",
+                    "medium",
+                    "high",
+                    "variable"
+                  ]
+                },
+                "cost": {
+                  "type": "object",
+                  "properties": {
+                    "unit": {
+                      "type": "string",
+                      "enum": [
+                        "row",
+                        "run"
+                      ]
+                    },
+                    "estimate": {
+                      "type": "boolean"
+                    },
+                    "minimum_credits": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "maximum_credits": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "unit",
+                    "estimate",
+                    "minimum_credits",
+                    "maximum_credits"
+                  ],
+                  "additionalProperties": false
+                },
+                "score": {
+                  "type": "number"
+                },
+                "score_band": {
+                  "type": "string",
+                  "enum": [
+                    "exact",
+                    "strong",
+                    "possible"
+                  ]
+                },
+                "match_reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "minItems": 1,
+                  "maxItems": 12
                 },
                 "state": {
                   "type": "string",
@@ -131703,6 +131388,15 @@
                 "definition_id",
                 "definition_version",
                 "label",
+                "description",
+                "provider",
+                "produced_fields",
+                "required_inputs",
+                "cost_class",
+                "cost",
+                "score",
+                "score_band",
+                "match_reasons",
                 "state",
                 "blockers",
                 "action",
@@ -131793,6 +131487,2556 @@
           "evaluated_at"
         ],
         "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "executables.run",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "executable_definition",
+      "label": "Executable Definition Run",
+      "description": "Canonical unified-table run operation for executable_definition resources.",
+      "when_to_use": [
+        "Use this operation to run a domain-neutral executable_definition through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "run",
+          "execution_evidence",
+          "graph_effects"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "async",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "key": "binding_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for binding_id."
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "name": "binding_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for binding_id."
+        }
+      ],
+      "input_json_schema": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "max_credits": {
+                "type": "string",
+                "pattern": "^(?:0|[1-9]\\d*)\\.\\d{6}$",
+                "minLength": 8,
+                "maxLength": 17
+              },
+              "max_units": {
+                "$ref": "#/anyOf/0/properties/max_credits"
+              },
+              "max_pages_per_provider": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              "max_provider_elapsed_ms": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "max_credits",
+              "max_units",
+              "max_pages_per_provider",
+              "max_provider_elapsed_ms"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "max_rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "max_credits": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              },
+              "dry_run": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "max_rows",
+              "max_credits"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "selection_snapshot_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "max_rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "max_credits": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              }
+            },
+            "required": [
+              "selection_snapshot_id",
+              "max_rows",
+              "max_credits"
+            ],
+            "additionalProperties": false
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "table_id": {
+            "type": "string",
+            "description": "Canonical identity for table_id."
+          },
+          "binding_id": {
+            "type": "string",
+            "description": "Canonical identity for binding_id."
+          }
+        },
+        "required": [
+          "table_id",
+          "binding_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "queued",
+                  "running",
+                  "reconciling",
+                  "partially_completed",
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "timed_out"
+                ]
+              },
+              "state_version": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "cancellation_requested": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "run_id",
+              "status",
+              "state_version",
+              "replayed",
+              "cancellation_requested"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "status": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state_version": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "authority_version": {
+                "type": "number",
+                "enum": [
+                  4
+                ]
+              },
+              "authority_digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "policy_trigger_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "selection_snapshot_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "replayed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "run_id",
+              "status",
+              "state_version",
+              "authority_version",
+              "authority_digest",
+              "policy_trigger_id",
+              "selection_snapshot_id",
+              "replayed"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "queued"
+                ]
+              }
+            },
+            "required": [
+              "run_id",
+              "status"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "status": {
+                "$ref": "#/anyOf/0/properties/status"
+              },
+              "state_version": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "authority_version": {
+                "type": "number",
+                "enum": [
+                  2
+                ]
+              },
+              "authority_digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "outer_run_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "outer_run_step_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "selection_snapshot_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "replayed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "run_id",
+              "status",
+              "state_version",
+              "authority_version",
+              "authority_digest",
+              "outer_run_id",
+              "outer_run_step_id",
+              "selection_snapshot_id",
+              "replayed"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "status": {
+                "$ref": "#/anyOf/0/properties/status"
+              },
+              "state_version": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "authority_version": {
+                "type": "number",
+                "enum": [
+                  3
+                ]
+              },
+              "authority_digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "policy_trigger_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "selection_snapshot_id": {
+                "$ref": "#/anyOf/0/properties/run_id"
+              },
+              "replayed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "run_id",
+              "status",
+              "state_version",
+              "authority_version",
+              "authority_digest",
+              "policy_trigger_id",
+              "selection_snapshot_id",
+              "replayed"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "executables.run",
+        "noun": "executable_definition",
+        "verb": "run"
+      },
+      "rest_paths": [
+        "/tables/{table_id}/executables/{binding_id}/runs",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/{table_id}/executables/{binding_id}/runs"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [],
+      "examples": [
+        "executables.run"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "executables.run",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "executables.run",
+          "Executable Definition Run"
+        ],
+        "use_cases": [
+          "Use this operation to run a domain-neutral executable_definition through the unified table data plane."
+        ],
+        "inputs": [
+          "table_id",
+          "binding_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "run",
+          "execution_evidence",
+          "graph_effects"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "executables.save",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "executable_definition",
+      "label": "Executable Definition Save",
+      "description": "Canonical unified-table save operation for executable_definition resources.",
+      "when_to_use": [
+        "Use this operation to save a domain-neutral executable_definition through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "executable_definition",
+          "evidence_only"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "key": "binding_spec",
+          "kind": "object",
+          "required": true,
+          "description": "binding_spec"
+        },
+        {
+          "key": "label",
+          "kind": "string",
+          "required": true,
+          "description": "label"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "name": "binding_spec",
+          "type": "object",
+          "required": true,
+          "description": "binding_spec"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "label"
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "required": false,
+          "description": "target"
+        },
+        {
+          "name": "position",
+          "type": "number",
+          "required": false,
+          "description": "position"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "binding_spec": {
+            "type": "object",
+            "properties": {
+              "definition_id": {
+                "type": "string",
+                "pattern": "^(provider|source|column|action)\\.[a-z0-9_.-]+$"
+              },
+              "input_bindings": {
+                "type": "object",
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "column"
+                          ]
+                        },
+                        "column_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "column_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "literal"
+                          ]
+                        },
+                        "value": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "enum": [
+                                "null"
+                              ],
+                              "nullable": true
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/properties/binding_spec/properties/input_bindings/additionalProperties/anyOf/1/properties/value"
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": {
+                                "$ref": "#/properties/binding_spec/properties/input_bindings/additionalProperties/anyOf/1/properties/value"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "secret"
+                          ]
+                        },
+                        "credential_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "credential_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "context"
+                          ]
+                        },
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "default": {}
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "shape": {
+                    "type": "string",
+                    "enum": [
+                      "scalar",
+                      "object",
+                      "rows",
+                      "action"
+                    ]
+                  },
+                  "value_type": {
+                    "type": "string",
+                    "enum": [
+                      "text",
+                      "number",
+                      "currency",
+                      "date",
+                      "datetime",
+                      "url",
+                      "email",
+                      "image_url",
+                      "boolean",
+                      "string_array",
+                      "json"
+                    ]
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "maxLength": 500
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        },
+                        "value_type": {
+                          "$ref": "#/properties/binding_spec/properties/output/properties/value_type"
+                        },
+                        "nullable": {
+                          "type": "boolean",
+                          "enum": [
+                            true
+                          ]
+                        },
+                        "children": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/properties/binding_spec/properties/output/properties/fields/items"
+                          },
+                          "maxItems": 200
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "label",
+                        "value_type",
+                        "nullable"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 500
+                  }
+                },
+                "additionalProperties": false
+              },
+              "run_policy": {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "source_identity": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "definition_default"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "mode"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "mode": {
+                        "type": "string",
+                        "enum": [
+                          "override"
+                        ]
+                      },
+                      "keys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1,
+                        "maxItems": 20
+                      }
+                    },
+                    "required": [
+                      "mode",
+                      "keys"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "required": [
+              "definition_id"
+            ],
+            "additionalProperties": false
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "column"
+                    ]
+                  },
+                  "column_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "expected_updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "expected_binding_revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": true,
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "kind",
+                  "column_id",
+                  "expected_updated_at",
+                  "expected_binding_revision"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "source"
+                    ]
+                  },
+                  "source_id": {
+                    "$ref": "#/properties/target/anyOf/0/properties/column_id"
+                  },
+                  "expected_state": {
+                    "type": "string",
+                    "enum": [
+                      "attached",
+                      "queued",
+                      "running",
+                      "partial",
+                      "completed",
+                      "failed",
+                      "canceled"
+                    ]
+                  },
+                  "expected_binding_revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": true,
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "kind",
+                  "source_id",
+                  "expected_state",
+                  "expected_binding_revision"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "table_id": {
+            "type": "string",
+            "description": "Canonical identity for table_id."
+          }
+        },
+        "required": [
+          "binding_spec",
+          "label",
+          "table_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "column": {
+                "type": "object",
+                "properties": {
+                  "column_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "table_id": {
+                    "$ref": "#/anyOf/0/properties/column/properties/column_id"
+                  },
+                  "workspace_id": {
+                    "$ref": "#/anyOf/0/properties/column/properties/column_id"
+                  },
+                  "key": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "name": {
+                    "$ref": "#/anyOf/0/properties/column/properties/column_id"
+                  },
+                  "behavior": {
+                    "type": "string",
+                    "enum": [
+                      "source",
+                      "manual",
+                      "formula",
+                      "ai",
+                      "tool",
+                      "enrichment",
+                      "relation",
+                      "workflow",
+                      "system"
+                    ]
+                  },
+                  "value_type": {
+                    "type": "string",
+                    "enum": [
+                      "text",
+                      "number",
+                      "boolean",
+                      "datetime",
+                      "url",
+                      "json",
+                      "reference"
+                    ]
+                  },
+                  "configuration": {
+                    "type": "object",
+                    "properties": {
+                      "semantic_type": {
+                        "type": "string",
+                        "enum": [
+                          "generic",
+                          "fit_score"
+                        ]
+                      },
+                      "output_schema": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "enum": [
+                                "null"
+                              ],
+                              "nullable": true
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": {
+                                "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "output_range": {
+                        "type": "object",
+                        "properties": {
+                          "minimum": {
+                            "type": "number"
+                          },
+                          "maximum": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "minimum",
+                          "maximum"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "dependencies": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "column_key": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-zA-Z0-9_]*$"
+                            },
+                            "required": {
+                              "type": "boolean"
+                            },
+                            "evidence_required": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "column_key",
+                            "required",
+                            "evidence_required"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "maxItems": 100
+                      },
+                      "prompt_revision": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "function_revision": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "model": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "model_revision": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "formula_expression": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "relation": {
+                        "type": "string",
+                        "enum": [
+                          "AUTHORED_BY",
+                          "ABOUT_TOPIC",
+                          "USES_FORMAT",
+                          "USES_HOOK",
+                          "USES_CTA",
+                          "USES_MEDIA_TYPE",
+                          "PART_OF_EXPERIMENT",
+                          "EXHIBITS_PATTERN",
+                          "SUPPORTS_CLAIM",
+                          "CONTRADICTS_CLAIM",
+                          "OBSERVED_IN",
+                          "REFERENCED_BY_TABLE"
+                        ]
+                      },
+                      "workflow_action_id": {
+                        "$ref": "#/anyOf/0/properties/column/properties/column_id"
+                      },
+                      "provider_id": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 200,
+                        "pattern": "^[a-z][a-z0-9_-]*(?:\\.[a-z0-9][a-z0-9_-]*)+$"
+                      },
+                      "input_bindings": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "run_if": {
+                        "type": "object",
+                        "additionalProperties": {},
+                        "nullable": true
+                      },
+                      "waterfall": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/provider_id"
+                        },
+                        "minItems": 1
+                      },
+                      "prompt_template": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "engine": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "handler_config": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "binding": {
+                    "nullable": true
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  },
+                  "position": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "$ref": "#/anyOf/0/properties/column/properties/created_at"
+                  }
+                },
+                "required": [
+                  "column_id",
+                  "table_id",
+                  "workspace_id",
+                  "key",
+                  "name",
+                  "behavior",
+                  "value_type",
+                  "configuration",
+                  "nullable",
+                  "position",
+                  "created_at",
+                  "updated_at"
+                ],
+                "additionalProperties": false
+              },
+              "binding": {
+                "type": "object",
+                "properties": {
+                  "binding_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "binding_revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": true,
+                    "minimum": 0
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "definition_id": {
+                    "type": "string",
+                    "pattern": "^(provider|source|column|action)\\.[a-z0-9_.-]+$"
+                  },
+                  "definition_version": {
+                    "type": "integer",
+                    "exclusiveMinimum": true,
+                    "minimum": 0
+                  },
+                  "input_bindings": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "column"
+                              ]
+                            },
+                            "column_id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "path": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "column_id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "literal"
+                              ]
+                            },
+                            "value": {
+                              "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "secret"
+                              ]
+                            },
+                            "credential_id": {
+                              "type": "string",
+                              "format": "uuid"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "credential_id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "context"
+                              ]
+                            },
+                            "path": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "path"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "input_binding_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "output_schema": {
+                    "type": "object",
+                    "properties": {
+                      "schema_version": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0
+                      },
+                      "shape": {
+                        "type": "string",
+                        "enum": [
+                          "scalar",
+                          "object",
+                          "rows",
+                          "action"
+                        ]
+                      },
+                      "fields": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "path": {
+                              "type": "string",
+                              "maxLength": 500
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "value_type": {
+                              "type": "string",
+                              "enum": [
+                                "text",
+                                "number",
+                                "currency",
+                                "date",
+                                "datetime",
+                                "url",
+                                "email",
+                                "image_url",
+                                "boolean",
+                                "string_array",
+                                "json"
+                              ]
+                            },
+                            "nullable": {
+                              "type": "boolean",
+                              "enum": [
+                                true
+                              ]
+                            },
+                            "children": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/fields/items"
+                              },
+                              "maxItems": 200
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "label",
+                            "value_type",
+                            "nullable"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "maxItems": 500
+                      },
+                      "json_schema": {
+                        "type": "object",
+                        "properties": {
+                          "$schema": {
+                            "type": "string",
+                            "enum": [
+                              "https://owninfluence.com/schemas/executable-json-schema-subset/2026-07-26"
+                            ]
+                          },
+                          "$id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "$ref": {
+                            "type": "string",
+                            "pattern": "^catalog:\\/\\/[a-z0-9._/@-]+$"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "null",
+                                  "boolean",
+                                  "object",
+                                  "array",
+                                  "number",
+                                  "integer",
+                                  "string"
+                                ]
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema/properties/type/anyOf/0"
+                                },
+                                "minItems": 1
+                              }
+                            ]
+                          },
+                          "format": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "const": {
+                            "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                          },
+                          "enum": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                            },
+                            "minItems": 1
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                            }
+                          },
+                          "required": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                              }
+                            ]
+                          },
+                          "items": {
+                            "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                          },
+                          "minItems": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "maxItems": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "minimum": {
+                            "type": "number"
+                          },
+                          "maximum": {
+                            "type": "number"
+                          },
+                          "minLength": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "maxLength": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "pattern": {
+                            "type": "string"
+                          },
+                          "oneOf": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                            },
+                            "minItems": 1
+                          },
+                          "anyOf": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                            },
+                            "minItems": 1
+                          },
+                          "allOf": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                            },
+                            "minItems": 1
+                          },
+                          "not": {
+                            "$ref": "#/anyOf/0/properties/binding/properties/output_schema/properties/json_schema"
+                          },
+                          "default": {
+                            "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                          },
+                          "examples": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "schema_digest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      },
+                      "frozen_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "origin": {
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "configured",
+                          "inferred"
+                        ]
+                      },
+                      "configuration_key": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "inference_evidence": {
+                        "type": "object",
+                        "properties": {
+                          "provider_snapshot_token": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 500
+                          },
+                          "sample_receipt_digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "sample_count": {
+                            "type": "integer",
+                            "exclusiveMinimum": true,
+                            "minimum": 0,
+                            "maximum": 10000
+                          },
+                          "sampled_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "provider_snapshot_token",
+                          "sample_receipt_digest",
+                          "sample_count",
+                          "sampled_at"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "schema_version",
+                      "shape",
+                      "fields",
+                      "json_schema",
+                      "schema_digest",
+                      "frozen_at",
+                      "origin"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "run_policy": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "trigger": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "manual"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "auto"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "demand"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "on_change"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "schedule"
+                                ]
+                              },
+                              "cron": {
+                                "type": "string",
+                                "maxLength": 200
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 100
+                              },
+                              "dst_policy": {
+                                "type": "string",
+                                "enum": [
+                                  "skip",
+                                  "run_once",
+                                  "run_twice"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "cron",
+                              "timezone",
+                              "dst_policy"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "event"
+                                ]
+                              },
+                              "event_type": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "event_type"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "invocation_if": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "comparison"
+                                ]
+                              },
+                              "left": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "column"
+                                        ]
+                                      },
+                                      "column_id": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      "path": {
+                                        "type": "string",
+                                        "maxLength": 500
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "column_id"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "output"
+                                        ]
+                                      },
+                                      "path": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 500
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "path"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "literal"
+                                        ]
+                                      },
+                                      "value": {
+                                        "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/output_schema/additionalProperties"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "context"
+                                        ]
+                                      },
+                                      "path": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 500
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "path"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              },
+                              "operator": {
+                                "type": "string",
+                                "enum": [
+                                  "equals",
+                                  "not_equals",
+                                  "contains",
+                                  "greater_than",
+                                  "less_than",
+                                  "is_empty",
+                                  "is_not_empty"
+                                ]
+                              },
+                              "right": {
+                                "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if/anyOf/0/properties/left"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "left",
+                              "operator"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "all"
+                                ]
+                              },
+                              "conditions": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if"
+                                },
+                                "minItems": 1,
+                                "maxItems": 100
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "conditions"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "any"
+                                ]
+                              },
+                              "conditions": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if"
+                                },
+                                "minItems": 1,
+                                "maxItems": 100
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "conditions"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "not"
+                                ]
+                              },
+                              "condition": {
+                                "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "condition"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ],
+                        "nullable": true
+                      },
+                      "row_if": {
+                        "allOf": [
+                          {
+                            "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if"
+                          }
+                        ],
+                        "nullable": true
+                      },
+                      "accept_row_if": {
+                        "allOf": [
+                          {
+                            "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if"
+                          }
+                        ],
+                        "nullable": true
+                      },
+                      "delay_seconds": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 86400
+                      },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "eager",
+                              "on_read",
+                              "on_change"
+                            ]
+                          },
+                          "watched_fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "maxItems": 200
+                          },
+                          "consumers": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "maxItems": 200
+                          }
+                        },
+                        "required": [
+                          "mode",
+                          "watched_fields",
+                          "consumers"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "selection": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "all"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "kind"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "view"
+                                ]
+                              },
+                              "view_id": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "view_id"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "selection_snapshot"
+                                ]
+                              },
+                              "selection_snapshot_id": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "selection_snapshot_id"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "rows"
+                                ]
+                              },
+                              "row_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "minItems": 1,
+                                "maxItems": 10000
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "row_ids"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "dependency": {
+                        "type": "object",
+                        "properties": {
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "wait",
+                              "skip_if_missing",
+                              "fail_if_missing"
+                            ]
+                          },
+                          "binding_ids": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "maxItems": 200
+                          }
+                        },
+                        "required": [
+                          "mode",
+                          "binding_ids"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "existing_result": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "mode": {
+                                "type": "string",
+                                "enum": [
+                                  "skip_succeeded"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "mode"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "mode": {
+                                "type": "string",
+                                "enum": [
+                                  "overwrite"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "mode"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "mode": {
+                                "type": "string",
+                                "enum": [
+                                  "fill_empty"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "mode"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "mode": {
+                                "type": "string",
+                                "enum": [
+                                  "run_if_inputs_changed"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "mode"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "mode": {
+                                "type": "string",
+                                "enum": [
+                                  "refresh_if_stale"
+                                ]
+                              },
+                              "stale_after_seconds": {
+                                "type": "integer",
+                                "exclusiveMinimum": true,
+                                "minimum": 0,
+                                "maximum": 31536000
+                              }
+                            },
+                            "required": [
+                              "mode",
+                              "stale_after_seconds"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "budgets": {
+                        "type": "object",
+                        "properties": {
+                          "per_run": {
+                            "type": "object",
+                            "properties": {
+                              "max_rows": {
+                                "type": "integer",
+                                "exclusiveMinimum": true,
+                                "minimum": 0
+                              },
+                              "max_credits": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "max_duration_seconds": {
+                                "type": "integer",
+                                "exclusiveMinimum": true,
+                                "minimum": 0
+                              }
+                            },
+                            "required": [
+                              "max_rows",
+                              "max_credits",
+                              "max_duration_seconds"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "daily": {
+                            "type": "object",
+                            "properties": {
+                              "max_rows": {
+                                "type": "integer",
+                                "exclusiveMinimum": true,
+                                "minimum": 0
+                              },
+                              "max_credits": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            },
+                            "required": [
+                              "max_rows",
+                              "max_credits"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "monthly": {
+                            "type": "object",
+                            "properties": {
+                              "max_rows": {
+                                "type": "integer",
+                                "exclusiveMinimum": true,
+                                "minimum": 0
+                              },
+                              "max_credits": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            },
+                            "required": [
+                              "max_rows",
+                              "max_credits"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "per_run",
+                          "daily",
+                          "monthly"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "retry": {
+                        "type": "object",
+                        "properties": {
+                          "max_attempts": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10
+                          },
+                          "backoff": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "linear",
+                              "exponential"
+                            ]
+                          },
+                          "initial_delay_seconds": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 3600
+                          }
+                        },
+                        "required": [
+                          "max_attempts",
+                          "backoff",
+                          "initial_delay_seconds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "concurrency": {
+                        "type": "object",
+                        "properties": {
+                          "max_parallel": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000
+                          },
+                          "max_pending": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 100000
+                          },
+                          "coalesce_window_seconds": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 3600
+                          }
+                        },
+                        "required": [
+                          "max_parallel",
+                          "max_pending",
+                          "coalesce_window_seconds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "on_error": {
+                        "type": "string",
+                        "enum": [
+                          "continue",
+                          "stop"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "trigger",
+                      "invocation_if",
+                      "row_if",
+                      "accept_row_if",
+                      "delay_seconds",
+                      "demand",
+                      "selection",
+                      "dependency",
+                      "existing_result",
+                      "budgets",
+                      "retry",
+                      "concurrency",
+                      "on_error"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "source_identity": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "definition_default"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "mode"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "override"
+                            ]
+                          },
+                          "keys": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "minItems": 1,
+                            "maxItems": 20
+                          }
+                        },
+                        "required": [
+                          "mode",
+                          "keys"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ],
+                    "default": {
+                      "mode": "definition_default"
+                    }
+                  }
+                },
+                "required": [
+                  "binding_id",
+                  "binding_revision",
+                  "definition_id",
+                  "definition_version",
+                  "input_bindings",
+                  "input_binding_digest",
+                  "output_schema",
+                  "run_policy"
+                ],
+                "additionalProperties": false,
+                "nullable": true
+              }
+            },
+            "required": [
+              "column",
+              "binding"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "workspace_id": {
+                "$ref": "#/anyOf/1/properties/source_id"
+              },
+              "table_id": {
+                "$ref": "#/anyOf/1/properties/source_id"
+              },
+              "source_column_id": {
+                "allOf": [
+                  {
+                    "$ref": "#/anyOf/1/properties/source_id"
+                  }
+                ],
+                "nullable": true
+              },
+              "source_tool_id": {
+                "$ref": "#/anyOf/0/properties/column/properties/configuration/properties/provider_id"
+              },
+              "output_row_kind": {
+                "type": "string",
+                "enum": [
+                  "person",
+                  "company",
+                  "content",
+                  "page",
+                  "keyword",
+                  "record"
+                ]
+              },
+              "canonical_upsert_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "binding": {
+                "$ref": "#/anyOf/0/properties/binding"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "attached",
+                  "queued",
+                  "running",
+                  "partial",
+                  "completed",
+                  "failed",
+                  "canceled",
+                  "archived"
+                ]
+              },
+              "frontier": {
+                "type": "object",
+                "properties": {
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "watermark": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "revision",
+                  "watermark",
+                  "updated_at"
+                ],
+                "additionalProperties": false,
+                "default": {
+                  "revision": 0,
+                  "watermark": null,
+                  "updated_at": null
+                }
+              },
+              "created_at": {
+                "$ref": "#/anyOf/1/properties/frontier/properties/updated_at"
+              },
+              "updated_at": {
+                "$ref": "#/anyOf/1/properties/frontier/properties/updated_at"
+              },
+              "archived_at": {
+                "allOf": [
+                  {
+                    "$ref": "#/anyOf/1/properties/frontier/properties/updated_at"
+                  }
+                ],
+                "nullable": true
+              }
+            },
+            "required": [
+              "source_id",
+              "workspace_id",
+              "table_id",
+              "source_column_id",
+              "source_tool_id",
+              "output_row_kind",
+              "canonical_upsert_key",
+              "binding",
+              "state",
+              "created_at",
+              "updated_at",
+              "archived_at"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "executables.save",
+        "noun": "executable_definition",
+        "verb": "save"
+      },
+      "rest_paths": [
+        "/tables/{table_id}/executables",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/{table_id}/executables"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [],
+      "examples": [
+        "executables.save"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "executables.save",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "executables.save",
+          "Executable Definition Save"
+        ],
+        "use_cases": [
+          "Use this operation to save a domain-neutral executable_definition through the unified table data plane."
+        ],
+        "inputs": [
+          "table_id",
+          "binding_spec",
+          "label"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "executable_definition",
+          "evidence_only"
+        ],
         "prerequisites": [],
         "deprecated": false
       }
@@ -281187,6 +283431,7 @@
                   "sequences.bind",
                   "sequences.publish",
                   "sequences.archive",
+                  "sequences.delete",
                   "sequences.orchestrate_selection_enrollment"
                 ]
               },
@@ -281527,66 +283772,98 @@
                 "minLength": 1
               },
               "enrollment_source": {
-                "type": "object",
-                "properties": {
-                  "kind": {
-                    "type": "string",
-                    "enum": [
-                      "worksheet_selection"
-                    ]
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "worksheet_selection"
+                        ]
+                      },
+                      "workspace_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "workbook_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "worksheet_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "saved_view_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "selection_snapshot_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "selection_digest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      },
+                      "export_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "export_revision": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0
+                      },
+                      "eligible_contact_count": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "workspace_id",
+                      "workbook_id",
+                      "worksheet_id",
+                      "saved_view_id",
+                      "selection_snapshot_id",
+                      "selection_digest",
+                      "export_id",
+                      "export_revision",
+                      "eligible_contact_count"
+                    ],
+                    "additionalProperties": false
                   },
-                  "workspace_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "workbook_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "worksheet_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "saved_view_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "selection_snapshot_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "selection_digest": {
-                    "type": "string",
-                    "pattern": "^sha256:[a-f0-9]{64}$"
-                  },
-                  "export_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "export_revision": {
-                    "type": "integer",
-                    "exclusiveMinimum": true,
-                    "minimum": 0
-                  },
-                  "eligible_contact_count": {
-                    "type": "integer",
-                    "exclusiveMinimum": true,
-                    "minimum": 0
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/kind"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/workspace_id"
+                      },
+                      "workbook_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/workbook_id"
+                      },
+                      "worksheet_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/worksheet_id"
+                      },
+                      "saved_view_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/saved_view_id"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "workspace_id",
+                      "workbook_id",
+                      "worksheet_id",
+                      "saved_view_id"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "kind",
-                  "workspace_id",
-                  "workbook_id",
-                  "worksheet_id",
-                  "saved_view_id",
-                  "selection_snapshot_id",
-                  "selection_digest",
-                  "export_id",
-                  "export_revision",
-                  "eligible_contact_count"
                 ],
-                "additionalProperties": false,
                 "nullable": true
               },
               "enrollment_receipt": {
@@ -282728,6 +285005,7 @@
                   "sequences.bind",
                   "sequences.publish",
                   "sequences.archive",
+                  "sequences.delete",
                   "sequences.orchestrate_selection_enrollment"
                 ]
               },
@@ -283142,6 +285420,333 @@
       }
     },
     {
+      "id": "sequences.delete",
+      "entitlement": "outreach",
+      "kind": "workspace_capability",
+      "domain": "sequence",
+      "category": "sequence",
+      "label": "Sequence Delete",
+      "description": "Canonical delete operation for sequence resources.",
+      "when_to_use": [
+        "Use the stable sequences.delete contract for canonical sequence delete behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "outreach:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "outreach",
+        "reports": [
+          "sequence_tombstone",
+          "receipt",
+          "graph_effects"
+        ]
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "sequence_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "sequence_id"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "sequence_id",
+          "type": "string",
+          "required": true,
+          "description": "sequence_id"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "sequence_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "sequence_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "sequence_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deleted": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          "receipt": {
+            "type": "object",
+            "properties": {
+              "capability_id": {
+                "type": "string",
+                "enum": [
+                  "workflows.graph_apply",
+                  "sequences.bind",
+                  "sequences.publish",
+                  "sequences.archive",
+                  "sequences.delete",
+                  "sequences.orchestrate_selection_enrollment"
+                ]
+              },
+              "run_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "run_step_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "operation_request_key": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255
+              },
+              "replay_strategy": {
+                "type": "string",
+                "enum": [
+                  "durable_receipt"
+                ]
+              },
+              "approval_identity": {
+                "type": "object",
+                "properties": {
+                  "capability_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "run_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "run_step_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "actor_user_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "actor_kind": {
+                    "type": "string",
+                    "enum": [
+                      "human",
+                      "agent"
+                    ]
+                  },
+                  "authority": {
+                    "type": "string",
+                    "enum": [
+                      "direct",
+                      "delegated"
+                    ]
+                  },
+                  "grant_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true
+                  },
+                  "operation_claim_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "operation_claim_epoch": {
+                    "type": "integer",
+                    "exclusiveMinimum": true,
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "capability_id",
+                  "run_id",
+                  "run_step_id",
+                  "actor_user_id",
+                  "actor_kind",
+                  "authority",
+                  "grant_id",
+                  "operation_claim_id",
+                  "operation_claim_epoch"
+                ],
+                "additionalProperties": false
+              },
+              "approval_identity_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "capability_id",
+              "run_id",
+              "run_step_id",
+              "operation_request_key",
+              "idempotency_key",
+              "replay_strategy",
+              "approval_identity",
+              "approval_identity_digest"
+            ],
+            "additionalProperties": false
+          },
+          "graph_effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "type": "string",
+                  "enum": [
+                    "created",
+                    "updated"
+                  ]
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "workflow",
+                    "sequence"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "op",
+                "kind",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "sequence_id",
+          "deleted",
+          "receipt",
+          "graph_effects"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "sequences.delete",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run sequences.delete"
+      ],
+      "examples": [
+        "dreamstate tools get sequences.delete",
+        "dreamstate tools run sequences.delete"
+      ],
+      "web_url_template": "/dashboard/outreach/sequences/{id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "sequences.delete",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "sequences.delete",
+          "Sequence Delete",
+          "dreamstate tools get sequences.delete",
+          "dreamstate tools run sequences.delete"
+        ],
+        "use_cases": [
+          "Use the stable sequences.delete contract for canonical sequence delete behavior."
+        ],
+        "inputs": [
+          "sequence_id"
+        ],
+        "outputs": [
+          "sequence_id",
+          "deleted",
+          "receipt",
+          "graph_effects"
+        ],
+        "side_effects": [
+          "write_sequence",
+          "outreach",
+          "sequence_tombstone",
+          "receipt",
+          "graph_effects"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "sequences.enroll_selection",
       "entitlement": "outreach",
       "kind": "workspace_capability",
@@ -283412,6 +286017,12 @@
           "type": "string",
           "required": false,
           "description": "cursor"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": "status"
         }
       ],
       "input_json_schema": {
@@ -283427,6 +286038,14 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 2000
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ]
           }
         },
         "additionalProperties": false,
@@ -283711,66 +286330,98 @@
                 "minLength": 1
               },
               "enrollment_source": {
-                "type": "object",
-                "properties": {
-                  "kind": {
-                    "type": "string",
-                    "enum": [
-                      "worksheet_selection"
-                    ]
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "worksheet_selection"
+                        ]
+                      },
+                      "workspace_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "workbook_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "worksheet_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "saved_view_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "selection_snapshot_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "selection_digest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      },
+                      "export_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "export_revision": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0
+                      },
+                      "eligible_contact_count": {
+                        "type": "integer",
+                        "exclusiveMinimum": true,
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "workspace_id",
+                      "workbook_id",
+                      "worksheet_id",
+                      "saved_view_id",
+                      "selection_snapshot_id",
+                      "selection_digest",
+                      "export_id",
+                      "export_revision",
+                      "eligible_contact_count"
+                    ],
+                    "additionalProperties": false
                   },
-                  "workspace_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "workbook_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "worksheet_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "saved_view_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "selection_snapshot_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "selection_digest": {
-                    "type": "string",
-                    "pattern": "^sha256:[a-f0-9]{64}$"
-                  },
-                  "export_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "export_revision": {
-                    "type": "integer",
-                    "exclusiveMinimum": true,
-                    "minimum": 0
-                  },
-                  "eligible_contact_count": {
-                    "type": "integer",
-                    "exclusiveMinimum": true,
-                    "minimum": 0
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/kind"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/workspace_id"
+                      },
+                      "workbook_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/workbook_id"
+                      },
+                      "worksheet_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/worksheet_id"
+                      },
+                      "saved_view_id": {
+                        "$ref": "#/properties/definition/properties/enrollment_source/anyOf/0/properties/saved_view_id"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "workspace_id",
+                      "workbook_id",
+                      "worksheet_id",
+                      "saved_view_id"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "kind",
-                  "workspace_id",
-                  "workbook_id",
-                  "worksheet_id",
-                  "saved_view_id",
-                  "selection_snapshot_id",
-                  "selection_digest",
-                  "export_id",
-                  "export_revision",
-                  "eligible_contact_count"
                 ],
-                "additionalProperties": false,
                 "nullable": true
               },
               "enrollment_receipt": {
@@ -284961,6 +287612,7 @@
                   "sequences.bind",
                   "sequences.publish",
                   "sequences.archive",
+                  "sequences.delete",
                   "sequences.orchestrate_selection_enrollment"
                 ]
               },
@@ -285325,6 +287977,7 @@
                   "sequences.bind",
                   "sequences.publish",
                   "sequences.archive",
+                  "sequences.delete",
                   "sequences.orchestrate_selection_enrollment"
                 ]
               },
@@ -321392,12 +324045,12 @@
       "id": "sources.list",
       "entitlement": "outreach",
       "kind": "workspace_capability",
-      "domain": "source",
-      "category": "source",
-      "label": "Source List",
-      "description": "Canonical list operation for source resources.",
+      "domain": "campaign",
+      "category": "campaign",
+      "label": "Campaign List",
+      "description": "Canonical list operation for campaign resources.",
       "when_to_use": [
-        "Use the stable sources.list contract for canonical source list behavior."
+        "Use the stable sources.list contract for canonical campaign list behavior."
       ],
       "when_not_to_use": [
         "Do not supply workspace identity or choose a transport-specific compatibility alias."
@@ -321559,12 +324212,12 @@
       "search": {
         "aliases": [
           "sources.list",
-          "Source List",
+          "Campaign List",
           "dreamstate tools get sources.list",
           "dreamstate tools run sources.list"
         ],
         "use_cases": [
-          "Use the stable sources.list contract for canonical source list behavior."
+          "Use the stable sources.list contract for canonical campaign list behavior."
         ],
         "inputs": [],
         "outputs": [
@@ -364759,7 +367412,7 @@
           "version": {
             "type": "string",
             "enum": [
-              "workflow_runtime_consumer_v2"
+              "workflow_runtime_consumer_v1"
             ]
           },
           "id": {
@@ -364776,6 +367429,9 @@
             "$ref": "#/properties/id"
           },
           "version_id": {
+            "$ref": "#/properties/id"
+          },
+          "campaign_id": {
             "$ref": "#/properties/id"
           },
           "lifecycle": {
@@ -364796,6 +367452,7 @@
           "workspace_id",
           "definition_id",
           "version_id",
+          "campaign_id",
           "lifecycle",
           "created"
         ],
@@ -364866,6 +367523,7 @@
           "workspace_id",
           "definition_id",
           "version_id",
+          "campaign_id",
           "lifecycle",
           "created"
         ],
@@ -365036,7 +367694,7 @@
               "source": {
                 "type": "string",
                 "enum": [
-                  "workflow_runtime_v2"
+                  "workflow_runtime_v1"
                 ]
               },
               "source_tables": {
@@ -365053,7 +367711,7 @@
                   {
                     "type": "string",
                     "enum": [
-                      "workflow_runtime_consumers_v2"
+                      "workflow_runtime_consumers_v1"
                     ]
                   },
                   {
@@ -365319,7 +367977,7 @@
               "source": {
                 "type": "string",
                 "enum": [
-                  "workflow_runtime_v2"
+                  "workflow_runtime_v1"
                 ]
               },
               "source_tables": {
@@ -365336,7 +367994,7 @@
                   {
                     "type": "string",
                     "enum": [
-                      "workflow_runtime_consumers_v2"
+                      "workflow_runtime_consumers_v1"
                     ]
                   },
                   {
@@ -366993,7 +369651,7 @@
           "version": {
             "type": "string",
             "enum": [
-              "workflow_runtime_consumer_v2"
+              "workflow_runtime_consumer_v1"
             ]
           },
           "id": {
@@ -367010,6 +369668,9 @@
             "$ref": "#/properties/id"
           },
           "version_id": {
+            "$ref": "#/properties/id"
+          },
+          "campaign_id": {
             "$ref": "#/properties/id"
           },
           "lifecycle": {
@@ -367030,6 +369691,7 @@
           "workspace_id",
           "definition_id",
           "version_id",
+          "campaign_id",
           "lifecycle",
           "created"
         ],
@@ -367099,8 +369761,181 @@
           "workspace_id",
           "definition_id",
           "version_id",
+          "campaign_id",
           "lifecycle",
           "created"
+        ],
+        "side_effects": [
+          "write_workflow",
+          "workflows",
+          "run",
+          "receipt",
+          "workflow",
+          "graph_projection"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "workflows.delete",
+      "entitlement": "outreach",
+      "kind": "workspace_capability",
+      "domain": "workflow",
+      "category": "workflow",
+      "label": "Workflow Delete",
+      "description": "Canonical delete operation for workflow resources.",
+      "when_to_use": [
+        "Use the stable workflows.delete contract for canonical workflow delete behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "workflows:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "workflows",
+        "reports": [
+          "run",
+          "receipt",
+          "workflow",
+          "graph_projection"
+        ]
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "workflow_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "workflow_id"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "workflow_id",
+          "type": "string",
+          "required": true,
+          "description": "workflow_id"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "workflow_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          "workflow_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "deleted",
+          "workflow_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "workflows.delete",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run workflows.delete"
+      ],
+      "examples": [
+        "dreamstate tools get workflows.delete",
+        "dreamstate tools run workflows.delete"
+      ],
+      "web_url_template": "/dashboard/workflows/{id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "workflows.delete",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "workflows.delete",
+          "Workflow Delete",
+          "dreamstate tools get workflows.delete",
+          "dreamstate tools run workflows.delete"
+        ],
+        "use_cases": [
+          "Use the stable workflows.delete contract for canonical workflow delete behavior."
+        ],
+        "inputs": [
+          "workflow_id"
+        ],
+        "outputs": [
+          "deleted",
+          "workflow_id"
         ],
         "side_effects": [
           "write_workflow",
@@ -370148,6 +372983,7 @@
                   "sequences.bind",
                   "sequences.publish",
                   "sequences.archive",
+                  "sequences.delete",
                   "sequences.orchestrate_selection_enrollment"
                 ]
               },
@@ -370431,6 +373267,18 @@
           "type": "string",
           "required": false,
           "description": "cursor"
+        },
+        {
+          "name": "lifecycle",
+          "type": "string",
+          "required": false,
+          "description": "lifecycle"
+        },
+        {
+          "name": "include_archived",
+          "type": "boolean",
+          "required": false,
+          "description": "include_archived"
         }
       ],
       "input_json_schema": {
@@ -370446,6 +373294,17 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 2000
+          },
+          "lifecycle": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "archived"
+            ]
+          },
+          "include_archived": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false,
@@ -392713,6 +395572,30 @@
       "billing_exempt": false
     },
     {
+      "name": "dreamstate_context_create_document",
+      "scope": "content:write",
+      "description": "Create an ordinary Markdown document in the shared Brain Context graph.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_context_create_folder",
+      "scope": "content:write",
+      "description": "Create an ordinary editable folder in the shared Brain Context Markdown graph.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_context_save_and_publish",
+      "scope": "content:write",
+      "description": "Atomically save and publish an exact Markdown revision in Brain Context.",
+      "billing_exempt": false
+    },
+    {
+      "name": "dreamstate_context_save_draft",
+      "scope": "content:write",
+      "description": "Save an exact Markdown draft revision in Brain Context.",
+      "billing_exempt": false
+    },
+    {
       "name": "dreamstate_get_run",
       "scope": null,
       "description": "Inspect a canonical durable run by run_id. Read-only and no cost.",
@@ -393136,8 +396019,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1117,
-    "mcp_tools": 11
+    "capabilities": 1119,
+    "mcp_tools": 15
   },
-  "manifest_digest": "c736598d5698918913d924c5887ad5856c88f7dbb735dacb5f2824a5a33039f2"
+  "manifest_digest": "caf0df71ed39b2908438094693b00278a571035efd2082af0ab34953c559fcce"
 }

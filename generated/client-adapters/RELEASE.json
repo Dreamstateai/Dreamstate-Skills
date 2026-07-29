@@ -2,14 +2,14 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379",
+  "source_release_hash": "b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379",
+    "playbook_kernel_hash": "b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "5d0fd03da3726899",
-    "manifest_digest": "c736598d5698918913d924c5887ad5856c88f7dbb735dacb5f2824a5a33039f2",
+    "capability_hash": "3308959ee5a8c299",
+    "manifest_digest": "caf0df71ed39b2908438094693b00278a571035efd2082af0ab34953c559fcce",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -173,6 +173,8 @@
       ],
       "capability_ids": [
         "brain.context.browse",
+        "brain.context.create_document",
+        "brain.context.create_folder",
         "brain.context.get",
         "brain.context.graph",
         "brain.context.history",
@@ -180,18 +182,18 @@
         "brain.context.preview_agent_view",
         "brain.context.propose",
         "brain.context.propose_document",
-        "brain.context.register_source",
+        "brain.context.save_and_publish",
+        "brain.context.save_draft",
         "brain.context.search",
-        "brain.context.website_source_register",
         "brain.evidence.search",
         "brain.graph.neighborhood"
       ],
-      "kernel_sha256": "8d08aa1318b22592c7ba2abd4d13ad1127904dea0823d73510affc58be852f73",
-      "evals_sha256": "191ae760a295cbcc3d98acd4e6697cd111c95b113e6d6054f45878521dcebac0",
+      "kernel_sha256": "ff8ecb5d852c4494f804e7237cb1ade7a1d2b6d5e6bd7839182a4992b3ea56cb",
+      "evals_sha256": "f98efcba6027d8dfdc4344927032ef4f370b1edf10727b992b9bdec36204aa60",
       "adapter_sha256": {
-        "architect": "2200f39fda6579f0653b911385675c2e7e75021dd9ef22b1e79e7430fe1b7eb7",
-        "claude": "6b998df302c88e57de6898163f4fd08ea8628fea22c4243cd43be50102789e36",
-        "codex": "377b86bce5ad29e73b89c893d4c79979bfc2a04f9d5e62918df281216841ff34"
+        "architect": "a5579217dbd98da18091390b8f44f31923796e5ad8f8f8112ae70cc4e7dce51a",
+        "claude": "8172da9f0b7d1a5c6264dbbf7ff0a1dac199f631196b3c04a8bb9435ed64601a",
+        "codex": "c69fd85248555228d34541c1a5f0b4bebc56bd950cf95b49d56b7d05b9a47d16"
       }
     },
     "experiments": {
@@ -674,11 +676,10 @@
       ],
       "capability_ids": [
         "brain.context.browse",
+        "brain.context.create_document",
         "brain.context.get",
-        "brain.context.propose",
-        "brain.context.propose_document",
+        "brain.context.save_and_publish",
         "brain.context.search",
-        "brain.context.website_source_register",
         "products.website_refresh",
         "products.website_scrape",
         "seo.agent_readiness_scan",
@@ -692,12 +693,12 @@
         "visibility.workspace_site_get",
         "visibility.workspace_site_update"
       ],
-      "kernel_sha256": "ae17d1ee4f471655c9140edc587422900dc18bc723be9943e57d6f1397f5a666",
-      "evals_sha256": "bbee998577038bd4494da0d4db33d6ad7f3b33b41ac188e30904de6513191fbc",
+      "kernel_sha256": "03c381f5688780c19b2757393959be76a466bfe4a29072265f7757dcf7478e11",
+      "evals_sha256": "599a65ac41d29cf965880a427fe2d9b0645d26071618bee0541ec36010a79c0a",
       "adapter_sha256": {
-        "architect": "93bd9e570a72b76936025194d12cd5fb27571882ada230c07862ae4a45c4c4d1",
-        "claude": "6d586b021229b34fbfb65eb7917a4f20b6a22d2adf555a7361c64cc881c28c8d",
-        "codex": "1ed98f914f76028efef56cc63669d48ce94c8d2db027278a30ecd0cc6739dfa8"
+        "architect": "b08a3fa04f337af965aaa36e96810b4210ed8633760df75e22f224635b932d76",
+        "claude": "847ef999091aef37114d60895c12751ae020e420a693bddbda8af6f5b269a23e",
+        "codex": "76dfd61b9f7f5474d762653f4c8b31f053b391e4472ebfd21957dcfa9cc87f99"
       }
     },
     "social": {
@@ -764,8 +765,8 @@
         "tools.x_hook_generate",
         "tools.x_post_generate"
       ],
-      "kernel_sha256": "611e4a1444615fba71c20ddd8324990718117486af6a8b788c6f87d2d9154701",
-      "evals_sha256": "03fb3f240c75046248313ef04376e4c07f3725913452bf4ca517dcd1d32c58e1",
+      "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
+      "evals_sha256": "95b9dab267ae3486d8576d35a966f96667f2d10f299e2e478d9c7f17ce2c2f2a",
       "adapter_sha256": {
         "architect": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
         "claude": "2f7e8cb7e291bcb124dea27d4ad768b2409e225c738f78771335b9cb7096b7a5",

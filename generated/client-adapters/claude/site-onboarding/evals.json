@@ -3,14 +3,14 @@
     {
       "expected_skill_ids": ["site-onboarding", "context"],
       "id": "fresh-site-to-cited-brain-markdown",
-      "request": "Onboard Example, Inc. at the exact URL https://example.com as our workspace site, crawl it, register that website as a governed source through the required approval gate, then search the workspace wiki. Reconcile the derived cited claims against exact existing revisions, propose cited updates without creating duplicates, and propose one useful ordinary file only when the evidence fits no existing document. Publish no proposal.",
-      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_ensure", "products.website_scrape", "visibility.site_scan", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.website_source_register", "brain.context.propose", "brain.context.propose_document"]
+      "request": "Onboard Example, Inc. at the exact URL https://example.com as our workspace site, crawl it, search existing workspace Markdown, and publish one useful non-duplicate file with a visible Source URL and fetched date.",
+      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_ensure", "products.website_scrape", "visibility.site_scan", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.create_document", "brain.context.save_and_publish"]
     },
     {
       "expected_skill_ids": ["site-onboarding"],
       "id": "site-revision-safe-refresh",
-      "request": "Refresh our existing site only if its exact revision is current, preserve redirects and source digests, then search and read the exact existing governed Context document and propose its cited website-derived revision against the exact base revision without creating a duplicate, erasing contradictions, or publishing it.",
-      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_update", "products.website_refresh", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.propose"]
+      "request": "Refresh our existing site only if its exact revision is current, then search and read the exact existing Context document and publish its website-derived Markdown revision with visible provenance and no duplicate.",
+      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_update", "products.website_refresh", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.save_and_publish"]
     },
     {
       "expected_skill_ids": ["site-onboarding"],

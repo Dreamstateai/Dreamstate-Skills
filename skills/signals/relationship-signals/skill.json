@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "5d0fd03da3726899",
+  "verified_capability_hash": "3308959ee5a8c299",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/signals/relationship-signals/SKILL.md",
   "install_command": "dreamstate skills install relationship-signals",

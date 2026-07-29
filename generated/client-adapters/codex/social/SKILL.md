@@ -7,24 +7,24 @@ capability_ids: ["brain.content.get","brain.content.search","brain.context.get",
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
+  playbook_kernel_hash: b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 5d0fd03da3726899
-  manifest_digest: c736598d5698918913d924c5887ad5856c88f7dbb735dacb5f2824a5a33039f2
+  capability_hash: 3308959ee5a8c299
+  manifest_digest: caf0df71ed39b2908438094693b00278a571035efd2082af0ab34953c559fcce
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 4a08db5d3a34df1c10971f9692222764b108a94dc2734bebebba97bd69df1379
+  source_release_hash: b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241
   generator_version: 1.0.0
   client: codex
   kernel_id: social
   kernel_file: KERNEL.md
-  kernel_sha256: 611e4a1444615fba71c20ddd8324990718117486af6a8b788c6f87d2d9154701
+  kernel_sha256: fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb
   adapter_sha256: 26ac178c58b42dcc6b549e167c06a9a4f2c6083ed7a5c32d6910816e9782d5cf
   evals_file: evals.json
-  evals_sha256: 03fb3f240c75046248313ef04376e4c07f3725913452bf4ca517dcd1d32c58e1
+  evals_sha256: 95b9dab267ae3486d8576d35a966f96667f2d10f299e2e478d9c7f17ce2c2f2a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -65,7 +65,7 @@ Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar p
 
 1. Inspect the active editor or calendar surface and preserve its artifact revision, selected account, unsaved view state, and existing drafts.
 2. Retrieve only the published workspace-wiki claims, voice guidance, evidence, and goals needed for this content. Keep citations and revision identity with the proposal.
-3. Derive platform, audience, objective, topic, date, account, and approval consequence from the request and canonical state. Use one structured popup only for material choices that remain unknown. Never ask again for a fact already present.
+3. Derive platform, audience, objective, topic, date, account, revision, delivery state, and approval consequence from the request and canonical state. Inspect live state before intake. Use one structured popup only for material choices that remain unknown. Never ask for a fact the request, selected surface, contract, receipt, or successful live read already answers.
 4. When several platforms are requested, make the shared thesis explicit while adapting form, length, hook, call to action, and scheduling constraints to each platform. Do not mechanically duplicate copy.
 
 Before designing a content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
@@ -76,10 +76,12 @@ Search the full live registry by desired outcome, available context, platform, a
 
 For a read whose request already supplies a topic or query and time window, ranking and output format choices are optional, not blockers. Execute the read with transparent defaults, report those defaults, and preserve nullable metrics rather than opening a popup. Ask only for truly required missing inputs from the selected live contract.
 
+Resolve current account binding, artifact identity, revision, review state, schedule, provider post id, and terminal run state by inspection. A missing contract, denied operation, invalid input, stale revision, unavailable integration, or runtime failure is an exact typed blocker with the returned code and failed operation. It is never a question asking the user to diagnose or route around the system.
+
 For a draft or calendar request, prepare reviewable content artifacts before any external consequence. Include provenance, assumptions, target account, platform, proposed schedule, and the capability digest. Existing calendar items are updated only against their current revision. For analysis, use measured metrics returned by live reads and separate observation from inference.
 
-Scheduling and publishing are different consequences. Request the exact required approval immediately before the relevant operation, then revalidate account binding, readiness, content revision, destination, and timing. A successful proposal or accepted job is not a completed post. Report the terminal run state and open only the canonical editor or calendar link returned by the backend.
+Scheduling and publishing are different consequences. Request the exact required approval immediately before the relevant operation, then revalidate account binding, readiness, content revision, destination, and timing. A successful proposal, approval, accepted job, queued item, or pending run is not a completed post. Report only the state in the real tool envelope. A provider error means not published unless a later inspected terminal receipt proves otherwise. On retry, inspect the prior run and receipt first; never replay a completed publish.
 
 ## Completion proof
 
-Return what was proposed, what was actually persisted, platform/account, schedule or publish state, run id, costs, citations, and any blocked or remaining work. Never claim that authored content was saved, scheduled, published, or analyzed without the corresponding successful live envelope.
+Return what was proposed, what was actually persisted, platform/account, schedule or publish state, provider post id or its absence, run id, costs, citations, and any typed blocker or remaining work. Never claim that authored content was saved, scheduled, published, or analyzed without the corresponding successful terminal live envelope and durable receipt.

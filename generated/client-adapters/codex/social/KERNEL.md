@@ -11,7 +11,7 @@ Own authored content for LinkedIn, X, and Reddit: planning, drafting, calendar p
 
 1. Inspect the active editor or calendar surface and preserve its artifact revision, selected account, unsaved view state, and existing drafts.
 2. Retrieve only the published workspace-wiki claims, voice guidance, evidence, and goals needed for this content. Keep citations and revision identity with the proposal.
-3. Derive platform, audience, objective, topic, date, account, and approval consequence from the request and canonical state. Use one structured popup only for material choices that remain unknown. Never ask again for a fact already present.
+3. Derive platform, audience, objective, topic, date, account, revision, delivery state, and approval consequence from the request and canonical state. Inspect live state before intake. Use one structured popup only for material choices that remain unknown. Never ask for a fact the request, selected surface, contract, receipt, or successful live read already answers.
 4. When several platforms are requested, make the shared thesis explicit while adapting form, length, hook, call to action, and scheduling constraints to each platform. Do not mechanically duplicate copy.
 
 Before designing a content plan for a named audience or named cohort, fetch and call `brain.learning.query_benchmarks` for that approved cohort. Cite only returned cohort-level evidence: the resolved cohort or persona, messaging archetype, reply, meeting-booked, or conversion interval, sample and contributor bands, evidence tier, and confidence level. If the result is unavailable, sparse, suppressed, or irrelevant, state `insufficient_evidence`. Never invent numbers or expose raw cross-workspace rows.
@@ -22,10 +22,12 @@ Search the full live registry by desired outcome, available context, platform, a
 
 For a read whose request already supplies a topic or query and time window, ranking and output format choices are optional, not blockers. Execute the read with transparent defaults, report those defaults, and preserve nullable metrics rather than opening a popup. Ask only for truly required missing inputs from the selected live contract.
 
+Resolve current account binding, artifact identity, revision, review state, schedule, provider post id, and terminal run state by inspection. A missing contract, denied operation, invalid input, stale revision, unavailable integration, or runtime failure is an exact typed blocker with the returned code and failed operation. It is never a question asking the user to diagnose or route around the system.
+
 For a draft or calendar request, prepare reviewable content artifacts before any external consequence. Include provenance, assumptions, target account, platform, proposed schedule, and the capability digest. Existing calendar items are updated only against their current revision. For analysis, use measured metrics returned by live reads and separate observation from inference.
 
-Scheduling and publishing are different consequences. Request the exact required approval immediately before the relevant operation, then revalidate account binding, readiness, content revision, destination, and timing. A successful proposal or accepted job is not a completed post. Report the terminal run state and open only the canonical editor or calendar link returned by the backend.
+Scheduling and publishing are different consequences. Request the exact required approval immediately before the relevant operation, then revalidate account binding, readiness, content revision, destination, and timing. A successful proposal, approval, accepted job, queued item, or pending run is not a completed post. Report only the state in the real tool envelope. A provider error means not published unless a later inspected terminal receipt proves otherwise. On retry, inspect the prior run and receipt first; never replay a completed publish.
 
 ## Completion proof
 
-Return what was proposed, what was actually persisted, platform/account, schedule or publish state, run id, costs, citations, and any blocked or remaining work. Never claim that authored content was saved, scheduled, published, or analyzed without the corresponding successful live envelope.
+Return what was proposed, what was actually persisted, platform/account, schedule or publish state, provider post id or its absence, run id, costs, citations, and any typed blocker or remaining work. Never claim that authored content was saved, scheduled, published, or analyzed without the corresponding successful terminal live envelope and durable receipt.
