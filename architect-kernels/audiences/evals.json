@@ -2,7 +2,61 @@
   "schema_version": 1,
   "skill_id": "audiences",
   "cases": [
-    {"id":"audience-research-preview","request":"Read existing audiences and sources, use grounded persona suggestions, and preview exact filters and exclusions before writing.","expected_skill_ids":["audiences"],"required_capability_ids":["audiences.list","audiences.get","audiences.sources_list","audiences.persona_suggestions","audiences.preview"]},
-    {"id":"audience-lifecycle","request":"Create or update this zero-credit reversible audience directly when authorized, and archive only the exact audience I name.","expected_skill_ids":["audiences"],"required_capability_ids":["audiences.create","audiences.update","audiences.archive"]}
+    {
+      "id": "audience-research-preview",
+      "request": "Read existing audiences and sources, use grounded persona suggestions, and preview exact filters and exclusions before writing.",
+      "expected_skill_ids": [
+        "audiences"
+      ],
+      "required_capability_ids": [
+        "audiences.list",
+        "audiences.get",
+        "audiences.sources_list",
+        "audiences.persona_suggestions",
+        "audiences.preview"
+      ],
+      "required_executed_capability_ids": [
+        "audiences.list",
+        "audiences.get",
+        "audiences.sources_list",
+        "audiences.persona_suggestions",
+        "audiences.preview"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audience-lifecycle",
+      "request": "Create or update this zero-credit reversible audience directly when authorized, and archive only the exact audience I name.",
+      "expected_skill_ids": [
+        "audiences"
+      ],
+      "required_capability_ids": [
+        "audiences.create",
+        "audiences.update",
+        "audiences.archive"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "saved_view_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "audience lifecycle changes remain review-bound and must not create a saved view yet"
+        }
+      ]
+    }
   ]
 }

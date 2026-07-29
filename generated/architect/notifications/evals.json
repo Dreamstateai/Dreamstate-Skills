@@ -2,8 +2,57 @@
   "schema_version": 1,
   "skill_id": "notifications",
   "cases": [
-    {"id":"notification-inbox","request":"Show my canonical notification inbox and unread counts, then mark or archive only the exact notifications I name.","expected_skill_ids":["notifications"],"required_capability_ids":["notifications.list","notifications.unread_counts_get","notifications.mark_read","notifications.mark_all_read","notifications.archive"]},
-    {"id":"notification-personal-preferences","request":"Read my current notification preferences before updating only the requested fields.","expected_skill_ids":["notifications"],"required_capability_ids":["notifications.preferences_get","notifications.preferences_update"]},
-    {"id":"notification-type-preferences","request":"Inspect, update, or reset exact personal and workspace notification-type preferences without overwriting other settings.","expected_skill_ids":["notifications"],"required_capability_ids":["notifications.type_preferences_get","notifications.type_preferences_update","notifications.type_preferences_reset","notifications.workspace_type_preferences_get","notifications.workspace_type_preferences_update","notifications.workspace_type_preferences_reset"]}
+    {
+      "id": "notification-inbox",
+      "request": "Show my canonical notification inbox and unread counts, then mark or archive only the exact notifications I name.",
+      "expected_skill_ids": [
+        "notifications"
+      ],
+      "required_capability_ids": [
+        "notifications.list",
+        "notifications.unread_counts_get",
+        "notifications.mark_read",
+        "notifications.mark_all_read",
+        "notifications.archive"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "Correction: keep this at the reviewed boundary. Do not apply the change or replay any effect that already has a terminal receipt.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "duplicate_effect",
+              "capability_id": "notifications.mark_read"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notification-personal-preferences",
+      "request": "Read my current notification preferences before updating only the requested fields.",
+      "expected_skill_ids": [
+        "notifications"
+      ],
+      "required_capability_ids": [
+        "notifications.preferences_get",
+        "notifications.preferences_update"
+      ]
+    },
+    {
+      "id": "notification-type-preferences",
+      "request": "Inspect, update, or reset exact personal and workspace notification-type preferences without overwriting other settings.",
+      "expected_skill_ids": [
+        "notifications"
+      ],
+      "required_capability_ids": [
+        "notifications.type_preferences_get",
+        "notifications.type_preferences_update",
+        "notifications.type_preferences_reset",
+        "notifications.workspace_type_preferences_get",
+        "notifications.workspace_type_preferences_update",
+        "notifications.workspace_type_preferences_reset"
+      ]
+    }
   ]
 }

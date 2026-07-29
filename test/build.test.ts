@@ -11,7 +11,9 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-const CANONICAL_MANIFEST_DIGEST = 'c736598d5698918913d924c5887ad5856c88f7dbb735dacb5f2824a5a33039f2';
+// Context gained four direct-write MCP tools, so the reviewed catalog release
+// legitimately has different canonical bytes from the pre-write-parity pin.
+const CANONICAL_MANIFEST_DIGEST = 'caf0df71ed39b2908438094693b00278a571035efd2082af0ab34953c559fcce';
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -201,7 +203,7 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       );
       assert.match(
         standalone,
-        /denied_operations: \[dreamstate_tools_run, dreamstate_proposals_create, dreamstate_proposals_mutate\]/,
+        /denied_operations: \[dreamstate_tools_run, dreamstate_context_create_document, dreamstate_context_create_folder, dreamstate_context_save_and_publish, dreamstate_context_save_draft, dreamstate_proposals_create, dreamstate_proposals_mutate\]/,
       );
       assert.match(standalone, /Refuse `dreamstate_tools_run` until the installed package is refreshed/);
       assert.match(standalone, /full 64-character SHA-256 manifest digest/i);
@@ -238,14 +240,19 @@ test('action authority is server-owned and no source or generated package carrie
   }
 });
 
-test('Context is the one files-first wiki with only agent-safe authority', () => {
+test('Context is one files-first Markdown graph with bounded direct-write authority', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
   assert.ok(context);
 
+  // Ordinary knowledge files no longer pass through protected roots or a
+  // proposal gate: Architect has the four direct writes, while review and
+  // conflict-resolution authority remains outside this kernel.
   const agentCapabilities = [
     'brain.context.browse',
+    'brain.context.create_document',
+    'brain.context.create_folder',
     'brain.context.get',
     'brain.context.graph',
     'brain.context.history',
@@ -253,9 +260,9 @@ test('Context is the one files-first wiki with only agent-safe authority', () =>
     'brain.context.preview_agent_view',
     'brain.context.propose',
     'brain.context.propose_document',
-    'brain.context.register_source',
+    'brain.context.save_and_publish',
+    'brain.context.save_draft',
     'brain.context.search',
-    'brain.context.website_source_register',
     'brain.evidence.search',
     'brain.graph.neighborhood',
   ].sort();
@@ -268,25 +275,42 @@ test('Context is the one files-first wiki with only agent-safe authority', () =>
   ].join('\n');
   assert.match(
     contextSource,
-    /protected workspace roots are exactly `Sources`, `Outreach`, `Social`, `Website`, and `Records`/,
+    /Read and write the one files-first workspace knowledge graph/,
   );
-  assert.match(contextSource, /private prose.*owner-bound ordinary wiki folders/is);
+  assert.match(contextSource, /Fresh workspaces are empty/);
+  assert.match(
+    contextSource,
+    /There are no protected or predefined roots, no required document tree, and no hidden completeness checklist/,
+  );
+  assert.match(contextSource, /Source: <url> fetched <YYYY-MM-DD>/);
+  assert.match(contextSource, /Provenance lives in the Markdown body, never in a hidden source or citation ledger/);
+  assert.match(contextSource, /ordinary Architect knowledge work does not require human publication/);
+  assert.match(contextSource, /never fall back to proposals to bypass it/);
+  assert.match(contextSource, /document-create ceiling exists only as a runaway-loop breaker/);
   assert.doesNotMatch(
     contextSource,
-    /Company Brain|Company Context|Personal Context|Product Information|Ideal Customer|Competitor Analysis|Tone of Voice|Marketing Strategy/i,
+    /Company Brain|Company Context|Personal Context|protected workspace roots are exactly `Sources`|Product Information|Ideal Customer|Competitor Analysis|Tone of Voice|Marketing Strategy/i,
   );
 
-  const humanOnlyCapabilities = [
-    'brain.context.create_folder',
-    'brain.context.create_document',
-    'brain.context.save_draft',
-    'brain.context.save_and_publish',
+  const retiredCapabilities = [
+    'brain.context.register_source',
+    'brain.context.website_source_register',
+  ];
+  const catalogCapabilityIds = new Set(
+    catalog.capabilities.map((capability: { id: string }) => capability.id),
+  );
+  for (const capabilityId of retiredCapabilities) {
+    assert.equal(catalogCapabilityIds.has(capabilityId), false, `${capabilityId} must be retired from the catalog`);
+    assert.equal(pinned.skills.context.capability_ids.includes(capabilityId), false);
+  }
+
+  const excludedGovernanceCapabilities = [
     'brain.context.publish',
     'brain.context.reject',
     'brain.context.resolve_conflict',
   ];
-  for (const capabilityId of humanOnlyCapabilities) {
-    assert.doesNotMatch(contextSource, new RegExp(capabilityId.replaceAll('.', '\\.')));
+  for (const capabilityId of excludedGovernanceCapabilities) {
+    assert.equal(pinned.skills.context.capability_ids.includes(capabilityId), false);
   }
 });
 
@@ -376,14 +400,38 @@ test('weekly growth coordination earns calendar and task creation authority from
   ]);
 });
 
-test('site onboarding preserves governed Brain document proposal authority', () => {
+test('site onboarding publishes evidence-named Markdown without imposing a document template', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
-  assert.ok(
-    pinned.skills['site-onboarding'].capability_ids.includes(
-      'brain.context.propose_document',
-    ),
+  const capabilityIds = pinned.skills['site-onboarding'].capability_ids;
+  const kernel = artifacts['generated/architect/site-onboarding/KERNEL.md'];
+  const evals = JSON.parse(artifacts['generated/architect/site-onboarding/evals.json']);
+
+  // Site onboarding now creates and publishes ordinary Markdown directly.
+  // The evidence still determines the useful file; no predefined Brain
+  // document name or template is smuggled back into the workflow.
+  assert.ok(capabilityIds.includes('brain.context.create_document'));
+  assert.ok(capabilityIds.includes('brain.context.save_and_publish'));
+  assert.equal(capabilityIds.includes('brain.context.propose_document'), false);
+  assert.match(
+    kernel,
+    /There is no source registry, citation ledger, protected root, or mandatory document template/,
   );
+  assert.match(kernel, /Choose each new file name from the evidence and knowledge it contains/);
+  assert.doesNotMatch(
+    kernel,
+    /Product Information|Ideal Customer|Competitor Analysis|Tone of Voice|Marketing Strategy/i,
+  );
+  const freshSite = evals.cases.find((item: { id: string }) => item.id === 'fresh-site-to-cited-brain-markdown');
+  assert.ok(freshSite);
+  assert.match(freshSite.request, /publish one useful non-duplicate file/);
+  assert.ok(freshSite.required_capability_ids.includes('brain.context.create_document'));
+  assert.ok(freshSite.required_capability_ids.includes('brain.context.save_and_publish'));
+  assert.ok(freshSite.expected_workspace_outcome.some(
+    (outcome: { check: string; expected: string }) => (
+      outcome.check === 'context_document_exists' && outcome.expected === 'present'
+    ),
+  ));
 });
 
 test('every kernel compliance contract exactly covers its eval-declared operation authority', () => {
@@ -542,11 +590,15 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
   const pinned = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
   const mutationOperations = new Set([
     'dreamstate_tools_run',
+    'dreamstate_context_create_document',
+    'dreamstate_context_create_folder',
+    'dreamstate_context_save_and_publish',
+    'dreamstate_context_save_draft',
     'dreamstate_proposals_create',
     'dreamstate_proposals_mutate',
   ]);
   for (const client of ['claude', 'codex']) {
-    const standalone = artifacts[`generated/client-adapters/${client}/outreach/SKILL.md`];
+    const standalone = artifacts[`generated/client-adapters/${client}/context/SKILL.md`];
     const scalar = (field: string) => standalone.match(new RegExp(`^  ${field}: (.+)$`, 'm'))?.[1];
     const installed = {
       capability_definition_version: scalar('capability_definition_version'),
@@ -560,6 +612,13 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
       manifest_digest: pinned.compatibility.manifest_digest,
       minimum_api_version: pinned.compatibility.minimum_api_version,
     });
+    // Dedicated Context write tools are mutation paths too. Compatibility
+    // drift must deny them alongside the canonical run and proposal paths.
+    const deniedOperations = standalone
+      .match(/^  denied_operations: \[([^\]]+)\]$/m)?.[1]
+      .split(', ')
+      .sort();
+    assert.deepEqual(deniedOperations, [...mutationOperations].sort());
     assert.equal(installed.manifest_digest, CANONICAL_MANIFEST_DIGEST);
     const live = { ...installed, manifest_digest: 'f'.repeat(64) };
     const compatible = Object.entries(installed).every(([key, value]) => live[key as keyof typeof live] === value);
@@ -577,12 +636,18 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
   }
 });
 
-test('the pinned MCP catalog exposes only the compact canonical gateway', () => {
+test('the pinned MCP catalog exposes the compact gateway plus four direct Context writes', () => {
+  // Context write parity intentionally expands the compact gateway with four
+  // exact Markdown mutation tools; retired source-registration tools stay gone.
   assert.deepEqual(catalog.mcp_tools.map((tool: { name: string }) => tool.name).sort(), [
     'dreamstate_agent_proposal_create',
     'dreamstate_agent_proposal_delegate_bindings',
     'dreamstate_agent_proposal_get',
     'dreamstate_cancel_run',
+    'dreamstate_context_create_document',
+    'dreamstate_context_create_folder',
+    'dreamstate_context_save_and_publish',
+    'dreamstate_context_save_draft',
     'dreamstate_get_run',
     'dreamstate_list_runs',
     'dreamstate_resume_run',
@@ -591,6 +656,10 @@ test('the pinned MCP catalog exposes only the compact canonical gateway', () => 
     'dreamstate_tools_search',
     'ping',
   ]);
+  assert.equal(
+    catalog.mcp_tools.some((tool: { name: string }) => /register_source/.test(tool.name)),
+    false,
+  );
 });
 
 test('generated Architect outreach packages contain no shortcut terminology', () => {

@@ -23,6 +23,25 @@
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search",
+        "brain.context.get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
       ]
     },
     {
@@ -71,6 +90,9 @@
       "id": "existing-workflow-complex-table",
       "request": "Open my existing founder outreach workflow, add signals, profile enrichment, a derived priority score and AI opener, then update its workflow through the owning specialist.",
       "required_capability_ids": [
+        "workflows.get"
+      ],
+      "required_executed_capability_ids": [
         "workflows.get"
       ]
     },
@@ -554,7 +576,28 @@
           "phase": "single_launch_authorization"
         }
       ],
-      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing Workbook and schema; use table_sources.preview for two or three scarcest-first variants with exactly ten real rows each; show one complete eight-concept opening intake with no volume, sender, channel, or messaging-branch question; then create the zero-credit reversible canonical Workbook immediately from the server ActionDecision without asking approval. After inspecting that Workbook revision, run demand planning, stage exactly 30 nondeliverable initial rows, build the workflow and conditional sequence through their specialists, run dependency-ordered verification/enrichment/filter/scoring and a real-prospect message preview before explicit build, audit cost and qualification, stage qualified rows within the demand cap, and close one launch approval with the required workflow publication, draft-sequence publication, exact-selection enrollment, activation, paced multi-channel sends, and terminal receipts."
+      "request": "Find people in my ICP who engage with competitors and build and run outreach. Use my durable ICP, offer, message voice, exclusions, and preferences; inspect the existing Workbook and schema; use table_sources.preview for two or three scarcest-first variants with exactly ten real rows each; show one complete eight-concept opening intake with no volume, sender, channel, or messaging-branch question; then create the zero-credit reversible canonical Workbook immediately from the server ActionDecision without asking approval. After inspecting that Workbook revision, run demand planning, stage exactly 30 nondeliverable initial rows, build the workflow and conditional sequence through their specialists, run dependency-ordered verification/enrichment/filter/scoring and a real-prospect message preview before explicit build, audit cost and qualification, stage qualified rows within the demand cap, and close one launch approval with the required workflow publication, draft-sequence publication, exact-selection enrollment, activation, paced multi-channel sends, and terminal receipts.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "present",
+          "target": "any",
+          "min_count": 1,
+          "reason": "the approved full journey must leave a durable enrollment instead of only claiming launch success"
+        },
+        {
+          "check": "sequence_published",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "the inspected draft sequence must be published before enrollment"
+        },
+        {
+          "check": "workflow_activated",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "the approved launch must activate the published workflow"
+        }
+      ]
     },
     {
       "execution_profile": "production_real",
@@ -698,7 +741,22 @@
           "phase": "blocked_before_activation"
         }
       ],
-      "request": "Reduce live sender headroom after approval but before launch. Revalidate the prior demand plan and prove activation and sending stay blocked until the exact qualified selection is replanned within fresh capacity."
+      "request": "Reduce live sender headroom after approval but before launch. Revalidate the prior demand plan and prove activation and sending stay blocked until the exact qualified selection is replanned within fresh capacity.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "fresh capacity is below the approved selection, so launch revalidation must leave the workflow inactive"
+        },
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "a stale approval must not enroll the oversized selection"
+        }
+      ]
     },
     {
       "execution_profile": "production_real",
@@ -794,6 +852,14 @@
         "outreach.global_pause_set",
         "outreach.icps_list",
         "outreach.sender_context_accounts_list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "contract inspection must not apply the global pause or activate any workflow"
+        }
       ]
     },
     {
@@ -806,6 +872,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "selection_snapshots.get"
+      ],
+      "required_concepts": [
+        "selection_snapshots.get"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -818,6 +893,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "workflows.list"
+      ],
+      "required_concepts": [
+        "workflows.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     }
   ],

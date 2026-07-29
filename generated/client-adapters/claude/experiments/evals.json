@@ -5,38 +5,124 @@
     {
       "id": "governed-growth-experiment-lifecycle",
       "request": "Show current governed experiments, create a reviewable experiment with hypothesis, population, treatment, metric, guardrails, owner and timebox, revise its exact draft, and reopen it by durable id.",
-      "expected_skill_ids": ["experiments"],
-      "required_capability_ids": ["growth.governed_experiment_list","growth.governed_experiment_create","growth.governed_experiment_revise","growth.governed_experiment_get"]
+      "expected_skill_ids": [
+        "experiments"
+      ],
+      "required_capability_ids": [
+        "growth.governed_experiment_list",
+        "growth.governed_experiment_create",
+        "growth.governed_experiment_revise",
+        "growth.governed_experiment_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        }
+      ]
     },
     {
       "id": "experiment-publication-and-measurement-evidence",
       "request": "For this exact approved experiment revision, retain the publication receipt and measurement observations as separate durable evidence, then show the updated experiment.",
-      "expected_skill_ids": ["experiments"],
-      "required_capability_ids": ["growth.governed_experiment_get","growth.governed_experiment_publication_record","growth.governed_experiment_measurement_record"]
+      "expected_skill_ids": [
+        "experiments"
+      ],
+      "required_capability_ids": [
+        "growth.governed_experiment_get",
+        "growth.governed_experiment_publication_record",
+        "growth.governed_experiment_measurement_record"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        }
+      ]
     },
     {
       "id": "confirmed-experiment-decisions",
       "request": "Preview approval, emergency stop, and conclusion for this exact experiment revision with its guardrails and evidence, but do not execute any decision without explicit confirmation.",
-      "expected_skill_ids": ["experiments"],
-      "required_capability_ids": ["growth.governed_experiment_get","growth.governed_experiment_approve","growth.governed_experiment_stop","growth.governed_experiment_conclude"],
-      "must_not_execute": true
+      "expected_skill_ids": [
+        "experiments"
+      ],
+      "required_capability_ids": [
+        "growth.governed_experiment_get",
+        "growth.governed_experiment_approve",
+        "growth.governed_experiment_stop",
+        "growth.governed_experiment_conclude"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        }
+      ]
     },
     {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["growth.governed_experiment_create"],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "growth.governed_experiment_create"
+      ],
       "approved_mutation_max_changes": 1,
       "execution_profile": "production_real",
-      "expected_skill_ids": ["experiments","context","visibility"],
-      "expected_load_order": ["experiments","context","visibility"],
-      "expected_workspace_outcome": [{"check":"governed_experiment_created","expected":"present","experiment_title":"T25 Homepage Answer Visibility Proof"}],
+      "expected_skill_ids": [
+        "experiments",
+        "context",
+        "visibility"
+      ],
+      "expected_load_order": [
+        "experiments",
+        "context",
+        "visibility"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "present",
+          "experiment_title": "T25 Homepage Answer Visibility Proof"
+        }
+      ],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock experiment receipt","fixture-only experiment revision","invented experiment id or design digest","prose-only verification"],
+      "forbidden_test_substitutions": [
+        "mock experiment receipt",
+        "fixture-only experiment revision",
+        "invented experiment id or design digest",
+        "prose-only verification"
+      ],
       "id": "production-local-governed-experiment-draft",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["growth.governed_experiment_list","growth.governed_experiment_create","growth.governed_experiment_get"],
+      "required_capability_ids": [
+        "growth.governed_experiment_list",
+        "growth.governed_experiment_create",
+        "growth.governed_experiment_get"
+      ],
       "request": "Use the current workspace site, its homepage, latest durable GSC cache, and current cited workspace-wiki revision and claim ids. List existing governed experiments, then draft one named T25 Homepage Answer Visibility Proof. Hypothesis: adding a concise cited answer block to the homepage will improve answer-engine citation coverage for the target query best B2B content platform. Population is current eligible homepage impressions; treatment is that answer block; guardrails are no indexed-page removal and no regression in page speed; stop on either guardrail breach; measurement compares citation coverage and organic clicks against the retained baseline. Save the exact proposal; after I approve it, execute only the create, re-read the exact experiment revision, and return its durable id, revision, design digest, canonical target, evidence inputs, run-step receipt, and deep link. Do not approve, publish evidence, record measurements, revise, stop, conclude, or change the site.",
-      "resume_after_approval": "owner_exact"
+      "resume_after_approval": "owner_exact",
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -15,6 +15,14 @@
         "content.article_create_schedule",
         "content.article_delivery_create",
         "content.delivery_publish"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "editorial review and contract inspection must not schedule or publish content"
+        }
       ]
     },
     {
@@ -29,6 +37,32 @@
         "brain.content.get",
         "brain.content.search",
         "brain.evidence.search"
+      ],
+      "required_concepts": [
+        "brain.content.get",
+        "brain.content.search",
+        "brain.evidence.search"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
       ]
     },
     {
@@ -56,6 +90,14 @@
         "content.schedule",
         "content.unschedule",
         "content.version_create"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "editorial review and contract inspection must not schedule or publish content"
+        }
       ]
     },
     {
@@ -70,6 +112,17 @@
         "content.version_diff_get",
         "content.version_get",
         "content.versions_list"
+      ],
+      "required_concepts": [
+        "content.version_diff_get",
+        "content.version_get",
+        "content.versions_list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -82,6 +135,14 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "research.urls_fetch"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "editorial review and contract inspection must not schedule or publish content"
+        }
       ]
     }
   ],

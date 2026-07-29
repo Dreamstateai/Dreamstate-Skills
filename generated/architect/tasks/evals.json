@@ -2,8 +2,54 @@
   "schema_version": 1,
   "skill_id": "tasks",
   "cases": [
-    {"id":"task-read-create-update","request":"List my current tasks, inspect the exact task I name, then create and update a zero-credit task directly when authorized.","expected_skill_ids":["tasks"],"required_capability_ids":["tasks.list","tasks.count","tasks.get","tasks.create","tasks.update"]},
-    {"id":"task-lifecycle","request":"Reassign, complete, reopen, or cancel the exact current task without guessing its id.","expected_skill_ids":["tasks"],"required_capability_ids":["tasks.reassign","tasks.complete","tasks.reopen","tasks.cancel"]},
-    {"id":"task-bulk-bounded","request":"Apply this change only to these exact selected task ids and report partial outcomes.","expected_skill_ids":["tasks"],"required_capability_ids":["tasks.bulk"]}
+    {
+      "id": "task-read-create-update",
+      "request": "List my current tasks, inspect the exact task I name, then create and update a zero-credit task directly when authorized.",
+      "expected_skill_ids": [
+        "tasks"
+      ],
+      "required_capability_ids": [
+        "tasks.list",
+        "tasks.count",
+        "tasks.get",
+        "tasks.create",
+        "tasks.update"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "Correction: keep this at the reviewed boundary. Do not apply the change or replay any effect that already has a terminal receipt.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "duplicate_effect",
+              "capability_id": "tasks.create"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "task-lifecycle",
+      "request": "Reassign, complete, reopen, or cancel the exact current task without guessing its id.",
+      "expected_skill_ids": [
+        "tasks"
+      ],
+      "required_capability_ids": [
+        "tasks.reassign",
+        "tasks.complete",
+        "tasks.reopen",
+        "tasks.cancel"
+      ]
+    },
+    {
+      "id": "task-bulk-bounded",
+      "request": "Apply this change only to these exact selected task ids and report partial outcomes.",
+      "expected_skill_ids": [
+        "tasks"
+      ],
+      "required_capability_ids": [
+        "tasks.bulk"
+      ]
+    }
   ]
 }

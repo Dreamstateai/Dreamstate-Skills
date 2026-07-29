@@ -12,6 +12,14 @@
         "brain.context.get",
         "social.strategy_overview",
         "social.strategy_update"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        }
       ]
     },
     {
@@ -22,6 +30,24 @@
       "request": "Design a growth strategy for B2B SaaS founders. Consult the pooled benchmark lattice first and report only releasable cohort-level evidence, sample band, confidence, or insufficient_evidence; never raw cross-workspace rows.",
       "required_capability_ids": [
         "brain.learning.query_benchmarks"
+      ],
+      "required_executed_capability_ids": [
+        "brain.learning.query_benchmarks"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
       ]
     },
     {
@@ -36,6 +62,17 @@
         "brain.companies.answer",
         "brain.companies.get",
         "brain.outreach.compare"
+      ],
+      "required_concepts": [
+        "brain.companies.answer",
+        "brain.companies.get",
+        "brain.outreach.compare"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -48,6 +85,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "command_center.goals.get"
+      ],
+      "required_concepts": [
+        "command_center.goals.get"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -60,6 +106,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "gtm.goals_list"
+      ],
+      "required_concepts": [
+        "gtm.goals_list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -72,6 +127,14 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "identity.content_pillars_generate"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        }
       ]
     },
     {
@@ -87,6 +150,14 @@
         "social.strategy_archetype_get",
         "social.strategy_format_targets_suggest",
         "social.strategy_plan_progress"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        }
       ]
     }
   ],

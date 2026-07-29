@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241
+  playbook_kernel_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 3308959ee5a8c299
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241
+  source_release_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
   generator_version: 1.0.0
   kernel_id: blog
   kernel_file: KERNEL.md
   kernel_sha256: 401a4ecc7c7361e296234fabbaf0aed9443f6f4e3909650880de16bcefd70654
   adapter_sha256: aed9a0c5bf7cbaf2b5c9b75ffab2e8106be2ac47b5c2578d27cadb012c3bf9e9
   evals_file: evals.json
-  evals_sha256: 7b871b5403ba2983ce333f82b51cabc9ebc01d6ad30f4bcd26b6d664ae6fa78a
+  evals_sha256: 05ca59a448c7d7f2bff52a273cce893bcef508932a48edd5b553357069881c46
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

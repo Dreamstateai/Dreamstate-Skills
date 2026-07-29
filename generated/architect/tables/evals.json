@@ -32,7 +32,14 @@
           ]
         }
       ],
-      "request": "Required order: search for tables.create, fetch that exact live contract, bind the proposal to every field and constraint it declares, then save the reviewable proposal. Use the execution mode that contract declares supported and do not claim a preparation receipt it cannot produce. The requested schema uses company_domain as stable row identity, a company search source, profile enrichment after identity resolution, a deterministic formula score after enrichment, and a review view. Use recommended non-secret defaults. A proposal that does not match the fetched contract is incomplete. Do not create the table and do not start a paid run."
+      "request": "Required order: search for tables.create, fetch that exact live contract, bind the proposal to every field and constraint it declares, then save the reviewable proposal. Use the execution mode that contract declares supported and do not claim a preparation receipt it cannot produce. The requested schema uses company_domain as stable row identity, a company search source, profile enrichment after identity resolution, a deterministic formula score after enrichment, and a review view. Use recommended non-secret defaults. A proposal that does not match the fetched contract is incomplete. Do not create the table and do not start a paid run.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_exists",
+          "expected": "absent",
+          "reason": "the requested turn stops at a reviewable proposal, so no new Workbook may exist"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -76,7 +83,16 @@
           ]
         }
       ],
-      "request": "Use the exact live canonical run contracts for the existing table selection. Preview cost, freeze the reviewed representative selection, and run the selected column with an explicit 10-row cap and 25-credit ceiling. The canonical runner must verify the current table revision, exact approved selection, and grant before execution. Follow the durable run to terminal settled-cell evidence, then report completed, failed, and blocked cells without retrying failures."
+      "request": "Use the exact live canonical run contracts for the existing table selection. Preview cost, freeze the reviewed representative selection, and run the selected column with an explicit 10-row cap and 25-credit ceiling. The canonical runner must verify the current table revision, exact approved selection, and grant before execution. Follow the durable run to terminal settled-cell evidence, then report completed, failed, and blocked cells without retrying failures.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -86,6 +102,24 @@
       "request": "Open record rec-1 and tell me every field it currently holds, with the actual saved values. Do not describe what the record probably contains and do not ask me to paste it.",
       "required_capability_ids": [
         "records.get"
+      ],
+      "required_executed_capability_ids": [
+        "records.get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
       ]
     },
     {
@@ -97,6 +131,15 @@
       "required_capability_ids": [
         "records.get",
         "records.field_set"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "editing an existing record must not create a duplicate record before approval"
+        }
       ]
     },
     {
@@ -139,7 +182,16 @@
         "post-approval demand plan",
         "stage_exact_result_set=true"
       ],
-      "request": "Prepare a separately reviewed exact-result-set expansion after the Workbook and bounded sample are approved. Bind the source-evidence receipt, exact Workbook, worksheet, saved-view and workflow revisions, configured source, unchanged targeting, post-approval demand-plan cap, and stage_exact_result_set=true. Do not enroll, activate, or send."
+      "request": "Prepare a separately reviewed exact-result-set expansion after the Workbook and bounded sample are approved. Bind the source-evidence receipt, exact Workbook, worksheet, saved-view and workflow revisions, configured source, unchanged targeting, post-approval demand-plan cap, and stage_exact_result_set=true. Do not enroll, activate, or send.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -156,7 +208,14 @@
         "workbooks.duplicate",
         "workbooks.archive"
       ],
-      "request": "Create and inspect a Workbook, update its exact revision and my tab state, duplicate it with a durable receipt, then archive only the approved duplicate while preserving the original."
+      "request": "Create and inspect a Workbook, update its exact revision and my tab state, duplicate it with a durable receipt, then archive only the approved duplicate while preserving the original.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_exists",
+          "expected": "absent",
+          "reason": "the requested turn stops at a reviewable proposal, so no new Workbook may exist"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -171,7 +230,16 @@
         "worksheets.duplicate",
         "worksheets.archive"
       ],
-      "request": "Add two typed worksheets to the current Workbook, revise and reorder them against exact revisions, duplicate the approved worksheet, and archive only that duplicate after readback."
+      "request": "Add two typed worksheets to the current Workbook, revise and reorder them against exact revisions, duplicate the approved worksheet, and archive only that duplicate after readback.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -190,7 +258,15 @@
         "views.update",
         "views.archive"
       ],
-      "request": "Inspect the current worksheet table, create a review view with typed filters, sorts and visible columns, revise it safely, then archive only the approved temporary view and table."
+      "request": "Inspect the current worksheet table, create a review view with typed filters, sorts and visible columns, revise it safely, then archive only the approved temporary view and table.",
+      "expected_workspace_outcome": [
+        {
+          "check": "saved_view_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the turn is a review or pre-approval boundary and must not create a durable effect"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -207,7 +283,16 @@
         "table_sources.restore_frontier",
         "table_sources.detach"
       ],
-      "request": "Attach the reviewed source definition to this worksheet, preview its bounded sync, run it, inspect and deliberately reset then restore its exact frontier, and detach only after separate approval."
+      "request": "Attach the reviewed source definition to this worksheet, preview its bounded sync, run it, inspect and deliberately reset then restore its exact frontier, and detach only after separate approval.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -227,7 +312,16 @@
         "rows.restore",
         "selection_snapshots.get"
       ],
-      "request": "Add and revise typed dependency columns, upsert and query exact stable rows, run all eligible columns under a bounded selection, inspect the frozen selection, and prove delete/restore and column archive preserve history."
+      "request": "Add and revise typed dependency columns, upsert and query exact stable rows, run all eligible columns under a bounded selection, inspect the frozen selection, and prove delete/restore and column archive preserve history.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -243,7 +337,16 @@
         "table_runs.reconcile_column",
         "table_runs.cancel"
       ],
-      "request": "Inspect the Run Center for this Workbook, open the exact failed run and failure report, choose the correct retry, resume, or column reconciliation path, and cancel only a separately approved still-active run."
+      "request": "Inspect the Run Center for this Workbook, open the exact failed run and failure report, choose the correct retry, resume, or column reconciliation path, and cancel only a separately approved still-active run.",
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
+      ]
     },
     {
       "allowed_consequence_levels": [
@@ -433,7 +536,7 @@
         "workbooks.create",
         "columns.add"
       ],
-      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11\u2013200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
+      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11–200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -448,6 +551,15 @@
         "attachments.create",
         "attachments.delete",
         "attachments.list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
       ]
     },
     {
@@ -462,6 +574,15 @@
         "cells.inspect",
         "cells.read_page",
         "cells.settle"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        }
       ]
     },
     {
@@ -478,6 +599,19 @@
         "records.people_list",
         "records.references_resolve",
         "records.search"
+      ],
+      "required_concepts": [
+        "records.companies_list",
+        "records.list",
+        "records.people_list",
+        "records.references_resolve",
+        "records.search"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -490,6 +624,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "sources.list"
+      ],
+      "required_concepts": [
+        "sources.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -502,6 +645,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "workbook_audiences.list"
+      ],
+      "required_concepts": [
+        "workbook_audiences.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -514,6 +666,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "executable_definitions.list_resolved"
+      ],
+      "required_concepts": [
+        "executable_definitions.list_resolved"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     }
   ],

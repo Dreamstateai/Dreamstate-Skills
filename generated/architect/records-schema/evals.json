@@ -5,41 +5,153 @@
     {
       "id": "inspect-object-schema",
       "request": "Inspect every canonical object and its typed attributes, layout, relationships, permissions, notification settings, and downstream impact using exact ids and revisions.",
-      "expected_skill_ids": ["records-schema"],
-      "required_capability_ids": ["record_objects.list","record_objects.attributes_list","record_attributes.list","record_objects.layout_get","record_relationships.list","record_objects.permission_get","record_objects.notification_prefs_get","record_definitions.impact_get"]
+      "expected_skill_ids": [
+        "records-schema"
+      ],
+      "required_capability_ids": [
+        "record_objects.list",
+        "record_objects.attributes_list",
+        "record_attributes.list",
+        "record_objects.layout_get",
+        "record_relationships.list",
+        "record_objects.permission_get",
+        "record_objects.notification_prefs_get",
+        "record_definitions.impact_get"
+      ],
+      "required_executed_capability_ids": [
+        "record_objects.list",
+        "record_objects.attributes_list",
+        "record_attributes.list",
+        "record_objects.layout_get",
+        "record_relationships.list",
+        "record_objects.permission_get",
+        "record_objects.notification_prefs_get",
+        "record_definitions.impact_get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "create-and-revise-object-schema",
       "request": "Create the reviewed custom object and attribute definitions, revise only the exact current object and attributes, reorder them, update the layout, then create one approved record and verify it.",
-      "expected_skill_ids": ["records-schema"],
-      "required_capability_ids": ["record_objects.create","record_objects.update","record_attributes.create","record_objects.attribute_create","record_objects.attribute_update","record_objects.attributes_reorder","record_objects.reorder","record_objects.layout_update","record_objects.record_create"]
+      "expected_skill_ids": [
+        "records-schema"
+      ],
+      "required_capability_ids": [
+        "record_objects.create",
+        "record_objects.update",
+        "record_attributes.create",
+        "record_objects.attribute_create",
+        "record_objects.attribute_update",
+        "record_objects.attributes_reorder",
+        "record_objects.reorder",
+        "record_objects.layout_update",
+        "record_objects.record_create"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "schema and field proposals must not create a business record as a side effect"
+        }
+      ]
     },
     {
       "id": "relationship-schema-lifecycle",
       "request": "Create the approved relationship definition, update and reorder only its current revision, and verify both sides without guessing object ids.",
-      "expected_skill_ids": ["records-schema"],
-      "required_capability_ids": ["record_relationships.create","record_relationships.update","record_relationships.reorder","record_relationships.list"]
+      "expected_skill_ids": [
+        "records-schema"
+      ],
+      "required_capability_ids": [
+        "record_relationships.create",
+        "record_relationships.update",
+        "record_relationships.reorder",
+        "record_relationships.list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "schema and field proposals must not create a business record as a side effect"
+        }
+      ]
     },
     {
       "id": "confirmed-schema-policy-write",
       "request": "Preview the exact permission and record-notification policy changes while preserving unrelated settings, but do not execute either policy write without explicit confirmation.",
-      "expected_skill_ids": ["records-schema"],
-      "required_capability_ids": ["record_objects.permission_get","record_objects.permission_update","record_objects.notification_prefs_get","record_objects.notification_prefs_update"],
-      "must_not_execute": true
+      "expected_skill_ids": [
+        "records-schema"
+      ],
+      "required_capability_ids": [
+        "record_objects.permission_get",
+        "record_objects.permission_update",
+        "record_objects.notification_prefs_get",
+        "record_objects.notification_prefs_update"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "schema and field proposals must not create a business record as a side effect"
+        }
+      ]
     },
     {
-      "allowed_consequence_levels": ["draft_write"],
-      "approved_mutation_capability_ids": ["record_objects.create","record_objects.record_create"],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "record_objects.create",
+        "record_objects.record_create"
+      ],
       "approved_mutation_max_changes": 2,
       "execution_profile": "production_real",
-      "expected_skill_ids": ["records-schema"],
-      "expected_workspace_outcome": [{"check":"record_created","expected":"present","object_key":"partner","record_display_name":"T25 Northstar Partner"}],
+      "expected_skill_ids": [
+        "records-schema"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "partner",
+          "record_display_name": "T25 Northstar Partner"
+        }
+      ],
       "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": ["mock run receipt","fixture-only record","invented record id"],
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only record",
+        "invented record id"
+      ],
       "id": "production-local-custom-partner-record",
       "must_not_ask_user": true,
       "must_not_request_secrets": true,
-      "required_capability_ids": ["record_objects.list","record_objects.attributes_list","record_objects.create","record_objects.record_create"],
+      "required_capability_ids": [
+        "record_objects.list",
+        "record_objects.attributes_list",
+        "record_objects.create",
+        "record_objects.record_create"
+      ],
       "request": "Inspect the current object catalog first. Create a custom object with key partner, singular label Partner, plural label Partners, and no icon; then create one record named T25 Northstar Partner with no optional values. Save the exact dependency-complete proposal; after I approve it, execute it, re-read the object schema, and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
       "resume_after_approval": "owner_exact"
     }

@@ -1,28 +1,123 @@
 {
   "cases": [
     {
-      "expected_skill_ids": ["site-onboarding", "context"],
+      "expected_skill_ids": [
+        "site-onboarding",
+        "context"
+      ],
       "id": "fresh-site-to-cited-brain-markdown",
       "request": "Onboard Example, Inc. at the exact URL https://example.com as our workspace site, crawl it, search existing workspace Markdown, and publish one useful non-duplicate file with a visible Source URL and fetched date.",
-      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_ensure", "products.website_scrape", "visibility.site_scan", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.create_document", "brain.context.save_and_publish"]
+      "required_capability_ids": [
+        "visibility.workspace_site_get",
+        "visibility.workspace_site_ensure",
+        "products.website_scrape",
+        "visibility.site_scan",
+        "brain.context.browse",
+        "brain.context.search",
+        "brain.context.get",
+        "brain.context.create_document",
+        "brain.context.save_and_publish"
+      ],
+      "execution_profile": "production_real",
+      "fixture_profile": "wiki_website_setup_production",
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "site onboarding is complete only when the cited Context document exists durably"
+        },
+        {
+          "check": "context_document_has_provenance",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "published researched Markdown must retain visible source provenance"
+        }
+      ]
     },
     {
-      "expected_skill_ids": ["site-onboarding"],
+      "expected_skill_ids": [
+        "site-onboarding"
+      ],
       "id": "site-revision-safe-refresh",
       "request": "Refresh our existing site only if its exact revision is current, then search and read the exact existing Context document and publish its website-derived Markdown revision with visible provenance and no duplicate.",
-      "required_capability_ids": ["visibility.workspace_site_get", "visibility.workspace_site_update", "products.website_refresh", "brain.context.browse", "brain.context.search", "brain.context.get", "brain.context.save_and_publish"]
+      "required_capability_ids": [
+        "visibility.workspace_site_get",
+        "visibility.workspace_site_update",
+        "products.website_refresh",
+        "brain.context.browse",
+        "brain.context.search",
+        "brain.context.get",
+        "brain.context.save_and_publish"
+      ],
+      "execution_profile": "production_real",
+      "fixture_profile": "wiki_website_setup_production",
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "site onboarding is complete only when the cited Context document exists durably"
+        },
+        {
+          "check": "context_document_has_provenance",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "published researched Markdown must retain visible source provenance"
+        }
+      ]
     },
     {
-      "expected_skill_ids": ["site-onboarding"],
+      "expected_skill_ids": [
+        "site-onboarding"
+      ],
       "id": "site-files-sitemap-robots",
       "request": "Inspect this site's current files, sitemap, and robots evidence and distinguish missing, blocked, stale, and valid empty states.",
-      "required_capability_ids": ["visibility.site_files_get", "visibility.sitemap_get", "seo.robots_audit"]
+      "required_capability_ids": [
+        "visibility.site_files_get",
+        "visibility.sitemap_get",
+        "seo.robots_audit"
+      ],
+      "required_executed_capability_ids": [
+        "visibility.site_files_get",
+        "visibility.sitemap_get",
+        "seo.robots_audit"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
     },
     {
-      "expected_skill_ids": ["site-onboarding"],
+      "expected_skill_ids": [
+        "site-onboarding"
+      ],
       "id": "agent-readiness-llms-proposal",
       "request": "Run an AI-agent readiness scan for the exact onboarded site and prepare a reviewable llms.txt proposal, then read back its durable state without claiming publication.",
-      "required_capability_ids": ["seo.agent_readiness_scan", "seo.llms_txt_generate", "seo.llms_txt_get"]
+      "required_capability_ids": [
+        "seo.agent_readiness_scan",
+        "seo.llms_txt_generate",
+        "seo.llms_txt_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "an llms.txt proposal or site inspection must not silently publish a Context document"
+        }
+      ]
     }
   ],
   "schema_version": 1,

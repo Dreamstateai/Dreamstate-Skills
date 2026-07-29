@@ -12,6 +12,14 @@
         "brain.context.get",
         "command_center.assets.list",
         "command_center.assets.create"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "asset planning must not schedule content as a side effect"
+        }
       ]
     },
     {
@@ -22,7 +30,28 @@
       "must_not_load": [
         "growth-asset-planner"
       ],
-      "request": "Draft a blog article and send it to editorial review."
+      "request": "Draft a blog article and send it to editorial review.",
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "the requested workspace evidence available through the loaded skill"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "deployed-brain-surface-coverage",
@@ -34,6 +63,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "brain.evidence.search"
+      ],
+      "required_concepts": [
+        "brain.evidence.search"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     }
   ],

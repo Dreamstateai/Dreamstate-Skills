@@ -12,6 +12,14 @@
         "workflows.node_registry",
         "workflows.validate_graph",
         "workflows.graph_apply"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "workflow authoring and recovery remain review-bound until the exact effect is approved"
+        }
       ]
     },
     {
@@ -27,6 +35,14 @@
         "workflows.node_registry",
         "workflows.validate_graph",
         "workflows.graph_apply"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "workflow authoring and recovery remain review-bound until the exact effect is approved"
+        }
       ]
     },
     {
@@ -70,7 +86,22 @@
         "source-evidence run",
         "terminal exact-selection receipt"
       ],
-      "request": "Consume the typed reviewed tables handoff for source-evidence run_eval_source_001 and its terminal exact-selection receipt. Bind workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, and draft workflow wf_eval_001 revision 3. Validate only the workflow eligibility binding. Do not search, fetch, validate, propose, dry-run, or execute source expansion; do not import, enroll, activate, or send."
+      "request": "Consume the typed reviewed tables handoff for source-evidence run_eval_source_001 and its terminal exact-selection receipt. Bind workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, and draft workflow wf_eval_001 revision 3. Validate only the workflow eligibility binding. Do not search, fetch, validate, propose, dry-run, or execute source expansion; do not import, enroll, activate, or send.",
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -86,6 +117,9 @@
       ],
       "request": "Add messaging only if the inspected workflow graph already has a messaging branch. This graph has scoring and routing nodes and no messaging node, so record the branch as absent instead of asking me.",
       "required_capability_ids": [
+        "workflows.get"
+      ],
+      "required_executed_capability_ids": [
         "workflows.get"
       ]
     },
@@ -115,6 +149,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "columns.list"
+      ],
+      "required_concepts": [
+        "columns.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -128,6 +171,16 @@
       "required_capability_ids": [
         "rows.get",
         "rows.query"
+      ],
+      "required_concepts": [
+        "rows.get",
+        "rows.query"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -140,6 +193,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "table_sources.list"
+      ],
+      "required_concepts": [
+        "table_sources.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -153,6 +215,16 @@
       "required_capability_ids": [
         "tables.get",
         "tables.list"
+      ],
+      "required_concepts": [
+        "tables.get",
+        "tables.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -166,6 +238,16 @@
       "required_capability_ids": [
         "views.get",
         "views.list"
+      ],
+      "required_concepts": [
+        "views.get",
+        "views.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -179,6 +261,16 @@
       "required_capability_ids": [
         "workbooks.get",
         "workbooks.list"
+      ],
+      "required_concepts": [
+        "workbooks.get",
+        "workbooks.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -194,6 +286,14 @@
         "workflows.get",
         "workflows.metrics_get",
         "workflows.run_retry"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "workflow authoring and recovery remain review-bound until the exact effect is approved"
+        }
       ]
     },
     {
@@ -216,6 +316,14 @@
         "workflows.trigger_create",
         "workflows.trigger_delete",
         "workflows.triggers_list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "workflow authoring and recovery remain review-bound until the exact effect is approved"
+        }
       ]
     },
     {
@@ -244,6 +352,14 @@
         "checkpoint-preserving resume",
         "cancel and retry are separate consequences",
         "completed effects are never replayed"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "workflow authoring and recovery remain review-bound until the exact effect is approved"
+        }
       ]
     },
     {
@@ -256,6 +372,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "worksheets.list"
+      ],
+      "required_concepts": [
+        "worksheets.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     }
   ],

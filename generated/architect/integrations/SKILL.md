@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241
+  playbook_kernel_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 3308959ee5a8c299
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241
+  source_release_hash: 4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540
   generator_version: 1.0.0
   kernel_id: integrations
   kernel_file: KERNEL.md
   kernel_sha256: 6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb
   adapter_sha256: 06abc5ffab4ab5bd45e07459e126d0c96057753293c99d602322a703c2221d49
   evals_file: evals.json
-  evals_sha256: 1d7705e0745dac6469fc1cd2ddf3786c1f77aa922c1c611f27aa9bea830cbc46
+  evals_sha256: cf66db3a966a77cb6a7d6847fa172d8d374ab88bfcf57d376e2dd3373828b566
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

@@ -2,11 +2,127 @@
   "schema_version": 1,
   "skill_id": "products",
   "cases": [
-    {"id":"product-source-read","request":"List current product content and inspect the exact page metadata with provenance and freshness.","expected_skill_ids":["products"],"required_capability_ids":["products.content_list","products.og_meta_get"]},
-    {"id":"product-document-process","request":"Process the Dreamstate product brief at workspace/products/dreamstate-brief.pdf, spend no more than 25 credits, and tell me when it finishes.","expected_skill_ids":["products"],"required_capability_ids":["products.document_process"]},
-    {"id":"product-website-scrape","request":"Scrape the Dreamstate product page at exactly https://trydreamstate.com/product, spend no more than 20 credits, and tell me when it finishes.","expected_skill_ids":["products"],"required_capability_ids":["products.website_scrape"]},
-    {"id":"product-website-refresh","request":"Refresh the existing Dreamstate product source at exactly https://trydreamstate.com/product, spend no more than 15 credits, and tell me when it finishes.","expected_skill_ids":["products"],"required_capability_ids":["products.website_refresh"]},
-    {"id":"product-content-archive","request":"Archive product content item 873d533d-225b-4d1b-a070-6709ce3f5b6c and leave every other product artifact alone.","expected_skill_ids":["products"],"required_capability_ids":["products.content_archive"]},
-    {"id":"context-source-transition-unavailable","request":"Inspect the exact dependency graph for product evidence Context source 5f32bb23-e0b9-4f20-a5be-82c8b9ce3b41 at version 7, then explain truthfully that this release cannot mark the source stale without a live transition capability. Do not mutate another source or claim success from prose.","expected_skill_ids":["products"],"required_capability_ids":["brain.context.graph"],"must_not_execute":true}
+    {
+      "id": "product-source-read",
+      "request": "List current product content and inspect the exact page metadata with provenance and freshness.",
+      "expected_skill_ids": [
+        "products"
+      ],
+      "required_capability_ids": [
+        "products.content_list",
+        "products.og_meta_get"
+      ],
+      "required_executed_capability_ids": [
+        "products.content_list",
+        "products.og_meta_get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-document-process",
+      "request": "Process the Dreamstate product brief at workspace/products/dreamstate-brief.pdf, spend no more than 25 credits, and tell me when it finishes.",
+      "expected_skill_ids": [
+        "products"
+      ],
+      "required_capability_ids": [
+        "products.document_process"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "product research and draft mutations must not silently publish workspace Context"
+        }
+      ]
+    },
+    {
+      "id": "product-website-scrape",
+      "request": "Scrape the Dreamstate product page at exactly https://trydreamstate.com/product, spend no more than 20 credits, and tell me when it finishes.",
+      "expected_skill_ids": [
+        "products"
+      ],
+      "required_capability_ids": [
+        "products.website_scrape"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "product research and draft mutations must not silently publish workspace Context"
+        }
+      ]
+    },
+    {
+      "id": "product-website-refresh",
+      "request": "Refresh the existing Dreamstate product source at exactly https://trydreamstate.com/product, spend no more than 15 credits, and tell me when it finishes.",
+      "expected_skill_ids": [
+        "products"
+      ],
+      "required_capability_ids": [
+        "products.website_refresh"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "product research and draft mutations must not silently publish workspace Context"
+        }
+      ]
+    },
+    {
+      "id": "product-content-archive",
+      "request": "Archive product content item 873d533d-225b-4d1b-a070-6709ce3f5b6c and leave every other product artifact alone.",
+      "expected_skill_ids": [
+        "products"
+      ],
+      "required_capability_ids": [
+        "products.content_archive"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "product research and draft mutations must not silently publish workspace Context"
+        }
+      ]
+    },
+    {
+      "id": "context-source-transition-unavailable",
+      "request": "Inspect the exact dependency graph for product evidence Context source 5f32bb23-e0b9-4f20-a5be-82c8b9ce3b41 at version 7, then explain truthfully that this release cannot mark the source stale without a live transition capability. Do not mutate another source or claim success from prose.",
+      "expected_skill_ids": [
+        "products"
+      ],
+      "required_capability_ids": [
+        "brain.context.graph"
+      ],
+      "must_not_execute": true,
+      "required_concepts": [
+        "brain.context.graph"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    }
   ]
 }

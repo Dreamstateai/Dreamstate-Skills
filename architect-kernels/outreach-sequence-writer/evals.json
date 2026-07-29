@@ -13,6 +13,14 @@
         "sequences.step_options",
         "sequences.validate",
         "sequences.bind"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        }
       ]
     },
     {
@@ -21,7 +29,28 @@
       "must_not_load": [
         "outreach-sequence-writer"
       ],
-      "request": "The workflow only scores and routes leads; it sends no messages."
+      "request": "The workflow only scores and routes leads; it sends no messages.",
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "the requested workspace evidence available through the loaded skill"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
     },
     {
       "expected_skill_ids": [
@@ -58,6 +87,14 @@
         "outreach.send_schedules.list",
         "outreach.senders_list",
         "outreach.settings_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        }
       ]
     },
     {
@@ -71,6 +108,16 @@
       "required_capability_ids": [
         "rows.get",
         "rows.query"
+      ],
+      "required_concepts": [
+        "rows.get",
+        "rows.query"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -84,6 +131,14 @@
       "required_capability_ids": [
         "sequences.archive",
         "sequences.list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        }
       ]
     }
   ],

@@ -2,8 +2,89 @@
   "schema_version": 1,
   "skill_id": "signals",
   "cases": [
-    {"id":"signal-read-suggest","request":"List and inspect current signal sources and events, then show grounded radar suggestions with freshness and completeness.","expected_skill_ids":["signals"],"required_capability_ids":["signal_sources.list","signal_sources.get","signal_sources.events_list","radar.signal_suggestions_get"]},
-    {"id":"signal-source-lifecycle","request":"Create or delete this exact signal source and set its capture key without printing the secret.","expected_skill_ids":["signals"],"required_capability_ids":["signal_sources.create","signal_sources.capture_key_set","signal_sources.delete"]},
-    {"id":"signal-test-event","request":"Send one exact governed test event and retain its durable receipt without claiming future monitoring is proven.","expected_skill_ids":["signals"],"required_capability_ids":["signal_sources.test_event"]}
+    {
+      "id": "signal-read-suggest",
+      "request": "List and inspect current signal sources and events, then show grounded radar suggestions with freshness and completeness.",
+      "expected_skill_ids": [
+        "signals"
+      ],
+      "required_capability_ids": [
+        "signal_sources.list",
+        "signal_sources.get",
+        "signal_sources.events_list",
+        "radar.signal_suggestions_get"
+      ],
+      "required_executed_capability_ids": [
+        "signal_sources.list",
+        "signal_sources.get",
+        "signal_sources.events_list",
+        "radar.signal_suggestions_get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal-source-lifecycle",
+      "request": "Create or delete this exact signal source and set its capture key without printing the secret.",
+      "expected_skill_ids": [
+        "signals"
+      ],
+      "required_capability_ids": [
+        "signal_sources.create",
+        "signal_sources.capture_key_set",
+        "signal_sources.delete"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "graph revisions remain behind confirmation and must not create nodes or relations yet"
+        },
+        {
+          "check": "graph_relation_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "graph revisions remain behind confirmation and must not create nodes or relations yet"
+        }
+      ]
+    },
+    {
+      "id": "signal-test-event",
+      "request": "Send one exact governed test event and retain its durable receipt without claiming future monitoring is proven.",
+      "expected_skill_ids": [
+        "signals"
+      ],
+      "required_capability_ids": [
+        "signal_sources.test_event"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "graph revisions remain behind confirmation and must not create nodes or relations yet"
+        },
+        {
+          "check": "graph_relation_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "graph revisions remain behind confirmation and must not create nodes or relations yet"
+        }
+      ]
+    }
   ]
 }

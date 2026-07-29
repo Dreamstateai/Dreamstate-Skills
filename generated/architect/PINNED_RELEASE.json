@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241",
+  "source_release_hash": "4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "b7bc9f2912d8aeb8b1be8ade59bc1c76656432fd501e3600a52e3c861aa54241",
+    "playbook_kernel_hash": "4dd448bd33df184d0cc25e8ccca7caae27fbb42330778777ff0052934064b540",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "3308959ee5a8c299",
@@ -63,7 +63,7 @@
       ],
       "kernel_sha256": "20ab56b536d6a08a14b93789ef76fbbf39623c8a467563833db9d9ef238e604f",
       "adapter_sha256": "86195904cd0077d7d28042462803974c6f573360aca7b4deb8be201b548d3a67",
-      "evals_sha256": "1f24c640fcee58b736d7cfa48607d3a7cf4f3d5de5d66512fdd79b50016c3ea0"
+      "evals_sha256": "67fbbc65cdfa9b54681210cd70c89d875fa6199a71fb55c91aebdd2914fedd72"
     },
     "audiences": {
       "capability_domains": [
@@ -81,7 +81,7 @@
       ],
       "kernel_sha256": "a336f54a5bafdb09b5fd94e6fa1405caf34c68b6b272b1233049bbfc7bf076e3",
       "adapter_sha256": "b2c7c72b96435fe69cb2cb23d9fe30eb056e956586717db01f5a385ad0fa0379",
-      "evals_sha256": "577a78c92b829068b9160ac0d0545c7058eee9b1d32461e439f451fccaef0cb6"
+      "evals_sha256": "602d4016fed3d378e0463d2482fa696cc1281c60d2dc30468e94beeb0f63cb75"
     },
     "blog": {
       "capability_domains": [
@@ -122,7 +122,7 @@
       ],
       "kernel_sha256": "401a4ecc7c7361e296234fabbaf0aed9443f6f4e3909650880de16bcefd70654",
       "adapter_sha256": "aed9a0c5bf7cbaf2b5c9b75ffab2e8106be2ac47b5c2578d27cadb012c3bf9e9",
-      "evals_sha256": "7b871b5403ba2983ce333f82b51cabc9ebc01d6ad30f4bcd26b6d664ae6fa78a"
+      "evals_sha256": "05ca59a448c7d7f2bff52a273cce893bcef508932a48edd5b553357069881c46"
     },
     "buyer-research-graph": {
       "capability_domains": [
@@ -149,7 +149,7 @@
       ],
       "kernel_sha256": "53c335f0095f4427c50dd3f6f147ef450ac5fbc187417b1ebced7a570836e440",
       "adapter_sha256": "919faa8247e2dca8f368bddd0468c2c03230d91fd17121b480e6de5f8f6da5f6",
-      "evals_sha256": "fd60a1169dc36797de325f8eaec1724e031b38fd0cbf9a69906745c716042629"
+      "evals_sha256": "e62ee2aa879f13e673b007ece474c3b9b9c08970a689f752acf1a3cef79468c5"
     },
     "context": {
       "capability_domains": [
@@ -175,7 +175,7 @@
       ],
       "kernel_sha256": "ff8ecb5d852c4494f804e7237cb1ade7a1d2b6d5e6bd7839182a4992b3ea56cb",
       "adapter_sha256": "a5579217dbd98da18091390b8f44f31923796e5ad8f8f8112ae70cc4e7dce51a",
-      "evals_sha256": "f98efcba6027d8dfdc4344927032ef4f370b1edf10727b992b9bdec36204aa60"
+      "evals_sha256": "00f30eaebedf1866ab93e3b1fc60753071195d544ebb97732073d3afa978a0ee"
     },
     "experiments": {
       "capability_domains": [
@@ -194,7 +194,7 @@
       ],
       "kernel_sha256": "1af58fa508afe884136151c8810eb767a4cdd2472f3fd0b0a104586bceb78007",
       "adapter_sha256": "647a98841c8d21f5253009497b984646f2737b11b948f32aa0b0cde06242b7aa",
-      "evals_sha256": "3109cba0f4f7ae3d506264b257676196a0dd105879b95d5d5446ff18d1612bca"
+      "evals_sha256": "0a2b4dd0402ad1f9dde41bb46a8a82e682dc171214f5e943498296aac47a0eba"
     },
     "growth-asset-planner": {
       "capability_domains": [],
@@ -207,7 +207,7 @@
       ],
       "kernel_sha256": "19927914886ae69503700e5a3ca86d2ba714225089fa443a0ea8f987da1e61b1",
       "adapter_sha256": "0ff4bf46670412c0fe55e1b73079dcd33baf0f0bf78c8159a39ba024dc3f4195",
-      "evals_sha256": "a04ebbe93e8520147463d361714335367b518659b8591db1fe60e811cf1d3c6d"
+      "evals_sha256": "63346b19339c86f1ecb9f15f842547135a772ab513eb4836ca397287fbdc5047"
     },
     "integrations": {
       "capability_domains": [],
@@ -242,7 +242,7 @@
       ],
       "kernel_sha256": "6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb",
       "adapter_sha256": "06abc5ffab4ab5bd45e07459e126d0c96057753293c99d602322a703c2221d49",
-      "evals_sha256": "1d7705e0745dac6469fc1cd2ddf3786c1f77aa922c1c611f27aa9bea830cbc46"
+      "evals_sha256": "cf66db3a966a77cb6a7d6847fa172d8d374ab88bfcf57d376e2dd3373828b566"
     },
     "notifications": {
       "capability_domains": [
@@ -265,7 +265,7 @@
       ],
       "kernel_sha256": "933d1bb32fd31ffcd637661ca7c76078b514e71a7decda89a5c60f3d5d3ced9b",
       "adapter_sha256": "33059304b1a5c411f5ef788bc4537dbb01269f2211ec95d6706d4d8498ccd5f8",
-      "evals_sha256": "8410560f5fa691368d3b767f8aa23b87b8249eed1da77229672f54a54a434181"
+      "evals_sha256": "e62c8949afb498033b68e1391df36ec1c80bddf53eee54414284b005f2ceae98"
     },
     "outreach": {
       "capability_domains": [
@@ -295,7 +295,7 @@
       ],
       "kernel_sha256": "af9ae1fd57957f795a555907bd9e6243886d925b6c3bd76201bfad55070c0d7f",
       "adapter_sha256": "05a953fff795e38d6a012f59c23b15ee626f1e3fe0ad3103e3b37b263fbb0f7b",
-      "evals_sha256": "ebf9a72b6f31beb7688768f0a7ab35048ee3e3ba9e644606c75bb398b1a93aa0"
+      "evals_sha256": "2e1b0a1d76831c781804702cb5ee96db85117a47bea42b9c17c2324d6909c480"
     },
     "outreach-sequence-writer": {
       "capability_domains": [
@@ -326,7 +326,7 @@
       ],
       "kernel_sha256": "a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357",
       "adapter_sha256": "9e8f39c1a6feb18cf4700007d498a2fdb4f937fe24fd6cb1af1765137437c965",
-      "evals_sha256": "5e3a508e62297b0604d1cf16b2d31d90a0c5cc92d683464204c1f4be9533f278"
+      "evals_sha256": "ce204cc3ae73fbdede2e5b52274dca63efd4a4b0734d566fb05387c68b7c84c4"
     },
     "outreach-workflow-builder": {
       "capability_domains": [
@@ -370,7 +370,7 @@
       ],
       "kernel_sha256": "6d786028ea4937001ef6b38358138ea263952419ed0861750a49545561f27bcd",
       "adapter_sha256": "8041368785f549079dfd7bdef819a92634ada7fdf64b40ba48434887cddd1da7",
-      "evals_sha256": "3e28388c9b94c4e9d25242ee374d3fbe8062dc1d34627f7d4848f5fece8e76b3"
+      "evals_sha256": "323ecb45bdd3384d06a99af30e45a53cbd2375ee77fd1a5ef3ea54b860635d6c"
     },
     "products": {
       "capability_domains": [
@@ -387,7 +387,7 @@
       ],
       "kernel_sha256": "98f746e7a136c6b80a3ac9bd7bedf42a1e5775c4b93d25f96f66f8c67f1570b8",
       "adapter_sha256": "df4cf30a48d9d3c34d8e85b3007598c33b30bde5513eb02bc7506812e3356480",
-      "evals_sha256": "33efd86883abe17ecd018e40f49177bf50d49740b4aa0414810a3a983b63e3bf"
+      "evals_sha256": "d4e49b34e3a5e3df0f2f8c032a8c3a522dcd644deee78ab52c5603775c260512"
     },
     "records": {
       "capability_domains": [
@@ -422,7 +422,7 @@
       ],
       "kernel_sha256": "9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89",
       "adapter_sha256": "798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b",
-      "evals_sha256": "c52ab7463cff127c4be633f149ce1608aa32cdc6f57febf689c53edbeacadeb5"
+      "evals_sha256": "df4c97121095c8bf10a303a475d2a669bcb651869f9fcbe4ebf886d131e4f798"
     },
     "records-pipelines": {
       "capability_domains": [
@@ -450,7 +450,7 @@
       ],
       "kernel_sha256": "08193d954cc35738c4aa0710a92392d508479e8690f94131ccce2610c002e124",
       "adapter_sha256": "d1e5780247875b0129779bb55a039f526f7e4dd27c61e68c16c990125c57f141",
-      "evals_sha256": "a5788249c50106a0d07b9f5af3a340348e7f4e0007e9da213c4c795c4d292e79"
+      "evals_sha256": "a998ede07698d80b84000d84efe0fdb9a019c098cc7372703f6ccb54bb5d3361"
     },
     "records-schema": {
       "capability_domains": [
@@ -482,7 +482,7 @@
       ],
       "kernel_sha256": "38d6f45af8c091ac7fddeba8c4a2f765c089f634622a48f1477d48a0b2ff82c1",
       "adapter_sha256": "03b35c6b6bb573236709e5418b4f03b328ece2efb292f9b2fe77f1fc4385d3d8",
-      "evals_sha256": "efba48003fc2500d0e16b062d49cedaa7171566b226d8b36e8a39aed85626b90"
+      "evals_sha256": "8815acba506205aa790239c8d976bdf3073478fcc6b02e6e56ddc3c9df0d9d14"
     },
     "records-transfer": {
       "capability_domains": [
@@ -503,7 +503,7 @@
       ],
       "kernel_sha256": "09eb3bc15afff2e09b68705290a9ad403ac9ab4608d82bd7c424617cb4078797",
       "adapter_sha256": "53aaf2c52992e1b2d14453e9a2d64bbb4116292bdb2e321f87cca3a144b6e539",
-      "evals_sha256": "4ed7d6f6ac66d6d2d04209ee44cf0bd01086540b83d2174ad3a6e6dc969e092e"
+      "evals_sha256": "970e82e1713125b8401179c9a63a307e8411ea1459a3ef458b58629a11cf1aea"
     },
     "records-views": {
       "capability_domains": [
@@ -522,7 +522,7 @@
       ],
       "kernel_sha256": "e9b5e5a12b07fbf14958d07bcac5922fdfe80394ce6554f21d24b68d99cb938c",
       "adapter_sha256": "7ac3dd85afb930fbedc10f17c387c8369f6a4d12a41607a2798500dd2360a5c2",
-      "evals_sha256": "08e04b259708c470eebfdcf9771a975c75ee718bdf2dc417f3230fcb16866557"
+      "evals_sha256": "3cf21753f3a28e9d2fa2a79c6c66655ff58d26e76ec541718bf919e564b55427"
     },
     "seo": {
       "capability_domains": [
@@ -569,7 +569,7 @@
       ],
       "kernel_sha256": "d8957cc2f65174a3286e7fbab1c53df0a57e57b61724e087ebbd9db9cdef665a",
       "adapter_sha256": "af8403eef8d7c7d29e840a227ce5c17ff044ed3901b3f7b09995554ee8ff9c8a",
-      "evals_sha256": "b34ab09d40bf83689715dd926c4def23eca397fe291a98f2a05a97f2d899438d"
+      "evals_sha256": "f5d7aaa2f4392a62de38dfadfad4904d0ef02bd973f96334f53cfb8811721065"
     },
     "signals": {
       "capability_domains": [
@@ -587,7 +587,7 @@
       ],
       "kernel_sha256": "665dfc04657526b90c547cefbfe0874fbd2a94cea6f0a0c55bb019835f07574b",
       "adapter_sha256": "4a24d52793c128155864d54f62b88e72945b111b8e3401d878436e0a162b9704",
-      "evals_sha256": "a1e7e9f1216a0e810e381f31016e812815688ac3273b40b223d4d79352676858"
+      "evals_sha256": "50d5be81eaf527a1d1f6e974ad341f1880c5ce3e01383ac3b2a077214cd08456"
     },
     "site-onboarding": {
       "capability_domains": [
@@ -614,9 +614,9 @@
         "visibility.workspace_site_get",
         "visibility.workspace_site_update"
       ],
-      "kernel_sha256": "03c381f5688780c19b2757393959be76a466bfe4a29072265f7757dcf7478e11",
+      "kernel_sha256": "af7c2bc23bbb2e4088689aac6e12d7d9a09f0570b2a60a13db653626ea176c94",
       "adapter_sha256": "b08a3fa04f337af965aaa36e96810b4210ed8633760df75e22f224635b932d76",
-      "evals_sha256": "599a65ac41d29cf965880a427fe2d9b0645d26071618bee0541ec36010a79c0a"
+      "evals_sha256": "136dbdaf0ebeb26a7491c23d9fb9bc590cfa3a8d7919014b7f3cb4b718819c45"
     },
     "social": {
       "capability_domains": [
@@ -711,7 +711,7 @@
       ],
       "kernel_sha256": "0f9626ebef6ffc6f271582bd5b4a06561d723366ba4af0215b8f770b18e877d1",
       "adapter_sha256": "9d5500d61eeb686726b709fd5fb1aa032dbe9579c819d6113648db32076fd247",
-      "evals_sha256": "4971ed086dc39eaaed104186d3c7dd6675a7519c54c8a55e2ffa9e24617bc717"
+      "evals_sha256": "298cead67a1cb91c31b0bb78e05f75c5f67c055327979c80fbf04969b3eb3d67"
     },
     "tables": {
       "capability_domains": [
@@ -793,7 +793,7 @@
       ],
       "kernel_sha256": "05956a3a5e2005dc090862eb2ac2972181144055d95eab08c96908f7dc67fd05",
       "adapter_sha256": "fcb534afafce503f15f3a430782d2a3308a6ba7a0cce5f8fa564385c582ac254",
-      "evals_sha256": "4d28d8a41b3a1e815e491b9a411d0470512759ef44a5a1ccc7412379e5634caa"
+      "evals_sha256": "5f7afdc4bd14e8b57e5a1b6df16bb1cf6bdc03335b58cd5fd013cb9b854f23a2"
     },
     "tasks": {
       "capability_domains": [
@@ -813,7 +813,7 @@
       ],
       "kernel_sha256": "44823e2209b86385e9d80c2487fd23d6ecc496314a0db574839eded6a44b93e3",
       "adapter_sha256": "c58e3054b8e7f661275af743f29171ce5817778f07be7aa14ff0163e5e6a910a",
-      "evals_sha256": "e9325c129b01900756b05c0e4412b076746d76db07daf402c03d7ca7020be604"
+      "evals_sha256": "2f35e4dbc96d90faaab1a4084bb4e43c442efa61efa345e1648ab4caca07b11d"
     },
     "visibility": {
       "capability_domains": [
@@ -856,7 +856,7 @@
       ],
       "kernel_sha256": "c743010241b7926d9d12a6960545a1393bfad0644ef09bda46639a5fff360f05",
       "adapter_sha256": "1154cbe8cae3169555010f8f807692e08c29a65128e588da1927a5c2770c484d",
-      "evals_sha256": "6a424a1ac0d6ba005a6b4b03fc23100cec4af8da5cd84ee6372d136b5d4fdbf6"
+      "evals_sha256": "e10848cb5e7bb369e41b42ae0a59d29fd2b5cf40925eff1c16e86def9784a0bf"
     },
     "webhooks": {
       "capability_domains": [
@@ -871,7 +871,7 @@
       ],
       "kernel_sha256": "e2a4d7c0f98421e1f005f3cfd2b65bc4b70d79bbe4ebbb2469351543f5296d81",
       "adapter_sha256": "c19fcd7442e490b3f3bdfcc3f05d35f9465670a24e3068aae28fced51222c685",
-      "evals_sha256": "f6e810bcbab2e73b35182f14c31a10a6ee2c04bfec35ef92c71989bf56fafa65"
+      "evals_sha256": "a67a381921d35fb88b6b32ea6823047f81e208efc0598982eb20412a8e4bf5ef"
     },
     "weekly-growth-plan": {
       "capability_domains": [],
@@ -906,7 +906,7 @@
       ],
       "kernel_sha256": "06a6d8eb74bd0e5c6542bc0108550935669c5409d40abe25455eddcfd16ce669",
       "adapter_sha256": "b09e5a8d3257e86d733b6d933247e93cbb60307b2a7d7f3c3f1110117356ec51",
-      "evals_sha256": "7fb1a7134692b81c1504b568967e7e4167e22835179288398ab2af64bcc8d302"
+      "evals_sha256": "5899b3d94fb2a9542b9b46e92f13bb6952fae5fdec394e632b86c03fdc68b2a3"
     }
   }
 }

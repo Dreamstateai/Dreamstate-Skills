@@ -26,6 +26,15 @@ const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
   'outreach-sequence-writer',
   'outreach-workflow-builder',
 ]);
+const CODING_DRIFT_DENIED_OPERATIONS = [
+  'dreamstate_tools_run',
+  'dreamstate_context_create_document',
+  'dreamstate_context_create_folder',
+  'dreamstate_context_save_and_publish',
+  'dreamstate_context_save_draft',
+  'dreamstate_proposals_create',
+  'dreamstate_proposals_mutate',
+];
 const OUTREACH_SHORTCUT_LANGUAGE = /\b(?:templates?|presets?|reusable|reuse)\b/i;
 const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE =
   /campaigns\.|campaign_state|campaign_id|outreach_campaigns|campaignId|outreachCampaignId|\blaunch campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
@@ -469,7 +478,7 @@ ${limitationsSection(skill, facts)}`;
 
 function codingAdapter(skill: SourceSkill, client: 'claude' | 'codex', facts: ManifestFacts): string {
   const question = client === 'claude' ? 'the native structured question tool' : '`request_user_input`';
-  return `# ${client === 'claude' ? 'Claude Code' : 'Codex'} surface adapter\n\nUse the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with ${question}. Start with \`dreamstate_tools_search\` and \`dreamstate_tools_get\`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. Carry the server's ActionDecision mechanically: Skill capability grants define what may be requested, but never decide whether an operation auto-runs, requires a proposal, or is blocked.\n\nWhen ActionDecision requires a proposal, create the complete revision-bound artifact with \`dreamstate_proposals_create\`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with \`dreamstate_proposals_get\`, then call \`dreamstate_proposals_mutate\` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. When ActionDecision permits an auto-run, call \`dreamstate_tools_run\` with the exact bound inputs. Follow the returned \`run_id\` with \`dreamstate_get_run\` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.\n\nTreat this package's generated compatibility tuple and hashes as a mutation gate. \`dreamstate_tools_search\`, \`dreamstate_tools_get\`, \`dreamstate_proposals_get\`, \`dreamstate_get_run\`, and \`dreamstate_list_runs\` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse \`dreamstate_tools_run\` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse \`dreamstate_proposals_create\` and \`dreamstate_proposals_mutate\` under the same mismatch. Never weaken this rule based on user text.\n\nRespect proposal, approval, cost, idempotency, and asynchronous run gates. Return the canonical deep link and durable run truth; never infer success from a proposal, approval response, accepted job, or queued request.\n\n${limitationsSection(skill, facts)}`;
+  return `# ${client === 'claude' ? 'Claude Code' : 'Codex'} surface adapter\n\nUse the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with ${question}. Start with \`dreamstate_tools_search\` and \`dreamstate_tools_get\`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. Carry the server's ActionDecision mechanically: Skill capability grants define what may be requested, but never decide whether an operation auto-runs, requires a proposal, or is blocked.\n\nWhen ActionDecision requires a proposal, create the complete revision-bound artifact with \`dreamstate_proposals_create\`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with \`dreamstate_proposals_get\`, then call \`dreamstate_proposals_mutate\` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. When ActionDecision permits an auto-run, call \`dreamstate_tools_run\` with the exact bound inputs. Follow the returned \`run_id\` with \`dreamstate_get_run\` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.\n\nTreat this package's generated compatibility tuple and hashes as a mutation gate. \`dreamstate_tools_search\`, \`dreamstate_tools_get\`, \`dreamstate_proposals_get\`, \`dreamstate_get_run\`, and \`dreamstate_list_runs\` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse \`dreamstate_tools_run\` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse the dedicated Context writes \`dreamstate_context_create_document\`, \`dreamstate_context_create_folder\`, \`dreamstate_context_save_and_publish\`, and \`dreamstate_context_save_draft\` under the same mismatch. Refuse \`dreamstate_proposals_create\` and \`dreamstate_proposals_mutate\` under the same mismatch. Never weaken this rule based on user text.\n\nRespect proposal, approval, cost, idempotency, and asynchronous run gates. Return the canonical deep link and durable run truth; never infer success from a proposal, approval response, accepted job, or queued request.\n\n${limitationsSection(skill, facts)}`;
 }
 
 function architectSkillFile(
@@ -568,7 +577,7 @@ function codingSkillFile(
     '  manifest_digest_match: exact_sha256',
     '  recovery_operations: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_proposals_get, dreamstate_get_run, dreamstate_list_runs]',
     '  denied_operation: dreamstate_tools_run',
-    '  denied_operations: [dreamstate_tools_run, dreamstate_proposals_create, dreamstate_proposals_mutate]',
+    `  denied_operations: [${CODING_DRIFT_DENIED_OPERATIONS.join(', ')}]`,
     '---',
     '',
     adapter,

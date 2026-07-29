@@ -44,6 +44,21 @@
         "brain.learning.query_benchmarks",
         "visibility.workspace_site_get",
         "visibility.keywords_get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
       ]
     },
     {
@@ -92,6 +107,12 @@
         "seo.robots_audit",
         "visibility.overview",
         "visibility.citations"
+      ],
+      "required_executed_capability_ids": [
+        "visibility.workspace_site_get",
+        "seo.robots_audit",
+        "visibility.overview",
+        "visibility.citations"
       ]
     },
     {
@@ -105,6 +126,16 @@
       "required_capability_ids": [
         "brain.context.get",
         "brain.context.search"
+      ],
+      "required_concepts": [
+        "brain.context.get",
+        "brain.context.search"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -124,6 +155,14 @@
         "integrations.gsc.search_analytics_refresh",
         "integrations.gsc.sitemaps_import",
         "integrations.gsc.status"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "read-only SEO planning and capability inspection must not publish workspace Context"
+        }
       ]
     },
     {
@@ -142,6 +181,14 @@
         "seo.llms_txt_get",
         "seo.serp_snapshot_resolve",
         "seo.serp_spend_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "read-only SEO planning and capability inspection must not publish workspace Context"
+        }
       ]
     },
     {
@@ -154,6 +201,15 @@
       "must_not_execute": true,
       "required_capability_ids": [
         "tools.llms_txt_generate"
+      ],
+      "required_concepts": [
+        "tools.llms_txt_generate"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
       ]
     },
     {
@@ -175,6 +231,14 @@
         "visibility.sitemap_get",
         "visibility.workspace_site_ensure",
         "visibility.workspace_site_update"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "read-only SEO planning and capability inspection must not publish workspace Context"
+        }
       ]
     }
   ],

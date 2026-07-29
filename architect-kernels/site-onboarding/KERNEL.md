@@ -17,7 +17,7 @@ Turn one exact website URL into governed site state and useful workspace Markdow
 
 Reconcile useful product, audience, positioning, proof, competitor, tone, and conversion information against existing Markdown documents. Do not create a duplicate when an existing document can be revised.
 
-For a new knowledge file, use `brain.context.create_document` under an exact ordinary parent folder. For an existing file, preserve its exact node and revision fence. Publish ready knowledge through `brain.context.save_and_publish`.
+For a new knowledge file, use `brain.context.create_document` under an exact ordinary parent folder. Choose each new file name from the evidence and knowledge it contains, never from a predefined document list. For an existing file, preserve its exact node and revision fence. Publish ready knowledge through `brain.context.save_and_publish`.
 
 Every research-backed document must carry visible provenance in its body:
 
