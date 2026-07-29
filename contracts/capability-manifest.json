@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "3308959ee5a8c299",
+  "capability_hash": "8ba8c82bd38f553e",
   "api_version": "v1",
   "capabilities": [
     {
@@ -17077,7 +17077,8 @@
           "parent_node_ref": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 512
+            "maxLength": 512,
+            "nullable": true
           },
           "title": {
             "type": "string",
@@ -17117,7 +17118,8 @@
             "parent_node_ref": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 512
+              "maxLength": 512,
+              "nullable": true
             },
             "title": {
               "type": "string",
@@ -118316,6 +118318,126 @@
                                   "saved_view_id"
                                 ],
                                 "additionalProperties": false
+                              }
+                            ],
+                            "nullable": true
+                          },
+                          "enrollment_filter": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {},
+                                "additionalProperties": false
+                              },
+                              {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "predicate"
+                                        ]
+                                      },
+                                      "field": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      "op": {
+                                        "type": "string",
+                                        "enum": [
+                                          "eq",
+                                          "neq",
+                                          "contains",
+                                          "not_contains",
+                                          "gt",
+                                          "gte",
+                                          "lt",
+                                          "lte",
+                                          "is_set",
+                                          "is_empty",
+                                          "in",
+                                          "not_in"
+                                        ]
+                                      },
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "boolean"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          {
+                                            "enum": [
+                                              "null"
+                                            ],
+                                            "nullable": true
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "field",
+                                      "op",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "and",
+                                          "or"
+                                        ]
+                                      },
+                                      "children": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_filter/anyOf/1"
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "children"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "not"
+                                        ]
+                                      },
+                                      "child": {
+                                        "$ref": "#/anyOf/1/anyOf/4/properties/inputs/properties/sequence_definition/properties/enrollment_filter/anyOf/1"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "child"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
                               }
                             ],
                             "nullable": true
@@ -283866,6 +283988,126 @@
                 ],
                 "nullable": true
               },
+              "enrollment_filter": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": false
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "predicate"
+                            ]
+                          },
+                          "field": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "op": {
+                            "type": "string",
+                            "enum": [
+                              "eq",
+                              "neq",
+                              "contains",
+                              "not_contains",
+                              "gt",
+                              "gte",
+                              "lt",
+                              "lte",
+                              "is_set",
+                              "is_empty",
+                              "in",
+                              "not_in"
+                            ]
+                          },
+                          "value": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              {
+                                "enum": [
+                                  "null"
+                                ],
+                                "nullable": true
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "field",
+                          "op",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "and",
+                              "or"
+                            ]
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/properties/definition/properties/enrollment_filter/anyOf/1"
+                            }
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "children"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "not"
+                            ]
+                          },
+                          "child": {
+                            "$ref": "#/properties/definition/properties/enrollment_filter/anyOf/1"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "child"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                ],
+                "nullable": true
+              },
               "enrollment_receipt": {
                 "type": "object",
                 "properties": {
@@ -286420,6 +286662,126 @@
                       "saved_view_id"
                     ],
                     "additionalProperties": false
+                  }
+                ],
+                "nullable": true
+              },
+              "enrollment_filter": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": false
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "predicate"
+                            ]
+                          },
+                          "field": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "op": {
+                            "type": "string",
+                            "enum": [
+                              "eq",
+                              "neq",
+                              "contains",
+                              "not_contains",
+                              "gt",
+                              "gte",
+                              "lt",
+                              "lte",
+                              "is_set",
+                              "is_empty",
+                              "in",
+                              "not_in"
+                            ]
+                          },
+                          "value": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              {
+                                "enum": [
+                                  "null"
+                                ],
+                                "nullable": true
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "field",
+                          "op",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "and",
+                              "or"
+                            ]
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/properties/definition/properties/enrollment_filter/anyOf/1"
+                            }
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "children"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "not"
+                            ]
+                          },
+                          "child": {
+                            "$ref": "#/properties/definition/properties/enrollment_filter/anyOf/1"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "child"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
                   }
                 ],
                 "nullable": true
@@ -317142,26 +317504,16 @@
       },
       "required_inputs": [
         {
-          "key": "provider",
-          "required": true
-        },
-        {
-          "key": "import_batch_id",
+          "key": "cold_targeting_config",
           "required": true
         }
       ],
       "input_schema": [
         {
-          "name": "provider",
-          "type": "string",
+          "name": "cold_targeting_config",
+          "type": "object",
           "required": true,
-          "description": "Provider"
-        },
-        {
-          "name": "import_batch_id",
-          "type": "string",
-          "required": true,
-          "description": "Import batch ID"
+          "description": "Provider targeting configuration"
         }
       ],
       "output_manifest": "structured",
@@ -317441,8 +317793,7 @@
           "Attach Data provider import to a compatible canonical worksheet."
         ],
         "inputs": [
-          "provider",
-          "import_batch_id"
+          "cold_targeting_config"
         ],
         "outputs": [
           "result"
@@ -320506,16 +320857,36 @@
       },
       "required_inputs": [
         {
-          "key": "event_type",
+          "key": "signal_source_id",
+          "required": true
+        },
+        {
+          "key": "event_kind",
+          "required": true
+        },
+        {
+          "key": "event_name",
           "required": true
         }
       ],
       "input_schema": [
         {
-          "name": "event_type",
+          "name": "signal_source_id",
           "type": "string",
           "required": true,
-          "description": "Event type"
+          "description": "Signal connector ID"
+        },
+        {
+          "name": "event_kind",
+          "type": "string",
+          "required": true,
+          "description": "Event kind"
+        },
+        {
+          "name": "event_name",
+          "type": "string",
+          "required": true,
+          "description": "Event name"
         }
       ],
       "output_manifest": "structured",
@@ -321017,7 +321388,9 @@
           "Attach Product event to a compatible canonical worksheet."
         ],
         "inputs": [
-          "event_type"
+          "signal_source_id",
+          "event_kind",
+          "event_name"
         ],
         "outputs": [
           "result"
@@ -396022,5 +396395,5 @@
     "capabilities": 1119,
     "mcp_tools": 15
   },
-  "manifest_digest": "caf0df71ed39b2908438094693b00278a571035efd2082af0ab34953c559fcce"
+  "manifest_digest": "9f0fd7349ac4b713a023dc91b7b3a1f0e9acbf751667820a99a1845eb3565d95"
 }
