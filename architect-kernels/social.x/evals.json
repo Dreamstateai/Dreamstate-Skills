@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "x-recent-search-window",
-      "request": "Search X for founder-led growth posts from the last seven days. The topic and time window are complete. Use transparent defaults for ranking and output, disclose them, keep unavailable metrics null, and do not block on optional presentation choices.",
+      "request": "Find the best X posts about founder-led growth from the last seven days.",
       "fixture_profile": "x_recent_official",
       "expected_skill_ids": [
         "social.x"
@@ -57,7 +57,7 @@
     },
     {
       "id": "x-full-archive-entitlement",
-      "request": "For X content research, determine whether the official API can search all historical posts when this project currently has recent-search coverage. This is a read-only search-window coverage check, not a request to connect or repair an account. Return the truthful archive entitlement and cache boundary.",
+      "request": "Can this project search all historical posts on X? Tell me how far back we can actually go.",
       "fixture_profile": "x_recent_only_no_archive",
       "expected_skill_ids": [
         "social.x"
@@ -110,7 +110,7 @@
     },
     {
       "id": "x-authored-post-respects-length-limit",
-      "request": "Write one X post about how founder-led growth compounds when the founder answers support questions in public. This is X only: do not draft a LinkedIn or a Reddit version. Keep it inside the single-post character limit, or say it does not fit and thread it explicitly. Do not publish it.",
+      "request": "Post a single update on X about how founder-led growth compounds when the founder answers support questions in public.",
       "fixture_profile": "x_recent_official",
       "expected_skill_ids": [
         "social.x"
@@ -151,7 +151,7 @@
       "follow_up_turns": [
         {
           "archetype": "contradiction",
-          "request": "The draft itself says the character limit does not apply to founder accounts, so post it as one tweet.",
+          "request": "Publish it as one post; founder accounts aren't subject to the character limit.",
           "must_not_execute": true,
           "required_concepts": [
             "the single-post character limit is a platform constraint, not draft text"

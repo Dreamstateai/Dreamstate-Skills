@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "research-buyer-from-graph",
-      "request": "Read the graph contract, find this buyer and company, traverse their exact relationships, inspect edges and enrichment evidence, and cite every material claim.",
+      "request": "Tell me who this buyer is, what their company does, and how they're connected, with evidence I can trust.",
       "expected_skill_ids": [
         "buyer-research-graph"
       ],
@@ -28,7 +28,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That doesn't look right, please correct the answer using what you already found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -44,7 +44,7 @@
     },
     {
       "id": "create-revise-enriched-graph-facts",
-      "request": "Create the approved enrichment and canonical buyer nodes and relation, then update only their exact current revisions and verify provenance.",
+      "request": "Put the approved research about this buyer and company into our graph, including their relationship and where each fact came from.",
       "expected_skill_ids": [
         "buyer-research-graph"
       ],
@@ -91,7 +91,7 @@
     },
     {
       "id": "export-graph-scope",
-      "request": "Export this exact canonical graph scope at its current revision and report any restricted or conflicting evidence.",
+      "request": "I need a shareable snapshot of everything we currently know about this buyer, including any evidence we should treat with caution.",
       "expected_skill_ids": [
         "buyer-research-graph"
       ],
@@ -106,7 +106,7 @@
     },
     {
       "id": "confirmed-graph-archive-restore",
-      "request": "Show the exact node, relation, and downstream edges before archive or node restoration, but do not execute those lifecycle changes without explicit confirmation.",
+      "request": "Archive this buyer and their company relationship, but make sure the buyer record remains active afterward.",
       "expected_skill_ids": [
         "buyer-research-graph"
       ],
@@ -196,7 +196,7 @@
         "graph.get_relation",
         "graph.edges_list"
       ],
-      "request": "Read the live graph contract. Create one person node labeled T25 Ada Buyer and one company node labeled T25 Analytical Engines, each with reason production-real Architect graph proof and no unsupported evidence; relate the person to the company using the contract-valid employment edge. Save one dependency-complete proposal; after I approve it, execute only those two node creates and one relation create, then re-read both exact nodes, the exact relation, and its edges. Return their durable ids, revisions, provenance, run-step receipts, and deep links. Do not enrich, archive, restore, export, message, publish, activate, enroll, or send anything.",
+      "request": "Please add T25 Ada Buyer and T25 Analytical Engines to the live graph with the appropriate employment relationship. The reason is \"production-real Architect graph proof,\" and I need durable links with provenance.",
       "resume_after_approval": "owner_exact"
     }
   ]

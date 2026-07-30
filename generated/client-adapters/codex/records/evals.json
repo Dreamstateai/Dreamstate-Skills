@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "inspect-standard-records-and-context",
-      "request": "Find the exact buyer, company, and related standard records; show all available fields, sources, history, conflicts, references, buyer brief, playbook, and wiki evidence without inventing missing values.",
+      "request": "Give me the full picture on this buyer, their company, and anything connected to them.",
       "expected_skill_ids": [
         "records"
       ],
@@ -36,7 +36,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That summary is off. Please fix it.",
           "archetype": "correction",
           "must_not": [
             {
@@ -52,7 +52,7 @@
     },
     {
       "id": "revision-safe-record-write",
-      "request": "On the exact existing person record rec-1, update only the current owner field revision, retire its superseded value, add a note and the approved file, then verify every durable artifact.",
+      "request": "Update person rec-1 with the owner, file, and note we agreed on.",
       "expected_skill_ids": [
         "records"
       ],
@@ -104,7 +104,7 @@
     },
     {
       "id": "exact-list-membership",
-      "request": "Show the available record lists, add these exact record ids to the selected list, remove only the reviewed ids, and verify final membership.",
+      "request": "Make the selected audience match the records we've approved.",
       "expected_skill_ids": [
         "records"
       ],
@@ -138,7 +138,7 @@
     },
     {
       "id": "confirmed-merge-unmerge-erase",
-      "request": "Preview the exact records and surviving values for a merge, unmerge, or erasure, but do not execute any destructive operation without explicit confirmation tied to the current revisions.",
+      "request": "Please combine the duplicate records, reverse the mistaken merge, and permanently remove the obsolete record.",
       "expected_skill_ids": [
         "records"
       ],
@@ -173,7 +173,7 @@
     },
     {
       "id": "confirmed-record-message",
-      "request": "Show eligible channels for this exact person and preview the message and sender, but do not send until the explicit provider-write approval is granted.",
+      "request": "Go ahead and send this person the message we agreed on.",
       "expected_skill_ids": [
         "records"
       ],
@@ -232,7 +232,7 @@
         "records.create",
         "records.get"
       ],
-      "request": "Create one standard person record named T25 Ada Lovelace with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "request": "Create a person record for T25 Ada Lovelace.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -268,7 +268,7 @@
         "records.create",
         "records.get"
       ],
-      "request": "Create one standard company record named T25 Analytical Engines with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "request": "Create a company record for T25 Analytical Engines.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -304,7 +304,7 @@
         "records.create",
         "records.get"
       ],
-      "request": "Create one standard deal record named T25 Expansion Review with no optional attributes. Save the exact proposal; after I approve it, execute it and verify the durable record. Do not message, enrich, import, sync, move stages, publish, activate, enroll, or send anything.",
+      "request": "Create a deal called T25 Expansion Review.",
       "resume_after_approval": "owner_exact"
     }
   ]

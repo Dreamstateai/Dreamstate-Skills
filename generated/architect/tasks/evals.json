@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "task-read-create-update",
-      "request": "List my current tasks, inspect the exact task I name, then create and update a zero-credit task directly when authorized.",
+      "request": "How many tasks do I have, and what are the details on the one I mentioned? Add a zero-point follow-up and fix the original task with the corrected details.",
       "expected_skill_ids": [
         "tasks"
       ],
@@ -25,7 +25,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "Correction: keep this at the reviewed boundary. Do not apply the change or replay any effect that already has a terminal receipt.",
+          "request": "Actually, leave my tasks as they were, I only wanted to review the proposed change.",
           "archetype": "correction",
           "must_not": [
             {
@@ -38,7 +38,7 @@
     },
     {
       "id": "task-lifecycle",
-      "request": "Reassign, complete, reopen, or cancel the exact current task without guessing its id.",
+      "request": "Take care of the task we were discussing and get it into the right hands and status.",
       "expected_skill_ids": [
         "tasks"
       ],
@@ -59,7 +59,7 @@
     },
     {
       "id": "task-bulk-bounded",
-      "request": "Apply this change only to these exact selected task ids and report partial outcomes.",
+      "request": "Clean up those tasks for me and tell me what happened to each one.",
       "expected_skill_ids": [
         "tasks"
       ],

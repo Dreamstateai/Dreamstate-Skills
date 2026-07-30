@@ -10,23 +10,23 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"source_state","description":"X evidence source boundary.","allowed_values":["official_api","cache","unavailable","not_applicable"]},{"id":"search_window","description":"Official X search-window coverage state.","allowed_values":["recent","archive","outside_entitlement","unavailable"]},{"id":"archive_entitlement","description":"Full-archive X entitlement state.","allowed_values":["entitled","not_entitled","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 90203e36c720ed48
-  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
+  capability_hash: d52d36727a64c369
+  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   generator_version: 1.0.0
   kernel_id: social.x
   kernel_file: KERNEL.md
   kernel_sha256: 77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969
   adapter_sha256: e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2
   evals_file: evals.json
-  evals_sha256: e895887d5cd585d67b03de0bf24d35c3f5be0db256e7bc3dc0e174c0903c34a8
+  evals_sha256: 6dfd2a7ce527ac0f82b9a419645cfbf06354d82ba6baa32081c7b80bd9455ecd
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

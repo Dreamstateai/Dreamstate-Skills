@@ -39,7 +39,7 @@
         "keyword-specific",
         "never raw cross-workspace rows"
       ],
-      "request": "For owninfluence.com's Dreamstate social-content product, target US-English marketing agencies and demo bookings. Before designing the keyword plan, consult the pooled benchmark lattice. Cite releasable cohort-level evidence with sample band and confidence only if it supports a keyword-specific conversion claim. If it cannot, state insufficient_evidence. Never expose raw cross-workspace rows. Return a read-only plan; do not publish.",
+      "request": "Build a keyword plan for owninfluence.com's Dreamstate social-content product aimed at US-English marketing agencies, with demo bookings as the goal. Use any reliable cross-customer benchmarks available and be clear about how strong the evidence is.",
       "required_capability_ids": [
         "brain.learning.query_benchmarks",
         "visibility.workspace_site_get",
@@ -47,7 +47,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "The evidence you already gathered is enough for this correction. Please update the plan from that existing workspace context.",
           "archetype": "correction",
           "must_not": [
             {
@@ -106,7 +106,7 @@
         }
       ],
       "required_concepts": [],
-      "request": "Run a read-only fast-triage SEO audit of owninfluence.com for US-English marketing agencies, using demo bookings as the target conversion and buffer.com plus hootsuite.com as competitors. Use public crawl and cached analytics/search evidence when available. Prioritize technical and content gaps and outline what should be fixed or proposed first; do not publish.",
+      "request": "Audit owninfluence.com for SEO opportunities targeting US-English marketing agencies and demo bookings, with buffer.com and hootsuite.com as competitors. Give me a prioritized plan covering the most important technical and content gaps.",
       "required_capability_ids": [
         "visibility.workspace_site_get",
         "seo.robots_audit",
@@ -122,7 +122,7 @@
     },
     {
       "id": "deployed-brain-surface-coverage",
-      "request": "Inspect the complete brain capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need an engineering-ready reference for the shared context and retrieval operations behind our deployed SEO workflows, including their inputs, outputs, side effects, and write governance.",
       "expected_skill_ids": [
         "seo"
       ],
@@ -145,7 +145,7 @@
     },
     {
       "id": "deployed-integrations-surface-coverage",
-      "request": "Inspect the complete integrations capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need an engineering-ready reference for the Google Search Console integration behind our deployed SEO workflows, including every available operation, its inputs, outputs, side effects, and write governance.",
       "expected_skill_ids": [
         "seo"
       ],
@@ -190,7 +190,7 @@
     },
     {
       "id": "deployed-seo-surface-coverage",
-      "request": "Inspect the complete seo capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Document the deployed SEO operations for agent readiness, llms.txt, and search-results data, including what each one accepts, returns, changes, and requires for governed writes.",
       "expected_skill_ids": [
         "seo"
       ],
@@ -228,7 +228,7 @@
     },
     {
       "id": "deployed-tools-surface-coverage",
-      "request": "Inspect the complete tools capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Document the llms.txt generation helper available to our deployed SEO workflows, including its inputs, output, side effects, and write governance.",
       "expected_skill_ids": [
         "seo"
       ],
@@ -249,7 +249,7 @@
     },
     {
       "id": "deployed-visibility-surface-coverage",
-      "request": "Inspect the complete visibility capability family used by deployed seo workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need an engineering-ready reference for the complete site-visibility layer behind our deployed SEO workflows, covering queries, metrics, sentiment, site files, scanning, performance, and workspace-site management.",
       "expected_skill_ids": [
         "seo"
       ],

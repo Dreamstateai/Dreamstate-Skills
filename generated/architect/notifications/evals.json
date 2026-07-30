@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "notification-inbox",
-      "request": "Show my canonical notification inbox and unread counts, then mark or archive only the exact notifications I name.",
+      "request": "Can you help me get my notifications under control? I want to see what needs my attention and clean up anything that doesn't.",
       "expected_skill_ids": [
         "notifications"
       ],
@@ -25,7 +25,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "Correction: keep this at the reviewed boundary. Do not apply the change or replay any effect that already has a terminal receipt.",
+          "request": "Actually, leave that notification the way it is.",
           "archetype": "correction",
           "must_not": [
             {
@@ -38,7 +38,7 @@
     },
     {
       "id": "notification-personal-preferences",
-      "request": "Read my current notification preferences before updating only the requested fields.",
+      "request": "Can you help me get my personal notifications set up the way I want?",
       "expected_skill_ids": [
         "notifications"
       ],
@@ -58,7 +58,7 @@
     },
     {
       "id": "notification-type-preferences",
-      "request": "Inspect, update, or reset exact personal and workspace notification-type preferences without overwriting other settings.",
+      "request": "Can you help me make sense of which alerts I get personally and in this workspace?",
       "expected_skill_ids": [
         "notifications"
       ],

@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "inspect-and-update-deal-board",
-      "request": "Open the canonical deal board, create and update the approved deal, then preview its exact pipeline transition and stage move against current revisions.",
+      "request": "Put the approved deal on our board with the reviewed changes and move it to the new pipeline and stage.",
       "expected_skill_ids": [
         "records-pipelines"
       ],
@@ -40,7 +40,7 @@
     },
     {
       "id": "pipeline-and-stage-definition",
-      "request": "List the exact pipelines, create and update the reviewed pipeline and stage, inspect stage impact, and preview their ordering changes.",
+      "request": "Update our pipelines and stages to match the reviewed design and ordering.",
       "expected_skill_ids": [
         "records-pipelines"
       ],
@@ -103,7 +103,7 @@
     },
     {
       "id": "confirmed-pipeline-lifecycle",
-      "request": "Show the affected deals before activating, archiving, or otherwise changing this pipeline or stage lifecycle, and do not execute without explicit confirmation.",
+      "request": "Archive the pipeline and stage from our review.",
       "expected_skill_ids": [
         "records-pipelines"
       ],
@@ -137,7 +137,7 @@
     },
     {
       "id": "confirmed-template-install",
-      "request": "List and preview the exact record template and everything it would create, but do not install it until I explicitly confirm that reviewed preview.",
+      "request": "Add the record template we reviewed to the workspace.",
       "expected_skill_ids": [
         "records-pipelines"
       ],
@@ -203,11 +203,11 @@
         "record_deals.board_get",
         "record_deals.create"
       ],
-      "request": "Inspect the canonical deal board, then create one deal named T25 Pipeline Proof Deal with no optional fields. Save the exact proposal; after I approve it, execute it and verify the durable deal and canonical run receipt. Do not update it, move stages, install templates, message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "request": "Create a new deal called T25 Pipeline Proof Deal.",
       "resume_after_approval": "owner_exact",
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "One correction: use the evidence you already found.",
           "archetype": "correction",
           "must_not": [
             {

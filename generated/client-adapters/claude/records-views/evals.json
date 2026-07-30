@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "saved-view-lifecycle",
-      "request": "List saved record views, create or update the exact reviewed filter and projection, execute it, and show paginated canonical results.",
+      "request": "Set up a saved record view for the items we reviewed and show me the matching records.",
       "expected_skill_ids": [
         "records-views"
       ],
@@ -37,7 +37,7 @@
     },
     {
       "id": "saved-view-v2-runtime",
-      "request": "List v2 views, create this reviewed v2 definition, upsert its exact runtime revision, execute it, and preserve nullable filter behavior.",
+      "request": "I need a saved view for the records we reviewed that also includes records with an empty optional value. Show me what it returns.",
       "expected_skill_ids": [
         "records-views"
       ],
@@ -64,7 +64,7 @@
     },
     {
       "id": "confirmed-saved-view-delete",
-      "request": "Show the exact saved view and its current revision, but do not delete it until I explicitly confirm that identity.",
+      "request": "Get rid of the saved view I was reviewing.",
       "expected_skill_ids": [
         "records-views"
       ],
@@ -122,11 +122,11 @@
         "saved_views.create",
         "saved_views.results"
       ],
-      "request": "List current saved views, then create one object-type Person saved view named T25 Active People Proof with no filters, default layout, and no grouping. Save the exact proposal; after I approve it, execute only that one create, list or execute its canonical results, and return the exact saved-view id, current revision, run-step receipt, result pagination, and deep link. Do not update, delete, import, export, message, enrich, publish, activate, enroll, or send anything.",
+      "request": "I need a Person view called T25 Active People Proof showing everyone, using the standard layout without grouping. Show me the people in it and send me the link.",
       "resume_after_approval": "owner_exact",
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "One correction: finish this using what you already found.",
           "archetype": "correction",
           "must_not": [
             {

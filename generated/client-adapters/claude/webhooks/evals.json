@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "webhook-read-configure",
-      "request": "List existing webhooks and create or delete only this exact zero-credit workspace endpoint without exposing secrets.",
+      "request": "Point zero-credit workspace events at the right endpoint and clean up the old webhook.",
       "expected_skill_ids": [
         "webhooks"
       ],
@@ -23,7 +23,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "Correction: keep this at the reviewed boundary. Do not apply the change or replay any effect that already has a terminal receipt.",
+          "request": "Actually, leave the webhook configuration as it was.",
           "archetype": "correction",
           "must_not": [
             {
@@ -36,7 +36,7 @@
     },
     {
       "id": "webhook-delivery-evidence",
-      "request": "Inspect delivery evidence and send one exact governed test delivery, retaining its external receipt.",
+      "request": "Can you make sure our webhook is working?",
       "expected_skill_ids": [
         "webhooks"
       ],

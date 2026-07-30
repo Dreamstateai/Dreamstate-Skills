@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "signal-read-suggest",
-      "request": "List and inspect current signal sources and events, then show grounded radar suggestions with freshness and completeness.",
+      "request": "What signals are coming in right now, and what should I be paying attention to?",
       "expected_skill_ids": [
         "signals"
       ],
@@ -22,7 +22,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That doesn't look right. Please take another look at what you found and give me a corrected answer.",
           "archetype": "correction",
           "must_not": [
             {
@@ -38,7 +38,7 @@
     },
     {
       "id": "signal-source-lifecycle",
-      "request": "Create or delete this exact signal source and set its capture key without printing the secret.",
+      "request": "Replace the existing signal source with this one and configure its capture key.",
       "expected_skill_ids": [
         "signals"
       ],
@@ -76,7 +76,7 @@
     },
     {
       "id": "signal-test-event",
-      "request": "Send one exact governed test event and retain its durable receipt without claiming future monitoring is proven.",
+      "request": "Send a test signal through this source and let me know whether it went through.",
       "expected_skill_ids": [
         "signals"
       ],

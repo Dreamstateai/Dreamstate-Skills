@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "inspect-object-schema",
-      "request": "Inspect every canonical object and its typed attributes, layout, relationships, permissions, notification settings, and downstream impact using exact ids and revisions.",
+      "request": "How are our main record types set up right now, and what would be affected if we changed them?",
       "expected_skill_ids": [
         "records-schema"
       ],
@@ -30,7 +30,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "One correction: base the answer on the results you already pulled from the workspace.",
           "archetype": "correction",
           "must_not": [
             {
@@ -46,7 +46,7 @@
     },
     {
       "id": "create-and-revise-object-schema",
-      "request": "Create the reviewed custom object and attribute definitions, revise only the exact current object and attributes, reorder them, update the layout, then create one approved record and verify it.",
+      "request": "Set up the custom record type we reviewed, including its fields, layout, and sample entry.",
       "expected_skill_ids": [
         "records-schema"
       ],
@@ -109,7 +109,7 @@
     },
     {
       "id": "relationship-schema-lifecycle",
-      "request": "Create the approved relationship definition, update and reorder only its current revision, and verify both sides without guessing object ids.",
+      "request": "Set up the relationship we reviewed between these two record types, including its labels and display order.",
       "expected_skill_ids": [
         "records-schema"
       ],
@@ -149,7 +149,7 @@
     },
     {
       "id": "confirmed-schema-policy-write",
-      "request": "Preview the exact permission and record-notification policy changes while preserving unrelated settings, but do not execute either policy write without explicit confirmation.",
+      "request": "Bring this record type's access and notification settings in line with the policy we reviewed.",
       "expected_skill_ids": [
         "records-schema"
       ],
@@ -212,7 +212,7 @@
         "record_objects.create",
         "record_objects.record_create"
       ],
-      "request": "Inspect the current object catalog first. Create a custom object with key partner, singular label Partner, plural label Partners, and no icon; then create one record named T25 Northstar Partner with no optional values. Save the exact dependency-complete proposal; after I approve it, execute it, re-read the object schema, and verify the durable record. Do not message, enrich, import, sync, publish, activate, enroll, or send anything.",
+      "request": "I need a Partner record type with the key partner, Partner and Partners as its labels, and no icon. Add a T25 Northstar Partner record without any extra details.",
       "resume_after_approval": "owner_exact"
     }
   ]

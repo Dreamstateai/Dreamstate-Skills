@@ -5,7 +5,7 @@
         "outreach-sequence-writer"
       ],
       "id": "custom-messaging-with-lineage",
-      "request": "Write custom LinkedIn and email steps whose variables resolve from the qualified table outputs, then preview them on real rows.",
+      "request": "Write a tailored LinkedIn and email sequence for our qualified leads, with a few realistic examples.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
@@ -35,7 +35,7 @@
       "must_not_load": [
         "outreach-sequence-writer"
       ],
-      "request": "The workflow only scores and routes leads; it sends no messages.",
+      "request": "Score and route our leads, but leave messaging out of it.",
       "must_not": [
         {
           "kind": "asked_for_derivable_fact",
@@ -44,7 +44,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "Actually, use whatever you already found in the workspace as the basis for it.",
           "archetype": "correction",
           "must_not": [
             {
@@ -72,7 +72,7 @@
         "preview count is the coordinator's literal pilot integer",
         "preview exactly the approved sample rows"
       ],
-      "request": "Preview the custom steps on the approved sample rows the coordinator already handed you. Do not ask me how many previews to generate.",
+      "request": "What would the personalized steps look like for the approved sample?",
       "required_capability_ids": [
         "rows.query"
       ],
@@ -82,7 +82,7 @@
     },
     {
       "id": "deployed-outreach-surface-coverage",
-      "request": "Inspect the complete outreach capability family used by deployed outreach-sequence-writer workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are all of the sequence writer's outreach features ready to deploy?",
       "expected_skill_ids": [
         "outreach-sequence-writer"
       ],
@@ -112,7 +112,7 @@
     },
     {
       "id": "deployed-rows-surface-coverage",
-      "request": "Inspect the complete rows capability family used by deployed outreach-sequence-writer workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Is the sequence writer's lead-data support ready to deploy?",
       "expected_skill_ids": [
         "outreach-sequence-writer"
       ],
@@ -135,7 +135,7 @@
     },
     {
       "id": "deployed-sequences-surface-coverage",
-      "request": "Inspect the complete sequences capability family used by deployed outreach-sequence-writer workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Is everything the writer uses to manage sequences ready to deploy?",
       "expected_skill_ids": [
         "outreach-sequence-writer"
       ],

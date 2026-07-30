@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "staged-record-import",
-      "request": "Upload this CRM source, stage and validate its rows with an explicit field mapping, create the import, then show the exact job, row errors, and resulting record ids.",
+      "request": "Bring the people from this CRM file into the workspace and tell me what made it in and what didn’t.",
       "expected_skill_ids": [
         "records-transfer"
       ],
@@ -34,7 +34,7 @@
     },
     {
       "id": "exact-record-export",
-      "request": "Create an export from this exact saved selection, inspect its durable status, and download only the terminal canonical artifact.",
+      "request": "I need a file with all the records in this saved selection.",
       "expected_skill_ids": [
         "records-transfer"
       ],
@@ -55,7 +55,7 @@
     },
     {
       "id": "confirmed-transfer-control",
-      "request": "Inspect this exact import or export job and preview a retry or cancellation, but do not control either job without explicit confirmation.",
+      "request": "Please get the failed import moving again and stop the export.",
       "expected_skill_ids": [
         "records-transfer"
       ],
@@ -137,11 +137,11 @@
         "record_imports.get",
         "record_imports.errors_list"
       ],
-      "request": "Inspect the standard Person object through the Records Schema specialist. Build an in-memory CSV named t25-transfer-proof.csv with one column named name and one data row T25 Transfer Proof Person. Upload that exact CSV, create a create-only import with duplicate mode error, stage exactly its one row, then re-read the canonical import and errors. Save the dependency-complete proposal; after I approve it, execute no more than those three writes and return the exact import job id, run-step receipts, source checksum, row result, and readback. Do not retry, cancel, export, message, enrich, publish, activate, enroll, or send anything.",
+      "request": "Add T25 Transfer Proof Person from t25-transfer-proof.csv without changing any existing people, and treat a duplicate as a failure. Send me the job ID and what happened to the row.",
       "resume_after_approval": "owner_exact",
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "Please make that correction using the evidence from the import you just checked.",
           "archetype": "correction",
           "must_not": [
             {

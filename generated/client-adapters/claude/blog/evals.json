@@ -5,7 +5,7 @@
         "blog"
       ],
       "id": "grounded-blog-draft",
-      "request": "Draft a cited blog article in our voice and put it into editorial review.",
+      "request": "Write a cited blog post that sounds like us and get it ready for the editorial team.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
@@ -51,7 +51,7 @@
     },
     {
       "id": "deployed-brain-surface-coverage",
-      "request": "Inspect the complete brain capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Give me a production-readiness assessment of the knowledge and evidence features behind our blog workflow.",
       "expected_skill_ids": [
         "blog"
       ],
@@ -75,7 +75,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That assessment doesn't seem right. Please correct it based on what you found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -91,7 +91,7 @@
     },
     {
       "id": "deployed-content-surface-coverage-1",
-      "request": "Inspect the complete content capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Give me a production-readiness assessment of the article management, assets, destinations, scheduling, distribution, and versioning features behind our blog workflow.",
       "expected_skill_ids": [
         "blog"
       ],
@@ -180,7 +180,7 @@
     },
     {
       "id": "deployed-content-surface-coverage-2",
-      "request": "Inspect the complete content capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Tell me whether the version history and comparison features in our blog workflow are ready for production.",
       "expected_skill_ids": [
         "blog"
       ],
@@ -205,7 +205,7 @@
     },
     {
       "id": "deployed-research-surface-coverage",
-      "request": "Inspect the complete research capability family used by deployed blog workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Tell me whether our blog workflow is ready to work reliably with external source links.",
       "expected_skill_ids": [
         "blog"
       ],

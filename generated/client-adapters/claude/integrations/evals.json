@@ -6,7 +6,7 @@
       ],
       "id": "safe-connect-resume",
       "must_not_request_secrets": true,
-      "request": "Connect the account needed for this publish operation and resume safely.",
+      "request": "I want to publish what we were working on. Get the connections sorted and carry on.",
       "required_capability_ids": [
         "integrations.unipile_status_get",
         "integrations.scheduler_status_get",
@@ -19,7 +19,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "You should already have everything you need here. Please continue.",
           "archetype": "correction",
           "must_not": [
             {
@@ -35,7 +35,7 @@
     },
     {
       "id": "deployed-integrations-surface-coverage-1",
-      "request": "Inspect the complete integrations capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are all the integrations behind our live workflows ready for launch? Flag anything that looks unavailable, misconfigured, or risky.",
       "expected_skill_ids": [
         "integrations"
       ],
@@ -78,7 +78,7 @@
     },
     {
       "id": "deployed-integrations-surface-coverage-2",
-      "request": "Inspect the complete integrations capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our Slack notifications and Stripe connection ready for launch? Let me know about anything that could block us.",
       "expected_skill_ids": [
         "integrations"
       ],
@@ -101,7 +101,7 @@
     },
     {
       "id": "deployed-mailboxes-surface-coverage",
-      "request": "Inspect the complete mailboxes capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our sending mailboxes ready to use? Flag any deliverability risks I should know about.",
       "expected_skill_ids": [
         "integrations"
       ],
@@ -122,7 +122,7 @@
     },
     {
       "id": "deployed-outreach-surface-coverage",
-      "request": "Inspect the complete outreach capability family used by deployed integrations workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Is our outreach setup ready to launch? Give me a quick rundown of anything that needs attention.",
       "expected_skill_ids": [
         "integrations"
       ],

@@ -3,28 +3,28 @@ id: outreach-workflow-builder
 name: outreach-workflow-builder
 description: "Build validated row workflows with triggers, typed branches, action handoffs, stop logic, eligibility, and explicit workflow-versus-expansion-versus-activation consequence boundaries."
 capability_domains: ["outreach"]
-capability_ids: ["columns.list","rows.get","rows.query","runs.cancel","runs.get","runs.pause","runs.resume","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]
+capability_ids: ["columns.list","rows.get","rows.query","runs.cancel","runs.get","runs.pause","runs.resume","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 90203e36c720ed48
-  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
+  capability_hash: d52d36727a64c369
+  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
-  kernel_sha256: 6d786028ea4937001ef6b38358138ea263952419ed0861750a49545561f27bcd
-  adapter_sha256: ad322f60fcd3bf26603be13e6b7b6c5b0221b657c032ebdeea6b742f5d7deed4
+  kernel_sha256: 24dec461a0ce92f11364d28d2b6551bd3824fa02798f9f8a0ec8201abfb70ae3
+  adapter_sha256: aa46b2ca1b3840533262f147a043c3c00dc92e74dda3f00482f0878fd3d6e801
   evals_file: evals.json
-  evals_sha256: 56e2780f6f18845a5336845acffacdbee6ded40a557c560934085d78bbf23a15
+  evals_sha256: 8b1dc40a336bdc5c221446f6243afaed3ae3114e7015f503174b37c7b05f389a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,7 +47,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 34 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 35 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 12 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 - Cannot hold a source definition as a capability grant: all 26 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
 
@@ -55,7 +55,7 @@ These are derived from this skill's exact capability contract, so state them up 
 
 # Outreach workflow builder
 <!-- architect-operation-contract
-{"required_capability_ids":["columns.list","rows.get","rows.query","runs.cancel","runs.get","runs.pause","runs.resume","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]}
+{"required_capability_ids":["columns.list","rows.get","rows.query","runs.cancel","runs.get","runs.pause","runs.resume","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]}
 -->
 
 ## Job boundary
@@ -84,7 +84,7 @@ Keep the lifecycle boundaries explicit in the handoff:
 
 1. Workflow persistence saves the reviewed graph only. A workflow proposal cannot run columns or enroll contacts. It also cannot expand a source, import contacts, or activate a workflow.
 2. After pilot and column-sample inspection, source expansion remains a separate `tables`-owned proposal. This specialist consumes its typed reviewed handoff—source-evidence receipt, exact workbook/worksheet/view revisions, configured source, unchanged targeting, capped exact selection, and terminal receipt—only to bind workflow eligibility. It never searches, fetches, validates, proposes, or executes source expansion.
-3. Activation remains a later coordinator-owned consequence with its own approval boundary.
+3. Activation remains a later coordinator-owned consequence with its own approval boundary. Before reporting activation readiness, read the bound delivery surface with `workflows.delivery_binding_get` for the exact workflow and version: mailbox connections, LinkedIn sender accounts, each side's selection mode, the bound ruleset, and the binding revision. Never infer senders from the graph or from memory. A missing or stale-revision binding is a typed blocker, not a default.
 
 Workflow versions and workflow runs have separate lifecycle controls:
 

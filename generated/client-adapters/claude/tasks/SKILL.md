@@ -7,16 +7,16 @@ capability_ids: ["tasks.bulk","tasks.cancel","tasks.complete","tasks.count","tas
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 90203e36c720ed48
-  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
+  capability_hash: d52d36727a64c369
+  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   generator_version: 1.0.0
   client: claude
   kernel_id: tasks
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 44823e2209b86385e9d80c2487fd23d6ecc496314a0db574839eded6a44b93e3
   adapter_sha256: 26dbff1d909a5bab889ef12256f8cb22ca8ac253e9bee49b0ee667252e65db6f
   evals_file: evals.json
-  evals_sha256: 452497e8f68eb5d6abaa112d4f0bca6bb68d13ede1d62849d1b93b42e8213e9c
+  evals_sha256: 6ea646a0c6e3a23e6f9c91c635e379a99efb1d3af82de800ef5d6c3c987bc0b6
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

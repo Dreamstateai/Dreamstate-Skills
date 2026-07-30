@@ -7,16 +7,16 @@ capability_ids: ["radar.signal_suggestions_get","signal_sources.capture_key_set"
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 90203e36c720ed48
-  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
+  capability_hash: d52d36727a64c369
+  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   generator_version: 1.0.0
   client: codex
   kernel_id: signals
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 665dfc04657526b90c547cefbfe0874fbd2a94cea6f0a0c55bb019835f07574b
   adapter_sha256: b7f79379ae09c8253d3a97bb11ebc7ee82b1000e46754d2d7ad906fe12199ef5
   evals_file: evals.json
-  evals_sha256: 92f319b710cd77afd2e21e98d763baba75d91b236735e23e4cb260f79dc002e1
+  evals_sha256: 75b4107afb5f4864306a1c759dc5edf08810d02ea75cb0dbcddc891d17df78de
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

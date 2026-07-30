@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "audience-research-preview",
-      "request": "Read existing audiences and sources, use grounded persona suggestions, and preview exact filters and exclusions before writing.",
+      "request": "I want a sharper audience based on what we already know about our customers. Show me who fits and who doesn't.",
       "expected_skill_ids": [
         "audiences"
       ],
@@ -24,7 +24,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That isn't quite right. Revise it using the information you already found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -40,7 +40,7 @@
     },
     {
       "id": "audience-lifecycle",
-      "request": "Create or update this zero-credit reversible audience directly when authorized, and archive only the exact audience I name.",
+      "request": "Please clean up our audiences: create the new one we discussed, correct the existing one, and retire the outdated one.",
       "expected_skill_ids": [
         "audiences"
       ],

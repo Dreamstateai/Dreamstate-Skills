@@ -31,7 +31,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That’s not quite right, revise it using what you already found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -106,7 +106,7 @@
     },
     {
       "id": "deployed-calendar-surface-coverage",
-      "request": "Inspect the complete calendar capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Tell me whether the calendar side of our weekly growth planning is ready to use, and give me a safe handoff for anything that needs attention.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -127,7 +127,7 @@
     },
     {
       "id": "deployed-command-center-surface-coverage",
-      "request": "Inspect the complete command center capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Give me a readiness assessment of the command center support behind our weekly growth planning, including any gaps I should know about.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -154,7 +154,7 @@
     },
     {
       "id": "deployed-content-surface-coverage",
-      "request": "Inspect the complete content capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Check whether our content setup fully supports weekly growth planning and summarize any gaps or risks.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -177,7 +177,7 @@
     },
     {
       "id": "deployed-gtm-surface-coverage",
-      "request": "Inspect the complete gtm capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Assess whether our go-to-market setup is ready to support weekly growth planning and flag anything that could get in the way.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -200,7 +200,7 @@
     },
     {
       "id": "deployed-outreach-surface-coverage",
-      "request": "Inspect the complete outreach capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Tell me whether our outreach workspace is ready for weekly growth planning and call out any issues.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -221,7 +221,7 @@
     },
     {
       "id": "deployed-sequences-surface-coverage",
-      "request": "Inspect the complete sequences capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Review whether our sequences are properly set up for weekly growth planning and summarize anything that needs attention.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -242,7 +242,7 @@
     },
     {
       "id": "deployed-social-surface-coverage",
-      "request": "Inspect the complete social capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Assess whether our social setup is ready to support weekly growth planning and highlight any gaps.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],
@@ -267,7 +267,7 @@
     },
     {
       "id": "deployed-workbooks-surface-coverage",
-      "request": "Inspect the complete workbooks capability family used by deployed weekly-growth-plan workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Check whether our workbooks are ready to support weekly growth planning and tell me about any gaps or risks.",
       "expected_skill_ids": [
         "weekly-growth-plan"
       ],

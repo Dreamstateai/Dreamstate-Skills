@@ -6,7 +6,7 @@
       ],
       "id": "unsaved-asset-proposal",
       "must_state_unsaved_without_capability": true,
-      "request": "Create a downloadable ICP audit checklist for our buyers.",
+      "request": "Create a downloadable ICP audit checklist for prospective buyers.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
@@ -40,7 +40,7 @@
       "must_not_load": [
         "growth-asset-planner"
       ],
-      "request": "Draft a blog article and send it to editorial review.",
+      "request": "Draft a blog post for our audience that is ready for editorial review.",
       "must_not": [
         {
           "kind": "asked_for_derivable_fact",
@@ -49,7 +49,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "Actually, revise the draft based on what you found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -66,7 +66,7 @@
     },
     {
       "id": "deployed-brain-surface-coverage",
-      "request": "Inspect the complete brain capability family used by deployed growth-asset-planner workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Give me an evidence-backed map of what powers our deployed growth-asset planning workflows, including the inputs, side effects, and governance requirements.",
       "expected_skill_ids": [
         "growth-asset-planner"
       ],

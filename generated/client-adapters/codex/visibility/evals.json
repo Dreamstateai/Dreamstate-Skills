@@ -9,7 +9,7 @@
         "analytics",
         "seo"
       ],
-      "request": "Audit whether AI assistants cite us for our core buyer questions and show the evidence gaps.",
+      "request": "Where are AI assistants mentioning us when buyers ask about LinkedIn outreach tools, and which important questions are we absent from?",
       "required_capability_ids": [
         "visibility.workspace_site_get",
         "visibility.overview",
@@ -25,7 +25,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That's not quite right, please correct the audit.",
           "archetype": "correction",
           "must_not": [
             {
@@ -52,7 +52,7 @@
       ],
       "id": "overall-score-and-carrying-prompt",
       "must_not_ask_user": true,
-      "request": "What is my latest overall AI visibility score, and which tracked prompt is carrying performance?",
+      "request": "How visible are we in AI answers right now, and what's driving that performance?",
       "required_capability_ids": [
         "visibility.workspace_site_get",
         "visibility.overview",
@@ -78,7 +78,7 @@
         "visibility"
       ],
       "id": "approved-citation-refresh",
-      "request": "Refresh the approved AI citation measurement after the credit-bearing consequence is reviewed, then report its durable run state.",
+      "request": "Bring our AI citation picture up to date and let me know when it's ready.",
       "execution_profile": "production_real",
       "fixture_profile": "workspace_live_reversible_mutation",
       "required_capability_ids": [
@@ -95,7 +95,7 @@
     },
     {
       "id": "deployed-visibility-surface-coverage-1",
-      "request": "Inspect the complete visibility capability family used by deployed visibility workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "We're about to turn on our visibility automation. What could it change, and where should a person review the work?",
       "expected_skill_ids": [
         "visibility"
       ],
@@ -138,7 +138,7 @@
     },
     {
       "id": "deployed-visibility-surface-coverage-2",
-      "request": "Inspect the complete visibility capability family used by deployed visibility workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Before we enable our visibility tools, map out what they could change and where a person should review the work.",
       "expected_skill_ids": [
         "visibility"
       ],

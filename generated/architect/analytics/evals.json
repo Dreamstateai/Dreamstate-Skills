@@ -9,7 +9,7 @@
         "seo",
         "visibility"
       ],
-      "request": "Explain why LinkedIn engagement fell this month using the metrics we actually have.",
+      "request": "Can you figure out what caused our LinkedIn engagement to drop this month?",
       "required_capability_ids": [
         "social.analytics_query",
         "social.post_analytics"
@@ -22,7 +22,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That doesn't look right. Please correct the analysis using the information you already found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -42,7 +42,7 @@
     },
     {
       "id": "deployed-analytics-surface-coverage",
-      "request": "Inspect the complete analytics capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are all of our analytics data sources ready for production? Give me a report on everything available and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -83,7 +83,7 @@
     },
     {
       "id": "deployed-attribution-surface-coverage",
-      "request": "Inspect the complete attribution capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Is our attribution reporting ready for production? Show me everything it can cover and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -116,7 +116,7 @@
     },
     {
       "id": "deployed-command-center-surface-coverage",
-      "request": "Inspect the complete command center capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Is the command center data ready to support our production reporting? Tell me what it covers and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -137,7 +137,7 @@
     },
     {
       "id": "deployed-gtm-surface-coverage",
-      "request": "Inspect the complete gtm capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our go-to-market run metrics ready for production reporting? Tell me what they cover and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -158,7 +158,7 @@
     },
     {
       "id": "deployed-outreach-surface-coverage",
-      "request": "Inspect the complete outreach capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our outreach and sequence analytics ready for production? Show me everything we can measure and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -189,7 +189,7 @@
     },
     {
       "id": "deployed-page-analytics-surface-coverage",
-      "request": "Inspect the complete page analytics capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our page analytics ready for production? Show me everything we can measure and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -216,7 +216,7 @@
     },
     {
       "id": "deployed-social-surface-coverage",
-      "request": "Inspect the complete social capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our social analytics ready for production? Show me everything we can measure and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -249,7 +249,7 @@
     },
     {
       "id": "deployed-visibility-surface-coverage",
-      "request": "Inspect the complete visibility capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Is our visibility reporting ready for production? Tell me what it covers and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],
@@ -270,7 +270,7 @@
     },
     {
       "id": "deployed-workflows-surface-coverage",
-      "request": "Inspect the complete workflows capability family used by deployed analytics workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Are our workflow analytics ready for production? Show me everything we can measure and any restrictions we need to account for.",
       "expected_skill_ids": [
         "analytics"
       ],

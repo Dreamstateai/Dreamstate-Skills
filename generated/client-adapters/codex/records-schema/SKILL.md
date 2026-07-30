@@ -7,16 +7,16 @@ capability_ids: ["record_attributes.create","record_attributes.list","record_def
 completion_contract: {"version":1,"fields":[{"id":"schema_definition_state","description":"Canonical object schema and revision state.","allowed_values":["complete","partial","missing","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 90203e36c720ed48
-  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
+  capability_hash: d52d36727a64c369
+  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   generator_version: 1.0.0
   client: codex
   kernel_id: records-schema
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 38d6f45af8c091ac7fddeba8c4a2f765c089f634622a48f1477d48a0b2ff82c1
   adapter_sha256: 9b9f191d4628e766b37e913ec2e7339f87c8b106b3af044729327b86e4d74af6
   evals_file: evals.json
-  evals_sha256: 168231518c8f5ac0b577d823bc65ad5043882ce82988bb6ee2749dc331b03154
+  evals_sha256: 57609921075322b6c1e83904abe94cd23445d633222cccd4a7e1dbe96573694e
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

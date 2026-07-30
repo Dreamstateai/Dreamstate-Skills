@@ -10,23 +10,23 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"transfer_run_state","description":"Canonical transfer job terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"transfer_evidence_state","description":"Row and artifact evidence status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 90203e36c720ed48
-  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
+  capability_hash: d52d36727a64c369
+  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
+  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
   generator_version: 1.0.0
   kernel_id: records-transfer
   kernel_file: KERNEL.md
   kernel_sha256: 09eb3bc15afff2e09b68705290a9ad403ac9ab4608d82bd7c424617cb4078797
   adapter_sha256: 53aaf2c52992e1b2d14453e9a2d64bbb4116292bdb2e321f87cca3a144b6e539
   evals_file: evals.json
-  evals_sha256: 03a8172acf5bda828876ac96b45de56c90b2135f2dc30a47c99e8b063304665a
+  evals_sha256: 1c117df40699db91599b8289d7436266fb05f1c54cd38748419f92fa59811424
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

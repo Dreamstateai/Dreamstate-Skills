@@ -104,10 +104,10 @@
         "source-evidence run",
         "terminal exact-selection receipt"
       ],
-      "request": "Consume the typed reviewed tables handoff for source-evidence run_eval_source_001 and its terminal exact-selection receipt. Bind workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, saved view sv_eval_001 revision 5, and draft workflow wf_eval_001 revision 3. Validate only the workflow eligibility binding. Do not search, fetch, validate, propose, dry-run, or execute source expansion; do not import, enroll, activate, or send.",
+      "request": "I need the reviewed source result from source-evidence run_eval_source_001 bound as the exact eligibility input for draft workflow wf_eval_001 revision 3, using workbook wb_eval_001 revision 7, worksheet ws_eval_001 revision 11, and saved view sv_eval_001 revision 5. I want confirmation that this binding is valid and ready for coordinator review.",
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "The evidence you already gathered is enough for this correction. Please update the workflow from that existing workspace context.",
           "archetype": "correction",
           "must_not": [
             {
@@ -159,14 +159,14 @@
         "workflow eligibility binding",
         "no source execution"
       ],
-      "request": "Bind the completed Tables-owned exact-result expansion receipt to this workflow's eligibility input. Inspect the workflow and preserve the exact selection, but do not search, fetch, propose, dry-run, or execute a source capability here.",
+      "request": "I need the completed exact selection bound to this workflow's eligibility input, with the selection preserved exactly and the resulting workflow state ready for review.",
       "required_executed_capability_ids": [
         "workflows.get"
       ]
     },
     {
       "id": "deployed-columns-surface-coverage",
-      "request": "Inspect the complete columns capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every column action available to our deployed outreach workflows, including what each action needs, what it can read or change, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -187,7 +187,7 @@
     },
     {
       "id": "deployed-rows-surface-coverage",
-      "request": "Inspect the complete rows capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every row inspection and query action available to our deployed outreach workflows, including what each action needs, what it can read, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -210,7 +210,7 @@
     },
     {
       "id": "deployed-table-sources-surface-coverage",
-      "request": "Inspect the complete table sources capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every worksheet source action available to our deployed outreach workflows, including what each action needs, what it can read or change, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -231,7 +231,7 @@
     },
     {
       "id": "deployed-tables-surface-coverage",
-      "request": "Inspect the complete tables capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every table inspection action available to our deployed outreach workflows, including what each action needs, what it can read, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -254,7 +254,7 @@
     },
     {
       "id": "deployed-views-surface-coverage",
-      "request": "Inspect the complete views capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every saved view inspection action available to our deployed outreach workflows, including what each action needs, what it can read, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -277,7 +277,7 @@
     },
     {
       "id": "deployed-workbooks-surface-coverage",
-      "request": "Inspect the complete workbooks capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every Workbook inspection action available to our deployed outreach workflows, including what each action needs, what it can read, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -329,7 +329,7 @@
     },
     {
       "id": "deployed-workflows-surface-coverage",
-      "request": "Inspect the complete workflows capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every drafting, node, trigger, child workflow, run history, and archival action available to our deployed outreach workflows, including inputs, boundaries, and approval requirements.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -451,7 +451,7 @@
     },
     {
       "id": "deployed-worksheets-surface-coverage",
-      "request": "Inspect the complete worksheets capability family used by deployed outreach-workflow-builder workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "I need a governance-ready map of every worksheet discovery action available to our deployed outreach workflows, including what each action needs, what it can read, and where approval is required.",
       "expected_skill_ids": [
         "outreach-workflow-builder"
       ],
@@ -467,6 +467,75 @@
         {
           "kind": "asked_for_derivable_fact",
           "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "read-delivery-binding-before-activation-readiness",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "request": "I am deciding whether draft workflow wf_eval_003 revision 6 is ready for activation. Tell me exactly which mailbox connections and LinkedIn sender accounts it currently uses, the selection mode for each, the bound ruleset, and the binding revision.",
+      "required_capability_ids": [
+        "workflows.get",
+        "workflows.delivery_binding_get"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.get",
+        "workflows.delivery_binding_get"
+      ],
+      "required_concepts": [
+        "delivery binding revision",
+        "mailbox and LinkedIn sender selection modes",
+        "activation stays a separate coordinator-owned approval"
+      ],
+      "required_completion_fields": [
+        {
+          "id": "artifact_state",
+          "allowed_values": [
+            "existing"
+          ]
+        },
+        {
+          "id": "approval_state",
+          "allowed_values": [
+            "not_applicable"
+          ]
+        },
+        {
+          "id": "activation_state",
+          "allowed_values": [
+            "inactive"
+          ]
+        },
+        {
+          "id": "durability_state",
+          "allowed_values": [
+            "not_applicable"
+          ]
+        }
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "reading the delivery binding is a free read; senders must never be reported by activating the workflow to observe them"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "So which LinkedIn sender would actually go first? Answer from the binding you already read.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "the sender selection and selection mode already returned by workflows.delivery_binding_get"
+            }
+          ]
         }
       ]
     }

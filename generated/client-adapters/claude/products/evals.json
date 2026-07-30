@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "product-source-read",
-      "request": "List current product content and inspect the exact page metadata with provenance and freshness.",
+      "request": "What product content do we currently have, and where did the page information come from?",
       "expected_skill_ids": [
         "products"
       ],
@@ -18,7 +18,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That doesn’t look right. Please correct it.",
           "archetype": "correction",
           "must_not": [
             {
@@ -34,7 +34,7 @@
     },
     {
       "id": "product-document-process",
-      "request": "Process the Dreamstate product brief at workspace/products/dreamstate-brief.pdf, spend no more than 25 credits, and tell me when it finishes.",
+      "request": "Please bring the Dreamstate brief at workspace/products/dreamstate-brief.pdf into our product materials. Keep the cost under 25 credits.",
       "expected_skill_ids": [
         "products"
       ],
@@ -52,7 +52,7 @@
     },
     {
       "id": "product-website-scrape",
-      "request": "Scrape the Dreamstate product page at exactly https://trydreamstate.com/product, spend no more than 20 credits, and tell me when it finishes.",
+      "request": "Add the Dreamstate page at https://trydreamstate.com/product to our product materials. Keep the cost under 20 credits.",
       "expected_skill_ids": [
         "products"
       ],
@@ -76,7 +76,7 @@
     },
     {
       "id": "product-website-refresh",
-      "request": "Refresh the existing Dreamstate product source at exactly https://trydreamstate.com/product, spend no more than 15 credits, and tell me when it finishes.",
+      "request": "Bring our saved Dreamstate product page up to date from https://trydreamstate.com/product. Keep the cost under 15 credits.",
       "expected_skill_ids": [
         "products"
       ],
@@ -100,7 +100,7 @@
     },
     {
       "id": "product-content-archive",
-      "request": "Archive product content item 873d533d-225b-4d1b-a070-6709ce3f5b6c and leave every other product artifact alone.",
+      "request": "We don’t need product content item 873d533d-225b-4d1b-a070-6709ce3f5b6c anymore. Please archive it.",
       "expected_skill_ids": [
         "products"
       ],
@@ -118,7 +118,7 @@
     },
     {
       "id": "context-source-transition-unavailable",
-      "request": "Inspect the exact dependency graph for product evidence Context source 5f32bb23-e0b9-4f20-a5be-82c8b9ce3b41 at version 7, then explain truthfully that this release cannot mark the source stale without a live transition capability. Do not mutate another source or claim success from prose.",
+      "request": "The product evidence in source 5f32bb23-e0b9-4f20-a5be-82c8b9ce3b41 is out of date as of version 7. Mark it stale.",
       "expected_skill_ids": [
         "products"
       ],

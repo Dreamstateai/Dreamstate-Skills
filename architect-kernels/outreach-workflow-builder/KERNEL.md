@@ -1,6 +1,6 @@
 # Outreach workflow builder
 <!-- architect-operation-contract
-{"required_capability_ids":["columns.list","rows.get","rows.query","runs.cancel","runs.get","runs.pause","runs.resume","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]}
+{"required_capability_ids":["columns.list","rows.get","rows.query","runs.cancel","runs.get","runs.pause","runs.resume","table_sources.list","tables.get","tables.list","views.get","views.list","workbooks.get","workbooks.list","workflows.archive","workflows.call_child","workflows.create","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheets.list"]}
 -->
 
 ## Job boundary
@@ -29,7 +29,7 @@ Keep the lifecycle boundaries explicit in the handoff:
 
 1. Workflow persistence saves the reviewed graph only. A workflow proposal cannot run columns or enroll contacts. It also cannot expand a source, import contacts, or activate a workflow.
 2. After pilot and column-sample inspection, source expansion remains a separate `tables`-owned proposal. This specialist consumes its typed reviewed handoff—source-evidence receipt, exact workbook/worksheet/view revisions, configured source, unchanged targeting, capped exact selection, and terminal receipt—only to bind workflow eligibility. It never searches, fetches, validates, proposes, or executes source expansion.
-3. Activation remains a later coordinator-owned consequence with its own approval boundary.
+3. Activation remains a later coordinator-owned consequence with its own approval boundary. Before reporting activation readiness, read the bound delivery surface with `workflows.delivery_binding_get` for the exact workflow and version: mailbox connections, LinkedIn sender accounts, each side's selection mode, the bound ruleset, and the binding revision. Never infer senders from the graph or from memory. A missing or stale-revision binding is a typed blocker, not a default.
 
 Workflow versions and workflow runs have separate lifecycle controls:
 

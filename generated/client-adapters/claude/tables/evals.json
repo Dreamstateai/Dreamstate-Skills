@@ -32,7 +32,7 @@
           ]
         }
       ],
-      "request": "Required order: search for tables.create, fetch that exact live contract, bind the proposal to every field and constraint it declares, then save the reviewable proposal. Use the execution mode that contract declares supported and do not claim a preparation receipt it cannot produce. The requested schema uses company_domain as stable row identity, a company search source, profile enrichment after identity resolution, a deterministic formula score after enrichment, and a review view. Use recommended non-secret defaults. A proposal that does not match the fetched contract is incomplete. Do not create the table and do not start a paid run.",
+      "request": "Set up a reviewable table proposal for AI companies, keyed by company domain, with company search, profile enrichment, a formula-based score, and a review view. Use sensible defaults and let me review it before anything runs.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
@@ -83,7 +83,7 @@
           ]
         }
       ],
-      "request": "Use the exact live canonical run contracts for the existing table selection. Preview cost, freeze the reviewed representative selection, and run the selected column with an explicit 10-row cap and 25-credit ceiling. The canonical runner must verify the current table revision, exact approved selection, and grant before execution. Follow the durable run to terminal settled-cell evidence, then report completed, failed, and blocked cells without retrying failures.",
+      "request": "Run the selected column on a representative 10-row sample, spend no more than 25 credits, and tell me how every cell finished. Show me the cost before I commit.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_enrolled",
@@ -99,7 +99,7 @@
         "tables"
       ],
       "id": "record-field-read-returns-real-values",
-      "request": "Open record rec-1 and tell me every field it currently holds, with the actual saved values. Do not describe what the record probably contains and do not ask me to paste it.",
+      "request": "What fields and saved values are currently on record rec-1?",
       "required_capability_ids": [
         "records.get"
       ],
@@ -108,7 +108,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "One correction: which of those fields are empty?",
           "archetype": "correction",
           "must_not": [
             {
@@ -127,7 +127,7 @@
         "tables"
       ],
       "id": "record-field-write-binds-to-the-read-revision",
-      "request": "Change the owner field on record rec-1 to Dana. Read the record first, show me the old value, and bind the proposed change to the revision that read returned.",
+      "request": "Change the owner of record rec-1 to Dana. Show me the current owner and let me review the change before it is saved.",
       "required_capability_ids": [
         "records.get",
         "records.field_set"
@@ -176,7 +176,7 @@
         "no enrollment",
         "no send"
       ],
-      "request": "Before attaching a source, use table_sources.preview to compare two or three scarcest-first parameter variants with exactly ten real provider rows each. Persist receipt-bearing reasoning, provenance, freshness, and cost. Compute precision as qualified divided by qualified plus not_qualified, excluding unsure. Select a variant only with at least six decided rows and precision strictly above 0.50. If it passes, stage exactly 30 nondeliverable rows; do not create a source destination, enroll, activate, or send.",
+      "request": "Figure out which source settings produce the most qualified prospects using small real samples. If the results are convincing, stage a 30-row preview for me to review.",
       "required_executed_capability_ids": [
         "table_sources.preview"
       ]
@@ -195,7 +195,7 @@
         "post-approval demand plan",
         "stage_exact_result_set=true"
       ],
-      "request": "Prepare a separately reviewed exact-result-set expansion after the Workbook and bounded sample are approved. Bind the source-evidence receipt, exact Workbook, worksheet, saved-view and workflow revisions, configured source, unchanged targeting, post-approval demand-plan cap, and stage_exact_result_set=true. Do not enroll, activate, or send.",
+      "request": "The workbook and sample are approved. Stage the complete matching result set for a separate review.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_enrolled",
@@ -221,7 +221,7 @@
         "workbooks.duplicate",
         "workbooks.archive"
       ],
-      "request": "Create and inspect a Workbook, update its exact revision and my tab state, duplicate it with a durable receipt, then archive only the approved duplicate while preserving the original.",
+      "request": "I need a new Workbook with my latest tab state and revision preserved in the original, plus an approved duplicate retained as an archived copy with a durable receipt.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_exists",
@@ -325,7 +325,7 @@
         "views.update",
         "views.archive"
       ],
-      "request": "Inspect the current worksheet table, create a review view with typed filters, sorts and visible columns, revise it safely, then archive only the approved temporary view and table.",
+      "request": "I need a temporary worksheet table and review view configured with the supplied typed filters, sorts, and visible columns, with their revision history preserved and both retained in an archived state after approval.",
       "expected_workspace_outcome": [
         {
           "check": "saved_view_created",
@@ -386,7 +386,7 @@
         "table_sources.restore_frontier",
         "table_sources.detach"
       ],
-      "request": "Attach the reviewed source definition to this worksheet, preview its bounded sync, run it, inspect and deliberately reset then restore its exact frontier, and detach only after separate approval.",
+      "request": "I need this reviewed source definition connected to the worksheet with a completed bounded sync and an audit proof that its exact frontier can be reset and restored. The final handoff should preserve the connection for a separate detachment decision.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_enrolled",
@@ -453,7 +453,7 @@
         "columns.run",
         "selection_snapshots.create"
       ],
-      "request": "Add and revise the typed dependency columns company_domain and employee_count, upsert and query exact stable rows, run the employee_count column on its own and then run all eligible columns under a bounded selection, freeze that selection as a snapshot, inspect the frozen selection, and prove delete/restore and column archive preserve history.",
+      "request": "I need this worksheet populated with stable rows and typed dependency columns for company_domain and employee_count, including results for employee_count alone and for all eligible columns across the bounded selection. Preserve that exact selection as an inspectable snapshot, with audit proof that row deletion, restoration, and column archival retain history.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_enrolled",
@@ -614,7 +614,7 @@
         "workbooks.create",
         "columns.add"
       ],
-      "request": "Create a workspace-local Workbook named T25 Account Qualification with first worksheet Companies, company row identity, and columns Company Domain, Company Name, Employee Count, and ICP Fit Reason. Save the exact proposal; after I approve it, execute it and verify durable readback. Do not attach or run a source, enrich, enroll, create a workflow or sequence, publish, activate, or send anything.",
+      "request": "Draft a local workbook called T25 Account Qualification, tracking companies by domain, with a Companies sheet and columns for Company Domain, Company Name, Employee Count, and ICP Fit Reason. Create it after I approve the draft.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -661,7 +661,7 @@
         "workbooks.create",
         "columns.add"
       ],
-      "request": "Create a workspace-local Workbook named T25 Buyer Research with first worksheet People, person row identity, and columns Full Name, Work Email, Job Title, and Company Domain. Save the exact proposal; after I approve it, execute it and verify durable readback. Do not attach or run a source, enrich, enroll, create a workflow or sequence, publish, activate, or send anything.",
+      "request": "Draft a local workbook called T25 Buyer Research, tracking people, with a People sheet and columns for Full Name, Work Email, Job Title, and Company Domain. Create it after I approve the draft.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -708,7 +708,7 @@
         "workbooks.create",
         "columns.add"
       ],
-      "request": "Create a workspace-local Workbook named T25 Market Map with first worksheet Companies, company row identity, and columns Company Name, Company Domain, Industry, and Headquarters. Save the exact proposal; after I approve it, execute it and verify durable readback. Do not attach or run a source, enrich, enroll, create a workflow or sequence, publish, activate, or send anything.",
+      "request": "Draft a local workbook called T25 Market Map, tracking companies, with a Companies sheet and columns for Company Name, Company Domain, Industry, and Headquarters. Create it after I approve the draft.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -758,12 +758,12 @@
         "workbooks.create",
         "columns.add"
       ],
-      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11\u2013200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
+      "request": "Draft an editable workbook called T25 US SaaS Founders for reviewing founders and CEOs at US B2B SaaS companies with 11\u2013200 employees, excluding agencies and consultants, and an 80-point qualification cutoff. Include Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Create it after I approve the draft.",
       "resume_after_approval": "owner_exact"
     },
     {
       "id": "deployed-attachments-surface-coverage",
-      "request": "Inspect the complete attachments capability family used by deployed tables workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Help me plan how attachments should be managed for this table before anything changes.",
       "expected_skill_ids": [
         "tables"
       ],
@@ -792,7 +792,7 @@
     },
     {
       "id": "deployed-cells-surface-coverage",
-      "request": "Inspect the complete cells capability family used by deployed tables workflows, including reading a bounded page of settled cell values. Verify live contract availability, inputs, read/write boundaries, paging limits, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Before I touch any cells, explain how I can inspect their values and mark them settled, including how many I can review at once.",
       "expected_skill_ids": [
         "tables"
       ],
@@ -821,7 +821,7 @@
     },
     {
       "id": "deployed-records-surface-coverage",
-      "request": "Inspect the complete records capability family used by deployed tables workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "What are my options for finding company and people records and resolving their references in this workspace?",
       "expected_skill_ids": [
         "tables"
       ],
@@ -850,7 +850,7 @@
     },
     {
       "id": "deployed-sources-catalog-coverage",
-      "request": "Inspect the workspace source catalog before choosing or attaching a Workbook source. Distinguish an empty catalog from an unavailable read, preserve source identity, and do not execute or attach anything.",
+      "request": "Before I choose a source, explain how the workspace catalog would be checked and how an empty result differs from a failed lookup.",
       "expected_skill_ids": [
         "tables"
       ],
@@ -871,7 +871,7 @@
     },
     {
       "id": "deployed-workbook-audiences-surface-coverage",
-      "request": "Inspect the complete workbook audiences capability family used by deployed tables workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Before I target this workbook, explain how I can see its available audiences.",
       "expected_skill_ids": [
         "tables"
       ],
@@ -892,7 +892,7 @@
     },
     {
       "id": "executable-definition-catalog-precedes-column-authoring",
-      "request": "Determine which executable column definitions this workspace can actually run before proposing any new enrichment or AI column. Resolve the live definition catalog, report each definition's required inputs and any credential or readiness blocker, and distinguish a definition that is absent from one that is present but blocked. Do not guess a definition id, do not add a column, and do not execute anything.",
+      "request": "Which enrichment or AI columns can this workspace support, and what setup is needed for any that are not ready?",
       "expected_skill_ids": [
         "tables"
       ],
@@ -926,7 +926,7 @@
       "required_concepts": [
         "review"
       ],
-      "request": "On person record rec-1, set lifecycle_stage to Customer and update job_title to VP Growth. Read the record first so you know what you are overwriting.",
+      "request": "Set lifecycle_stage to Customer and job_title to VP Growth on person record rec-1. Show me the current values and let me review the changes before they are saved.",
       "expected_workspace_outcome": [
         {
           "check": "record_created",

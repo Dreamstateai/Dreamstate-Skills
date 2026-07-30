@@ -5,7 +5,7 @@
         "strategy"
       ],
       "id": "channel-strategy",
-      "request": "Review the workspace's current Context document catalog, then read our exact published ICP and revise the roles of content, community, and outbound without inventing a missing strategy document.",
+      "request": "Help me tighten our strategy so content, community, and outbound reinforce each other for the ICP we've already published.",
       "required_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
@@ -33,7 +33,7 @@
         "strategy"
       ],
       "id": "named-cohort-strategy-benchmark",
-      "request": "Design a growth strategy for B2B SaaS founders. Consult the pooled benchmark lattice first and report only releasable cohort-level evidence, sample band, confidence, or insufficient_evidence; never raw cross-workspace rows.",
+      "request": "What growth approach would you recommend for B2B SaaS founders based on what comparable companies are seeing?",
       "required_capability_ids": [
         "brain.learning.query_benchmarks"
       ],
@@ -42,7 +42,7 @@
       ],
       "follow_up_turns": [
         {
-          "request": "One correction: use the evidence already returned. Do not repeat the same capability reads or ask me to restate facts the workspace can derive.",
+          "request": "That's enough context, give me your recommendation based on what you found.",
           "archetype": "correction",
           "must_not": [
             {
@@ -58,7 +58,7 @@
     },
     {
       "id": "deployed-brain-surface-coverage",
-      "request": "Inspect the complete brain capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Put together a practical guide for our strategy team on using company intelligence to improve outreach.",
       "expected_skill_ids": [
         "strategy"
       ],
@@ -83,7 +83,7 @@
     },
     {
       "id": "deployed-command-center-surface-coverage",
-      "request": "Inspect the complete command center capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Show our strategy team how company goals should shape day-to-day decisions.",
       "expected_skill_ids": [
         "strategy"
       ],
@@ -104,7 +104,7 @@
     },
     {
       "id": "deployed-gtm-surface-coverage",
-      "request": "Inspect the complete gtm capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Help our strategy team make better use of our go-to-market goals.",
       "expected_skill_ids": [
         "strategy"
       ],
@@ -125,7 +125,7 @@
     },
     {
       "id": "deployed-identity-surface-coverage",
-      "request": "Inspect the complete identity capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Develop a strong set of content pillars for the company that our strategy team can use.",
       "expected_skill_ids": [
         "strategy"
       ],
@@ -145,7 +145,7 @@
     },
     {
       "id": "deployed-social-surface-coverage",
-      "request": "Inspect the complete social capability family used by deployed strategy workflows. Verify live contract availability, inputs, read/write boundaries, and proposal requirements, then return a governed no-execution handoff without asking for facts the contracts already answer.",
+      "request": "Help us choose the right social approach, prioritize formats, and keep the plan on track.",
       "expected_skill_ids": [
         "strategy"
       ],
