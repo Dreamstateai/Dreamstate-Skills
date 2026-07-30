@@ -7,7 +7,7 @@ capability_ids: ["analytics.attribution_health_get","analytics.ga4.attribution",
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   generator_version: 1.0.0
   client: claude
   kernel_id: analytics
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 20ab56b536d6a08a14b93789ef76fbbf39623c8a467563833db9d9ef238e604f
   adapter_sha256: 9ca00cb32b285d339cbc67893342ba2a3e076c9b997ac34791cc38a595a81baa
   evals_file: evals.json
-  evals_sha256: 67fbbc65cdfa9b54681210cd70c89d875fa6199a71fb55c91aebdd2914fedd72
+  evals_sha256: 3997a14914c068fa4f3ba19b380fe055fd4c8c9d9ad119b8b92d613e2f2add04
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

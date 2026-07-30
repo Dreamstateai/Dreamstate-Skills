@@ -7,7 +7,7 @@ capability_ids: ["brain.context.graph","products.content_archive","products.cont
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   generator_version: 1.0.0
   client: codex
   kernel_id: products
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 98f746e7a136c6b80a3ac9bd7bedf42a1e5775c4b93d25f96f66f8c67f1570b8
   adapter_sha256: cda06d61e218117a7ca03ba5b66cb8f8f105745bd9efb5bce73f21d9a489a4b7
   evals_file: evals.json
-  evals_sha256: d4e49b34e3a5e3df0f2f8c032a8c3a522dcd644deee78ab52c5603775c260512
+  evals_sha256: 40a11929b3937ae08aa60627622ac864538266a90ba985ec07376d4d83dba31d
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

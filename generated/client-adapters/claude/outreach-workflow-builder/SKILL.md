@@ -7,7 +7,7 @@ capability_ids: ["columns.list","rows.get","rows.query","runs.cancel","runs.get"
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-workflow-builder
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 6d786028ea4937001ef6b38358138ea263952419ed0861750a49545561f27bcd
   adapter_sha256: ad322f60fcd3bf26603be13e6b7b6c5b0221b657c032ebdeea6b742f5d7deed4
   evals_file: evals.json
-  evals_sha256: 323ecb45bdd3384d06a99af30e45a53cbd2375ee77fd1a5ef3ea54b860635d6c
+  evals_sha256: fd93d8dfefc93ed2c9a4c0c19457fc3f98aa053d6e069d318567b4bcc59bfdc9
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

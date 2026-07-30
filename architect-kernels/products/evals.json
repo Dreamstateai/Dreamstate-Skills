@@ -65,6 +65,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "product research and draft mutations must not silently publish workspace Context"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "website_content",
+          "reason": "the scrape must land real fetched website content, so a narrated page summary cannot pass"
         }
       ]
     },
@@ -83,6 +89,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "product research and draft mutations must not silently publish workspace Context"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "website_content",
+          "reason": "a refresh must re-store real website content rather than reuse a stale summary"
         }
       ]
     },

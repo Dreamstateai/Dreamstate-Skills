@@ -67,6 +67,11 @@
           "object_key": "person",
           "min_count": 1,
           "reason": "coordination must attach to the existing customer and must not create a duplicate record"
+        },
+        {
+          "check": "task_state_changed",
+          "expected": "present",
+          "reason": "the owner task must exist as a durable task row, not only in the summary"
         }
       ]
     },
@@ -84,7 +89,8 @@
           "kind": "asked_for_derivable_fact",
           "fact": "the requested workspace evidence available through the loaded skill"
         }
-      ]
+      ],
+      "must_not_execute": true
     },
     {
       "id": "deployed-calendar-surface-coverage",

@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   generator_version: 1.0.0
   kernel_id: social.linkedin
   kernel_file: KERNEL.md
   kernel_sha256: 5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49
   adapter_sha256: e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2
   evals_file: evals.json
-  evals_sha256: e8d7ecfc2b7b5056e4c6228064d0dfb9fe9ecafb5a0506fe4b1483b5fa0443ae
+  evals_sha256: b2285a32addb4c615f3502c90aa26473f6908808b5373bf6c491ae0b19f0e73b
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

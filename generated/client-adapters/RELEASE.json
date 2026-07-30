@@ -2,10 +2,10 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80",
+  "source_release_hash": "05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80",
+    "playbook_kernel_hash": "05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "90203e36c720ed48",
@@ -61,7 +61,7 @@
         "workflows.metrics_get"
       ],
       "kernel_sha256": "20ab56b536d6a08a14b93789ef76fbbf39623c8a467563833db9d9ef238e604f",
-      "evals_sha256": "67fbbc65cdfa9b54681210cd70c89d875fa6199a71fb55c91aebdd2914fedd72",
+      "evals_sha256": "3997a14914c068fa4f3ba19b380fe055fd4c8c9d9ad119b8b92d613e2f2add04",
       "adapter_sha256": {
         "architect": "86195904cd0077d7d28042462803974c6f573360aca7b4deb8be201b548d3a67",
         "claude": "9ca00cb32b285d339cbc67893342ba2a3e076c9b997ac34791cc38a595a81baa",
@@ -230,7 +230,7 @@
         "command_center.assets.list"
       ],
       "kernel_sha256": "19927914886ae69503700e5a3ca86d2ba714225089fa443a0ea8f987da1e61b1",
-      "evals_sha256": "63346b19339c86f1ecb9f15f842547135a772ab513eb4836ca397287fbdc5047",
+      "evals_sha256": "72eb1fe168aaabfd1f8efe5f0b4c0beb35de237609e069a07295cc6a04dfa862",
       "adapter_sha256": {
         "architect": "0ff4bf46670412c0fe55e1b73079dcd33baf0f0bf78c8159a39ba024dc3f4195",
         "claude": "2ed01647582f2e403fd83d3e3a2e31983fbcdd8c9a5839a1e1738574f93a118f",
@@ -320,6 +320,7 @@
         "outreach.global_pause_set",
         "outreach.icps_list",
         "outreach.sender_context_accounts_list",
+        "rows.query",
         "selection_snapshots.get",
         "sequences.enroll_selection",
         "sequences.publish",
@@ -329,12 +330,12 @@
         "workflows.get",
         "workflows.list"
       ],
-      "kernel_sha256": "af9ae1fd57957f795a555907bd9e6243886d925b6c3bd76201bfad55070c0d7f",
-      "evals_sha256": "2e1b0a1d76831c781804702cb5ee96db85117a47bea42b9c17c2324d6909c480",
+      "kernel_sha256": "6d282a487efd9bc177b9986f16887f6675f27efa1212d93608f2f14ebd9a9f0d",
+      "evals_sha256": "aa4687cb38ebd7770056f7e098afee850d8ef7bdd6ab6add200ad4958c651962",
       "adapter_sha256": {
-        "architect": "05a953fff795e38d6a012f59c23b15ee626f1e3fe0ad3103e3b37b263fbb0f7b",
-        "claude": "ab36beb0e79b3d6bd82462dbf5164a7372246dad563597ed551490662cab8ecf",
-        "codex": "90e8b0e7872319e276c93af34000180be98bb1237fb4680e9010c8e6b9b8ffd7"
+        "architect": "f88548d7b36a407c37d6001bf25d29d19be05fa9c94775202ebfb310075170e2",
+        "claude": "953b12be659efa214e1bf2ade35fb464d53ea271678457c9427607610e7c3c17",
+        "codex": "58ccd49e5a085f48cd0a68c556cbb7ed0aa2fa2424132416171694e148a97dc3"
       }
     },
     "outreach-sequence-writer": {
@@ -365,7 +366,7 @@
         "sequences.validate"
       ],
       "kernel_sha256": "a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357",
-      "evals_sha256": "ce204cc3ae73fbdede2e5b52274dca63efd4a4b0734d566fb05387c68b7c84c4",
+      "evals_sha256": "5d04aae3d4d27627dffe6c9d0d76e4c12c01e9ab4ec7486a9780320050e41735",
       "adapter_sha256": {
         "architect": "9e8f39c1a6feb18cf4700007d498a2fdb4f937fe24fd6cb1af1765137437c965",
         "claude": "a92f4100597b2e82f605801975b2517342403fc5599cb931594b2444f2d73cf1",
@@ -413,7 +414,7 @@
         "worksheets.list"
       ],
       "kernel_sha256": "6d786028ea4937001ef6b38358138ea263952419ed0861750a49545561f27bcd",
-      "evals_sha256": "323ecb45bdd3384d06a99af30e45a53cbd2375ee77fd1a5ef3ea54b860635d6c",
+      "evals_sha256": "fd93d8dfefc93ed2c9a4c0c19457fc3f98aa053d6e069d318567b4bcc59bfdc9",
       "adapter_sha256": {
         "architect": "8041368785f549079dfd7bdef819a92634ada7fdf64b40ba48434887cddd1da7",
         "claude": "ad322f60fcd3bf26603be13e6b7b6c5b0221b657c032ebdeea6b742f5d7deed4",
@@ -434,7 +435,7 @@
         "products.website_scrape"
       ],
       "kernel_sha256": "98f746e7a136c6b80a3ac9bd7bedf42a1e5775c4b93d25f96f66f8c67f1570b8",
-      "evals_sha256": "d4e49b34e3a5e3df0f2f8c032a8c3a522dcd644deee78ab52c5603775c260512",
+      "evals_sha256": "40a11929b3937ae08aa60627622ac864538266a90ba985ec07376d4d83dba31d",
       "adapter_sha256": {
         "architect": "df4cf30a48d9d3c34d8e85b3007598c33b30bde5513eb02bc7506812e3356480",
         "claude": "661cb3af7c2e2c752e2540922593c0e35dcc7bcaf64ac4e910c2b955c9206b1a",
@@ -473,7 +474,7 @@
         "records.wiki_get"
       ],
       "kernel_sha256": "9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89",
-      "evals_sha256": "df4c97121095c8bf10a303a475d2a669bcb651869f9fcbe4ebf886d131e4f798",
+      "evals_sha256": "5d5ea7644ecb08c8d1ea253cfa7e98b6422e50bd20159122fd2c5e19576bf6b5",
       "adapter_sha256": {
         "architect": "798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b",
         "claude": "d79925fb2cecf8b7e0ebe983d639aea8b7850184435cd3fc2f3809cc862f4b01",
@@ -640,7 +641,7 @@
         "visibility.workspace_site_update"
       ],
       "kernel_sha256": "d8957cc2f65174a3286e7fbab1c53df0a57e57b61724e087ebbd9db9cdef665a",
-      "evals_sha256": "f5d7aaa2f4392a62de38dfadfad4904d0ef02bd973f96334f53cfb8811721065",
+      "evals_sha256": "025271721e2b420890e48433cc765185619820fd353ccf1cd1d59243a79eae81",
       "adapter_sha256": {
         "architect": "af8403eef8d7c7d29e840a227ce5c17ff044ed3901b3f7b09995554ee8ff9c8a",
         "claude": "54f135f44217d8fb76e9ab511b6a3090e4b711c8a4fe73f9aa912daeeecb8741",
@@ -768,7 +769,7 @@
         "tools.x_post_generate"
       ],
       "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
-      "evals_sha256": "e5b7037665b18bc4331df69b4cf4e5fc4488df72468eae77dc9a16f42fb4d02b",
+      "evals_sha256": "9bd90191b46664ac7e89535ad9b506c1f254b2647de810275975c6d45a0c65c3",
       "adapter_sha256": {
         "architect": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
         "claude": "8702c0da6d9408e48d4298a199adaf4b753aa8c2277526bde02f5b836c4f7c0c",
@@ -786,7 +787,7 @@
         "social.accounts_list"
       ],
       "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
-      "evals_sha256": "e8d7ecfc2b7b5056e4c6228064d0dfb9fe9ecafb5a0506fe4b1483b5fa0443ae",
+      "evals_sha256": "b2285a32addb4c615f3502c90aa26473f6908808b5373bf6c491ae0b19f0e73b",
       "adapter_sha256": {
         "architect": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
         "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
@@ -803,7 +804,7 @@
         "brain.content.search"
       ],
       "kernel_sha256": "2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3",
-      "evals_sha256": "aa479428a09795bbdb394bf46821ff106bee8cb586de3c497ce6815227f33ba4",
+      "evals_sha256": "1ea2ad572fae6ef3238a263b091c5903ad477e3840b34573b20c9aca4285ca81",
       "adapter_sha256": {
         "architect": "645f1ae37684eaa3b2d1cfb8319d56111a4445e598dfd443c553ff01e148c764",
         "claude": "0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c",
@@ -821,7 +822,7 @@
         "social.accounts_list"
       ],
       "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
-      "evals_sha256": "dccb04056b909b2bd2f47c21b8bbea5e1d7361d0a247d4c29baa75de62ef891a",
+      "evals_sha256": "e895887d5cd585d67b03de0bf24d35c3f5be0db256e7bc3dc0e174c0903c34a8",
       "adapter_sha256": {
         "architect": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
         "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
@@ -938,7 +939,7 @@
         "worksheets.update"
       ],
       "kernel_sha256": "05956a3a5e2005dc090862eb2ac2972181144055d95eab08c96908f7dc67fd05",
-      "evals_sha256": "ec14f4a8c939336b774a42f8fa7928af9532e937ef9c658cfeb34f523fe221d1",
+      "evals_sha256": "6ea357ed033087a1e1462659abe52fb03f6e36fe1f1af036dfca8a9cb5839ac5",
       "adapter_sha256": {
         "architect": "fcb534afafce503f15f3a430782d2a3308a6ba7a0cce5f8fa564385c582ac254",
         "claude": "5c667a4c145f7dba80d7b5992404f31bd194e785f621fbfd9cf57b599efb2d2e",
@@ -1009,7 +1010,7 @@
         "visibility.workspace_site_update"
       ],
       "kernel_sha256": "c743010241b7926d9d12a6960545a1393bfad0644ef09bda46639a5fff360f05",
-      "evals_sha256": "2ccb9f7dbb759e3f0d5819ff26307d6a6a7a44a7824406ed68f41d44147a7c07",
+      "evals_sha256": "a5ec230b922519a0a4932c5fbf10771312eb5af5bb5105df1b9f973490cc96b6",
       "adapter_sha256": {
         "architect": "1154cbe8cae3169555010f8f807692e08c29a65128e588da1927a5c2770c484d",
         "claude": "adb000881aaeb8caac75aade05c015fc2849b73058f945765b5b66dc2b01b2d7",
@@ -1067,7 +1068,7 @@
         "workflows.list"
       ],
       "kernel_sha256": "06a6d8eb74bd0e5c6542bc0108550935669c5409d40abe25455eddcfd16ce669",
-      "evals_sha256": "5899b3d94fb2a9542b9b46e92f13bb6952fae5fdec394e632b86c03fdc68b2a3",
+      "evals_sha256": "f8e3cafb870ae42ecbaae971bb41d5350951c05b690122db6053f8e44e256c28",
       "adapter_sha256": {
         "architect": "b09e5a8d3257e86d733b6d933247e93cbb60307b2a7d7f3c3f1110117356ec51",
         "claude": "48c46393e8334ee35aefa936405cfc9473dc0cb510ab9ad71a05ddd312029079",

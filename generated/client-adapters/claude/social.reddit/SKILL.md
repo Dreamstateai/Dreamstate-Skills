@@ -7,7 +7,7 @@ capability_ids: ["brain.content.search"]
 completion_contract: {"version":1,"fields":[{"id":"link_state","description":"Verified real-thread link retrieval state.","allowed_values":["verified_links","none_retrieved","unavailable"]},{"id":"evidence_trust","description":"Untrusted provider evidence handling state.","allowed_values":["fenced","none_retrieved","unavailable"]},{"id":"artifact_class","description":"Authored standalone artifact classification.","allowed_values":["authored_standalone","community_reply","none"]},{"id":"review_state","description":"Human-review readiness state.","allowed_values":["reviewable","not_created","not_applicable"]},{"id":"rights_state","description":"Workspace research rights state.","allowed_values":["workspace_authorized","unavailable","not_applicable"]},{"id":"reply_state","description":"External Reddit reply execution state.","allowed_values":["not_published","published_with_approval","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
+  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
   generator_version: 1.0.0
   client: claude
   kernel_id: social.reddit
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3
   adapter_sha256: 0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c
   evals_file: evals.json
-  evals_sha256: aa479428a09795bbdb394bf46821ff106bee8cb586de3c497ce6815227f33ba4
+  evals_sha256: 1ea2ad572fae6ef3238a263b091c5903ad477e3840b34573b20c9aca4285ca81
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

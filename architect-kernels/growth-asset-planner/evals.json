@@ -51,7 +51,8 @@
             }
           ]
         }
-      ]
+      ],
+      "must_not_execute": true
     },
     {
       "id": "deployed-brain-surface-coverage",

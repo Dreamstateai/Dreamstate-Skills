@@ -59,6 +59,11 @@
             }
           ]
         }
+      ],
+      "required_executed_capability_ids": [
+        "brain.learning.query_benchmarks",
+        "visibility.workspace_site_get",
+        "visibility.keywords_get"
       ]
     },
     {
@@ -188,6 +193,18 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "read-only SEO planning and capability inspection must not publish workspace Context"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "absent",
+          "artifact_kind": "agent_readiness_run",
+          "reason": "a no-execution inspection must not run a readiness scan"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "absent",
+          "artifact_kind": "llms_txt",
+          "reason": "a no-execution inspection must not generate llms.txt content"
         }
       ]
     },
@@ -238,6 +255,18 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "read-only SEO planning and capability inspection must not publish workspace Context"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "absent",
+          "artifact_kind": "pagespeed_audit",
+          "reason": "a no-execution inspection must not start a site scan"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "absent",
+          "artifact_kind": "workspace_site",
+          "reason": "a no-execution inspection must neither ensure nor update the workspace site row"
         }
       ]
     }

@@ -37,6 +37,13 @@
             }
           ]
         }
+      ],
+      "required_executed_capability_ids": [
+        "visibility.workspace_site_get",
+        "visibility.overview",
+        "visibility.citations",
+        "visibility.tracked_prompts.list",
+        "visibility.prompt_metrics_list"
       ]
     },
     {
@@ -59,6 +66,11 @@
         "provider coverage",
         "timestamp",
         "do not substitute"
+      ],
+      "required_executed_capability_ids": [
+        "visibility.workspace_site_get",
+        "visibility.overview",
+        "visibility.prompt_metrics_list"
       ]
     },
     {

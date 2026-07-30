@@ -139,6 +139,16 @@
           "object_key": "person",
           "min_count": 1,
           "reason": "editing an existing record must not create a duplicate record before approval"
+        },
+        {
+          "check": "record_field_changed",
+          "expected": "absent",
+          "object_key": "person",
+          "record_id": "rec-1",
+          "field_keys": [
+            "owner"
+          ],
+          "reason": "the change is only proposed and bound to the read revision, so no new owner value row may land yet"
         }
       ]
     },
@@ -166,7 +176,10 @@
         "no enrollment",
         "no send"
       ],
-      "request": "Before attaching a source, use table_sources.preview to compare two or three scarcest-first parameter variants with exactly ten real provider rows each. Persist receipt-bearing reasoning, provenance, freshness, and cost. Compute precision as qualified divided by qualified plus not_qualified, excluding unsure. Select a variant only with at least six decided rows and precision strictly above 0.50. If it passes, stage exactly 30 nondeliverable rows; do not create a source destination, enroll, activate, or send."
+      "request": "Before attaching a source, use table_sources.preview to compare two or three scarcest-first parameter variants with exactly ten real provider rows each. Persist receipt-bearing reasoning, provenance, freshness, and cost. Compute precision as qualified divided by qualified plus not_qualified, excluding unsure. Select a variant only with at least six decided rows and precision strictly above 0.50. If it passes, stage exactly 30 nondeliverable rows; do not create a source destination, enroll, activate, or send.",
+      "required_executed_capability_ids": [
+        "table_sources.preview"
+      ]
     },
     {
       "expected_skill_ids": [
@@ -312,7 +325,7 @@
         "rows.restore",
         "selection_snapshots.get"
       ],
-      "request": "Add and revise typed dependency columns, upsert and query exact stable rows, run all eligible columns under a bounded selection, inspect the frozen selection, and prove delete/restore and column archive preserve history.",
+      "request": "Add and revise the typed dependency columns company_domain and employee_count, upsert and query exact stable rows, run all eligible columns under a bounded selection, inspect the frozen selection, and prove delete/restore and column archive preserve history.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_enrolled",
@@ -320,6 +333,15 @@
           "target": "any",
           "min_count": 1,
           "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        },
+        {
+          "check": "workbook_columns",
+          "expected": "present",
+          "expected_columns": [
+            "company_domain",
+            "employee_count"
+          ],
+          "reason": "the named typed columns must exist on the workbook, so a narrated schema cannot pass"
         }
       ]
     },
@@ -536,7 +558,7 @@
         "workbooks.create",
         "columns.add"
       ],
-      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11–200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
+      "request": "Build only an editable Workbook named T25 US SaaS Founders. Outcome: qualification review. ICP: US B2B SaaS companies; titles: Founder and CEO; company keywords: SaaS; size: 11\u2013200; geography: United States; exclusions: agencies and consultants; qualification: fit score at least 80. Create columns Full Name, Job Title, Company, Company Domain, Employee Count, Qualification Status, and Qualification Reason. Save the exact proposal; after I approve it, execute and verify it, then stop. Do not attach or run a source, enrich, plan demand, create a workflow or sequence, enroll, publish, activate, or send anything.",
       "resume_after_approval": "owner_exact"
     },
     {
@@ -700,6 +722,17 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "a review-only field-change proposal must not create a duplicate person record or persist the proposed write"
+        },
+        {
+          "check": "record_field_changed",
+          "expected": "absent",
+          "object_key": "person",
+          "record_id": "rec-1",
+          "field_keys": [
+            "lifecycle_stage",
+            "job_title"
+          ],
+          "reason": "a review-only proposal must not persist either field write"
         }
       ]
     }

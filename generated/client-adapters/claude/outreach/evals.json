@@ -64,6 +64,11 @@
           "expected": "absent",
           "target": "any",
           "reason": "the request forbids enrollment before workbook approval, so a self-reported boundary is verified against the workspace; scoped workspace-wide from this turn's start"
+        },
+        {
+          "check": "workbook_exists",
+          "expected": "present",
+          "reason": "the zero-credit Workbook must exist as a durable row before any receipt is reported"
         }
       ],
       "id": "workbook-first-before-any-bundle",
@@ -81,7 +86,15 @@
         "bundle binds the inspected workbook revision",
         "enrollment only after workbook inspection"
       ],
-      "request": "Build outbound outreach. Ask every still-missing opening concept once after deriving cited workspace-wiki claims, including target job titles and company keywords, and never ask me about volume, sender, channel, tone, copy angle, call to action, or channel motion. Then execute the zero-credit reversible Workbook from the server ActionDecision without asking approval, return its durable receipt, and open the native Workbook so I can add and change columns and filters over several turns. Do not fetch or plan demand, workflow, sequence, or bundle contracts until that Workbook revision is inspected, and enroll nobody before then."
+      "request": "Build outbound outreach. Ask every still-missing opening concept once after deriving cited workspace-wiki claims, including target job titles and company keywords, and never ask me about volume, sender, channel, tone, copy angle, call to action, or channel motion. Then execute the zero-credit reversible Workbook from the server ActionDecision without asking approval, return its durable receipt, and open the native Workbook so I can add and change columns and filters over several turns. Do not fetch or plan demand, workflow, sequence, or bundle contracts until that Workbook revision is inspected, and enroll nobody before then.",
+      "required_capability_ids": [
+        "brain.context.search",
+        "workbooks.create"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search",
+        "workbooks.create"
+      ]
     },
     {
       "expected_skill_ids": [
@@ -108,7 +121,13 @@
         "never ask the user to classify the graph",
         "unresolved inspection is blocked"
       ],
-      "request": "After my Workbook is approved, update my current workflow to include custom outreach messages only if the inspected graph has a messaging branch. Treat messaging_branch_state as inspection-only. Never ask me to classify the graph; block if inspection cannot establish the state."
+      "request": "After my Workbook is approved, update my current workflow to include custom outreach messages only if the inspected graph has a messaging branch. Treat messaging_branch_state as inspection-only. Never ask me to classify the graph; block if inspection cannot establish the state.",
+      "required_capability_ids": [
+        "workflows.get"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.get"
+      ]
     },
     {
       "expected_skill_ids": [
@@ -176,6 +195,16 @@
           "expected": "absent",
           "target": "any",
           "reason": "the turn must report launch blocked, so nothing may be enrolled or activated; scoped workspace-wide from this turn's start"
+        },
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "reason": "launch is reported blocked, so no workflow may become active in this turn"
+        },
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "reason": "the launch closure is refused, so the reviewed draft sequence must stay unpublished"
         }
       ],
       "id": "explicit-final-launch-revalidation",
@@ -261,7 +290,10 @@
         "7-row",
         "expansion_row_cap"
       ],
-      "request": "After the exact outreach Workbook for my supplied cohort is approved, preserve structured intent as fixed_cohort with exact_quantity 18, calculate live capacity with outreach.demand_plan_get, keep the evidence pilot at exactly 7, and never expand or stage above the returned expansion_row_cap. Do not ask me another volume question."
+      "request": "After the exact outreach Workbook for my supplied cohort is approved, preserve structured intent as fixed_cohort with exact_quantity 18, calculate live capacity with outreach.demand_plan_get, keep the evidence pilot at exactly 7, and never expand or stage above the returned expansion_row_cap. Do not ask me another volume question.",
+      "required_executed_capability_ids": [
+        "outreach.demand_plan_get"
+      ]
     },
     {
       "execution_profile": "production_real",
@@ -641,7 +673,13 @@
           "phase": "unsure_row_visible_and_ai_cost_zero"
         }
       ],
-      "request": "Run the competitor-engager sample where person or company enrichment is missing. Prove the structured run condition skips the AI fit scorer, preserves the row as unsure, records zero AI cost, and returns the real skipped-cell receipt."
+      "request": "Run the competitor-engager sample where person or company enrichment is missing. Prove the structured run condition skips the AI fit scorer, preserves the row as unsure, records zero AI cost, and returns the real skipped-cell receipt.",
+      "required_capability_ids": [
+        "rows.query"
+      ],
+      "required_executed_capability_ids": [
+        "rows.query"
+      ]
     },
     {
       "execution_profile": "production_real",
@@ -686,7 +724,13 @@
           "phase": "qualified_view_excludes_failed_rows"
         }
       ],
-      "request": "Run rows that fail each deterministic required criterion: exclusion keyword, location, and company size. Prove each is disqualified with fit 0, hidden from the qualified view, and never invokes the AI scorer."
+      "request": "Run rows that fail each deterministic required criterion: exclusion keyword, location, and company size. Prove each is disqualified with fit 0, hidden from the qualified view, and never invokes the AI scorer.",
+      "required_capability_ids": [
+        "rows.query"
+      ],
+      "required_executed_capability_ids": [
+        "rows.query"
+      ]
     },
     {
       "execution_profile": "production_real",
@@ -812,7 +856,13 @@
           "phase": "audit_stops_before_expansion"
         }
       ],
-      "request": "Return a stale person/title verification plus a low-precision competitor-engager source sample. Prove the stale row is not qualified and the post-batch audit stops expansion, names the failed criterion and cost, and proposes a different scarce-signal source angle."
+      "request": "Return a stale person/title verification plus a low-precision competitor-engager source sample. Prove the stale row is not qualified and the post-batch audit stops expansion, names the failed criterion and cost, and proposes a different scarce-signal source angle.",
+      "required_capability_ids": [
+        "rows.query"
+      ],
+      "required_executed_capability_ids": [
+        "rows.query"
+      ]
     },
     {
       "expected_skill_ids": [
@@ -834,7 +884,10 @@
         "insufficient_evidence",
         "never raw cross-workspace rows"
       ],
-      "request": "Our acting workspace has zero outreach history for restaurant owners. Search for, fetch, and call the exact brain.learning.query_benchmarks contract before designing outreach. Report its cohort-level evidence boundary, messaging archetype availability, sample band, confidence, and insufficient_evidence state exactly from the canonical receipt. State the privacy boundary verbatim: never raw cross-workspace rows. Do not create or launch a workflow."
+      "request": "Our acting workspace has zero outreach history for restaurant owners. Search for, fetch, and call the exact brain.learning.query_benchmarks contract before designing outreach. Report its cohort-level evidence boundary, messaging archetype availability, sample band, confidence, and insufficient_evidence state exactly from the canonical receipt. State the privacy boundary verbatim: never raw cross-workspace rows. Do not create or launch a workflow.",
+      "required_executed_capability_ids": [
+        "brain.learning.query_benchmarks"
+      ]
     },
     {
       "id": "deployed-outreach-surface-coverage",

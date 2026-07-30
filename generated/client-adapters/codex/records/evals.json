@@ -52,12 +52,11 @@
     },
     {
       "id": "revision-safe-record-write",
-      "request": "Create the approved standard record, update only the exact current field revision, retire its superseded value, add a note and approved file, then verify every durable artifact.",
+      "request": "On the exact existing person record rec-1, update only the current owner field revision, retire its superseded value, add a note and the approved file, then verify every durable artifact.",
       "expected_skill_ids": [
         "records"
       ],
       "required_capability_ids": [
-        "records.create",
         "records.get",
         "records.field_set",
         "records.value_retire",
@@ -67,11 +66,21 @@
       ],
       "expected_workspace_outcome": [
         {
+          "check": "record_field_changed",
+          "expected": "present",
+          "object_key": "person",
+          "record_id": "rec-1",
+          "field_keys": [
+            "owner"
+          ],
+          "reason": "the owner field must carry a real new value row bound to the revision the read returned"
+        },
+        {
           "check": "record_created",
           "expected": "absent",
           "object_key": "person",
           "min_count": 1,
-          "reason": "the turn is a review or pre-approval boundary and must not create a durable effect"
+          "reason": "a revision-safe edit revises the exact record and must not create a duplicate person"
         }
       ]
     },

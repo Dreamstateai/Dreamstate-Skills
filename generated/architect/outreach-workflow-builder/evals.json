@@ -101,6 +101,10 @@
             }
           ]
         }
+      ],
+      "required_executed_capability_ids": [
+        "workflows.get",
+        "workflows.validate_graph"
       ]
     },
     {
@@ -137,7 +141,10 @@
         "workflow eligibility binding",
         "no source execution"
       ],
-      "request": "Bind the completed Tables-owned exact-result expansion receipt to this workflow's eligibility input. Inspect the workflow and preserve the exact selection, but do not search, fetch, propose, dry-run, or execute a source capability here."
+      "request": "Bind the completed Tables-owned exact-result expansion receipt to this workflow's eligibility input. Inspect the workflow and preserve the exact selection, but do not search, fetch, propose, dry-run, or execute a source capability here.",
+      "required_executed_capability_ids": [
+        "workflows.get"
+      ]
     },
     {
       "id": "deployed-columns-surface-coverage",

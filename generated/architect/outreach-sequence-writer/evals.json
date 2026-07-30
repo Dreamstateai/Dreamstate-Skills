@@ -50,7 +50,8 @@
             }
           ]
         }
-      ]
+      ],
+      "must_not_execute": true
     },
     {
       "expected_skill_ids": [
@@ -65,7 +66,13 @@
         "preview count is the coordinator's literal pilot integer",
         "preview exactly the approved sample rows"
       ],
-      "request": "Preview the custom steps on the approved sample rows the coordinator already handed you. Do not ask me how many previews to generate."
+      "request": "Preview the custom steps on the approved sample rows the coordinator already handed you. Do not ask me how many previews to generate.",
+      "required_capability_ids": [
+        "rows.query"
+      ],
+      "required_executed_capability_ids": [
+        "rows.query"
+      ]
     },
     {
       "id": "deployed-outreach-surface-coverage",
