@@ -7,7 +7,7 @@ capability_ids: ["saved_views.create","saved_views.delete","saved_views.list","s
 completion_contract: {"version":1,"fields":[{"id":"view_artifact_state","description":"Durable saved-view artifact state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"view_result_state","description":"Result evidence and pagination status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   client: claude
   kernel_id: records-views
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: e9b5e5a12b07fbf14958d07bcac5922fdfe80394ce6554f21d24b68d99cb938c
   adapter_sha256: 58858ee80c4671d2f557e98d6a491c9b111113a1832025be19053a4f96bfb756
   evals_file: evals.json
-  evals_sha256: 3cf21753f3a28e9d2fa2a79c6c66655ff58d26e76ec541718bf919e564b55427
+  evals_sha256: d3ee2861a9fe88fe25af884bbd408220bd8da4d2c730775dd94bb00184efc66a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

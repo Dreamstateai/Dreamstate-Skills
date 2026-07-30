@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069",
+  "source_release_hash": "551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069",
+    "playbook_kernel_hash": "551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "90203e36c720ed48",
@@ -81,7 +81,7 @@
       ],
       "kernel_sha256": "a336f54a5bafdb09b5fd94e6fa1405caf34c68b6b272b1233049bbfc7bf076e3",
       "adapter_sha256": "b2c7c72b96435fe69cb2cb23d9fe30eb056e956586717db01f5a385ad0fa0379",
-      "evals_sha256": "602d4016fed3d378e0463d2482fa696cc1281c60d2dc30468e94beeb0f63cb75"
+      "evals_sha256": "f71088ddbf6871aa3b197daa7a04839c122a3ff0898b9cf2c87bd2a83c7d246e"
     },
     "blog": {
       "capability_domains": [
@@ -122,7 +122,7 @@
       ],
       "kernel_sha256": "401a4ecc7c7361e296234fabbaf0aed9443f6f4e3909650880de16bcefd70654",
       "adapter_sha256": "aed9a0c5bf7cbaf2b5c9b75ffab2e8106be2ac47b5c2578d27cadb012c3bf9e9",
-      "evals_sha256": "05ca59a448c7d7f2bff52a273cce893bcef508932a48edd5b553357069881c46"
+      "evals_sha256": "cbea12d379836772cc381b729df46eb8d4234780372907a0fcc4820a05390f6a"
     },
     "buyer-research-graph": {
       "capability_domains": [
@@ -149,7 +149,7 @@
       ],
       "kernel_sha256": "53c335f0095f4427c50dd3f6f147ef450ac5fbc187417b1ebced7a570836e440",
       "adapter_sha256": "919faa8247e2dca8f368bddd0468c2c03230d91fd17121b480e6de5f8f6da5f6",
-      "evals_sha256": "e62ee2aa879f13e673b007ece474c3b9b9c08970a689f752acf1a3cef79468c5"
+      "evals_sha256": "eb9a4894d0dd22579aa45818c86d8bcc02cfbd4902d107830047db002e564e6c"
     },
     "context": {
       "capability_domains": [
@@ -208,7 +208,7 @@
       ],
       "kernel_sha256": "19927914886ae69503700e5a3ca86d2ba714225089fa443a0ea8f987da1e61b1",
       "adapter_sha256": "0ff4bf46670412c0fe55e1b73079dcd33baf0f0bf78c8159a39ba024dc3f4195",
-      "evals_sha256": "72eb1fe168aaabfd1f8efe5f0b4c0beb35de237609e069a07295cc6a04dfa862"
+      "evals_sha256": "9d13a799ccdff7bded7c2709d82add9d8aff1b5c7de77896ccd97aed7c31cf5f"
     },
     "integrations": {
       "capability_domains": [],
@@ -297,7 +297,7 @@
       ],
       "kernel_sha256": "6d282a487efd9bc177b9986f16887f6675f27efa1212d93608f2f14ebd9a9f0d",
       "adapter_sha256": "f88548d7b36a407c37d6001bf25d29d19be05fa9c94775202ebfb310075170e2",
-      "evals_sha256": "aa4687cb38ebd7770056f7e098afee850d8ef7bdd6ab6add200ad4958c651962"
+      "evals_sha256": "d41c4973e8e6f1b4070c3335bc37c6fae321b0646181091f1fe2fd9502303dc3"
     },
     "outreach-sequence-writer": {
       "capability_domains": [
@@ -328,7 +328,7 @@
       ],
       "kernel_sha256": "a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357",
       "adapter_sha256": "9e8f39c1a6feb18cf4700007d498a2fdb4f937fe24fd6cb1af1765137437c965",
-      "evals_sha256": "5d04aae3d4d27627dffe6c9d0d76e4c12c01e9ab4ec7486a9780320050e41735"
+      "evals_sha256": "ea5182dc9db5baee4862dceffbafdb320a9342244b1d2fa80ad4bb52ff50d560"
     },
     "outreach-workflow-builder": {
       "capability_domains": [
@@ -372,7 +372,7 @@
       ],
       "kernel_sha256": "6d786028ea4937001ef6b38358138ea263952419ed0861750a49545561f27bcd",
       "adapter_sha256": "8041368785f549079dfd7bdef819a92634ada7fdf64b40ba48434887cddd1da7",
-      "evals_sha256": "fd93d8dfefc93ed2c9a4c0c19457fc3f98aa053d6e069d318567b4bcc59bfdc9"
+      "evals_sha256": "56e2780f6f18845a5336845acffacdbee6ded40a557c560934085d78bbf23a15"
     },
     "products": {
       "capability_domains": [
@@ -424,7 +424,7 @@
       ],
       "kernel_sha256": "9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89",
       "adapter_sha256": "798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b",
-      "evals_sha256": "5d5ea7644ecb08c8d1ea253cfa7e98b6422e50bd20159122fd2c5e19576bf6b5"
+      "evals_sha256": "f783e0f86c80e88e363ff2ec170e5346a8b1a52c0b9a458c5fe9e958b8c83709"
     },
     "records-pipelines": {
       "capability_domains": [
@@ -452,7 +452,7 @@
       ],
       "kernel_sha256": "08193d954cc35738c4aa0710a92392d508479e8690f94131ccce2610c002e124",
       "adapter_sha256": "d1e5780247875b0129779bb55a039f526f7e4dd27c61e68c16c990125c57f141",
-      "evals_sha256": "a998ede07698d80b84000d84efe0fdb9a019c098cc7372703f6ccb54bb5d3361"
+      "evals_sha256": "264f7127d914587036a1612fa66a1ecba8e9ed66afe98bb237e7b69400b21c39"
     },
     "records-schema": {
       "capability_domains": [
@@ -484,7 +484,7 @@
       ],
       "kernel_sha256": "38d6f45af8c091ac7fddeba8c4a2f765c089f634622a48f1477d48a0b2ff82c1",
       "adapter_sha256": "03b35c6b6bb573236709e5418b4f03b328ece2efb292f9b2fe77f1fc4385d3d8",
-      "evals_sha256": "8815acba506205aa790239c8d976bdf3073478fcc6b02e6e56ddc3c9df0d9d14"
+      "evals_sha256": "168231518c8f5ac0b577d823bc65ad5043882ce82988bb6ee2749dc331b03154"
     },
     "records-transfer": {
       "capability_domains": [
@@ -505,7 +505,7 @@
       ],
       "kernel_sha256": "09eb3bc15afff2e09b68705290a9ad403ac9ab4608d82bd7c424617cb4078797",
       "adapter_sha256": "53aaf2c52992e1b2d14453e9a2d64bbb4116292bdb2e321f87cca3a144b6e539",
-      "evals_sha256": "970e82e1713125b8401179c9a63a307e8411ea1459a3ef458b58629a11cf1aea"
+      "evals_sha256": "03a8172acf5bda828876ac96b45de56c90b2135f2dc30a47c99e8b063304665a"
     },
     "records-views": {
       "capability_domains": [
@@ -524,7 +524,7 @@
       ],
       "kernel_sha256": "e9b5e5a12b07fbf14958d07bcac5922fdfe80394ce6554f21d24b68d99cb938c",
       "adapter_sha256": "7ac3dd85afb930fbedc10f17c387c8369f6a4d12a41607a2798500dd2360a5c2",
-      "evals_sha256": "3cf21753f3a28e9d2fa2a79c6c66655ff58d26e76ec541718bf919e564b55427"
+      "evals_sha256": "d3ee2861a9fe88fe25af884bbd408220bd8da4d2c730775dd94bb00184efc66a"
     },
     "seo": {
       "capability_domains": [
@@ -571,7 +571,7 @@
       ],
       "kernel_sha256": "d8957cc2f65174a3286e7fbab1c53df0a57e57b61724e087ebbd9db9cdef665a",
       "adapter_sha256": "af8403eef8d7c7d29e840a227ce5c17ff044ed3901b3f7b09995554ee8ff9c8a",
-      "evals_sha256": "025271721e2b420890e48433cc765185619820fd353ccf1cd1d59243a79eae81"
+      "evals_sha256": "38f265573f25d534ad83b882210d02cdffaa5ac8ba5ac27d21de3e88c7d833d9"
     },
     "signals": {
       "capability_domains": [
@@ -589,7 +589,7 @@
       ],
       "kernel_sha256": "665dfc04657526b90c547cefbfe0874fbd2a94cea6f0a0c55bb019835f07574b",
       "adapter_sha256": "4a24d52793c128155864d54f62b88e72945b111b8e3401d878436e0a162b9704",
-      "evals_sha256": "50d5be81eaf527a1d1f6e974ad341f1880c5ce3e01383ac3b2a077214cd08456"
+      "evals_sha256": "92f319b710cd77afd2e21e98d763baba75d91b236735e23e4cb260f79dc002e1"
     },
     "site-onboarding": {
       "capability_domains": [
@@ -687,7 +687,7 @@
       ],
       "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
       "adapter_sha256": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
-      "evals_sha256": "9bd90191b46664ac7e89535ad9b506c1f254b2647de810275975c6d45a0c65c3"
+      "evals_sha256": "dc1a53d74ab3394bec513fa51001c26906a06ea13e417c8f16778aa6794569c0"
     },
     "social.linkedin": {
       "capability_domains": [
@@ -755,7 +755,7 @@
       ],
       "kernel_sha256": "0f9626ebef6ffc6f271582bd5b4a06561d723366ba4af0215b8f770b18e877d1",
       "adapter_sha256": "9d5500d61eeb686726b709fd5fb1aa032dbe9579c819d6113648db32076fd247",
-      "evals_sha256": "298cead67a1cb91c31b0bb78e05f75c5f67c055327979c80fbf04969b3eb3d67"
+      "evals_sha256": "5a6f89e69264c6ff3e0a49e01b2c32e9b986a74905143d66bed0a5732a7ec079"
     },
     "tables": {
       "capability_domains": [
@@ -835,9 +835,9 @@
         "worksheets.reorder",
         "worksheets.update"
       ],
-      "kernel_sha256": "05956a3a5e2005dc090862eb2ac2972181144055d95eab08c96908f7dc67fd05",
+      "kernel_sha256": "ffd2f5e03b621eadc1604e874391735b980dab8bd7119884e994d23546d6ab5d",
       "adapter_sha256": "fcb534afafce503f15f3a430782d2a3308a6ba7a0cce5f8fa564385c582ac254",
-      "evals_sha256": "6ea357ed033087a1e1462659abe52fb03f6e36fe1f1af036dfca8a9cb5839ac5"
+      "evals_sha256": "ea828e9ed9d73150f57d8eb23528ff90360dfdbd184807661d8fcd61e0c1ed36"
     },
     "tasks": {
       "capability_domains": [
@@ -950,7 +950,7 @@
       ],
       "kernel_sha256": "06a6d8eb74bd0e5c6542bc0108550935669c5409d40abe25455eddcfd16ce669",
       "adapter_sha256": "b09e5a8d3257e86d733b6d933247e93cbb60307b2a7d7f3c3f1110117356ec51",
-      "evals_sha256": "f8e3cafb870ae42ecbaae971bb41d5350951c05b690122db6053f8e44e256c28"
+      "evals_sha256": "0756cd8cdaf647cc13d26bd37e4a350b29358454d08abbf524d628ab8871df20"
     }
   }
 }

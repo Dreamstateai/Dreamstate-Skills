@@ -59,6 +59,18 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "graph revisions remain behind confirmation and must not create nodes or relations yet"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "signal_sources.create",
+          "min_count": 1,
+          "reason": "signal_sources.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "signal_sources.capture_key_set",
+          "min_count": 1,
+          "reason": "signal_sources.capture_key_set must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -83,6 +95,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "graph revisions remain behind confirmation and must not create nodes or relations yet"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "signal_sources.test_event",
+          "min_count": 1,
+          "reason": "signal_sources.test_event must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     }

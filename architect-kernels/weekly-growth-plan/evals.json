@@ -72,6 +72,18 @@
           "check": "task_state_changed",
           "expected": "present",
           "reason": "the owner task must exist as a durable task row, not only in the summary"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_files.upload",
+          "min_count": 1,
+          "reason": "record_files.upload must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "calendar.events_create",
+          "min_count": 1,
+          "reason": "calendar.events_create must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },

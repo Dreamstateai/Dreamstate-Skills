@@ -7,7 +7,7 @@ capability_ids: ["brain.content.get","brain.content.search","brain.context.get",
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   client: codex
   kernel_id: blog
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 401a4ecc7c7361e296234fabbaf0aed9443f6f4e3909650880de16bcefd70654
   adapter_sha256: 19f8080697ced626ce9639893a1b598d56352c127ed294d4a3ae656bcfed06e2
   evals_file: evals.json
-  evals_sha256: 05ca59a448c7d7f2bff52a273cce893bcef508932a48edd5b553357069881c46
+  evals_sha256: cbea12d379836772cc381b729df46eb8d4234780372907a0fcc4820a05390f6a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

@@ -19,6 +19,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "the governed experiment remains a reviewed proposal until explicitly approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "social.strategy_update",
+          "min_count": 1,
+          "reason": "social.strategy_update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },

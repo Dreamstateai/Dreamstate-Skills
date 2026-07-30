@@ -22,6 +22,30 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "editorial review and contract inspection must not schedule or publish content"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.submit_review",
+          "min_count": 1,
+          "reason": "content.submit_review must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_delivery_create",
+          "min_count": 1,
+          "reason": "content.article_delivery_create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.delivery_publish",
+          "min_count": 1,
+          "reason": "content.delivery_publish must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_update",
+          "min_count": 1,
+          "reason": "content.article_update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -97,6 +121,60 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "editorial review and contract inspection must not schedule or publish content"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_asset_import",
+          "min_count": 1,
+          "reason": "This turn must not execute content.article_asset_import, so no durable row from it may exist.",
+          "expected": "absent"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_asset_register",
+          "min_count": 1,
+          "reason": "This turn must not execute content.article_asset_register, so no durable row from it may exist.",
+          "expected": "absent"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_asset_upload",
+          "min_count": 1,
+          "reason": "This turn must not execute content.article_asset_upload, so no durable row from it may exist.",
+          "expected": "absent"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.destination_test",
+          "min_count": 1,
+          "reason": "This turn must not execute content.destination_test, so no durable row from it may exist.",
+          "expected": "absent"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.unschedule",
+          "min_count": 1,
+          "reason": "This turn must not execute content.unschedule, so no durable row from it may exist.",
+          "expected": "absent"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.version_create",
+          "min_count": 1,
+          "reason": "This turn must not execute content.version_create, so no durable row from it may exist.",
+          "expected": "absent"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_archive",
+          "expected": "absent",
+          "reason": "content.article_archive is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "content.article_duplicate",
+          "expected": "absent",
+          "reason": "content.article_duplicate is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     },

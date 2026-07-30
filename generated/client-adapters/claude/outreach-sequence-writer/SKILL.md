@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","outreach.ai_spintax
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   client: claude
   kernel_id: outreach-sequence-writer
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357
   adapter_sha256: a92f4100597b2e82f605801975b2517342403fc5599cb931594b2444f2d73cf1
   evals_file: evals.json
-  evals_sha256: 5d04aae3d4d27627dffe6c9d0d76e4c12c01e9ab4ec7486a9780320050e41735
+  evals_sha256: ea5182dc9db5baee4862dceffbafdb320a9342244b1d2fa80ad4bb52ff50d560
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

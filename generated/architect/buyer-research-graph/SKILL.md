@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"graph_evidence_state","description":"Research provenance and confidence state.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"graph_state","description":"Canonical graph identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   kernel_id: buyer-research-graph
   kernel_file: KERNEL.md
   kernel_sha256: 53c335f0095f4427c50dd3f6f147ef450ac5fbc187417b1ebced7a570836e440
   adapter_sha256: 919faa8247e2dca8f368bddd0468c2c03230d91fd17121b480e6de5f8f6da5f6
   evals_file: evals.json
-  evals_sha256: e62ee2aa879f13e673b007ece474c3b9b9c08970a689f752acf1a3cef79468c5
+  evals_sha256: eb9a4894d0dd22579aa45818c86d8bcc02cfbd4902d107830047db002e564e6c
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

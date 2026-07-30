@@ -19,7 +19,17 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "asset planning must not schedule content as a side effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "command_center.assets.create",
+          "reason": "the asset kind is unsupported, so no growth_media_assets row may exist for this turn",
+          "expected": "absent"
         }
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search",
+        "command_center.assets.list"
       ]
     },
     {

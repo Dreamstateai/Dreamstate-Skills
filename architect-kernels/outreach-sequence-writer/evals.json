@@ -20,6 +20,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.bind",
+          "min_count": 1,
+          "reason": "sequences.bind must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -145,6 +151,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.archive",
+          "expected": "absent",
+          "reason": "sequences.archive is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     }

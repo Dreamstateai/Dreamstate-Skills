@@ -227,6 +227,30 @@
           "check": "workbook_exists",
           "expected": "absent",
           "reason": "the requested turn stops at a reviewable proposal, so no new Workbook may exist"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workbooks.archive",
+          "min_count": 1,
+          "reason": "workbooks.archive must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workbooks.duplicate",
+          "min_count": 1,
+          "reason": "workbooks.duplicate must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workbooks.update",
+          "min_count": 1,
+          "reason": "workbooks.update must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workbooks.update_user_state",
+          "min_count": 1,
+          "reason": "workbooks.update_user_state must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -251,6 +275,36 @@
           "target": "any",
           "min_count": 1,
           "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "worksheets.archive",
+          "min_count": 1,
+          "reason": "worksheets.archive must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "worksheets.create",
+          "min_count": 1,
+          "reason": "worksheets.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "worksheets.duplicate",
+          "min_count": 1,
+          "reason": "worksheets.duplicate must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "worksheets.update",
+          "min_count": 1,
+          "reason": "worksheets.update must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "worksheets.reorder",
+          "min_count": 1,
+          "reason": "worksheets.reorder must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -278,6 +332,42 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "the turn is a review or pre-approval boundary and must not create a durable effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "tables.archive",
+          "min_count": 1,
+          "reason": "tables.archive must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "tables.create",
+          "min_count": 1,
+          "reason": "tables.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "tables.update",
+          "min_count": 1,
+          "reason": "tables.update must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "views.archive",
+          "min_count": 1,
+          "reason": "views.archive must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "views.create",
+          "min_count": 1,
+          "reason": "views.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "views.update",
+          "min_count": 1,
+          "reason": "views.update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -304,6 +394,42 @@
           "target": "any",
           "min_count": 1,
           "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_sources.attach",
+          "min_count": 1,
+          "reason": "table_sources.attach must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_sources.detach",
+          "min_count": 1,
+          "reason": "table_sources.detach must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_sources.reset_frontier",
+          "min_count": 1,
+          "reason": "table_sources.reset_frontier must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_sources.restore_frontier",
+          "min_count": 1,
+          "reason": "table_sources.restore_frontier must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_sources.update",
+          "min_count": 1,
+          "reason": "table_sources.update must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_sources.run",
+          "min_count": 1,
+          "reason": "table_sources.run must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -323,9 +449,11 @@
         "rows.query",
         "rows.delete",
         "rows.restore",
-        "selection_snapshots.get"
+        "selection_snapshots.get",
+        "columns.run",
+        "selection_snapshots.create"
       ],
-      "request": "Add and revise the typed dependency columns company_domain and employee_count, upsert and query exact stable rows, run all eligible columns under a bounded selection, inspect the frozen selection, and prove delete/restore and column archive preserve history.",
+      "request": "Add and revise the typed dependency columns company_domain and employee_count, upsert and query exact stable rows, run the employee_count column on its own and then run all eligible columns under a bounded selection, freeze that selection as a snapshot, inspect the frozen selection, and prove delete/restore and column archive preserve history.",
       "expected_workspace_outcome": [
         {
           "check": "workbook_enrolled",
@@ -342,6 +470,54 @@
             "employee_count"
           ],
           "reason": "the named typed columns must exist on the workbook, so a narrated schema cannot pass"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "columns.archive",
+          "min_count": 1,
+          "reason": "columns.archive must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "columns.update",
+          "min_count": 1,
+          "reason": "columns.update must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "rows.delete",
+          "min_count": 1,
+          "reason": "rows.delete must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "rows.restore",
+          "min_count": 1,
+          "reason": "rows.restore must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "rows.upsert",
+          "min_count": 1,
+          "reason": "rows.upsert must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "columns.run_all",
+          "min_count": 1,
+          "reason": "columns.run_all must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "columns.run",
+          "min_count": 1,
+          "reason": "a single-column run must leave its durable run row, or the turn only claimed to run it"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "selection_snapshots.create",
+          "min_count": 1,
+          "reason": "the frozen selection must exist as a durable snapshot row, not only in the summary"
         }
       ]
     },
@@ -367,6 +543,30 @@
           "target": "any",
           "min_count": 1,
           "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_runs.retry",
+          "min_count": 1,
+          "reason": "table_runs.retry must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_runs.resume",
+          "min_count": 1,
+          "reason": "table_runs.resume must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_runs.reconcile_column",
+          "min_count": 1,
+          "reason": "table_runs.reconcile_column must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "table_runs.cancel",
+          "min_count": 1,
+          "reason": "table_runs.cancel must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -581,6 +781,12 @@
           "target": "any",
           "min_count": 1,
           "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "attachments.create",
+          "expected": "absent",
+          "reason": "This turn must not execute attachments.create, so no durable row from it may exist."
         }
       ]
     },
@@ -604,6 +810,12 @@
           "target": "any",
           "min_count": 1,
           "reason": "table work must remain nondeliverable and must not enroll rows into outreach"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "cells.settle",
+          "expected": "absent",
+          "reason": "This turn must not execute cells.settle, so no durable row from it may exist."
         }
       ]
     },

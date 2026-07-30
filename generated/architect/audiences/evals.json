@@ -55,6 +55,18 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "audience lifecycle changes remain review-bound and must not create a saved view yet"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "audiences.create",
+          "min_count": 1,
+          "reason": "audiences.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "audiences.update",
+          "min_count": 1,
+          "reason": "audiences.update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     }

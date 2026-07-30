@@ -20,6 +20,18 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "the saved-view mutation remains behind explicit confirmation"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.create",
+          "min_count": 1,
+          "reason": "saved_views.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.update",
+          "min_count": 1,
+          "reason": "saved_views.update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -41,6 +53,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "the saved-view mutation remains behind explicit confirmation"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.v2_runtime_upsert",
+          "min_count": 1,
+          "reason": "saved_views.v2_runtime_upsert must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -81,6 +99,12 @@
           "check": "saved_view_created",
           "expected": "present",
           "saved_view_name": "T25 Active People Proof"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.create",
+          "min_count": 1,
+          "reason": "saved_views.create must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",

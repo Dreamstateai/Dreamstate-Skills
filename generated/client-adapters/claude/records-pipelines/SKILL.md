@@ -7,7 +7,7 @@ capability_ids: ["record_deals.board_get","record_deals.create","record_deals.pi
 completion_contract: {"version":1,"fields":[{"id":"pipeline_state","description":"Canonical deal, pipeline, and stage identity state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   client: claude
   kernel_id: records-pipelines
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 08193d954cc35738c4aa0710a92392d508479e8690f94131ccce2610c002e124
   adapter_sha256: 70fa7b7acf9e68bb752dbc34d2522f710ba5a6bc0a10a4933d0e47d436b6c5f0
   evals_file: evals.json
-  evals_sha256: a998ede07698d80b84000d84efe0fdb9a019c098cc7372703f6ccb54bb5d3361
+  evals_sha256: 264f7127d914587036a1612fa66a1ecba8e9ed66afe98bb237e7b69400b21c39
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

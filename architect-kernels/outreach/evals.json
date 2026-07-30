@@ -205,6 +205,12 @@
           "check": "sequence_published",
           "expected": "absent",
           "reason": "the launch closure is refused, so the reviewed draft sequence must stay unpublished"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workflows.draft_publish",
+          "min_count": 1,
+          "reason": "workflows.draft_publish must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ],
       "id": "explicit-final-launch-revalidation",
@@ -628,6 +634,12 @@
           "expected": "present",
           "min_count": 1,
           "reason": "the approved launch must activate the published workflow"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workflows.draft_publish",
+          "min_count": 1,
+          "reason": "workflows.draft_publish must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -912,6 +924,12 @@
           "expected": "absent",
           "min_count": 1,
           "reason": "contract inspection must not apply the global pause or activate any workflow"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "outreach.global_pause_set",
+          "expected": "absent",
+          "reason": "outreach.global_pause_set is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     },

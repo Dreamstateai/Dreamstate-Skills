@@ -7,7 +7,7 @@ capability_ids: ["attachments.create","attachments.delete","attachments.list","c
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,15 +16,15 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   client: codex
   kernel_id: tables
   kernel_file: KERNEL.md
-  kernel_sha256: 05956a3a5e2005dc090862eb2ac2972181144055d95eab08c96908f7dc67fd05
+  kernel_sha256: ffd2f5e03b621eadc1604e874391735b980dab8bd7119884e994d23546d6ab5d
   adapter_sha256: 2c29d6cb333ba94e74bbd583b7a79ef7b219843d8b0433a9af675e0712e3adf0
   evals_file: evals.json
-  evals_sha256: 6ea357ed033087a1e1462659abe52fb03f6e36fe1f1af036dfca8a9cb5839ac5
+  evals_sha256: ea828e9ed9d73150f57d8eb23528ff90360dfdbd184807661d8fcd61e0c1ed36
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -70,7 +70,7 @@ Resolve the workspace, workbook, table, view, row entity, stable identifiers, cu
 
 ## Capability workflow
 
-Search the live registry by desired table outcome and fetch every selected contract. Live schemas own supported providers, column types, costs, readiness, limits, and result shapes. Keep source, enrichment, formula, action, and workflow responsibilities explicit. Declare each node's inputs, outputs, dependencies, run conditions, provider, expected cost, and failure behavior before proposing a change.
+Search the live registry by desired table outcome and fetch every selected contract. Live schemas own supported providers, column types, costs, readiness, limits, and result shapes. Survey the library with `executable_definitions.list_resolved` before designing any column: pass the fields you want as `desired_outputs` and the fields the row already carries as `available_inputs`, and read the returned description, provider, produced fields, cost class, and match reasons rather than guessing from a definition id. Prefer a ranked definition that already produces the wanted field over a `column.ai` or `column.http_request` reimplementation of it. When a chosen provider is unavailable or its run fails, take the next ranked definition that produces the same field, and only fall back to a generic column once the ranked alternatives are exhausted; say which ones you tried. Keep source, enrichment, formula, action, and workflow responsibilities explicit. Declare each node's inputs, outputs, dependencies, run conditions, provider, expected cost, and failure behavior before proposing a change.
 
 For outreach tables, preserve the table's current schema and lineage. Preserve compatible identity and evidence fields and search live contracts for signals, profile enrichments, functions, AI generation operations, and their outputs. Side-effecting actions remain workflow operations, never recomputable columns. A source evidence pilot has no durable destination. Use `table_sources.preview` for two or three parameter variants of exactly ten receipt-bearing rows each, test the scarcest criterion first, and persist the returned probe evidence. Compute precision as `qualified / (qualified + not_qualified)`; `unsure` is excluded from that denominator. Do not expand unless at least six rows are decided and precision is strictly greater than 0.50. The first expansion is exactly 30 nondeliverable rows: it cannot enroll or send. A later expansion binds the exact workbook, worksheet, saved view, and reviewed revision; never substitute a workflow-local audience identifier.
 

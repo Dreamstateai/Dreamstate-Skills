@@ -7,7 +7,7 @@ capability_ids: ["record_exports.control","record_exports.create","record_export
 completion_contract: {"version":1,"fields":[{"id":"transfer_run_state","description":"Canonical transfer job terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"transfer_evidence_state","description":"Row and artifact evidence status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  playbook_kernel_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 90203e36c720ed48
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 05a99d94cafcf22eea071d8b05c04f442eb343fa49166bbaf01290f0990db069
+  source_release_hash: 551d0b0e82196b38dbf5ece95179fc773ee1cb33cec1761d37d0ecb7d883eeae
   generator_version: 1.0.0
   client: claude
   kernel_id: records-transfer
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 09eb3bc15afff2e09b68705290a9ad403ac9ab4608d82bd7c424617cb4078797
   adapter_sha256: b2aad24e7f9309363f844efd116846deccd4cd44092a0c690fd061ba6056a2da
   evals_file: evals.json
-  evals_sha256: 970e82e1713125b8401179c9a63a307e8411ea1459a3ef458b58629a11cf1aea
+  evals_sha256: 03a8172acf5bda828876ac96b45de56c90b2135f2dc30a47c99e8b063304665a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

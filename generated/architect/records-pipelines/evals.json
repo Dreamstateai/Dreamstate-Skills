@@ -23,6 +23,18 @@
           "object_key": "deal",
           "min_count": 1,
           "reason": "pipeline-definition work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_deals.create",
+          "expected": "absent",
+          "reason": "record_deals.create is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_deals.pipeline_transition",
+          "expected": "absent",
+          "reason": "record_deals.pipeline_transition is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     },
@@ -50,6 +62,42 @@
           "object_key": "deal",
           "min_count": 1,
           "reason": "pipeline-definition work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipelines.create",
+          "expected": "absent",
+          "reason": "record_pipelines.create is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipelines.update",
+          "expected": "absent",
+          "reason": "record_pipelines.update is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipelines.reorder",
+          "expected": "absent",
+          "reason": "record_pipelines.reorder is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipeline_stages.create",
+          "expected": "absent",
+          "reason": "record_pipeline_stages.create is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipeline_stages.update",
+          "expected": "absent",
+          "reason": "record_pipeline_stages.update is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipeline_stages.reorder",
+          "expected": "absent",
+          "reason": "record_pipeline_stages.reorder is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     },
@@ -72,6 +120,18 @@
           "object_key": "deal",
           "min_count": 1,
           "reason": "pipeline-definition work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipelines.lifecycle_set",
+          "expected": "absent",
+          "reason": "record_pipelines.lifecycle_set is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipeline_stages.lifecycle_set",
+          "expected": "absent",
+          "reason": "record_pipeline_stages.lifecycle_set is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     },
@@ -94,6 +154,12 @@
           "object_key": "deal",
           "min_count": 1,
           "reason": "pipeline-definition work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_templates.install",
+          "expected": "absent",
+          "reason": "record_templates.install is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
     },
@@ -115,6 +181,12 @@
           "expected": "present",
           "object_key": "deal",
           "record_display_name": "T25 Pipeline Proof Deal"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_deals.create",
+          "min_count": 1,
+          "reason": "record_deals.create must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",

@@ -68,6 +68,42 @@
           "object_key": "person",
           "min_count": 1,
           "reason": "schema and field proposals must not create a business record as a side effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_attributes.create",
+          "min_count": 1,
+          "reason": "record_attributes.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.attribute_create",
+          "min_count": 1,
+          "reason": "record_objects.attribute_create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.attribute_update",
+          "min_count": 1,
+          "reason": "record_objects.attribute_update must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.attributes_reorder",
+          "min_count": 1,
+          "reason": "record_objects.attributes_reorder must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.create",
+          "min_count": 1,
+          "reason": "record_objects.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.update",
+          "min_count": 1,
+          "reason": "record_objects.update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -90,6 +126,24 @@
           "object_key": "person",
           "min_count": 1,
           "reason": "schema and field proposals must not create a business record as a side effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_relationships.create",
+          "min_count": 1,
+          "reason": "record_relationships.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_relationships.reorder",
+          "min_count": 1,
+          "reason": "record_relationships.reorder must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_relationships.update",
+          "min_count": 1,
+          "reason": "record_relationships.update must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ]
     },
@@ -135,6 +189,12 @@
           "expected": "present",
           "object_key": "partner",
           "record_display_name": "T25 Northstar Partner"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.create",
+          "min_count": 1,
+          "reason": "record_objects.create must leave behind the durable row it declared, or the turn only claimed to write."
         }
       ],
       "fixture_profile": "workspace_local_approved_mutation",
