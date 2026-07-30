@@ -5,28 +5,28 @@ description: Onboard or refresh a website from an exact URL into governed site i
 triggers: ["onboard a new website","learn our company from this site","refresh website facts and workspace wiki files","set up SEO and AI visibility for a domain"]
 dependencies: ["context"]
 capability_domains: ["brain","content","visibility"]
-capability_ids: ["brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.get","brain.context.save_and_publish","brain.context.search","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
+capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
+  playbook_kernel_hash: 91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: d52d36727a64c369
-  manifest_digest: 6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3
+  capability_hash: 5bd51a68ef00f441
+  manifest_digest: f71a57af4031c49ae5196f700bc1d62a7307d0ef152ff1d7a649f3e34506052b
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967
+  source_release_hash: 91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88
   generator_version: 1.0.0
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
-  kernel_sha256: 7fae1fa0fbbf8fa3b18e98d19e76b3ac5b1bc65a9fd27ffbe6af6f27aff6c24d
+  kernel_sha256: 2c53640b264879afb4f99d6095962cc9f71ad8f3b1f47fd3994b1fea3c9288d5
   adapter_sha256: 93bd9e570a72b76936025194d12cd5fb27571882ada230c07862ae4a45c4c4d1
   evals_file: evals.json
-  evals_sha256: 2c8ba506272dc9a96c2f5b777acb0368da9340aca93476c339fdf9c3249edcc4
+  evals_sha256: 7e23709c67cf1095d3b89a6da2b314c3aaaa6a8d83b8c412853578d06ff2a94c
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

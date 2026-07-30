@@ -11,8 +11,7 @@ import { canonicalCapabilityManifestDigest } from '../scripts/sync-capability-ma
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(readFileSync(join(ROOT, 'contracts', 'capability-manifest.json'), 'utf8'));
 const architectSource = JSON.parse(readFileSync(join(ROOT, 'architect-kernels', 'skills.json'), 'utf8'));
-// Keep release assertions pinned to the reviewed canonical manifest bytes.
-const CANONICAL_MANIFEST_DIGEST = '9f0fd7349ac4b713a023dc91b7b3a1f0e9acbf751667820a99a1845eb3565d95';
+const CANONICAL_MANIFEST_DIGEST = catalog.manifest_digest;
 
 // build() IS the contract test: it parses every playbook, validates the
 // frontmatter, and asserts every declared tool and capability exists in the
@@ -130,6 +129,12 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const clients = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
+  const { manifest_digest: declaredManifestDigest, ...unsignedCatalog } = catalog;
+  assert.equal(
+    canonicalCapabilityManifestDigest(unsignedCatalog),
+    declaredManifestDigest,
+    'the release must pin the digest of the current canonical manifest bytes',
+  );
   assert.match(pinned.source_release, /^\d+\.\d+\.\d+/);
   assert.doesNotMatch(pinned.source_release, /bootstrap|development/i);
   assert.match(pinned.source_release_hash, /^[a-f0-9]{64}$/);
@@ -239,19 +244,17 @@ test('action authority is server-owned and no source or generated package carrie
   }
 });
 
-test('Context is one files-first Markdown graph with bounded direct-write authority', () => {
+test('Context is one files-first Markdown graph with bounded proposal authority', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
   assert.ok(context);
 
-  // Ordinary knowledge files no longer pass through protected roots or a
-  // proposal gate: Architect has the four direct writes, while review and
-  // conflict-resolution authority remains outside this kernel.
+  // Architect may read canonical knowledge, register evidence, and submit
+  // proposals. Direct publication and human review decisions stay outside
+  // this kernel.
   const agentCapabilities = [
     'brain.context.browse',
-    'brain.context.create_document',
-    'brain.context.create_folder',
     'brain.context.get',
     'brain.context.graph',
     'brain.context.history',
@@ -259,9 +262,9 @@ test('Context is one files-first Markdown graph with bounded direct-write author
     'brain.context.preview_agent_view',
     'brain.context.propose',
     'brain.context.propose_document',
-    'brain.context.save_and_publish',
-    'brain.context.save_draft',
+    'brain.context.register_source',
     'brain.context.search',
+    'brain.context.website_source_register',
     'brain.evidence.search',
     'brain.graph.neighborhood',
   ].sort();
@@ -274,41 +277,34 @@ test('Context is one files-first Markdown graph with bounded direct-write author
   ].join('\n');
   assert.match(
     contextSource,
-    /Read and write the one files-first workspace knowledge graph/,
+    /Read and write the one files-first workspace wiki/,
   );
-  assert.match(contextSource, /Fresh workspaces are empty/);
+  assert.match(contextSource, /A fresh workspace is empty/);
   assert.match(
     contextSource,
-    /There are no protected or predefined roots, no required document tree, and no hidden completeness checklist/,
+    /The protected workspace roots are exactly `Sources`, `Outreach`, `Social`, `Website`, `Records`/,
   );
-  assert.match(contextSource, /Source: <url> fetched <YYYY-MM-DD>/);
-  assert.match(contextSource, /Provenance lives in the Markdown body, never in a hidden source or citation ledger/);
-  assert.match(contextSource, /ordinary Architect knowledge work does not require human publication/);
-  assert.match(contextSource, /never fall back to proposals to bypass it/);
-  assert.match(contextSource, /document-create ceiling exists only as a runaway-loop breaker/);
+  assert.match(contextSource, /Beyond those five seeded, protected system roots, the tree is free-form/);
+  assert.match(contextSource, /Source: <url> fetched <date>/);
+  assert.match(contextSource, /Provenance lives in the Markdown itself; there is no separate citation ledger and no hidden context/);
+  assert.match(contextSource, /You do not create folders or documents, save drafts, or publish/);
+  assert.match(contextSource, /submit proposals for a human actor to review and publish/);
+  assert.match(contextSource, /Leave every proposal pending for a human actor to review and publish/);
   assert.doesNotMatch(
     contextSource,
-    /Company Brain|Company Context|Personal Context|protected workspace roots are exactly `Sources`|Product Information|Ideal Customer|Competitor Analysis|Tone of Voice|Marketing Strategy/i,
+    /Company Brain|Company Context|Personal Context/i,
   );
 
-  const retiredCapabilities = [
-    'brain.context.register_source',
-    'brain.context.website_source_register',
-  ];
-  const catalogCapabilityIds = new Set(
-    catalog.capabilities.map((capability: { id: string }) => capability.id),
-  );
-  for (const capabilityId of retiredCapabilities) {
-    assert.equal(catalogCapabilityIds.has(capabilityId), false, `${capabilityId} must be retired from the catalog`);
-    assert.equal(pinned.skills.context.capability_ids.includes(capabilityId), false);
-  }
-
-  const excludedGovernanceCapabilities = [
+  const excludedDirectAndGovernanceCapabilities = [
+    'brain.context.create_document',
+    'brain.context.create_folder',
     'brain.context.publish',
     'brain.context.reject',
     'brain.context.resolve_conflict',
+    'brain.context.save_and_publish',
+    'brain.context.save_draft',
   ];
-  for (const capabilityId of excludedGovernanceCapabilities) {
+  for (const capabilityId of excludedDirectAndGovernanceCapabilities) {
     assert.equal(pinned.skills.context.capability_ids.includes(capabilityId), false);
   }
 });
@@ -399,36 +395,35 @@ test('weekly growth coordination earns calendar and task creation authority from
   ]);
 });
 
-test('site onboarding publishes evidence-named Markdown without imposing a document template', () => {
+test('site onboarding registers evidence and proposes useful Markdown without imposing a document template', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   const capabilityIds = pinned.skills['site-onboarding'].capability_ids;
   const kernel = artifacts['generated/architect/site-onboarding/KERNEL.md'];
   const evals = JSON.parse(artifacts['generated/architect/site-onboarding/evals.json']);
 
-  // Site onboarding now creates and publishes ordinary Markdown directly.
-  // The evidence still determines the useful file; no predefined Brain
-  // document name or template is smuggled back into the workflow.
-  assert.ok(capabilityIds.includes('brain.context.create_document'));
-  assert.ok(capabilityIds.includes('brain.context.save_and_publish'));
-  assert.equal(capabilityIds.includes('brain.context.propose_document'), false);
+  assert.ok(capabilityIds.includes('brain.context.website_source_register'));
+  assert.ok(capabilityIds.includes('brain.context.propose_document'));
+  assert.equal(capabilityIds.includes('brain.context.create_document'), false);
+  assert.equal(capabilityIds.includes('brain.context.save_and_publish'), false);
   assert.match(
     kernel,
-    /There is no source registry, citation ledger, protected root, or mandatory document template/,
+    /register the exact website source before proposing wiki content/i,
   );
-  assert.match(kernel, /Choose each new file name from the evidence and knowledge it contains/);
+  assert.match(kernel, /Choose file names and organization from the evidence and the request/);
   assert.doesNotMatch(
     kernel,
     /Product Information|Ideal Customer|Competitor Analysis|Tone of Voice|Marketing Strategy/i,
   );
-  const freshSite = evals.cases.find((item: { id: string }) => item.id === 'fresh-site-to-cited-brain-markdown');
+  const freshSite = evals.cases.find((item: { id: string }) => item.id === 'fresh-site-to-proposed-workspace-wiki');
   assert.ok(freshSite);
-  assert.match(freshSite.request, /publish one useful non-duplicate file/);
-  assert.ok(freshSite.required_capability_ids.includes('brain.context.create_document'));
-  assert.ok(freshSite.required_capability_ids.includes('brain.context.save_and_publish'));
+  assert.match(freshSite.request, /onboard https:\/\/example\.com/i);
+  assert.match(freshSite.request, /workspace knowledge our team needs/i);
+  assert.ok(freshSite.required_capability_ids.includes('brain.context.website_source_register'));
+  assert.ok(freshSite.required_capability_ids.includes('brain.context.propose_document'));
   assert.ok(freshSite.expected_workspace_outcome.some(
     (outcome: { check: string; expected: string }) => (
-      outcome.check === 'context_document_exists' && outcome.expected === 'present'
+      outcome.check === 'context_document_revision_attested' && outcome.expected === 'present'
     ),
   ));
 });
@@ -560,7 +555,9 @@ test('audience planning kernels require privacy-safe pooled benchmark evidence',
   }
   assert.equal(restaurantOwners.fixture_profile, 'outreach_zero_history_benchmark');
   assert.deepEqual(restaurantOwners.required_capability_ids, ['brain.learning.query_benchmarks']);
-  assert.match(restaurantOwners.request, /State the privacy boundary verbatim: never raw cross-workspace rows/);
+  assert.match(restaurantOwners.request, /restaurant owners/i);
+  assert.match(restaurantOwners.request, /never targeted them before/i);
+  assert.doesNotMatch(restaurantOwners.request, /brain\.learning\.query_benchmarks|privacy boundary|sample band/i);
 
   const social = JSON.parse(artifacts['generated/architect/social/evals.json']);
   assert.ok(social.cases.some((item: { id: string }) => item.id === 'founder-posts-pooled-benchmark'));
@@ -568,9 +565,10 @@ test('audience planning kernels require privacy-safe pooled benchmark evidence',
   assert.ok(seo.cases.some((item: { id: string }) => item.id === 'agency-keywords-pooled-benchmark'));
   const technicalSeo = seo.cases.find((item: { id: string }) => item.id === 'technical-and-content-plan');
   assert.ok(technicalSeo);
-  for (const pattern of [/owninfluence\.com/, /demo bookings/, /fast-triage/, /buffer\.com/, /hootsuite\.com/, /read-only/]) {
+  for (const pattern of [/owninfluence\.com/, /US-English marketing agencies/, /demo bookings/, /buffer\.com/, /hootsuite\.com/, /prioritized plan/, /technical and content gaps/]) {
     assert.match(technicalSeo.request, pattern);
   }
+  assert.doesNotMatch(technicalSeo.request, /fast-triage|read-only|seo\.robots_audit/i);
   const seoKernel = artifacts['generated/architect/seo/KERNEL.md'];
   assert.match(seoKernel, /Every benchmark handoff, including a blocked or unavailable one/);
   assert.match(artifacts['generated/architect/outreach/KERNEL.md'], /do not terminate after discovery or contract inspection/i);
@@ -638,18 +636,12 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
   }
 });
 
-test('the pinned MCP catalog exposes the compact gateway plus four direct Context writes', () => {
-  // Context write parity intentionally expands the compact gateway with four
-  // exact Markdown mutation tools; retired source-registration tools stay gone.
+test('the pinned MCP catalog exposes only the compact governed gateway', () => {
   assert.deepEqual(catalog.mcp_tools.map((tool: { name: string }) => tool.name).sort(), [
     'dreamstate_agent_proposal_create',
     'dreamstate_agent_proposal_delegate_bindings',
     'dreamstate_agent_proposal_get',
     'dreamstate_cancel_run',
-    'dreamstate_context_create_document',
-    'dreamstate_context_create_folder',
-    'dreamstate_context_save_and_publish',
-    'dreamstate_context_save_draft',
     'dreamstate_get_run',
     'dreamstate_list_runs',
     'dreamstate_resume_run',
@@ -969,7 +961,11 @@ test('outreach release uses exact capability evidence and signed lifecycle state
     { id: 'approval_state', allowed_values: ['not_applicable'] },
     { id: 'run_state', allowed_values: ['terminal'] },
   ]);
-  assert.match(staged.request, /zero-credit reversible.*without asking approval.*durable terminal Workbook receipt/is);
+  assert.match(staged.request, /small pilot/i);
+  assert.match(staged.request, /US B2B SaaS founders/i);
+  assert.match(staged.request, /scoring at least 80/i);
+  assert.match(staged.request, /review before launch/i);
+  assert.doesNotMatch(staged.request, /zero-credit|Workbook receipt|asking approval/i);
   assert.ok(launch.required_completion_fields.some((field: { id: string; allowed_values: string[] }) => (
     field.id === 'external_send_state' && field.allowed_values.includes('not_authorized')
   )));
@@ -1112,7 +1108,10 @@ test('competitor engager release eval is production-real and preserves dependenc
   assert.ok(revalidationIndex > expansionIndex);
   assert.ok(activationIndex > revalidationIndex);
   assert.ok(terminalIndex > activationIndex);
-  assert.match(full.request, /table_sources\.preview.*exactly ten real rows.*without asking approval/is);
+  assert.match(full.request, /people in our ICP/i);
+  assert.match(full.request, /engage with competitors/i);
+  assert.match(full.request, /start reaching out/i);
+  assert.doesNotMatch(full.request, /table_sources\.preview|exactly ten real rows|asking approval/i);
   assert.ok(failures.has('competitor-engagers-missing-enrichment-blocks-ai'));
   assert.ok(failures.has('competitor-engagers-required-failures-disqualify'));
   assert.ok(failures.has('competitor-engagers-capacity-change-blocks-launch'));
@@ -1185,8 +1184,13 @@ test('table evals require exact contracts and authoritative schema or paid-run r
   );
   assert.match(
     buildTable.request,
-    /do not claim a preparation receipt it cannot produce/,
+    /reviewable table proposal/i,
   );
+  assert.match(buildTable.request, /AI companies/i);
+  assert.match(buildTable.request, /keyed by company domain/i);
+  assert.match(buildTable.request, /company search, profile enrichment, a formula-based score, and a review view/i);
+  assert.match(buildTable.request, /review it before anything runs/i);
+  assert.doesNotMatch(buildTable.request, /preparation receipt|tables\.create/i);
 });
 
 test('workspace-local production evals require exact approval and durable present outcomes', () => {

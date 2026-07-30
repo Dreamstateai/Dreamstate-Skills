@@ -1929,6 +1929,149 @@
         "brain.content.search"
       ],
       "resume_after_elicitation": "recommended"
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "content.artifact_generate"
+      ],
+      "approved_mutation_max_changes": 1,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "expected": "present",
+          "graph_node_kind": "post",
+          "reason": "The grounded draft must exist as a durable post artifact."
+        },
+        {
+          "capability_id": "content.artifact_generate",
+          "check": "capability_effect_persisted",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "The task verb must save the generated draft instead of returning prose."
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock knowledge result",
+        "mock generation receipt",
+        "fixture-only post",
+        "prose-only verification"
+      ],
+      "id": "primitive-make-post-from-workspace-knowledge",
+      "must_not_ask_before_tools": true,
+      "must_not_request_secrets": true,
+      "request": "Turn the published product positioning in our workspace wiki into a saved LinkedIn draft about why teams should centralize GTM context. Keep it unscheduled so I can review it, then give me the durable revision and receipt.",
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "content.artifact_generate"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "content.artifact_generate"
+      ],
+      "required_tool_sequence": [
+        {
+          "skill_id": "social",
+          "tool": "load_skill"
+        },
+        {
+          "capability_id": "brain.context.search",
+          "tool": "brain_context_search"
+        },
+        {
+          "capability_id": "brain.context.get",
+          "tool": "brain_context_get"
+        },
+        {
+          "capability_id": "content.artifact_generate",
+          "tool": "make_post"
+        }
+      ],
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "content.artifact_create",
+        "content.artifact_update"
+      ],
+      "approved_mutation_max_changes": 2,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "graph_node_created",
+          "expected": "present",
+          "graph_node_kind": "post",
+          "reason": "The corrected draft must survive exact revision readback."
+        },
+        {
+          "capability_id": "content.artifact_update",
+          "check": "capability_effect_persisted",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "The task verb must change the durable artifact instead of narrating an edit."
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock artifact lookup",
+        "mock update receipt",
+        "invented revision",
+        "prose-only verification"
+      ],
+      "id": "primitive-edit-post-by-current-revision",
+      "must_not_ask_before_tools": true,
+      "must_not_request_secrets": true,
+      "request": "I need a saved LinkedIn draft titled Phase One Correction with an audit trail that preserves the supplied original, while its exact current revision uses the supplied corrected claim. Keep it unscheduled for review and give me the durable revision and receipt.",
+      "required_capability_ids": [
+        "content.artifact_create",
+        "content.artifact_list",
+        "content.artifact_get",
+        "content.artifact_update"
+      ],
+      "required_executed_capability_ids": [
+        "content.artifact_create",
+        "content.artifact_list",
+        "content.artifact_get",
+        "content.artifact_update"
+      ],
+      "required_tool_sequence": [
+        {
+          "skill_id": "social",
+          "tool": "load_skill"
+        },
+        {
+          "capability_id": "content.artifact_create",
+          "tool": "tools_run"
+        },
+        {
+          "capability_id": "content.artifact_list",
+          "tool": "tools_run"
+        },
+        {
+          "capability_id": "content.artifact_get",
+          "tool": "tools_run"
+        },
+        {
+          "capability_id": "content.artifact_update",
+          "tool": "edit_post"
+        }
+      ],
+      "resume_after_approval": "owner_exact"
     }
   ],
   "schema_version": 1,

@@ -2,14 +2,14 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967",
+  "source_release_hash": "91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "57387a14a9e71e3e132d6c4e26ae21996676d9399ecbfd3d29999f7930051967",
+    "playbook_kernel_hash": "91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "d52d36727a64c369",
-    "manifest_digest": "6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3",
+    "capability_hash": "5bd51a68ef00f441",
+    "manifest_digest": "f71a57af4031c49ae5196f700bc1d62a7307d0ef152ff1d7a649f3e34506052b",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -676,11 +676,11 @@
       ],
       "capability_ids": [
         "brain.context.browse",
-        "brain.context.create_document",
-        "brain.context.create_folder",
         "brain.context.get",
-        "brain.context.save_and_publish",
+        "brain.context.propose",
+        "brain.context.propose_document",
         "brain.context.search",
+        "brain.context.website_source_register",
         "products.website_refresh",
         "products.website_scrape",
         "seo.agent_readiness_scan",
@@ -694,8 +694,8 @@
         "visibility.workspace_site_get",
         "visibility.workspace_site_update"
       ],
-      "kernel_sha256": "7fae1fa0fbbf8fa3b18e98d19e76b3ac5b1bc65a9fd27ffbe6af6f27aff6c24d",
-      "evals_sha256": "2c8ba506272dc9a96c2f5b777acb0368da9340aca93476c339fdf9c3249edcc4",
+      "kernel_sha256": "2c53640b264879afb4f99d6095962cc9f71ad8f3b1f47fd3994b1fea3c9288d5",
+      "evals_sha256": "7e23709c67cf1095d3b89a6da2b314c3aaaa6a8d83b8c412853578d06ff2a94c",
       "adapter_sha256": {
         "architect": "93bd9e570a72b76936025194d12cd5fb27571882ada230c07862ae4a45c4c4d1",
         "claude": "bf0fa017723e1955af5529ea300ab8c88079508dd3a5139ee7713c5f6b683cf5",
@@ -766,8 +766,8 @@
         "tools.x_hook_generate",
         "tools.x_post_generate"
       ],
-      "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
-      "evals_sha256": "bc4b89e3f1d61b7784cc21f23087d12606706f6778695e320958a3633d73abc1",
+      "kernel_sha256": "de3147299af13dfb6b327183c5d015f73a27fb6b0177a028b745d960c97e7cae",
+      "evals_sha256": "09fd7c6386f77761128d27f9b3b9287758de2e5e7d7cb190b6a551f136d557b4",
       "adapter_sha256": {
         "architect": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
         "claude": "8702c0da6d9408e48d4298a199adaf4b753aa8c2277526bde02f5b836c4f7c0c",

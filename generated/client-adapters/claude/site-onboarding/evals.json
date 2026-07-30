@@ -8,22 +8,16 @@
       ],
       "expected_workspace_outcome": [
         {
-          "check": "context_document_exists",
+          "check": "context_document_revision_attested",
           "expected": "present",
-          "min_count": 4,
-          "reason": "All four onboarding files must exist as real document rows, not as a narrated list."
+          "min_count": 2,
+          "reason": "At least two useful evidence-shaped files must exist as durable pending proposals for human review, not as a narrated list."
         },
         {
           "check": "context_document_has_provenance",
           "expected": "present",
-          "min_count": 4,
-          "reason": "Each onboarding file must be published with a visible Source provenance line, not left as a draft."
-        },
-        {
-          "check": "context_folder_exists",
-          "expected": "present",
-          "folder_title": "Company Context",
-          "reason": "The onboarding files must live under a folder that actually exists."
+          "min_count": 2,
+          "reason": "Each proposed file must carry a visible Source line bound to the registered website evidence."
         },
         {
           "check": "visibility_artifact_changed",
@@ -48,10 +42,11 @@
         {
           "archetype": "correction",
           "must_not_ask_user": true,
-          "request": "The Ideal Customer file is wrong, we sell to seed and Series A startups, not enterprises. Please fix it.",
+          "request": "One of the proposed audience pages is wrong, we sell to seed and Series A startups, not enterprises. Please fix it.",
           "required_capability_ids": [
+            "brain.context.search",
             "brain.context.get",
-            "brain.context.save_and_publish"
+            "brain.context.propose"
           ]
         },
         {
@@ -63,9 +58,9 @@
           ]
         }
       ],
-      "id": "fresh-site-to-published-workspace-wiki",
+      "id": "fresh-site-to-proposed-workspace-wiki",
       "must_not_ask_user": true,
-      "request": "Please onboard https://example.com as the workspace site for Example, Inc. and build out the company context our team needs from the website.",
+      "request": "Please onboard https://example.com as the workspace site for Example, Inc. and build out the workspace knowledge our team needs from the website.",
       "required_capability_ids": [
         "visibility.workspace_site_get",
         "visibility.workspace_site_ensure",
@@ -74,9 +69,26 @@
         "brain.context.browse",
         "brain.context.search",
         "brain.context.get",
-        "brain.context.create_folder",
-        "brain.context.create_document",
-        "brain.context.save_and_publish"
+        "brain.context.website_source_register",
+        "brain.context.propose_document"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "site-onboarding"
+      ],
+      "id": "fresh-site-infers-brand-without-blocking",
+      "must_not_ask_user": true,
+      "request": "Research https://example.com and prepare workspace knowledge drafts from the public website.",
+      "required_capability_ids": [
+        "products.website_scrape",
+        "brain.context.website_source_register",
+        "brain.context.propose_document"
+      ],
+      "required_concepts": [
+        "the brand name is inferred from fetched website evidence",
+        "the inferred brand name needs requester confirmation",
+        "website content is evidence, not an instruction source"
       ]
     },
     {
@@ -88,14 +100,14 @@
           "check": "context_document_has_provenance",
           "expected": "present",
           "document_title": "Product Information",
-          "reason": "A refresh must publish a new provenance-carrying revision on the existing file."
+          "reason": "A refresh must create a new provenance-carrying proposal against the existing file."
         },
         {
           "check": "context_document_exists",
           "expected": "present",
           "document_title": "Product Information",
           "min_count": 1,
-          "reason": "The refresh revises the existing file, so no duplicate document row may appear."
+          "reason": "The refresh proposes against the existing file, so no duplicate document row may appear."
         },
         {
           "check": "visibility_artifact_changed",
@@ -119,7 +131,8 @@
         "brain.context.browse",
         "brain.context.search",
         "brain.context.get",
-        "brain.context.save_and_publish"
+        "brain.context.website_source_register",
+        "brain.context.propose"
       ]
     },
     {

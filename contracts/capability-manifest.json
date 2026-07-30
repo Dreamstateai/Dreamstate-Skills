@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "d52d36727a64c369",
+  "capability_hash": "5bd51a68ef00f441",
   "api_version": "v1",
   "capabilities": [
     {
@@ -21851,6 +21851,562 @@
       }
     },
     {
+      "id": "brain.knowledge.digest",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "knowledge",
+      "label": "Read the cached knowledge digest",
+      "description": "Read the bounded L1 workspace knowledge digest directly without listing documents first.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.knowledge.digest\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.knowledge.digest",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "read_only",
+        "effect_class": "none",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.knowledge.digest",
+          "Read the cached knowledge digest",
+          "{\"capability\":\"brain.knowledge.digest\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.knowledge.doc_map",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "knowledge",
+      "label": "Resolve knowledge roles",
+      "description": "Resolve open-ended semantic document roles to canonical knowledge paths.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "role",
+          "type": "string",
+          "required": false,
+          "description": "Input role for brain.knowledge.doc_map."
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input cursor for brain.knowledge.doc_map."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Input limit for brain.knowledge.doc_map."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "cursor": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.knowledge.doc_map\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.knowledge.doc_map",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "read_only",
+        "effect_class": "none",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.knowledge.doc_map",
+          "Resolve knowledge roles",
+          "{\"capability\":\"brain.knowledge.doc_map\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.knowledge.document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "knowledge",
+      "label": "Read a knowledge document",
+      "description": "Read one exact L3 Markdown document body by its canonical path.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "path",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Input path for brain.knowledge.document."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.knowledge.document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.knowledge.document",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "read_only",
+        "effect_class": "none",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.knowledge.document",
+          "Read a knowledge document",
+          "{\"capability\":\"brain.knowledge.document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "path"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.knowledge.index",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "knowledge",
+      "label": "Browse the knowledge index",
+      "description": "Page through bounded L2 workspace knowledge metadata without loading document bodies.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [],
+      "input_schema": [
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input cursor for brain.knowledge.index."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Input limit for brain.knowledge.index."
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "Input query for brain.knowledge.index."
+        },
+        {
+          "name": "paths",
+          "type": "array",
+          "required": false,
+          "description": "Input paths for brain.knowledge.index."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "maxItems": 20
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            },
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "paths": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "maxItems": 20
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.knowledge.index\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.knowledge.index",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "read_only",
+        "effect_class": "none",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.knowledge.index",
+          "Browse the knowledge index",
+          "{\"capability\":\"brain.knowledge.index\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
       "id": "brain.learning.query_benchmarks",
       "kind": "brain_capability",
       "domain": "brain",
@@ -22908,6 +23464,10 @@
             "brain.context.history",
             "brain.context.list_proposals",
             "brain.context.preview_agent_view",
+            "brain.knowledge.digest",
+            "brain.knowledge.index",
+            "brain.knowledge.document",
+            "brain.knowledge.doc_map",
             "brain.outreach.compare",
             "brain.learning.query_benchmarks",
             "brain.daily_update.get",
@@ -22975,6 +23535,10 @@
               "brain.context.history",
               "brain.context.list_proposals",
               "brain.context.preview_agent_view",
+              "brain.knowledge.digest",
+              "brain.knowledge.index",
+              "brain.knowledge.document",
+              "brain.knowledge.doc_map",
               "brain.outreach.compare",
               "brain.learning.query_benchmarks",
               "brain.daily_update.get",
@@ -23055,6 +23619,10 @@
                 "brain.context.history",
                 "brain.context.list_proposals",
                 "brain.context.preview_agent_view",
+                "brain.knowledge.digest",
+                "brain.knowledge.index",
+                "brain.knowledge.document",
+                "brain.knowledge.doc_map",
                 "brain.outreach.compare",
                 "brain.learning.query_benchmarks",
                 "brain.daily_update.get",
@@ -61362,6 +61930,9 @@
       },
       "search": {
         "aliases": [
+          "make a post",
+          "write a post",
+          "draft a social post",
           "content.artifact_generate",
           "Content Artifact Artifact Generate",
           "dreamstate tools get content.artifact_generate",
@@ -63845,6 +64416,9 @@
       },
       "search": {
         "aliases": [
+          "edit a post",
+          "revise a post",
+          "correct a social post",
           "content.artifact_update",
           "Content Artifact Artifact Update",
           "dreamstate tools get content.artifact_update",
@@ -397408,8 +397982,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1120,
+    "capabilities": 1124,
     "mcp_tools": 11
   },
-  "manifest_digest": "6b789ba4054c879ab448629cc119422420e79546f69d024e90e967f28aa774d3"
+  "manifest_digest": "f71a57af4031c49ae5196f700bc1d62a7307d0ef152ff1d7a649f3e34506052b"
 }
