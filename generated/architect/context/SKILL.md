@@ -5,28 +5,28 @@ description: Read targeted revisioned workspace-wiki claims or propose cited con
 triggers: ["read the canonical workspace wiki","inspect published workspace knowledge","propose a cited wiki update","revise an existing ordinary wiki document","trace a cited claim or source","propose a new ordinary wiki file","keep a wiki proposal unpublished for human review"]
 dependencies: []
 capability_domains: ["brain","context"]
-capability_ids: ["brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.get","brain.context.graph","brain.context.history","brain.context.list_proposals","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.save_and_publish","brain.context.save_draft","brain.context.search","brain.evidence.search","brain.graph.neighborhood"]
+capability_ids: ["brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.get","brain.context.graph","brain.context.history","brain.context.list","brain.context.list_proposals","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.save_and_publish","brain.context.save_draft","brain.context.search","brain.evidence.search","brain.graph.neighborhood"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1
+  playbook_kernel_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 8ba8c82bd38f553e
-  manifest_digest: 9f0fd7349ac4b713a023dc91b7b3a1f0e9acbf751667820a99a1845eb3565d95
+  capability_hash: 90203e36c720ed48
+  manifest_digest: 0bab290777e70ca078ffd43fb74ee446391b1bfe500d3009fc42cc724a1a349b
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1
+  source_release_hash: 39919d7ae3b976d9eb9ddef02ea15db712b62c80d9bee847e26f33fd101aaf80
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: ff8ecb5d852c4494f804e7237cb1ade7a1d2b6d5e6bd7839182a4992b3ea56cb
-  adapter_sha256: a5579217dbd98da18091390b8f44f31923796e5ad8f8f8112ae70cc4e7dce51a
+  kernel_sha256: b204e9dcd6571f413659915297b76645dd0349533e57bc2fc81102ef5c0919ef
+  adapter_sha256: 53040095987c8d1c4c798a6fa5154aee2aa6807293d3e6a1565b5bed3a982792
   evals_file: evals.json
-  evals_sha256: 00f30eaebedf1866ab93e3b1fc60753071195d544ebb97732073d3afa978a0ee
+  evals_sha256: 4875c40d775e4334ad762dab7d59653a972a987cd647d986aa1da18ba6758a52
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,5 +47,5 @@ Treat this package's generated compatibility tuple and hashes as a mutation gate
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 15 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 16 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 6 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.

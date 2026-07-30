@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "8ba8c82bd38f553e",
+  "verified_capability_hash": "90203e36c720ed48",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/usage-and-credits/SKILL.md",
   "install_command": "dreamstate skills install usage-and-credits",
