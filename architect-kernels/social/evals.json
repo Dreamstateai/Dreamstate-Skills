@@ -1295,7 +1295,7 @@
     },
     {
       "id": "cross-platform-social-research-table",
-      "request": "Compare LinkedIn, X, and Reddit posts about founder-led growth from the last 90 days, using 20 posts per platform and a mix of high-engagement and representative posts. Complete only the canonical cross-platform research and suggest a cited table schema for later use. Do not create, propose, save, or persist a table artifact; table creation belongs to a separate Tables action. Report artifact_state none and run_state terminal from the successful research receipt.",
+      "request": "I need a finished research brief comparing 20 high-performing and representative founder-led growth posts from each of LinkedIn, X, and Reddit over the last 90 days, with citations and a suggested schema that someone can later turn into a table.",
       "fixture_profile": "social_cross_platform_research",
       "expected_skill_ids": [
         "social"
@@ -1333,7 +1333,7 @@
     },
     {
       "id": "cross-platform-publishing-needs-approval",
-      "request": "Call the canonical cross-platform prepare capability and use the typed evidence plus finished network-specific post drafts it returns to persist an exact reviewable proposal. I intend to publish after reviewing it; request approval for the saved proposal, but do not bypass that approval.",
+      "request": "I want finished LinkedIn, X, and Reddit drafts grounded in the available evidence and saved together as one exact proposal for my review before anything is published.",
       "fixture_profile": "social_publish_proposal",
       "expected_skill_ids": [
         "social"
@@ -1373,7 +1373,7 @@
     },
     {
       "id": "linkedin-and-x-authoring-loads-both-specialists",
-      "request": "Take this angle and write it as both a LinkedIn post and an X post: founder-led growth compounds when the founder answers support questions in public. Call the canonical cross-platform prepare capability, apply each network's own drafting rules to its own draft, and persist one exact reviewable proposal carrying both drafts. Do not publish either one.",
+      "request": "Turn this angle into finished LinkedIn and X drafts, each suited to its platform, and save them together as one exact proposal for my review: founder-led growth compounds when the founder answers support questions in public.",
       "fixture_profile": "social_publish_proposal",
       "expected_skill_ids": [
         "social",

@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "x-recent-search-window",
-      "request": "Search X for founder-led growth posts from the last seven days. The topic and time window are complete. Use transparent defaults for ranking and output, disclose them, keep unavailable metrics null, and do not block on optional presentation choices.",
+      "request": "Find the best X posts about founder-led growth from the last seven days.",
       "fixture_profile": "x_recent_official",
       "expected_skill_ids": [
         "social.x"
@@ -110,7 +110,7 @@
     },
     {
       "id": "x-authored-post-respects-length-limit",
-      "request": "Write one X post about how founder-led growth compounds when the founder answers support questions in public. This is X only: do not draft a LinkedIn or a Reddit version. Keep it inside the single-post character limit, or say it does not fit and thread it explicitly. Do not publish it.",
+      "request": "Post a single update on X about how founder-led growth compounds when the founder answers support questions in public.",
       "fixture_profile": "x_recent_official",
       "expected_skill_ids": [
         "social.x"

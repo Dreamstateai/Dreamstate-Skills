@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "reddit-real-thread-opportunities",
-      "request": "Using the authorized workspace Reddit research source, find real Reddit threads from the last 30 days where founders discuss lead enrichment. Return the 10 most relevant verified links and prepare helpful reply drafts, but do not publish any reply.",
+      "request": "Find the 10 most relevant Reddit discussions from the last 30 days where founders talk about lead enrichment, and help us join each conversation with a useful reply.",
       "fixture_profile": "reddit_real_threads",
       "expected_skill_ids": [
         "social.reddit"
@@ -51,7 +51,7 @@
     },
     {
       "id": "reddit-authored-post-distinction",
-      "request": "Verify these citations through the authorized workspace Reddit research source, then turn the verified themes into one authored standalone company post and save an exact reviewable proposal: (1) founders validate evidence quality before automating enrichment, citation reddit:thread-1, verified URL https://reddit.com/r/startups/comments/thread-1; (2) they want transparent missing-data handling, citation reddit:thread-2, verified URL https://reddit.com/r/sales/comments/thread-2. Do not publish it.",
+      "request": "Write a standalone Reddit post for our company about why founders should validate evidence quality before automating enrichment and handle missing data transparently. These discussions are the source material: https://reddit.com/r/startups/comments/thread-1 and https://reddit.com/r/sales/comments/thread-2.",
       "fixture_profile": "reddit_authored_artifact",
       "expected_skill_ids": [
         "social.reddit"

@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1",
+  "source_release_hash": "e2aaaa6020d1d0c496bf21b1179e38aa2f43e5dbb8a9cdece100bd507a3fae29",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "bf5ca7a57b04726c70ccaaf7f8a99ad04f16dd28f0ae1ea7d19d209450146ed1",
+    "playbook_kernel_hash": "e2aaaa6020d1d0c496bf21b1179e38aa2f43e5dbb8a9cdece100bd507a3fae29",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "8ba8c82bd38f553e",
@@ -684,7 +684,7 @@
       ],
       "kernel_sha256": "fdb14c3c6abc0be479a837bf2c7bc23ed2f1d004e989b7bcd6a0e899b6124efb",
       "adapter_sha256": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
-      "evals_sha256": "e5b7037665b18bc4331df69b4cf4e5fc4488df72468eae77dc9a16f42fb4d02b"
+      "evals_sha256": "0b60ef81ebafec1a4f7e30568bfaa23ec571409ba0312f47704844053f9b32ae"
     },
     "social.linkedin": {
       "capability_domains": [
@@ -698,7 +698,7 @@
       ],
       "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
       "adapter_sha256": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
-      "evals_sha256": "e8d7ecfc2b7b5056e4c6228064d0dfb9fe9ecafb5a0506fe4b1483b5fa0443ae"
+      "evals_sha256": "e214508e90d9f5c3f322e929cdd21e4f744b000982a4aea0bd541c134f4deed7"
     },
     "social.reddit": {
       "capability_domains": [
@@ -711,7 +711,7 @@
       ],
       "kernel_sha256": "2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3",
       "adapter_sha256": "645f1ae37684eaa3b2d1cfb8319d56111a4445e598dfd443c553ff01e148c764",
-      "evals_sha256": "aa479428a09795bbdb394bf46821ff106bee8cb586de3c497ce6815227f33ba4"
+      "evals_sha256": "2f2b50aed9b94e456b2132a95c3f8259e636d6d7c1eb31707d75814135adebd1"
     },
     "social.x": {
       "capability_domains": [
@@ -725,7 +725,7 @@
       ],
       "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
       "adapter_sha256": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
-      "evals_sha256": "dccb04056b909b2bd2f47c21b8bbea5e1d7361d0a247d4c29baa75de62ef891a"
+      "evals_sha256": "95f4d14a5e4d43368c7dbb09f382eee4a582ce623b36959bf054fa5e3ff27b3f"
     },
     "strategy": {
       "capability_domains": [

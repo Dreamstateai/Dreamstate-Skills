@@ -96,7 +96,7 @@
     },
     {
       "id": "linkedin-authored-post-ends-with-cta",
-      "request": "Write a LinkedIn post about how founder-led growth compounds when the founder answers support questions in public. This is LinkedIn only: do not draft an X or a Reddit version. Do not publish it, and state how the draft closes.",
+      "request": "Draft a LinkedIn post about the compounding effect of founders answering support questions in public, and invite other founders to share what they have seen.",
       "fixture_profile": "linkedin_connected_recent",
       "expected_skill_ids": [
         "social.linkedin"
