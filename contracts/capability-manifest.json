@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "5bd51a68ef00f441",
+  "capability_hash": "8313b15f26c8c946",
   "api_version": "v1",
   "capabilities": [
     {
@@ -21856,7 +21856,7 @@
       "domain": "brain",
       "category": "knowledge",
       "label": "Read the cached knowledge digest",
-      "description": "Read the bounded L1 workspace knowledge digest directly without listing documents first.",
+      "description": "Read the bounded L1 workspace knowledge digest directly without listing documents first. Accepted capability arguments: optional rationale.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -21881,10 +21881,23 @@
         "timeout_ms": 24000
       },
       "required_inputs": [],
-      "input_schema": [],
+      "input_schema": [
+        {
+          "name": "rationale",
+          "type": "string",
+          "required": false,
+          "description": "Input rationale for brain.knowledge.digest."
+        }
+      ],
       "input_json_schema": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
         "required": [],
         "additionalProperties": false
       },
@@ -21895,7 +21908,13 @@
         "contract_version": "2026-07-15.0",
         "input_json_schema": {
           "type": "object",
-          "properties": {},
+          "properties": {
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            }
+          },
           "required": [],
           "additionalProperties": false
         },
@@ -21957,7 +21976,7 @@
       "domain": "brain",
       "category": "knowledge",
       "label": "Resolve knowledge roles",
-      "description": "Resolve open-ended semantic document roles to canonical knowledge paths.",
+      "description": "Resolve open-ended semantic document roles to canonical knowledge paths. Accepted capability arguments: optional role, cursor, limit, and rationale.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -22000,6 +22019,12 @@
           "type": "number",
           "required": false,
           "description": "Input limit for brain.knowledge.doc_map."
+        },
+        {
+          "name": "rationale",
+          "type": "string",
+          "required": false,
+          "description": "Input rationale for brain.knowledge.doc_map."
         }
       ],
       "input_json_schema": {
@@ -22018,6 +22043,11 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 50
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
           }
         },
         "required": [],
@@ -22044,6 +22074,11 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 50
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
             }
           },
           "required": [],
@@ -22107,7 +22142,7 @@
       "domain": "brain",
       "category": "knowledge",
       "label": "Read a knowledge document",
-      "description": "Read one exact L3 Markdown document body by its canonical path.",
+      "description": "Read one exact L3 Markdown document body by its canonical path. Accepted capability arguments: path and optional rationale.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -22143,12 +22178,23 @@
           "type": "string",
           "required": true,
           "description": "Input path for brain.knowledge.document."
+        },
+        {
+          "name": "rationale",
+          "type": "string",
+          "required": false,
+          "description": "Input rationale for brain.knowledge.document."
         }
       ],
       "input_json_schema": {
         "type": "object",
         "properties": {
           "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "rationale": {
             "type": "string",
             "minLength": 1,
             "maxLength": 2000
@@ -22168,6 +22214,11 @@
           "type": "object",
           "properties": {
             "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "rationale": {
               "type": "string",
               "minLength": 1,
               "maxLength": 2000
@@ -22238,7 +22289,7 @@
       "domain": "brain",
       "category": "knowledge",
       "label": "Browse the knowledge index",
-      "description": "Page through bounded L2 workspace knowledge metadata without loading document bodies.",
+      "description": "Page through bounded L2 workspace knowledge metadata without loading document bodies. Accepted capability arguments: optional cursor, limit, query, paths, and rationale.",
       "when_to_use": [
         "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
       ],
@@ -22287,6 +22338,12 @@
           "type": "array",
           "required": false,
           "description": "Input paths for brain.knowledge.index."
+        },
+        {
+          "name": "rationale",
+          "type": "string",
+          "required": false,
+          "description": "Input rationale for brain.knowledge.index."
         }
       ],
       "input_json_schema": {
@@ -22314,6 +22371,11 @@
               "maxLength": 2000
             },
             "maxItems": 20
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
           }
         },
         "required": [],
@@ -22349,6 +22411,11 @@
                 "maxLength": 2000
               },
               "maxItems": 20
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
             }
           },
           "required": [],
@@ -397985,5 +398052,5 @@
     "capabilities": 1124,
     "mcp_tools": 11
   },
-  "manifest_digest": "f71a57af4031c49ae5196f700bc1d62a7307d0ef152ff1d7a649f3e34506052b"
+  "manifest_digest": "7f545f8a0bdabd348207c4bd5a6e5e1f0382e6146b90d95353d9ef6dc12f4fdb"
 }

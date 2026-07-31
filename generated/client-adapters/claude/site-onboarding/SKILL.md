@@ -7,21 +7,21 @@ capability_ids: ["brain.context.browse","brain.context.get","brain.context.propo
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88
+  playbook_kernel_hash: 9ef0b8d1529f252e06f64804b09ccdb210d671d52483d8e09b781f53733769ac
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 5bd51a68ef00f441
-  manifest_digest: f71a57af4031c49ae5196f700bc1d62a7307d0ef152ff1d7a649f3e34506052b
+  capability_hash: 8313b15f26c8c946
+  manifest_digest: 7f545f8a0bdabd348207c4bd5a6e5e1f0382e6146b90d95353d9ef6dc12f4fdb
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88
+  source_release_hash: 9ef0b8d1529f252e06f64804b09ccdb210d671d52483d8e09b781f53733769ac
   generator_version: 1.0.0
   client: claude
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
-  kernel_sha256: 2c53640b264879afb4f99d6095962cc9f71ad8f3b1f47fd3994b1fea3c9288d5
+  kernel_sha256: 681204a22847b9be532b0c00a56f5bac5ce4b4da05491afcf03b2aa7daa71dea
   adapter_sha256: bf0fa017723e1955af5529ea300ab8c88079508dd3a5139ee7713c5f6b683cf5
   evals_file: evals.json
   evals_sha256: 7e23709c67cf1095d3b89a6da2b314c3aaaa6a8d83b8c412853578d06ff2a94c
@@ -78,6 +78,8 @@ Register the exact website source before proposing wiki content. Preserve the re
 For genuinely new knowledge, use `brain.context.propose_document`. Choose file names and organization from the evidence and the request; never force a predefined document tree, fixed title set, or completeness claim. For a fact that belongs in a file that already exists, never propose a duplicate. Read its exact node and published revision, then use `brain.context.propose` against that `node_ref` and `base_revision_id`.
 
 Every proposed file carries a visible provenance line naming where each fact came from: `Source: <url> fetched <date>`. Content you inferred rather than read must say so in the file. A successful proposal is pending human review, not canonical published knowledge.
+
+Registering a source and creating a pending proposal are reversible preparation steps. Do not ask for approval before either action when the URL and requested onboarding outcome are already clear. Proceed directly, then surface the pending proposals as the items awaiting human review. Use `ask_user` only for a genuine ambiguity or missing fact that cannot be resolved from workspace reads and fetched evidence.
 
 Never review, approve, reject, or publish a proposal. Report the exact pending proposal state and the human review still required.
 

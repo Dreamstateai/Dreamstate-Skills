@@ -25,6 +25,8 @@ For genuinely new knowledge, use `brain.context.propose_document`. Choose file n
 
 Every proposed file carries a visible provenance line naming where each fact came from: `Source: <url> fetched <date>`. Content you inferred rather than read must say so in the file. A successful proposal is pending human review, not canonical published knowledge.
 
+Registering a source and creating a pending proposal are reversible preparation steps. Do not ask for approval before either action when the URL and requested onboarding outcome are already clear. Proceed directly, then surface the pending proposals as the items awaiting human review. Use `ask_user` only for a genuine ambiguity or missing fact that cannot be resolved from workspace reads and fetched evidence.
+
 Never review, approve, reject, or publish a proposal. Report the exact pending proposal state and the human review still required.
 
 ## Prepare measurement

@@ -7,16 +7,16 @@ capability_ids: ["brain.content.get","brain.content.search","brain.context.get",
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88
+  playbook_kernel_hash: 9ef0b8d1529f252e06f64804b09ccdb210d671d52483d8e09b781f53733769ac
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 5bd51a68ef00f441
-  manifest_digest: f71a57af4031c49ae5196f700bc1d62a7307d0ef152ff1d7a649f3e34506052b
+  capability_hash: 8313b15f26c8c946
+  manifest_digest: 7f545f8a0bdabd348207c4bd5a6e5e1f0382e6146b90d95353d9ef6dc12f4fdb
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: 91b7bc084f4f3ad7920057128b7deeb9d5aa3dcbe347e4ea65552d593a5ece88
+  source_release_hash: 9ef0b8d1529f252e06f64804b09ccdb210d671d52483d8e09b781f53733769ac
   generator_version: 1.0.0
   client: codex
   kernel_id: social
