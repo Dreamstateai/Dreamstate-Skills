@@ -88,8 +88,7 @@
       ],
       "request": "Set up outbound prospecting for my team, starting with a list I can review and refine.",
       "required_capability_ids": [
-        "brain.context.search",
-        "workbooks.create"
+        "brain.context.search"
       ],
       "required_executed_capability_ids": [
         "brain.context.search",
@@ -147,9 +146,6 @@
         }
       ],
       "id": "staged-pilot-build-sample-expand-launch",
-      "required_capability_ids": [
-        "workbooks.create"
-      ],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [
         {

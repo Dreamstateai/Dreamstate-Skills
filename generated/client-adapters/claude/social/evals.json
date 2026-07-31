@@ -2036,6 +2036,13 @@
       ],
       "expected_workspace_outcome": [
         {
+          "capability_id": "content.artifact_create",
+          "check": "capability_effect_persisted",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "The initial draft creation must be read back before its current revision can be corrected."
+        },
+        {
           "check": "graph_node_created",
           "expected": "present",
           "graph_node_kind": "post",

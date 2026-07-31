@@ -56,14 +56,12 @@
       "required_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
-        "brain.context.website_source_register",
         "brain.context.propose_document",
         "brain.context.propose"
       ],
       "required_executed_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
-        "brain.context.website_source_register",
         "brain.context.propose_document",
         "brain.context.propose"
       ]
@@ -106,8 +104,6 @@
         "brain.context.propose_document"
       ],
       "required_executed_capability_ids": [
-        "brain.context.website_source_register",
-        "brain.context.register_source",
         "brain.context.propose_document"
       ]
     },
@@ -117,6 +113,12 @@
         "context"
       ],
       "expected_workspace_outcome": [
+        {
+          "check": "context_document_revision_attested",
+          "expected": "present",
+          "document_title": "Ideal Customer",
+          "reason": "The revision must be durably attested against the existing document, not only described in prose."
+        },
         {
           "check": "context_document_has_provenance",
           "expected": "present",
@@ -312,9 +314,7 @@
         "brain.context.preview_agent_view",
         "brain.context.propose",
         "brain.context.propose_document",
-        "brain.context.register_source",
         "brain.context.search",
-        "brain.context.website_source_register",
         "brain.evidence.search",
         "brain.graph.neighborhood"
       ]

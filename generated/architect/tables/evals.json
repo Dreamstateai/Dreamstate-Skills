@@ -9,6 +9,7 @@
       "required_capability_ids": [
         "tables.create"
       ],
+      "required_executed_capability_ids": [],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [
         {
@@ -34,6 +35,12 @@
       ],
       "request": "Set up a reviewable table proposal for AI companies, keyed by company domain, with company search, profile enrichment, a formula-based score, and a review view. Use sensible defaults and let me review it before anything runs.",
       "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "tables.create",
+          "expected": "absent",
+          "reason": "The proposal boundary must leave no durable table row before approval."
+        },
         {
           "check": "workbook_exists",
           "expected": "absent",
@@ -85,6 +92,18 @@
       ],
       "request": "Run the selected column on a representative 10-row sample, spend no more than 25 credits, and tell me how every cell finished. Show me the cost before I commit.",
       "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "selection_snapshots.create",
+          "expected": "present",
+          "reason": "The exact bounded sample must be frozen in a durable selection snapshot."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "columns.run",
+          "expected": "present",
+          "reason": "The bounded column execution must create a durable run that can be followed to terminal cell truth."
+        },
         {
           "check": "workbook_enrolled",
           "expected": "absent",
@@ -188,7 +207,8 @@
       "fixture_profile": "outreach_exact_result_set_expansion",
       "id": "exact-result-set-expansion",
       "required_capability_ids": [
-        "sources.cold_outbound_expand"
+        "sources.cold_outbound_expand",
+        "sources.cold_outbound_preview"
       ],
       "required_concepts": [
         "approved Workbook revision",
@@ -197,6 +217,12 @@
       ],
       "request": "The workbook and sample are approved. Stage the complete matching result set for a separate review.",
       "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sources.cold_outbound_expand",
+          "expected": "present",
+          "reason": "The approved exact-result-set expansion must create the durable run returned by the capability."
+        },
         {
           "check": "workbook_enrolled",
           "expected": "absent",

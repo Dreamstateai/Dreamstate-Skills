@@ -77,6 +77,19 @@
       "expected_skill_ids": [
         "site-onboarding"
       ],
+      "expected_workspace_outcome": [
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "website_content",
+          "reason": "The public-site scrape must persist the exact fetched website content."
+        },
+        {
+          "check": "context_document_revision_attested",
+          "expected": "present",
+          "reason": "Preparing workspace knowledge drafts must create a durable attested revision."
+        }
+      ],
       "id": "fresh-site-infers-brand-without-blocking",
       "must_not_ask_user": true,
       "request": "Research https://example.com and prepare workspace knowledge drafts from the public website.",
@@ -96,6 +109,12 @@
         "site-onboarding"
       ],
       "expected_workspace_outcome": [
+        {
+          "check": "context_document_revision_attested",
+          "expected": "present",
+          "document_title": "Product Information",
+          "reason": "The refreshed proposal must create a durable attested revision against the existing file."
+        },
         {
           "check": "context_document_has_provenance",
           "expected": "present",
@@ -131,7 +150,6 @@
         "brain.context.browse",
         "brain.context.search",
         "brain.context.get",
-        "brain.context.website_source_register",
         "brain.context.propose"
       ]
     },

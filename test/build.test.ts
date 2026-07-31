@@ -803,19 +803,20 @@ test('outreach specialists own authoring mutations while the coordinator owns on
   }
 });
 
-test('tables is the only specialist owner of canonical source preview and expansion', () => {
+test('tables is the only specialist owner of workbook creation and canonical source preview and expansion', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/architect/PINNED_RELEASE.json']);
   for (const capabilityId of [
+    'workbooks.create',
     'table_sources.preview',
     'sources.cold_outbound_expand',
+    'sources.cold_outbound_preview',
   ]) {
     const owners = ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']
       .filter((skillId) => pinned.skills[skillId].capability_ids.includes(capabilityId));
     assert.deepEqual(owners, ['tables'], `${capabilityId}: exactly one specialist owner`);
   }
   for (const retiredAlias of [
-    'sources.cold_outbound_preview',
     'sources.linkedin_post_engagers_preview',
   ]) {
     for (const skillId of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
@@ -990,7 +991,7 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
   const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'typed-reviewed-tables-handoff');
 
-  assert.deepEqual(staged.required_capability_ids, ['workbooks.create']);
+  assert.equal(staged.required_capability_ids, undefined);
   assert.deepEqual(staged.required_completion_fields, [
     { id: 'stage_boundary_state', allowed_values: ['ordered_separate'] },
     { id: 'activation_state', allowed_values: ['inactive'] },
