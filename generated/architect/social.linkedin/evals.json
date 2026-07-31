@@ -4,7 +4,7 @@
   "cases": [
     {
       "id": "linkedin-connected-research",
-      "request": "Compare the hooks in our recent LinkedIn posts and tell me which ones seem strongest.",
+      "request": "Research recent LinkedIn posts from our supported connected account and compare their hooks.",
       "fixture_profile": "linkedin_connected_recent",
       "expected_skill_ids": [
         "social.linkedin"
@@ -49,7 +49,7 @@
     },
     {
       "id": "linkedin-disconnected-stays-truthful",
-      "request": "Tell me what our LinkedIn performance looks like right now.",
+      "request": "Load LinkedIn intelligence even if no account is connected and tell me what is available.",
       "fixture_profile": "linkedin_disconnected",
       "expected_skill_ids": [
         "social.linkedin"
