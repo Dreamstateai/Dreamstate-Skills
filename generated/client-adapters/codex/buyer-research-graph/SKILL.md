@@ -7,7 +7,7 @@ capability_ids: ["graph.archive_node","graph.archive_relation","graph.contract_g
 completion_contract: {"version":1,"fields":[{"id":"graph_evidence_state","description":"Research provenance and confidence state.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"graph_state","description":"Canonical graph identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e2aaaa6020d1d0c496bf21b1179e38aa2f43e5dbb8a9cdece100bd507a3fae29
+  playbook_kernel_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8ba8c82bd38f553e
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: e2aaaa6020d1d0c496bf21b1179e38aa2f43e5dbb8a9cdece100bd507a3fae29
+  source_release_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
   generator_version: 1.0.0
   client: codex
   kernel_id: buyer-research-graph

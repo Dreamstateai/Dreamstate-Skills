@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.8",
-  "source_release_hash": "e2aaaa6020d1d0c496bf21b1179e38aa2f43e5dbb8a9cdece100bd507a3fae29",
+  "source_release_hash": "f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "e2aaaa6020d1d0c496bf21b1179e38aa2f43e5dbb8a9cdece100bd507a3fae29",
+    "playbook_kernel_hash": "f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "8ba8c82bd38f553e",
@@ -698,7 +698,7 @@
       ],
       "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
       "adapter_sha256": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
-      "evals_sha256": "e214508e90d9f5c3f322e929cdd21e4f744b000982a4aea0bd541c134f4deed7"
+      "evals_sha256": "17d146a7c35c42f32b8fd6e5713d2d32fd78bcd93e62a1823c1051d2b9e8e6b2"
     },
     "social.reddit": {
       "capability_domains": [
@@ -711,7 +711,7 @@
       ],
       "kernel_sha256": "2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3",
       "adapter_sha256": "645f1ae37684eaa3b2d1cfb8319d56111a4445e598dfd443c553ff01e148c764",
-      "evals_sha256": "2f2b50aed9b94e456b2132a95c3f8259e636d6d7c1eb31707d75814135adebd1"
+      "evals_sha256": "d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc"
     },
     "social.x": {
       "capability_domains": [
@@ -725,7 +725,7 @@
       ],
       "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
       "adapter_sha256": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
-      "evals_sha256": "95f4d14a5e4d43368c7dbb09f382eee4a582ce623b36959bf054fa5e3ff27b3f"
+      "evals_sha256": "e9c860ace45ed95d06670f711d22ce1f9b01a983509d1b3f2e592159b83bd4bb"
     },
     "strategy": {
       "capability_domains": [
