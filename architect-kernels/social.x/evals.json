@@ -103,7 +103,18 @@
       "must_not": [
         {
           "kind": "claimed_success_without_receipt",
-          "capability_id": "x.posts.search"
+          "capability_id": "x.posts.search",
+          "completion_evidence": {
+            "field_id": "archive_entitlement",
+            "success_values": [
+              "entitled"
+            ],
+            "non_success_values": [
+              "not_entitled",
+              "unavailable",
+              "not_applicable"
+            ]
+          }
         }
       ],
       "adversarial": true
