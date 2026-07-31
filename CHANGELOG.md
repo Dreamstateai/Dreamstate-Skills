@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.9 - 2026-07-31
+
+- Made the Architect eval corpus require durable read-back evidence for approved writes while preserving explicit proposal-only and no-execution boundaries.
+- Integrated the Social authored overlay into the canonical source tree so LinkedIn, Reddit, and X adversarial and evidence contracts reproduce from one pinned commit without a private lane.
+- Refreshed the canonical Influence capability manifest and generated Architect, Claude Code, and Codex packages as one hash-verified release.
+
 ## 0.5.8 - 2026-07-28
 
 - Made the files-first workspace wiki the only Context knowledge surface, with protected roots limited to Sources, Outreach, Social, Website, and Records and private prose retained in owner-bound ordinary folders.

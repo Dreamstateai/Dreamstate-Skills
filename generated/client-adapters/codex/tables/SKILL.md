@@ -7,7 +7,7 @@ capability_ids: ["attachments.create","attachments.delete","attachments.list","c
 completion_contract: {"version":1,"fields":[{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"schema_state","description":"Combined row identity, source, and dependency schema state.","allowed_values":["identity_source_dependencies_ready","partial","missing","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 8a52648086a5be5d14a61d2cd59ec3331dc67c3f3a6c6d401e5fb10f3873ab95
+  playbook_kernel_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d2f4b59d2b8b388
@@ -15,8 +15,8 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.8
-  source_release_hash: 8a52648086a5be5d14a61d2cd59ec3331dc67c3f3a6c6d401e5fb10f3873ab95
+  source_release: 0.5.9
+  source_release_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
   generator_version: 1.0.0
   client: codex
   kernel_id: tables

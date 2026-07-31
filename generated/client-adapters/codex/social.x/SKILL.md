@@ -7,7 +7,7 @@ capability_ids: ["brain.content.search","social.accounts_list"]
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"source_state","description":"X evidence source boundary.","allowed_values":["official_api","cache","unavailable","not_applicable"]},{"id":"search_window","description":"Official X search-window coverage state.","allowed_values":["recent","archive","outside_entitlement","unavailable"]},{"id":"archive_entitlement","description":"Full-archive X entitlement state.","allowed_values":["entitled","not_entitled","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 8a52648086a5be5d14a61d2cd59ec3331dc67c3f3a6c6d401e5fb10f3873ab95
+  playbook_kernel_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d2f4b59d2b8b388
@@ -15,8 +15,8 @@ compatibility:
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.5.8
-  source_release_hash: 8a52648086a5be5d14a61d2cd59ec3331dc67c3f3a6c6d401e5fb10f3873ab95
+  source_release: 0.5.9
+  source_release_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
   generator_version: 1.0.0
   client: codex
   kernel_id: social.x
