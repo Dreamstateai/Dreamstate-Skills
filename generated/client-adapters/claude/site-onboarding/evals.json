@@ -70,7 +70,11 @@
         "brain.context.search",
         "brain.context.get",
         "brain.context.website_source_register",
-        "brain.context.propose_document"
+        "brain.context.propose_document",
+        "workspace.company_setup_dismiss",
+        "workspace.company_setup_handoff_acknowledge",
+        "workspace.company_setup_handoff_set",
+        "workspace.company_setup_state_get"
       ]
     },
     {

@@ -1,6 +1,6 @@
 # Webhook operations
 <!-- architect-operation-contract
-{"required_capability_ids":["webhooks.create","webhooks.delete","webhooks.deliveries_list","webhooks.list","webhooks.test_delivery"]}
+{"required_capability_ids":["webhooks.create","webhooks.delete","webhooks.deliveries_list","webhooks.delivery_get","webhooks.list","webhooks.test_delivery"]}
 -->
 
 Manage workspace webhooks without exposing or requesting secrets in chat. List current endpoints and delivery evidence first. Preserve webhook ID, exact destination identity, subscribed events, status, revision, delivery timestamps, response classifications, and deep link; redact credentials and payload secrets.

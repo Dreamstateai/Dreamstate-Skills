@@ -389,6 +389,8 @@
         "runs.resume",
         "runs.cancel",
         "workflows.get",
+        "workflows.deactivate",
+        "workflows.delete",
         "workflows.draft_save",
         "workflows.draft_publish",
         "workflows.trigger_create",

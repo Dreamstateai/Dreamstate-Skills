@@ -2,10 +2,10 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.9",
-  "source_release_hash": "62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6",
+  "source_release_hash": "f7ac6c5e30a7f9b70d66ab0a92ea8fb40751c48237e35221dc9b1b4222b5453b",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6",
+    "playbook_kernel_hash": "f7ac6c5e30a7f9b70d66ab0a92ea8fb40751c48237e35221dc9b1b4222b5453b",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "5d2f4b59d2b8b388",
@@ -184,14 +184,18 @@
         "brain.context.search",
         "brain.context.website_source_register",
         "brain.evidence.search",
-        "brain.graph.neighborhood"
+        "brain.graph.neighborhood",
+        "brain.knowledge.digest",
+        "brain.knowledge.doc_map",
+        "brain.knowledge.document",
+        "brain.knowledge.index"
       ],
-      "kernel_sha256": "552a2472bbe5c5d27e8d57ec86f4c4c2124cb7fb89925ee369ad34d6e8b8bafc",
-      "evals_sha256": "8861db511961c2354b218116cc667e7228a223a77a8d979f71a846fe6b4558ad",
+      "kernel_sha256": "bfcad921b6b0353a8a8b7b03f3fc5cd0d2f981da5015e355dad5cfc131e7a331",
+      "evals_sha256": "f67e24a2f1371cd5dfea2e405781e031bb3e32f9cb0beb685845e5876173d115",
       "adapter_sha256": {
-        "architect": "2200f39fda6579f0653b911385675c2e7e75021dd9ef22b1e79e7430fe1b7eb7",
-        "claude": "1b9ad804147ed70ccd523ba913db4c327ae984bf67313ed1d70124453686a7e8",
-        "codex": "2a3f6a33768ed0bc4f166235e01677561abd6f265df8f9415b9ee7a11b2de5ed"
+        "architect": "1fa8042fd58e2c84ee5ba3a86281b34512f9e0c9aac4da2df92458fb977542d3",
+        "claude": "f330c507602d9333e8ea173933bfc037ea9e046f1db0d4e02b548ced92d70c7c",
+        "codex": "e7b0c6928668600f6a9f8a28d9e5418477347fc89c2efe3292c2922903a40f49"
       }
     },
     "experiments": {
@@ -279,6 +283,7 @@
       ],
       "capability_ids": [
         "notifications.archive",
+        "notifications.get",
         "notifications.list",
         "notifications.mark_all_read",
         "notifications.mark_read",
@@ -292,12 +297,12 @@
         "notifications.workspace_type_preferences_reset",
         "notifications.workspace_type_preferences_update"
       ],
-      "kernel_sha256": "933d1bb32fd31ffcd637661ca7c76078b514e71a7decda89a5c60f3d5d3ced9b",
-      "evals_sha256": "4ee7785faded331d1e2eda20b5fc2d1ecfe3b10614a4ebcc1f90f394edc43724",
+      "kernel_sha256": "e2fa6674ab5910453dfe39e1ac8884ec1ba5ab25770339dd70f3b26231226d0e",
+      "evals_sha256": "fc2eb2db468854cd23562cfb391ee69ff45d2712cd6c6f7622fe6dec2e9914ee",
       "adapter_sha256": {
-        "architect": "33059304b1a5c411f5ef788bc4537dbb01269f2211ec95d6706d4d8498ccd5f8",
-        "claude": "8c400ca96a7181b2a467f77eba9f82a572740a14e60ea696acacfa6cf9e76e9d",
-        "codex": "b0b9750dde0f6ddbf5a7ff57dce39481d1b77b288991aa34c58813a0ed4bd29d"
+        "architect": "27c199122eb2b8dcd5c1693a87d466401335652adf408d50842e97280e178298",
+        "claude": "d02e758e241c910ab0664ebd5ec827e6437c7689c5cd78af2d65c65fc0e52798",
+        "codex": "973626bddccb563513ec88cfadf683e8db995f4c802e2348aad323985716dd13"
       }
     },
     "outreach": {
@@ -357,16 +362,18 @@
         "sequences.archive",
         "sequences.bind",
         "sequences.definition_get",
+        "sequences.delete",
+        "sequences.enrollment_owner_clear",
         "sequences.list",
         "sequences.step_options",
         "sequences.validate"
       ],
-      "kernel_sha256": "a2da552a7d0ef68c04fd43d770cd858bff03d4d88a90a0087f5c0135c3667357",
-      "evals_sha256": "42d430e973042b0a4af58ec1334637f0c23c94f5a685a9cae20bf4553011b598",
+      "kernel_sha256": "18b4d2ddc98bd25008810dcff1c9a959d0750333378ba0e4c2e958afc8d812cb",
+      "evals_sha256": "a41a29228e8f6b6274e0a011ee74d9552e08a9d0c77359879f949f5956dd32a1",
       "adapter_sha256": {
-        "architect": "9e8f39c1a6feb18cf4700007d498a2fdb4f937fe24fd6cb1af1765137437c965",
-        "claude": "a92f4100597b2e82f605801975b2517342403fc5599cb931594b2444f2d73cf1",
-        "codex": "d6810b08488497cc47ff47a0045c7136cbe8840aef72af27cff0d97fd6a2258f"
+        "architect": "0075d9b99f376029c55dc85be0b0547436e3f022f489e6c962e21e5c47dec476",
+        "claude": "d1ab294683cb315eed7997843c96d95c42595babb1dadd55ef5e0bb6f407eb6a",
+        "codex": "29e442b45a554d767230694eed0eb40bbbd63735ad77f808050186681af42a80"
       }
     },
     "outreach-workflow-builder": {
@@ -391,6 +398,8 @@
         "workflows.archive",
         "workflows.call_child",
         "workflows.create",
+        "workflows.deactivate",
+        "workflows.delete",
         "workflows.delivery_binding_get",
         "workflows.draft_publish",
         "workflows.draft_save",
@@ -410,12 +419,12 @@
         "workflows.validate_graph",
         "worksheets.list"
       ],
-      "kernel_sha256": "24dec461a0ce92f11364d28d2b6551bd3824fa02798f9f8a0ec8201abfb70ae3",
-      "evals_sha256": "8b1dc40a336bdc5c221446f6243afaed3ae3114e7015f503174b37c7b05f389a",
+      "kernel_sha256": "a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73",
+      "evals_sha256": "1021527014ea0448eb837c78cc2e04224311a54addc7707e7fc0ffdae177c537",
       "adapter_sha256": {
-        "architect": "0408581255c23fef7776436dd46600105b05a532ea5fe917baf047702cb7b0cc",
-        "claude": "aa46b2ca1b3840533262f147a043c3c00dc92e74dda3f00482f0878fd3d6e801",
-        "codex": "bd4ffb79794d7e33a7489415d441af83fe9cee999ea88cda0edcc2883a8c5b2a"
+        "architect": "30089627a0cb943e2035f945716f2d66c3448bb2976b08d13a1e67868c4b2e2d",
+        "claude": "b881dbc32f73afa0c42ecf76ba567d0f1a3e22bd480c7db4a8879c0d165aad2d",
+        "codex": "7a4793e7b962d9010f0af91c5e51ca128bbff90a6b8bbd872295139b4a5286fa"
       }
     },
     "products": {
@@ -427,16 +436,18 @@
         "products.content_archive",
         "products.content_list",
         "products.document_process",
+        "products.get",
+        "products.list",
         "products.og_meta_get",
         "products.website_refresh",
         "products.website_scrape"
       ],
-      "kernel_sha256": "98f746e7a136c6b80a3ac9bd7bedf42a1e5775c4b93d25f96f66f8c67f1570b8",
-      "evals_sha256": "6e2eb621a9f6c52197ea5f54f5c119d36ec8934119e68bd16d729cc7b5e90707",
+      "kernel_sha256": "b0db424c7b14799eca725aad6c1a03eb24c205db36c5e9b29496fbfcc2d8bb0c",
+      "evals_sha256": "05786fe7cce20bb993570d8ba64175b46398e02edcf42d8bf7cf4cd9cc890152",
       "adapter_sha256": {
-        "architect": "df4cf30a48d9d3c34d8e85b3007598c33b30bde5513eb02bc7506812e3356480",
-        "claude": "661cb3af7c2e2c752e2540922593c0e35dcc7bcaf64ac4e910c2b955c9206b1a",
-        "codex": "cda06d61e218117a7ca03ba5b66cb8f8f105745bd9efb5bce73f21d9a489a4b7"
+        "architect": "175cb449604acac38dcb1a0d7ceb94097656d27ea0f602e3890e4273b5011dbf",
+        "claude": "24fa8adffc7a5d5f28d81f92d61926fdf72f2de38156ce1f18cdff9c635b616e",
+        "codex": "4917fa2085030b852a8c265ca90a8b4cc83a3ffd70aa2dc19a559056ee14ff50"
       }
     },
     "records": {
@@ -691,14 +702,18 @@
         "visibility.sitemap_get",
         "visibility.workspace_site_ensure",
         "visibility.workspace_site_get",
-        "visibility.workspace_site_update"
+        "visibility.workspace_site_update",
+        "workspace.company_setup_dismiss",
+        "workspace.company_setup_handoff_acknowledge",
+        "workspace.company_setup_handoff_set",
+        "workspace.company_setup_state_get"
       ],
-      "kernel_sha256": "681204a22847b9be532b0c00a56f5bac5ce4b4da05491afcf03b2aa7daa71dea",
-      "evals_sha256": "7a750d0189d6519b2764e8a620336bb4f9c60aa4c285b497c0e531bb82dc4782",
+      "kernel_sha256": "c026cada0a70e26030c8a94d0a11c369fadfd89b6c19f7a667218d6a3a75698b",
+      "evals_sha256": "459b3c747108cccff97835c91a16dac7b95996aef90c217a88248254e74f1397",
       "adapter_sha256": {
-        "architect": "93bd9e570a72b76936025194d12cd5fb27571882ada230c07862ae4a45c4c4d1",
-        "claude": "bf0fa017723e1955af5529ea300ab8c88079508dd3a5139ee7713c5f6b683cf5",
-        "codex": "03d2104b91aa071f417e1a4a7cb341cd8cdacfee3dae453a9a4362a66058d59d"
+        "architect": "0ee99021bfea9e67ae99a7edf463e3f68eb4ad92c78c9cc24483079249a40527",
+        "claude": "7eb02887a05a2e31b9f8d2b996b481b4dc2e85de56fc9b837e7f100d4f18d915",
+        "codex": "4252f2103c8939790c1d8cedbf335a8e445238b152b1c466901fdd27b134cbc6"
       }
     },
     "social": {
@@ -876,6 +891,8 @@
         "columns.run_all",
         "columns.update",
         "executable_definitions.list_resolved",
+        "executables.run",
+        "executables.save",
         "records.companies_list",
         "records.field_set",
         "records.get",
@@ -936,12 +953,12 @@
         "worksheets.reorder",
         "worksheets.update"
       ],
-      "kernel_sha256": "c4dde7571a28e7fa933e866c8d24888fe4aa132ed1ed008cc43162abd889631e",
-      "evals_sha256": "3b79a00428c15adc680cbf1c9ff5c3db2c545ab3a7f52752abcd5fbc6bd19786",
+      "kernel_sha256": "7903b813d5686c072e69a712b4c9922b6244cc2a510892db6ddfcbc925dac78d",
+      "evals_sha256": "7ff87328109546b1b653c3c49e1b4d45394d62fcd36845047f4c0dcd3ba3d3ae",
       "adapter_sha256": {
-        "architect": "dbd270edb45ee49fe55e296930da075c2412b105919cd72a1b8653b791730c4e",
-        "claude": "ca447f3cff614c41019397efaee22ca3d2cfd1b1386f271cdc74becc91307c17",
-        "codex": "900ccb38ee015e5dcd0bda2ae0885802067034581cc5fa668e7da031b281959b"
+        "architect": "b0f57cd360afecb5c33a4e13ceea03bb3341a28d7f6db52e6036d100955eec82",
+        "claude": "01d9f66072335a9e2e3f259992919440b5dab250059c63d4cebe0bf4258b6099",
+        "codex": "2aa73cbf73c0f75974b47efd7d5848cbf707b89b23ef95704c84e160e8a2ce73"
       }
     },
     "tasks": {
@@ -1023,15 +1040,16 @@
         "webhooks.create",
         "webhooks.delete",
         "webhooks.deliveries_list",
+        "webhooks.delivery_get",
         "webhooks.list",
         "webhooks.test_delivery"
       ],
-      "kernel_sha256": "e2a4d7c0f98421e1f005f3cfd2b65bc4b70d79bbe4ebbb2469351543f5296d81",
-      "evals_sha256": "b8cd5ca6a41939a69760426067156e439a128104cb1fdd3cea1396a4da7257f4",
+      "kernel_sha256": "5028e4fca152f98d4bb559f783c93babfa5b3f5c2a4f01ea4a9350db88d2eb1b",
+      "evals_sha256": "c3798bc3a305d01adc11e40ba80246794e24f6f1d0e5b054f2a2ba466158fe60",
       "adapter_sha256": {
-        "architect": "c19fcd7442e490b3f3bdfcc3f05d35f9465670a24e3068aae28fced51222c685",
-        "claude": "55b3752bf14f4c0912c12b049ba348911b91f9f9f40e98d322018107a5478f92",
-        "codex": "a0631ce5b638be81bb6b7731c191ec870cb17af979a4b0f98faa928d7e830d82"
+        "architect": "5fe7a44a4e77ff6c00658a3c3669bbb4f68c05f70eb6de7c185322d62da09b1c",
+        "claude": "8c3a3c2c4d00e64ffaf897378ef10d253c35cda33ad6a334023effe14bd91345",
+        "codex": "81f6873a64e5c71fdfa4db3b0d44cf3f674b6d35c2269409bd73ebc029233f2a"
       }
     },
     "weekly-growth-plan": {

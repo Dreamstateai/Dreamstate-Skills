@@ -5,12 +5,12 @@ description: Onboard or refresh a website from an exact URL into governed site i
 triggers: ["onboard a new website","learn our company from this site","refresh website facts and workspace wiki files","set up SEO and AI visibility for a domain"]
 dependencies: ["context"]
 capability_domains: ["brain","content","visibility"]
-capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
+capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update","workspace.company_setup_dismiss","workspace.company_setup_handoff_acknowledge","workspace.company_setup_handoff_set","workspace.company_setup_state_get"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
+  playbook_kernel_hash: f7ac6c5e30a7f9b70d66ab0a92ea8fb40751c48237e35221dc9b1b4222b5453b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d2f4b59d2b8b388
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
+  source_release_hash: f7ac6c5e30a7f9b70d66ab0a92ea8fb40751c48237e35221dc9b1b4222b5453b
   generator_version: 1.0.0
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
-  kernel_sha256: 681204a22847b9be532b0c00a56f5bac5ce4b4da05491afcf03b2aa7daa71dea
-  adapter_sha256: 93bd9e570a72b76936025194d12cd5fb27571882ada230c07862ae4a45c4c4d1
+  kernel_sha256: c026cada0a70e26030c8a94d0a11c369fadfd89b6c19f7a667218d6a3a75698b
+  adapter_sha256: 0ee99021bfea9e67ae99a7edf463e3f68eb4ad92c78c9cc24483079249a40527
   evals_file: evals.json
-  evals_sha256: 7a750d0189d6519b2764e8a620336bb4f9c60aa4c285b497c0e531bb82dc4782
+  evals_sha256: 459b3c747108cccff97835c91a16dac7b95996aef90c217a88248254e74f1397
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,5 +47,5 @@ Treat this package's generated compatibility tuple and hashes as a mutation gate
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 18 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot infer execution authority from these 10 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
+- Cannot act outside this contract: exactly 22 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 13 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.

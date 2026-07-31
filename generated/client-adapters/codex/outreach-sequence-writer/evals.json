@@ -10,6 +10,8 @@
         "brain.context.search",
         "brain.context.get",
         "sequences.definition_get",
+        "sequences.delete",
+        "sequences.enrollment_owner_clear",
         "sequences.step_options",
         "sequences.validate",
         "sequences.bind"

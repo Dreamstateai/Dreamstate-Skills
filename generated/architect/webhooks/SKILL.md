@@ -5,12 +5,12 @@ description: Inspect and govern webhook configuration and delivery evidence with
 triggers: ["list webhooks","create or delete a webhook","inspect webhook deliveries","send a webhook test"]
 dependencies: []
 capability_domains: ["webhooks"]
-capability_ids: ["webhooks.create","webhooks.delete","webhooks.deliveries_list","webhooks.list","webhooks.test_delivery"]
+capability_ids: ["webhooks.create","webhooks.delete","webhooks.deliveries_list","webhooks.delivery_get","webhooks.list","webhooks.test_delivery"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
+  playbook_kernel_hash: f7ac6c5e30a7f9b70d66ab0a92ea8fb40751c48237e35221dc9b1b4222b5453b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d2f4b59d2b8b388
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: 62b407673f52fd159a25778ced3f9cc37fdb538731fd03e8c3dc77970735e9c6
+  source_release_hash: f7ac6c5e30a7f9b70d66ab0a92ea8fb40751c48237e35221dc9b1b4222b5453b
   generator_version: 1.0.0
   kernel_id: webhooks
   kernel_file: KERNEL.md
-  kernel_sha256: e2a4d7c0f98421e1f005f3cfd2b65bc4b70d79bbe4ebbb2469351543f5296d81
-  adapter_sha256: c19fcd7442e490b3f3bdfcc3f05d35f9465670a24e3068aae28fced51222c685
+  kernel_sha256: 5028e4fca152f98d4bb559f783c93babfa5b3f5c2a4f01ea4a9350db88d2eb1b
+  adapter_sha256: 5fe7a44a4e77ff6c00658a3c3669bbb4f68c05f70eb6de7c185322d62da09b1c
   evals_file: evals.json
-  evals_sha256: b8cd5ca6a41939a69760426067156e439a128104cb1fdd3cea1396a4da7257f4
+  evals_sha256: c3798bc3a305d01adc11e40ba80246794e24f6f1d0e5b054f2a2ba466158fe60
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,5 +47,5 @@ Treat this package's generated compatibility tuple and hashes as a mutation gate
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 5 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 6 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 3 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.

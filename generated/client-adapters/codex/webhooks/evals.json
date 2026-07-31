@@ -42,6 +42,7 @@
       ],
       "required_capability_ids": [
         "webhooks.deliveries_list",
+        "webhooks.delivery_get",
         "webhooks.test_delivery"
       ],
       "expected_workspace_outcome": [

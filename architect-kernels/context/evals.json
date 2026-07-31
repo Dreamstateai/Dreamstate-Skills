@@ -8,7 +8,11 @@
       "request": "What's our current published positioning? Include enough detail for me to verify which version it came from.",
       "required_capability_ids": [
         "brain.context.search",
-        "brain.context.get"
+        "brain.context.get",
+        "brain.knowledge.digest",
+        "brain.knowledge.doc_map",
+        "brain.knowledge.document",
+        "brain.knowledge.index"
       ],
       "required_executed_capability_ids": [
         "brain.context.search",

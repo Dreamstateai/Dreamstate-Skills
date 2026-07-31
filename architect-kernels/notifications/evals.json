@@ -9,6 +9,7 @@
         "notifications"
       ],
       "required_capability_ids": [
+        "notifications.get",
         "notifications.list",
         "notifications.unread_counts_get",
         "notifications.mark_read",

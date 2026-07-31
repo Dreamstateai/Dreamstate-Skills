@@ -304,6 +304,10 @@ test('Context is one files-first Markdown graph with bounded proposal authority'
     'brain.context.website_source_register',
     'brain.evidence.search',
     'brain.graph.neighborhood',
+    'brain.knowledge.digest',
+    'brain.knowledge.doc_map',
+    'brain.knowledge.document',
+    'brain.knowledge.index',
   ].sort();
   assert.deepEqual(pinned.skills.context.capability_ids, agentCapabilities);
 
@@ -1198,7 +1202,11 @@ test('table evals require exact contracts and authoritative schema or paid-run r
   const paidSample = tables.cases.find((item: { id: string }) => item.id === 'bounded-paid-run');
 
   assert.equal(buildTable.fixture_profile, 'tables_reactive_proposal');
-  assert.deepEqual(buildTable.required_capability_ids, ['tables.create']);
+  assert.deepEqual(buildTable.required_capability_ids, [
+    'tables.create',
+    'executables.run',
+    'executables.save',
+  ]);
   assert.deepEqual(buildTable.required_completion_fields, [
     { id: 'schema_state', allowed_values: ['identity_source_dependencies_ready'] },
     { id: 'artifact_state', allowed_values: ['proposal_saved', 'existing'] },

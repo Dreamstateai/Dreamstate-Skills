@@ -7,7 +7,9 @@
       "fixture_profile": "tables_reactive_proposal",
       "id": "build-reactive-table",
       "required_capability_ids": [
-        "tables.create"
+        "tables.create",
+        "executables.run",
+        "executables.save"
       ],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [

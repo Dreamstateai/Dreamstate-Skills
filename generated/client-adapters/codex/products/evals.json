@@ -9,6 +9,8 @@
         "products"
       ],
       "required_capability_ids": [
+        "products.get",
+        "products.list",
         "products.content_list",
         "products.og_meta_get"
       ],
