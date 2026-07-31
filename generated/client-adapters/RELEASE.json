@@ -2,10 +2,10 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.9",
-  "source_release_hash": "8a1a573ae59b25858dc9016ce14b93bbcdfa64464c97690a50a993851f81e555",
+  "source_release_hash": "d716628a7ac5ba2f5fb1f0278c963fde685c01f3157f22d43296f9f8675e1770",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "8a1a573ae59b25858dc9016ce14b93bbcdfa64464c97690a50a993851f81e555",
+    "playbook_kernel_hash": "d716628a7ac5ba2f5fb1f0278c963fde685c01f3157f22d43296f9f8675e1770",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "5d2f4b59d2b8b388",
@@ -369,7 +369,7 @@
         "sequences.validate"
       ],
       "kernel_sha256": "18b4d2ddc98bd25008810dcff1c9a959d0750333378ba0e4c2e958afc8d812cb",
-      "evals_sha256": "a41a29228e8f6b6274e0a011ee74d9552e08a9d0c77359879f949f5956dd32a1",
+      "evals_sha256": "141b11da2b48f125fd2d29ad96e1da49cba5197ffcdca91c79c342ba0d5d9131",
       "adapter_sha256": {
         "architect": "0075d9b99f376029c55dc85be0b0547436e3f022f489e6c962e21e5c47dec476",
         "claude": "d1ab294683cb315eed7997843c96d95c42595babb1dadd55ef5e0bb6f407eb6a",
@@ -420,7 +420,7 @@
         "worksheets.list"
       ],
       "kernel_sha256": "a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73",
-      "evals_sha256": "1021527014ea0448eb837c78cc2e04224311a54addc7707e7fc0ffdae177c537",
+      "evals_sha256": "3cab2ff0b474880e635b25ef0f2f6699aa753939ef12a3b0707a1292c1a40970",
       "adapter_sha256": {
         "architect": "30089627a0cb943e2035f945716f2d66c3448bb2976b08d13a1e67868c4b2e2d",
         "claude": "b881dbc32f73afa0c42ecf76ba567d0f1a3e22bd480c7db4a8879c0d165aad2d",
@@ -709,7 +709,7 @@
         "workspace.company_setup_state_get"
       ],
       "kernel_sha256": "c026cada0a70e26030c8a94d0a11c369fadfd89b6c19f7a667218d6a3a75698b",
-      "evals_sha256": "459b3c747108cccff97835c91a16dac7b95996aef90c217a88248254e74f1397",
+      "evals_sha256": "2044134a3a8820021a63f1c236c4aca4678c513c14181f3dab7468f1841d996a",
       "adapter_sha256": {
         "architect": "0ee99021bfea9e67ae99a7edf463e3f68eb4ad92c78c9cc24483079249a40527",
         "claude": "7eb02887a05a2e31b9f8d2b996b481b4dc2e85de56fc9b837e7f100d4f18d915",
@@ -955,7 +955,7 @@
         "worksheets.update"
       ],
       "kernel_sha256": "5e33d07682c459c0f397a8b9e2c40f29352d166efb357a96ca7e3c097bb8b831",
-      "evals_sha256": "7f7c3780e68ad7be9c118d24d27e02f8478a9fb80200f623c53fb9b7d9995e02",
+      "evals_sha256": "a2c1b209c9c90959c644383b2d08f9f007b922b4ead8e4893e78652ab171a0b0",
       "adapter_sha256": {
         "architect": "b78970a6c3d0019521c3664b1f58e04ad0a86d0064be283e92c67d49a0f50aeb",
         "claude": "7bab27bd429e346f877dc089bf997e13d1c1fb7c895e00a0baddd8d4c1d45f64",

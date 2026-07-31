@@ -389,8 +389,6 @@
         "runs.resume",
         "runs.cancel",
         "workflows.get",
-        "workflows.deactivate",
-        "workflows.delete",
         "workflows.draft_save",
         "workflows.draft_publish",
         "workflows.trigger_create",
@@ -449,6 +447,39 @@
           "min_count": 1,
           "reason": "runs.cancel must leave behind the durable row it declared, or the turn only claimed to write."
         }
+      ]
+    },
+    {
+      "id": "deactivate-active-workflow",
+      "request": "Deactivate workflow wf_eval_active_001 without deleting its definition or run history.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "required_capability_ids": [
+        "workflows.get",
+        "workflows.deactivate"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workflows.deactivate",
+          "min_count": 1,
+          "reason": "Deactivation must durably move the exact workflow definition back to draft."
+        }
+      ]
+    },
+    {
+      "id": "delete-retired-workflow",
+      "request": "Delete the retired workflow wf_eval_retired_001 after checking that it is the exact workflow I named.",
+      "expected_skill_ids": [
+        "outreach-workflow-builder"
+      ],
+      "required_capability_ids": [
+        "workflows.get",
+        "workflows.delete"
+      ],
+      "required_concepts": [
+        "delete only the exact retired workflow requested"
       ]
     },
     {

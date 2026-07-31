@@ -7,9 +7,7 @@
       "fixture_profile": "tables_reactive_proposal",
       "id": "build-reactive-table",
       "required_capability_ids": [
-        "tables.create",
-        "executables.run",
-        "executables.save"
+        "tables.create"
       ],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [
@@ -47,6 +45,21 @@
           "expected": "absent",
           "reason": "the requested turn stops at a reviewable proposal, so no new Workbook may exist"
         }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "tables"
+      ],
+      "id": "save-and-run-reviewed-table-executable",
+      "request": "Save the reviewed executable for the approved AI-company table column, then run it for the approved sample rows.",
+      "required_capability_ids": [
+        "executables.save",
+        "executables.run"
+      ],
+      "required_concepts": [
+        "save the reviewed executable before running it",
+        "run only the approved sample rows"
       ]
     },
     {

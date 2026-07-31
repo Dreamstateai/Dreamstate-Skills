@@ -6,38 +6,6 @@
         "site-onboarding",
         "context"
       ],
-      "expected_workspace_outcome": [
-        {
-          "check": "context_document_revision_attested",
-          "expected": "present",
-          "min_count": 2,
-          "reason": "At least two useful evidence-shaped files must exist as durable pending proposals for human review, not as a narrated list."
-        },
-        {
-          "check": "context_document_has_provenance",
-          "expected": "present",
-          "min_count": 2,
-          "reason": "Each proposed file must carry a visible Source line bound to the registered website evidence."
-        },
-        {
-          "check": "visibility_artifact_changed",
-          "expected": "present",
-          "artifact_kind": "workspace_site",
-          "reason": "Making the URL our workspace site must durably change the workspace-site artifact."
-        },
-        {
-          "check": "visibility_artifact_changed",
-          "expected": "present",
-          "artifact_kind": "pagespeed_audit",
-          "reason": "The site scan must land a real audit artifact, not a narrated crawl."
-        },
-        {
-          "check": "visibility_artifact_changed",
-          "expected": "present",
-          "artifact_kind": "website_content",
-          "reason": "The crawl must store real website content, not summarize a page it never fetched."
-        }
-      ],
       "follow_up_turns": [
         {
           "archetype": "correction",
@@ -71,10 +39,84 @@
         "brain.context.get",
         "brain.context.website_source_register",
         "brain.context.propose_document",
-        "workspace.company_setup_dismiss",
-        "workspace.company_setup_handoff_acknowledge",
         "workspace.company_setup_handoff_set",
         "workspace.company_setup_state_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_revision_attested",
+          "expected": "present",
+          "min_count": 2,
+          "reason": "At least two useful evidence-shaped files must exist as durable pending proposals for human review, not as a narrated list."
+        },
+        {
+          "check": "context_document_has_provenance",
+          "expected": "present",
+          "min_count": 2,
+          "reason": "Each proposed file must carry a visible Source line bound to the registered website evidence."
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "workspace_site",
+          "reason": "Making the URL our workspace site must durably change the workspace-site artifact."
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "pagespeed_audit",
+          "reason": "The site scan must land a real audit artifact, not a narrated crawl."
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "website_content",
+          "reason": "The crawl must store real website content, not summarize a page it never fetched."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workspace.company_setup_handoff_set",
+          "min_count": 1,
+          "reason": "Onboarding must durably store the exact proposed handoff before it can be acknowledged."
+        }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "site-onboarding"
+      ],
+      "id": "dismiss-company-setup",
+      "request": "Dismiss the company setup prompt for this workspace; we are not completing it now.",
+      "required_capability_ids": [
+        "workspace.company_setup_state_get",
+        "workspace.company_setup_dismiss"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workspace.company_setup_dismiss",
+          "min_count": 1,
+          "reason": "Dismissing setup must durably update the workspace-scoped setup state."
+        }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "site-onboarding"
+      ],
+      "id": "acknowledge-company-setup-handoff",
+      "request": "Acknowledge the current company setup handoff for this workspace after reading its exact state.",
+      "required_capability_ids": [
+        "workspace.company_setup_state_get",
+        "workspace.company_setup_handoff_acknowledge"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workspace.company_setup_handoff_acknowledge",
+          "min_count": 1,
+          "reason": "Acknowledgement must durably update the exact workspace setup state returned by the capability."
+        }
       ]
     },
     {

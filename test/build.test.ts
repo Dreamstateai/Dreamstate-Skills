@@ -1189,13 +1189,16 @@ test('table evals require exact contracts and authoritative schema or paid-run r
   const artifacts = build();
   const tables = JSON.parse(artifacts['generated/architect/tables/evals.json']);
   const buildTable = tables.cases.find((item: { id: string }) => item.id === 'build-reactive-table');
+  const runExecutable = tables.cases.find(
+    (item: { id: string }) => item.id === 'save-and-run-reviewed-table-executable',
+  );
   const paidSample = tables.cases.find((item: { id: string }) => item.id === 'bounded-paid-run');
 
   assert.equal(buildTable.fixture_profile, 'tables_reactive_proposal');
-  assert.deepEqual(buildTable.required_capability_ids, [
-    'tables.create',
-    'executables.run',
+  assert.deepEqual(buildTable.required_capability_ids, ['tables.create']);
+  assert.deepEqual(runExecutable.required_capability_ids, [
     'executables.save',
+    'executables.run',
   ]);
   assert.deepEqual(buildTable.required_completion_fields, [
     { id: 'schema_state', allowed_values: ['identity_source_dependencies_ready'] },

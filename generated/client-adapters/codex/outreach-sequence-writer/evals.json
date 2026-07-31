@@ -10,8 +10,6 @@
         "brain.context.search",
         "brain.context.get",
         "sequences.definition_get",
-        "sequences.delete",
-        "sequences.enrollment_owner_clear",
         "sequences.step_options",
         "sequences.validate",
         "sequences.bind"
@@ -29,6 +27,39 @@
           "min_count": 1,
           "reason": "sequences.bind must leave behind the durable row it declared, or the turn only claimed to write."
         }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
+      "id": "clear-sequence-enrollment-owner",
+      "request": "Clear the enrollment owner from sequence seq_eval_001 so future enrollments are not pinned to the old owner.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.enrollment_owner_clear"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.enrollment_owner_clear",
+          "min_count": 1,
+          "reason": "Clearing the owner must durably update the exact sequence row returned by the capability."
+        }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "outreach-sequence-writer"
+      ],
+      "id": "delete-retired-sequence",
+      "request": "Delete the already-retired sequence seq_eval_retired_001 after confirming it is the one I named.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.delete"
+      ],
+      "required_concepts": [
+        "delete only the exact retired sequence requested"
       ]
     },
     {

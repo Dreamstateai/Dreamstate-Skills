@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 8a1a573ae59b25858dc9016ce14b93bbcdfa64464c97690a50a993851f81e555
+  playbook_kernel_hash: d716628a7ac5ba2f5fb1f0278c963fde685c01f3157f22d43296f9f8675e1770
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 5d2f4b59d2b8b388
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: 8a1a573ae59b25858dc9016ce14b93bbcdfa64464c97690a50a993851f81e555
+  source_release_hash: d716628a7ac5ba2f5fb1f0278c963fde685c01f3157f22d43296f9f8675e1770
   generator_version: 1.0.0
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
   kernel_sha256: c026cada0a70e26030c8a94d0a11c369fadfd89b6c19f7a667218d6a3a75698b
   adapter_sha256: 0ee99021bfea9e67ae99a7edf463e3f68eb4ad92c78c9cc24483079249a40527
   evals_file: evals.json
-  evals_sha256: 459b3c747108cccff97835c91a16dac7b95996aef90c217a88248254e74f1397
+  evals_sha256: 2044134a3a8820021a63f1c236c4aca4678c513c14181f3dab7468f1841d996a
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
