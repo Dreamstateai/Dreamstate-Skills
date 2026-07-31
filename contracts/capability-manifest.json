@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "24386058e1adfd30",
+  "capability_hash": "5d2f4b59d2b8b388",
   "api_version": "v1",
   "capabilities": [
     {
@@ -392613,6 +392613,1052 @@
       }
     },
     {
+      "id": "workspace.company_setup_dismiss",
+      "entitlement": "growth",
+      "kind": "workspace_capability",
+      "domain": "workspace",
+      "category": "workspace",
+      "label": "Workspace Company Setup Dismiss",
+      "description": "Canonical company_setup_dismiss operation for workspace resources.",
+      "when_to_use": [
+        "Use the stable workspace.company_setup_dismiss contract for canonical workspace company_setup_dismiss behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "actions"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "workspace_setup",
+        "reports": [
+          "run",
+          "receipt",
+          "provider_evidence",
+          "graph_effects"
+        ]
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [],
+      "input_schema": [],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "seen": {
+            "type": "boolean"
+          },
+          "company_url": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "pending_handoff": {
+            "type": "object",
+            "properties": {
+              "handoff_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "instruction": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "handoff_id",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          },
+          "pending_handoff_created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "receipt": {
+            "type": "object",
+            "properties": {
+              "capability_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "run_id": {
+                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+              },
+              "run_step_id": {
+                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+              },
+              "operation_request_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "replay_strategy": {
+                "type": "string",
+                "enum": [
+                  "durable_receipt"
+                ]
+              }
+            },
+            "required": [
+              "capability_id",
+              "run_id",
+              "run_step_id",
+              "operation_request_key",
+              "idempotency_key",
+              "replay_strategy"
+            ],
+            "additionalProperties": false
+          },
+          "graph_effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "type": "string",
+                  "enum": [
+                    "upsert",
+                    "link_evidence"
+                  ]
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "op",
+                "kind",
+                "id"
+              ],
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "enum": [
+                      "null"
+                    ],
+                    "nullable": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/properties/graph_effects/items/additionalProperties"
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/graph_effects/items/additionalProperties"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "web_url": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "seen",
+          "company_url",
+          "pending_handoff",
+          "pending_handoff_created_at",
+          "receipt",
+          "graph_effects",
+          "web_url"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "workspace.company_setup_dismiss",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run workspace.company_setup_dismiss"
+      ],
+      "examples": [
+        "dreamstate tools get workspace.company_setup_dismiss",
+        "dreamstate tools run workspace.company_setup_dismiss"
+      ],
+      "web_url_template": "/dashboard/settings?tab=workspace",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "workspace.company_setup_dismiss",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "workspace.company_setup_dismiss",
+          "Workspace Company Setup Dismiss",
+          "dreamstate tools get workspace.company_setup_dismiss",
+          "dreamstate tools run workspace.company_setup_dismiss"
+        ],
+        "use_cases": [
+          "Use the stable workspace.company_setup_dismiss contract for canonical workspace company_setup_dismiss behavior."
+        ],
+        "inputs": [],
+        "outputs": [
+          "seen",
+          "company_url",
+          "pending_handoff",
+          "pending_handoff_created_at",
+          "receipt",
+          "graph_effects",
+          "web_url"
+        ],
+        "side_effects": [
+          "write_workspace",
+          "workspace_setup",
+          "run",
+          "receipt",
+          "provider_evidence",
+          "graph_effects"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "workspace.company_setup_handoff_acknowledge",
+      "entitlement": "growth",
+      "kind": "workspace_capability",
+      "domain": "workspace",
+      "category": "workspace",
+      "label": "Workspace Company Setup Handoff Acknowledge",
+      "description": "Canonical company_setup_handoff_acknowledge operation for workspace resources.",
+      "when_to_use": [
+        "Use the stable workspace.company_setup_handoff_acknowledge contract for canonical workspace company_setup_handoff_acknowledge behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "actions"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "workspace_setup",
+        "reports": [
+          "run",
+          "receipt",
+          "provider_evidence",
+          "graph_effects"
+        ]
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "handoff_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "handoff_id"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "handoff_id",
+          "type": "string",
+          "required": true,
+          "description": "handoff_id"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "handoff_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "handoff_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "acknowledged": {
+            "type": "boolean"
+          },
+          "handoff_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "receipt": {
+            "type": "object",
+            "properties": {
+              "capability_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "run_id": {
+                "$ref": "#/properties/handoff_id"
+              },
+              "run_step_id": {
+                "$ref": "#/properties/handoff_id"
+              },
+              "operation_request_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "replay_strategy": {
+                "type": "string",
+                "enum": [
+                  "durable_receipt"
+                ]
+              }
+            },
+            "required": [
+              "capability_id",
+              "run_id",
+              "run_step_id",
+              "operation_request_key",
+              "idempotency_key",
+              "replay_strategy"
+            ],
+            "additionalProperties": false
+          },
+          "graph_effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "type": "string",
+                  "enum": [
+                    "upsert",
+                    "link_evidence"
+                  ]
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "op",
+                "kind",
+                "id"
+              ],
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "enum": [
+                      "null"
+                    ],
+                    "nullable": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/properties/graph_effects/items/additionalProperties"
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/graph_effects/items/additionalProperties"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "web_url": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "acknowledged",
+          "handoff_id",
+          "receipt",
+          "graph_effects",
+          "web_url"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "workspace.company_setup_handoff_acknowledge",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run workspace.company_setup_handoff_acknowledge"
+      ],
+      "examples": [
+        "dreamstate tools get workspace.company_setup_handoff_acknowledge",
+        "dreamstate tools run workspace.company_setup_handoff_acknowledge"
+      ],
+      "web_url_template": "/dashboard/settings?tab=workspace",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "workspace.company_setup_handoff_acknowledge",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "workspace.company_setup_handoff_acknowledge",
+          "Workspace Company Setup Handoff Acknowledge",
+          "dreamstate tools get workspace.company_setup_handoff_acknowledge",
+          "dreamstate tools run workspace.company_setup_handoff_acknowledge"
+        ],
+        "use_cases": [
+          "Use the stable workspace.company_setup_handoff_acknowledge contract for canonical workspace company_setup_handoff_acknowledge behavior."
+        ],
+        "inputs": [
+          "handoff_id"
+        ],
+        "outputs": [
+          "acknowledged",
+          "handoff_id",
+          "receipt",
+          "graph_effects",
+          "web_url"
+        ],
+        "side_effects": [
+          "write_workspace",
+          "workspace_setup",
+          "run",
+          "receipt",
+          "provider_evidence",
+          "graph_effects"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "workspace.company_setup_handoff_set",
+      "entitlement": "growth",
+      "kind": "workspace_capability",
+      "domain": "workspace",
+      "category": "workspace",
+      "label": "Workspace Company Setup Handoff Set",
+      "description": "Canonical company_setup_handoff_set operation for workspace resources.",
+      "when_to_use": [
+        "Use the stable workspace.company_setup_handoff_set contract for canonical workspace company_setup_handoff_set behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "actions"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "workspace_setup",
+        "reports": [
+          "run",
+          "receipt",
+          "provider_evidence",
+          "graph_effects"
+        ]
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "company_url",
+          "kind": "uri",
+          "required": true,
+          "description": "company_url"
+        },
+        {
+          "key": "instruction",
+          "kind": "string",
+          "required": true,
+          "description": "instruction"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "company_url",
+          "type": "string",
+          "required": true,
+          "description": "company_url"
+        },
+        {
+          "name": "instruction",
+          "type": "string",
+          "required": true,
+          "description": "instruction"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "company_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048
+          },
+          "instruction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          }
+        },
+        "required": [
+          "company_url",
+          "instruction"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "seen": {
+            "type": "boolean"
+          },
+          "company_url": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "pending_handoff": {
+            "type": "object",
+            "properties": {
+              "handoff_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "instruction": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "handoff_id",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          },
+          "pending_handoff_created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "receipt": {
+            "type": "object",
+            "properties": {
+              "capability_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "run_id": {
+                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+              },
+              "run_step_id": {
+                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+              },
+              "operation_request_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "replay_strategy": {
+                "type": "string",
+                "enum": [
+                  "durable_receipt"
+                ]
+              }
+            },
+            "required": [
+              "capability_id",
+              "run_id",
+              "run_step_id",
+              "operation_request_key",
+              "idempotency_key",
+              "replay_strategy"
+            ],
+            "additionalProperties": false
+          },
+          "graph_effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "type": "string",
+                  "enum": [
+                    "upsert",
+                    "link_evidence"
+                  ]
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "op",
+                "kind",
+                "id"
+              ],
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "enum": [
+                      "null"
+                    ],
+                    "nullable": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/properties/graph_effects/items/additionalProperties"
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/properties/graph_effects/items/additionalProperties"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "web_url": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "seen",
+          "company_url",
+          "pending_handoff",
+          "pending_handoff_created_at",
+          "receipt",
+          "graph_effects",
+          "web_url"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "workspace.company_setup_handoff_set",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run workspace.company_setup_handoff_set"
+      ],
+      "examples": [
+        "dreamstate tools get workspace.company_setup_handoff_set",
+        "dreamstate tools run workspace.company_setup_handoff_set"
+      ],
+      "web_url_template": "/dashboard/settings?tab=workspace",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "workspace.company_setup_handoff_set",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "workspace.company_setup_handoff_set",
+          "Workspace Company Setup Handoff Set",
+          "dreamstate tools get workspace.company_setup_handoff_set",
+          "dreamstate tools run workspace.company_setup_handoff_set"
+        ],
+        "use_cases": [
+          "Use the stable workspace.company_setup_handoff_set contract for canonical workspace company_setup_handoff_set behavior."
+        ],
+        "inputs": [
+          "company_url",
+          "instruction"
+        ],
+        "outputs": [
+          "seen",
+          "company_url",
+          "pending_handoff",
+          "pending_handoff_created_at",
+          "receipt",
+          "graph_effects",
+          "web_url"
+        ],
+        "side_effects": [
+          "write_workspace",
+          "workspace_setup",
+          "run",
+          "receipt",
+          "provider_evidence",
+          "graph_effects"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "workspace.company_setup_state_get",
+      "entitlement": "growth",
+      "kind": "workspace_capability",
+      "domain": "workspace",
+      "category": "workspace",
+      "label": "Workspace Company Setup State Get",
+      "description": "Canonical company_setup_state_get operation for workspace resources.",
+      "when_to_use": [
+        "Use the stable workspace.company_setup_state_get contract for canonical workspace company_setup_state_get behavior."
+      ],
+      "when_not_to_use": [
+        "Do not supply workspace identity or choose a transport-specific compatibility alias."
+      ],
+      "required_scopes": [
+        "actions"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "effects": {
+        "domain": "workspace_setup",
+        "reports": [
+          "provider_evidence",
+          "freshness"
+        ]
+      },
+      "action_policy": {
+        "consequence": "read_only",
+        "effect_class": "none",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync"
+      },
+      "dry_run_supported": false,
+      "required_inputs": [],
+      "input_schema": [],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "seen": {
+            "type": "boolean"
+          },
+          "company_url": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "pending_handoff": {
+            "type": "object",
+            "properties": {
+              "handoff_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "instruction": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "handoff_id",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          },
+          "pending_handoff_created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "required": [
+          "seen",
+          "company_url",
+          "pending_handoff",
+          "pending_handoff_created_at"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "canonical-parity",
+        "canonical_capability_id": "workspace.company_setup_state_get",
+        "execution_core": "canonicalContract"
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate tools run workspace.company_setup_state_get"
+      ],
+      "examples": [
+        "dreamstate tools get workspace.company_setup_state_get",
+        "dreamstate tools run workspace.company_setup_state_get"
+      ],
+      "web_url_template": "/dashboard/settings?tab=workspace",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "canonicalContract"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "workspace.company_setup_state_get",
+        "schema_policy": "strict"
+      },
+      "search": {
+        "aliases": [
+          "workspace.company_setup_state_get",
+          "Workspace Company Setup State Get",
+          "dreamstate tools get workspace.company_setup_state_get",
+          "dreamstate tools run workspace.company_setup_state_get"
+        ],
+        "use_cases": [
+          "Use the stable workspace.company_setup_state_get contract for canonical workspace company_setup_state_get behavior."
+        ],
+        "inputs": [],
+        "outputs": [
+          "seen",
+          "company_url",
+          "pending_handoff",
+          "pending_handoff_created_at"
+        ],
+        "side_effects": [],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "workspace.configure_provisioned",
       "entitlement": "public",
       "kind": "workspace_capability",
@@ -397980,8 +399026,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1124,
+    "capabilities": 1128,
     "mcp_tools": 11
   },
-  "manifest_digest": "2f0a711066546d363fec386dac860f5b86aeeeaec329dc879d69e9d6ed40e631"
+  "manifest_digest": "3715f4b76628f6cc58ea7c51c3e556168ab6aaca571e5673995deb50a34b3891"
 }

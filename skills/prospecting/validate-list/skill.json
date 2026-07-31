@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "24386058e1adfd30",
+  "verified_capability_hash": "5d2f4b59d2b8b388",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/prospecting/validate-list/SKILL.md",
   "install_command": "dreamstate skills install validate-list",
