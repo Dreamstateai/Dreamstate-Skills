@@ -146,6 +146,12 @@
         }
       ],
       "id": "staged-pilot-build-sample-expand-launch",
+      "required_capability_ids": [
+        "brain.context.search"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search"
+      ],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [
         {

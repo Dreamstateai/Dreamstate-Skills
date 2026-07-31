@@ -991,7 +991,8 @@ test('outreach release uses exact capability evidence and signed lifecycle state
   const conditional = outreach.cases.find((item: { id: string }) => item.id === 'sequence-only-when-messaging');
   const exactSet = workflow.cases.find((item: { id: string }) => item.id === 'typed-reviewed-tables-handoff');
 
-  assert.equal(staged.required_capability_ids, undefined);
+  assert.deepEqual(staged.required_capability_ids, ['brain.context.search']);
+  assert.deepEqual(staged.required_executed_capability_ids, ['brain.context.search']);
   assert.deepEqual(staged.required_completion_fields, [
     { id: 'stage_boundary_state', allowed_values: ['ordered_separate'] },
     { id: 'activation_state', allowed_values: ['inactive'] },

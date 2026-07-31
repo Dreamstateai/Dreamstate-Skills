@@ -218,6 +218,12 @@
       "expected_workspace_outcome": [
         {
           "check": "capability_effect_persisted",
+          "capability_id": "sources.cold_outbound_preview",
+          "expected": "present",
+          "reason": "The approved bounded preview must create the durable pilot run returned by the capability."
+        },
+        {
+          "check": "capability_effect_persisted",
           "capability_id": "sources.cold_outbound_expand",
           "expected": "present",
           "reason": "The approved exact-result-set expansion must create the durable run returned by the capability."

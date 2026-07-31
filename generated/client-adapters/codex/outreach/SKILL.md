@@ -7,7 +7,7 @@ capability_ids: ["brain.context.get","brain.context.search","brain.learning.quer
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"durability_state","description":"Durable artifact versus proposal-only state.","allowed_values":["durable","proposal_only","missing","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]},{"id":"stage_boundary_state","description":"Ordered outreach-stage approval boundary state.","allowed_values":["ordered_separate","violated","not_applicable"]},{"id":"activation_state","description":"Whether workflow activation has occurred; blocked execution belongs in run_state.","allowed_values":["inactive","active","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"messaging_branch_state","description":"Inspected workflow messaging-branch state.","allowed_values":["present","absent","unresolved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: e5a83a11804c0b769a7df8c8456b9ffca458e7808033ea7687786f83f321bd5f
+  playbook_kernel_hash: 9fb9117a12d5117ce51ea79f2f7cb18440cd1454e6caa7f0cbe24949ca24ad73
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 24386058e1adfd30
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: e5a83a11804c0b769a7df8c8456b9ffca458e7808033ea7687786f83f321bd5f
+  source_release_hash: 9fb9117a12d5117ce51ea79f2f7cb18440cd1454e6caa7f0cbe24949ca24ad73
   generator_version: 1.0.0
   client: codex
   kernel_id: outreach
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: eaeda523d7a529b51dea0708a8d7cd273684d87ee450bb9743ab85583d0cbe66
   adapter_sha256: 92311b3cdfa8bd971406f46847fe4e89af252cc153490a58cac3efae9c64ada2
   evals_file: evals.json
-  evals_sha256: e755cda8d4c3fc7e4bff5767f6839e95e67c1dd836b71b0f4c2dc65207f214aa
+  evals_sha256: c087c798161f15b336569fea71c24425276e8c23290d7b1d2683f7ccbc00f2da
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
