@@ -7,7 +7,7 @@ capability_ids: ["brain.content.search","social.accounts_list"]
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"source_state","description":"X evidence source boundary.","allowed_values":["official_api","cache","unavailable","not_applicable"]},{"id":"search_window","description":"Official X search-window coverage state.","allowed_values":["recent","archive","outside_entitlement","unavailable"]},{"id":"archive_entitlement","description":"Full-archive X entitlement state.","allowed_values":["entitled","not_entitled","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
+  playbook_kernel_hash: f3a725e454ca08076eedbc370773522264223aff4ca440e115f89da9d8eabd3b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8ba8c82bd38f553e
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
+  source_release_hash: f3a725e454ca08076eedbc370773522264223aff4ca440e115f89da9d8eabd3b
   generator_version: 1.0.0
   client: claude
   kernel_id: social.x
@@ -24,7 +24,7 @@ generated:
   kernel_sha256: 77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969
   adapter_sha256: 4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68
   evals_file: evals.json
-  evals_sha256: e9c860ace45ed95d06670f711d22ce1f9b01a983509d1b3f2e592159b83bd4bb
+  evals_sha256: 9992c3735014e6070b68c0514abd519ad1d4e8f945966901b01c0cb4e1f53982
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256

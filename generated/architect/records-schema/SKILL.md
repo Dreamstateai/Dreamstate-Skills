@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"schema_definition_state","description":"Canonical object schema and revision state.","allowed_values":["complete","partial","missing","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
+  playbook_kernel_hash: f3a725e454ca08076eedbc370773522264223aff4ca440e115f89da9d8eabd3b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8ba8c82bd38f553e
@@ -19,7 +19,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
+  source_release_hash: f3a725e454ca08076eedbc370773522264223aff4ca440e115f89da9d8eabd3b
   generator_version: 1.0.0
   kernel_id: records-schema
   kernel_file: KERNEL.md

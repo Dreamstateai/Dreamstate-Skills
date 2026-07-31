@@ -7,7 +7,7 @@ capability_ids: ["brain.content.search"]
 completion_contract: {"version":1,"fields":[{"id":"link_state","description":"Verified real-thread link retrieval state.","allowed_values":["verified_links","none_retrieved","unavailable"]},{"id":"evidence_trust","description":"Untrusted provider evidence handling state.","allowed_values":["fenced","none_retrieved","unavailable"]},{"id":"artifact_class","description":"Authored standalone artifact classification.","allowed_values":["authored_standalone","community_reply","none"]},{"id":"review_state","description":"Human-review readiness state.","allowed_values":["reviewable","not_created","not_applicable"]},{"id":"rights_state","description":"Workspace research rights state.","allowed_values":["workspace_authorized","unavailable","not_applicable"]},{"id":"reply_state","description":"External Reddit reply execution state.","allowed_values":["not_published","published_with_approval","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
+  playbook_kernel_hash: f3a725e454ca08076eedbc370773522264223aff4ca440e115f89da9d8eabd3b
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 8ba8c82bd38f553e
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.8
-  source_release_hash: f78ab22eaa814fe273bf63f641d0b4a5f3e7f2c5a3d1aa284853901fd931cc11
+  source_release_hash: f3a725e454ca08076eedbc370773522264223aff4ca440e115f89da9d8eabd3b
   generator_version: 1.0.0
   client: codex
   kernel_id: social.reddit

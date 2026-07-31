@@ -89,7 +89,17 @@
       "must_not": [
         {
           "kind": "claimed_success_without_receipt",
-          "capability_id": "social.accounts_list"
+          "capability_id": "social.accounts_list",
+          "completion_evidence": {
+            "field_id": "connection_status",
+            "success_values": [
+              "connected"
+            ],
+            "non_success_values": [
+              "disconnected",
+              "unavailable"
+            ]
+          }
         }
       ],
       "adversarial": true
