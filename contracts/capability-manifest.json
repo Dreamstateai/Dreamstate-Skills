@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "8313b15f26c8c946",
+  "capability_hash": "24386058e1adfd30",
   "api_version": "v1",
   "capabilities": [
     {
@@ -39660,9 +39660,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -39964,9 +39964,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -236176,10 +236176,10 @@
       "kind": "workspace_capability",
       "domain": "source",
       "category": "source",
-      "label": "Source Website Scrape",
-      "description": "Canonical website_scrape operation for source resources.",
+      "label": "Scrape a product website into a source",
+      "description": "Scrape a product or company website and persist the result as a durable workspace source record.",
       "when_to_use": [
-        "Use the stable products.website_scrape contract for canonical source website_scrape behavior."
+        "Capture a product website as a stored source rather than as one-off research evidence."
       ],
       "when_not_to_use": [
         "Do not supply workspace identity or choose a transport-specific compatibility alias."
@@ -236451,12 +236451,12 @@
       "search": {
         "aliases": [
           "products.website_scrape",
-          "Source Website Scrape",
+          "Scrape a product website into a source",
           "dreamstate tools get products.website_scrape",
           "dreamstate tools run products.website_scrape"
         ],
         "use_cases": [
-          "Use the stable products.website_scrape contract for canonical source website_scrape behavior."
+          "Capture a product website as a stored source rather than as one-off research evidence."
         ],
         "inputs": [
           "url",
@@ -271516,10 +271516,11 @@
       "kind": "workspace_capability",
       "domain": "evidence",
       "category": "evidence",
-      "label": "Evidence Urls Fetch",
-      "description": "Canonical urls_fetch operation for evidence resources.",
+      "label": "Research a public website",
+      "description": "Fetch and extract the public content of one or more website URLs, returning page text, metadata, and cited offsets as workspace evidence.",
       "when_to_use": [
-        "Use the stable research.urls_fetch contract for canonical evidence urls_fetch behavior."
+        "Research a company website or public page before writing Context documents.",
+        "Crawl, browse, scrape, snapshot, or extract public web content for company research."
       ],
       "when_not_to_use": [
         "Do not supply workspace identity or choose a transport-specific compatibility alias."
@@ -271856,12 +271857,13 @@
       "search": {
         "aliases": [
           "research.urls_fetch",
-          "Evidence Urls Fetch",
+          "Research a public website",
           "dreamstate tools get research.urls_fetch",
           "dreamstate tools run research.urls_fetch"
         ],
         "use_cases": [
-          "Use the stable research.urls_fetch contract for canonical evidence urls_fetch behavior."
+          "Research a company website or public page before writing Context documents.",
+          "Crawl, browse, scrape, snapshot, or extract public web content for company research."
         ],
         "inputs": [
           "urls"
@@ -288043,283 +288045,218 @@
         "mode": "async"
       },
       "dry_run_supported": false,
-      "required_inputs": [
-        {
-          "key": "sequence_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "sequence_id"
-        },
-        {
-          "key": "workbook_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "workbook_id"
-        },
-        {
-          "key": "worksheet_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "worksheet_id"
-        },
-        {
-          "key": "saved_view_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "saved_view_id"
-        },
-        {
-          "key": "selection_snapshot_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "selection_snapshot_id"
-        }
-      ],
-      "input_schema": [
-        {
-          "name": "sequence_id",
-          "type": "string",
-          "required": true,
-          "description": "sequence_id"
-        },
-        {
-          "name": "workbook_id",
-          "type": "string",
-          "required": true,
-          "description": "workbook_id"
-        },
-        {
-          "name": "worksheet_id",
-          "type": "string",
-          "required": true,
-          "description": "worksheet_id"
-        },
-        {
-          "name": "saved_view_id",
-          "type": "string",
-          "required": true,
-          "description": "saved_view_id"
-        },
-        {
-          "name": "selection_snapshot_id",
-          "type": "string",
-          "required": true,
-          "description": "selection_snapshot_id"
-        },
-        {
-          "name": "enrollment_filter",
-          "type": "string",
-          "required": false,
-          "description": "enrollment_filter"
-        },
-        {
-          "name": "enrollment_priority",
-          "type": "array",
-          "required": false,
-          "description": "enrollment_priority"
-        },
-        {
-          "name": "enrollment_sort",
-          "type": "object",
-          "required": false,
-          "description": "enrollment_sort"
-        },
-        {
-          "name": "max_new_enrollments_per_day",
-          "type": "number",
-          "required": false,
-          "description": "max_new_enrollments_per_day"
-        }
-      ],
+      "required_inputs": [],
+      "input_schema": [],
       "input_json_schema": {
-        "type": "object",
-        "properties": {
-          "sequence_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "workbook_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "worksheet_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "saved_view_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "selection_snapshot_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "enrollment_filter": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": false
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "sequence_id": {
+                "type": "string",
+                "format": "uuid"
               },
-              {
+              "workbook_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "worksheet_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "saved_view_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "selection_snapshot_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "enrollment_filter": {
                 "anyOf": [
                   {
                     "type": "object",
-                    "properties": {
-                      "kind": {
-                        "type": "string",
-                        "enum": [
-                          "predicate"
-                        ]
-                      },
-                      "field": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "op": {
-                        "type": "string",
-                        "enum": [
-                          "eq",
-                          "neq",
-                          "contains",
-                          "not_contains",
-                          "gt",
-                          "gte",
-                          "lt",
-                          "lte",
-                          "is_set",
-                          "is_empty",
-                          "in",
-                          "not_in"
-                        ]
-                      },
-                      "value": {
-                        "anyOf": [
-                          {
-                            "type": "string"
+                    "properties": {},
+                    "additionalProperties": false
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "predicate"
+                            ]
                           },
-                          {
-                            "type": "number"
+                          "field": {
+                            "type": "string",
+                            "minLength": 1
                           },
-                          {
-                            "type": "boolean"
+                          "op": {
+                            "type": "string",
+                            "enum": [
+                              "eq",
+                              "neq",
+                              "contains",
+                              "not_contains",
+                              "gt",
+                              "gte",
+                              "lt",
+                              "lte",
+                              "is_set",
+                              "is_empty",
+                              "in",
+                              "not_in"
+                            ]
                           },
-                          {
+                          "value": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              {
+                                "enum": [
+                                  "null"
+                                ],
+                                "nullable": true
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "field",
+                          "op",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "and",
+                              "or"
+                            ]
+                          },
+                          "children": {
                             "type": "array",
                             "items": {
-                              "type": "string"
+                              "$ref": "#/anyOf/0/properties/enrollment_filter/anyOf/1"
                             }
-                          },
-                          {
-                            "enum": [
-                              "null"
-                            ],
-                            "nullable": true
                           }
-                        ]
-                      }
-                    },
-                    "required": [
-                      "kind",
-                      "field",
-                      "op",
-                      "value"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "kind": {
-                        "type": "string",
-                        "enum": [
-                          "and",
-                          "or"
-                        ]
+                        },
+                        "required": [
+                          "kind",
+                          "children"
+                        ],
+                        "additionalProperties": false
                       },
-                      "children": {
-                        "type": "array",
-                        "items": {
-                          "$ref": "#/properties/enrollment_filter/anyOf/1"
-                        }
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "not"
+                            ]
+                          },
+                          "child": {
+                            "$ref": "#/anyOf/0/properties/enrollment_filter/anyOf/1"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "child"
+                        ],
+                        "additionalProperties": false
                       }
-                    },
-                    "required": [
-                      "kind",
-                      "children"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "kind": {
-                        "type": "string",
-                        "enum": [
-                          "not"
-                        ]
-                      },
-                      "child": {
-                        "$ref": "#/properties/enrollment_filter/anyOf/1"
-                      }
-                    },
-                    "required": [
-                      "kind",
-                      "child"
-                    ],
-                    "additionalProperties": false
+                    ]
                   }
-                ]
-              }
-            ],
-            "nullable": true
-          },
-          "enrollment_priority": {
-            "type": "array",
-            "items": {
-              "$ref": "#/properties/enrollment_filter"
-            },
-            "maxItems": 100,
-            "default": []
-          },
-          "enrollment_sort": {
-            "type": "object",
-            "properties": {
-              "field": {
-                "type": "string",
-                "minLength": 1,
-                "pattern": "^col\\:"
+                ],
+                "nullable": true
               },
-              "direction": {
-                "type": "string",
-                "enum": [
-                  "asc",
-                  "desc"
-                ]
+              "enrollment_priority": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/anyOf/0/properties/enrollment_filter"
+                },
+                "maxItems": 100,
+                "default": []
+              },
+              "enrollment_sort": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^col\\:"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  }
+                },
+                "required": [
+                  "field",
+                  "direction"
+                ],
+                "additionalProperties": false,
+                "nullable": true
+              },
+              "max_new_enrollments_per_day": {
+                "type": "integer",
+                "exclusiveMinimum": true,
+                "minimum": 0,
+                "maximum": 100000,
+                "nullable": true
               }
             },
             "required": [
-              "field",
-              "direction"
+              "sequence_id",
+              "workbook_id",
+              "worksheet_id",
+              "saved_view_id",
+              "selection_snapshot_id"
             ],
-            "additionalProperties": false,
-            "nullable": true
+            "additionalProperties": false
           },
-          "max_new_enrollments_per_day": {
-            "type": "integer",
-            "exclusiveMinimum": true,
-            "minimum": 0,
-            "maximum": 100000,
-            "nullable": true
+          {
+            "type": "object",
+            "properties": {
+              "launch_authorization_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "required": [
+              "launch_authorization_id"
+            ],
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "sequence_id",
-          "workbook_id",
-          "worksheet_id",
-          "saved_view_id",
-          "selection_snapshot_id"
         ],
+        "type": "object",
+        "properties": {},
+        "required": [],
         "additionalProperties": false
       },
       "output_json_schema": {
@@ -288413,13 +288350,7 @@
         "use_cases": [
           "Use the stable sequences.enroll_selection contract for canonical sequence enroll_selection behavior."
         ],
-        "inputs": [
-          "sequence_id",
-          "workbook_id",
-          "worksheet_id",
-          "saved_view_id",
-          "selection_snapshot_id"
-        ],
+        "inputs": [],
         "outputs": [
           "bindingId",
           "replayed",
@@ -329666,9 +329597,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -329935,9 +329866,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -330181,9 +330112,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -336759,9 +336690,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -380902,9 +380833,9 @@
         "schema_policy": "strict"
       },
       "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
+        "consequence": "test_run",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
         "proposal_required": true,
         "credit_class": "free"
       },
@@ -398052,5 +397983,5 @@
     "capabilities": 1124,
     "mcp_tools": 11
   },
-  "manifest_digest": "7f545f8a0bdabd348207c4bd5a6e5e1f0382e6146b90d95353d9ef6dc12f4fdb"
+  "manifest_digest": "2f0a711066546d363fec386dac860f5b86aeeeaec329dc879d69e9d6ed40e631"
 }

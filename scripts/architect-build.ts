@@ -12,6 +12,16 @@ const CAPABILITY_HASH = /^[a-f0-9]{16,64}$/;
 const SKILL_ID = /^[a-z0-9]+(?:(?:-|\.)[a-z0-9]+)*$/;
 const CAPABILITY_DOMAIN = /^[a-z][a-z0-9_-]{0,63}$/;
 const CAPABILITY_ID = /^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+$/;
+const ARCHITECT_TOOL_NAMES = new Set([
+  'load_skill',
+  'ask_user',
+  'tools_search',
+  'tools_get',
+  'tools_run',
+  'propose_artifact',
+  'request_approval',
+  'open_canvas',
+]);
 const OPERATION_CONTRACT_START = '<!-- architect-operation-contract\n';
 const OPERATION_CONTRACT_END = '\n-->';
 const OUTREACH_POLICY_IDS = new Set([
@@ -278,7 +288,11 @@ function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; sk
     const evalDocument = JSON.parse(evals) as {
       schema_version?: unknown;
       skill_id?: unknown;
-      cases?: Array<{ required_capability_ids?: unknown }>;
+      cases?: Array<{
+        id?: unknown;
+        required_capability_ids?: unknown;
+        required_tool_sequence?: unknown;
+      }>;
     };
     if (evalDocument.schema_version !== 1 || evalDocument.skill_id !== skill.id || !Array.isArray(evalDocument.cases) || !evalDocument.cases.length) {
       throw new Error(`${skill.id}: eval contract does not match schema v1`);
@@ -286,6 +300,23 @@ function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; sk
     const completionFields = new Map(skill.completion_contract.fields.map((field) => [field.id, field]));
     for (const evalCase of evalDocument.cases) {
       if (!evalCase || typeof evalCase !== 'object') throw new Error(`${skill.id}: eval case must be an object`);
+      if (evalCase.required_tool_sequence !== undefined) {
+        if (!Array.isArray(evalCase.required_tool_sequence) || !evalCase.required_tool_sequence.length) {
+          throw new Error(`${skill.id}: required_tool_sequence must be a non-empty array`);
+        }
+        for (const [index, rawStep] of evalCase.required_tool_sequence.entries()) {
+          if (!rawStep || typeof rawStep !== 'object' || Array.isArray(rawStep)) {
+            throw new Error(`${skill.id}: required_tool_sequence step ${index} must be an object`);
+          }
+          const tool = (rawStep as { tool?: unknown }).tool;
+          if (typeof tool !== 'string' || !ARCHITECT_TOOL_NAMES.has(tool)) {
+            const caseId = typeof evalCase.id === 'string' ? evalCase.id : '(unnamed)';
+            throw new Error(
+              `${skill.id}/${caseId}: required_tool_sequence names unsupported Architect tool ${String(tool)}`,
+            );
+          }
+        }
+      }
       const requirements = (evalCase as { required_completion_fields?: unknown }).required_completion_fields;
       if (requirements === undefined) continue;
       if (!Array.isArray(requirements) || requirements.length > 12) {

@@ -121,6 +121,21 @@ Add or improve a playbook? See [CONTRIBUTING.md](CONTRIBUTING.md). Every playboo
 validated against the canonical capability manifest in CI, so a skill that
 references an unknown tool or capability cannot merge.
 
+For Architect kernel changes, synchronize the runtime capability manifest, build
+the signed release, project the Social overlay, and verify per-skill eval counts
+with one command:
+
+```bash
+npm run sync:architect-workspace -- \
+  --influence /absolute/path/to/influence \
+  --social /absolute/path/to/ds-lanes/e-social
+```
+
+The command refuses a dirty Social source worktree and any source or projection
+that would silently remove an eval case. Files under the Influence
+`prompts/skills/` directory remain generated output and must not be edited by
+hand.
+
 ## License
 
 MIT. The Dreamstate engine and your data are governed by your Dreamstate account.

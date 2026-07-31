@@ -31,6 +31,7 @@
     "check:generated-clean": "node --import tsx scripts/verify-generated-clean.ts",
     "sync:capabilities": "node --import tsx scripts/sync-capability-manifest.ts",
     "sync:architect": "node --import tsx scripts/sync-architect.ts",
+    "sync:architect-workspace": "node --import tsx scripts/sync-architect-workspace.ts",
     "compile": "tsc",
     "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
     "prepublishOnly": "npm run build && npm run check && npm test && npm run compile"

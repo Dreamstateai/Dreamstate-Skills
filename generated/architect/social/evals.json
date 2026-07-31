@@ -1985,15 +1985,38 @@
         },
         {
           "capability_id": "brain.context.search",
-          "tool": "brain_context_search"
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "brain.context.search",
+          "tool": "tools_get"
+        },
+        {
+          "capability_id": "brain.context.search",
+          "tool": "tools_run"
         },
         {
           "capability_id": "brain.context.get",
-          "tool": "brain_context_get"
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "brain.context.get",
+          "tool": "tools_get"
+        },
+        {
+          "capability_id": "brain.context.get",
+          "tool": "tools_run"
         },
         {
           "capability_id": "content.artifact_generate",
-          "tool": "make_post"
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "content.artifact_generate",
+          "tool": "tools_get"
+        },
+        {
+          "tool": "propose_artifact"
         }
       ],
       "resume_after_approval": "owner_exact"
@@ -2056,7 +2079,19 @@
         },
         {
           "capability_id": "content.artifact_create",
-          "tool": "tools_run"
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "content.artifact_create",
+          "tool": "tools_get"
+        },
+        {
+          "capability_id": "content.artifact_list",
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "content.artifact_list",
+          "tool": "tools_get"
         },
         {
           "capability_id": "content.artifact_list",
@@ -2064,11 +2099,26 @@
         },
         {
           "capability_id": "content.artifact_get",
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "content.artifact_get",
+          "tool": "tools_get"
+        },
+        {
+          "capability_id": "content.artifact_get",
           "tool": "tools_run"
         },
         {
           "capability_id": "content.artifact_update",
-          "tool": "edit_post"
+          "tool": "tools_search"
+        },
+        {
+          "capability_id": "content.artifact_update",
+          "tool": "tools_get"
+        },
+        {
+          "tool": "propose_artifact"
         }
       ],
       "resume_after_approval": "owner_exact"

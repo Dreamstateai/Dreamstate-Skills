@@ -22,6 +22,43 @@ test('build succeeds: all playbooks valid and every tool exists in the catalog',
   assert.ok(Object.keys(artifacts).length > 0, 'expected generated artifacts');
 });
 
+test('Architect eval tool sequences use only the eight compact runtime tools', () => {
+  const allowed = new Set([
+    'load_skill', 'ask_user', 'tools_search', 'tools_get', 'tools_run',
+    'propose_artifact', 'request_approval', 'open_canvas',
+  ]);
+  const artifacts = build();
+  const social = JSON.parse(artifacts['generated/architect/social/evals.json']);
+  const makePost = social.cases.find(
+    (item: { id: string }) => item.id === 'primitive-make-post-from-workspace-knowledge',
+  );
+  const editPost = social.cases.find(
+    (item: { id: string }) => item.id === 'primitive-edit-post-by-current-revision',
+  );
+  assert.deepEqual(makePost.required_tool_sequence.map((step: { tool: string }) => step.tool), [
+    'load_skill',
+    'tools_search', 'tools_get', 'tools_run',
+    'tools_search', 'tools_get', 'tools_run',
+    'tools_search', 'tools_get', 'propose_artifact',
+  ]);
+  assert.deepEqual(editPost.required_tool_sequence.map((step: { tool: string }) => step.tool), [
+    'load_skill',
+    'tools_search', 'tools_get',
+    'tools_search', 'tools_get', 'tools_run',
+    'tools_search', 'tools_get', 'tools_run',
+    'tools_search', 'tools_get', 'propose_artifact',
+  ]);
+  for (const [relative, content] of Object.entries(artifacts)) {
+    if (!relative.startsWith('generated/architect/') || !relative.endsWith('/evals.json')) continue;
+    const document = JSON.parse(content);
+    for (const evalCase of document.cases) {
+      for (const step of evalCase.required_tool_sequence ?? []) {
+        assert.ok(allowed.has(step.tool), `${document.skill_id}/${evalCase.id}: unsupported ${step.tool}`);
+      }
+    }
+  }
+});
+
 test('ordinary build rejects stale digests, duplicate registry entries, and broken tool references', () => {
   const root = mkdtempSync(join(tmpdir(), 'dreamstate-build-manifest-'));
   const path = join(root, 'capabilities.json');
