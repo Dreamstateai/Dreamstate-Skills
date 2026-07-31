@@ -9,7 +9,6 @@
       "required_capability_ids": [
         "tables.create"
       ],
-      "required_executed_capability_ids": [],
       "resume_after_elicitation": "recommended",
       "required_completion_fields": [
         {
