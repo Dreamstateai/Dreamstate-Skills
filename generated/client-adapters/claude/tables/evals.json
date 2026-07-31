@@ -180,6 +180,7 @@
       "fixture_profile": "outreach_source_probe_variants",
       "id": "ephemeral-ten-row-source-variants",
       "required_capability_ids": [
+        "sources.linkedin_post_engagers_preview",
         "table_sources.preview"
       ],
       "required_concepts": [
@@ -196,8 +197,9 @@
         "no enrollment",
         "no send"
       ],
-      "request": "Figure out which source settings produce the most qualified prospects using small real samples. If the results are convincing, stage a 30-row preview for me to review.",
+      "request": "Figure out which LinkedIn competitor post-engager source settings produce the most qualified prospects using small real samples. If the results are convincing, stage a 30-row preview for me to review.",
       "required_executed_capability_ids": [
+        "sources.linkedin_post_engagers_preview",
         "table_sources.preview"
       ]
     },

@@ -815,21 +815,11 @@ test('tables is the only specialist owner of workbook creation and canonical sou
     'table_sources.preview',
     'sources.cold_outbound_expand',
     'sources.cold_outbound_preview',
+    'sources.linkedin_post_engagers_preview',
   ]) {
     const owners = ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']
       .filter((skillId) => pinned.skills[skillId].capability_ids.includes(capabilityId));
     assert.deepEqual(owners, ['tables'], `${capabilityId}: exactly one specialist owner`);
-  }
-  for (const retiredAlias of [
-    'sources.linkedin_post_engagers_preview',
-  ]) {
-    for (const skillId of ['outreach', 'tables', 'outreach-workflow-builder', 'outreach-sequence-writer']) {
-      assert.equal(
-        pinned.skills[skillId].capability_ids.includes(retiredAlias),
-        false,
-        `${skillId}: retired preview alias ${retiredAlias}`,
-      );
-    }
   }
   const workflowKernel = artifacts['generated/architect/outreach-workflow-builder/KERNEL.md'];
   const workflowEvals = artifacts['generated/architect/outreach-workflow-builder/evals.json'];
