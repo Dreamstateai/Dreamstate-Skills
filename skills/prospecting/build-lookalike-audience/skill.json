@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "b157ca9af8e41603",
+  "verified_capability_hash": "f95b1fde0b931763",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/prospecting/build-lookalike-audience/SKILL.md",
   "install_command": "dreamstate skills install build-lookalike-audience",

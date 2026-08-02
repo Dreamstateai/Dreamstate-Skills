@@ -28,6 +28,6 @@
   "required_scopes": [
     "workflows:read"
   ],
-  "capability_hash": "b157ca9af8e41603",
+  "capability_hash": "f95b1fde0b931763",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

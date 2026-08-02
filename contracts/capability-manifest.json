@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "b157ca9af8e41603",
+  "capability_hash": "f95b1fde0b931763",
   "api_version": "v1",
   "capabilities": [
     {
@@ -17763,6 +17763,12 @@
       ],
       "mutates": true,
       "idempotency_required": true,
+      "approval_policy": {
+        "tier": "fresh_owner",
+        "maximum_age_seconds": 600,
+        "reusable": false,
+        "exact_consequence_preview": true
+      },
       "effect_replay": {
         "strategy": "durable_receipt",
         "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
@@ -400059,5 +400065,5 @@
     "capabilities": 1134,
     "mcp_tools": 11
   },
-  "manifest_digest": "e5897473780f939766bb058fafd7c8c056058039d0f98d0db7c78c78e4e976c8"
+  "manifest_digest": "36e1541ce5c465d328d53e25fceaa9a75aee8d932ef7ef4c7ddf6451fa9fd469"
 }
