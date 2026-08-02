@@ -10,7 +10,7 @@ max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"experiment_artifact_state","description":"Durable governed-experiment state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"experiment_evidence_state","description":"Publication and measurement evidence state.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: d727d363b8fd84ace55cb9c34fcf3bfc5918a5a90c69442673f0f433b228c91a
+  playbook_kernel_hash: 50220083886d52d07c754bfa43b61c4613271a9bfb3833070e9d4f28cd726a5f
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: b157ca9af8e41603
@@ -19,7 +19,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: d727d363b8fd84ace55cb9c34fcf3bfc5918a5a90c69442673f0f433b228c91a
+  source_release_hash: 50220083886d52d07c754bfa43b61c4613271a9bfb3833070e9d4f28cd726a5f
   generator_version: 1.0.0
   kernel_id: experiments
   kernel_file: KERNEL.md
