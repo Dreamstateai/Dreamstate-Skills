@@ -7,16 +7,16 @@ capability_ids: ["brain.content.search","social.accounts_list"]
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"source_state","description":"X evidence source boundary.","allowed_values":["official_api","cache","unavailable","not_applicable"]},{"id":"search_window","description":"Official X search-window coverage state.","allowed_values":["recent","archive","outside_entitlement","unavailable"]},{"id":"archive_entitlement","description":"Full-archive X entitlement state.","allowed_values":["entitled","not_entitled","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: ed2751299645edf87c290f17f5760bfb00b6cc4d6bee6eed8bd1838294e3ba9c
+  playbook_kernel_hash: 104653a9284fcc85166b61796d433c9fa5f5cd96c7904df5e306b184184ff9a7
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 5d2f4b59d2b8b388
-  manifest_digest: 3715f4b76628f6cc58ea7c51c3e556168ab6aaca571e5673995deb50a34b3891
+  capability_hash: b157ca9af8e41603
+  manifest_digest: e5897473780f939766bb058fafd7c8c056058039d0f98d0db7c78c78e4e976c8
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: ed2751299645edf87c290f17f5760bfb00b6cc4d6bee6eed8bd1838294e3ba9c
+  source_release_hash: 104653a9284fcc85166b61796d433c9fa5f5cd96c7904df5e306b184184ff9a7
   generator_version: 1.0.0
   client: codex
   kernel_id: social.x

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "5d2f4b59d2b8b388",
+  "capability_hash": "b157ca9af8e41603",
   "api_version": "v1",
   "capabilities": [
     {
@@ -16833,6 +16833,321 @@
       }
     },
     {
+      "id": "brain.context.archive_document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Archive a Context document",
+      "description": "Move a Context document into its recoverable archived lifecycle state against its current revision.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        },
+        {
+          "key": "expected_document_revision",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Input document_id for brain.context.archive_document."
+        },
+        {
+          "name": "expected_document_revision",
+          "type": "number",
+          "required": true,
+          "description": "Input expected_document_revision for brain.context.archive_document."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_document_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "document_id",
+          "expected_document_revision"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "expected_document_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "document_id",
+            "expected_document_revision"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.archive_document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.archive_document",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.archive_document",
+          "Archive a Context document",
+          "{\"capability\":\"brain.context.archive_document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id",
+          "expected_document_revision"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.backlinks",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "List canonical Context backlinks",
+      "description": "List permission-filtered committed links into one canonical Context document using stable keyset pagination.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:read"
+      ],
+      "mutates": false,
+      "idempotency_required": false,
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": true,
+        "external_call": false,
+        "preapproval_read": true
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "target_node_ref",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "target_node_ref",
+          "type": "string",
+          "required": true,
+          "description": "Input target_node_ref for brain.context.backlinks."
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Stable link-id pagination cursor."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum backlinks to return."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "target_node_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "cursor": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "limit": {
+            "type": "integer",
+            "exclusiveMinimum": true,
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "target_node_ref"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "target_node_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "cursor": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "limit": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "target_node_ref"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.backlinks\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.backlinks",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "read_only",
+        "effect_class": "none",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.backlinks",
+          "List canonical Context backlinks",
+          "{\"capability\":\"brain.context.backlinks\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "target_node_ref"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
       "id": "brain.context.browse",
       "kind": "brain_capability",
       "domain": "brain",
@@ -16871,6 +17186,16 @@
           "description": "Input parent_node_ref for brain.context.browse."
         },
         {
+          "name": "lifecycle_state",
+          "type": "string",
+          "required": false,
+          "description": "Input lifecycle_state for brain.context.browse.",
+          "enum": [
+            "active",
+            "archived"
+          ]
+        },
+        {
           "name": "subject_user_id",
           "type": "string",
           "required": false,
@@ -16897,6 +17222,13 @@
             "minLength": 1,
             "maxLength": 512,
             "nullable": true
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived"
+            ]
           },
           "subject_user_id": {
             "type": "string",
@@ -16929,6 +17261,13 @@
               "minLength": 1,
               "maxLength": 512,
               "nullable": true
+            },
+            "lifecycle_state": {
+              "type": "string",
+              "enum": [
+                "active",
+                "archived"
+              ]
             },
             "subject_user_id": {
               "type": "string",
@@ -17393,6 +17732,158 @@
           "parent_node_ref",
           "title",
           "idempotency_key"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.delete_document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Delete an archived Context document",
+      "description": "Irreversibly delete an already-archived Context document against its current revision.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        },
+        {
+          "key": "expected_document_revision",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Input document_id for brain.context.delete_document."
+        },
+        {
+          "name": "expected_document_revision",
+          "type": "number",
+          "required": true,
+          "description": "Input expected_document_revision for brain.context.delete_document."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_document_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "document_id",
+          "expected_document_revision"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "expected_document_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "document_id",
+            "expected_document_revision"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.delete_document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.delete_document",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.delete_document",
+          "Delete an archived Context document",
+          "{\"capability\":\"brain.context.delete_document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id",
+          "expected_document_revision"
         ],
         "outputs": [
           "result"
@@ -18279,6 +18770,200 @@
           "result"
         ],
         "side_effects": [],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.move_document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Move a Context document",
+      "description": "Move an editable Context document between exact folders against its current revision and folder.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        },
+        {
+          "key": "expected_folder_id",
+          "required": true
+        },
+        {
+          "key": "target_folder_id",
+          "required": true
+        },
+        {
+          "key": "expected_document_revision",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Input document_id for brain.context.move_document."
+        },
+        {
+          "name": "expected_folder_id",
+          "type": "string",
+          "required": true,
+          "description": "Input expected_folder_id for brain.context.move_document."
+        },
+        {
+          "name": "target_folder_id",
+          "type": "string",
+          "required": true,
+          "description": "Input target_folder_id for brain.context.move_document."
+        },
+        {
+          "name": "expected_document_revision",
+          "type": "number",
+          "required": true,
+          "description": "Input expected_document_revision for brain.context.move_document."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_folder_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_folder_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_document_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "document_id",
+          "expected_folder_id",
+          "target_folder_id",
+          "expected_document_revision"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "expected_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "target_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "expected_document_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "document_id",
+            "expected_folder_id",
+            "target_folder_id",
+            "expected_document_revision"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.move_document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.move_document",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.move_document",
+          "Move a Context document",
+          "{\"capability\":\"brain.context.move_document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id",
+          "expected_folder_id",
+          "target_folder_id",
+          "expected_document_revision"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
         "prerequisites": [
           "Runtime readiness is available only from the authenticated live catalog."
         ],
@@ -19450,6 +20135,160 @@
       }
     },
     {
+      "id": "brain.context.rebuild_links",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Rebuild Context document links",
+      "description": "Queue durable relationship indexing for one exact current published Context revision.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "node_ref",
+          "required": true
+        },
+        {
+          "key": "revision_id",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "node_ref",
+          "type": "string",
+          "required": true,
+          "description": "Canonical Context document node reference."
+        },
+        {
+          "name": "revision_id",
+          "type": "string",
+          "required": true,
+          "description": "Exact current published revision id."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "node_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "revision_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "node_ref",
+          "revision_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "node_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "revision_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "node_ref",
+            "revision_id"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.rebuild_links\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.rebuild_links",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.rebuild_links",
+          "Rebuild Context document links",
+          "{\"capability\":\"brain.context.rebuild_links\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "node_ref",
+          "revision_id"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
       "id": "brain.context.register_source",
       "kind": "brain_capability",
       "domain": "brain",
@@ -19890,6 +20729,181 @@
       }
     },
     {
+      "id": "brain.context.rename_document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Rename a Context document",
+      "description": "Rename an editable Context document without changing its stable identity or revision bindings.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        },
+        {
+          "key": "expected_document_revision",
+          "required": true
+        },
+        {
+          "key": "title",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Input document_id for brain.context.rename_document."
+        },
+        {
+          "name": "expected_document_revision",
+          "type": "number",
+          "required": true,
+          "description": "Input expected_document_revision for brain.context.rename_document."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Input title for brain.context.rename_document."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_document_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "document_id",
+          "expected_document_revision",
+          "title"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "expected_document_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "document_id",
+            "expected_document_revision",
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.rename_document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.rename_document",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.rename_document",
+          "Rename a Context document",
+          "{\"capability\":\"brain.context.rename_document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id",
+          "expected_document_revision",
+          "title"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
       "id": "brain.context.resolve_conflict",
       "kind": "brain_capability",
       "domain": "brain",
@@ -20097,6 +21111,158 @@
           "expected_current_revision_id",
           "content",
           "idempotency_key"
+        ],
+        "outputs": [
+          "result"
+        ],
+        "side_effects": [
+          "write_brain"
+        ],
+        "prerequisites": [
+          "Runtime readiness is available only from the authenticated live catalog."
+        ],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "brain.context.restore_document",
+      "kind": "brain_capability",
+      "domain": "brain",
+      "category": "context",
+      "label": "Restore a Context document",
+      "description": "Restore an archived Context document against its current revision.",
+      "when_to_use": [
+        "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+      ],
+      "when_not_to_use": [
+        "Do not use to bypass workspace policy, exact citations, or prepared-action approval."
+      ],
+      "required_scopes": [
+        "content:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effect_replay": {
+        "strategy": "durable_receipt",
+        "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0
+      },
+      "async_policy": {
+        "mode": "sync",
+        "timeout_ms": 24000
+      },
+      "required_inputs": [
+        {
+          "key": "document_id",
+          "required": true
+        },
+        {
+          "key": "expected_document_revision",
+          "required": true
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "document_id",
+          "type": "string",
+          "required": true,
+          "description": "Input document_id for brain.context.restore_document."
+        },
+        {
+          "name": "expected_document_revision",
+          "type": "number",
+          "required": true,
+          "description": "Input expected_document_revision for brain.context.restore_document."
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_document_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "document_id",
+          "expected_document_revision"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "dreamstate-unified-brain",
+        "contract_version": "2026-07-15.0",
+        "input_json_schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "expected_document_revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "document_id",
+            "expected_document_revision"
+          ],
+          "additionalProperties": false
+        },
+        "citation_required": true
+      },
+      "rest_paths": [
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "examples": [
+        "{\"capability\":\"brain.context.restore_document\"}"
+      ],
+      "readiness": {
+        "ready": false,
+        "state": "unavailable",
+        "runtime": "brainCapabilityRuntime",
+        "reason": "Runtime readiness is available only from the authenticated live catalog."
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "brain.context.restore_document",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "destructive",
+        "human_approval_required": true,
+        "proposal_required": true,
+        "credit_class": "none"
+      },
+      "search": {
+        "aliases": [
+          "brain.context.restore_document",
+          "Restore a Context document",
+          "{\"capability\":\"brain.context.restore_document\"}"
+        ],
+        "use_cases": [
+          "Use when an agent or product surface needs cited, workspace-safe GTM brain data."
+        ],
+        "inputs": [
+          "document_id",
+          "expected_document_revision"
         ],
         "outputs": [
           "result"
@@ -20578,6 +21744,12 @@
           "description": "Input cursor for brain.context.search."
         },
         {
+          "name": "match_cursor",
+          "type": "string",
+          "required": false,
+          "description": "Input match_cursor for brain.context.search."
+        },
+        {
           "name": "limit",
           "type": "number",
           "required": false,
@@ -20628,6 +21800,11 @@
           "cursor": {
             "type": "string",
             "minLength": 1
+          },
+          "match_cursor": {
+            "type": "string",
+            "maxLength": 1024,
+            "pattern": "^(?:0|[1-9]\\d*)(?:\\.\\d{1,6})?\\|[^|\\s]{1,512}\\|(?:0|[1-9]\\d{0,3})$"
           },
           "limit": {
             "type": "integer",
@@ -20690,6 +21867,11 @@
             "cursor": {
               "type": "string",
               "minLength": 1
+            },
+            "match_cursor": {
+              "type": "string",
+              "maxLength": 1024,
+              "pattern": "^(?:0|[1-9]\\d*)(?:\\.\\d{1,6})?\\|[^|\\s]{1,512}\\|(?:0|[1-9]\\d{0,3})$"
             },
             "limit": {
               "type": "integer",
@@ -23528,6 +24710,7 @@
             "brain.context.search",
             "brain.context.get",
             "brain.context.graph",
+            "brain.context.backlinks",
             "brain.context.history",
             "brain.context.list_proposals",
             "brain.context.preview_agent_view",
@@ -23599,6 +24782,7 @@
               "brain.context.search",
               "brain.context.get",
               "brain.context.graph",
+              "brain.context.backlinks",
               "brain.context.history",
               "brain.context.list_proposals",
               "brain.context.preview_agent_view",
@@ -23683,6 +24867,7 @@
                 "brain.context.search",
                 "brain.context.get",
                 "brain.context.graph",
+                "brain.context.backlinks",
                 "brain.context.history",
                 "brain.context.list_proposals",
                 "brain.context.preview_agent_view",
@@ -35272,6 +36457,14 @@
                     ],
                     "nullable": true
                   },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
+                      }
+                    ],
+                    "nullable": true
+                  },
                   "accept_row_if": {
                     "allOf": [
                       {
@@ -36896,6 +38089,14 @@
                           "condition"
                         ],
                         "additionalProperties": false
+                      }
+                    ],
+                    "nullable": true
+                  },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
                       }
                     ],
                     "nullable": true
@@ -38801,6 +40002,14 @@
                                 "condition"
                               ],
                               "additionalProperties": false
+                            }
+                          ],
+                          "nullable": true
+                        },
+                        "row_if": {
+                          "allOf": [
+                            {
+                              "$ref": "#/properties/columns/items/properties/binding/properties/run_policy/properties/invocation_if"
                             }
                           ],
                           "nullable": true
@@ -41211,6 +42420,14 @@
                     ],
                     "nullable": true
                   },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
+                      }
+                    ],
+                    "nullable": true
+                  },
                   "accept_row_if": {
                     "allOf": [
                       {
@@ -42833,6 +44050,14 @@
                           "condition"
                         ],
                         "additionalProperties": false
+                      }
+                    ],
+                    "nullable": true
+                  },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
                       }
                     ],
                     "nullable": true
@@ -135435,6 +136660,14 @@
                               "condition"
                             ],
                             "additionalProperties": false
+                          }
+                        ],
+                        "nullable": true
+                      },
+                      "row_if": {
+                        "allOf": [
+                          {
+                            "$ref": "#/anyOf/0/properties/binding/properties/run_policy/properties/invocation_if"
                           }
                         ],
                         "nullable": true
@@ -331093,6 +332326,14 @@
                     ],
                     "nullable": true
                   },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
+                      }
+                    ],
+                    "nullable": true
+                  },
                   "accept_row_if": {
                     "allOf": [
                       {
@@ -332450,6 +333691,14 @@
                           "condition"
                         ],
                         "additionalProperties": false
+                      }
+                    ],
+                    "nullable": true
+                  },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
                       }
                     ],
                     "nullable": true
@@ -334223,6 +335472,14 @@
                                 "condition"
                               ],
                               "additionalProperties": false
+                            }
+                          ],
+                          "nullable": true
+                        },
+                        "row_if": {
+                          "allOf": [
+                            {
+                              "$ref": "#/properties/sources/items/properties/binding/properties/run_policy/properties/invocation_if"
                             }
                           ],
                           "nullable": true
@@ -337687,6 +338944,14 @@
                     ],
                     "nullable": true
                   },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
+                      }
+                    ],
+                    "nullable": true
+                  },
                   "accept_row_if": {
                     "allOf": [
                       {
@@ -339060,6 +340325,14 @@
                           "condition"
                         ],
                         "additionalProperties": false
+                      }
+                    ],
+                    "nullable": true
+                  },
+                  "row_if": {
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/binding/properties/run_policy/properties/invocation_if"
                       }
                     ],
                     "nullable": true
@@ -384662,6 +385935,14 @@
                                 ],
                                 "nullable": true
                               },
+                              "row_if": {
+                                "allOf": [
+                                  {
+                                    "$ref": "#/properties/templates/items/properties/recipe/properties/sources/items/properties/run_policy/properties/invocation_if"
+                                  }
+                                ],
+                                "nullable": true
+                              },
                               "accept_row_if": {
                                 "allOf": [
                                   {
@@ -386472,6 +387753,14 @@
                                     "condition"
                                   ],
                                   "additionalProperties": false
+                                }
+                              ],
+                              "nullable": true
+                            },
+                            "row_if": {
+                              "allOf": [
+                                {
+                                  "$ref": "#/properties/template/properties/recipe/properties/sources/items/properties/run_policy/properties/invocation_if"
                                 }
                               ],
                               "nullable": true
@@ -388833,6 +390122,14 @@
                                     "condition"
                                   ],
                                   "additionalProperties": false
+                                }
+                              ],
+                              "nullable": true
+                            },
+                            "row_if": {
+                              "allOf": [
+                                {
+                                  "$ref": "#/anyOf/1/properties/sources/items/properties/binding/properties/run_policy/properties/invocation_if"
                                 }
                               ],
                               "nullable": true
@@ -392681,12 +393978,16 @@
             "format": "uri",
             "nullable": true
           },
+          "architect_job_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
           "pending_handoff": {
             "type": "object",
             "properties": {
               "handoff_id": {
-                "type": "string",
-                "format": "uuid"
+                "$ref": "#/properties/architect_job_id"
               },
               "instruction": {
                 "type": "string",
@@ -392713,10 +394014,10 @@
                 "minLength": 1
               },
               "run_id": {
-                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+                "$ref": "#/properties/architect_job_id"
               },
               "run_step_id": {
-                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+                "$ref": "#/properties/architect_job_id"
               },
               "operation_request_key": {
                 "type": "string",
@@ -392810,6 +394111,7 @@
         "required": [
           "seen",
           "company_url",
+          "architect_job_id",
           "pending_handoff",
           "pending_handoff_created_at",
           "receipt",
@@ -392876,284 +394178,9 @@
         "outputs": [
           "seen",
           "company_url",
+          "architect_job_id",
           "pending_handoff",
           "pending_handoff_created_at",
-          "receipt",
-          "graph_effects",
-          "web_url"
-        ],
-        "side_effects": [
-          "write_workspace",
-          "workspace_setup",
-          "run",
-          "receipt",
-          "provider_evidence",
-          "graph_effects"
-        ],
-        "prerequisites": [],
-        "deprecated": false
-      }
-    },
-    {
-      "id": "workspace.company_setup_handoff_acknowledge",
-      "entitlement": "growth",
-      "kind": "workspace_capability",
-      "domain": "workspace",
-      "category": "workspace",
-      "label": "Workspace Company Setup Handoff Acknowledge",
-      "description": "Canonical company_setup_handoff_acknowledge operation for workspace resources.",
-      "when_to_use": [
-        "Use the stable workspace.company_setup_handoff_acknowledge contract for canonical workspace company_setup_handoff_acknowledge behavior."
-      ],
-      "when_not_to_use": [
-        "Do not supply workspace identity or choose a transport-specific compatibility alias."
-      ],
-      "required_scopes": [
-        "actions"
-      ],
-      "mutates": true,
-      "idempotency_required": true,
-      "effects": {
-        "domain": "workspace_setup",
-        "reports": [
-          "run",
-          "receipt",
-          "provider_evidence",
-          "graph_effects"
-        ]
-      },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": false,
-        "credit_class": "free"
-      },
-      "effect_replay": {
-        "strategy": "durable_receipt",
-        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
-      },
-      "cost_policy": {
-        "type": "none",
-        "credits": 0,
-        "zero_cost": true,
-        "side_effect_free": false,
-        "external_call": false
-      },
-      "async_policy": {
-        "mode": "sync"
-      },
-      "dry_run_supported": false,
-      "required_inputs": [
-        {
-          "key": "handoff_id",
-          "kind": "uuid",
-          "required": true,
-          "description": "handoff_id"
-        }
-      ],
-      "input_schema": [
-        {
-          "name": "handoff_id",
-          "type": "string",
-          "required": true,
-          "description": "handoff_id"
-        }
-      ],
-      "input_json_schema": {
-        "type": "object",
-        "properties": {
-          "handoff_id": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "required": [
-          "handoff_id"
-        ],
-        "additionalProperties": false
-      },
-      "output_json_schema": {
-        "type": "object",
-        "properties": {
-          "acknowledged": {
-            "type": "boolean"
-          },
-          "handoff_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "receipt": {
-            "type": "object",
-            "properties": {
-              "capability_id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "run_id": {
-                "$ref": "#/properties/handoff_id"
-              },
-              "run_step_id": {
-                "$ref": "#/properties/handoff_id"
-              },
-              "operation_request_key": {
-                "type": "string",
-                "minLength": 1
-              },
-              "idempotency_key": {
-                "type": "string",
-                "minLength": 1
-              },
-              "replay_strategy": {
-                "type": "string",
-                "enum": [
-                  "durable_receipt"
-                ]
-              }
-            },
-            "required": [
-              "capability_id",
-              "run_id",
-              "run_step_id",
-              "operation_request_key",
-              "idempotency_key",
-              "replay_strategy"
-            ],
-            "additionalProperties": false
-          },
-          "graph_effects": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "op": {
-                  "type": "string",
-                  "enum": [
-                    "upsert",
-                    "link_evidence"
-                  ]
-                },
-                "kind": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "id": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "op",
-                "kind",
-                "id"
-              ],
-              "additionalProperties": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "boolean"
-                  },
-                  {
-                    "enum": [
-                      "null"
-                    ],
-                    "nullable": true
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/properties/graph_effects/items/additionalProperties"
-                    }
-                  },
-                  {
-                    "type": "object",
-                    "additionalProperties": {
-                      "$ref": "#/properties/graph_effects/items/additionalProperties"
-                    }
-                  }
-                ]
-              }
-            }
-          },
-          "web_url": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "required": [
-          "acknowledged",
-          "handoff_id",
-          "receipt",
-          "graph_effects",
-          "web_url"
-        ],
-        "additionalProperties": false
-      },
-      "output_manifest": "structured",
-      "provider": null,
-      "source": {
-        "contract": "canonical-parity",
-        "canonical_capability_id": "workspace.company_setup_handoff_acknowledge",
-        "execution_core": "canonicalContract"
-      },
-      "rest_paths": [
-        "/tools/{id}",
-        "/tools/{id}/run"
-      ],
-      "rest_operations": [
-        {
-          "method": "get",
-          "path": "/tools/{id}"
-        },
-        {
-          "method": "post",
-          "path": "/tools/{id}/run"
-        }
-      ],
-      "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run"
-      ],
-      "cli_commands": [
-        "dreamstate tools run workspace.company_setup_handoff_acknowledge"
-      ],
-      "examples": [
-        "dreamstate tools get workspace.company_setup_handoff_acknowledge",
-        "dreamstate tools run workspace.company_setup_handoff_acknowledge"
-      ],
-      "web_url_template": "/dashboard/settings?tab=workspace",
-      "readiness": {
-        "ready": true,
-        "state": "available",
-        "runtime": "canonicalContract"
-      },
-      "execution": {
-        "status": "active",
-        "executor_id": "workspace.company_setup_handoff_acknowledge",
-        "schema_policy": "strict"
-      },
-      "search": {
-        "aliases": [
-          "workspace.company_setup_handoff_acknowledge",
-          "Workspace Company Setup Handoff Acknowledge",
-          "dreamstate tools get workspace.company_setup_handoff_acknowledge",
-          "dreamstate tools run workspace.company_setup_handoff_acknowledge"
-        ],
-        "use_cases": [
-          "Use the stable workspace.company_setup_handoff_acknowledge contract for canonical workspace company_setup_handoff_acknowledge behavior."
-        ],
-        "inputs": [
-          "handoff_id"
-        ],
-        "outputs": [
-          "acknowledged",
-          "handoff_id",
           "receipt",
           "graph_effects",
           "web_url"
@@ -393226,12 +394253,6 @@
           "kind": "uri",
           "required": true,
           "description": "company_url"
-        },
-        {
-          "key": "instruction",
-          "kind": "string",
-          "required": true,
-          "description": "instruction"
         }
       ],
       "input_schema": [
@@ -393240,12 +394261,6 @@
           "type": "string",
           "required": true,
           "description": "company_url"
-        },
-        {
-          "name": "instruction",
-          "type": "string",
-          "required": true,
-          "description": "instruction"
         }
       ],
       "input_json_schema": {
@@ -393255,53 +394270,59 @@
             "type": "string",
             "format": "uri",
             "maxLength": 2048
-          },
-          "instruction": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 8000
           }
         },
         "required": [
-          "company_url",
-          "instruction"
+          "company_url"
         ],
         "additionalProperties": false
       },
       "output_json_schema": {
         "type": "object",
         "properties": {
-          "seen": {
+          "architect_job_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "current_api_run_id": {
+            "$ref": "#/properties/architect_job_id"
+          },
+          "job_kind": {
+            "type": "string",
+            "enum": [
+              "research_company_context"
+            ]
+          },
+          "job_phase": {
+            "type": "string",
+            "enum": [
+              "resolving",
+              "intake_pending",
+              "planning",
+              "approval_pending",
+              "executing",
+              "paused",
+              "failed",
+              "completed",
+              "cancelled"
+            ]
+          },
+          "run_status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "paused",
+              "reconciling",
+              "succeeded",
+              "failed",
+              "partially_completed",
+              "cancelled",
+              "timed_out"
+            ]
+          },
+          "idempotent": {
             "type": "boolean"
-          },
-          "company_url": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "pending_handoff": {
-            "type": "object",
-            "properties": {
-              "handoff_id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "instruction": {
-                "type": "string",
-                "minLength": 1
-              }
-            },
-            "required": [
-              "handoff_id",
-              "instruction"
-            ],
-            "additionalProperties": false,
-            "nullable": true
-          },
-          "pending_handoff_created_at": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           },
           "receipt": {
             "type": "object",
@@ -393311,10 +394332,10 @@
                 "minLength": 1
               },
               "run_id": {
-                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+                "$ref": "#/properties/architect_job_id"
               },
               "run_step_id": {
-                "$ref": "#/properties/pending_handoff/properties/handoff_id"
+                "$ref": "#/properties/architect_job_id"
               },
               "operation_request_key": {
                 "type": "string",
@@ -393406,10 +394427,12 @@
           }
         },
         "required": [
-          "seen",
-          "company_url",
-          "pending_handoff",
-          "pending_handoff_created_at",
+          "architect_job_id",
+          "current_api_run_id",
+          "job_kind",
+          "job_phase",
+          "run_status",
+          "idempotent",
           "receipt",
           "graph_effects",
           "web_url"
@@ -393471,14 +394494,15 @@
           "Use the stable workspace.company_setup_handoff_set contract for canonical workspace company_setup_handoff_set behavior."
         ],
         "inputs": [
-          "company_url",
-          "instruction"
+          "company_url"
         ],
         "outputs": [
-          "seen",
-          "company_url",
-          "pending_handoff",
-          "pending_handoff_created_at",
+          "architect_job_id",
+          "current_api_run_id",
+          "job_kind",
+          "job_phase",
+          "run_status",
+          "idempotent",
           "receipt",
           "graph_effects",
           "web_url"
@@ -393559,12 +394583,16 @@
             "format": "uri",
             "nullable": true
           },
+          "architect_job_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
           "pending_handoff": {
             "type": "object",
             "properties": {
               "handoff_id": {
-                "type": "string",
-                "format": "uuid"
+                "$ref": "#/properties/architect_job_id"
               },
               "instruction": {
                 "type": "string",
@@ -393587,6 +394615,7 @@
         "required": [
           "seen",
           "company_url",
+          "architect_job_id",
           "pending_handoff",
           "pending_handoff_created_at"
         ],
@@ -393650,6 +394679,7 @@
         "outputs": [
           "seen",
           "company_url",
+          "architect_job_id",
           "pending_handoff",
           "pending_handoff_created_at"
         ],
@@ -399026,8 +400056,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1128,
+    "capabilities": 1134,
     "mcp_tools": 11
   },
-  "manifest_digest": "3715f4b76628f6cc58ea7c51c3e556168ab6aaca571e5673995deb50a34b3891"
+  "manifest_digest": "e5897473780f939766bb058fafd7c8c056058039d0f98d0db7c78c78e4e976c8"
 }

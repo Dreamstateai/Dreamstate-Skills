@@ -104,25 +104,6 @@
       "expected_skill_ids": [
         "site-onboarding"
       ],
-      "id": "acknowledge-company-setup-handoff",
-      "request": "Acknowledge the current company setup handoff for this workspace after reading its exact state.",
-      "required_capability_ids": [
-        "workspace.company_setup_state_get",
-        "workspace.company_setup_handoff_acknowledge"
-      ],
-      "expected_workspace_outcome": [
-        {
-          "check": "capability_effect_persisted",
-          "capability_id": "workspace.company_setup_handoff_acknowledge",
-          "min_count": 1,
-          "reason": "Acknowledgement must durably update the exact workspace setup state returned by the capability."
-        }
-      ]
-    },
-    {
-      "expected_skill_ids": [
-        "site-onboarding"
-      ],
       "expected_workspace_outcome": [
         {
           "check": "visibility_artifact_changed",

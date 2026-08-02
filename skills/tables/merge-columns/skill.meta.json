@@ -30,6 +30,6 @@
   "required_scopes": [
     "tables:write"
   ],
-  "capability_hash": "5d2f4b59d2b8b388",
+  "capability_hash": "b157ca9af8e41603",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }
