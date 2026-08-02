@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.9",
-  "source_release_hash": "104653a9284fcc85166b61796d433c9fa5f5cd96c7904df5e306b184184ff9a7",
+  "source_release_hash": "d727d363b8fd84ace55cb9c34fcf3bfc5918a5a90c69442673f0f433b228c91a",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "104653a9284fcc85166b61796d433c9fa5f5cd96c7904df5e306b184184ff9a7",
+    "playbook_kernel_hash": "d727d363b8fd84ace55cb9c34fcf3bfc5918a5a90c69442673f0f433b228c91a",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "b157ca9af8e41603",
@@ -157,15 +157,22 @@
         "context"
       ],
       "capability_ids": [
+        "brain.context.archive_document",
+        "brain.context.backlinks",
         "brain.context.browse",
+        "brain.context.delete_document",
         "brain.context.get",
         "brain.context.graph",
         "brain.context.history",
         "brain.context.list_proposals",
+        "brain.context.move_document",
         "brain.context.preview_agent_view",
         "brain.context.propose",
         "brain.context.propose_document",
+        "brain.context.rebuild_links",
         "brain.context.register_source",
+        "brain.context.rename_document",
+        "brain.context.restore_document",
         "brain.context.search",
         "brain.context.website_source_register",
         "brain.evidence.search",
@@ -175,9 +182,9 @@
         "brain.knowledge.document",
         "brain.knowledge.index"
       ],
-      "kernel_sha256": "bfcad921b6b0353a8a8b7b03f3fc5cd0d2f981da5015e355dad5cfc131e7a331",
-      "adapter_sha256": "1fa8042fd58e2c84ee5ba3a86281b34512f9e0c9aac4da2df92458fb977542d3",
-      "evals_sha256": "f67e24a2f1371cd5dfea2e405781e031bb3e32f9cb0beb685845e5876173d115"
+      "kernel_sha256": "926d48f5a57ddf2c0ca701bd185a30a566ebe9c19c550609c74f924401a8eb84",
+      "adapter_sha256": "53d43e96bbc93e3316608d3de9a9e9511eb272de4de03b54745c7582b8cb3ebf",
+      "evals_sha256": "3e42e75a0c705564aa08158595176188e6de255803ab9344e0d99f97a08c0bfc"
     },
     "experiments": {
       "capability_domains": [

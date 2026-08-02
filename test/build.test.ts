@@ -287,19 +287,26 @@ test('Context is one files-first Markdown graph with bounded proposal authority'
   const context = architectSource.skills.find((skill: { id: string }) => skill.id === 'context');
   assert.ok(context);
 
-  // Architect may read canonical knowledge, register evidence, and submit
-  // proposals. Direct publication and human review decisions stay outside
-  // this kernel.
+  // Architect may read canonical knowledge, register evidence, submit
+  // proposals, and perform exact approval-bound document lifecycle changes.
+  // Direct publication and human review decisions stay outside this kernel.
   const agentCapabilities = [
+    'brain.context.archive_document',
+    'brain.context.backlinks',
     'brain.context.browse',
+    'brain.context.delete_document',
     'brain.context.get',
     'brain.context.graph',
     'brain.context.history',
     'brain.context.list_proposals',
+    'brain.context.move_document',
     'brain.context.preview_agent_view',
     'brain.context.propose',
     'brain.context.propose_document',
+    'brain.context.rebuild_links',
     'brain.context.register_source',
+    'brain.context.rename_document',
+    'brain.context.restore_document',
     'brain.context.search',
     'brain.context.website_source_register',
     'brain.evidence.search',
@@ -331,6 +338,9 @@ test('Context is one files-first Markdown graph with bounded proposal authority'
   assert.match(contextSource, /You do not create folders or documents, save drafts, or publish/);
   assert.match(contextSource, /submit proposals for a human actor to review and publish/);
   assert.match(contextSource, /Leave every proposal pending for a human actor to review and publish/);
+  assert.match(contextSource, /backlinks.*read-only inspection/i);
+  assert.match(contextSource, /governed mutations for a directly authenticated Context editor/i);
+  assert.match(contextSource, /delete_document.*irreversible.*fresh owner-exact approval/i);
   assert.doesNotMatch(
     contextSource,
     /Company Brain|Company Context|Personal Context/i,
