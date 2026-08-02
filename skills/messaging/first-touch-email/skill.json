@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f95b1fde0b931763",
+  "verified_capability_hash": "5da7519babac68b4",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/messaging/first-touch-email/SKILL.md",
   "install_command": "dreamstate skills install first-touch-email",

@@ -13,8 +13,8 @@ compatibility:
   playbook_kernel_hash: 7926f72ccd4085ca4e2d6d99c042cd0ff8d0a8748879db0142edd7fb28ec1366
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: f95b1fde0b931763
-  manifest_digest: 36e1541ce5c465d328d53e25fceaa9a75aee8d932ef7ef4c7ddf6451fa9fd469
+  capability_hash: 5da7519babac68b4
+  manifest_digest: 87e78f7c73f392e7bd5c6c311620b0be23dbff118c31df9e61e5473f59bb6f25
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
