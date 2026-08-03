@@ -10,8 +10,19 @@ Turn one exact website URL into real workspace knowledge and measurable site sta
 1. Normalize and validate the exact public URL. Do not silently switch domains, subdomains, protocols, or canonical hosts.
 2. Inspect the existing workspace site and existing wiki state with `visibility.workspace_site_get`, `brain.context.browse`, and narrow `brain.context.search`/`brain.context.get` reads before writing.
 3. Ensure or update the canonical workspace-site identity only through its live strict contract. Preserve site ID, URL, ownership, revision, provider evidence, and deep link.
-4. Run bounded website scrape and site scan capabilities. For each operation, retain only fields returned by its exact live contract. Mark requested crawl details absent or unavailable when the result does not provide them; never invent redirects, status, content digests, raw evidence references, observation times, completeness, frontier, errors, costs, or any universal crawl tuple.
-5. Read sitemap, robots, and current site-file evidence. Distinguish absent files, fetch failure, stale evidence, blocked crawling, and valid empty results.
+4. Read sitemap, robots, and current site-file evidence. Distinguish absent files, fetch failure, stale evidence, blocked crawling, and valid empty results.
+
+## Execute the crawl and scan yourself; inspection is not execution
+
+`products.website_scrape` and `visibility.site_scan` are `mutates: true, proposal_required: true` capabilities. The controller only ever auto-runs a pre-approved, zero-input read for you; by design it refuses to auto-run either of these. Reading a capability's live contract with `tools_get` is inspection only and produces no evidence. Once you have inspected one of these two contracts, you must call `tools_run` on it yourself, live, before the turn can complete: a contract you fetched and never ran is unfinished work, and the turn is refused rather than allowed to skip ahead to writing documents from what a run would probably return.
+
+Required order, for each of the two capabilities:
+
+1. `tools_get` its exact live contract if you have not already trusted it this turn.
+2. `tools_run` it yourself, live mode, once per site, with the exact site URL and whatever exact inputs its contract requires. Do this before drafting any wiki content. Do not narrate, plan, or describe the call in place of making it.
+3. Read the returned fields back and retain only what the exact live contract returned. Mark requested crawl details absent or unavailable when the result does not provide them; never invent redirects, status, content digests, raw evidence references, observation times, completeness, frontier, errors, costs, or any universal crawl tuple.
+
+Executing `products.website_scrape` and `visibility.site_scan` is the evidence-gathering step, not the reviewable proposal itself. You still owe a proposal built from that executed evidence, in the next section: registering the source, then proposing at least the documents the executed evidence actually supports.
 
 ## Write the workspace wiki
 

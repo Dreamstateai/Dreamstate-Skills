@@ -7,7 +7,7 @@ capability_ids: ["record_exports.control","record_exports.create","record_export
 completion_contract: {"version":1,"fields":[{"id":"transfer_run_state","description":"Canonical transfer job terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"transfer_evidence_state","description":"Row and artifact evidence status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 7ddbefcb362b98acfa7695932760ba51f14b05d5fe507275109a7aac0d7e4dd1
+  playbook_kernel_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 787f9735a083219d
@@ -16,7 +16,7 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: 7ddbefcb362b98acfa7695932760ba51f14b05d5fe507275109a7aac0d7e4dd1
+  source_release_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
   generator_version: 1.0.0
   client: claude
   kernel_id: records-transfer

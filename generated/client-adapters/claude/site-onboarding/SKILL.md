@@ -7,7 +7,7 @@ capability_ids: ["brain.context.browse","brain.context.get","brain.context.propo
 completion_contract: {"version":1,"fields":[{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none"]},{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 7ddbefcb362b98acfa7695932760ba51f14b05d5fe507275109a7aac0d7e4dd1
+  playbook_kernel_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: 787f9735a083219d
@@ -16,12 +16,12 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: 7ddbefcb362b98acfa7695932760ba51f14b05d5fe507275109a7aac0d7e4dd1
+  source_release_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
   generator_version: 1.0.0
   client: claude
   kernel_id: site-onboarding
   kernel_file: KERNEL.md
-  kernel_sha256: c46263ff984bc8d7fb1679539e588a077c1b4f2916a98c2206cff24a8ff8a887
+  kernel_sha256: 58e2f61c2f0448a38626e859dd9d8f9f782e2fc5ec0167fc17fdcafb0a9b9f9b
   adapter_sha256: 62abdd52c1633e4bbe5e420665285dd39f5addd3575e0576f3cc250f9838e30e
   evals_file: evals.json
   evals_sha256: b252ac5f5b335c7e0b569d83acb8dc34e29a12cde7a14d9a0903a1c7442646b8
@@ -64,8 +64,19 @@ Turn one exact website URL into real workspace knowledge and measurable site sta
 1. Normalize and validate the exact public URL. Do not silently switch domains, subdomains, protocols, or canonical hosts.
 2. Inspect the existing workspace site and existing wiki state with `visibility.workspace_site_get`, `brain.context.browse`, and narrow `brain.context.search`/`brain.context.get` reads before writing.
 3. Ensure or update the canonical workspace-site identity only through its live strict contract. Preserve site ID, URL, ownership, revision, provider evidence, and deep link.
-4. Run bounded website scrape and site scan capabilities. For each operation, retain only fields returned by its exact live contract. Mark requested crawl details absent or unavailable when the result does not provide them; never invent redirects, status, content digests, raw evidence references, observation times, completeness, frontier, errors, costs, or any universal crawl tuple.
-5. Read sitemap, robots, and current site-file evidence. Distinguish absent files, fetch failure, stale evidence, blocked crawling, and valid empty results.
+4. Read sitemap, robots, and current site-file evidence. Distinguish absent files, fetch failure, stale evidence, blocked crawling, and valid empty results.
+
+## Execute the crawl and scan yourself; inspection is not execution
+
+`products.website_scrape` and `visibility.site_scan` are `mutates: true, proposal_required: true` capabilities. The controller only ever auto-runs a pre-approved, zero-input read for you; by design it refuses to auto-run either of these. Reading a capability's live contract with `tools_get` is inspection only and produces no evidence. Once you have inspected one of these two contracts, you must call `tools_run` on it yourself, live, before the turn can complete: a contract you fetched and never ran is unfinished work, and the turn is refused rather than allowed to skip ahead to writing documents from what a run would probably return.
+
+Required order, for each of the two capabilities:
+
+1. `tools_get` its exact live contract if you have not already trusted it this turn.
+2. `tools_run` it yourself, live mode, once per site, with the exact site URL and whatever exact inputs its contract requires. Do this before drafting any wiki content. Do not narrate, plan, or describe the call in place of making it.
+3. Read the returned fields back and retain only what the exact live contract returned. Mark requested crawl details absent or unavailable when the result does not provide them; never invent redirects, status, content digests, raw evidence references, observation times, completeness, frontier, errors, costs, or any universal crawl tuple.
+
+Executing `products.website_scrape` and `visibility.site_scan` is the evidence-gathering step, not the reviewable proposal itself. You still owe a proposal built from that executed evidence, in the next section: registering the source, then proposing at least the documents the executed evidence actually supports.
 
 ## Write the workspace wiki
 
