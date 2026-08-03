@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "5da7519babac68b4",
+  "capability_hash": "4537b0bc2deb7531",
   "api_version": "v1",
   "capabilities": [
     {
@@ -28272,6 +28272,13 @@
       ],
       "mutates": true,
       "idempotency_required": true,
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
       "effect_replay": {
         "strategy": "durable_receipt",
         "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
@@ -28780,13 +28787,6 @@
         "executor_id": "brain.context.propose",
         "schema_policy": "strict"
       },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
-        "credit_class": "none"
-      },
       "search": {
         "aliases": [
           "brain.context.propose",
@@ -28836,6 +28836,13 @@
       ],
       "mutates": true,
       "idempotency_required": true,
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
       "effect_replay": {
         "strategy": "durable_receipt",
         "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
@@ -30143,13 +30150,6 @@
         "executor_id": "brain.context.propose_document",
         "schema_policy": "strict"
       },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
-        "credit_class": "none"
-      },
       "search": {
         "aliases": [
           "brain.context.propose_document",
@@ -30849,6 +30849,13 @@
       ],
       "mutates": true,
       "idempotency_required": true,
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
       "effect_replay": {
         "strategy": "durable_receipt",
         "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
@@ -31972,13 +31979,6 @@
         "status": "active",
         "executor_id": "brain.context.register_source",
         "schema_policy": "strict"
-      },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
-        "credit_class": "none"
       },
       "search": {
         "aliases": [
@@ -36537,6 +36537,13 @@
       ],
       "mutates": true,
       "idempotency_required": true,
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": false,
+        "credit_class": "free"
+      },
       "effect_replay": {
         "strategy": "durable_receipt",
         "proof": "Brain writes bind the server-authenticated request_id to a durable database receipt and replay the prior result."
@@ -37574,13 +37581,6 @@
         "status": "active",
         "executor_id": "brain.context.website_source_register",
         "schema_policy": "strict"
-      },
-      "action_policy": {
-        "consequence": "draft_write",
-        "effect_class": "destructive",
-        "human_approval_required": true,
-        "proposal_required": true,
-        "credit_class": "none"
       },
       "search": {
         "aliases": [
@@ -419779,5 +419779,5 @@
     "capabilities": 1134,
     "mcp_tools": 11
   },
-  "manifest_digest": "87e78f7c73f392e7bd5c6c311620b0be23dbff118c31df9e61e5473f59bb6f25"
+  "manifest_digest": "9124a4eff635a9ea52a8132b6ba4aa088ce153dc2b3c1561282a04d146b8c4f8"
 }

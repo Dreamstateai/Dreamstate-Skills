@@ -44,7 +44,7 @@
     "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "5da7519babac68b4",
+  "verified_capability_hash": "4537b0bc2deb7531",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/signal-scraper/SKILL.md",
   "install_command": "dreamstate skills install signal-scraper",

@@ -8,8 +8,8 @@
     "playbook_kernel_hash": "70b89077b92a973aeb192455dbd6aeb4580a7922894b21e19db09bde3dda6ea3",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "5da7519babac68b4",
-    "manifest_digest": "87e78f7c73f392e7bd5c6c311620b0be23dbff118c31df9e61e5473f59bb6f25",
+    "capability_hash": "4537b0bc2deb7531",
+    "manifest_digest": "9124a4eff635a9ea52a8132b6ba4aa088ce153dc2b3c1561282a04d146b8c4f8",
     "minimum_api_version": "v1"
   },
   "skills": {
