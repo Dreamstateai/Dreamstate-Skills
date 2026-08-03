@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "787f9735a083219d",
+  "verified_capability_hash": "94da9c35e674d402",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/prospecting/deduplicate-list/SKILL.md",
   "install_command": "dreamstate skills install deduplicate-list",
