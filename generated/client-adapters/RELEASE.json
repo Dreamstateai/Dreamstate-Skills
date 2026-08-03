@@ -2,10 +2,10 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.9",
-  "source_release_hash": "70b89077b92a973aeb192455dbd6aeb4580a7922894b21e19db09bde3dda6ea3",
+  "source_release_hash": "7ddbefcb362b98acfa7695932760ba51f14b05d5fe507275109a7aac0d7e4dd1",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "70b89077b92a973aeb192455dbd6aeb4580a7922894b21e19db09bde3dda6ea3",
+    "playbook_kernel_hash": "7ddbefcb362b98acfa7695932760ba51f14b05d5fe507275109a7aac0d7e4dd1",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "787f9735a083219d",
@@ -175,6 +175,7 @@
         "brain.context.archive_document",
         "brain.context.backlinks",
         "brain.context.browse",
+        "brain.context.create_folder",
         "brain.context.delete_document",
         "brain.context.get",
         "brain.context.graph",
@@ -197,12 +198,12 @@
         "brain.knowledge.document",
         "brain.knowledge.index"
       ],
-      "kernel_sha256": "926d48f5a57ddf2c0ca701bd185a30a566ebe9c19c550609c74f924401a8eb84",
-      "evals_sha256": "247cea40d67db453f41e2018625b9cf0f00c14374cd1a684c2b55183c0cda8da",
+      "kernel_sha256": "5eac890b61fe56b979074226924f6f309ab03eac7d1c383294432565d308f834",
+      "evals_sha256": "93e0240b7be702e387fde7270e27168eb3aac2dd8978ac1e573fd2bc340d59b4",
       "adapter_sha256": {
-        "architect": "53d43e96bbc93e3316608d3de9a9e9511eb272de4de03b54745c7582b8cb3ebf",
-        "claude": "a962bfa76e3695e7f378c2f364c8ca7722ae8bd860b5e86bafc3d57cb1329c8c",
-        "codex": "24b5d71ae11d814aa8e525110e1fabaa3a67745a567e8fe539caa2a8803cda7c"
+        "architect": "798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b",
+        "claude": "d79925fb2cecf8b7e0ebe983d639aea8b7850184435cd3fc2f3809cc862f4b01",
+        "codex": "3b703f0d2e82f8b865e006656411cfce11f57933332030dbd4c577bc0bd5a9d8"
       }
     },
     "experiments": {
