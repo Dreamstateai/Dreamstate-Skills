@@ -44,7 +44,7 @@
     "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "94da9c35e674d402",
+  "verified_capability_hash": "4529f2a0fe650ffa",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/enrich-company/SKILL.md",
   "install_command": "dreamstate skills install enrich-company",
