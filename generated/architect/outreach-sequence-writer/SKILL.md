@@ -24,7 +24,7 @@ generated:
   kernel_id: outreach-sequence-writer
   kernel_file: KERNEL.md
   kernel_sha256: 18b4d2ddc98bd25008810dcff1c9a959d0750333378ba0e4c2e958afc8d812cb
-  adapter_sha256: 0075d9b99f376029c55dc85be0b0547436e3f022f489e6c962e21e5c47dec476
+  adapter_sha256: f7684214b55e1d3eab3d786ebd95443bf2f0dae3024e0ac52313e022358f3be1
   evals_file: evals.json
   evals_sha256: 141b11da2b48f125fd2d29ad96e1da49cba5197ffcdca91c79c342ba0d5d9131
 mutation_compatibility:
@@ -37,7 +37,7 @@ mutation_compatibility:
 
 # Architect surface adapter
 
-Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`, fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, cost bounds, and the server's ActionDecision into the next step. Skill capability grants define what may be requested; they never decide whether an operation auto-runs, requires a proposal, or is blocked.
+Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured `ask_user` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured `tools_search`: name every capability id this turn is likely to need as `query_terms` in one call, drawn from this skill's own capability_ids, instead of one narrower search per goal. `tools_get` refuses an id this turn never searched, so a capability id must appear in some earlier `tools_search` result before it can be fetched, even one already named by this skill's grant. The three-search discovery budget exists for genuinely unknown needs, not for fetching one already-named id at a time; spend it in as few calls as the turn's real uncertainty requires. Fetch every selected exact contract with `tools_get`, and carry exact schemas, revisions, state versions, gates, cost bounds, and the server's ActionDecision into the next step. Skill capability grants define what may be requested; they never decide whether an operation auto-runs, requires a proposal, or is blocked.
 
 Follow the fetched contract and ActionDecision mechanically. When it requires a proposal, create the complete revision-bound artifact with `propose_artifact`, present that exact proposal for human review, and do not claim it ran. Call `request_approval` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. When it permits an auto-run, call `tools_run` with the exact bound inputs. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
 

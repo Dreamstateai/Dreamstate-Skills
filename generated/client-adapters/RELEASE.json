@@ -63,7 +63,7 @@
       "kernel_sha256": "20ab56b536d6a08a14b93789ef76fbbf39623c8a467563833db9d9ef238e604f",
       "evals_sha256": "9dc8d05270e8d4c96a4c846e041c13f93e001a919f5e18eab009aca9083883a0",
       "adapter_sha256": {
-        "architect": "86195904cd0077d7d28042462803974c6f573360aca7b4deb8be201b548d3a67",
+        "architect": "8f982fc4cfbcfe1d82eb6fb6613f09f2132a4aebddbd81528ab8e30345ac9fdd",
         "claude": "9ca00cb32b285d339cbc67893342ba2a3e076c9b997ac34791cc38a595a81baa",
         "codex": "56f1e93796bcee197ecc2feb5a4328edbf021a4b8ffd98d4138eac52209ffb5f"
       }
@@ -85,7 +85,7 @@
       "kernel_sha256": "a336f54a5bafdb09b5fd94e6fa1405caf34c68b6b272b1233049bbfc7bf076e3",
       "evals_sha256": "b11137ee968ef29571eb8cf93166e282855d5d6d088131b99403d9f702da1ec3",
       "adapter_sha256": {
-        "architect": "b2c7c72b96435fe69cb2cb23d9fe30eb056e956586717db01f5a385ad0fa0379",
+        "architect": "657edf39ffd9720f0f0b7edee69dcfe6dc1490cf347b40a3152c738133aa38c2",
         "claude": "0577971a1612b74feab20a40c6d64b2d61fa385009b46730518315855486d5bc",
         "codex": "1b373e0ad1b36db96f55348cfc4dbe522bca6733f6983e52e2ed23c67f0e9bdd"
       }
@@ -130,7 +130,7 @@
       "kernel_sha256": "401a4ecc7c7361e296234fabbaf0aed9443f6f4e3909650880de16bcefd70654",
       "evals_sha256": "a403210c539f276b9b7fbb563a306867307c313b64bb57359befefb6356f9d19",
       "adapter_sha256": {
-        "architect": "aed9a0c5bf7cbaf2b5c9b75ffab2e8106be2ac47b5c2578d27cadb012c3bf9e9",
+        "architect": "91815e64bf52a44c17c9d4421dfd526b85752704543358aaf27f32a893936f66",
         "claude": "36796fcbf2bbd9efe22225683a93e75f4b9224841c9ff7cf221803f39b88ea51",
         "codex": "19f8080697ced626ce9639893a1b598d56352c127ed294d4a3ae656bcfed06e2"
       }
@@ -161,7 +161,7 @@
       "kernel_sha256": "53c335f0095f4427c50dd3f6f147ef450ac5fbc187417b1ebced7a570836e440",
       "evals_sha256": "78fae7e90e27d068d43fa71a16cef282e8012ce549091ff4829c4090fc92abde",
       "adapter_sha256": {
-        "architect": "919faa8247e2dca8f368bddd0468c2c03230d91fd17121b480e6de5f8f6da5f6",
+        "architect": "82f60e3cf9a19039bcce228fefab31ce2eb10dd573dce450909dfbc1c730850c",
         "claude": "13f2296c3fc88a7c07aabca7850283bea15619e66c9ceb8e93936d3f8e8fbf47",
         "codex": "2a189168eabca41e3a48f3157d6e3c89cebae3afec9bbaae4c09b11f2a2743b4"
       }
@@ -201,7 +201,7 @@
       "kernel_sha256": "5eac890b61fe56b979074226924f6f309ab03eac7d1c383294432565d308f834",
       "evals_sha256": "93e0240b7be702e387fde7270e27168eb3aac2dd8978ac1e573fd2bc340d59b4",
       "adapter_sha256": {
-        "architect": "798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b",
+        "architect": "e5b86445a4687a768cfd83b18fd60728dcc7aff18d36471d9b9f860d67336f32",
         "claude": "d79925fb2cecf8b7e0ebe983d639aea8b7850184435cd3fc2f3809cc862f4b01",
         "codex": "3b703f0d2e82f8b865e006656411cfce11f57933332030dbd4c577bc0bd5a9d8"
       }
@@ -224,7 +224,7 @@
       "kernel_sha256": "1af58fa508afe884136151c8810eb767a4cdd2472f3fd0b0a104586bceb78007",
       "evals_sha256": "cf2f1884ed6e69d7a2c0452725e3d1e94c62a91512b7c92d6f51a70ad985219c",
       "adapter_sha256": {
-        "architect": "647a98841c8d21f5253009497b984646f2737b11b948f32aa0b0cde06242b7aa",
+        "architect": "04765f1cbb8ce9f8081d0e8eec1c584fa49589a1061b0017b81eb9b1e08cc631",
         "claude": "01933b94729ca79a4bf1017c328631af9b91c4dd2193317ad199938287d60237",
         "codex": "be27bbc7466f5f6f2686f9133f49f10dea559a9b51ff03b44e1e9cd3667dd2ba"
       }
@@ -241,7 +241,7 @@
       "kernel_sha256": "19927914886ae69503700e5a3ca86d2ba714225089fa443a0ea8f987da1e61b1",
       "evals_sha256": "38a7f66a0a0f91570d51851a38522c200874e8d6eebf129c69e5ad4a0c6b813f",
       "adapter_sha256": {
-        "architect": "0ff4bf46670412c0fe55e1b73079dcd33baf0f0bf78c8159a39ba024dc3f4195",
+        "architect": "87910459447541328ceb61fd2164bf7d089bed01e78a13e069c943953c548185",
         "claude": "2ed01647582f2e403fd83d3e3a2e31983fbcdd8c9a5839a1e1738574f93a118f",
         "codex": "a5cb080eafd2fe82fac65921cfebd2fc9cd130ce19b986a12b04902caf4a2d18"
       }
@@ -280,7 +280,7 @@
       "kernel_sha256": "6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb",
       "evals_sha256": "f5d84e03ebe76689556e199c9cf67d1b0ea437d6522f434adfdd569c9498ce61",
       "adapter_sha256": {
-        "architect": "06abc5ffab4ab5bd45e07459e126d0c96057753293c99d602322a703c2221d49",
+        "architect": "935edb0b300ac4aea16f75a3038a225005684900523e684f3f3860264fabcfc4",
         "claude": "536ba1dc58adb21319ca5c30df9f90a273a063e04996fd1034e4b454c9d821ac",
         "codex": "5ce12f22a2f0dc031db6acdbb3e9064bae1634c641e6b792c37144bd524e68fe"
       }
@@ -308,7 +308,7 @@
       "kernel_sha256": "e2fa6674ab5910453dfe39e1ac8884ec1ba5ab25770339dd70f3b26231226d0e",
       "evals_sha256": "fc2eb2db468854cd23562cfb391ee69ff45d2712cd6c6f7622fe6dec2e9914ee",
       "adapter_sha256": {
-        "architect": "27c199122eb2b8dcd5c1693a87d466401335652adf408d50842e97280e178298",
+        "architect": "76d4bd944ccf1eed9a8450d1f53aef53382cd6d579d575dfc9a25b8133e5432d",
         "claude": "d02e758e241c910ab0664ebd5ec827e6437c7689c5cd78af2d65c65fc0e52798",
         "codex": "973626bddccb563513ec88cfadf683e8db995f4c802e2348aad323985716dd13"
       }
@@ -342,7 +342,7 @@
       "kernel_sha256": "eaeda523d7a529b51dea0708a8d7cd273684d87ee450bb9743ab85583d0cbe66",
       "evals_sha256": "c087c798161f15b336569fea71c24425276e8c23290d7b1d2683f7ccbc00f2da",
       "adapter_sha256": {
-        "architect": "d34e39096f4ee904865e3fb21e38e18fd04cfd4d01e027f92f494854e515d1b3",
+        "architect": "94c9082e713489f8bf45ba900c61d965d0ca2c6c05a59fa3ec2fc0e6ed4484bc",
         "claude": "70ebaad0e0314154ae553e3dc34fd5268557357621dd86acd3b1a02077a316d5",
         "codex": "92311b3cdfa8bd971406f46847fe4e89af252cc153490a58cac3efae9c64ada2"
       }
@@ -379,7 +379,7 @@
       "kernel_sha256": "18b4d2ddc98bd25008810dcff1c9a959d0750333378ba0e4c2e958afc8d812cb",
       "evals_sha256": "141b11da2b48f125fd2d29ad96e1da49cba5197ffcdca91c79c342ba0d5d9131",
       "adapter_sha256": {
-        "architect": "0075d9b99f376029c55dc85be0b0547436e3f022f489e6c962e21e5c47dec476",
+        "architect": "f7684214b55e1d3eab3d786ebd95443bf2f0dae3024e0ac52313e022358f3be1",
         "claude": "d1ab294683cb315eed7997843c96d95c42595babb1dadd55ef5e0bb6f407eb6a",
         "codex": "29e442b45a554d767230694eed0eb40bbbd63735ad77f808050186681af42a80"
       }
@@ -430,7 +430,7 @@
       "kernel_sha256": "a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73",
       "evals_sha256": "3cab2ff0b474880e635b25ef0f2f6699aa753939ef12a3b0707a1292c1a40970",
       "adapter_sha256": {
-        "architect": "30089627a0cb943e2035f945716f2d66c3448bb2976b08d13a1e67868c4b2e2d",
+        "architect": "40597de6829ab7e022a9a91266cc6921568b857ce516650a4f2405fdcdd1cb8d",
         "claude": "b881dbc32f73afa0c42ecf76ba567d0f1a3e22bd480c7db4a8879c0d165aad2d",
         "codex": "7a4793e7b962d9010f0af91c5e51ca128bbff90a6b8bbd872295139b4a5286fa"
       }
@@ -453,7 +453,7 @@
       "kernel_sha256": "b0db424c7b14799eca725aad6c1a03eb24c205db36c5e9b29496fbfcc2d8bb0c",
       "evals_sha256": "05786fe7cce20bb993570d8ba64175b46398e02edcf42d8bf7cf4cd9cc890152",
       "adapter_sha256": {
-        "architect": "175cb449604acac38dcb1a0d7ceb94097656d27ea0f602e3890e4273b5011dbf",
+        "architect": "b889ae49068d94f11ceb94fa4a6ef819bf7c4d37621a706e1797b38d052562a1",
         "claude": "24fa8adffc7a5d5f28d81f92d61926fdf72f2de38156ce1f18cdff9c635b616e",
         "codex": "4917fa2085030b852a8c265ca90a8b4cc83a3ffd70aa2dc19a559056ee14ff50"
       }
@@ -492,7 +492,7 @@
       "kernel_sha256": "9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89",
       "evals_sha256": "c965e4734743e291c7ad1d0395c9f384bfd377f6f1820dea2c51b93af0b3889e",
       "adapter_sha256": {
-        "architect": "798efd71f85d417f450871fa77c2480ce2072aeca1256ef01335ea7349a9130b",
+        "architect": "e5b86445a4687a768cfd83b18fd60728dcc7aff18d36471d9b9f860d67336f32",
         "claude": "d79925fb2cecf8b7e0ebe983d639aea8b7850184435cd3fc2f3809cc862f4b01",
         "codex": "3b703f0d2e82f8b865e006656411cfce11f57933332030dbd4c577bc0bd5a9d8"
       }
@@ -524,7 +524,7 @@
       "kernel_sha256": "08193d954cc35738c4aa0710a92392d508479e8690f94131ccce2610c002e124",
       "evals_sha256": "66080a26bf1b83ad54b3c83b98a2ac91caf80735060616280463dcc64ffe8f55",
       "adapter_sha256": {
-        "architect": "d1e5780247875b0129779bb55a039f526f7e4dd27c61e68c16c990125c57f141",
+        "architect": "dc10457a92b627e9d331cdf5534e77bb3e72745454f1dd4f954f4ff8fd4c311c",
         "claude": "70fa7b7acf9e68bb752dbc34d2522f710ba5a6bc0a10a4933d0e47d436b6c5f0",
         "codex": "6acc2ac60a72336893a98f682db00754fe05eef1600d09565feccc48ab46ec4c"
       }
@@ -560,7 +560,7 @@
       "kernel_sha256": "38d6f45af8c091ac7fddeba8c4a2f765c089f634622a48f1477d48a0b2ff82c1",
       "evals_sha256": "57609921075322b6c1e83904abe94cd23445d633222cccd4a7e1dbe96573694e",
       "adapter_sha256": {
-        "architect": "03b35c6b6bb573236709e5418b4f03b328ece2efb292f9b2fe77f1fc4385d3d8",
+        "architect": "50f2cbdf6611379f2b6e41256e1066759cff7781654176646e3c8e76fe655422",
         "claude": "074963f7d623af18677535a115ed208d610e1a7dc98e68f0e697de3a1741d0ee",
         "codex": "9b9f191d4628e766b37e913ec2e7339f87c8b106b3af044729327b86e4d74af6"
       }
@@ -585,7 +585,7 @@
       "kernel_sha256": "09eb3bc15afff2e09b68705290a9ad403ac9ab4608d82bd7c424617cb4078797",
       "evals_sha256": "1c117df40699db91599b8289d7436266fb05f1c54cd38748419f92fa59811424",
       "adapter_sha256": {
-        "architect": "53aaf2c52992e1b2d14453e9a2d64bbb4116292bdb2e321f87cca3a144b6e539",
+        "architect": "c7033eb2e8d2e6fba2a5aafcf9c30eabbe0ecf04c29cbac4e88241d5dbd3e6d0",
         "claude": "b2aad24e7f9309363f844efd116846deccd4cd44092a0c690fd061ba6056a2da",
         "codex": "58ca58bcba1e5ed557a7eb4513f195ff8e5c7d333bb5f18aa6a6d40c3db88346"
       }
@@ -608,7 +608,7 @@
       "kernel_sha256": "e9b5e5a12b07fbf14958d07bcac5922fdfe80394ce6554f21d24b68d99cb938c",
       "evals_sha256": "740adfed215c66876c23d6c844e1667bcfdebaa3a3a266a5284277cf097d75f3",
       "adapter_sha256": {
-        "architect": "7ac3dd85afb930fbedc10f17c387c8369f6a4d12a41607a2798500dd2360a5c2",
+        "architect": "3ecef1d495dfda40b66be29dbfdd944f6e88c9986c592ee757c5540dc0ec886a",
         "claude": "58858ee80c4671d2f557e98d6a491c9b111113a1832025be19053a4f96bfb756",
         "codex": "5bdef9ebdccfb2f81d13364575f9dc86d66c71fac41022c0859ba58203e8a054"
       }
@@ -659,7 +659,7 @@
       "kernel_sha256": "d8957cc2f65174a3286e7fbab1c53df0a57e57b61724e087ebbd9db9cdef665a",
       "evals_sha256": "ad9656b04e6bd6812ea88611d1a36b320fa0e03ade7470ff2c9b87750c987507",
       "adapter_sha256": {
-        "architect": "af8403eef8d7c7d29e840a227ce5c17ff044ed3901b3f7b09995554ee8ff9c8a",
+        "architect": "0f320bb078d8d1905089a22da4350e72c051c1df315aeca8ff4c7328cda32596",
         "claude": "54f135f44217d8fb76e9ab511b6a3090e4b711c8a4fe73f9aa912daeeecb8741",
         "codex": "80630492b6cce8da31750f6d5aa664e6d172c7dadacd95420b70998dd7f6fe0e"
       }
@@ -681,7 +681,7 @@
       "kernel_sha256": "665dfc04657526b90c547cefbfe0874fbd2a94cea6f0a0c55bb019835f07574b",
       "evals_sha256": "75b4107afb5f4864306a1c759dc5edf08810d02ea75cb0dbcddc891d17df78de",
       "adapter_sha256": {
-        "architect": "4a24d52793c128155864d54f62b88e72945b111b8e3401d878436e0a162b9704",
+        "architect": "2c05b50dab1881973b246e980437600bd8b540e868cebd47aa5259d5aea08af4",
         "claude": "50404322ac3ec693185c02a7d90f236d0a831a6749403278fc541391d13e6bcb",
         "codex": "b7f79379ae09c8253d3a97bb11ebc7ee82b1000e46754d2d7ad906fe12199ef5"
       }
@@ -718,7 +718,7 @@
       "kernel_sha256": "58e2f61c2f0448a38626e859dd9d8f9f782e2fc5ec0167fc17fdcafb0a9b9f9b",
       "evals_sha256": "b252ac5f5b335c7e0b569d83acb8dc34e29a12cde7a14d9a0903a1c7442646b8",
       "adapter_sha256": {
-        "architect": "020434dc3d9ef14f609bd80a6af7e4d7b99d444cd3091c8033620a7b7986f8c4",
+        "architect": "046d219662ce38f57ed484fe9bbc15d5e210bd505e545c98008e4dc48d82380a",
         "claude": "62abdd52c1633e4bbe5e420665285dd39f5addd3575e0576f3cc250f9838e30e",
         "codex": "e2f744c7620638a8e137497cadb84939cd2af00518a132099094c494ca0f5bce"
       }
@@ -790,7 +790,7 @@
       "kernel_sha256": "b5d03a23275d5e58195babdfa5eee60c3c4a8d3f64f66aa3302593d464e75ed0",
       "evals_sha256": "eb55c0b54fa7bed11c0b17cf102cd3671ef811c78c7f2a484f519ff78f13d7c0",
       "adapter_sha256": {
-        "architect": "b5c3eef17a120e81f661dad0a3d4de1914f65523e40da27d1170ea588efbd511",
+        "architect": "506d2fbb5cfebdcd861019199c1df063a1f11d68e38c0d760a236ce975f837cd",
         "claude": "8702c0da6d9408e48d4298a199adaf4b753aa8c2277526bde02f5b836c4f7c0c",
         "codex": "11ddb11dca0d3e0c5e38494a236714392ba1d6a38ef4fd09e5da1be5efa46584"
       }
@@ -808,7 +808,7 @@
       "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
       "evals_sha256": "4f4839bd9ae78c297f29b049216a8d2c3f0962acec1f9936053383a74a3a88cd",
       "adapter_sha256": {
-        "architect": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
+        "architect": "71ac2c66b02a6984100d7301038f1f8a98f35a14a195f11f115350d9b24bf2ac",
         "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
         "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
       }
@@ -825,7 +825,7 @@
       "kernel_sha256": "2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3",
       "evals_sha256": "d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc",
       "adapter_sha256": {
-        "architect": "645f1ae37684eaa3b2d1cfb8319d56111a4445e598dfd443c553ff01e148c764",
+        "architect": "a139d004016e06e011e3f622610e22df1b380410d1f28fef94054df8ff0b6a87",
         "claude": "0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c",
         "codex": "f413018d24badd59f80ac471f70c3e06142375ef91b3a458df08e38168003ba9"
       }
@@ -843,7 +843,7 @@
       "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
       "evals_sha256": "9992c3735014e6070b68c0514abd519ad1d4e8f945966901b01c0cb4e1f53982",
       "adapter_sha256": {
-        "architect": "e7207acd2d405b72c8b5959feedffa96beeb74df71ed4f116e6300c2288b49a2",
+        "architect": "71ac2c66b02a6984100d7301038f1f8a98f35a14a195f11f115350d9b24bf2ac",
         "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
         "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
       }
@@ -874,7 +874,7 @@
       "kernel_sha256": "0f9626ebef6ffc6f271582bd5b4a06561d723366ba4af0215b8f770b18e877d1",
       "evals_sha256": "daa8be0aa24b9ca05181ac3a7720bda2f9f7c23a1f618fdce4a05eedbb46c0b4",
       "adapter_sha256": {
-        "architect": "9d5500d61eeb686726b709fd5fb1aa032dbe9579c819d6113648db32076fd247",
+        "architect": "f9df446c177b87844609548440ac001be435db14ab5caff052dab6b55333a6cc",
         "claude": "2fe1816a05c63064ba177d809ec6ac5b416d9c2834445d3855d555d7919243b7",
         "codex": "953425f9d3920b128b22cda112dfb7fe582542ccc78b0f9cb200d3bba6e18d2a"
       }
@@ -964,7 +964,7 @@
       "kernel_sha256": "5e33d07682c459c0f397a8b9e2c40f29352d166efb357a96ca7e3c097bb8b831",
       "evals_sha256": "a2c1b209c9c90959c644383b2d08f9f007b922b4ead8e4893e78652ab171a0b0",
       "adapter_sha256": {
-        "architect": "b78970a6c3d0019521c3664b1f58e04ad0a86d0064be283e92c67d49a0f50aeb",
+        "architect": "d6f3a13daa1a837b62b4310fdead5b6c8784c33a6bb973dc37f04baccc3e4221",
         "claude": "7bab27bd429e346f877dc089bf997e13d1c1fb7c895e00a0baddd8d4c1d45f64",
         "codex": "2f665676c0ce2d3e65054d07cbc7a6a4dd5bcdd3e8edc8b766d4f798483b252a"
       }
@@ -988,7 +988,7 @@
       "kernel_sha256": "44823e2209b86385e9d80c2487fd23d6ecc496314a0db574839eded6a44b93e3",
       "evals_sha256": "6ea646a0c6e3a23e6f9c91c635e379a99efb1d3af82de800ef5d6c3c987bc0b6",
       "adapter_sha256": {
-        "architect": "c58e3054b8e7f661275af743f29171ce5817778f07be7aa14ff0163e5e6a910a",
+        "architect": "0a6f65a76f9ef476d8cdf071186f6188ab7decc3f732aff005378f2046f242ea",
         "claude": "26dbff1d909a5bab889ef12256f8cb22ca8ac253e9bee49b0ee667252e65db6f",
         "codex": "afcef3c3d9ddb5f513240e0b4ae94172ba475fb05968271d88d37f912337412a"
       }
@@ -1035,7 +1035,7 @@
       "kernel_sha256": "c743010241b7926d9d12a6960545a1393bfad0644ef09bda46639a5fff360f05",
       "evals_sha256": "407181411a1157660818dc3f762d5e358de8b2127985155828625626202126b1",
       "adapter_sha256": {
-        "architect": "1154cbe8cae3169555010f8f807692e08c29a65128e588da1927a5c2770c484d",
+        "architect": "ddea1d287b8d45f4d72334d2428f9c25469f2fdd96218192c4773ed183abdfe7",
         "claude": "adb000881aaeb8caac75aade05c015fc2849b73058f945765b5b66dc2b01b2d7",
         "codex": "575ef44e923a88722436a06c789d7eb54b40bcc74a9a7ed72e86d22451032ea4"
       }
@@ -1055,7 +1055,7 @@
       "kernel_sha256": "5028e4fca152f98d4bb559f783c93babfa5b3f5c2a4f01ea4a9350db88d2eb1b",
       "evals_sha256": "c3798bc3a305d01adc11e40ba80246794e24f6f1d0e5b054f2a2ba466158fe60",
       "adapter_sha256": {
-        "architect": "5fe7a44a4e77ff6c00658a3c3669bbb4f68c05f70eb6de7c185322d62da09b1c",
+        "architect": "0f23860c2ac4e511f7142cafab938786a469d821c681c8c6b0eb33792bc4a124",
         "claude": "8c3a3c2c4d00e64ffaf897378ef10d253c35cda33ad6a334023effe14bd91345",
         "codex": "81f6873a64e5c71fdfa4db3b0d44cf3f674b6d35c2269409bd73ebc029233f2a"
       }
@@ -1094,7 +1094,7 @@
       "kernel_sha256": "06a6d8eb74bd0e5c6542bc0108550935669c5409d40abe25455eddcfd16ce669",
       "evals_sha256": "0b4163ec95d3e5d7ab9cb1391943010d50ebd9b4a60c44d74d0be74594a1da39",
       "adapter_sha256": {
-        "architect": "b09e5a8d3257e86d733b6d933247e93cbb60307b2a7d7f3c3f1110117356ec51",
+        "architect": "1d0d4231fd67bfd2f2e2767ba833cc30270ec76e0e7c8396317a670685f9b259",
         "claude": "48c46393e8334ee35aefa936405cfc9473dc0cb510ab9ad71a05ddd312029079",
         "codex": "57d16253d6f42e3462716244f3d51f146ad20dea0395c63a9131a1486567f150"
       }
