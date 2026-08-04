@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "4529f2a0fe650ffa",
+  "capability_hash": "7a964687b781fd3d",
   "api_version": "v1",
   "capabilities": [
     {
@@ -143940,6 +143940,8 @@
                       "worker_heartbeat_missing",
                       "worker_release_mismatch",
                       "local_workspace_scope_missing",
+                      "worker_authority_environment_invalid",
+                      "worker_reporting_errors",
                       "outreach_not_enabled",
                       "tool_not_runnable",
                       "request_failed",
@@ -145072,6 +145074,8 @@
                       "worker_heartbeat_missing",
                       "worker_release_mismatch",
                       "local_workspace_scope_missing",
+                      "worker_authority_environment_invalid",
+                      "worker_reporting_errors",
                       "outreach_not_enabled",
                       "tool_not_runnable",
                       "request_failed",
@@ -296062,6 +296066,8 @@
                       "worker_heartbeat_missing",
                       "worker_release_mismatch",
                       "local_workspace_scope_missing",
+                      "worker_authority_environment_invalid",
+                      "worker_reporting_errors",
                       "outreach_not_enabled",
                       "tool_not_runnable",
                       "request_failed",
@@ -297064,6 +297070,8 @@
                       "worker_heartbeat_missing",
                       "worker_release_mismatch",
                       "local_workspace_scope_missing",
+                      "worker_authority_environment_invalid",
+                      "worker_reporting_errors",
                       "outreach_not_enabled",
                       "tool_not_runnable",
                       "request_failed",
@@ -297945,6 +297953,8 @@
                       "worker_heartbeat_missing",
                       "worker_release_mismatch",
                       "local_workspace_scope_missing",
+                      "worker_authority_environment_invalid",
+                      "worker_reporting_errors",
                       "outreach_not_enabled",
                       "tool_not_runnable",
                       "request_failed",
@@ -298579,6 +298589,8 @@
                       "worker_heartbeat_missing",
                       "worker_release_mismatch",
                       "local_workspace_scope_missing",
+                      "worker_authority_environment_invalid",
+                      "worker_reporting_errors",
                       "outreach_not_enabled",
                       "tool_not_runnable",
                       "request_failed",
@@ -419803,5 +419815,5 @@
     "capabilities": 1134,
     "mcp_tools": 11
   },
-  "manifest_digest": "2b80f557240353b8599c9f76643dd1f8da73070319dfbea8ddd243916f9b615e"
+  "manifest_digest": "734ba3f90ea986bec4c4286c00492d1dff57fc23b69d7ce710db1a08b9dd0ba1"
 }
