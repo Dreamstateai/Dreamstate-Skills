@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "00bec8d31dc672d9",
+  "capability_hash": "3ad885ec954ac37e",
   "api_version": "v1",
   "capabilities": [
     {
@@ -365310,6 +365310,1060 @@
       }
     },
     {
+      "id": "table_sources.csv_upload_attach",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "source",
+      "label": "Source Csv Upload Attach",
+      "description": "Canonical unified-table csv_upload_attach operation for source resources.",
+      "when_to_use": [
+        "Use this operation to csv_upload_attach a domain-neutral source through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "source_definition",
+          "evidence_only"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "key": "upload_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "name": "upload_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        },
+        {
+          "name": "existing_source_id",
+          "type": "string",
+          "required": false,
+          "description": "existing_source_id"
+        },
+        {
+          "name": "source_label",
+          "type": "string",
+          "required": false,
+          "description": "source_label"
+        },
+        {
+          "name": "replace_existing_rows",
+          "type": "boolean",
+          "required": false,
+          "description": "replace_existing_rows"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "existing_source_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "replace_existing_rows": {
+            "type": "boolean"
+          },
+          "table_id": {
+            "type": "string",
+            "description": "Canonical identity for table_id."
+          },
+          "upload_id": {
+            "type": "string",
+            "description": "Canonical identity for upload_id."
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "table_id",
+          "upload_id"
+        ]
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "replaced_rows": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "source_id",
+          "replaced_rows"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "table_sources.csv_upload_attach",
+        "noun": "source",
+        "verb": "csv_upload_attach"
+      },
+      "rest_paths": [
+        "/tables/{table_id}/sources/csv-uploads/{upload_id}/attach",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/{table_id}/sources/csv-uploads/{upload_id}/attach"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate table-sources csv_upload_attach"
+      ],
+      "examples": [
+        "dreamstate table-sources csv_upload_attach"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "table_sources.csv_upload_attach",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "table_sources.csv_upload_attach",
+          "Source Csv Upload Attach",
+          "dreamstate table-sources csv_upload_attach"
+        ],
+        "use_cases": [
+          "Use this operation to csv_upload_attach a domain-neutral source through the unified table data plane."
+        ],
+        "inputs": [
+          "table_id",
+          "upload_id"
+        ],
+        "outputs": [
+          "source_id",
+          "replaced_rows"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "source_definition",
+          "evidence_only"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "table_sources.csv_upload_create",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "source",
+      "label": "Source Csv Upload Create",
+      "description": "Canonical unified-table csv_upload_create operation for source resources.",
+      "when_to_use": [
+        "Use this operation to csv_upload_create a domain-neutral source through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "csv_upload_receipt",
+          "evidence_only"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "key": "file_name",
+          "kind": "string",
+          "required": true,
+          "description": "file_name"
+        },
+        {
+          "key": "headers",
+          "kind": "array",
+          "required": true,
+          "description": "headers"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "name": "file_name",
+          "type": "string",
+          "required": true,
+          "description": "file_name"
+        },
+        {
+          "name": "headers",
+          "type": "array",
+          "required": true,
+          "description": "headers"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "file_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "headers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "maxItems": 200
+          },
+          "table_id": {
+            "type": "string",
+            "description": "Canonical identity for table_id."
+          }
+        },
+        "required": [
+          "file_name",
+          "headers",
+          "table_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "upload_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "suggested_mapping": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "upload_id",
+          "suggested_mapping"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "table_sources.csv_upload_create",
+        "noun": "source",
+        "verb": "csv_upload_create"
+      },
+      "rest_paths": [
+        "/tables/{table_id}/sources/csv-uploads",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/{table_id}/sources/csv-uploads"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate table-sources csv_upload_create"
+      ],
+      "examples": [
+        "dreamstate table-sources csv_upload_create"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "table_sources.csv_upload_create",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "table_sources.csv_upload_create",
+          "Source Csv Upload Create",
+          "dreamstate table-sources csv_upload_create"
+        ],
+        "use_cases": [
+          "Use this operation to csv_upload_create a domain-neutral source through the unified table data plane."
+        ],
+        "inputs": [
+          "table_id",
+          "file_name",
+          "headers"
+        ],
+        "outputs": [
+          "upload_id",
+          "suggested_mapping"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "csv_upload_receipt",
+          "evidence_only"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "table_sources.csv_upload_land_chunk",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "source",
+      "label": "Source Csv Upload Land Chunk",
+      "description": "Canonical unified-table csv_upload_land_chunk operation for source resources.",
+      "when_to_use": [
+        "Use this operation to csv_upload_land_chunk a domain-neutral source through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "row_evidence",
+          "graph_effects"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "table_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "key": "upload_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "table_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for table_id."
+        },
+        {
+          "name": "upload_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "limit"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "table_id": {
+            "type": "string",
+            "description": "Canonical identity for table_id."
+          },
+          "upload_id": {
+            "type": "string",
+            "description": "Canonical identity for upload_id."
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "table_id",
+          "upload_id"
+        ]
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "landed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "skipped": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "remaining": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "done": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "landed",
+          "skipped",
+          "remaining",
+          "done"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "table_sources.csv_upload_land_chunk",
+        "noun": "source",
+        "verb": "csv_upload_land_chunk"
+      },
+      "rest_paths": [
+        "/tables/{table_id}/sources/csv-uploads/{upload_id}/land",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/{table_id}/sources/csv-uploads/{upload_id}/land"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate table-sources csv_upload_land_chunk"
+      ],
+      "examples": [
+        "dreamstate table-sources csv_upload_land_chunk"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "table_sources.csv_upload_land_chunk",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "table_sources.csv_upload_land_chunk",
+          "Source Csv Upload Land Chunk",
+          "dreamstate table-sources csv_upload_land_chunk"
+        ],
+        "use_cases": [
+          "Use this operation to csv_upload_land_chunk a domain-neutral source through the unified table data plane."
+        ],
+        "inputs": [
+          "table_id",
+          "upload_id"
+        ],
+        "outputs": [
+          "landed",
+          "skipped",
+          "remaining",
+          "done"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "row_evidence",
+          "graph_effects"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "table_sources.csv_upload_map",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "source",
+      "label": "Source Csv Upload Map",
+      "description": "Canonical unified-table csv_upload_map operation for source resources.",
+      "when_to_use": [
+        "Use this operation to csv_upload_map a domain-neutral source through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "csv_upload_receipt",
+          "evidence_only"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "upload_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        },
+        {
+          "key": "mapping",
+          "kind": "object",
+          "required": true,
+          "description": "mapping"
+        },
+        {
+          "key": "identity_column",
+          "kind": "string",
+          "required": true,
+          "description": "identity_column"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "upload_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        },
+        {
+          "name": "mapping",
+          "type": "object",
+          "required": true,
+          "description": "mapping"
+        },
+        {
+          "name": "identity_column",
+          "type": "string",
+          "required": true,
+          "description": "identity_column"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "mapping": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "identity_column": {
+            "type": "string",
+            "minLength": 1
+          },
+          "upload_id": {
+            "type": "string",
+            "description": "Canonical identity for upload_id."
+          }
+        },
+        "required": [
+          "mapping",
+          "identity_column",
+          "upload_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "ok"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "table_sources.csv_upload_map",
+        "noun": "source",
+        "verb": "csv_upload_map"
+      },
+      "rest_paths": [
+        "/tables/csv-uploads/{upload_id}/mapping",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/csv-uploads/{upload_id}/mapping"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate table-sources csv_upload_map"
+      ],
+      "examples": [
+        "dreamstate table-sources csv_upload_map"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "table_sources.csv_upload_map",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "table_sources.csv_upload_map",
+          "Source Csv Upload Map",
+          "dreamstate table-sources csv_upload_map"
+        ],
+        "use_cases": [
+          "Use this operation to csv_upload_map a domain-neutral source through the unified table data plane."
+        ],
+        "inputs": [
+          "upload_id",
+          "mapping",
+          "identity_column"
+        ],
+        "outputs": [
+          "ok"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "csv_upload_receipt",
+          "evidence_only"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
+      "id": "table_sources.csv_upload_stage",
+      "kind": "resource",
+      "domain": "tables",
+      "category": "source",
+      "label": "Source Csv Upload Stage",
+      "description": "Canonical unified-table csv_upload_stage operation for source resources.",
+      "when_to_use": [
+        "Use this operation to csv_upload_stage a domain-neutral source through the unified table data plane."
+      ],
+      "when_not_to_use": [
+        "Do not substitute another product resource for the canonical worksheet identity."
+      ],
+      "required_scopes": [
+        "tables:write"
+      ],
+      "mutates": true,
+      "idempotency_required": true,
+      "effects": {
+        "domain": "tables",
+        "reports": [
+          "csv_upload_receipt",
+          "evidence_only"
+        ]
+      },
+      "effect_replay": {
+        "strategy": "atomic_local",
+        "proof": "Canonical unified-table persistence and caller-owned idempotency fences converge retries."
+      },
+      "cost_policy": {
+        "type": "none",
+        "credits": 0,
+        "zero_cost": true,
+        "side_effect_free": false,
+        "external_call": false,
+        "preapproval_read": false
+      },
+      "async_policy": {
+        "mode": "sync",
+        "dry_run_supported": false
+      },
+      "dry_run_supported": false,
+      "required_inputs": [
+        {
+          "key": "upload_id",
+          "kind": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        },
+        {
+          "key": "rows",
+          "kind": "array",
+          "required": true,
+          "description": "rows"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "upload_id",
+          "type": "string",
+          "required": true,
+          "description": "Canonical identity for upload_id."
+        },
+        {
+          "name": "rows",
+          "type": "array",
+          "required": true,
+          "description": "rows"
+        }
+      ],
+      "input_json_schema": {
+        "type": "object",
+        "properties": {
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source_row_number": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "data": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "source_row_number",
+                "data"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 5000
+          },
+          "upload_id": {
+            "type": "string",
+            "description": "Canonical identity for upload_id."
+          }
+        },
+        "required": [
+          "rows",
+          "upload_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_json_schema": {
+        "type": "object",
+        "properties": {
+          "staged": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "staged"
+        ],
+        "additionalProperties": false
+      },
+      "output_manifest": "structured",
+      "provider": null,
+      "source": {
+        "contract": "unified-table-api",
+        "operation_id": "table_sources.csv_upload_stage",
+        "noun": "source",
+        "verb": "csv_upload_stage"
+      },
+      "rest_paths": [
+        "/tables/csv-uploads/{upload_id}/rows",
+        "/tools/{id}",
+        "/tools/{id}/run"
+      ],
+      "rest_operations": [
+        {
+          "method": "post",
+          "path": "/tables/csv-uploads/{upload_id}/rows"
+        },
+        {
+          "method": "get",
+          "path": "/tools/{id}"
+        },
+        {
+          "method": "post",
+          "path": "/tools/{id}/run"
+        }
+      ],
+      "mcp_tools": [
+        "dreamstate_tools_search",
+        "dreamstate_tools_get",
+        "dreamstate_tools_run"
+      ],
+      "cli_commands": [
+        "dreamstate table-sources csv_upload_stage"
+      ],
+      "examples": [
+        "dreamstate table-sources csv_upload_stage"
+      ],
+      "web_url_template": "/dashboard/worksheets/{table_id}",
+      "readiness": {
+        "ready": true,
+        "state": "available",
+        "runtime": "unifiedTableRepository"
+      },
+      "execution": {
+        "status": "active",
+        "executor_id": "table_sources.csv_upload_stage",
+        "schema_policy": "strict"
+      },
+      "action_policy": {
+        "consequence": "draft_write",
+        "effect_class": "internal_reversible",
+        "human_approval_required": false,
+        "proposal_required": true,
+        "credit_class": "free"
+      },
+      "search": {
+        "aliases": [
+          "table_sources.csv_upload_stage",
+          "Source Csv Upload Stage",
+          "dreamstate table-sources csv_upload_stage"
+        ],
+        "use_cases": [
+          "Use this operation to csv_upload_stage a domain-neutral source through the unified table data plane."
+        ],
+        "inputs": [
+          "upload_id",
+          "rows"
+        ],
+        "outputs": [
+          "staged"
+        ],
+        "side_effects": [
+          "write_tables",
+          "tables",
+          "csv_upload_receipt",
+          "evidence_only"
+        ],
+        "prerequisites": [],
+        "deprecated": false
+      }
+    },
+    {
       "id": "table_sources.detach",
       "kind": "resource",
       "domain": "tables",
@@ -436342,8 +437396,8 @@
     ]
   },
   "counts": {
-    "capabilities": 1141,
+    "capabilities": 1146,
     "mcp_tools": 23
   },
-  "manifest_digest": "6754a12996b1ba6581c889f47533d4469f8bdcad8c153876a061e9bf98071bf9"
+  "manifest_digest": "6c5fd2925eb2f2f94e98cb978f0ef03cbbabff6a49bc376e19b74afb701b54ed"
 }

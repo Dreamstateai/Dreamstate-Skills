@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "00bec8d31dc672d9",
+  "verified_capability_hash": "3ad885ec954ac37e",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/classify-replies/SKILL.md",
   "install_command": "dreamstate skills install classify-replies",
