@@ -10,8 +10,8 @@ compatibility:
   playbook_kernel_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 7a964687b781fd3d
-  manifest_digest: 734ba3f90ea986bec4c4286c00492d1dff57fc23b69d7ce710db1a08b9dd0ba1
+  capability_hash: 00bec8d31dc672d9
+  manifest_digest: 6754a12996b1ba6581c889f47533d4469f8bdcad8c153876a061e9bf98071bf9
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
@@ -22,7 +22,7 @@ generated:
   kernel_id: tables
   kernel_file: KERNEL.md
   kernel_sha256: 5e33d07682c459c0f397a8b9e2c40f29352d166efb357a96ca7e3c097bb8b831
-  adapter_sha256: 7bab27bd429e346f877dc089bf997e13d1c1fb7c895e00a0baddd8d4c1d45f64
+  adapter_sha256: e1030d9b799760a0e39c260b657cfc9826e3cc507d8194523a6ce4c28cbc51d9
   evals_file: evals.json
   evals_sha256: a2c1b209c9c90959c644383b2d08f9f007b922b4ead8e4893e78652ab171a0b0
 mutation_compatibility:
@@ -49,8 +49,8 @@ These are derived from this skill's exact capability contract, so state them up 
 
 - Cannot act outside this contract: exactly 75 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 43 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
-- Cannot hold a source definition as a capability grant: all 26 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
-- Cannot start 22 of the 26 source definitions with `table_sources.run`: their runtime is a canonical producer that lands rows when its authenticated producer sends them, so a manual run is refused with a typed reason instead of queued. Those definitions are source.api_import, source.company_page, source.csv, source.data_provider, source.engaged_with_account, source.engaged_with_company, source.engaged_with_post, source.engaged_with_team, source.form_submission, source.keyword_commented, source.linkedin_connections, source.linkedin_new_connection, source.live_signal, source.mentioned_keyword, source.own_post_commented, source.own_post_liked, source.own_post_reacted, source.product_event, source.salesnav_search, source.url, source.viewed_profile, source.webhook_source. Say the source is attached and waiting on its producer.
+- Cannot hold a source definition as a capability grant: all 17 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
+- Cannot start 13 of the 17 source definitions with `table_sources.run`: their runtime is a canonical producer that lands rows when its authenticated producer sends them, so a manual run is refused with a typed reason instead of queued. Those definitions are source.api_import, source.csv, source.data_provider, source.engaged_with_account, source.engaged_with_company, source.engaged_with_post, source.engaged_with_team, source.form_submission, source.own_post_commented, source.own_post_liked, source.own_post_reacted, source.product_event, source.webhook_source. Say the source is attached and waiting on its producer.
 - Cannot schedule or subscribe a source run: the pinned manifest exposes no scheduling or subscription capability for sources, so a manual `table_sources.run` is the only start. Say scheduled and event-driven source runs are not available in this release.
 
 ---

@@ -39,7 +39,7 @@
     "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "7a964687b781fd3d",
+  "verified_capability_hash": "00bec8d31dc672d9",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/build-table/SKILL.md",
   "install_command": "dreamstate skills install build-table",

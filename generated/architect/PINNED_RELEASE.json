@@ -9,8 +9,8 @@
     "playbook_kernel_hash": "3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "7a964687b781fd3d",
-    "manifest_digest": "734ba3f90ea986bec4c4286c00492d1dff57fc23b69d7ce710db1a08b9dd0ba1",
+    "capability_hash": "00bec8d31dc672d9",
+    "manifest_digest": "6754a12996b1ba6581c889f47533d4469f8bdcad8c153876a061e9bf98071bf9",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -385,7 +385,7 @@
         "worksheets.list"
       ],
       "kernel_sha256": "a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73",
-      "adapter_sha256": "40597de6829ab7e022a9a91266cc6921568b857ce516650a4f2405fdcdd1cb8d",
+      "adapter_sha256": "d26ede55fec177e144c4d5e7f7e3d6211e69618a208e4afe8b4a9722ae731879",
       "evals_sha256": "3cab2ff0b474880e635b25ef0f2f6699aa753939ef12a3b0707a1292c1a40970"
     },
     "products": {
@@ -859,7 +859,7 @@
         "worksheets.update"
       ],
       "kernel_sha256": "5e33d07682c459c0f397a8b9e2c40f29352d166efb357a96ca7e3c097bb8b831",
-      "adapter_sha256": "d6f3a13daa1a837b62b4310fdead5b6c8784c33a6bb973dc37f04baccc3e4221",
+      "adapter_sha256": "f5b87aba519dea806d2f7e47885e3b493050e1e5363ce73744233e1cbdddc533",
       "evals_sha256": "a2c1b209c9c90959c644383b2d08f9f007b922b4ead8e4893e78652ab171a0b0"
     },
     "tasks": {

@@ -8,8 +8,8 @@
     "playbook_kernel_hash": "3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "7a964687b781fd3d",
-    "manifest_digest": "734ba3f90ea986bec4c4286c00492d1dff57fc23b69d7ce710db1a08b9dd0ba1",
+    "capability_hash": "00bec8d31dc672d9",
+    "manifest_digest": "6754a12996b1ba6581c889f47533d4469f8bdcad8c153876a061e9bf98071bf9",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -430,9 +430,9 @@
       "kernel_sha256": "a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73",
       "evals_sha256": "3cab2ff0b474880e635b25ef0f2f6699aa753939ef12a3b0707a1292c1a40970",
       "adapter_sha256": {
-        "architect": "40597de6829ab7e022a9a91266cc6921568b857ce516650a4f2405fdcdd1cb8d",
-        "claude": "b881dbc32f73afa0c42ecf76ba567d0f1a3e22bd480c7db4a8879c0d165aad2d",
-        "codex": "7a4793e7b962d9010f0af91c5e51ca128bbff90a6b8bbd872295139b4a5286fa"
+        "architect": "d26ede55fec177e144c4d5e7f7e3d6211e69618a208e4afe8b4a9722ae731879",
+        "claude": "b419a1efe824b547b6fe661a94671047b5248d28c293e2f5c50042cbea9267a5",
+        "codex": "ae09f73d97e20dd1df1dbd014e8b230570c4bdcdd4701eef004e066a63c87718"
       }
     },
     "products": {
@@ -964,9 +964,9 @@
       "kernel_sha256": "5e33d07682c459c0f397a8b9e2c40f29352d166efb357a96ca7e3c097bb8b831",
       "evals_sha256": "a2c1b209c9c90959c644383b2d08f9f007b922b4ead8e4893e78652ab171a0b0",
       "adapter_sha256": {
-        "architect": "d6f3a13daa1a837b62b4310fdead5b6c8784c33a6bb973dc37f04baccc3e4221",
-        "claude": "7bab27bd429e346f877dc089bf997e13d1c1fb7c895e00a0baddd8d4c1d45f64",
-        "codex": "2f665676c0ce2d3e65054d07cbc7a6a4dd5bcdd3e8edc8b766d4f798483b252a"
+        "architect": "f5b87aba519dea806d2f7e47885e3b493050e1e5363ce73744233e1cbdddc533",
+        "claude": "e1030d9b799760a0e39c260b657cfc9826e3cc507d8194523a6ce4c28cbc51d9",
+        "codex": "25d752e3b9b3e56bd87ae0a03f3ee48431ebd7795013e03c7e8238490a8b7295"
       }
     },
     "tasks": {

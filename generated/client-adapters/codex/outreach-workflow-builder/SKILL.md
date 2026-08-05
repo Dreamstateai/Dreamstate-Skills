@@ -10,8 +10,8 @@ compatibility:
   playbook_kernel_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 7a964687b781fd3d
-  manifest_digest: 734ba3f90ea986bec4c4286c00492d1dff57fc23b69d7ce710db1a08b9dd0ba1
+  capability_hash: 00bec8d31dc672d9
+  manifest_digest: 6754a12996b1ba6581c889f47533d4469f8bdcad8c153876a061e9bf98071bf9
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
@@ -22,7 +22,7 @@ generated:
   kernel_id: outreach-workflow-builder
   kernel_file: KERNEL.md
   kernel_sha256: a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73
-  adapter_sha256: 7a4793e7b962d9010f0af91c5e51ca128bbff90a6b8bbd872295139b4a5286fa
+  adapter_sha256: ae09f73d97e20dd1df1dbd014e8b230570c4bdcdd4701eef004e066a63c87718
   evals_file: evals.json
   evals_sha256: 3cab2ff0b474880e635b25ef0f2f6699aa753939ef12a3b0707a1292c1a40970
 mutation_compatibility:
@@ -49,7 +49,7 @@ These are derived from this skill's exact capability contract, so state them up 
 
 - Cannot act outside this contract: exactly 37 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 14 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
-- Cannot hold a source definition as a capability grant: all 26 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
+- Cannot hold a source definition as a capability grant: all 17 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
 
 ---
 
