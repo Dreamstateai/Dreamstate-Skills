@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "8df1be483274bb8a",
+  "capability_hash": "a7fafedeb45d2a7d",
   "api_version": "v1",
   "capabilities": [
     {
@@ -55429,7 +55429,7 @@
         },
         {
           "key": "value",
-          "kind": "unknown",
+          "kind": "string",
           "required": true,
           "description": "value"
         },
@@ -82636,6 +82636,21 @@
           "kind": "string",
           "required": true,
           "description": "Canonical identity. Accepted aliases: article_id, id."
+        },
+        {
+          "key": "kind",
+          "kind": "native_article",
+          "required": true,
+          "description": "kind",
+          "enum": [
+            "native_article"
+          ]
+        },
+        {
+          "key": "expected_revision",
+          "kind": "integer",
+          "required": true,
+          "description": "expected_revision"
         }
       ],
       "input_schema": [
@@ -82644,6 +82659,82 @@
           "type": "string",
           "required": true,
           "description": "Canonical identity. Accepted aliases: article_id, id."
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "required": true,
+          "description": "kind",
+          "enum": [
+            "native_article"
+          ]
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "required": false,
+          "description": "platform",
+          "enum": [
+            "linkedin",
+            "twitter"
+          ]
+        },
+        {
+          "name": "expected_revision",
+          "type": "number",
+          "required": true,
+          "description": "expected_revision"
+        },
+        {
+          "name": "publish_directly",
+          "type": "string",
+          "required": false,
+          "description": "publish_directly"
+        },
+        {
+          "name": "account_id",
+          "type": "string",
+          "required": false,
+          "description": "account_id"
+        },
+        {
+          "name": "scheduled_at",
+          "type": "string",
+          "required": false,
+          "description": "scheduled_at"
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "required": false,
+          "description": "provider",
+          "enum": [
+            "substack",
+            "generic"
+          ]
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "format",
+          "enum": [
+            "rich_html",
+            "markdown",
+            "plain"
+          ]
+        },
+        {
+          "name": "destination_id",
+          "type": "string",
+          "required": false,
+          "description": "destination_id"
+        },
+        {
+          "name": "retry_of_attempt_id",
+          "type": "string",
+          "required": false,
+          "description": "retry_of_attempt_id"
         }
       ],
       "input_json_schema": {
@@ -82821,10 +82912,52 @@
           "article_id": {
             "type": "string",
             "description": "Canonical identity. Accepted aliases: article_id, id."
+          },
+          "kind": {
+            "type": "string",
+            "description": "kind"
+          },
+          "platform": {
+            "type": "string",
+            "description": "platform"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "description": "expected_revision"
+          },
+          "publish_directly": {
+            "type": "string",
+            "description": "publish_directly"
+          },
+          "account_id": {
+            "type": "string",
+            "description": "account_id"
+          },
+          "scheduled_at": {
+            "type": "string",
+            "description": "scheduled_at"
+          },
+          "provider": {
+            "type": "string",
+            "description": "provider"
+          },
+          "format": {
+            "type": "string",
+            "description": "format"
+          },
+          "destination_id": {
+            "type": "string",
+            "description": "destination_id"
+          },
+          "retry_of_attempt_id": {
+            "type": "string",
+            "description": "retry_of_attempt_id"
           }
         },
         "required": [
-          "article_id"
+          "article_id",
+          "kind",
+          "expected_revision"
         ],
         "additionalProperties": false
       },
@@ -82938,7 +83071,9 @@
           "Use the stable content.article_delivery_create contract for canonical content_artifact article_delivery_create behavior."
         ],
         "inputs": [
-          "article_id"
+          "article_id",
+          "kind",
+          "expected_revision"
         ],
         "outputs": [
           "created",
@@ -86396,7 +86531,7 @@
           "name": "platform_payloads",
           "type": "object",
           "required": false,
-          "description": "platform_payloads",
+          "description": "Per-platform overrides. A linkedin.linkedin_poll, x.twitter_poll, or x.twitter_quote_tweet_id is mutually exclusive with media on this artifact: setting any of them while media is non-empty is rejected.",
           "properties": [
             {
               "name": "linkedin",
@@ -86922,7 +87057,8 @@
                 "additionalProperties": false
               }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "Per-platform overrides. A linkedin.linkedin_poll, x.twitter_poll, or x.twitter_quote_tweet_id is mutually exclusive with media on this artifact: setting any of them while media is non-empty is rejected."
           },
           "labels": {
             "type": "array",
@@ -87568,8 +87704,8 @@
         "credit_class": "action"
       },
       "effect_replay": {
-        "strategy": "atomic_local",
-        "proof": "The canonical operation declares atomic local idempotent execution."
+        "strategy": "durable_receipt",
+        "proof": "The canonical run plane persists step state and effect receipts before exposing completion."
       },
       "cost_policy": {
         "type": "action",
@@ -87578,7 +87714,7 @@
         "external_call": true
       },
       "async_policy": {
-        "mode": "sync"
+        "mode": "async"
       },
       "dry_run_supported": false,
       "required_inputs": [
@@ -89909,7 +90045,7 @@
           "name": "platform_payloads",
           "type": "object",
           "required": false,
-          "description": "platform_payloads",
+          "description": "Per-platform overrides. A linkedin.linkedin_poll, x.twitter_poll, or x.twitter_quote_tweet_id is mutually exclusive with media on this artifact: setting any of them while media is non-empty is rejected.",
           "properties": [
             {
               "name": "linkedin",
@@ -90433,7 +90569,8 @@
                 "additionalProperties": false
               }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "Per-platform overrides. A linkedin.linkedin_poll, x.twitter_poll, or x.twitter_quote_tweet_id is mutually exclusive with media on this artifact: setting any of them while media is non-empty is rejected."
           },
           "labels": {
             "type": "array",
@@ -100167,8 +100304,66 @@
         "mode": "async"
       },
       "dry_run_supported": false,
-      "required_inputs": [],
-      "input_schema": [],
+      "required_inputs": [
+        {
+          "key": "type",
+          "kind": "wordpress",
+          "required": true,
+          "description": "type",
+          "enum": [
+            "wordpress"
+          ]
+        },
+        {
+          "key": "display_name",
+          "kind": "string",
+          "required": true,
+          "description": "display_name"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "description": "type",
+          "enum": [
+            "wordpress"
+          ]
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "required": true,
+          "description": "display_name"
+        },
+        {
+          "name": "base_url",
+          "type": "string",
+          "required": false,
+          "description": "base_url"
+        },
+        {
+          "name": "config",
+          "type": "object",
+          "required": false,
+          "description": "config",
+          "properties": [
+            {
+              "name": "content_type",
+              "type": "string",
+              "required": false,
+              "description": "content_type"
+            }
+          ]
+        },
+        {
+          "name": "secret_lease_id",
+          "type": "string",
+          "required": false,
+          "description": "secret_lease_id"
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -100485,8 +100680,32 @@
           }
         ],
         "type": "object",
-        "properties": {},
-        "required": [],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "type"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "display_name"
+          },
+          "base_url": {
+            "type": "string",
+            "description": "base_url"
+          },
+          "config": {
+            "type": "object",
+            "description": "config"
+          },
+          "secret_lease_id": {
+            "type": "string",
+            "description": "secret_lease_id"
+          }
+        },
+        "required": [
+          "type",
+          "display_name"
+        ],
         "additionalProperties": false
       },
       "output_json_schema": {
@@ -100610,7 +100829,10 @@
         "use_cases": [
           "Use the stable content.destination_create contract for canonical content_artifact destination_create behavior."
         ],
-        "inputs": [],
+        "inputs": [
+          "type",
+          "display_name"
+        ],
         "outputs": [
           "capability_id",
           "run_id",
@@ -101172,8 +101394,78 @@
         "mode": "async"
       },
       "dry_run_supported": false,
-      "required_inputs": [],
-      "input_schema": [],
+      "required_inputs": [
+        {
+          "key": "destination_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "destination_id"
+        },
+        {
+          "key": "type",
+          "kind": "wordpress",
+          "required": true,
+          "description": "type",
+          "enum": [
+            "wordpress"
+          ]
+        },
+        {
+          "key": "display_name",
+          "kind": "string",
+          "required": true,
+          "description": "display_name"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "destination_id",
+          "type": "string",
+          "required": true,
+          "description": "destination_id"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "description": "type",
+          "enum": [
+            "wordpress"
+          ]
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "required": true,
+          "description": "display_name"
+        },
+        {
+          "name": "base_url",
+          "type": "string",
+          "required": false,
+          "description": "base_url"
+        },
+        {
+          "name": "config",
+          "type": "object",
+          "required": false,
+          "description": "config",
+          "properties": [
+            {
+              "name": "content_type",
+              "type": "string",
+              "required": false,
+              "description": "content_type"
+            }
+          ]
+        },
+        {
+          "name": "secret_lease_id",
+          "type": "string",
+          "required": false,
+          "description": "secret_lease_id"
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -101512,8 +101804,37 @@
           }
         ],
         "type": "object",
-        "properties": {},
-        "required": [],
+        "properties": {
+          "destination_id": {
+            "type": "string",
+            "description": "destination_id"
+          },
+          "type": {
+            "type": "string",
+            "description": "type"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "display_name"
+          },
+          "base_url": {
+            "type": "string",
+            "description": "base_url"
+          },
+          "config": {
+            "type": "object",
+            "description": "config"
+          },
+          "secret_lease_id": {
+            "type": "string",
+            "description": "secret_lease_id"
+          }
+        },
+        "required": [
+          "destination_id",
+          "type",
+          "display_name"
+        ],
         "additionalProperties": false
       },
       "output_json_schema": {
@@ -101637,7 +101958,11 @@
         "use_cases": [
           "Use the stable content.destination_update contract for canonical content_artifact destination_update behavior."
         ],
-        "inputs": [],
+        "inputs": [
+          "destination_id",
+          "type",
+          "display_name"
+        ],
         "outputs": [
           "capability_id",
           "run_id",
@@ -146551,7 +146876,68 @@
       },
       "dry_run_supported": false,
       "required_inputs": [],
-      "input_schema": [],
+      "input_schema": [
+        {
+          "name": "workspace_id",
+          "type": "string",
+          "required": false,
+          "description": "workspace_id"
+        },
+        {
+          "name": "authorization_id",
+          "type": "string",
+          "required": false,
+          "description": "authorization_id"
+        },
+        {
+          "name": "effect_id",
+          "type": "string",
+          "required": false,
+          "description": "effect_id"
+        },
+        {
+          "name": "connection_id",
+          "type": "string",
+          "required": false,
+          "description": "connection_id"
+        },
+        {
+          "name": "capability_id",
+          "type": "string",
+          "required": false,
+          "description": "capability_id"
+        },
+        {
+          "name": "params",
+          "type": "object",
+          "required": false,
+          "description": "params"
+        },
+        {
+          "name": "maximum_credits",
+          "type": "number",
+          "required": false,
+          "description": "maximum_credits"
+        },
+        {
+          "name": "idempotency_key",
+          "type": "string",
+          "required": false,
+          "description": "idempotency_key"
+        },
+        {
+          "name": "effect",
+          "type": "object",
+          "required": false,
+          "description": "effect"
+        },
+        {
+          "name": "resources",
+          "type": "array",
+          "required": false,
+          "description": "resources"
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -149615,7 +150001,48 @@
           }
         ],
         "type": "object",
-        "properties": {},
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "description": "workspace_id"
+          },
+          "authorization_id": {
+            "type": "string",
+            "description": "authorization_id"
+          },
+          "effect_id": {
+            "type": "string",
+            "description": "effect_id"
+          },
+          "connection_id": {
+            "type": "string",
+            "description": "connection_id"
+          },
+          "capability_id": {
+            "type": "string",
+            "description": "capability_id"
+          },
+          "params": {
+            "type": "object",
+            "description": "params"
+          },
+          "maximum_credits": {
+            "type": "integer",
+            "description": "maximum_credits"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "idempotency_key"
+          },
+          "effect": {
+            "type": "object",
+            "description": "effect"
+          },
+          "resources": {
+            "type": "array",
+            "description": "resources"
+          }
+        },
         "required": [],
         "additionalProperties": false
       },
@@ -160716,6 +161143,12 @@
           "kind": "string",
           "required": true,
           "description": "Canonical identity for binding_id."
+        },
+        {
+          "key": "max_credits",
+          "kind": "string",
+          "required": true,
+          "description": "max_credits"
         }
       ],
       "input_schema": [
@@ -160730,6 +161163,48 @@
           "type": "string",
           "required": true,
           "description": "Canonical identity for binding_id."
+        },
+        {
+          "name": "max_credits",
+          "type": "string",
+          "required": true,
+          "description": "max_credits"
+        },
+        {
+          "name": "max_units",
+          "type": "string",
+          "required": false,
+          "description": "max_units"
+        },
+        {
+          "name": "max_pages_per_provider",
+          "type": "number",
+          "required": false,
+          "description": "max_pages_per_provider"
+        },
+        {
+          "name": "max_provider_elapsed_ms",
+          "type": "number",
+          "required": false,
+          "description": "max_provider_elapsed_ms"
+        },
+        {
+          "name": "max_rows",
+          "type": "number",
+          "required": false,
+          "description": "max_rows"
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "required": false,
+          "description": "dry_run"
+        },
+        {
+          "name": "selection_snapshot_id",
+          "type": "string",
+          "required": false,
+          "description": "selection_snapshot_id"
         }
       ],
       "input_json_schema": {
@@ -160825,11 +161300,40 @@
           "binding_id": {
             "type": "string",
             "description": "Canonical identity for binding_id."
+          },
+          "max_credits": {
+            "type": "string",
+            "description": "max_credits"
+          },
+          "max_units": {
+            "type": "string",
+            "description": "max_units"
+          },
+          "max_pages_per_provider": {
+            "type": "integer",
+            "description": "max_pages_per_provider"
+          },
+          "max_provider_elapsed_ms": {
+            "type": "integer",
+            "description": "max_provider_elapsed_ms"
+          },
+          "max_rows": {
+            "type": "integer",
+            "description": "max_rows"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "description": "dry_run"
+          },
+          "selection_snapshot_id": {
+            "type": "string",
+            "description": "selection_snapshot_id"
           }
         },
         "required": [
           "table_id",
-          "binding_id"
+          "binding_id",
+          "max_credits"
         ],
         "additionalProperties": false
       },
@@ -161100,7 +161604,8 @@
         ],
         "inputs": [
           "table_id",
-          "binding_id"
+          "binding_id",
+          "max_credits"
         ],
         "outputs": [
           "result"
@@ -161355,7 +161860,7 @@
         },
         {
           "name": "target",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "target"
         },
@@ -179770,7 +180275,7 @@
         },
         {
           "key": "canonical_target",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "canonical_target"
         },
@@ -179912,7 +180417,7 @@
         },
         {
           "key": "mutation",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "mutation"
         },
@@ -179986,7 +180491,7 @@
         },
         {
           "name": "canonical_target",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "canonical_target"
         },
@@ -180128,7 +180633,7 @@
         },
         {
           "name": "mutation",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "mutation"
         },
@@ -184293,7 +184798,7 @@
         },
         {
           "key": "receipt",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "receipt"
         }
@@ -184325,7 +184830,7 @@
         },
         {
           "name": "receipt",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "receipt"
         }
@@ -185353,7 +185858,7 @@
         },
         {
           "key": "canonical_target",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "canonical_target"
         },
@@ -185495,7 +186000,7 @@
         },
         {
           "key": "mutation",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "mutation"
         },
@@ -185593,7 +186098,7 @@
         },
         {
           "name": "canonical_target",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "canonical_target"
         },
@@ -185735,7 +186240,7 @@
         },
         {
           "name": "mutation",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "mutation"
         },
@@ -190884,7 +191389,7 @@
       "input_schema": [
         {
           "name": "period_days",
-          "type": "string",
+          "type": "number",
           "required": false,
           "description": "period_days"
         },
@@ -241641,7 +242146,7 @@
       "input_schema": [
         {
           "name": "intent",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "intent"
         },
@@ -251986,8 +252491,49 @@
         "mode": "sync"
       },
       "dry_run_supported": false,
-      "required_inputs": [],
-      "input_schema": [],
+      "required_inputs": [
+        {
+          "key": "contact_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "contact_id"
+        }
+      ],
+      "input_schema": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": false,
+          "description": "task",
+          "enum": [
+            "summarize"
+          ]
+        },
+        {
+          "name": "contact_id",
+          "type": "string",
+          "required": true,
+          "description": "contact_id"
+        },
+        {
+          "name": "signal_context",
+          "type": "string",
+          "required": false,
+          "description": "signal_context"
+        },
+        {
+          "name": "node_id",
+          "type": "string",
+          "required": false,
+          "description": "node_id"
+        },
+        {
+          "name": "message_template",
+          "type": "string",
+          "required": false,
+          "description": "message_template"
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -252051,8 +252597,31 @@
           }
         ],
         "type": "object",
-        "properties": {},
-        "required": [],
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "task"
+          },
+          "contact_id": {
+            "type": "string",
+            "description": "contact_id"
+          },
+          "signal_context": {
+            "type": "string",
+            "description": "signal_context"
+          },
+          "node_id": {
+            "type": "string",
+            "description": "node_id"
+          },
+          "message_template": {
+            "type": "string",
+            "description": "message_template"
+          }
+        },
+        "required": [
+          "contact_id"
+        ],
         "additionalProperties": false
       },
       "output_json_schema": {
@@ -252143,7 +252712,9 @@
         "use_cases": [
           "Use the stable outreach.personalization_generate contract for canonical outreach_action personalization_generate behavior."
         ],
-        "inputs": [],
+        "inputs": [
+          "contact_id"
+        ],
         "outputs": [
           "result"
         ],
@@ -259118,7 +259689,7 @@
         },
         {
           "name": "auto_withdraw_days",
-          "type": "string",
+          "type": "number",
           "required": false,
           "description": "auto_withdraw_days"
         },
@@ -285968,7 +286539,7 @@
         },
         {
           "name": "default_value",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "default_value"
         },
@@ -286023,7 +286594,7 @@
         },
         {
           "name": "options",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "options"
         },
@@ -286625,13 +287196,13 @@
         },
         {
           "name": "options",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "options"
         },
         {
           "name": "default_value",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "default_value"
         },
@@ -300513,7 +301084,7 @@
         },
         {
           "key": "value",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "value"
         }
@@ -300533,7 +301104,7 @@
         },
         {
           "name": "value",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "value"
         }
@@ -308956,7 +309527,7 @@
             "type": "integer",
             "minimum": 500,
             "maximum": 15000,
-            "default": 2000
+            "default": 8000
           }
         },
         "required": [
@@ -310033,7 +310604,7 @@
         },
         {
           "name": "cursor",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "cursor"
         },
@@ -320421,6 +320992,12 @@
           "kind": "string",
           "required": true,
           "description": "Canonical identity for table_id."
+        },
+        {
+          "key": "view_id",
+          "kind": "uuid",
+          "required": true,
+          "description": "view_id"
         }
       ],
       "input_schema": [
@@ -320429,6 +321006,86 @@
           "type": "string",
           "required": true,
           "description": "Canonical identity for table_id."
+        },
+        {
+          "name": "view_id",
+          "type": "string",
+          "required": true,
+          "description": "view_id"
+        },
+        {
+          "name": "row_ids",
+          "type": "array",
+          "required": false,
+          "description": "row_ids"
+        },
+        {
+          "name": "query",
+          "type": "object",
+          "required": false,
+          "description": "query",
+          "properties": [
+            {
+              "name": "filters",
+              "type": "array",
+              "required": true,
+              "description": "filters"
+            },
+            {
+              "name": "sorts",
+              "type": "array",
+              "required": true,
+              "description": "sorts"
+            },
+            {
+              "name": "grouping",
+              "type": "object",
+              "required": true,
+              "description": "grouping",
+              "properties": [
+                {
+                  "name": "column_id",
+                  "type": "string",
+                  "required": true,
+                  "description": "column_id"
+                },
+                {
+                  "name": "direction",
+                  "type": "string",
+                  "required": true,
+                  "description": "direction",
+                  "enum": [
+                    "asc",
+                    "desc"
+                  ]
+                },
+                {
+                  "name": "collapsed_group_keys",
+                  "type": "array",
+                  "required": true,
+                  "description": "collapsed_group_keys"
+                },
+                {
+                  "name": "null_group_label",
+                  "type": "string",
+                  "required": true,
+                  "description": "null_group_label"
+                }
+              ]
+            },
+            {
+              "name": "search",
+              "type": "string",
+              "required": true,
+              "description": "search"
+            }
+          ]
+        },
+        {
+          "name": "max_rows",
+          "type": "number",
+          "required": false,
+          "description": "max_rows"
         }
       ],
       "input_json_schema": {
@@ -320625,10 +321282,27 @@
           "table_id": {
             "type": "string",
             "description": "Canonical identity for table_id."
+          },
+          "view_id": {
+            "type": "string",
+            "description": "view_id"
+          },
+          "row_ids": {
+            "type": "array",
+            "description": "row_ids"
+          },
+          "query": {
+            "type": "object",
+            "description": "query"
+          },
+          "max_rows": {
+            "type": "integer",
+            "description": "max_rows"
           }
         },
         "required": [
-          "table_id"
+          "table_id",
+          "view_id"
         ],
         "additionalProperties": false
       },
@@ -320749,7 +321423,8 @@
           "Use this operation to create a domain-neutral selection_snapshot through the unified table data plane."
         ],
         "inputs": [
-          "table_id"
+          "table_id",
+          "view_id"
         ],
         "outputs": [
           "selection_snapshot_id",
@@ -327537,7 +328212,86 @@
       },
       "dry_run_supported": false,
       "required_inputs": [],
-      "input_schema": [],
+      "input_schema": [
+        {
+          "name": "sequence_id",
+          "type": "string",
+          "required": false,
+          "description": "sequence_id"
+        },
+        {
+          "name": "workbook_id",
+          "type": "string",
+          "required": false,
+          "description": "workbook_id"
+        },
+        {
+          "name": "worksheet_id",
+          "type": "string",
+          "required": false,
+          "description": "worksheet_id"
+        },
+        {
+          "name": "saved_view_id",
+          "type": "string",
+          "required": false,
+          "description": "saved_view_id"
+        },
+        {
+          "name": "selection_snapshot_id",
+          "type": "string",
+          "required": false,
+          "description": "selection_snapshot_id"
+        },
+        {
+          "name": "enrollment_filter",
+          "type": "object",
+          "required": false,
+          "description": "enrollment_filter"
+        },
+        {
+          "name": "enrollment_priority",
+          "type": "array",
+          "required": false,
+          "description": "enrollment_priority"
+        },
+        {
+          "name": "enrollment_sort",
+          "type": "object",
+          "required": false,
+          "description": "enrollment_sort",
+          "properties": [
+            {
+              "name": "field",
+              "type": "string",
+              "required": true,
+              "description": "field"
+            },
+            {
+              "name": "direction",
+              "type": "string",
+              "required": true,
+              "description": "direction",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "max_new_enrollments_per_day",
+          "type": "number",
+          "required": false,
+          "description": "max_new_enrollments_per_day"
+        },
+        {
+          "name": "launch_authorization_id",
+          "type": "string",
+          "required": false,
+          "description": "launch_authorization_id"
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -327746,7 +328500,48 @@
           }
         ],
         "type": "object",
-        "properties": {},
+        "properties": {
+          "sequence_id": {
+            "type": "string",
+            "description": "sequence_id"
+          },
+          "workbook_id": {
+            "type": "string",
+            "description": "workbook_id"
+          },
+          "worksheet_id": {
+            "type": "string",
+            "description": "worksheet_id"
+          },
+          "saved_view_id": {
+            "type": "string",
+            "description": "saved_view_id"
+          },
+          "selection_snapshot_id": {
+            "type": "string",
+            "description": "selection_snapshot_id"
+          },
+          "enrollment_filter": {
+            "type": "object",
+            "description": "enrollment_filter"
+          },
+          "enrollment_priority": {
+            "type": "array",
+            "description": "enrollment_priority"
+          },
+          "enrollment_sort": {
+            "type": "object",
+            "description": "enrollment_sort"
+          },
+          "max_new_enrollments_per_day": {
+            "type": "integer",
+            "description": "max_new_enrollments_per_day"
+          },
+          "launch_authorization_id": {
+            "type": "string",
+            "description": "launch_authorization_id"
+          }
+        },
         "required": [],
         "additionalProperties": false
       },
@@ -338514,7 +339309,102 @@
       },
       "dry_run_supported": false,
       "required_inputs": [],
-      "input_schema": [],
+      "input_schema": [
+        {
+          "name": "content_id",
+          "type": "string",
+          "required": false,
+          "description": "content_id"
+        },
+        {
+          "name": "annotation_mode",
+          "type": "string",
+          "required": false,
+          "description": "annotation_mode",
+          "enum": [
+            "manual_format"
+          ]
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "required": false,
+          "description": "platform",
+          "enum": [
+            "linkedin",
+            "x"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "string",
+          "required": false,
+          "description": "source_id"
+        },
+        {
+          "name": "credential_account_id",
+          "type": "string",
+          "required": false,
+          "description": "credential_account_id"
+        },
+        {
+          "name": "content_text",
+          "type": "string",
+          "required": false,
+          "description": "content_text"
+        },
+        {
+          "name": "post_format",
+          "type": "string",
+          "required": false,
+          "description": "post_format",
+          "enum": [
+            "personal_milestone",
+            "vulnerable_moment",
+            "launch_announcement",
+            "before_after_transformation",
+            "mindset",
+            "motivational",
+            "lessons_learned",
+            "founder_story",
+            "contrarian_opinion",
+            "build_in_public",
+            "relatable_situation",
+            "how_to_guide",
+            "actionable_guide",
+            "giveaway_resource",
+            "trends_analysis",
+            "internal_system_process",
+            "behind_the_scenes",
+            "framework_mental_model",
+            "teardown_audit",
+            "data_stat_reveal",
+            "listicle",
+            "company_win",
+            "case_study",
+            "customer_story_testimonial",
+            "result_proof",
+            "benchmark_metric_win",
+            "offer_highlights",
+            "market_shift_news_take",
+            "competitor_industry_reaction",
+            "trend_repurpose",
+            "leadership_thought",
+            "myth_busting_contrarian_critique",
+            "humor",
+            "question_discussion"
+          ]
+        },
+        {
+          "name": "post_format_taxonomy_version",
+          "type": "string",
+          "required": false,
+          "description": "post_format_taxonomy_version",
+          "enum": [
+            "v1"
+          ]
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -338621,7 +339511,40 @@
           }
         ],
         "type": "object",
-        "properties": {},
+        "properties": {
+          "content_id": {
+            "type": "string",
+            "description": "content_id"
+          },
+          "annotation_mode": {
+            "type": "string",
+            "description": "annotation_mode"
+          },
+          "platform": {
+            "type": "string",
+            "description": "platform"
+          },
+          "source_id": {
+            "type": "string",
+            "description": "source_id"
+          },
+          "credential_account_id": {
+            "type": "string",
+            "description": "credential_account_id"
+          },
+          "content_text": {
+            "type": "string",
+            "description": "content_text"
+          },
+          "post_format": {
+            "type": "string",
+            "description": "post_format"
+          },
+          "post_format_taxonomy_version": {
+            "type": "string",
+            "description": "post_format_taxonomy_version"
+          }
+        },
         "required": [],
         "additionalProperties": false
       },
@@ -352247,7 +353170,7 @@
         },
         {
           "key": "window_days",
-          "kind": "unknown",
+          "kind": "number",
           "required": true,
           "description": "window_days"
         }
@@ -352261,7 +353184,7 @@
         },
         {
           "name": "window_days",
-          "type": "string",
+          "type": "number",
           "required": true,
           "description": "window_days"
         }
@@ -380639,7 +381562,7 @@
         },
         {
           "key": "selection",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "selection"
         },
@@ -380697,7 +381620,7 @@
         },
         {
           "name": "selection",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "selection"
         },
@@ -391466,6 +392389,12 @@
           "kind": "string",
           "required": true,
           "description": "Canonical identity for source_id."
+        },
+        {
+          "key": "max_credits",
+          "kind": "string",
+          "required": true,
+          "description": "max_credits"
         }
       ],
       "input_schema": [
@@ -391480,6 +392409,42 @@
           "type": "string",
           "required": true,
           "description": "Canonical identity for source_id."
+        },
+        {
+          "name": "max_credits",
+          "type": "string",
+          "required": true,
+          "description": "max_credits"
+        },
+        {
+          "name": "max_units",
+          "type": "string",
+          "required": false,
+          "description": "max_units"
+        },
+        {
+          "name": "max_pages_per_provider",
+          "type": "number",
+          "required": false,
+          "description": "max_pages_per_provider"
+        },
+        {
+          "name": "max_provider_elapsed_ms",
+          "type": "number",
+          "required": false,
+          "description": "max_provider_elapsed_ms"
+        },
+        {
+          "name": "max_rows",
+          "type": "number",
+          "required": false,
+          "description": "max_rows"
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "required": false,
+          "description": "dry_run"
         }
       ],
       "input_json_schema": {
@@ -391550,11 +392515,36 @@
           "source_id": {
             "type": "string",
             "description": "Canonical identity for source_id."
+          },
+          "max_credits": {
+            "type": "string",
+            "description": "max_credits"
+          },
+          "max_units": {
+            "type": "string",
+            "description": "max_units"
+          },
+          "max_pages_per_provider": {
+            "type": "integer",
+            "description": "max_pages_per_provider"
+          },
+          "max_provider_elapsed_ms": {
+            "type": "integer",
+            "description": "max_provider_elapsed_ms"
+          },
+          "max_rows": {
+            "type": "integer",
+            "description": "max_rows"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "description": "dry_run"
           }
         },
         "required": [
           "table_id",
-          "source_id"
+          "source_id",
+          "max_credits"
         ],
         "additionalProperties": false
       },
@@ -391734,7 +392724,8 @@
         ],
         "inputs": [
           "table_id",
-          "source_id"
+          "source_id",
+          "max_credits"
         ],
         "outputs": [
           "result"
@@ -399400,7 +400391,26 @@
       },
       "dry_run_supported": false,
       "required_inputs": [],
-      "input_schema": [],
+      "input_schema": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "required": false,
+          "description": "task_id"
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "required": false,
+          "description": "reason"
+        },
+        {
+          "name": "create_idempotency_key",
+          "type": "string",
+          "required": false,
+          "description": "create_idempotency_key"
+        }
+      ],
       "input_json_schema": {
         "anyOf": [
           {
@@ -399444,7 +400454,20 @@
           }
         ],
         "type": "object",
-        "properties": {},
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "task_id"
+          },
+          "reason": {
+            "type": "string",
+            "description": "reason"
+          },
+          "create_idempotency_key": {
+            "type": "string",
+            "description": "create_idempotency_key"
+          }
+        },
         "required": [],
         "additionalProperties": false
       },
@@ -417713,7 +418736,7 @@
       "input_schema": [
         {
           "name": "days",
-          "type": "string",
+          "type": "number",
           "required": false,
           "description": "days"
         }
@@ -427553,7 +428576,7 @@
         },
         {
           "name": "last_opened_location",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "last_opened_location"
         },
@@ -432651,7 +433674,7 @@
         },
         {
           "name": "audience_filter",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "audience_filter"
         },
@@ -438364,7 +439387,7 @@
         },
         {
           "key": "scope",
-          "kind": "unknown",
+          "kind": "object",
           "required": true,
           "description": "scope"
         },
@@ -438518,7 +439541,7 @@
         },
         {
           "name": "scope",
-          "type": "string",
+          "type": "object",
           "required": true,
           "description": "scope"
         },
@@ -446501,7 +447524,7 @@
         },
         {
           "name": "cursor",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "cursor"
         },
@@ -450618,7 +451641,7 @@
         },
         {
           "name": "cursor",
-          "type": "string",
+          "type": "object",
           "required": false,
           "description": "cursor"
         }
@@ -461356,7 +462379,7 @@
     {
       "name": "ds_records",
       "scope": null,
-      "description": "The CRM. Read, create and update people, companies, deals and any custom object. The noun is person, never contact. Discriminates on `action` (unlike ds_search, which uses scope). create requires top-level display_name (example display_name=\"Acme\"); do not put the name only in values. get/history/memberships/update/note need a real record id from a prior list; never null. `merge` without confirm:true previews both records; confirm:true performs it. `erase` is permanent and requires confirm:true; pass capability_id records.value_retire with value_id to retire one field instead. history/memberships/deal update accept optional capability_id to reach wiki/brief/lists/deals.move (defaults are documented on the capability_id field). import/import_status/export/export_status always require capability_id. Also tasks (task_create/task_list/task_update/task_transition) and file import/export. Example create: {\"action\":\"create\",\"object\":\"company\",\"display_name\":\"Acme Corp\",\"purpose\":\"Add Acme Corp as a new company record.\"}. Example memberships: {\"action\":\"memberships\",\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"purpose\":\"Check what Acme Corp is enrolled in.\"} (id must come from a prior list/search, never null).",
+      "description": "The CRM. Read, create and update people, companies, deals and any custom object. The noun is person, never contact. Discriminates on `action` (unlike ds_search, which uses scope). create requires top-level display_name (example display_name=\"Acme\"); do not put the name only in values. get/history/memberships/update/note need a real record id from a prior list; never null. `merge` without confirm:true previews both records; confirm:true performs it. `erase` is permanent and requires confirm:true; pass capability_id records.value_retire with value_id to retire one field instead. `archive` (deals only today) is recoverable, unlike erase. history/memberships/deal update accept optional capability_id to reach wiki/brief/lists/deals.move (defaults are documented on the capability_id field). import/import_status/export/export_status always require capability_id. Also tasks (task_create/task_list/task_update/task_transition) and file import/export. Example create: {\"action\":\"create\",\"object\":\"company\",\"display_name\":\"Acme Corp\",\"purpose\":\"Add Acme Corp as a new company record.\"}. Example memberships: {\"action\":\"memberships\",\"id\":\"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\"purpose\":\"Check what Acme Corp is enrolled in.\"} (id must come from a prior list/search, never null).",
       "billing_exempt": false
     },
     {
@@ -461768,5 +462791,5 @@
     "capabilities": 1156,
     "mcp_tools": 23
   },
-  "manifest_digest": "e945f747d1ec82a2dc4f2f7c4164b7b9122d059d952dfdd8d07c1d0a5c650cf5"
+  "manifest_digest": "128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7"
 }

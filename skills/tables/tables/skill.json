@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "8df1be483274bb8a",
+  "verified_capability_hash": "a7fafedeb45d2a7d",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/tables/SKILL.md",
   "install_command": "dreamstate skills install tables",
