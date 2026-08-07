@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "59276ee1e9bf1d3e",
+  "capability_hash": "8df1be483274bb8a",
   "api_version": "v1",
   "capabilities": [
     {
@@ -410530,8 +410530,7 @@
             "type": "array",
             "items": {
               "$ref": "#/properties/view_id"
-            },
-            "nullable": true
+            }
           },
           "frozen_column_ids": {
             "type": "array",
@@ -412130,8 +412129,7 @@
             "type": "array",
             "items": {
               "$ref": "#/properties/view_id"
-            },
-            "nullable": true
+            }
           },
           "frozen_column_ids": {
             "type": "array",
@@ -461352,7 +461350,7 @@
     {
       "name": "ds_read",
       "scope": null,
-      "description": "Read one or more addresses in a single call. Takes an ARRAY of paths: name everything you need at once rather than chaining calls. Reads a context document, a CRM record, a window of workbook rows, a public URL, or a skill. skill://<name> loads the procedure, quality bars and traps for one job, and is how you obey an instruction to load a skill before doing something; ds_search scope=skills lists which ones exist. An https:// path costs credits and leaves the workspace, so it requires a purpose and a positive max_credits; everything else is free. `fields` only projects workbook columns; `limit` only applies to folder browse and workbook viewports.",
+      "description": "Read one or more addresses in a single call. Takes an ARRAY of paths: name everything you need at once rather than chaining calls. Reads a context document, a CRM record, a window of workbook rows, a public URL, or a skill. skill://<name> loads the procedure, quality bars and traps for one job, and is how you obey an instruction to load a skill before doing something; ds_search scope=skills lists which ones exist. An https:// path costs credits and leaves the workspace, so it requires a purpose; everything else is free. `fields` only projects workbook columns; `limit` only applies to folder browse and workbook viewports.",
       "billing_exempt": false
     },
     {
@@ -461364,7 +461362,7 @@
     {
       "name": "ds_search",
       "scope": null,
-      "description": "Find things whose address you do not know. Discriminates on `scope` (NOT `action`: every other ds_* tool uses action; this one alone uses scope). Five scopes: `context` (workspace knowledge graph; pass address + optional walk graph|backlinks to walk a node instead of text search), `records` (CRM text search, or pass ids to resolve record ids; noun is person, never contact), `web` (fetch one https:// URL via query, not free-text web search; costs credits; requires purpose and max_credits), `capabilities` (catalogue search returning a short-lived capability_ref for ds_api; the top 3 candidates already carry input_schema, action_policy and cost_policy by default -- set include_schema: true to widen that to 5, or false to suppress it for a compact card), `skills` (level-1 skill roster; read a body with ds_read on the skill:// address).",
+      "description": "Find things whose address you do not know. Discriminates on `scope` (NOT `action`: every other ds_* tool uses action; this one alone uses scope). Five scopes: `context` (workspace knowledge graph; pass address + optional walk graph|backlinks to walk a node instead of text search), `records` (CRM text search, or pass ids to resolve record ids; noun is person, never contact), `web` (fetch one https:// URL via query, not free-text web search; costs credits; requires purpose), `capabilities` (catalogue search returning a short-lived capability_ref for ds_api; the top 3 candidates already carry input_schema, action_policy and cost_policy by default -- set include_schema: true to widen that to 5, or false to suppress it for a compact card), `skills` (level-1 skill roster; read a body with ds_read on the skill:// address).",
       "billing_exempt": false
     },
     {
@@ -461770,5 +461768,5 @@
     "capabilities": 1156,
     "mcp_tools": 23
   },
-  "manifest_digest": "9bc0070263549b8fa230cb4b80589a806b007c54facb52996c3dcfaeef6e99a2"
+  "manifest_digest": "e945f747d1ec82a2dc4f2f7c4164b7b9122d059d952dfdd8d07c1d0a5c650cf5"
 }

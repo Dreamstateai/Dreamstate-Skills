@@ -37,7 +37,7 @@
     "outreach:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "59276ee1e9bf1d3e",
+  "verified_capability_hash": "8df1be483274bb8a",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/crm/route-and-assign-leads/SKILL.md",
   "install_command": "dreamstate skills install route-and-assign-leads",
