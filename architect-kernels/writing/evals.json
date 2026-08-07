@@ -6,6 +6,9 @@
         "writing"
       ],
       "request": "Write a cited article on our onboarding benchmarks using the seo-geo brief, get it through review, and publish it.",
+      "required_concepts": [
+        "article platform values are 'linkedin' or 'twitter', not 'x'"
+      ],
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",

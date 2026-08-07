@@ -370,6 +370,13 @@ test('Context is one files-first Markdown graph with a direct-write, approval-bo
     'brain.knowledge.digest',
     'brain.knowledge.doc_map',
     'brain.knowledge.document',
+    // Reading a URL the user supplied is part of writing context, not a
+    // separate job. Granted here after a real user asked Context to read a
+    // site and it searched the workspace three times instead, because the
+    // fetch was granted to `writing` alone. Same read-only trust class as
+    // brain.evidence.search, and mirrored on the influence side in
+    // ARCHITECT_CONTEXT_AGENT_CAPABILITY_IDS.
+    'research.urls_fetch',
     'brain.knowledge.index',
   ].sort();
   assert.deepEqual(pinned.skills.context.capability_ids, agentCapabilities);

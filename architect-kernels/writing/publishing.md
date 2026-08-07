@@ -4,6 +4,10 @@
 
 An article has two identities that matter. `content.article_get`, `content.article_list`, `content.article_update`, `content.article_delivery_create`, `content.article_duplicate`, and `content.article_archive` key off the article id. Every article object returned by a read or write also carries `content_artifact_id`: that is the id `content.schedule`, `content.unschedule`, `content.submit_review`, `content.approve`, `content.approval.submit`, `content.approval.decide`, `content.approval.authorize_publish`, `content.replacement_create`, and `content.delete_republish_propose` require. These six-plus capabilities were built against the same underlying artifact row a social post uses; an article's `content_artifact_id` points at a real row in that table, so calling them against it is a legitimate, functional operation, not a no-op. Read the article first, take its `content_artifact_id` from the response, and pass that, not the article id, to any of the artifact-scoped calls below.
 
+## Platform values are not the same string everywhere
+
+The article capabilities in this file (`content.article_create_schedule`'s and `content.article_update`'s `target_platforms`, and `content.article_delivery_create`'s `platform` field when `kind: 'native_article'`) accept `'linkedin'` or `'twitter'`. Short-form social capabilities elsewhere (a post's own `platform`, and the connected-account `platform`/`provider` fields) accept `'linkedin'` or `'x'`, not `'twitter'`. These are two different enums on two different capability families, not a typo: passing `'twitter'` to a short-form social call or `'x'` to an article call is a validation failure, not an accepted synonym. Match the literal to the capability you are actually calling, never assume one universal platform name.
+
 ## The state machine
 
 1. `content.article_create_schedule` creates the article, its linked artifact, an initial version, and delivery scaffolding in one transaction, with its own schedule-time parameter. There is no separate bare-draft create; this is the only way an article comes into existence. This call does not require prior approval.

@@ -628,6 +628,94 @@
       ]
     },
     {
+      "id": "competitor-engagers-canonical-full-journey",
+      "request": "Find people in our ICP who engage with competitors and start reaching out to them.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_live_reversible_mutation",
+      "max_intake_checkpoints": 1,
+      "forbidden_question_concepts": [
+        "outreach_volume",
+        "sender",
+        "channel",
+        "messaging_branch_state"
+      ],
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "table_sources.preview",
+        "workbooks.create",
+        "worksheet.bootstrap",
+        "outreach.demand_plan_get",
+        "workflows.get",
+        "workflows.graph_apply",
+        "columns.run",
+        "table_runs.preview_cost",
+        "sources.cold_outbound_expand",
+        "workflows.draft_publish",
+        "sequences.publish",
+        "sequences.enroll_selection",
+        "workflows.activate"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search",
+        "table_sources.preview",
+        "workbooks.create",
+        "outreach.demand_plan_get",
+        "columns.run",
+        "table_runs.preview_cost",
+        "sources.cold_outbound_expand",
+        "workflows.draft_publish",
+        "sequences.enroll_selection",
+        "workflows.activate"
+      ],
+      "required_concepts": [
+        "one complete intake, no second ask_user",
+        "Workbook created before any demand plan is fetched",
+        "null is unsure, a real required failure sets fit to 0",
+        "fresh demand revalidation immediately before and after the launch proposal",
+        "frozen selection enrollment, never a live query",
+        "sequence publication only when inspection shows it is still draft",
+        "single reviewed launch closure"
+      ],
+      "forbidden_test_substitutions": [
+        "fabricated capability domain",
+        "unconditional tool success",
+        "counter-only assertion",
+        "mock proposal receipt",
+        "mock run receipt"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workbook_enrolled",
+          "expected": "present",
+          "target": "any",
+          "min_count": 1,
+          "reason": "the approved full journey must leave a durable enrollment instead of only claiming launch success"
+        },
+        {
+          "check": "sequence_published",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "the inspected draft sequence must be published before enrollment"
+        },
+        {
+          "check": "workflow_activated",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "the approved launch must activate the published workflow"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "workflows.draft_publish",
+          "min_count": 1,
+          "reason": "workflows.draft_publish must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
       "id": "competitor-engagers-qualify-and-price",
       "request": "Find people in our ICP who engage with competitors, build the reviewable list, and price a run before we spend anything.",
       "expected_skill_ids": [
@@ -767,6 +855,90 @@
           "target": "any",
           "min_count": 1,
           "reason": "a stale approval must not enroll an oversized selection"
+        }
+      ]
+    },
+    {
+      "id": "competitor-engagers-capacity-change-blocks-launch",
+      "request": "Launch the approved competitor-engager sequence.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_live_reversible_mutation",
+      "required_capability_ids": [
+        "outreach.demand_plan_get",
+        "workflows.activate"
+      ],
+      "required_executed_capability_ids": [
+        "outreach.demand_plan_get"
+      ],
+      "required_concepts": [
+        "launch_revalidation",
+        "fresh sender headroom checked again immediately before activation",
+        "exact qualified selection exceeds capacity",
+        "a capacity drop since the approval blocks launch and must be replanned",
+        "workflow remains inactive"
+      ],
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fabricated capability domain",
+        "counter-only assertion",
+        "mock proposal receipt"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "workflow_activated",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "fresh capacity is below the approved selection, so launch revalidation must leave the workflow inactive"
+        },
+        {
+          "check": "workbook_enrolled",
+          "expected": "absent",
+          "target": "any",
+          "min_count": 1,
+          "reason": "a stale approval must not enroll the oversized selection"
+        }
+      ]
+    },
+    {
+      "id": "competitor-engagers-stale-and-low-precision-audit",
+      "request": "Find competitor engagers who match our ICP and prepare them for outreach.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_live_reversible_mutation",
+      "required_capability_ids": [
+        "table_sources.preview",
+        "rows.query",
+        "sources.cold_outbound_expand"
+      ],
+      "required_executed_capability_ids": [
+        "table_sources.preview",
+        "rows.query"
+      ],
+      "required_concepts": [
+        "exactly 10 successful distinct pilot rows per variant",
+        "stale title or current company disqualifies or is unsure",
+        "AI not run without a verified identity",
+        "source precision below 10% stops expansion",
+        "below 30% name the highest failed required criterion",
+        "below 10% propose a different scarce-signal angle",
+        "cost per qualified row"
+      ],
+      "forbidden_test_substitutions": [
+        "mock proposal receipt",
+        "fabricated capability domain",
+        "counter-only assertion"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sources.cold_outbound_expand",
+          "expected": "absent",
+          "reason": "a source auditing below the qualification floor must stop before any bulk expansion is persisted"
         }
       ]
     },

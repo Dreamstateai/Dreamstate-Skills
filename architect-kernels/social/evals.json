@@ -3074,7 +3074,8 @@
       ],
       "required_concepts": [
         "LinkedIn-only",
-        "irreversible once posted"
+        "irreversible once posted",
+        "target is a urn:li:activity: post URN taken from the read, never constructed by hand"
       ],
       "resume_after_approval": "owner_exact",
       "expected_workspace_outcome": [
