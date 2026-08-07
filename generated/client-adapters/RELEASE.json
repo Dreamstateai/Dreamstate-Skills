@@ -2,19 +2,30 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.5.9",
-  "source_release_hash": "3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07",
+  "source_release_hash": "f576421493706e499305f22b23670520dc9467e4ab6c3cff0d82730c6b56b9ac",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07",
+    "playbook_kernel_hash": "f576421493706e499305f22b23670520dc9467e4ab6c3cff0d82730c6b56b9ac",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "3ad885ec954ac37e",
-    "manifest_digest": "6c5fd2925eb2f2f94e98cb978f0ef03cbbabff6a49bc376e19b74afb701b54ed",
+    "capability_hash": "59276ee1e9bf1d3e",
+    "manifest_digest": "9bc0070263549b8fa230cb4b80589a806b007c54facb52996c3dcfaeef6e99a2",
     "minimum_api_version": "v1"
   },
   "skills": {
     "analytics": {
-      "capability_domains": [],
+      "capability_domains": [
+        "analytics",
+        "attribution",
+        "command_center",
+        "gtm",
+        "outreach",
+        "page_analytics",
+        "sequences",
+        "social",
+        "visibility",
+        "workflows"
+      ],
       "capability_ids": [
         "analytics.attribution_health_get",
         "analytics.ga4.attribution",
@@ -55,131 +66,39 @@
         "social.post_analytics",
         "social.strategy_activity_calendar",
         "social.strategy_plan_progress",
+        "usage.action_costs_get",
+        "usage.history_list",
+        "usage.limits_get",
+        "usage.status_get",
         "visibility.overview",
         "workflows.analytics_by_workflow",
         "workflows.analytics_overview",
         "workflows.metrics_get"
       ],
-      "kernel_sha256": "20ab56b536d6a08a14b93789ef76fbbf39623c8a467563833db9d9ef238e604f",
-      "evals_sha256": "9dc8d05270e8d4c96a4c846e041c13f93e001a919f5e18eab009aca9083883a0",
+      "kernel_sha256": "cc7ae22911a6435d8a2e6ae480a98a1127317aa6e87c1a97343ee580c92025bd",
+      "evals_sha256": "cb6b3282f25da08f1d7d0907811c809ba098279b4e1f5517fda6d8e2d16993a8",
+      "supporting_sha256": {},
       "adapter_sha256": {
-        "architect": "8f982fc4cfbcfe1d82eb6fb6613f09f2132a4aebddbd81528ab8e30345ac9fdd",
-        "claude": "9ca00cb32b285d339cbc67893342ba2a3e076c9b997ac34791cc38a595a81baa",
-        "codex": "56f1e93796bcee197ecc2feb5a4328edbf021a4b8ffd98d4138eac52209ffb5f"
-      }
-    },
-    "audiences": {
-      "capability_domains": [
-        "audiences"
-      ],
-      "capability_ids": [
-        "audiences.archive",
-        "audiences.create",
-        "audiences.get",
-        "audiences.list",
-        "audiences.persona_suggestions",
-        "audiences.preview",
-        "audiences.sources_list",
-        "audiences.update"
-      ],
-      "kernel_sha256": "a336f54a5bafdb09b5fd94e6fa1405caf34c68b6b272b1233049bbfc7bf076e3",
-      "evals_sha256": "b11137ee968ef29571eb8cf93166e282855d5d6d088131b99403d9f702da1ec3",
-      "adapter_sha256": {
-        "architect": "657edf39ffd9720f0f0b7edee69dcfe6dc1490cf347b40a3152c738133aa38c2",
-        "claude": "0577971a1612b74feab20a40c6d64b2d61fa385009b46730518315855486d5bc",
-        "codex": "1b373e0ad1b36db96f55348cfc4dbe522bca6733f6983e52e2ed23c67f0e9bdd"
-      }
-    },
-    "blog": {
-      "capability_domains": [
-        "content"
-      ],
-      "capability_ids": [
-        "brain.content.get",
-        "brain.content.search",
-        "brain.context.get",
-        "brain.context.search",
-        "brain.evidence.search",
-        "content.article_archive",
-        "content.article_asset_import",
-        "content.article_asset_register",
-        "content.article_asset_upload",
-        "content.article_create_schedule",
-        "content.article_deliveries_list",
-        "content.article_delivery_create",
-        "content.article_delivery_payload_get",
-        "content.article_distribution_get",
-        "content.article_duplicate",
-        "content.article_enabled_get",
-        "content.article_get",
-        "content.article_list",
-        "content.article_selection_edit",
-        "content.article_update",
-        "content.delivery_publish",
-        "content.destination_test",
-        "content.destinations_list",
-        "content.schedule",
-        "content.submit_review",
-        "content.unschedule",
-        "content.version_create",
-        "content.version_diff_get",
-        "content.version_get",
-        "content.versions_list",
-        "research.urls_fetch"
-      ],
-      "kernel_sha256": "401a4ecc7c7361e296234fabbaf0aed9443f6f4e3909650880de16bcefd70654",
-      "evals_sha256": "a403210c539f276b9b7fbb563a306867307c313b64bb57359befefb6356f9d19",
-      "adapter_sha256": {
-        "architect": "91815e64bf52a44c17c9d4421dfd526b85752704543358aaf27f32a893936f66",
-        "claude": "36796fcbf2bbd9efe22225683a93e75f4b9224841c9ff7cf221803f39b88ea51",
-        "codex": "19f8080697ced626ce9639893a1b598d56352c127ed294d4a3ae656bcfed06e2"
-      }
-    },
-    "buyer-research-graph": {
-      "capability_domains": [
-        "graph",
-        "records"
-      ],
-      "capability_ids": [
-        "graph.archive_node",
-        "graph.archive_relation",
-        "graph.contract_get",
-        "graph.create_node",
-        "graph.create_relation",
-        "graph.edges_list",
-        "graph.export",
-        "graph.get_node",
-        "graph.get_relation",
-        "graph.restore_node",
-        "graph.search",
-        "graph.traverse",
-        "graph.update_node",
-        "graph.update_relation",
-        "record_enrichment.create",
-        "record_enrichment.get"
-      ],
-      "kernel_sha256": "53c335f0095f4427c50dd3f6f147ef450ac5fbc187417b1ebced7a570836e440",
-      "evals_sha256": "78fae7e90e27d068d43fa71a16cef282e8012ce549091ff4829c4090fc92abde",
-      "adapter_sha256": {
-        "architect": "82f60e3cf9a19039bcce228fefab31ce2eb10dd573dce450909dfbc1c730850c",
-        "claude": "13f2296c3fc88a7c07aabca7850283bea15619e66c9ceb8e93936d3f8e8fbf47",
-        "codex": "2a189168eabca41e3a48f3157d6e3c89cebae3afec9bbaae4c09b11f2a2743b4"
+        "architect": "81ffaf4fd572d40474ae531ecb09155acdd108ad20cdc09ed2ef923f6fd6359b",
+        "claude": "649bdda84c8ccee2480f8a9899060804edfe1893a4591d52bce39bf07125b9cf",
+        "codex": "07f05647892a34ffba85872b37c0240cb978c4a24399ece251efc15b389ddc90"
       }
     },
     "context": {
       "capability_domains": [
-        "brain",
-        "context"
+        "brain"
       ],
       "capability_ids": [
         "brain.context.archive_document",
         "brain.context.backlinks",
         "brain.context.browse",
+        "brain.context.create_document",
         "brain.context.create_folder",
         "brain.context.delete_document",
         "brain.context.get",
         "brain.context.graph",
         "brain.context.history",
+        "brain.context.list",
         "brain.context.list_proposals",
         "brain.context.move_document",
         "brain.context.preview_agent_view",
@@ -189,6 +108,8 @@
         "brain.context.register_source",
         "brain.context.rename_document",
         "brain.context.restore_document",
+        "brain.context.save_and_publish",
+        "brain.context.save_draft",
         "brain.context.search",
         "brain.context.website_source_register",
         "brain.evidence.search",
@@ -198,249 +119,45 @@
         "brain.knowledge.document",
         "brain.knowledge.index"
       ],
-      "kernel_sha256": "5eac890b61fe56b979074226924f6f309ab03eac7d1c383294432565d308f834",
-      "evals_sha256": "93e0240b7be702e387fde7270e27168eb3aac2dd8978ac1e573fd2bc340d59b4",
+      "kernel_sha256": "30f768408a9922b628abce43b89e5430d793c1d774f8d0a7d576762e42a40d1c",
+      "evals_sha256": "eed5faff171255de44e0015ee056d52e8976d8959917e62a77cf165d7aa37b90",
+      "supporting_sha256": {
+        "lifecycle.md": "f9f1d33e018fac214538914e539c857584934341fe63de8428b32e2f336a1d19",
+        "retrieval.md": "6d6a9bf18e63f7f92d360a477a2cff448624d05c8ed76915428fa929da5bd62c",
+        "writing.md": "5d3faa313dc0cdf884ad76cae808735aca53388e918168ef8fce2dfbf2a87c65"
+      },
       "adapter_sha256": {
-        "architect": "e5b86445a4687a768cfd83b18fd60728dcc7aff18d36471d9b9f860d67336f32",
-        "claude": "d79925fb2cecf8b7e0ebe983d639aea8b7850184435cd3fc2f3809cc862f4b01",
-        "codex": "3b703f0d2e82f8b865e006656411cfce11f57933332030dbd4c577bc0bd5a9d8"
+        "architect": "d8d99a911b308ba7a4dd9efe49cb99d587a0b951dbcaeb1a9647e1f2c18c9823",
+        "claude": "f438e9cc2b08bcb5d6a2c5b7ea35cf69635704f9028499f05a0e0bfd714ec722",
+        "codex": "0d4837e143460274b8510ce8b7b4771de83ff6b75b14b0e47d320257fa64b1cd"
       }
     },
-    "experiments": {
-      "capability_domains": [
-        "growth"
-      ],
-      "capability_ids": [
-        "growth.governed_experiment_approve",
-        "growth.governed_experiment_conclude",
-        "growth.governed_experiment_create",
-        "growth.governed_experiment_get",
-        "growth.governed_experiment_list",
-        "growth.governed_experiment_measurement_record",
-        "growth.governed_experiment_publication_record",
-        "growth.governed_experiment_revise",
-        "growth.governed_experiment_stop"
-      ],
-      "kernel_sha256": "1af58fa508afe884136151c8810eb767a4cdd2472f3fd0b0a104586bceb78007",
-      "evals_sha256": "cf2f1884ed6e69d7a2c0452725e3d1e94c62a91512b7c92d6f51a70ad985219c",
-      "adapter_sha256": {
-        "architect": "04765f1cbb8ce9f8081d0e8eec1c584fa49589a1061b0017b81eb9b1e08cc631",
-        "claude": "01933b94729ca79a4bf1017c328631af9b91c4dd2193317ad199938287d60237",
-        "codex": "be27bbc7466f5f6f2686f9133f49f10dea559a9b51ff03b44e1e9cd3667dd2ba"
-      }
-    },
-    "growth-asset-planner": {
-      "capability_domains": [],
-      "capability_ids": [
-        "brain.context.get",
-        "brain.context.search",
-        "brain.evidence.search",
-        "command_center.assets.create",
-        "command_center.assets.list"
-      ],
-      "kernel_sha256": "19927914886ae69503700e5a3ca86d2ba714225089fa443a0ea8f987da1e61b1",
-      "evals_sha256": "38a7f66a0a0f91570d51851a38522c200874e8d6eebf129c69e5ad4a0c6b813f",
-      "adapter_sha256": {
-        "architect": "87910459447541328ceb61fd2164bf7d089bed01e78a13e069c943953c548185",
-        "claude": "2ed01647582f2e403fd83d3e3a2e31983fbcdd8c9a5839a1e1738574f93a118f",
-        "codex": "a5cb080eafd2fe82fac65921cfebd2fc9cd130ce19b986a12b04902caf4a2d18"
-      }
-    },
-    "integrations": {
-      "capability_domains": [],
-      "capability_ids": [
-        "integrations.attribution_status_get",
-        "integrations.crm_import_job_get",
-        "integrations.crm_importable_lists_get",
-        "integrations.ga4.connect_start",
-        "integrations.ga4.properties",
-        "integrations.ga4.status",
-        "integrations.github_repositories_list",
-        "integrations.gsc.connect_start",
-        "integrations.gsc.properties",
-        "integrations.gsc.properties_list",
-        "integrations.gsc.status",
-        "integrations.hubspot_deal_rule_get",
-        "integrations.linkedin_parameters_search",
-        "integrations.outreach_connectors_list",
-        "integrations.scheduler_connections_list",
-        "integrations.scheduler_event_types_list",
-        "integrations.scheduler_status_get",
-        "integrations.slack_channels_list",
-        "integrations.slack_notification_routing_get",
-        "integrations.stripe_status_get",
-        "integrations.unipile_status_get",
-        "mailboxes.deliverability_get",
-        "outreach.access_get",
-        "outreach.mailboxes_list",
-        "outreach.pr_mailboxes_list",
-        "outreach.senders_list",
-        "outreach.settings_get"
-      ],
-      "kernel_sha256": "6f4210080eadb8d29487340771e706860de9d38e39448081f94e83177e3635eb",
-      "evals_sha256": "f5d84e03ebe76689556e199c9cf67d1b0ea437d6522f434adfdd569c9498ce61",
-      "adapter_sha256": {
-        "architect": "935edb0b300ac4aea16f75a3038a225005684900523e684f3f3860264fabcfc4",
-        "claude": "536ba1dc58adb21319ca5c30df9f90a273a063e04996fd1034e4b454c9d821ac",
-        "codex": "5ce12f22a2f0dc031db6acdbb3e9064bae1634c641e6b792c37144bd524e68fe"
-      }
-    },
-    "notifications": {
-      "capability_domains": [
-        "notifications"
-      ],
-      "capability_ids": [
-        "notifications.archive",
-        "notifications.get",
-        "notifications.list",
-        "notifications.mark_all_read",
-        "notifications.mark_read",
-        "notifications.preferences_get",
-        "notifications.preferences_update",
-        "notifications.type_preferences_get",
-        "notifications.type_preferences_reset",
-        "notifications.type_preferences_update",
-        "notifications.unread_counts_get",
-        "notifications.workspace_type_preferences_get",
-        "notifications.workspace_type_preferences_reset",
-        "notifications.workspace_type_preferences_update"
-      ],
-      "kernel_sha256": "e2fa6674ab5910453dfe39e1ac8884ec1ba5ab25770339dd70f3b26231226d0e",
-      "evals_sha256": "fc2eb2db468854cd23562cfb391ee69ff45d2712cd6c6f7622fe6dec2e9914ee",
-      "adapter_sha256": {
-        "architect": "76d4bd944ccf1eed9a8450d1f53aef53382cd6d579d575dfc9a25b8133e5432d",
-        "claude": "d02e758e241c910ab0664ebd5ec827e6437c7689c5cd78af2d65c65fc0e52798",
-        "codex": "973626bddccb563513ec88cfadf683e8db995f4c802e2348aad323985716dd13"
-      }
-    },
-    "outreach": {
+    "crm": {
       "capability_domains": [
         "brain",
-        "outreach"
-      ],
-      "capability_ids": [
-        "brain.context.get",
-        "brain.context.search",
-        "brain.learning.query_benchmarks",
-        "outreach.access_get",
-        "outreach.activity_list",
-        "outreach.credit_usage_get",
-        "outreach.demand_plan_get",
-        "outreach.enrichment_sequence_get",
-        "outreach.global_pause_set",
-        "outreach.icps_list",
-        "outreach.sender_context_accounts_list",
-        "rows.query",
-        "selection_snapshots.get",
-        "sequences.enroll_selection",
-        "sequences.publish",
-        "workflows.activate",
-        "workflows.draft_publish",
-        "workflows.get",
-        "workflows.list"
-      ],
-      "kernel_sha256": "eaeda523d7a529b51dea0708a8d7cd273684d87ee450bb9743ab85583d0cbe66",
-      "evals_sha256": "c087c798161f15b336569fea71c24425276e8c23290d7b1d2683f7ccbc00f2da",
-      "adapter_sha256": {
-        "architect": "94c9082e713489f8bf45ba900c61d965d0ca2c6c05a59fa3ec2fc0e6ed4484bc",
-        "claude": "70ebaad0e0314154ae553e3dc34fd5268557357621dd86acd3b1a02077a316d5",
-        "codex": "92311b3cdfa8bd971406f46847fe4e89af252cc153490a58cac3efae9c64ada2"
-      }
-    },
-    "outreach-sequence-writer": {
-      "capability_domains": [
-        "outreach"
-      ],
-      "capability_ids": [
-        "brain.context.get",
-        "brain.context.search",
-        "outreach.ai_spintax_generate",
-        "outreach.ai_write_generate",
-        "outreach.ai_write_resolve",
-        "outreach.mailboxes_list",
-        "outreach.opener_sample_generate",
-        "outreach.opener_styles_list",
-        "outreach.personalization_generate",
-        "outreach.send_schedules.get",
-        "outreach.send_schedules.list",
-        "outreach.senders_list",
-        "outreach.settings_get",
-        "rows.get",
-        "rows.query",
-        "sequences.archive",
-        "sequences.bind",
-        "sequences.definition_get",
-        "sequences.delete",
-        "sequences.enrollment_owner_clear",
-        "sequences.list",
-        "sequences.step_options",
-        "sequences.validate"
-      ],
-      "kernel_sha256": "18b4d2ddc98bd25008810dcff1c9a959d0750333378ba0e4c2e958afc8d812cb",
-      "evals_sha256": "141b11da2b48f125fd2d29ad96e1da49cba5197ffcdca91c79c342ba0d5d9131",
-      "adapter_sha256": {
-        "architect": "f7684214b55e1d3eab3d786ebd95443bf2f0dae3024e0ac52313e022358f3be1",
-        "claude": "d1ab294683cb315eed7997843c96d95c42595babb1dadd55ef5e0bb6f407eb6a",
-        "codex": "29e442b45a554d767230694eed0eb40bbbd63735ad77f808050186681af42a80"
-      }
-    },
-    "outreach-workflow-builder": {
-      "capability_domains": [
-        "outreach"
-      ],
-      "capability_ids": [
-        "columns.list",
-        "rows.get",
-        "rows.query",
-        "runs.cancel",
-        "runs.get",
-        "runs.pause",
-        "runs.resume",
-        "table_sources.list",
-        "tables.get",
-        "tables.list",
-        "views.get",
-        "views.list",
-        "workbooks.get",
-        "workbooks.list",
-        "workflows.archive",
-        "workflows.call_child",
-        "workflows.create",
-        "workflows.deactivate",
-        "workflows.delete",
-        "workflows.delivery_binding_get",
-        "workflows.draft_publish",
-        "workflows.draft_save",
-        "workflows.get",
-        "workflows.graph_apply",
-        "workflows.list",
-        "workflows.metrics_get",
-        "workflows.node_inspect",
-        "workflows.node_options",
-        "workflows.node_registry",
-        "workflows.run_retry",
-        "workflows.run_trace_get",
-        "workflows.runs_list",
-        "workflows.trigger_create",
-        "workflows.trigger_delete",
-        "workflows.triggers_list",
-        "workflows.validate_graph",
-        "worksheets.list"
-      ],
-      "kernel_sha256": "a8c62330565dabaf565e3c6979b9eb546eda6d83e095198a5a77d7ee12a06a73",
-      "evals_sha256": "3cab2ff0b474880e635b25ef0f2f6699aa753939ef12a3b0707a1292c1a40970",
-      "adapter_sha256": {
-        "architect": "d26ede55fec177e144c4d5e7f7e3d6211e69618a208e4afe8b4a9722ae731879",
-        "claude": "b419a1efe824b547b6fe661a94671047b5248d28c293e2f5c50042cbea9267a5",
-        "codex": "ae09f73d97e20dd1df1dbd014e8b230570c4bdcdd4701eef004e066a63c87718"
-      }
-    },
-    "products": {
-      "capability_domains": [
-        "products"
+        "products",
+        "record_attributes",
+        "record_deals",
+        "record_definitions",
+        "record_exports",
+        "record_files",
+        "record_imports",
+        "record_objects",
+        "record_pipeline_stages",
+        "record_pipelines",
+        "record_relationships",
+        "record_templates",
+        "records",
+        "saved_views",
+        "tasks"
       ],
       "capability_ids": [
         "brain.context.graph",
+        "deals.create",
+        "deals.get",
+        "deals.list",
+        "deals.move",
+        "deals.update",
         "products.content_archive",
         "products.content_list",
         "products.document_process",
@@ -448,95 +165,28 @@
         "products.list",
         "products.og_meta_get",
         "products.website_refresh",
-        "products.website_scrape"
-      ],
-      "kernel_sha256": "b0db424c7b14799eca725aad6c1a03eb24c205db36c5e9b29496fbfcc2d8bb0c",
-      "evals_sha256": "05786fe7cce20bb993570d8ba64175b46398e02edcf42d8bf7cf4cd9cc890152",
-      "adapter_sha256": {
-        "architect": "b889ae49068d94f11ceb94fa4a6ef819bf7c4d37621a706e1797b38d052562a1",
-        "claude": "24fa8adffc7a5d5f28d81f92d61926fdf72f2de38156ce1f18cdff9c635b616e",
-        "codex": "4917fa2085030b852a8c265ca90a8b4cc83a3ffd70aa2dc19a559056ee14ff50"
-      }
-    },
-    "records": {
-      "capability_domains": [
-        "records"
-      ],
-      "capability_ids": [
-        "record_files.list",
-        "record_files.upload",
-        "records.buyer_brief_get",
-        "records.companies_list",
-        "records.create",
-        "records.erase",
-        "records.field_set",
-        "records.get",
-        "records.history_get",
-        "records.list",
-        "records.list_add",
-        "records.list_remove",
-        "records.lists_get",
-        "records.merge",
-        "records.message_channels_get",
-        "records.message_send",
-        "records.note_add",
-        "records.people_list",
-        "records.playbook_get",
-        "records.references_resolve",
-        "records.search",
-        "records.source_lookup",
-        "records.unmerge",
-        "records.value_retire",
-        "records.wiki_get"
-      ],
-      "kernel_sha256": "9e18d775f2d79be35c84d7293d72009c6f54fc5aec72b742a31506f32f16db89",
-      "evals_sha256": "c965e4734743e291c7ad1d0395c9f384bfd377f6f1820dea2c51b93af0b3889e",
-      "adapter_sha256": {
-        "architect": "e5b86445a4687a768cfd83b18fd60728dcc7aff18d36471d9b9f860d67336f32",
-        "claude": "d79925fb2cecf8b7e0ebe983d639aea8b7850184435cd3fc2f3809cc862f4b01",
-        "codex": "3b703f0d2e82f8b865e006656411cfce11f57933332030dbd4c577bc0bd5a9d8"
-      }
-    },
-    "records-pipelines": {
-      "capability_domains": [
-        "records"
-      ],
-      "capability_ids": [
+        "products.website_scrape",
+        "record_attributes.create",
+        "record_attributes.list",
         "record_deals.board_get",
         "record_deals.create",
         "record_deals.pipeline_transition",
         "record_deals.stage_move",
         "record_deals.update",
-        "record_pipeline_stages.create",
-        "record_pipeline_stages.impact_get",
-        "record_pipeline_stages.lifecycle_set",
-        "record_pipeline_stages.reorder",
-        "record_pipeline_stages.update",
-        "record_pipelines.create",
-        "record_pipelines.lifecycle_set",
-        "record_pipelines.list",
-        "record_pipelines.reorder",
-        "record_pipelines.update",
-        "record_templates.install",
-        "record_templates.list",
-        "record_templates.preview"
-      ],
-      "kernel_sha256": "08193d954cc35738c4aa0710a92392d508479e8690f94131ccce2610c002e124",
-      "evals_sha256": "66080a26bf1b83ad54b3c83b98a2ac91caf80735060616280463dcc64ffe8f55",
-      "adapter_sha256": {
-        "architect": "dc10457a92b627e9d331cdf5534e77bb3e72745454f1dd4f954f4ff8fd4c311c",
-        "claude": "70fa7b7acf9e68bb752dbc34d2522f710ba5a6bc0a10a4933d0e47d436b6c5f0",
-        "codex": "6acc2ac60a72336893a98f682db00754fe05eef1600d09565feccc48ab46ec4c"
-      }
-    },
-    "records-schema": {
-      "capability_domains": [
-        "records"
-      ],
-      "capability_ids": [
-        "record_attributes.create",
-        "record_attributes.list",
         "record_definitions.impact_get",
+        "record_exports.control",
+        "record_exports.create",
+        "record_exports.download",
+        "record_exports.get",
+        "record_files.list",
+        "record_files.upload",
+        "record_imports.control",
+        "record_imports.create",
+        "record_imports.errors_list",
+        "record_imports.get",
+        "record_imports.list",
+        "record_imports.rows_stage",
+        "record_imports.source_upload",
         "record_objects.attribute_create",
         "record_objects.attribute_update",
         "record_objects.attributes_list",
@@ -552,49 +202,47 @@
         "record_objects.record_create",
         "record_objects.reorder",
         "record_objects.update",
+        "record_pipeline_stages.create",
+        "record_pipeline_stages.impact_get",
+        "record_pipeline_stages.lifecycle_set",
+        "record_pipeline_stages.reorder",
+        "record_pipeline_stages.update",
+        "record_pipelines.create",
+        "record_pipelines.lifecycle_set",
+        "record_pipelines.list",
+        "record_pipelines.reorder",
+        "record_pipelines.update",
         "record_relationships.create",
         "record_relationships.list",
         "record_relationships.reorder",
-        "record_relationships.update"
-      ],
-      "kernel_sha256": "38d6f45af8c091ac7fddeba8c4a2f765c089f634622a48f1477d48a0b2ff82c1",
-      "evals_sha256": "57609921075322b6c1e83904abe94cd23445d633222cccd4a7e1dbe96573694e",
-      "adapter_sha256": {
-        "architect": "50f2cbdf6611379f2b6e41256e1066759cff7781654176646e3c8e76fe655422",
-        "claude": "074963f7d623af18677535a115ed208d610e1a7dc98e68f0e697de3a1741d0ee",
-        "codex": "9b9f191d4628e766b37e913ec2e7339f87c8b106b3af044729327b86e4d74af6"
-      }
-    },
-    "records-transfer": {
-      "capability_domains": [
-        "records"
-      ],
-      "capability_ids": [
-        "record_exports.control",
-        "record_exports.create",
-        "record_exports.download",
-        "record_exports.get",
-        "record_imports.control",
-        "record_imports.create",
-        "record_imports.errors_list",
-        "record_imports.get",
-        "record_imports.list",
-        "record_imports.rows_stage",
-        "record_imports.source_upload"
-      ],
-      "kernel_sha256": "09eb3bc15afff2e09b68705290a9ad403ac9ab4608d82bd7c424617cb4078797",
-      "evals_sha256": "1c117df40699db91599b8289d7436266fb05f1c54cd38748419f92fa59811424",
-      "adapter_sha256": {
-        "architect": "c7033eb2e8d2e6fba2a5aafcf9c30eabbe0ecf04c29cbac4e88241d5dbd3e6d0",
-        "claude": "b2aad24e7f9309363f844efd116846deccd4cd44092a0c690fd061ba6056a2da",
-        "codex": "58ca58bcba1e5ed557a7eb4513f195ff8e5c7d333bb5f18aa6a6d40c3db88346"
-      }
-    },
-    "records-views": {
-      "capability_domains": [
-        "records"
-      ],
-      "capability_ids": [
+        "record_relationships.update",
+        "record_templates.install",
+        "record_templates.list",
+        "record_templates.preview",
+        "records.buyer_brief_get",
+        "records.companies_list",
+        "records.create",
+        "records.erase",
+        "records.field_set",
+        "records.get",
+        "records.history_get",
+        "records.list",
+        "records.list_add",
+        "records.list_remove",
+        "records.lists_get",
+        "records.memberships_get",
+        "records.merge",
+        "records.message_channels_get",
+        "records.message_send",
+        "records.note_add",
+        "records.people_list",
+        "records.playbook_get",
+        "records.references_resolve",
+        "records.search",
+        "records.source_lookup",
+        "records.unmerge",
+        "records.value_retire",
+        "records.wiki_get",
         "saved_views.create",
         "saved_views.delete",
         "saved_views.list",
@@ -603,291 +251,77 @@
         "saved_views.v2_create",
         "saved_views.v2_execute",
         "saved_views.v2_list",
-        "saved_views.v2_runtime_upsert"
+        "saved_views.v2_runtime_upsert",
+        "tasks.bulk",
+        "tasks.cancel",
+        "tasks.complete",
+        "tasks.count",
+        "tasks.create",
+        "tasks.get",
+        "tasks.list",
+        "tasks.reassign",
+        "tasks.reopen",
+        "tasks.update"
       ],
-      "kernel_sha256": "e9b5e5a12b07fbf14958d07bcac5922fdfe80394ce6554f21d24b68d99cb938c",
-      "evals_sha256": "740adfed215c66876c23d6c844e1667bcfdebaa3a3a266a5284277cf097d75f3",
+      "kernel_sha256": "769ec729bf027f3b836a79ab59a4c4c45b572ca0a5a375aadf006b2b027374c5",
+      "evals_sha256": "c2fdd380239b330ba82adc77fbb69a0cbe5b8448ab745206c91a7ba8447bbb44",
+      "supporting_sha256": {
+        "objects-and-attributes.md": "4f78a7779f95215ec8055d3667430f1246d13461b3f39a55a765f31ebee5e41f",
+        "pipelines.md": "509196b8e3883d75148e733381b9681c37a4200bea9c8a9d4ac21aaa4a86def8",
+        "records.md": "188a0b6d1765d47d682b3341c5dca497310e594abeb3a2427c3f1c3a0998ce49",
+        "tasks-and-products.md": "e467981b42f89a9a26f70f74cac48c4a2af25734e23730c78ed34f16e0a436cb",
+        "views-and-transfer.md": "ccf8439303a7d05eaea99f8b5032e24a0eb9ff410d95707f222d66c73f5b1ed5"
+      },
       "adapter_sha256": {
-        "architect": "3ecef1d495dfda40b66be29dbfdd944f6e88c9986c592ee757c5540dc0ec886a",
-        "claude": "58858ee80c4671d2f557e98d6a491c9b111113a1832025be19053a4f96bfb756",
-        "codex": "5bdef9ebdccfb2f81d13364575f9dc86d66c71fac41022c0859ba58203e8a054"
+        "architect": "37b48c3d0fff31c64a65dfbc75bf75cd2118d6a4f945c00f5b0ba3c7b54b2555",
+        "claude": "e27307aab87ad663d3b30fc26f313ea2b6db5c28d8786acf9bfff586e5d6498e",
+        "codex": "9a062c57a8e5614774b397bda7c232643e19c96ae28cd2711b6e81a09441414a"
       }
     },
-    "seo": {
+    "outreach": {
       "capability_domains": [
+        "attachments",
+        "audiences",
         "brain",
-        "content",
-        "tables",
-        "visibility"
-      ],
-      "capability_ids": [
-        "brain.context.get",
-        "brain.context.search",
-        "brain.learning.query_benchmarks",
-        "integrations.gsc.properties",
-        "integrations.gsc.properties_list",
-        "integrations.gsc.property_primary_set",
-        "integrations.gsc.property_select",
-        "integrations.gsc.search_analytics_get",
-        "integrations.gsc.search_analytics_refresh",
-        "integrations.gsc.sitemaps_import",
-        "integrations.gsc.status",
-        "seo.agent_readiness_history",
-        "seo.agent_readiness_latest",
-        "seo.agent_readiness_scan",
-        "seo.llms_txt_generate",
-        "seo.llms_txt_get",
-        "seo.robots_audit",
-        "seo.serp_snapshot_resolve",
-        "seo.serp_spend_get",
-        "tools.llms_txt_generate",
-        "visibility.citations",
-        "visibility.geo_queries_list",
-        "visibility.html_analysis_get",
-        "visibility.keywords_get",
-        "visibility.overview",
-        "visibility.pagespeed_get",
-        "visibility.prompt_metrics_list",
-        "visibility.sentiment_trend",
-        "visibility.site_files_get",
-        "visibility.site_scan",
-        "visibility.sitemap_get",
-        "visibility.workspace_site_ensure",
-        "visibility.workspace_site_get",
-        "visibility.workspace_site_update"
-      ],
-      "kernel_sha256": "d8957cc2f65174a3286e7fbab1c53df0a57e57b61724e087ebbd9db9cdef665a",
-      "evals_sha256": "ad9656b04e6bd6812ea88611d1a36b320fa0e03ade7470ff2c9b87750c987507",
-      "adapter_sha256": {
-        "architect": "0f320bb078d8d1905089a22da4350e72c051c1df315aeca8ff4c7328cda32596",
-        "claude": "54f135f44217d8fb76e9ab511b6a3090e4b711c8a4fe73f9aa912daeeecb8741",
-        "codex": "80630492b6cce8da31750f6d5aa664e6d172c7dadacd95420b70998dd7f6fe0e"
-      }
-    },
-    "signals": {
-      "capability_domains": [
-        "signals"
-      ],
-      "capability_ids": [
-        "radar.signal_suggestions_get",
-        "signal_sources.capture_key_set",
-        "signal_sources.create",
-        "signal_sources.delete",
-        "signal_sources.events_list",
-        "signal_sources.get",
-        "signal_sources.list",
-        "signal_sources.test_event"
-      ],
-      "kernel_sha256": "665dfc04657526b90c547cefbfe0874fbd2a94cea6f0a0c55bb019835f07574b",
-      "evals_sha256": "75b4107afb5f4864306a1c759dc5edf08810d02ea75cb0dbcddc891d17df78de",
-      "adapter_sha256": {
-        "architect": "2c05b50dab1881973b246e980437600bd8b540e868cebd47aa5259d5aea08af4",
-        "claude": "50404322ac3ec693185c02a7d90f236d0a831a6749403278fc541391d13e6bcb",
-        "codex": "b7f79379ae09c8253d3a97bb11ebc7ee82b1000e46754d2d7ad906fe12199ef5"
-      }
-    },
-    "site-onboarding": {
-      "capability_domains": [
-        "brain",
-        "content",
-        "visibility"
-      ],
-      "capability_ids": [
-        "brain.context.browse",
-        "brain.context.get",
-        "brain.context.propose",
-        "brain.context.propose_document",
-        "brain.context.search",
-        "brain.context.website_source_register",
-        "products.website_refresh",
-        "products.website_scrape",
-        "seo.agent_readiness_scan",
-        "seo.llms_txt_generate",
-        "seo.llms_txt_get",
-        "seo.robots_audit",
-        "visibility.site_files_get",
-        "visibility.site_scan",
-        "visibility.sitemap_get",
-        "visibility.workspace_site_ensure",
-        "visibility.workspace_site_get",
-        "visibility.workspace_site_update",
-        "workspace.company_setup_dismiss",
-        "workspace.company_setup_handoff_set",
-        "workspace.company_setup_state_get"
-      ],
-      "kernel_sha256": "58e2f61c2f0448a38626e859dd9d8f9f782e2fc5ec0167fc17fdcafb0a9b9f9b",
-      "evals_sha256": "b252ac5f5b335c7e0b569d83acb8dc34e29a12cde7a14d9a0903a1c7442646b8",
-      "adapter_sha256": {
-        "architect": "046d219662ce38f57ed484fe9bbc15d5e210bd505e545c98008e4dc48d82380a",
-        "claude": "62abdd52c1633e4bbe5e420665285dd39f5addd3575e0576f3cc250f9838e30e",
-        "codex": "e2f744c7620638a8e137497cadb84939cd2af00518a132099094c494ca0f5bce"
-      }
-    },
-    "social": {
-      "capability_domains": [
-        "brain",
-        "content"
-      ],
-      "capability_ids": [
-        "brain.content.get",
-        "brain.content.search",
-        "brain.context.get",
-        "brain.context.search",
-        "brain.learning.query_benchmarks",
-        "brain.social.benchmarks.query",
-        "brain.social.patterns.compare",
-        "content.artifact_archive",
-        "content.artifact_create",
-        "content.artifact_generate",
-        "content.artifact_get",
-        "content.artifact_list",
-        "content.artifact_update",
-        "content.assist",
-        "content.compose",
-        "content.delivery_publish",
-        "content.destination_test",
-        "content.destinations_list",
-        "content.generate",
-        "content.generate_hooks",
-        "content.hook_batch_get",
-        "content.labels_get",
-        "content.labels_list",
-        "content.regenerate_hooks",
-        "content.schedule",
-        "content.submit_review",
-        "content.unschedule",
-        "content.version_create",
-        "content.version_diff_get",
-        "content.version_get",
-        "content.version_rollback",
-        "content.versions_list",
-        "social.accounts_list",
-        "social.analytics_query",
-        "social.analytics_refresh",
-        "social.analytics_rollup_get",
-        "social.audience_analytics",
-        "social.brand_voice_get",
-        "social.draft_score",
-        "social.metric_definitions",
-        "social.performance_analysis_get",
-        "social.performance_snapshot_get",
-        "social.post_analysis_job_create",
-        "social.post_analytics",
-        "social.post_format_hooks_list",
-        "social.strategy_activity_calendar",
-        "social.strategy_weekly_post_action",
-        "social.strategy_weekly_post_materialize",
-        "social.weekly_plan_item_create",
-        "social.weekly_plan_item_transition",
-        "social.weekly_plan_item_update",
-        "social.weekly_plan_items_list",
-        "tools.linkedin_headline_generate",
-        "tools.linkedin_hook_generate",
-        "tools.linkedin_post_generate",
-        "tools.x_hook_generate",
-        "tools.x_post_generate"
-      ],
-      "kernel_sha256": "b5d03a23275d5e58195babdfa5eee60c3c4a8d3f64f66aa3302593d464e75ed0",
-      "evals_sha256": "eb55c0b54fa7bed11c0b17cf102cd3671ef811c78c7f2a484f519ff78f13d7c0",
-      "adapter_sha256": {
-        "architect": "506d2fbb5cfebdcd861019199c1df063a1f11d68e38c0d760a236ce975f837cd",
-        "claude": "8702c0da6d9408e48d4298a199adaf4b753aa8c2277526bde02f5b836c4f7c0c",
-        "codex": "11ddb11dca0d3e0c5e38494a236714392ba1d6a38ef4fd09e5da1be5efa46584"
-      }
-    },
-    "social.linkedin": {
-      "capability_domains": [
-        "brain",
-        "social",
-        "tables"
-      ],
-      "capability_ids": [
-        "brain.content.search",
-        "social.accounts_list"
-      ],
-      "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
-      "evals_sha256": "4f4839bd9ae78c297f29b049216a8d2c3f0962acec1f9936053383a74a3a88cd",
-      "adapter_sha256": {
-        "architect": "71ac2c66b02a6984100d7301038f1f8a98f35a14a195f11f115350d9b24bf2ac",
-        "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
-        "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
-      }
-    },
-    "social.reddit": {
-      "capability_domains": [
-        "brain",
-        "social",
-        "tables"
-      ],
-      "capability_ids": [
-        "brain.content.search"
-      ],
-      "kernel_sha256": "2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3",
-      "evals_sha256": "d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc",
-      "adapter_sha256": {
-        "architect": "a139d004016e06e011e3f622610e22df1b380410d1f28fef94054df8ff0b6a87",
-        "claude": "0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c",
-        "codex": "f413018d24badd59f80ac471f70c3e06142375ef91b3a458df08e38168003ba9"
-      }
-    },
-    "social.x": {
-      "capability_domains": [
-        "brain",
-        "social",
-        "tables"
-      ],
-      "capability_ids": [
-        "brain.content.search",
-        "social.accounts_list"
-      ],
-      "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
-      "evals_sha256": "9992c3735014e6070b68c0514abd519ad1d4e8f945966901b01c0cb4e1f53982",
-      "adapter_sha256": {
-        "architect": "71ac2c66b02a6984100d7301038f1f8a98f35a14a195f11f115350d9b24bf2ac",
-        "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
-        "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
-      }
-    },
-    "strategy": {
-      "capability_domains": [
-        "brain",
-        "context"
-      ],
-      "capability_ids": [
-        "brain.companies.answer",
-        "brain.companies.get",
-        "brain.context.browse",
-        "brain.context.get",
-        "brain.context.search",
-        "brain.learning.query_benchmarks",
-        "brain.outreach.compare",
-        "command_center.goals.get",
-        "gtm.goals_list",
-        "identity.content_pillars_generate",
-        "social.strategy_archetype_benchmark",
-        "social.strategy_archetype_get",
-        "social.strategy_format_targets_suggest",
-        "social.strategy_overview",
-        "social.strategy_plan_progress",
-        "social.strategy_update"
-      ],
-      "kernel_sha256": "0f9626ebef6ffc6f271582bd5b4a06561d723366ba4af0215b8f770b18e877d1",
-      "evals_sha256": "daa8be0aa24b9ca05181ac3a7720bda2f9f7c23a1f618fdce4a05eedbb46c0b4",
-      "adapter_sha256": {
-        "architect": "f9df446c177b87844609548440ac001be435db14ab5caff052dab6b55333a6cc",
-        "claude": "2fe1816a05c63064ba177d809ec6ac5b416d9c2834445d3855d555d7919243b7",
-        "codex": "953425f9d3920b128b22cda112dfb7fe582542ccc78b0f9cb200d3bba6e18d2a"
-      }
-    },
-    "tables": {
-      "capability_domains": [
+        "cells",
+        "columns",
+        "executable_definitions",
+        "executables",
+        "graph",
+        "outreach",
+        "radar",
+        "record_enrichment",
         "records",
-        "tables"
+        "rows",
+        "runs",
+        "selection_snapshots",
+        "sequences",
+        "signal_sources",
+        "sources",
+        "table_runs",
+        "table_sources",
+        "tables",
+        "views",
+        "workbook_audiences",
+        "workbooks",
+        "workflows",
+        "worksheets"
       ],
       "capability_ids": [
         "attachments.create",
         "attachments.delete",
         "attachments.list",
+        "audiences.archive",
+        "audiences.create",
+        "audiences.get",
+        "audiences.list",
+        "audiences.persona_suggestions",
+        "audiences.preview",
+        "audiences.sources_list",
+        "audiences.update",
+        "brain.context.get",
+        "brain.context.search",
+        "brain.learning.query_benchmarks",
         "cells.inspect",
         "cells.read_page",
         "cells.settle",
@@ -900,6 +334,32 @@
         "executable_definitions.list_resolved",
         "executables.run",
         "executables.save",
+        "graph.archive_node",
+        "graph.archive_relation",
+        "graph.contract_get",
+        "graph.create_node",
+        "graph.create_relation",
+        "graph.edges_list",
+        "graph.export",
+        "graph.get_node",
+        "graph.get_relation",
+        "graph.restore_node",
+        "graph.search",
+        "graph.traverse",
+        "graph.update_node",
+        "graph.update_relation",
+        "linkedin.search_parameters_list",
+        "outreach.access_get",
+        "outreach.activity_list",
+        "outreach.credit_usage_get",
+        "outreach.demand_plan_get",
+        "outreach.enrichment_sequence_get",
+        "outreach.global_pause_set",
+        "outreach.icps_list",
+        "outreach.sender_context_accounts_list",
+        "radar.signal_suggestions_get",
+        "record_enrichment.create",
+        "record_enrichment.get",
         "records.companies_list",
         "records.field_set",
         "records.get",
@@ -907,13 +367,28 @@
         "records.people_list",
         "records.references_resolve",
         "records.search",
+        "records.unbound_rows_enroll",
+        "rows.count",
         "rows.delete",
         "rows.get",
         "rows.query",
         "rows.restore",
         "rows.upsert",
+        "runs.cancel",
+        "runs.get",
+        "runs.pause",
+        "runs.resume",
         "selection_snapshots.create",
         "selection_snapshots.get",
+        "sequences.enroll_selection",
+        "sequences.publish",
+        "signal_sources.capture_key_set",
+        "signal_sources.create",
+        "signal_sources.delete",
+        "signal_sources.events_list",
+        "signal_sources.get",
+        "signal_sources.list",
+        "signal_sources.test_event",
         "sources.cold_outbound_expand",
         "sources.cold_outbound_preview",
         "sources.linkedin_post_engagers_preview",
@@ -940,6 +415,9 @@
         "tables.get",
         "tables.list",
         "tables.update",
+        "usage.action_costs_get",
+        "usage.limits_get",
+        "usage.status_get",
         "views.archive",
         "views.create",
         "views.get",
@@ -954,6 +432,34 @@
         "workbooks.overview",
         "workbooks.update",
         "workbooks.update_user_state",
+        "workflows.activate",
+        "workflows.archive",
+        "workflows.call_child",
+        "workflows.create",
+        "workflows.deactivate",
+        "workflows.delete",
+        "workflows.delivery_binding_get",
+        "workflows.draft_publish",
+        "workflows.draft_save",
+        "workflows.enroll_selection",
+        "workflows.get",
+        "workflows.graph_apply",
+        "workflows.list",
+        "workflows.metrics_get",
+        "workflows.node_inspect",
+        "workflows.node_options",
+        "workflows.node_registry",
+        "workflows.run_retry",
+        "workflows.run_trace_get",
+        "workflows.runs_list",
+        "workflows.trigger_create",
+        "workflows.trigger_delete",
+        "workflows.triggers_list",
+        "workflows.validate_graph",
+        "worksheet.bootstrap",
+        "worksheet.viewport",
+        "worksheet_exports.create",
+        "worksheet_exports.enroll_sequence",
         "worksheets.archive",
         "worksheets.create",
         "worksheets.duplicate",
@@ -961,43 +467,135 @@
         "worksheets.reorder",
         "worksheets.update"
       ],
-      "kernel_sha256": "5e33d07682c459c0f397a8b9e2c40f29352d166efb357a96ca7e3c097bb8b831",
-      "evals_sha256": "a2c1b209c9c90959c644383b2d08f9f007b922b4ead8e4893e78652ab171a0b0",
+      "kernel_sha256": "ca8eb43741db8bf726cac42af116583fe9cdca0a169f82cf800521a4a267a39e",
+      "evals_sha256": "eb0916f337a77ef65b3b971ec030aa2d7e9e71b748d6dfc71719b4a476e47439",
+      "supporting_sha256": {
+        "columns-and-enrichment.md": "9f9dba7dd05d75568e9719df1c2b1be0fc46bb3291a22584f78e7f76c23214a5",
+        "fit-scoring-and-economics.md": "b8927b4053e5c317d1addff6aac5de414f2e10763b06803db6b6f42902ef86ea",
+        "icp.md": "9c906148865f9b570192f414f33fb483e7c3248ff72fa0dc2ac90f619625f113",
+        "sources.md": "4482dfff531c976e73cb2ef56e3a2f37ec16ea3b18d033b89037d9e64a319935",
+        "workflow-and-handoff.md": "b5400b39643b02f220644e8d2362984b6de06ba0b14db4ffb1462c21a4b93b46"
+      },
       "adapter_sha256": {
-        "architect": "f5b87aba519dea806d2f7e47885e3b493050e1e5363ce73744233e1cbdddc533",
-        "claude": "e1030d9b799760a0e39c260b657cfc9826e3cc507d8194523a6ce4c28cbc51d9",
-        "codex": "25d752e3b9b3e56bd87ae0a03f3ee48431ebd7795013e03c7e8238490a8b7295"
+        "architect": "61d84d20df0f02e52047ffd0c5fb05a4c2318226a245d273b54a002df3cd1ee3",
+        "claude": "d0077df42de62190484888b9bb22970e577b6921953afc0cd2d5a54c0e7e76ea",
+        "codex": "bc166715103bdde0571df364a4f70eed46d150b7ab8d4cd1c4d90966fc687a9a"
       }
     },
-    "tasks": {
+    "planning": {
       "capability_domains": [
-        "tasks"
+        "brain",
+        "calendar",
+        "command_center",
+        "content",
+        "growth",
+        "gtm",
+        "identity",
+        "outreach",
+        "record_files",
+        "records",
+        "sequences",
+        "social",
+        "tasks",
+        "visibility",
+        "workbooks",
+        "workflows"
       ],
       "capability_ids": [
-        "tasks.bulk",
-        "tasks.cancel",
-        "tasks.complete",
-        "tasks.count",
+        "brain.companies.answer",
+        "brain.companies.get",
+        "brain.context.browse",
+        "brain.context.get",
+        "brain.context.search",
+        "brain.evidence.search",
+        "brain.learning.query_benchmarks",
+        "brain.outreach.compare",
+        "calendar.events_create",
+        "calendar.events_list",
+        "command_center.action_items.list",
+        "command_center.assets.create",
+        "command_center.assets.list",
+        "command_center.feed.list",
+        "command_center.goals.get",
+        "command_center.overview.get",
+        "content.article_list",
+        "content.artifact_list",
+        "growth.governed_experiment_approve",
+        "growth.governed_experiment_conclude",
+        "growth.governed_experiment_create",
+        "growth.governed_experiment_get",
+        "growth.governed_experiment_list",
+        "growth.governed_experiment_measurement_record",
+        "growth.governed_experiment_publication_record",
+        "growth.governed_experiment_revise",
+        "growth.governed_experiment_stop",
+        "gtm.goals_list",
+        "gtm.tasks.counts",
+        "gtm.tasks.list",
+        "identity.content_pillars_generate",
+        "outreach.workspace_stats_get",
+        "record_files.list",
+        "record_files.upload",
+        "records.get",
+        "sequences.list",
+        "social.analytics_query",
+        "social.strategy_activity_calendar",
+        "social.strategy_archetype_benchmark",
+        "social.strategy_archetype_get",
+        "social.strategy_format_targets_suggest",
+        "social.strategy_overview",
+        "social.strategy_plan_progress",
+        "social.strategy_update",
+        "social.weekly_plan_items_list",
         "tasks.create",
         "tasks.get",
-        "tasks.list",
-        "tasks.reassign",
-        "tasks.reopen",
-        "tasks.update"
+        "visibility.overview",
+        "workbooks.list",
+        "workflows.list"
       ],
-      "kernel_sha256": "44823e2209b86385e9d80c2487fd23d6ecc496314a0db574839eded6a44b93e3",
-      "evals_sha256": "6ea646a0c6e3a23e6f9c91c635e379a99efb1d3af82de800ef5d6c3c987bc0b6",
+      "kernel_sha256": "827728597ab78d6074d8aef81e1d4523352faa02693283ae269e9ee0fb5baaa7",
+      "evals_sha256": "f816c843dfe68188a0b11fcfda0054b7c95f359c12c9485eda98c29d5727c961",
+      "supporting_sha256": {
+        "assets.md": "c6c22c9c79adb14254ae90efbc8a3633f08ac481baa8cc3622d9d959f374eac2",
+        "experiments.md": "14687276d2ecbd17851911b7619f7e6cf61d6a8a7bbd77b6703a6470f7c34307",
+        "strategy.md": "ea584fa0714d7728006fda0619d514e0b34ee8e784b77b3b05b1737590404c69",
+        "weekly-plan.md": "9fbcc4d9fa1105d4d995c8be85175a98528ea6bae181213c9f332b9f8e52160f"
+      },
       "adapter_sha256": {
-        "architect": "0a6f65a76f9ef476d8cdf071186f6188ab7decc3f732aff005378f2046f242ea",
-        "claude": "26dbff1d909a5bab889ef12256f8cb22ca8ac253e9bee49b0ee667252e65db6f",
-        "codex": "afcef3c3d9ddb5f513240e0b4ae94172ba475fb05968271d88d37f912337412a"
+        "architect": "41f209aa289730a5b25aecb7745e08e913b0dda9bb16d625c0adf2da7a8cdf7f",
+        "claude": "74f175b52400d4d9a19a77b19f3d36d4f235b881af80cfe573b004fefd3df8eb",
+        "codex": "2bd28d0eca82f6146691e6c3634bd87b8e08fa1d5e90749265a19d1cbaa311e8"
       }
     },
-    "visibility": {
+    "seo-geo": {
       "capability_domains": [
+        "brain",
+        "integrations",
+        "seo",
+        "tools",
         "visibility"
       ],
       "capability_ids": [
+        "brain.context.get",
+        "brain.context.search",
+        "brain.learning.query_benchmarks",
+        "integrations.gsc.properties",
+        "integrations.gsc.properties_list",
+        "integrations.gsc.property_primary_set",
+        "integrations.gsc.property_select",
+        "integrations.gsc.search_analytics_get",
+        "integrations.gsc.search_analytics_refresh",
+        "integrations.gsc.sitemaps_import",
+        "integrations.gsc.status",
+        "seo.agent_readiness_history",
+        "seo.agent_readiness_latest",
+        "seo.agent_readiness_scan",
+        "seo.llms_txt_generate",
+        "seo.llms_txt_get",
+        "seo.robots_audit",
+        "seo.serp_snapshot_resolve",
+        "seo.serp_spend_get",
+        "tools.llms_txt_generate",
         "visibility.ai_bot_fetch_get",
         "visibility.ai_traffic",
         "visibility.citations",
@@ -1032,71 +630,387 @@
         "visibility.workspace_site_get",
         "visibility.workspace_site_update"
       ],
-      "kernel_sha256": "c743010241b7926d9d12a6960545a1393bfad0644ef09bda46639a5fff360f05",
-      "evals_sha256": "407181411a1157660818dc3f762d5e358de8b2127985155828625626202126b1",
+      "kernel_sha256": "3e9fca49e6411ae08d5afdd01710e28b9954c7734f9434a121723d183b387945",
+      "evals_sha256": "1067363134c1a8411614ae2a8900310462ef829444b65f4e3f1e172c25c32b9e",
+      "supporting_sha256": {
+        "diagnosing-drops.md": "a3d4eba0ecb6f83dda0933ccd8d34ade7f8c1197ccf64303702b9b821b7d04b8",
+        "geo-citations.md": "5fc4ffb405fd97eb8af7d8789f07bc0b9da1db59b21754bbd1db0b18b0b5d891",
+        "keywords.md": "4aaa062cd1ecb55513568148c0080eddb702f755cdfe9e490f5a2f8cffa0070c",
+        "technical-and-schema.md": "69401372399351a2e03b7068bf81a4984b5e65cca95af9c4a687df02f45692c1"
+      },
       "adapter_sha256": {
-        "architect": "ddea1d287b8d45f4d72334d2428f9c25469f2fdd96218192c4773ed183abdfe7",
-        "claude": "adb000881aaeb8caac75aade05c015fc2849b73058f945765b5b66dc2b01b2d7",
-        "codex": "575ef44e923a88722436a06c789d7eb54b40bcc74a9a7ed72e86d22451032ea4"
+        "architect": "faa62234dc3f393d6555dfe972869b8942ab0b4ae8ddfb3101ea8754606d89fe",
+        "claude": "b1763ce12a6c56d1748347f4b6c0190604d8039e051543d8a8dc5822a2255384",
+        "codex": "012f7769e287f6f473386defcf769e06aa69c535ea4e0f2bd7fd63b1fd6ae6ed"
       }
     },
-    "webhooks": {
+    "sequences": {
       "capability_domains": [
-        "webhooks"
+        "brain",
+        "outreach",
+        "rows",
+        "sequences"
       ],
       "capability_ids": [
+        "brain.context.get",
+        "brain.context.search",
+        "outreach.ai_spintax_generate",
+        "outreach.ai_write_generate",
+        "outreach.ai_write_resolve",
+        "outreach.dm_conversation_by_contact_get",
+        "outreach.dm_conversation_get",
+        "outreach.dm_conversation_read",
+        "outreach.dm_conversation_status_update",
+        "outreach.dm_conversations_list",
+        "outreach.dm_message_send",
+        "outreach.mailboxes_list",
+        "outreach.opener_sample_generate",
+        "outreach.opener_styles_list",
+        "outreach.personalization_generate",
+        "outreach.send_schedules.get",
+        "outreach.send_schedules.list",
+        "outreach.senders_list",
+        "outreach.settings_get",
+        "rows.get",
+        "rows.query",
+        "sequences.archive",
+        "sequences.bind",
+        "sequences.definition_get",
+        "sequences.delete",
+        "sequences.enrollment_owner_clear",
+        "sequences.list",
+        "sequences.step_options",
+        "sequences.validate"
+      ],
+      "kernel_sha256": "ee366933a2fb592f3267b7f78e84889dc81a9ee28ec7c3604226549215fe3602",
+      "evals_sha256": "98113e311081c03833aa6a387ee1ed640448501cc4dff4254af334e4f1fdd37a",
+      "supporting_sha256": {
+        "deliverability-and-caps.md": "c7c9b04673dc60edab3acd159a6c04d87d32acdc29e89865f607054eed57f31d",
+        "enrollment.md": "a60501aafe23333334dddcfa30e31e4585e981f2ee0ccc5c50aa681f450767e8",
+        "message-copy.md": "3659d6c10d1c49b376902381d01a4f7c52160f093b5723389a482e39b5b02a18",
+        "replies.md": "2834fe095af6a9669bc50f9d92808ef2894d87e8b95f31e3c100b96358aa06e7",
+        "steps-and-timing.md": "dce5a7b2fe95a0b00b10b27d230417f58452e3d03b925bdbe0f0fcd982262b13"
+      },
+      "adapter_sha256": {
+        "architect": "0621b4d6f1e63b1896ab7d0251af5fc505da18db19e7abd9dd3fd56635a7643b",
+        "claude": "9146880265c15e2bf2eabfb682563b347bd89818a753298b547eb315e8e6d19b",
+        "codex": "5477abfbc218cf9e5a55418a789fb53b65301ab5d7525f958a2f2b4bf3ede46f"
+      }
+    },
+    "social": {
+      "capability_domains": [
+        "brain",
+        "content",
+        "social",
+        "tools"
+      ],
+      "capability_ids": [
+        "brain.content.get",
+        "brain.content.search",
+        "brain.context.get",
+        "brain.context.search",
+        "brain.learning.query_benchmarks",
+        "brain.social.benchmarks.query",
+        "brain.social.patterns.compare",
+        "content.approval.authorize_publish",
+        "content.approval.decide",
+        "content.approval.submit",
+        "content.approve",
+        "content.artifact_archive",
+        "content.artifact_create",
+        "content.artifact_generate",
+        "content.artifact_get",
+        "content.artifact_list",
+        "content.artifact_update",
+        "content.assist",
+        "content.campaigns_list",
+        "content.compose",
+        "content.delete_republish_propose",
+        "content.delivery_publish",
+        "content.destination_test",
+        "content.destinations_list",
+        "content.generate",
+        "content.generate_hooks",
+        "content.hook_batch_get",
+        "content.labels_get",
+        "content.labels_list",
+        "content.regenerate_hooks",
+        "content.replacement_create",
+        "content.schedule",
+        "content.submit_review",
+        "content.unschedule",
+        "content.version_create",
+        "content.version_diff_get",
+        "content.version_get",
+        "content.version_rollback",
+        "content.versions_list",
+        "engagement.opportunities.counts",
+        "engagement.opportunities.list",
+        "engagement.opportunities.status_set",
+        "engagement.people_engaged_n_times",
+        "social.accounts_list",
+        "social.analytics_goal_update",
+        "social.analytics_query",
+        "social.analytics_refresh",
+        "social.analytics_rollup_get",
+        "social.audience_analytics",
+        "social.brand_voice_get",
+        "social.comment_publish",
+        "social.draft_score",
+        "social.linkedin_analytics_import",
+        "social.linkedin_notification_subscriptions_list",
+        "social.linkedin_notifications_list",
+        "social.linkedin_notifications_pull",
+        "social.linkedin_notifications_subscribe",
+        "social.linkedin_notifications_unsubscribe",
+        "social.linkedin_post_notifications_list",
+        "social.metric_definitions",
+        "social.performance_analysis_get",
+        "social.performance_snapshot_get",
+        "social.post_analysis_job_create",
+        "social.post_analytics",
+        "social.post_format_hooks_list",
+        "social.reddit_comment_publish",
+        "social.strategy_activity_calendar",
+        "social.strategy_archetype_inspiration",
+        "social.strategy_suggestions_generate",
+        "social.strategy_weekly_post_action",
+        "social.strategy_weekly_post_materialize",
+        "social.weekly_plan_item_create",
+        "social.weekly_plan_item_transition",
+        "social.weekly_plan_item_update",
+        "social.weekly_plan_items_list",
+        "tools.linkedin_headline_generate",
+        "tools.linkedin_hook_generate",
+        "tools.linkedin_post_generate",
+        "tools.x_hook_generate",
+        "tools.x_post_generate"
+      ],
+      "kernel_sha256": "e4a01828d613981bdcbd2820edb6a3b9bac842888511ec0a417bd5e1557caf3b",
+      "evals_sha256": "f5d6098c9df55c34d9c390eeb5dbafb8e0acfa348caa6f189ae7d7475ea6882b",
+      "supporting_sha256": {
+        "engagement.md": "60ebe8b10e762ec33163da742f18cfd6ed0767f921c4ac13e4edf1e2737f3418",
+        "hooks.md": "43b53ca910c9dcb62e162554e6209d6cd934a4c8adca17dff410a9c13c53986e",
+        "linkedin.md": "7e66f54dc088631cf59d0dd081a990d1e84923a11fbcba25d23e0ba2dfaa69ae",
+        "reddit.md": "97e2d600810e1a143ed13de2f840ebf877e5af4bf68762d5fd70c5152f7b0faa",
+        "x.md": "6596f593d66f1e83f5dcb5c02559f765d07640eb49578d6f041b551bdec70f3b"
+      },
+      "adapter_sha256": {
+        "architect": "d3ee7cbe7cca6267050747e71bec41cac28bcf21973430f90b7cc64c9c13dcbb",
+        "claude": "4b9cd857d161a3113471b0e380195fccdabe9dfcd30420398a6deeeb385183f0",
+        "codex": "cc2b3fc10a1cf44ff01dde66237a28bbc86e5b8835ed9024261aa7bb078eedfa"
+      }
+    },
+    "social.linkedin": {
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "capability_ids": [
+        "brain.content.search",
+        "social.accounts_list"
+      ],
+      "kernel_sha256": "5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49",
+      "evals_sha256": "4f4839bd9ae78c297f29b049216a8d2c3f0962acec1f9936053383a74a3a88cd",
+      "supporting_sha256": {},
+      "adapter_sha256": {
+        "architect": "be8958728ba0d2f35f867dbfa9182ab7f5d59db7c5dbe59752fb7241c1714ced",
+        "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
+        "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
+      }
+    },
+    "social.reddit": {
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "capability_ids": [
+        "brain.content.search"
+      ],
+      "kernel_sha256": "1e0783bd031500ee8c99ac0403d2a5b9285ac2718502f57ad11c353151f37c77",
+      "evals_sha256": "d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc",
+      "supporting_sha256": {},
+      "adapter_sha256": {
+        "architect": "b5ef35c44edb5c8406ba5d6a57cfa8cbd7a183b3d5ac98c8296ce4a1bc5c1c41",
+        "claude": "0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c",
+        "codex": "f413018d24badd59f80ac471f70c3e06142375ef91b3a458df08e38168003ba9"
+      }
+    },
+    "social.x": {
+      "capability_domains": [
+        "brain",
+        "social",
+        "tables"
+      ],
+      "capability_ids": [
+        "brain.content.search",
+        "social.accounts_list"
+      ],
+      "kernel_sha256": "77d0dd8498f0db28efc9a20bb523a83e2a5c9ba947a0777e268764257c839969",
+      "evals_sha256": "9992c3735014e6070b68c0514abd519ad1d4e8f945966901b01c0cb4e1f53982",
+      "supporting_sha256": {},
+      "adapter_sha256": {
+        "architect": "be8958728ba0d2f35f867dbfa9182ab7f5d59db7c5dbe59752fb7241c1714ced",
+        "claude": "4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68",
+        "codex": "483959ea4a0433680917b2ba3ed10fe20714d33df3bd2d9ce45e205b5a7f6173"
+      }
+    },
+    "workspace": {
+      "capability_domains": [
+        "brain",
+        "integrations",
+        "mailboxes",
+        "notifications",
+        "outreach",
+        "products",
+        "seo",
+        "visibility",
+        "webhooks",
+        "workspace"
+      ],
+      "capability_ids": [
+        "brain.context.browse",
+        "brain.context.get",
+        "brain.context.propose",
+        "brain.context.propose_document",
+        "brain.context.search",
+        "brain.context.website_source_register",
+        "integrations.attribution_status_get",
+        "integrations.crm_import_job_get",
+        "integrations.crm_importable_lists_get",
+        "integrations.ga4.connect_start",
+        "integrations.ga4.properties",
+        "integrations.ga4.status",
+        "integrations.github_repositories_list",
+        "integrations.gsc.connect_start",
+        "integrations.gsc.properties",
+        "integrations.gsc.properties_list",
+        "integrations.gsc.status",
+        "integrations.hubspot_deal_rule_get",
+        "integrations.linkedin_parameters_search",
+        "integrations.outreach_connectors_list",
+        "integrations.scheduler_connections_list",
+        "integrations.scheduler_event_types_list",
+        "integrations.scheduler_status_get",
+        "integrations.slack_channels_list",
+        "integrations.slack_notification_routing_get",
+        "integrations.stripe_status_get",
+        "integrations.unipile_status_get",
+        "mailboxes.deliverability_get",
+        "notifications.archive",
+        "notifications.get",
+        "notifications.list",
+        "notifications.mark_all_read",
+        "notifications.mark_read",
+        "notifications.preferences_get",
+        "notifications.preferences_update",
+        "notifications.type_preferences_get",
+        "notifications.type_preferences_reset",
+        "notifications.type_preferences_update",
+        "notifications.unread_counts_get",
+        "notifications.workspace_type_preferences_get",
+        "notifications.workspace_type_preferences_reset",
+        "notifications.workspace_type_preferences_update",
+        "outreach.access_get",
+        "outreach.mailboxes_list",
+        "outreach.pr_mailboxes_list",
+        "outreach.senders_list",
+        "outreach.settings_get",
+        "products.website_refresh",
+        "products.website_scrape",
+        "seo.agent_readiness_scan",
+        "seo.llms_txt_generate",
+        "seo.llms_txt_get",
+        "seo.robots_audit",
+        "visibility.site_files_get",
+        "visibility.site_scan",
+        "visibility.sitemap_get",
+        "visibility.workspace_site_ensure",
+        "visibility.workspace_site_get",
+        "visibility.workspace_site_update",
         "webhooks.create",
         "webhooks.delete",
         "webhooks.deliveries_list",
         "webhooks.delivery_get",
         "webhooks.list",
-        "webhooks.test_delivery"
+        "webhooks.test_delivery",
+        "workspace.company_setup_dismiss",
+        "workspace.company_setup_handoff_set",
+        "workspace.company_setup_state_get"
       ],
-      "kernel_sha256": "5028e4fca152f98d4bb559f783c93babfa5b3f5c2a4f01ea4a9350db88d2eb1b",
-      "evals_sha256": "c3798bc3a305d01adc11e40ba80246794e24f6f1d0e5b054f2a2ba466158fe60",
+      "kernel_sha256": "881c464754c7b842dfd4724f12e1685193d7bc9de1221e9908aa489bc763e798",
+      "evals_sha256": "2649c7c25c65770664e66a32bd0c6d5505ef1502c531cb88991c9713c063f3cf",
+      "supporting_sha256": {
+        "notifications.md": "e7c76b3b5c7697524032ff7fd18b292ba9b1238bbe6680424d8df4961db49bbc",
+        "providers-and-mailboxes.md": "f34d58f6df8774d3151aaf3aa5d885a24708539b576a63a2186afc504b30583d",
+        "site-onboarding.md": "2987ead5b4b17003e538f54a677b6960c651d32ddcd084f177fe72d0abb64388",
+        "webhooks.md": "b2aaee3bf29fc7a943a0ef241a7e4fa0a3f62612d9658c2d60da0c42a2c7278d"
+      },
       "adapter_sha256": {
-        "architect": "0f23860c2ac4e511f7142cafab938786a469d821c681c8c6b0eb33792bc4a124",
-        "claude": "8c3a3c2c4d00e64ffaf897378ef10d253c35cda33ad6a334023effe14bd91345",
-        "codex": "81f6873a64e5c71fdfa4db3b0d44cf3f674b6d35c2269409bd73ebc029233f2a"
+        "architect": "cf1485e6cbea9f73b3c7111183a161ebefa300224879e849c26786c80ebb14e1",
+        "claude": "77ca63e22547fdc0fbbc511d38d0de58f23ba8137be2f9c2232a1a99776d09f1",
+        "codex": "db51cac877de5d33bc97d6fb6a4fb8629985d6b79227dbc8f6011cdb22ba3f1e"
       }
     },
-    "weekly-growth-plan": {
-      "capability_domains": [],
+    "writing": {
+      "capability_domains": [
+        "brain",
+        "content",
+        "research"
+      ],
       "capability_ids": [
+        "brain.content.get",
+        "brain.content.search",
         "brain.context.get",
         "brain.context.search",
-        "calendar.events_create",
-        "calendar.events_list",
-        "command_center.action_items.list",
-        "command_center.feed.list",
-        "command_center.goals.get",
-        "command_center.overview.get",
+        "brain.evidence.search",
+        "content.approval.authorize_publish",
+        "content.approval.decide",
+        "content.approval.submit",
+        "content.approve",
+        "content.article_archive",
+        "content.article_asset_import",
+        "content.article_asset_register",
+        "content.article_asset_upload",
+        "content.article_create_schedule",
+        "content.article_deliveries_list",
+        "content.article_delivery_create",
+        "content.article_delivery_payload_get",
+        "content.article_distribution_get",
+        "content.article_duplicate",
+        "content.article_enabled_get",
+        "content.article_get",
         "content.article_list",
-        "content.artifact_list",
-        "gtm.goals_list",
-        "gtm.tasks.list",
-        "outreach.workspace_stats_get",
-        "record_files.list",
-        "record_files.upload",
-        "records.get",
-        "sequences.list",
-        "social.analytics_query",
-        "social.strategy_activity_calendar",
-        "social.strategy_overview",
-        "social.strategy_plan_progress",
-        "social.weekly_plan_items_list",
-        "tasks.create",
-        "tasks.get",
-        "visibility.overview",
-        "workbooks.list",
-        "workflows.list"
+        "content.article_selection_edit",
+        "content.article_update",
+        "content.delete_republish_propose",
+        "content.delivery_publish",
+        "content.destination_test",
+        "content.destinations_list",
+        "content.replacement_create",
+        "content.schedule",
+        "content.submit_review",
+        "content.unschedule",
+        "content.version_create",
+        "content.version_diff_get",
+        "content.version_get",
+        "content.versions_list",
+        "research.urls_fetch"
       ],
-      "kernel_sha256": "06a6d8eb74bd0e5c6542bc0108550935669c5409d40abe25455eddcfd16ce669",
-      "evals_sha256": "0b4163ec95d3e5d7ab9cb1391943010d50ebd9b4a60c44d74d0be74594a1da39",
+      "kernel_sha256": "c1be4a291e14cb21dd56d405e1d10681fda9f2a11d1e22e6fb42846f9f3af47a",
+      "evals_sha256": "8b427a939032ab2625e0bbd0153017fc18e6778282e4c2ec8108bd6be2e49ce7",
+      "supporting_sha256": {
+        "briefs.md": "436ab32787a052afdd378fcc6c48049de873e155fa9357500caaf0eb795f513b",
+        "drafting.md": "f4ae381020b08d63bf61665642d2571ae8de373d6f5dced481c1fb01f50284bc",
+        "publishing.md": "b5f916904faae3fddb0b85ca575a5da5362ab33a81f994d0f9280f38ead27359",
+        "revision-and-voice.md": "f21d056f33ebe08e194650e1aee6d06f7992c01a9eaf15ee06e11a8247cd6ac0"
+      },
       "adapter_sha256": {
-        "architect": "1d0d4231fd67bfd2f2e2767ba833cc30270ec76e0e7c8396317a670685f9b259",
-        "claude": "48c46393e8334ee35aefa936405cfc9473dc0cb510ab9ad71a05ddd312029079",
-        "codex": "57d16253d6f42e3462716244f3d51f146ad20dea0395c63a9131a1486567f150"
+        "architect": "75dcb3990eb7f2ba411ede3ba661a9633437a03634111b416b9923657b7f490a",
+        "claude": "00d627d4ce1d06831eca918df0cddad05c799fc4e6c876d030c070e3103582d3",
+        "codex": "1a5d6e264b9676a55fa284a94c3bd00ec605c7ccaf61029708aba51b348e0484"
       }
     }
   }

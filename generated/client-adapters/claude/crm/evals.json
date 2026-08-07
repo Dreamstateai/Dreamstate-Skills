@@ -1,0 +1,892 @@
+{
+  "schema_version": 1,
+  "skill_id": "crm",
+  "cases": [
+    {
+      "id": "records-full-context-read",
+      "request": "Give me the full picture on this buyer, their company, and anything connected to them, including past plays and where their info came from.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "records.people_list",
+        "records.companies_list",
+        "records.list",
+        "records.search",
+        "records.get",
+        "records.history_get",
+        "records.references_resolve",
+        "records.source_lookup",
+        "records.buyer_brief_get",
+        "records.playbook_get",
+        "records.wiki_get",
+        "records.lists_get",
+        "records.memberships_get"
+      ],
+      "required_executed_capability_ids": [
+        "records.people_list",
+        "records.companies_list",
+        "records.list",
+        "records.search",
+        "records.get",
+        "records.history_get",
+        "records.references_resolve",
+        "records.source_lookup",
+        "records.buyer_brief_get",
+        "records.playbook_get",
+        "records.wiki_get",
+        "records.lists_get",
+        "records.memberships_get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "That summary is off. Please fix it.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "revision-safe-write-and-membership",
+      "request": "Update person rec-1 with the owner, file, and note we agreed on, and make sure they're in the right lists.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "records.get",
+        "records.field_set",
+        "records.value_retire",
+        "records.note_add",
+        "record_files.upload",
+        "record_files.list",
+        "records.list_add",
+        "records.list_remove"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_field_changed",
+          "expected": "present",
+          "object_key": "person",
+          "record_id": "rec-1",
+          "field_keys": [
+            "owner"
+          ],
+          "reason": "the owner field must carry a real new value row bound to the revision the read returned"
+        },
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "a revision-safe edit revises the exact record and must not create a duplicate person"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_files.upload",
+          "min_count": 1,
+          "reason": "record_files.upload must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "records.note_add",
+          "min_count": 1,
+          "reason": "records.note_add must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "records.list_add",
+          "min_count": 1,
+          "reason": "records.list_add must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "id": "confirmed-merge-unmerge-erase-and-message",
+      "request": "Please combine the duplicate records, reverse the mistaken merge, permanently remove the obsolete record, and send this person the message we agreed on.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "records.get",
+        "records.merge",
+        "records.unmerge",
+        "records.erase",
+        "records.message_channels_get",
+        "records.message_send"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "the turn is a review or pre-approval boundary and must not create a durable effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "records.merge",
+          "expected": "absent",
+          "reason": "records.merge is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "records.erase",
+          "expected": "absent",
+          "reason": "records.erase is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "records.message_send",
+          "expected": "absent",
+          "reason": "records.message_send is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "record_objects.record_create",
+        "records.create"
+      ],
+      "approved_mutation_max_changes": 1,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "person",
+          "record_display_name": "T25 Ada Lovelace"
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only record",
+        "invented record id"
+      ],
+      "id": "production-local-person-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": [
+        "record_objects.record_create",
+        "records.create",
+        "records.get"
+      ],
+      "request": "Create a person record for T25 Ada Lovelace.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "record_deals.create"
+      ],
+      "approved_mutation_max_changes": 1,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "deal",
+          "record_display_name": "T25 Pipeline Proof Deal"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_deals.create",
+          "min_count": 1,
+          "reason": "record_deals.create must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only deal",
+        "invented deal id",
+        "prose-only verification"
+      ],
+      "id": "production-local-deal-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": [
+        "record_deals.board_get",
+        "record_deals.create"
+      ],
+      "request": "Create a new deal called T25 Pipeline Proof Deal.",
+      "resume_after_approval": "owner_exact",
+      "follow_up_turns": [
+        {
+          "request": "One correction: use the evidence you already found.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schema-inspect-full",
+      "request": "How are our main record types set up right now, what's related to what, who can see them, and what would be affected if we changed them?",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_objects.list",
+        "record_objects.attributes_list",
+        "record_attributes.list",
+        "record_objects.layout_get",
+        "record_relationships.list",
+        "record_objects.permission_get",
+        "record_objects.notification_prefs_get",
+        "record_definitions.impact_get"
+      ],
+      "required_executed_capability_ids": [
+        "record_objects.list",
+        "record_objects.attributes_list",
+        "record_attributes.list",
+        "record_objects.layout_get",
+        "record_relationships.list",
+        "record_objects.permission_get",
+        "record_objects.notification_prefs_get",
+        "record_definitions.impact_get"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: base the answer on the results you already pulled from the workspace.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schema-create-and-revise-object",
+      "request": "Set up the custom record type we reviewed, including its fields, layout, and a sample entry.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_objects.create",
+        "record_objects.update",
+        "record_attributes.create",
+        "record_objects.attribute_create",
+        "record_objects.attribute_update",
+        "record_objects.attributes_reorder",
+        "record_objects.reorder",
+        "record_objects.layout_update",
+        "record_objects.record_create"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "schema and field proposals must not create an unrelated business record as a side effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.create",
+          "min_count": 1,
+          "reason": "record_objects.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.attribute_create",
+          "min_count": 1,
+          "reason": "record_objects.attribute_create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.layout_update",
+          "min_count": 1,
+          "reason": "record_objects.layout_update must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "id": "relationship-and-policy-lifecycle",
+      "request": "Set up the relationship we reviewed between these two record types, and bring the record type's access and notification settings in line with the policy we reviewed.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_relationships.create",
+        "record_relationships.update",
+        "record_relationships.reorder",
+        "record_relationships.list",
+        "record_objects.permission_get",
+        "record_objects.permission_update",
+        "record_objects.notification_prefs_get",
+        "record_objects.notification_prefs_update"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "schema and policy proposals must not create a business record as a side effect"
+        }
+      ]
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "record_objects.create",
+        "record_objects.record_create"
+      ],
+      "approved_mutation_max_changes": 2,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "present",
+          "object_key": "partner",
+          "record_display_name": "T25 Northstar Partner"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_objects.create",
+          "min_count": 1,
+          "reason": "record_objects.create must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock run receipt",
+        "fixture-only record",
+        "invented record id"
+      ],
+      "id": "production-local-custom-partner-record",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": [
+        "record_objects.list",
+        "record_objects.attributes_list",
+        "record_objects.create",
+        "record_objects.record_create"
+      ],
+      "request": "I need a Partner record type with the key partner, Partner and Partners as its labels, and no icon. Add a T25 Northstar Partner record without any extra details.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "id": "canonical-deal-crud-and-move",
+      "request": "Show me the deals in this pipeline view, open the one we discussed, apply the reviewed field changes, and move it to the next stage.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "deals.list",
+        "deals.get",
+        "deals.create",
+        "deals.update",
+        "deals.move"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "deal",
+          "min_count": 1,
+          "reason": "deal review work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "deals.move",
+          "expected": "absent",
+          "reason": "deals.move is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "deals.update",
+          "expected": "absent",
+          "reason": "deals.update is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    },
+    {
+      "id": "deal-board-review-and-transition",
+      "request": "Put the approved deal on our board with the reviewed changes and move it to the new pipeline and stage.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_deals.board_get",
+        "record_deals.create",
+        "record_deals.update",
+        "record_deals.pipeline_transition",
+        "record_deals.stage_move"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "deal",
+          "min_count": 1,
+          "reason": "pipeline-definition work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_deals.pipeline_transition",
+          "expected": "absent",
+          "reason": "record_deals.pipeline_transition is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    },
+    {
+      "id": "pipeline-and-stage-definition",
+      "request": "Update our pipelines and stages to match the reviewed design, ordering, and lifecycle.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_pipelines.list",
+        "record_pipelines.create",
+        "record_pipelines.update",
+        "record_pipelines.reorder",
+        "record_pipelines.lifecycle_set",
+        "record_pipeline_stages.create",
+        "record_pipeline_stages.update",
+        "record_pipeline_stages.impact_get",
+        "record_pipeline_stages.reorder",
+        "record_pipeline_stages.lifecycle_set"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "deal",
+          "min_count": 1,
+          "reason": "pipeline-definition work must not create or move a deal before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipeline_stages.lifecycle_set",
+          "expected": "absent",
+          "reason": "record_pipeline_stages.lifecycle_set is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_pipelines.lifecycle_set",
+          "expected": "absent",
+          "reason": "record_pipelines.lifecycle_set is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    },
+    {
+      "id": "confirmed-template-install",
+      "request": "Add the record template we reviewed to the workspace.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_templates.list",
+        "record_templates.preview",
+        "record_templates.install"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "deal",
+          "min_count": 1,
+          "reason": "a template proposal must not create or install anything before the reviewed effect is approved"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_templates.install",
+          "expected": "absent",
+          "reason": "record_templates.install is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    },
+    {
+      "id": "saved-view-lifecycle-v1-and-v2",
+      "request": "Set up a saved record view for the items we reviewed, including one that also matches records with an empty optional value, and show me what each returns.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "saved_views.list",
+        "saved_views.create",
+        "saved_views.update",
+        "saved_views.results",
+        "saved_views.v2_list",
+        "saved_views.v2_create",
+        "saved_views.v2_runtime_upsert",
+        "saved_views.v2_execute"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "saved_view_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the saved-view mutation remains behind explicit confirmation"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.create",
+          "min_count": 1,
+          "reason": "saved_views.create must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.v2_runtime_upsert",
+          "min_count": 1,
+          "reason": "saved_views.v2_runtime_upsert must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "id": "confirmed-saved-view-delete",
+      "request": "Get rid of the saved view I was reviewing.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "saved_views.list",
+        "saved_views.delete"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "saved_view_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the saved-view mutation remains behind explicit confirmation"
+        }
+      ]
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "saved_views.create"
+      ],
+      "approved_mutation_max_changes": 1,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "saved_view_created",
+          "expected": "present",
+          "saved_view_name": "T25 Active People Proof"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "saved_views.create",
+          "min_count": 1,
+          "reason": "saved_views.create must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock saved-view receipt",
+        "fixture-only saved view",
+        "invented saved-view id",
+        "prose-only verification"
+      ],
+      "id": "production-local-saved-person-view",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": [
+        "saved_views.list",
+        "saved_views.create",
+        "saved_views.results"
+      ],
+      "request": "I need a Person view called T25 Active People Proof showing everyone, using the standard layout without grouping. Show me the people in it.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "id": "staged-import-and-export-review",
+      "request": "Bring the people from this CRM file into the workspace, tell me what made it in and what didn't, and give me a file back with everyone in the matching saved selection.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_imports.source_upload",
+        "record_imports.rows_stage",
+        "record_imports.create",
+        "record_imports.get",
+        "record_imports.list",
+        "record_imports.errors_list",
+        "record_exports.create",
+        "record_exports.get",
+        "record_exports.download"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_transfer_created",
+          "expected": "absent",
+          "transfer_kind": "import",
+          "min_count": 1,
+          "reason": "the import or export remains a reviewed proposal until explicitly confirmed"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_imports.rows_stage",
+          "min_count": 1,
+          "reason": "record_imports.rows_stage must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "id": "confirmed-transfer-control",
+      "request": "Please get the failed import moving again and stop the export.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "record_imports.get",
+        "record_imports.control",
+        "record_exports.get",
+        "record_exports.control"
+      ],
+      "must_not_execute": true,
+      "expected_workspace_outcome": [
+        {
+          "check": "record_transfer_created",
+          "expected": "absent",
+          "transfer_kind": "export",
+          "min_count": 1,
+          "reason": "the import or export remains a reviewed proposal until explicitly confirmed"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_imports.control",
+          "expected": "absent",
+          "reason": "record_imports.control is declared for shape only on this turn, so nothing of it may persist."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_exports.control",
+          "expected": "absent",
+          "reason": "record_exports.control is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    },
+    {
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "record_imports.source_upload",
+        "record_imports.create",
+        "record_imports.rows_stage"
+      ],
+      "approved_mutation_max_changes": 3,
+      "execution_profile": "production_real",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_transfer_created",
+          "expected": "present",
+          "transfer_kind": "import"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_imports.rows_stage",
+          "min_count": 1,
+          "reason": "record_imports.rows_stage must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ],
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock transfer receipt",
+        "fixture-only import job",
+        "invented import id",
+        "prose-only verification"
+      ],
+      "id": "production-local-one-row-record-import",
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": [
+        "record_imports.source_upload",
+        "record_imports.create",
+        "record_imports.rows_stage",
+        "record_imports.get",
+        "record_imports.errors_list"
+      ],
+      "request": "Add T25 Transfer Proof Person from t25-transfer-proof.csv without changing any existing people, and treat a duplicate as a failure. Send me the job ID and what happened to the row.",
+      "resume_after_approval": "owner_exact"
+    },
+    {
+      "id": "task-read-create-update-and-lifecycle",
+      "request": "How many tasks do I have, and what are the details on the one I mentioned? Add a follow-up, fix the original task's details, and once the one we discussed is ready, get it to the right person and the right status.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "tasks.list",
+        "tasks.count",
+        "tasks.get",
+        "tasks.create",
+        "tasks.update",
+        "tasks.reassign",
+        "tasks.complete",
+        "tasks.reopen",
+        "tasks.cancel"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "task_state_changed",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "without one exact task id and requested transition no durable task may change"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "Actually, leave my tasks as they were, I only wanted to review the proposed change.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "duplicate_effect",
+              "capability_id": "tasks.create"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "task-bulk-bounded",
+      "request": "Clean up those tasks for me and tell me what happened to each one.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "tasks.bulk"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "task_state_changed",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "without an explicit bounded task-id selection no durable task may change"
+        }
+      ]
+    },
+    {
+      "id": "product-evidence-read-and-ingest",
+      "request": "What product content do we currently have and where did it come from? Also bring the Dreamstate brief at workspace/products/dreamstate-brief.pdf and the page at https://trydreamstate.com/product into our product materials, refresh the saved page once it's stale, and archive the old content item once the new one is in. Keep the cost under 25 credits total.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "products.get",
+        "products.list",
+        "products.content_list",
+        "products.og_meta_get",
+        "products.document_process",
+        "products.website_scrape",
+        "products.website_refresh",
+        "products.content_archive"
+      ],
+      "required_executed_capability_ids": [
+        "products.content_list",
+        "products.og_meta_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "product research and draft mutations must not silently publish workspace Context"
+        },
+        {
+          "check": "visibility_artifact_changed",
+          "expected": "present",
+          "artifact_kind": "website_content",
+          "reason": "the scrape must land real fetched website content, so a narrated page summary cannot pass"
+        }
+      ]
+    },
+    {
+      "id": "context-source-transition-unavailable",
+      "request": "The product evidence in source 5f32bb23-e0b9-4f20-a5be-82c8b9ce3b41 is out of date as of version 7. Mark it stale.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "brain.context.graph"
+      ],
+      "must_not_execute": true,
+      "required_concepts": [
+        "brain.context.graph"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "ambiguous-record-reference-needs-clarification",
+      "request": "Send Alex the note we talked about.",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "required_capability_ids": [
+        "records.search",
+        "records.get"
+      ],
+      "must_not_execute": true,
+      "must_not": [
+        {
+          "kind": "repeat_tool_calls"
+        }
+      ],
+      "must_use_popup_when_missing": [
+        "record_identity"
+      ],
+      "max_intake_checkpoints": 1
+    }
+  ]
+}

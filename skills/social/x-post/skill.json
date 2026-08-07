@@ -43,7 +43,7 @@
     "content:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "3ad885ec954ac37e",
+  "verified_capability_hash": "59276ee1e9bf1d3e",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/social/x-post/SKILL.md",
   "install_command": "dreamstate skills install x-post",

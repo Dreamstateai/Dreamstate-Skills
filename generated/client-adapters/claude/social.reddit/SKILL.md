@@ -7,21 +7,21 @@ capability_ids: ["brain.content.search"]
 completion_contract: {"version":1,"fields":[{"id":"link_state","description":"Verified real-thread link retrieval state.","allowed_values":["verified_links","none_retrieved","unavailable"]},{"id":"evidence_trust","description":"Untrusted provider evidence handling state.","allowed_values":["fenced","none_retrieved","unavailable"]},{"id":"artifact_class","description":"Authored standalone artifact classification.","allowed_values":["authored_standalone","community_reply","none"]},{"id":"review_state","description":"Human-review readiness state.","allowed_values":["reviewable","not_created","not_applicable"]},{"id":"rights_state","description":"Workspace research rights state.","allowed_values":["workspace_authorized","unavailable","not_applicable"]},{"id":"reply_state","description":"External Reddit reply execution state.","allowed_values":["not_published","published_with_approval","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
+  playbook_kernel_hash: f576421493706e499305f22b23670520dc9467e4ab6c3cff0d82730c6b56b9ac
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 3ad885ec954ac37e
-  manifest_digest: 6c5fd2925eb2f2f94e98cb978f0ef03cbbabff6a49bc376e19b74afb701b54ed
+  capability_hash: 59276ee1e9bf1d3e
+  manifest_digest: 9bc0070263549b8fa230cb4b80589a806b007c54facb52996c3dcfaeef6e99a2
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.5.9
-  source_release_hash: 3a3cf1b7d0cfcdaf4e31d7ea482343871feb3ea6a505f6619f5719ee6b699a07
+  source_release_hash: f576421493706e499305f22b23670520dc9467e4ab6c3cff0d82730c6b56b9ac
   generator_version: 1.0.0
   client: claude
   kernel_id: social.reddit
   kernel_file: KERNEL.md
-  kernel_sha256: 2263ac5498807ce5fcc80ef39e257b6a4cc3801afef0cdc5cef54aa341fafbc3
+  kernel_sha256: 1e0783bd031500ee8c99ac0403d2a5b9285ac2718502f57ad11c353151f37c77
   adapter_sha256: 0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c
   evals_file: evals.json
   evals_sha256: d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc
@@ -71,6 +71,6 @@ Reddit content remains `workspace_research`. It may support private tables, comp
 
 Research and table preparation are non-mutating. Durable ingestion follows workspace policy. Replies, posts, external writes, strategy or playbook changes, and rights-sensitive exports require explicit user approval. Return real links, canonical identities, evidence, provider state, risks, and run truth.
 
-When the resolved plan requests a reviewable artifact and canonical evidence validation succeeds, do not terminate until `propose_artifact` succeeds. `review_state=not_created` is valid only for an analysis-only request or when a concrete proposal blocker is reported; it is never a substitute for the requested proposal.
+When the resolved plan requests a reviewable artifact and canonical evidence validation succeeds, do not terminate until that artifact is durably saved and read back. `review_state=not_created` is valid only for an analysis-only request or when a concrete blocker is reported; it is never a substitute for the artifact that was asked for.
 
 When a completed canonical Reddit research run returns verified thread URLs and fenced evidence, terminal completion must report `link_state=verified_links` and `evidence_trust=fenced`. Report `link_state=unavailable` only when the canonical run lacks verified URLs or reports a source blocker, and preserve that blocker explicitly.

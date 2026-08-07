@@ -6,8 +6,7 @@
       ],
       "id": "measured-social-diagnosis",
       "must_not_load": [
-        "seo",
-        "visibility"
+        "seo-geo"
       ],
       "request": "Can you figure out what caused our LinkedIn engagement to drop this month?",
       "required_capability_ids": [
@@ -38,6 +37,50 @@
       "required_executed_capability_ids": [
         "social.analytics_query",
         "social.post_analytics"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "id": "measured-usage-and-remaining-limits",
+      "request": "How much of our credit allowance have we used this month, and can we afford to run a full GA4 refresh right now?",
+      "required_capability_ids": [
+        "usage.status_get",
+        "usage.limits_get",
+        "usage.action_costs_get"
+      ],
+      "required_concepts": [
+        "measured, not estimated"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "credit status, limits, and action cost figures already available from a live read"
+        }
+      ],
+      "required_executed_capability_ids": [
+        "usage.status_get",
+        "usage.limits_get",
+        "usage.action_costs_get"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "id": "usage-history-ledger-is-paginated-not-a-full-export",
+      "must_not_ask_user": true,
+      "request": "Pull our recent credit spend history so I can see what we've been charged for.",
+      "required_capability_ids": [
+        "usage.history_list"
+      ],
+      "required_concepts": [
+        "paginated ledger, not a full export",
+        "completeness"
+      ],
+      "required_executed_capability_ids": [
+        "usage.history_list"
       ]
     },
     {
@@ -239,6 +282,33 @@
         "social.performance_snapshot_get",
         "social.strategy_activity_calendar",
         "social.strategy_plan_progress"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-usage-surface-coverage",
+      "request": "Is our usage and billing reporting ready for production? Tell me what it covers and any restrictions we need to account for.",
+      "expected_skill_ids": [
+        "analytics"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "usage.action_costs_get",
+        "usage.history_list",
+        "usage.limits_get",
+        "usage.status_get"
+      ],
+      "required_concepts": [
+        "usage.action_costs_get",
+        "usage.history_list",
+        "usage.limits_get",
+        "usage.status_get"
       ],
       "must_not": [
         {

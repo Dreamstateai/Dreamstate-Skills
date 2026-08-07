@@ -18,6 +18,6 @@ Reddit content remains `workspace_research`. It may support private tables, comp
 
 Research and table preparation are non-mutating. Durable ingestion follows workspace policy. Replies, posts, external writes, strategy or playbook changes, and rights-sensitive exports require explicit user approval. Return real links, canonical identities, evidence, provider state, risks, and run truth.
 
-When the resolved plan requests a reviewable artifact and canonical evidence validation succeeds, do not terminate until `propose_artifact` succeeds. `review_state=not_created` is valid only for an analysis-only request or when a concrete proposal blocker is reported; it is never a substitute for the requested proposal.
+When the resolved plan requests a reviewable artifact and canonical evidence validation succeeds, do not terminate until that artifact is durably saved and read back. `review_state=not_created` is valid only for an analysis-only request or when a concrete blocker is reported; it is never a substitute for the artifact that was asked for.
 
 When a completed canonical Reddit research run returns verified thread URLs and fenced evidence, terminal completion must report `link_state=verified_links` and `evidence_trust=fenced`. Report `link_state=unavailable` only when the canonical run lacks verified URLs or reports a source blocker, and preserve that blocker explicitly.

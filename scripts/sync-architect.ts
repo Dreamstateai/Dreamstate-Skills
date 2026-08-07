@@ -85,7 +85,24 @@ function generatedRelease(artifacts: Record<string, string>) {
   if (skillIds.some((skillId) => !SKILL_ID.test(skillId))) {
     throw new Error('generated Architect release contains an invalid skill id');
   }
-  const expected = new Set([PINNED_FILE, ...skillIds.flatMap((id) => PACKAGE_FILES.map((file) => `${id}/${file}`))]);
+  // A package is no longer exactly three files. Level-3 supporting files
+  // (`skill://<id>/<file>.md`) carry the depth that used to be crammed into
+  // KERNEL.md, and each one is pinned by sha256 in PINNED_RELEASE.json, so the
+  // release stays hash-gated. Expecting only PACKAGE_FILES made this reject the
+  // build's own output as drifted.
+  const supportingByskill = new Map<string, Set<string>>(
+    skillIds.map((id) => {
+      const record = (pinned.skills ?? {})[id] as { supporting_sha256?: Record<string, string> } | undefined;
+      return [id, new Set(Object.keys(record?.supporting_sha256 ?? {}))];
+    }),
+  );
+  const expected = new Set([
+    PINNED_FILE,
+    ...skillIds.flatMap((id) => [
+      ...PACKAGE_FILES.map((file) => `${id}/${file}`),
+      ...[...(supportingByskill.get(id) ?? [])].map((file) => `${id}/${file}`),
+    ]),
+  ]);
   if (files.size !== expected.size || [...files.keys()].some((relative) => !expected.has(relative))) {
     throw new Error('generated Architect release file set drifted');
   }

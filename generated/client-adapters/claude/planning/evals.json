@@ -1,0 +1,541 @@
+{
+  "schema_version": 1,
+  "skill_id": "planning",
+  "cases": [
+    {
+      "id": "strategy-revision-channel-fit",
+      "request": "Help me tighten our strategy so content, community, and outbound reinforce each other for the ICP we've already published.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "required_capability_ids": [
+        "brain.context.browse",
+        "brain.context.search",
+        "brain.context.get",
+        "social.strategy_overview",
+        "social.strategy_update"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "social.strategy_update",
+          "min_count": 1,
+          "reason": "social.strategy_update must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "id": "named-cohort-strategy-benchmark",
+      "request": "What growth approach would you recommend for B2B SaaS founders based on what comparable companies are seeing?",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "required_capability_ids": [
+        "brain.learning.query_benchmarks"
+      ],
+      "required_executed_capability_ids": [
+        "brain.learning.query_benchmarks"
+      ],
+      "follow_up_turns": [
+        {
+          "request": "That's enough context, give me your recommendation based on what you found.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "weekly-plan-cross-channel",
+      "request": "Plan my week across LinkedIn, Reddit, SEO, and outbound, and rank what actually matters.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "command_center.overview.get",
+        "command_center.goals.get",
+        "social.strategy_overview",
+        "social.weekly_plan_items_list",
+        "workflows.list",
+        "visibility.overview"
+      ],
+      "required_concepts": [
+        "command_center.overview.get",
+        "command_center.goals.get",
+        "social.strategy_overview",
+        "social.weekly_plan_items_list",
+        "workflows.list",
+        "visibility.overview"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "That's not quite right, revise it using what you already found.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "customer-follow-up-coordination",
+      "request": "Create the customer follow-up meeting and owner task, attach the briefing to the customer record, and show me everything that was saved.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "required_capability_ids": [
+        "calendar.events_create",
+        "calendar.events_list",
+        "tasks.create",
+        "tasks.get",
+        "record_files.upload",
+        "record_files.list",
+        "records.get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "record_created",
+          "expected": "absent",
+          "object_key": "person",
+          "min_count": 1,
+          "reason": "coordination must attach to the existing customer and must not create a duplicate record"
+        },
+        {
+          "check": "task_state_changed",
+          "expected": "present",
+          "reason": "the owner task must exist as a durable task row, not only in the summary"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "record_files.upload",
+          "min_count": 1,
+          "reason": "record_files.upload must leave behind the durable row it declared, or the turn only claimed to write."
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "calendar.events_create",
+          "min_count": 1,
+          "reason": "calendar.events_create must leave behind the durable row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "id": "asset-unsaved-proposal",
+      "request": "Create a downloadable ICP audit checklist for prospective buyers.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_state_unsaved_without_capability": true,
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "command_center.assets.list",
+        "command_center.assets.create"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.search",
+        "command_center.assets.list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "content_scheduled",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "asset planning must not schedule content as a side effect"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "command_center.assets.create",
+          "reason": "the asset kind is unsupported (create accepts only image or video), so no growth_media_assets row may exist for this turn",
+          "expected": "absent"
+        }
+      ]
+    },
+    {
+      "id": "blog-is-not-planning",
+      "request": "Draft a blog post for our audience that is ready for editorial review.",
+      "expected_skill_ids": [
+        "writing"
+      ],
+      "must_not_load": [
+        "planning"
+      ],
+      "must_not_execute": true,
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "the requested workspace evidence available through the loaded skill"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "Actually, revise the draft based on what you found.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "social-calendar-not-weekly-plan",
+      "request": "Put five authored posts onto next week's social calendar.",
+      "expected_skill_ids": [
+        "social"
+      ],
+      "must_not_load": [
+        "planning"
+      ],
+      "must_not_execute": true,
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "the requested workspace evidence available through the loaded skill"
+        }
+      ]
+    },
+    {
+      "id": "workbook-is-not-asset-planning",
+      "request": "Build a worksheet of qualified ICP prospects we can run an audit against.",
+      "expected_skill_ids": [
+        "outreach"
+      ],
+      "must_not_load": [
+        "planning"
+      ],
+      "must_not_execute": true,
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "the requested workspace evidence available through the loaded skill"
+        }
+      ]
+    },
+    {
+      "id": "governed-growth-experiment-design",
+      "request": "Help me test a change to our homepage signup flow and give me a solid plan the team can review.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "required_capability_ids": [
+        "growth.governed_experiment_list",
+        "growth.governed_experiment_create",
+        "growth.governed_experiment_revise",
+        "growth.governed_experiment_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "the governed experiment remains a reviewed draft until an authorized approve decision is recorded"
+        }
+      ]
+    },
+    {
+      "id": "experiment-publication-and-measurement-evidence",
+      "request": "The homepage signup experiment is approved. Record what went live and how it performed so we can audit it.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "required_capability_ids": [
+        "growth.governed_experiment_get",
+        "growth.governed_experiment_publication_record",
+        "growth.governed_experiment_measurement_record"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "publication and measurement evidence are recorded against an existing experiment, they do not create a new one"
+        }
+      ]
+    },
+    {
+      "id": "confirmed-experiment-decisions",
+      "request": "Review where this experiment stands and take care of any approval, safety, or wrap-up decisions that are due.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "growth.governed_experiment_get",
+        "growth.governed_experiment_approve",
+        "growth.governed_experiment_stop",
+        "growth.governed_experiment_conclude"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "reviewing lifecycle decisions on an existing experiment must not fabricate a new experiment"
+        }
+      ]
+    },
+    {
+      "id": "production-local-governed-experiment-draft",
+      "request": "Set up T25 Homepage Answer Visibility Proof so we can see whether a concise, cited homepage answer improves visibility for best B2B content platform without putting search traffic or site performance at risk. Make it review-ready and auditable using the evidence already in our workspace.",
+      "expected_skill_ids": [
+        "planning",
+        "context",
+        "seo-geo"
+      ],
+      "expected_load_order": [
+        "planning",
+        "context",
+        "seo-geo"
+      ],
+      "allowed_consequence_levels": [
+        "draft_write"
+      ],
+      "approved_mutation_capability_ids": [
+        "growth.governed_experiment_create"
+      ],
+      "approved_mutation_max_changes": 1,
+      "execution_profile": "production_real",
+      "fixture_profile": "workspace_local_approved_mutation",
+      "forbidden_test_substitutions": [
+        "mock experiment receipt",
+        "fixture-only experiment revision",
+        "invented experiment id or design digest",
+        "prose-only verification"
+      ],
+      "must_not_ask_user": true,
+      "must_not_request_secrets": true,
+      "required_capability_ids": [
+        "growth.governed_experiment_list",
+        "growth.governed_experiment_create",
+        "growth.governed_experiment_get"
+      ],
+      "resume_after_approval": "owner_exact",
+      "expected_workspace_outcome": [
+        {
+          "check": "governed_experiment_created",
+          "expected": "present",
+          "experiment_title": "T25 Homepage Answer Visibility Proof"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "One correction: base the draft on the workspace evidence you already found.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deployed-brain-surface-coverage",
+      "request": "Give me an evidence-backed map of the company intelligence available to improve how we plan outreach strategy.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "brain.companies.answer",
+        "brain.companies.get",
+        "brain.outreach.compare",
+        "brain.evidence.search"
+      ],
+      "required_concepts": [
+        "brain.companies.answer",
+        "brain.companies.get",
+        "brain.outreach.compare",
+        "brain.evidence.search"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-command-center-surface-coverage",
+      "request": "Give me a readiness assessment of the command center support behind our growth planning, including any gaps I should know about.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "command_center.action_items.list",
+        "command_center.assets.list",
+        "command_center.feed.list",
+        "command_center.goals.get",
+        "command_center.overview.get"
+      ],
+      "required_concepts": [
+        "command_center.action_items.list",
+        "command_center.assets.list",
+        "command_center.feed.list",
+        "command_center.goals.get",
+        "command_center.overview.get"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-content-surface-coverage",
+      "request": "Check whether our content setup fully supports growth planning and summarize any gaps or risks.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "content.article_list",
+        "content.artifact_list"
+      ],
+      "required_concepts": [
+        "content.article_list",
+        "content.artifact_list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-gtm-surface-coverage",
+      "request": "Assess whether our go-to-market goals and tasks are ready to support growth planning and flag anything that could get in the way.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "gtm.goals_list",
+        "gtm.tasks.counts",
+        "gtm.tasks.list"
+      ],
+      "required_concepts": [
+        "gtm.goals_list",
+        "gtm.tasks.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-identity-surface-coverage",
+      "request": "Develop a strong set of content pillars for the company that our growth plan can build on.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "identity.content_pillars_generate"
+      ],
+      "required_concepts": [
+        "identity.content_pillars_generate"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "identity.content_pillars_generate",
+          "expected": "absent",
+          "reason": "assessing readiness must not silently persist new planner pillars; that requires an explicit non-preview request"
+        }
+      ]
+    },
+    {
+      "id": "deployed-outreach-sequences-surface-coverage",
+      "request": "Review whether our outreach workspace, sequences, and workbooks are ready to support this week's growth plan.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.workspace_stats_get",
+        "sequences.list",
+        "workbooks.list",
+        "workflows.list"
+      ],
+      "required_concepts": [
+        "outreach.workspace_stats_get",
+        "sequences.list",
+        "workbooks.list",
+        "workflows.list"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-social-strategy-surface-coverage",
+      "request": "Help us choose the right social approach, benchmark our archetype, prioritize formats, and keep the plan on track.",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "social.strategy_archetype_benchmark",
+        "social.strategy_archetype_get",
+        "social.strategy_format_targets_suggest",
+        "social.strategy_plan_progress",
+        "social.strategy_activity_calendar",
+        "social.analytics_query"
+      ],
+      "required_concepts": [
+        "social.strategy_archetype_benchmark",
+        "social.strategy_archetype_get",
+        "social.strategy_format_targets_suggest",
+        "social.strategy_plan_progress",
+        "social.strategy_activity_calendar",
+        "social.analytics_query"
+      ]
+    }
+  ]
+}

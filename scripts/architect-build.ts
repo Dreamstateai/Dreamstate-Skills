@@ -6,12 +6,18 @@ import { assertFrontmatterRoundTrip, assertOptionalFrontmatter } from './frontma
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_DIR = join(ROOT, 'architect-kernels');
+const ARCHITECT_TOOL_CONTRACT_PATH = join(ROOT, 'contracts', 'architect-tool-contract.json');
 const ADAPTER_VERSION = '1.0.0';
 const SHA256 = /^[a-f0-9]{64}$/;
 const CAPABILITY_HASH = /^[a-f0-9]{16,64}$/;
 const SKILL_ID = /^[a-z0-9]+(?:(?:-|\.)[a-z0-9]+)*$/;
 const CAPABILITY_DOMAIN = /^[a-z][a-z0-9_-]{0,63}$/;
 const CAPABILITY_ID = /^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+$/;
+const SUPPORTING_FILE_NAME = /^[a-z0-9-]+\.md$/;
+const MAX_SUPPORTING_FILES = 8;
+const TOOL_ACTION_NAME = /^[a-z][a-z0-9_]*$/;
+const ARCHITECT_SURFACE_TOOL_NAME = /^ds_[a-z_]+$/;
+const ANY_TOOL_NAME_PATTERN = /\b(?:ds_[a-z_]+|dreamstate_[a-z_]+)\b/;
 const ARCHITECT_TOOL_NAMES = new Set([
   'load_skill',
   'ask_user',
@@ -22,19 +28,30 @@ const ARCHITECT_TOOL_NAMES = new Set([
   'request_approval',
   'open_canvas',
 ]);
+// Matches a retired name only when it is referenced as a tool, i.e. in the
+// same backtick code-span style every real tool name in this file's prose
+// uses (`` `ds_read` ``, `` `ds_ask` ``). This is deliberately narrower than a
+// bare word match: `ask_user` is both a retired tool name and the live,
+// correct `repair` taxonomy value from `architect_core.txt` (owned outside
+// this repo, not rewritten here). Plain, unquoted prose use of that value is
+// not an instruction to call a nonexistent tool and must stay sayable; a
+// backtick-quoted `` `ask_user` `` naming it as something to invoke is the
+// actual retired-harness bug this gate exists to catch.
+const RETIRED_TOOL_NAME_PATTERN = new RegExp(`\`(?:${[...ARCHITECT_TOOL_NAMES].join('|')})\``);
 const OPERATION_CONTRACT_START = '<!-- architect-operation-contract\n';
 const OPERATION_CONTRACT_END = '\n-->';
+// Both sets named the pre-consolidation packages. `outreach-list-builder`,
+// `tables`, `outreach-sequence-writer` and `outreach-workflow-builder` were
+// merged into `outreach` and `sequences`, so every id but `outreach` had
+// stopped matching anything and the campaign-terminology gate had silently
+// stopped covering the sequence-writing kernel entirely.
 const OUTREACH_POLICY_IDS = new Set([
   'outreach',
-  'outreach-list-builder',
-  'outreach-sequence-writer',
-  'outreach-workflow-builder',
+  'sequences',
 ]);
 const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
   'outreach',
-  'tables',
-  'outreach-sequence-writer',
-  'outreach-workflow-builder',
+  'sequences',
 ]);
 const CODING_DRIFT_DENIED_OPERATIONS = [
   'dreamstate_tools_run',
@@ -45,12 +62,30 @@ const CODING_DRIFT_DENIED_OPERATIONS = [
   'dreamstate_proposals_create',
   'dreamstate_proposals_mutate',
 ];
+// The gate forbids selling a shortcut ("use a preset", "reuse the template")
+// in place of building the real thing. It matched prose only by accident: it
+// also matched `body_template` and `note_template`, which are literal sequence
+// step field names, and `audiences.*`, which really are saved reusable ICP
+// definitions. A kernel cannot describe those APIs without naming them, so
+// matches inside a backticked code span or inside a snake_case / dotted
+// identifier are not shortcut language. Prose matches still fail.
 const OUTREACH_SHORTCUT_LANGUAGE = /\b(?:templates?|presets?|reusable|reuse)\b/i;
+const CODE_SPAN = /`[^`\n]*`/g;
+const IDENTIFIER_LIKE = /\b[a-z0-9]+(?:[_.][a-z0-9_.]+)+\b/gi;
+
+// Strip the two places a banned word can appear as a fact rather than a
+// shortcut: inside a backticked code span, and inside a snake_case or dotted
+// identifier. `body_template` and `note_template` are literal sequence step
+// field names and `audiences.*` really are saved reusable ICP definitions, so
+// a kernel cannot describe those APIs without naming them. Prose still fails.
+function proseOnly(value: string): string {
+  return value.replace(CODE_SPAN, ' ').replace(IDENTIFIER_LIKE, ' ');
+}
 const RETIRED_OUTREACH_CAMPAIGN_LANGUAGE =
   /campaigns\.|campaign_state|campaign_id|outreach_campaigns|campaignId|outreachCampaignId|\blaunch campaign\b|\bcampaign(?:s|[-_][a-z0-9_]+)?\b/i;
 
 function hasOutreachShortcutLanguage(value: string): boolean {
-  return OUTREACH_SHORTCUT_LANGUAGE.test(value);
+  return OUTREACH_SHORTCUT_LANGUAGE.test(proseOnly(value));
 }
 
 export interface ArchitectCapabilityManifest {
@@ -99,6 +134,13 @@ interface SourceSkill extends ArchitectSkillSource {
   evals: string;
   kernel_sha256: string;
   evals_sha256: string;
+  supporting: SupportingFile[];
+}
+
+interface SupportingFile {
+  name: string;
+  content: string;
+  sha256: string;
 }
 
 type Compatibility = {
@@ -276,12 +318,26 @@ function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; sk
   const skills = [...manifest.skills].sort((a, b) => a.id.localeCompare(b.id)).map((skill) => {
     const directory = join(sourceDir, skill.id);
     const entries = readdirSync(directory).sort();
-    if (JSON.stringify(entries) !== JSON.stringify(['KERNEL.md', 'evals.json'])) {
-      throw new Error(`${skill.id}: source package must contain exactly KERNEL.md and evals.json`);
+    if (!entries.includes('KERNEL.md') || !entries.includes('evals.json')) {
+      throw new Error(`${skill.id}: source package must contain KERNEL.md and evals.json`);
     }
     for (const file of entries) {
       if (!lstatSync(join(directory, file)).isFile()) throw new Error(`${skill.id}/${file}: source must be a regular file`);
     }
+    const supportingNames = entries.filter((file) => file !== 'KERNEL.md' && file !== 'evals.json');
+    if (supportingNames.some((file) => !SUPPORTING_FILE_NAME.test(file))) {
+      throw new Error(
+        `${skill.id}: source package contains a file that is not KERNEL.md, evals.json, or a [a-z0-9-]+.md supporting file`,
+      );
+    }
+    if (supportingNames.length > MAX_SUPPORTING_FILES) {
+      throw new Error(`${skill.id}: source package has ${supportingNames.length} supporting files, maximum is ${MAX_SUPPORTING_FILES}`);
+    }
+    const supporting: SupportingFile[] = supportingNames.sort().map((name) => {
+      const content = readFileSync(join(directory, name), 'utf8');
+      if (!content.trim()) throw new Error(`${skill.id}/${name}: supporting file is empty`);
+      return { name, content, sha256: sha256(content) };
+    });
     const kernel = readFileSync(join(directory, 'KERNEL.md'), 'utf8');
     const evals = readFileSync(join(directory, 'evals.json'), 'utf8');
     if (!kernel.trim()) throw new Error(`${skill.id}: kernel is empty`);
@@ -332,10 +388,17 @@ function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; sk
         }
       }
     }
-    if (OUTREACH_POLICY_IDS.has(skill.id) && hasOutreachShortcutLanguage(`${kernel}\n${evals}`)) {
+    // Supporting files carry most of a consolidated package's prose, so both
+    // outreach gates read them too. Before multi-file packages there was
+    // nothing but KERNEL.md and evals.json to check, and leaving them out
+    // would have let the banned language move one file over.
+    const supportingProse = supporting.map((file) => file.content).join('\n');
+    if (OUTREACH_POLICY_IDS.has(skill.id)
+      && hasOutreachShortcutLanguage(`${kernel}\n${evals}\n${supportingProse}`)) {
       throw new Error(`${skill.id}: Architect outreach source contains forbidden shortcut language`);
     }
-    if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(kernel)) {
+    if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id)
+      && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(`${kernel}\n${supportingProse}`)) {
       throw new Error(`${skill.id}: active outreach kernel contains retired campaign terminology`);
     }
     if (ACTIVE_OUTREACH_KERNEL_IDS.has(skill.id) && RETIRED_OUTREACH_CAMPAIGN_LANGUAGE.test(evals)) {
@@ -372,13 +435,20 @@ function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; sk
       evals,
       kernel_sha256: sha256(kernel),
       evals_sha256: sha256(evals),
+      supporting,
     };
   });
   const releaseInput = JSON.stringify({
     schema_version: manifest.schema_version,
     source_release: manifest.source_release,
     playbook_kernel_version: manifest.playbook_kernel_version,
-    skills: skills.map(({ kernel, evals, ...skill }) => skill),
+    // Supporting file bytes are folded in as their sha256, the same way kernel
+    // and evals content is: a supporting-file edit must change the release
+    // hash, but the hash input itself stays a flat, stable JSON shape.
+    skills: skills.map(({ kernel, evals, supporting, ...skill }) => ({
+      ...skill,
+      supporting_sha256: Object.fromEntries(supporting.map((file) => [file.name, file.sha256])),
+    })),
   });
   return { manifest, skills, sourceHash: sha256(releaseInput) };
 }
@@ -495,16 +565,139 @@ function validateCapabilityManifest(manifest: ArchitectCapabilityManifest): void
   if (!Array.isArray(manifest.mcp_tools) || !manifest.mcp_tools.length) throw new Error('capability manifest has no MCP tools');
 }
 
-function architectAdapter(skill: SourceSkill, facts: ManifestFacts): string {
+interface ArchitectToolContractAction {
+  action: string;
+  compilesTo: string[];
+}
+
+interface ArchitectToolContractTool {
+  name: string;
+  actions: ArchitectToolContractAction[];
+}
+
+interface ArchitectToolContract {
+  schema_version: number;
+  surface_version: string;
+  tools: ArchitectToolContractTool[];
+}
+
+interface CapabilityRoute {
+  tool: string;
+  action: string;
+}
+
+interface CapabilityRouteIndex {
+  routes: Map<string, CapabilityRoute[]>;
+  toolActionCounts: Map<string, number>;
+}
+
+function validateArchitectToolContract(contract: ArchitectToolContract): void {
+  if (contract.schema_version !== 1) throw new Error('architect tool contract schema must be v1');
+  if (!/^\d+\.\d+\.\d+$/.test(contract.surface_version)) throw new Error('architect tool contract surface_version must be semantic');
+  if (!Array.isArray(contract.tools) || !contract.tools.length) throw new Error('architect tool contract has no tools');
+  const toolNames = new Set<string>();
+  for (const tool of contract.tools) {
+    if (typeof tool.name !== 'string' || !ARCHITECT_SURFACE_TOOL_NAME.test(tool.name)) {
+      throw new Error(`architect tool contract: invalid tool name ${JSON.stringify(tool.name)}`);
+    }
+    if (toolNames.has(tool.name)) throw new Error(`architect tool contract: duplicate tool ${tool.name}`);
+    toolNames.add(tool.name);
+    if (!Array.isArray(tool.actions) || !tool.actions.length) {
+      throw new Error(`architect tool contract: ${tool.name} has no actions`);
+    }
+    const actionNames = new Set<string>();
+    for (const action of tool.actions) {
+      if (typeof action.action !== 'string' || !TOOL_ACTION_NAME.test(action.action)) {
+        throw new Error(`architect tool contract: ${tool.name} has an invalid action name ${JSON.stringify(action.action)}`);
+      }
+      if (actionNames.has(action.action)) throw new Error(`architect tool contract: ${tool.name}.${action.action} is a duplicate action`);
+      actionNames.add(action.action);
+      assertStringArray(action.compilesTo, `architect tool contract ${tool.name}.${action.action}.compilesTo`);
+      for (const capabilityId of action.compilesTo) {
+        if (!CAPABILITY_ID.test(capabilityId)) {
+          throw new Error(`architect tool contract: ${tool.name}.${action.action}.compilesTo has an invalid capability id ${capabilityId}`);
+        }
+      }
+    }
+  }
+}
+
+function loadArchitectToolContract(path: string = ARCHITECT_TOOL_CONTRACT_PATH): ArchitectToolContract {
+  const contract = readJson<ArchitectToolContract>(path);
+  validateArchitectToolContract(contract);
+  return contract;
+}
+
+/**
+ * The reverse index the model actually needs: capability id -> the exact tool
+ * action that reaches it. `KERNEL.md` bodies are client-neutral and only ever
+ * name capability ids, so without this index the model holds an id and no
+ * tool to call it through.
+ */
+function capabilityRouteIndex(contract: ArchitectToolContract): CapabilityRouteIndex {
+  const routes = new Map<string, CapabilityRoute[]>();
+  const toolActionCounts = new Map<string, number>();
+  for (const tool of contract.tools) {
+    toolActionCounts.set(tool.name, tool.actions.length);
+    for (const action of tool.actions) {
+      for (const capabilityId of action.compilesTo) {
+        const existing = routes.get(capabilityId) ?? [];
+        existing.push({ tool: tool.name, action: action.action });
+        routes.set(capabilityId, existing);
+      }
+    }
+  }
+  return { routes, toolActionCounts };
+}
+
+function formatCapabilityRoute(route: CapabilityRoute, toolActionCounts: Map<string, number>): string {
+  const actionCount = toolActionCounts.get(route.tool) ?? 1;
+  return actionCount > 1 ? `${route.tool} action=${route.action}` : route.tool;
+}
+
+function capabilityRoutingSection(skill: SourceSkill, index: CapabilityRouteIndex): string {
+  const header = '## Capability routing\n\nEach capability this skill grants is reached through one tool action. Call the tool, not the capability id.';
+  if (!skill.capability_ids.length) return `${header}\n\nThis skill grants no capability ids.`;
+  const rows: string[] = [];
+  const unrouted: string[] = [];
+  for (const capabilityId of [...skill.capability_ids].sort()) {
+    const routes = index.routes.get(capabilityId);
+    if (!routes || !routes.length) {
+      unrouted.push(capabilityId);
+      continue;
+    }
+    const call = routes.map((route) => formatCapabilityRoute(route, index.toolActionCounts)).join(', or ');
+    rows.push(`| ${capabilityId} | ${call} |`);
+  }
+  const table = [header, '', '| capability | call |', '|---|---|', ...rows].join('\n');
+  if (!unrouted.length) return table;
+  return [
+    table,
+    '',
+    '### Reachable only through the capability catalogue',
+    '',
+    'These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.',
+    '',
+    ...unrouted.map((capabilityId) => `- ${capabilityId}`),
+  ].join('\n');
+}
+
+function architectAdapter(skill: SourceSkill, facts: ManifestFacts, routeIndex: CapabilityRouteIndex): string {
   return `# Architect surface adapter
 
-Use the client-neutral kernel above through the eight fixed harness tools. Put every material undiscoverable finite choice in one structured \`ask_user\` popup, preserve only bounded structured partial outputs plus the exact next transition, and stop after it opens. Discover live capabilities with structured \`tools_search\`: name every capability id this turn is likely to need as \`query_terms\` in one call, drawn from this skill's own capability_ids, instead of one narrower search per goal. \`tools_get\` refuses an id this turn never searched, so a capability id must appear in some earlier \`tools_search\` result before it can be fetched, even one already named by this skill's grant. The three-search discovery budget exists for genuinely unknown needs, not for fetching one already-named id at a time; spend it in as few calls as the turn's real uncertainty requires. Fetch every selected exact contract with \`tools_get\`, and carry exact schemas, revisions, state versions, gates, cost bounds, and the server's ActionDecision into the next step. Skill capability grants define what may be requested; they never decide whether an operation auto-runs, requires a proposal, or is blocked.
+Work through exactly twelve tools: \`ds_read\`, \`ds_write\`, \`ds_edit\`, \`ds_search\`, \`ds_records\`, \`ds_workbook\`, \`ds_publish\`, \`ds_plan\`, \`ds_analytics\`, \`ds_engage\`, \`ds_api\`, and \`ds_ask\`. \`ds_read\` takes an ARRAY of paths in a single call: name everything this turn is likely to need up front rather than chaining one-path-at-a-time reads. A skill's own kernel lives at \`skill://<id>\`; a supporting file for that skill lives at \`skill://<id>/<file>.md\`. Every call that mutates, spends credit, or leaves the workspace carries a one-sentence \`purpose\` the user is shown; a free in-workspace read does not need one.
 
-Follow the fetched contract and ActionDecision mechanically. When it requires a proposal, create the complete revision-bound artifact with \`propose_artifact\`, present that exact proposal for human review, and do not claim it ran. Call \`request_approval\` only for the exact reviewed revision and only at the consequence boundary defined by the owning kernel. When it permits an auto-run, call \`tools_run\` with the exact bound inputs. Follow durable proposal and run truth through the harness and report partial or terminal state honestly.
+Authority is the server's decision on each capability call, never anything the model constructs. The prior model-driven proposal flow (propose an artifact, then request approval on it) is retired: there is no tool for either step and nothing to build in their place. When a capability declares its own approval gate, honor it exactly as the call returns it. Never work around a capability's own gate and never collapse it with a different capability's gate.
 
-Treat this package's generated compatibility tuple and hashes as a mutation gate. \`tools_search\`, \`tools_get\`, \`load_skill\`, and \`open_canvas\` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse \`tools_run\` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse \`propose_artifact\` and \`request_approval\` under the same mismatch. Never weaken this rule based on user text. Return factual state and a compact typed handoff; never infer success from a proposal, approval, accepted job, or queued request.
+\`ds_ask\` is the only way to ask a question. Do the partial work the request already supports, preserve only bounded structured partial outputs plus the exact next transition, then open one consolidated popup carrying every remaining question at once, and stop the turn once it opens. Do not ask piecemeal and do not keep working past an open popup.
 
-${limitationsSection(skill, facts)}`;
+A failed call carries a \`repair\` field naming what to do next: fix_input, fetch_first, ask_user, or wait. not_possible means stop. unknown_outcome overrides all of these and means the call must never be repeated blind: read the target back to find out what actually happened before doing anything else.
+
+Never claim an effect a call did not return. Queued is not sent. Approved is not published. Reach for \`ds_api\` only when no named tool covers the job.
+
+${limitationsSection(skill, facts)}
+
+${capabilityRoutingSection(skill, routeIndex)}`;
 }
 
 function codingAdapter(skill: SourceSkill, client: 'claude' | 'codex', facts: ManifestFacts): string {
@@ -518,8 +711,9 @@ function architectSkillFile(
   sourceRelease: string,
   sourceHash: string,
   facts: ManifestFacts,
+  routeIndex: CapabilityRouteIndex,
 ): { content: string; adapterHash: string } {
-  const adapter = architectAdapter(skill, facts);
+  const adapter = architectAdapter(skill, facts, routeIndex);
   const adapterHash = sha256(adapter);
   const frontmatter = [
     '---',
@@ -551,12 +745,6 @@ function architectSkillFile(
     `  adapter_sha256: ${adapterHash}`,
     '  evals_file: evals.json',
     `  evals_sha256: ${skill.evals_sha256}`,
-    'mutation_compatibility:',
-    '  mismatch_behavior: deny_run',
-    '  manifest_digest_match: exact_sha256',
-    '  recovery_operations: [tools_search, tools_get, load_skill, open_canvas]',
-    '  denied_operation: tools_run',
-    '  denied_operations: [tools_run, propose_artifact, request_approval]',
     '---',
     '',
     adapter,
@@ -622,6 +810,38 @@ function codingSkillFile(
 }
 
 /**
+ * Make the class of bug that shipped a retired eight-tool harness to every
+ * generated package impossible to repeat silently.
+ *
+ * Retired tool names may never appear in a generated Architect Markdown file:
+ * the Architect's live surface has no tool by those names, so any occurrence
+ * is a stale template, not a valid instruction. Separately, `KERNEL.md` and
+ * every supporting file are client-neutral by contract on every surface they
+ * are emitted to (Architect, Claude, Codex): a kernel that names a live tool
+ * has silently coupled itself to one client, which is exactly the seam the
+ * capability routing table exists to close instead.
+ */
+function assertGeneratedToolSurfaceIsClean(artifacts: Record<string, string>): void {
+  for (const [path, content] of Object.entries(artifacts)) {
+    if (!path.endsWith('.md')) continue;
+    const file = path.slice(path.lastIndexOf('/') + 1);
+    if (path.startsWith('generated/architect/')) {
+      const retired = content.match(RETIRED_TOOL_NAME_PATTERN);
+      if (retired) {
+        throw new Error(`${path}: contains retired tool name "${retired[0]}"`);
+      }
+    }
+    const isKernelSurfaceFile = file === 'KERNEL.md' || (file !== 'SKILL.md' && file.endsWith('.md'));
+    if (isKernelSurfaceFile) {
+      const named = content.match(ANY_TOOL_NAME_PATTERN);
+      if (named) {
+        throw new Error(`${path}: kernel-surface content must not name a tool; found "${named[0]}"`);
+      }
+    }
+  }
+}
+
+/**
  * `sourceDir` exists so the emit-time frontmatter guard can be exercised against
  * a throwaway fixture tree. Production callers never pass it and always build
  * from the repository's real `architect-kernels/`.
@@ -639,6 +859,7 @@ export function buildArchitectArtifacts(
     }),
   );
   const facts = manifestFacts(capabilityManifest);
+  const routeIndex = capabilityRouteIndex(loadArchitectToolContract());
   const { manifest, skills, sourceHash } = loadSources(sourceDir);
   for (const skill of skills) {
     for (const capabilityId of skill.capability_ids) {
@@ -663,6 +884,7 @@ export function buildArchitectArtifacts(
     kernel_sha256: string;
     adapter_sha256: string;
     evals_sha256: string;
+    supporting_sha256: Record<string, string>;
   }> = {};
   const clientSkills: Record<string, unknown> = {};
   for (const skill of skills) {
@@ -672,6 +894,7 @@ export function buildArchitectArtifacts(
       manifest.source_release,
       sourceHash,
       facts,
+      routeIndex,
     );
     const architectRoot = `generated/architect/${skill.id}`;
     // Validate the bytes just produced, not the inputs that produced them. The
@@ -687,12 +910,17 @@ export function buildArchitectArtifacts(
     artifacts[`${architectRoot}/SKILL.md`] = architect.content;
     artifacts[`${architectRoot}/KERNEL.md`] = skill.kernel;
     artifacts[`${architectRoot}/evals.json`] = skill.evals;
+    const supportingSha256 = Object.fromEntries(skill.supporting.map((file) => [file.name, file.sha256]));
+    for (const file of skill.supporting) {
+      artifacts[`${architectRoot}/${file.name}`] = file.content;
+    }
     pinnedSkills[skill.id] = {
       capability_domains: skill.capability_domains,
       capability_ids: skill.capability_ids,
       kernel_sha256: skill.kernel_sha256,
       adapter_sha256: architect.adapterHash,
       evals_sha256: skill.evals_sha256,
+      supporting_sha256: supportingSha256,
     };
     const clientHashes: Record<string, string> = {};
     for (const client of ['claude', 'codex'] as const) {
@@ -712,6 +940,9 @@ export function buildArchitectArtifacts(
       artifacts[`${root}/SKILL.md`] = adapter.content;
       artifacts[`${root}/KERNEL.md`] = skill.kernel;
       artifacts[`${root}/evals.json`] = skill.evals;
+      for (const file of skill.supporting) {
+        artifacts[`${root}/${file.name}`] = file.content;
+      }
       clientHashes[client] = adapter.adapterHash;
     }
     clientSkills[skill.id] = {
@@ -719,6 +950,7 @@ export function buildArchitectArtifacts(
       capability_ids: skill.capability_ids,
       kernel_sha256: skill.kernel_sha256,
       evals_sha256: skill.evals_sha256,
+      supporting_sha256: supportingSha256,
       adapter_sha256: {
         architect: architect.adapterHash,
         ...clientHashes,
@@ -747,5 +979,6 @@ export function buildArchitectArtifacts(
     skills: clientSkills,
   }, null, 2)}\n`;
   if (!SHA256.test(sourceHash)) throw new Error('source release hash is invalid');
+  assertGeneratedToolSurfaceIsClean(artifacts);
   return artifacts;
 }

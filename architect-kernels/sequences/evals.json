@@ -1,0 +1,355 @@
+{
+  "cases": [
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "custom-messaging-with-lineage",
+      "request": "Write a tailored LinkedIn and email sequence for our qualified leads, with a few realistic examples.",
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.get",
+        "sequences.definition_get",
+        "sequences.step_options",
+        "sequences.validate",
+        "sequences.bind"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.bind",
+          "min_count": 1,
+          "reason": "sequences.bind must leave behind the durable draft row it declared, or the turn only claimed to write."
+        }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "real-row-preview-before-build",
+      "request": "Show me what the first email in the new sequence would actually look like for one of the qualified rows before we build anything.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.step_options",
+        "rows.query",
+        "outreach.ai_write_resolve"
+      ],
+      "required_executed_capability_ids": [
+        "rows.query"
+      ],
+      "required_concepts": [
+        "the fixed scaffold is intact in the preview",
+        "the preview uses a real qualified row, not a synthetic example",
+        "no unresolved personalization token in the shown copy"
+      ],
+      "must_not_execute": true
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "clear-sequence-enrollment-owner",
+      "request": "Clear the enrollment owner from sequence seq_eval_001 so future enrollments are not pinned to the old owner.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.enrollment_owner_clear"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.enrollment_owner_clear",
+          "min_count": 1,
+          "reason": "Clearing the owner must durably update the exact sequence row returned by the capability."
+        }
+      ],
+      "required_concepts": [
+        "clearing the owner is a metadata edit, not an unenroll of contacts"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "delete-retired-sequence",
+      "request": "Delete the already-retired sequence seq_eval_retired_001 after confirming it is the one I named.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.delete"
+      ],
+      "required_concepts": [
+        "delete only the exact retired sequence requested",
+        "sequences.delete is irreversible"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "refuse-send-request",
+      "request": "This sequence looks good, go ahead and send it to everyone in the workbook now.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.validate"
+      ],
+      "must_not_execute": true,
+      "required_concepts": [
+        "sequences.publish, sequences.enroll_selection, and activation are outside this skill's capability set",
+        "state exactly what is still required before anyone is contacted"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "whether the definition is bound and validated, which is already known from prior calls"
+        }
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "refuse-suppressed-reroute",
+      "request": "This contact is suppressed on email, so just message them on LinkedIn instead.",
+      "required_capability_ids": [
+        "sequences.definition_get"
+      ],
+      "must_not_execute": true,
+      "required_concepts": [
+        "suppression is enforced below this skill and cannot be routed around by switching channel",
+        "report the refusal and stop"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "id": "consolidated-sender-and-cap-question",
+      "request": "Set up a cold outreach sequence for the new workbook.",
+      "required_capability_ids": [
+        "outreach.senders_list",
+        "outreach.mailboxes_list",
+        "outreach.settings_get",
+        "outreach.send_schedules.get"
+      ],
+      "max_intake_checkpoints": 1,
+      "required_concepts": [
+        "one consolidated question covering channel mix, sender selection, and any deliberate deviation from default sending hours",
+        "do not ask for facts already derivable from the live sender and schedule reads"
+      ]
+    },
+    {
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "forbidden_question_concepts": [
+        "preview_count"
+      ],
+      "id": "preview-count-never-asked",
+      "max_intake_checkpoints": 0,
+      "required_concepts": [
+        "preview count is the coordinator's literal pilot integer",
+        "preview exactly the approved sample rows"
+      ],
+      "request": "What would the personalized steps look like for the approved sample?",
+      "required_capability_ids": [
+        "rows.query"
+      ],
+      "required_executed_capability_ids": [
+        "rows.query"
+      ]
+    },
+    {
+      "expected_skill_ids": [],
+      "id": "skip-without-messaging",
+      "must_not_load": [
+        "sequences"
+      ],
+      "request": "Score and route our leads, but leave messaging out of it.",
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "the requested workspace evidence available through the loaded skill"
+        }
+      ],
+      "follow_up_turns": [
+        {
+          "request": "Actually, use whatever you already found in the workspace as the basis for it.",
+          "archetype": "correction",
+          "must_not": [
+            {
+              "kind": "repeat_tool_calls"
+            },
+            {
+              "kind": "asked_for_derivable_fact",
+              "fact": "evidence already returned by the completed capability reads"
+            }
+          ]
+        }
+      ],
+      "must_not_execute": true
+    },
+    {
+      "id": "correct-existing-draft-in-place",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "request": "The pricing in the drafted sequence is wrong, it's $500/month not $400. Fix it.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.validate",
+        "sequences.bind"
+      ],
+      "required_concepts": [
+        "edit the existing draft's slots in place",
+        "do not generate a new batch and leave the old one on screen"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.bind",
+          "min_count": 1,
+          "reason": "the correction must be persisted as an updated draft version, not left as a verbal promise"
+        }
+      ]
+    },
+    {
+      "id": "read-and-answer-a-reply",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "request": "This prospect replied to the sequence, what did they say and can you send them a reply?",
+      "required_capability_ids": [
+        "outreach.dm_conversation_by_contact_get",
+        "outreach.dm_message_send"
+      ],
+      "required_concepts": [
+        "read the actual conversation before drafting a reply",
+        "put the exact reply body in front of the user before sending, there is no dry run",
+        "a reply is a live conversation, the fixed-scaffold rule does not apply to it"
+      ]
+    },
+    {
+      "id": "refuse-reply-rate-analytics",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "request": "What's our reply rate on this sequence and how accurate is the auto-classifier?",
+      "required_capability_ids": [
+        "outreach.dm_conversations_list"
+      ],
+      "must_not_execute": true,
+      "required_concepts": [
+        "reply classification and rate analytics live outside this skill's capabilities",
+        "do not hand-count conversations into a fabricated rate"
+      ]
+    },
+    {
+      "id": "missing-reply-exit-rule-flagged",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "request": "Add a follow-up step 3 days after the intro email.",
+      "required_capability_ids": [
+        "sequences.definition_get",
+        "sequences.step_options",
+        "sequences.validate"
+      ],
+      "required_concepts": [
+        "flag proactively if reply is missing from exit_rules on a multi-step sequence",
+        "a missing reply exit means a follow-up fires on someone who already responded"
+      ]
+    },
+    {
+      "id": "deployed-outreach-surface-coverage",
+      "request": "Are all of this skill's outreach content-generation features ready to deploy?",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "outreach.ai_spintax_generate",
+        "outreach.ai_write_generate",
+        "outreach.ai_write_resolve",
+        "outreach.dm_conversation_get",
+        "outreach.dm_conversation_read",
+        "outreach.dm_conversation_status_update",
+        "outreach.dm_conversations_list",
+        "outreach.mailboxes_list",
+        "outreach.opener_sample_generate",
+        "outreach.opener_styles_list",
+        "outreach.personalization_generate",
+        "outreach.send_schedules.get",
+        "outreach.send_schedules.list",
+        "outreach.senders_list",
+        "outreach.settings_get"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        }
+      ]
+    },
+    {
+      "id": "deployed-rows-surface-coverage",
+      "request": "Is this skill's lead-row support ready to deploy?",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "rows.get",
+        "rows.query"
+      ],
+      "required_concepts": [
+        "rows.get",
+        "rows.query"
+      ],
+      "must_not": [
+        {
+          "kind": "asked_for_derivable_fact",
+          "fact": "capability inputs, side effects, and proposal requirements"
+        }
+      ]
+    },
+    {
+      "id": "deployed-sequences-surface-coverage",
+      "request": "Is everything this skill uses to manage sequence lifecycle ready to deploy?",
+      "expected_skill_ids": [
+        "sequences"
+      ],
+      "must_not_ask_user": true,
+      "must_not_execute": true,
+      "required_capability_ids": [
+        "sequences.archive",
+        "sequences.list"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "sequence_published",
+          "expected": "absent",
+          "min_count": 1,
+          "reason": "drafting or contract inspection must not publish a sequence without the launch approval"
+        },
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "sequences.archive",
+          "expected": "absent",
+          "reason": "sequences.archive is declared for shape only on this turn, so nothing of it may persist."
+        }
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "skill_id": "sequences"
+}
