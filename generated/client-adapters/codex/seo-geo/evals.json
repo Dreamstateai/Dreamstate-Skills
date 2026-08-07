@@ -627,6 +627,27 @@
           "reason": "contract inspection must not ensure or update workspace site state"
         }
       ]
+    },
+    {
+      "id": "content-gap-quality-check-against-competitor",
+      "expected_skill_ids": [
+        "seo-geo"
+      ],
+      "request": "We dropped out of the AI answer for 'best outbound sequencing tool' and a competitor's page at https://rival-tool.example/outbound-sequencing is showing up instead. Is our page missing coverage or is theirs just better?",
+      "must_not_ask_user": true,
+      "required_capability_ids": [
+        "visibility.prompt_metrics_list",
+        "visibility.citations",
+        "research.urls_fetch"
+      ],
+      "required_executed_capability_ids": [
+        "visibility.prompt_metrics_list",
+        "research.urls_fetch"
+      ],
+      "required_concepts": [
+        "fetch the competing URL with research.urls_fetch before judging whether the gap is coverage or quality; do not guess its content from the URL or title",
+        "do not cite what the competing page says if research.urls_fetch returned success: false for it"
+      ]
     }
   ],
   "schema_version": 1,

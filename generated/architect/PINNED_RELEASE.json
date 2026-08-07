@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.6.0",
-  "source_release_hash": "f28aaaa46095f6ff48ddc58b66364debc518136453034a77202ac951f82b1615",
+  "source_release_hash": "a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "1.0.0",
-    "playbook_kernel_hash": "f28aaaa46095f6ff48ddc58b66364debc518136453034a77202ac951f82b1615",
+    "playbook_kernel_hash": "a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
     "capability_hash": "a7fafedeb45d2a7d",
@@ -114,14 +114,15 @@
         "brain.knowledge.digest",
         "brain.knowledge.doc_map",
         "brain.knowledge.document",
-        "brain.knowledge.index"
+        "brain.knowledge.index",
+        "research.urls_fetch"
       ],
-      "kernel_sha256": "30f768408a9922b628abce43b89e5430d793c1d774f8d0a7d576762e42a40d1c",
-      "adapter_sha256": "d8d99a911b308ba7a4dd9efe49cb99d587a0b951dbcaeb1a9647e1f2c18c9823",
-      "evals_sha256": "eed5faff171255de44e0015ee056d52e8976d8959917e62a77cf165d7aa37b90",
+      "kernel_sha256": "96ee1dbdabd8a41ae71270cde4a5da6da2ff5d11efd1e47be426a7a966bc8096",
+      "adapter_sha256": "4f4e6497c538d125c5f9540b9d737090f07b7feb7bde4851e5070c5dedad4454",
+      "evals_sha256": "3d88cc1caa0457f18d0066c54a578d01bfc88dee229cd21c18756325f6d6d34c",
       "supporting_sha256": {
         "lifecycle.md": "f9f1d33e018fac214538914e539c857584934341fe63de8428b32e2f336a1d19",
-        "retrieval.md": "6d6a9bf18e63f7f92d360a477a2cff448624d05c8ed76915428fa929da5bd62c",
+        "retrieval.md": "751201aca245cd6cdea755e3fc9f1910cd00578e0ec3e3cb20106453c4397a06",
         "writing.md": "5d3faa313dc0cdf884ad76cae808735aca53388e918168ef8fce2dfbf2a87c65"
       }
     },
@@ -236,6 +237,7 @@
         "records.unmerge",
         "records.value_retire",
         "records.wiki_get",
+        "research.urls_fetch",
         "saved_views.create",
         "saved_views.delete",
         "saved_views.list",
@@ -256,14 +258,14 @@
         "tasks.reopen",
         "tasks.update"
       ],
-      "kernel_sha256": "769ec729bf027f3b836a79ab59a4c4c45b572ca0a5a375aadf006b2b027374c5",
-      "adapter_sha256": "37b48c3d0fff31c64a65dfbc75bf75cd2118d6a4f945c00f5b0ba3c7b54b2555",
-      "evals_sha256": "c2fdd380239b330ba82adc77fbb69a0cbe5b8448ab745206c91a7ba8447bbb44",
+      "kernel_sha256": "810ec9a177b8f6d3d1bb9723c45f7f4e3c85a4a8837a7b94a912d0ded97d34cc",
+      "adapter_sha256": "a0557ac81b1efd3986e404a177bfd3be7a2f0741dfc3278a1800d934c5400c5a",
+      "evals_sha256": "9f7c1f2cf5c8d30ef184350768da2dbb6a916af3fb980dbde4ec6f6b1f6dcc56",
       "supporting_sha256": {
         "objects-and-attributes.md": "4f78a7779f95215ec8055d3667430f1246d13461b3f39a55a765f31ebee5e41f",
         "pipelines.md": "509196b8e3883d75148e733381b9681c37a4200bea9c8a9d4ac21aaa4a86def8",
         "records.md": "188a0b6d1765d47d682b3341c5dca497310e594abeb3a2427c3f1c3a0998ce49",
-        "tasks-and-products.md": "e467981b42f89a9a26f70f74cac48c4a2af25734e23730c78ed34f16e0a436cb",
+        "tasks-and-products.md": "58f7ce4c123171dfb5866a56b710d0ba5fec035adfdaff3c68d4d165542a1b89",
         "views-and-transfer.md": "ccf8439303a7d05eaea99f8b5032e24a0eb9ff410d95707f222d66c73f5b1ed5"
       }
     },
@@ -522,6 +524,7 @@
         "record_files.list",
         "record_files.upload",
         "records.get",
+        "research.urls_fetch",
         "sequences.list",
         "social.analytics_query",
         "social.strategy_activity_calendar",
@@ -538,13 +541,13 @@
         "workbooks.list",
         "workflows.list"
       ],
-      "kernel_sha256": "827728597ab78d6074d8aef81e1d4523352faa02693283ae269e9ee0fb5baaa7",
-      "adapter_sha256": "41f209aa289730a5b25aecb7745e08e913b0dda9bb16d625c0adf2da7a8cdf7f",
-      "evals_sha256": "f816c843dfe68188a0b11fcfda0054b7c95f359c12c9485eda98c29d5727c961",
+      "kernel_sha256": "5e24a9c5a27d0df1e4a401eefad87016cc5d0e75536460aa954628bf6ca21c7d",
+      "adapter_sha256": "28e8981e376ecc46f9b28234784b6e2c3d6c70ade441c99c881812f308374360",
+      "evals_sha256": "a078f155b2bbefa67d7b3dc9c55ef84c8c1cc5091a272c7e6735ba811a17b1ab",
       "supporting_sha256": {
         "assets.md": "c6c22c9c79adb14254ae90efbc8a3633f08ac481baa8cc3622d9d959f374eac2",
         "experiments.md": "14687276d2ecbd17851911b7619f7e6cf61d6a8a7bbd77b6703a6470f7c34307",
-        "strategy.md": "ea584fa0714d7728006fda0619d514e0b34ee8e784b77b3b05b1737590404c69",
+        "strategy.md": "5acfe962865342b1f452803940f7ac1d84454802c5a97bc3f877c1c320b3c529",
         "weekly-plan.md": "9fbcc4d9fa1105d4d995c8be85175a98528ea6bae181213c9f332b9f8e52160f"
       }
     },
@@ -568,6 +571,7 @@
         "integrations.gsc.search_analytics_refresh",
         "integrations.gsc.sitemaps_import",
         "integrations.gsc.status",
+        "research.urls_fetch",
         "seo.agent_readiness_history",
         "seo.agent_readiness_latest",
         "seo.agent_readiness_scan",
@@ -611,11 +615,11 @@
         "visibility.workspace_site_get",
         "visibility.workspace_site_update"
       ],
-      "kernel_sha256": "3e9fca49e6411ae08d5afdd01710e28b9954c7734f9434a121723d183b387945",
-      "adapter_sha256": "faa62234dc3f393d6555dfe972869b8942ab0b4ae8ddfb3101ea8754606d89fe",
-      "evals_sha256": "1067363134c1a8411614ae2a8900310462ef829444b65f4e3f1e172c25c32b9e",
+      "kernel_sha256": "909485ea13c36e58b96de4ba400225593d77a7933bf398e56485fa0924e50ad2",
+      "adapter_sha256": "49db5dd319777ee61b4345b6c983cdd353be4bec5895531acdfbc8342a3abc52",
+      "evals_sha256": "e50d02b53064b4f65918d6ed468d365d1e648abe1b902e7e80482d5c11ca7fe2",
       "supporting_sha256": {
-        "diagnosing-drops.md": "a3d4eba0ecb6f83dda0933ccd8d34ade7f8c1197ccf64303702b9b821b7d04b8",
+        "diagnosing-drops.md": "b2e0f1f9c95f4941228f8070bae8481b96e7b4aac5273640e91576c5ec09bf8b",
         "geo-citations.md": "5fc4ffb405fd97eb8af7d8789f07bc0b9da1db59b21754bbd1db0b18b0b5d891",
         "keywords.md": "4aaa062cd1ecb55513568148c0080eddb702f755cdfe9e490f5a2f8cffa0070c",
         "technical-and-schema.md": "69401372399351a2e03b7068bf81a4984b5e65cca95af9c4a687df02f45692c1"

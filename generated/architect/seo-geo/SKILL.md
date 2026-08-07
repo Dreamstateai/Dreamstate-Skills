@@ -5,12 +5,12 @@ description: Keyword and page work for search engines, plus measuring and improv
 triggers: ["research keywords","audit a page for search","add schema markup","find why organic traffic dropped","check whether ChatGPT or Perplexity cites us","improve AI answer visibility"]
 dependencies: []
 capability_domains: ["brain","integrations","seo","tools","visibility"]
-capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","integrations.gsc.properties","integrations.gsc.properties_list","integrations.gsc.property_primary_set","integrations.gsc.property_select","integrations.gsc.search_analytics_get","integrations.gsc.search_analytics_refresh","integrations.gsc.sitemaps_import","integrations.gsc.status","seo.agent_readiness_history","seo.agent_readiness_latest","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","seo.serp_snapshot_resolve","seo.serp_spend_get","tools.llms_txt_generate","visibility.ai_bot_fetch_get","visibility.ai_traffic","visibility.citations","visibility.geo_queries_list","visibility.html_analysis_get","visibility.keywords_get","visibility.overview","visibility.pagespeed_get","visibility.pagespeed_refresh","visibility.probe.latest","visibility.probe.recommendations","visibility.probe.results","visibility.probe.run_get","visibility.probe.runs_list","visibility.probe.start","visibility.probe.status","visibility.probe.today","visibility.prompt_metrics_list","visibility.refresh","visibility.sentiment_trend","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.tracked_prompts.create","visibility.tracked_prompts.generate","visibility.tracked_prompts.list","visibility.tracked_prompts.save","visibility.tracked_prompts.status","visibility.tracked_prompts.tags","visibility.tracked_prompts.update","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
+capability_ids: ["brain.context.get","brain.context.search","brain.learning.query_benchmarks","integrations.gsc.properties","integrations.gsc.properties_list","integrations.gsc.property_primary_set","integrations.gsc.property_select","integrations.gsc.search_analytics_get","integrations.gsc.search_analytics_refresh","integrations.gsc.sitemaps_import","integrations.gsc.status","research.urls_fetch","seo.agent_readiness_history","seo.agent_readiness_latest","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","seo.serp_snapshot_resolve","seo.serp_spend_get","tools.llms_txt_generate","visibility.ai_bot_fetch_get","visibility.ai_traffic","visibility.citations","visibility.geo_queries_list","visibility.html_analysis_get","visibility.keywords_get","visibility.overview","visibility.pagespeed_get","visibility.pagespeed_refresh","visibility.probe.latest","visibility.probe.recommendations","visibility.probe.results","visibility.probe.run_get","visibility.probe.runs_list","visibility.probe.start","visibility.probe.status","visibility.probe.today","visibility.prompt_metrics_list","visibility.refresh","visibility.sentiment_trend","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.tracked_prompts.create","visibility.tracked_prompts.generate","visibility.tracked_prompts.list","visibility.tracked_prompts.save","visibility.tracked_prompts.status","visibility.tracked_prompts.tags","visibility.tracked_prompts.update","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"benchmark_state","description":"Pooled benchmark evidence availability.","allowed_values":["supported","insufficient_evidence","unavailable","not_applicable"]},{"id":"confidence_state","description":"Evidence confidence disclosure state.","allowed_values":["disclosed","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"observation_state","description":"Observation timestamp and source state.","allowed_values":["observed","cached","unavailable"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f28aaaa46095f6ff48ddc58b66364debc518136453034a77202ac951f82b1615
+  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: a7fafedeb45d2a7d
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.6.0
-  source_release_hash: f28aaaa46095f6ff48ddc58b66364debc518136453034a77202ac951f82b1615
+  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
   generator_version: 1.0.0
   kernel_id: seo-geo
   kernel_file: KERNEL.md
-  kernel_sha256: 3e9fca49e6411ae08d5afdd01710e28b9954c7734f9434a121723d183b387945
-  adapter_sha256: faa62234dc3f393d6555dfe972869b8942ab0b4ae8ddfb3101ea8754606d89fe
+  kernel_sha256: 909485ea13c36e58b96de4ba400225593d77a7933bf398e56485fa0924e50ad2
+  adapter_sha256: 49db5dd319777ee61b4345b6c983cdd353be4bec5895531acdfbc8342a3abc52
   evals_file: evals.json
-  evals_sha256: 1067363134c1a8411614ae2a8900310462ef829444b65f4e3f1e172c25c32b9e
+  evals_sha256: e50d02b53064b4f65918d6ed468d365d1e648abe1b902e7e80482d5c11ca7fe2
 ---
 
 # Architect surface adapter
@@ -45,7 +45,7 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 53 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 54 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 17 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ## Capability routing
@@ -56,6 +56,7 @@ Each capability this skill grants is reached through one tool action. Call the t
 |---|---|
 | brain.context.get | ds_read |
 | brain.context.search | ds_search action=context |
+| research.urls_fetch | ds_read, or ds_search action=web |
 
 ### Reachable only through the capability catalogue
 

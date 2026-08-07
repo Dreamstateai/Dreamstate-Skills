@@ -536,6 +536,29 @@
         "social.strategy_activity_calendar",
         "social.analytics_query"
       ]
+    },
+    {
+      "id": "competitor-page-grounds-positioning",
+      "expected_skill_ids": [
+        "planning"
+      ],
+      "request": "Read https://rival-saas.example/pricing and tell me if our positioning still holds up against them.",
+      "must_not_ask_user": true,
+      "required_capability_ids": [
+        "brain.context.browse",
+        "brain.context.search",
+        "brain.context.get",
+        "research.urls_fetch",
+        "visibility.overview"
+      ],
+      "required_executed_capability_ids": [
+        "brain.context.get",
+        "research.urls_fetch"
+      ],
+      "required_concepts": [
+        "read the competitor's page with research.urls_fetch before comparing; do not infer their pricing or positioning from the domain name or prior training knowledge",
+        "separate the fetched competitor claim, the workspace's cited positioning, and the measured metric into distinct labeled statements"
+      ]
     }
   ]
 }

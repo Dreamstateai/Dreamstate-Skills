@@ -5,12 +5,12 @@ description: Read targeted revisioned workspace-wiki claims or propose cited con
 triggers: ["read the canonical workspace wiki","inspect published workspace knowledge","propose a cited wiki update","revise an existing ordinary wiki document","trace a cited claim or source","propose a new ordinary wiki file","keep a wiki proposal unpublished for human review"]
 dependencies: []
 capability_domains: ["brain"]
-capability_ids: ["brain.context.archive_document","brain.context.backlinks","brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.delete_document","brain.context.get","brain.context.graph","brain.context.history","brain.context.list","brain.context.list_proposals","brain.context.move_document","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.rebuild_links","brain.context.register_source","brain.context.rename_document","brain.context.restore_document","brain.context.save_and_publish","brain.context.save_draft","brain.context.search","brain.context.website_source_register","brain.evidence.search","brain.graph.neighborhood","brain.knowledge.digest","brain.knowledge.doc_map","brain.knowledge.document","brain.knowledge.index"]
+capability_ids: ["brain.context.archive_document","brain.context.backlinks","brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.delete_document","brain.context.get","brain.context.graph","brain.context.history","brain.context.list","brain.context.list_proposals","brain.context.move_document","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.rebuild_links","brain.context.register_source","brain.context.rename_document","brain.context.restore_document","brain.context.save_and_publish","brain.context.save_draft","brain.context.search","brain.context.website_source_register","brain.evidence.search","brain.graph.neighborhood","brain.knowledge.digest","brain.knowledge.doc_map","brain.knowledge.document","brain.knowledge.index","research.urls_fetch"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: f28aaaa46095f6ff48ddc58b66364debc518136453034a77202ac951f82b1615
+  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
   capability_hash: a7fafedeb45d2a7d
@@ -19,14 +19,14 @@ compatibility:
 generated:
   source_repository: dreamstate-skills
   source_release: 0.6.0
-  source_release_hash: f28aaaa46095f6ff48ddc58b66364debc518136453034a77202ac951f82b1615
+  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: 30f768408a9922b628abce43b89e5430d793c1d774f8d0a7d576762e42a40d1c
-  adapter_sha256: d8d99a911b308ba7a4dd9efe49cb99d587a0b951dbcaeb1a9647e1f2c18c9823
+  kernel_sha256: 96ee1dbdabd8a41ae71270cde4a5da6da2ff5d11efd1e47be426a7a966bc8096
+  adapter_sha256: 4f4e6497c538d125c5f9540b9d737090f07b7feb7bde4851e5070c5dedad4454
   evals_file: evals.json
-  evals_sha256: eed5faff171255de44e0015ee056d52e8976d8959917e62a77cf165d7aa37b90
+  evals_sha256: 3d88cc1caa0457f18d0066c54a578d01bfc88dee229cd21c18756325f6d6d34c
 ---
 
 # Architect surface adapter
@@ -45,7 +45,7 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 29 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 30 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 14 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ## Capability routing
@@ -72,6 +72,7 @@ Each capability this skill grants is reached through one tool action. Call the t
 | brain.context.save_draft | ds_edit action=replace |
 | brain.context.search | ds_search action=context |
 | brain.context.website_source_register | ds_write action=register_source |
+| research.urls_fetch | ds_read, or ds_search action=web |
 
 ### Reachable only through the capability catalogue
 

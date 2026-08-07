@@ -887,6 +887,39 @@
         "record_identity"
       ],
       "max_intake_checkpoints": 1
+    },
+    {
+      "id": "record-note-from-supplied-url",
+      "expected_skill_ids": [
+        "crm"
+      ],
+      "request": "Here's a news article about Acme Analytics raising a Series B: https://news.example/acme-analytics-series-b. Find their record and add a note with what it actually says before I call them.",
+      "must_not_ask_user": true,
+      "required_capability_ids": [
+        "records.search",
+        "records.get",
+        "research.urls_fetch",
+        "records.note_add"
+      ],
+      "required_executed_capability_ids": [
+        "records.search",
+        "records.get",
+        "research.urls_fetch",
+        "records.note_add"
+      ],
+      "required_concepts": [
+        "read the supplied URL with research.urls_fetch before writing the note; do not summarize the article from its headline or domain alone",
+        "the deliverable is a saved note on the resolved record, not a summary left only in the reply"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "records.note_add",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "records.note_add must leave behind the durable note it declared, or the turn only claimed to save the article's content."
+        }
+      ]
     }
   ]
 }
