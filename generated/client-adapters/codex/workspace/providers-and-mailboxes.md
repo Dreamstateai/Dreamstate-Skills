@@ -2,6 +2,14 @@
 
 Diagnose account, provider, destination, sender, and authorization readiness, and report the exact gap. Never ask the user to paste a password, token, cookie, private key, or other secret into chat, and never request one on a provider's behalf.
 
+## Search Console selection and import
+
+After `integrations.gsc.status` confirms the connected provider identity, inspect the returned property catalog and call `integrations.gsc.property_select` only with the exact reviewed `property_url`. Selection changes the active provider property. `integrations.gsc.property_primary_set` separately makes one inspected property the workspace primary; never infer that selection also made it primary. Read status back and verify both identities before any SEO measurement. `integrations.gsc.sitemaps_import` imports sitemap configuration for that selected property; it does not prove pages are indexed, crawled, or healthy. Preserve the property URL, import receipt, observation time, completeness, and any partial failures.
+
+## Outreach emergency control and sender scope
+
+`outreach.sender_context_accounts_list` is the canonical read for which sender identities are in scope; never substitute every connected account or infer ownership from a display name. `outreach.global_pause_set` is a workspace-wide operational control. Before changing it, show the current pause state, exact workspace consequence, and requested target state. Read readiness back afterward. A pause receipt does not cancel already-completed effects, and resume does not authorize a launch by itself.
+
 ## Read before you claim readiness
 
 These are read-only diagnostics; running them changes nothing:
@@ -14,6 +22,12 @@ These are read-only diagnostics; running them changes nothing:
 - `mailboxes.deliverability_get` for sending-mailbox warmup state (`warmup_state` is one of `warming_up`, `full_send`, or null when unknown).
 
 A status response reports its own state field (for example `disconnected`, `connected_no_property`, `connected`, or `not_connected`, `auth_expired`). Read that field; do not infer readiness from an account label, a plan tier, or something said earlier in the conversation.
+
+## Readiness is outcome-specific
+
+Do not summarize a provider as simply "connected." Report a readiness matrix for the requested outcome: provider/account identity, authentication state, selected property or destination, required scopes, sender/mailbox binding, warmup or deliverability state, last successful sync, freshness, and the exact downstream operation enabled or blocked. A connected Google account without a selected GSC property is not search-analytics-ready. A connected mailbox in `warming_up` is not full-send-ready. A LinkedIn provider connection without the requested sender identity is not publish-ready.
+
+Onboarding is complete only when the canonical workspace site exists, required provider identities are bound, dependent reads succeed, and the state is read back. A setup checklist or connection link is preparation, not completion. Preserve partial readiness so independent work can continue while one provider is blocked.
 
 ## connect_start is a real write, not a read
 

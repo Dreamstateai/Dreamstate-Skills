@@ -9,24 +9,24 @@ capability_ids: ["brain.content.search"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"link_state","description":"Verified real-thread link retrieval state.","allowed_values":["verified_links","none_retrieved","unavailable"]},{"id":"evidence_trust","description":"Untrusted provider evidence handling state.","allowed_values":["fenced","none_retrieved","unavailable"]},{"id":"artifact_class","description":"Authored standalone artifact classification.","allowed_values":["authored_standalone","community_reply","none"]},{"id":"review_state","description":"Human-review readiness state.","allowed_values":["reviewable","not_created","not_applicable"]},{"id":"rights_state","description":"Workspace research rights state.","allowed_values":["workspace_authorized","unavailable","not_applicable"]},{"id":"reply_state","description":"External Reddit reply execution state.","allowed_values":["not_published","published_with_approval","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: social.reddit
   kernel_file: KERNEL.md
-  kernel_sha256: 1e0783bd031500ee8c99ac0403d2a5b9285ac2718502f57ad11c353151f37c77
-  adapter_sha256: b5ef35c44edb5c8406ba5d6a57cfa8cbd7a183b3d5ac98c8296ce4a1bc5c1c41
+  kernel_sha256: 6891844a1d59076980716a1543b40f1d7ef591592ffa7fd774173d6f80a9f302
+  adapter_sha256: b8112f76e6f639d3f2fb3b8e5e34429afdac1f8b392bf4da9a2393f670af76c6
   evals_file: evals.json
-  evals_sha256: d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc
+  evals_sha256: 286481ed1e89b9e457b01f972e4642635e3c75742c396bc5cf1740c2f5bb81a3
 ---
 
 # Architect surface adapter
@@ -53,9 +53,4 @@ Each capability this skill grants is reached through one tool action. Call the t
 
 | capability | call |
 |---|---|
-
-### Reachable only through the capability catalogue
-
-These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.
-
-- brain.content.search
+| brain.content.search | ds_analytics action=brain_evidence |

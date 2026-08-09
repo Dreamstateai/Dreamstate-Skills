@@ -2,6 +2,8 @@
 
 A governed experiment is a durable, structured A/B test with a hypothesis, a defined population, a treatment and control, guardrails, and a measurement plan. Use one when a weekly-plan priority makes a claim that can be falsified (a homepage change increases visibility, a new hook improves reply rate) and the plan needs real evidence, not an opinion, on whether it worked.
 
+Write the hypothesis as an explicit chain: because observed evidence X suggests mechanism Y, changing Z for population P is expected to move primary metric M from baseline B by at least D within window W. List the assumptions required for that chain separately. A hypothesis without a baseline, minimum detectable effect, or falsifying result is a preference wearing experimental language.
+
 ## Authority now lives on the server, not in a proposal object
 
 The old model-driven flow, draft an experiment, submit it through a dedicated proposal step, wait for a separate dedicated approval step to confirm it, is retired. Neither step exists anymore. Instead, `growth.governed_experiment_approve`, `_stop`, and `_conclude` are themselves gated capabilities: the server checks the caller's workspace role before honoring them, and the same durable-write discipline that applies to every mutating capability applies here (a resolved run/claim context and, on every mutating call, the experiment's current `expected_revision` and `expected_design_digest`). Do not design a flow around a separate propose-then-approve pair of steps; design it around "call `_create`, read `_get` back, and only then call the next lifecycle capability against the confirmed current revision."
@@ -17,9 +19,11 @@ This capability family is built around SEO and answer-visibility tests, not a ge
 1. `growth.governed_experiment_list` and `_get` to inspect current state before any mutation. Never design blind.
 2. `_create` for a new draft, or `_revise` against the exact current `expected_revision` for a change to an existing draft. Report the returned revision and design digest, never a value you computed yourself.
 3. `_approve` only when the user has explicit review authority and asks for the decision; pass `decision: approved` or `decision: rejected` against the current revision. The server's role check is the real gate, not anything this skill infers from conversation tone.
-4. `_publication_record` to record what actually went live, with the receipt the provider or content system returned. This is evidence of publication, not a launch action in itself: launching the underlying change is the owning skill's job (content, website, or outreach), this capability only records that it happened.
+4. `_publication_record` records what actually went live from the owning package receipt. It is evidence, not a launch action: `social` owns social publication, `workspace` owns site changes, and `workflows` owns sequence publication, cohort enrollment, activation, and external-run lifecycle.
 5. `_measurement_record` for each measurement phase (`baseline` or `post`), bound to the GSC search-analytics cache snapshot that backs it. Record observations without rewriting the hypothesis; if the result contradicts the hypothesis, that is the finding, not a reason to edit the design.
 6. `_stop` (with a `reason`) for an early halt, typically because a guardrail breached. `_conclude` (with `proposed_learning`) only from the measurement evidence actually recorded, stating uncertainty and any guardrail breach plainly.
+
+The conclusion must distinguish the observed result, whether the predeclared decision rule passed, guardrail outcome, assumptions supported or weakened, and next decision. Do not rewrite the hypothesis after seeing the result, substitute a secondary metric because the primary missed, or call an underpowered result a win. Record `inconclusive` when the sample or window did not meet the design.
 
 ## Reporting
 

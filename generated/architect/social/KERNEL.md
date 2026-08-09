@@ -4,14 +4,14 @@
 {"required_capability_ids":["brain.content.get","brain.content.search","brain.context.get","brain.context.search","brain.learning.query_benchmarks","brain.social.benchmarks.query","brain.social.patterns.compare","content.approval.authorize_publish","content.approval.decide","content.approval.submit","content.approve","content.artifact_archive","content.artifact_create","content.artifact_generate","content.artifact_get","content.artifact_list","content.artifact_update","content.assist","content.campaigns_list","content.compose","content.delete_republish_propose","content.delivery_publish","content.destination_test","content.destinations_list","content.generate","content.generate_hooks","content.hook_batch_get","content.labels_get","content.labels_list","content.regenerate_hooks","content.replacement_create","content.schedule","content.submit_review","content.unschedule","content.version_create","content.version_diff_get","content.version_get","content.version_rollback","content.versions_list","engagement.opportunities.counts","engagement.opportunities.list","engagement.opportunities.status_set","engagement.people_engaged_n_times","social.accounts_list","social.analytics_goal_update","social.analytics_query","social.analytics_refresh","social.analytics_rollup_get","social.audience_analytics","social.brand_voice_get","social.comment_publish","social.draft_score","social.linkedin_analytics_import","social.linkedin_notification_subscriptions_list","social.linkedin_notifications_list","social.linkedin_notifications_pull","social.linkedin_notifications_subscribe","social.linkedin_notifications_unsubscribe","social.linkedin_post_notifications_list","social.metric_definitions","social.performance_analysis_get","social.performance_snapshot_get","social.post_analysis_job_create","social.post_analytics","social.post_format_hooks_list","social.reddit_comment_publish","social.strategy_activity_calendar","social.strategy_archetype_inspiration","social.strategy_suggestions_generate","social.strategy_weekly_post_action","social.strategy_weekly_post_materialize","social.weekly_plan_item_create","social.weekly_plan_item_transition","social.weekly_plan_item_update","social.weekly_plan_items_list","tools.linkedin_headline_generate","tools.linkedin_hook_generate","tools.linkedin_post_generate","tools.x_hook_generate","tools.x_post_generate"]}
 -->
 
-Plan, write, schedule, publish and measure posts across LinkedIn, X and Reddit, and manage the engagement opportunities and reply inbox that follow. Own the authored-content job end to end: grounding, drafting, review, scheduling, publishing, replying and evidence-backed performance analysis. Real thread discovery and replies are content research, not authored posts, but stay inside this job. Contact sourcing, paid outreach and enrollment belong to `outreach`; account connection belongs to `integrations`.
+Coordinate shared social artifact persistence, review, scheduling, publishing, engagement, and measurement across LinkedIn, X, and Reddit. Platform specialists own single-platform research and authoring decisions: load `social.linkedin`, `social.x`, or `social.reddit` for platform voice, format, limits, and evidence rules; load Social with all named specialists for a multi-platform deliverable. Contact sourcing and qualification belong to their current prospecting packages. Provider connection, account setup, and repair belong to `workspace`.
 
 ## Read this first
 
 1. Ground the draft: search cited workspace-wiki claims and prior content first. For a named cohort, pull `brain.learning.query_benchmarks` evidence.
 2. Load the platform file for depth: linkedin.md, x.md, reddit.md. Shared hook principles: hooks.md. Replies and the LinkedIn inbox: engagement.md.
-3. Score a draft before saving when a scoring capability is reachable; treat it as a pre-save check, not something the user must ask for.
-4. Save the draft as a real artifact, then hand back what the capability returned, not chat prose.
+3. Prepare: resolve platform, exact connected account, objective, source claims, voice profile, format, and destination. Score the prepared draft when scoring is reachable.
+4. Compose internally with the platform file's rules, then save the draft as a real artifact and read it back. This `prepare -> compose -> save` order is mandatory; hand back what persisted, not unsaved chat prose.
 5. Move the saved artifact through review, then schedule or publish only on explicit, immediate approval for that specific step.
 6. For a performance question, use measured reads and keep observation separate from inference.
 
@@ -22,6 +22,14 @@ A post moves through draft, update, submit_review, approve, schedule, unschedule
 ## Output containment
 
 Compose internally, call the drafting or generation capability, then return exactly what it persisted: artifact id, revision, receipt. Unsaved copy pasted into chat before the save succeeds is never recorded, never audit-tracked, and the user may act on text that no capability call ever produced.
+
+## Corrections rewrite the artifact in place
+
+When the user says "rewrite this," "try another hook," or corrects a fact in a saved draft, resolve the existing artifact id and current revision, generate or edit the replacement content, and persist it with `content.artifact_update`. Do not create a second artifact unless the user clearly asks for another separate post. A correction that exists only in chat leaves the stale draft canonical; a newly created artifact leaves both versions active and loses the review trail.
+
+## Scheduled generation produces drafts only
+
+A request for daily or weekly content authorizes recurring preparation of saved drafts, not recurring publication. Scheduled generation must stop at a reviewable artifact. Schedule or publish only with explicit runtime authority for that exact artifact revision, account, platform, and time. Never reuse approval from workflow setup, a prior draft, or an earlier scheduled run. If nobody with authority is present when a run executes, keep the draft and report its review state.
 
 ## Two rules that never bend
 

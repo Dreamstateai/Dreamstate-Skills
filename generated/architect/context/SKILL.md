@@ -5,28 +5,28 @@ description: Read targeted revisioned workspace-wiki claims or propose cited con
 triggers: ["read the canonical workspace wiki","inspect published workspace knowledge","propose a cited wiki update","revise an existing ordinary wiki document","trace a cited claim or source","propose a new ordinary wiki file","keep a wiki proposal unpublished for human review"]
 dependencies: []
 capability_domains: ["brain"]
-capability_ids: ["brain.context.archive_document","brain.context.backlinks","brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.delete_document","brain.context.get","brain.context.graph","brain.context.history","brain.context.list","brain.context.list_proposals","brain.context.move_document","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.rebuild_links","brain.context.register_source","brain.context.rename_document","brain.context.restore_document","brain.context.save_and_publish","brain.context.save_draft","brain.context.search","brain.context.website_source_register","brain.evidence.search","brain.graph.neighborhood","brain.knowledge.digest","brain.knowledge.doc_map","brain.knowledge.document","brain.knowledge.index","research.urls_fetch"]
+capability_ids: ["brain.context.archive_document","brain.context.backlinks","brain.context.browse","brain.context.create_document","brain.context.create_folder","brain.context.delete_document","brain.context.get","brain.context.graph","brain.context.history","brain.context.list","brain.context.list_proposals","brain.context.move_document","brain.context.preview_agent_view","brain.context.propose","brain.context.propose_document","brain.context.rebuild_links","brain.context.register_source","brain.context.rename_document","brain.context.restore_document","brain.context.save_and_publish","brain.context.save_draft","brain.context.search","brain.context.website_source_register","brain.evidence.search","brain.graph.neighborhood","brain.knowledge.digest","brain.knowledge.doc_map","brain.knowledge.document","brain.knowledge.index"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: context
   kernel_file: KERNEL.md
-  kernel_sha256: 96ee1dbdabd8a41ae71270cde4a5da6da2ff5d11efd1e47be426a7a966bc8096
-  adapter_sha256: 4f4e6497c538d125c5f9540b9d737090f07b7feb7bde4851e5070c5dedad4454
+  kernel_sha256: ab5288cbd567f2d58ce7ba541a799d1b1d8b0f4f7cf956362bc7825daa10ff03
+  adapter_sha256: 4ec4c8136eb49c2646eeb2fd5e8887f3a00966ad9717155ec4bb37ba37c12c99
   evals_file: evals.json
-  evals_sha256: 3d88cc1caa0457f18d0066c54a578d01bfc88dee229cd21c18756325f6d6d34c
+  evals_sha256: 11ab80bc317c53070323e54b36b17eb47757fee6190c013df2f96d348bc075f7
 ---
 
 # Architect surface adapter
@@ -45,7 +45,7 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 30 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 29 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 14 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ## Capability routing
@@ -72,7 +72,12 @@ Each capability this skill grants is reached through one tool action. Call the t
 | brain.context.save_draft | ds_edit action=replace |
 | brain.context.search | ds_search action=context |
 | brain.context.website_source_register | ds_write action=register_source |
-| research.urls_fetch | ds_read, or ds_search action=web |
+| brain.evidence.search | ds_analytics action=brain_evidence |
+| brain.graph.neighborhood | ds_analytics action=brain_evidence |
+| brain.knowledge.digest | ds_analytics action=brain_evidence |
+| brain.knowledge.doc_map | ds_analytics action=brain_evidence |
+| brain.knowledge.document | ds_analytics action=brain_evidence |
+| brain.knowledge.index | ds_analytics action=brain_evidence |
 
 ### Reachable only through the capability catalogue
 
@@ -83,9 +88,3 @@ These capability ids have no fixed tool route in this release. Find the exact co
 - brain.context.preview_agent_view
 - brain.context.propose
 - brain.context.propose_document
-- brain.evidence.search
-- brain.graph.neighborhood
-- brain.knowledge.digest
-- brain.knowledge.doc_map
-- brain.knowledge.document
-- brain.knowledge.index

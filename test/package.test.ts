@@ -53,7 +53,13 @@ test('npm tarball contains runnable maintainer scripts and Architect source inpu
       'scripts/sync-capability-manifest.ts',
       'scripts/sync-architect.ts',
       'architect-kernels/skills.json',
-      'architect-kernels/outreach/KERNEL.md',
+      'architect-kernels/workbooks/KERNEL.md',
+      'architect-kernels/sourcing-enrichment/KERNEL.md',
+      'architect-kernels/qualification/KERNEL.md',
+      'architect-kernels/research/KERNEL.md',
+      'architect-kernels/seo/KERNEL.md',
+      'architect-kernels/geo/KERNEL.md',
+      'architect-kernels/workflows/KERNEL.md',
       'test/build.test.ts',
     ]) {
       assert.ok(entries.includes(`package/${relative}`), `${relative} missing from tarball`);

@@ -20,11 +20,13 @@ Produce one diagnosis (what changed, what is off-track, what the evidence shows)
 - the outcome it targets and the metric that will show it worked
 - the specific evidence and its date (a `command_center.overview.get` read from this turn, not a remembered number)
 - an impact estimate: low, medium, or high, with the one-line reason
-- the owning skill: `outreach`, `social`, `seo-geo`, or `writing`
+- the owning skill: `workbooks`, `sourcing-enrichment`, `qualification`, `sequences`, `workflows`, `social`, `seo`, `geo`, `research`, or `writing`
 - the exact deliverable, dependency, and due date
 - the smallest useful next action, small enough to start today
 
-State explicitly why anything ranked 6th or lower was deferred. Distinguish an authored-content schedule (owned by `social`) from Reddit community engagement, outbound sourcing (owned by `outreach`), organic/AI-search visibility work (owned by `seo-geo`), and long-form drafts (owned by `writing`). A plan item that tries to specify how the owning skill should execute is doing that skill's job for it; state the objective and evidence, not the implementation.
+State explicitly why anything ranked 6th or lower was deferred. Keep the prospect lifecycle explicit: `workbooks` owns structure, `sourcing-enrichment` owns source and row evidence, `qualification` owns rubric and frozen cohort, `sequences` owns author/validate/bind, and `workflows` owns publish/enroll/activate/run. Distinguish those from authored social, Reddit engagement, traditional search, GEO, research, and long-form writing. State the objective and evidence, not the owning skill's implementation.
+
+Each priority also names its critical assumption and whether the week should execute, investigate, or experiment. `Execute` is for strong evidence and low uncertainty. `Investigate` is for a missing fact that research or analytics can answer. `Experiment` is for a falsifiable mechanism with a stable target and measurable outcome. Do not schedule full execution when the priority's central assumption is both high-impact and untested.
 
 ## Handoff discipline
 
@@ -36,7 +38,7 @@ Only when the user explicitly asks to coordinate a follow-up across the calendar
 
 ## What the plan is not
 
-The plan itself never schedules a post, launches a sequence, or approves an experiment. Those consequences belong to `social`, `outreach`, and the `growth.governed_experiment_*` family respectively (see `experiments.md`). State clearly in the output which items are only planned and which already have a separate durable proposal, run, or receipt.
+The plan itself never schedules a post, publishes or enrolls a sequence, activates a workflow, or approves an experiment. Those consequences belong to `social`, `workflows`, and the governed-experiment lifecycle respectively. State which items are only planned and which already have a durable artifact, run, or receipt.
 
 ## Traps
 

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "skill_id": "geo",
+  "cases": [
+    {
+      "id": "query-set-is-a-revisioned-instrument",
+      "expected_skill_ids": ["geo"],
+      "request": "Build and save a balanced GEO query set for our US-English market.",
+      "required_capability_ids": ["visibility.workspace_site_get", "brain.context.search", "brain.context.get", "visibility.tracked_prompts.status", "visibility.tracked_prompts.list", "visibility.tracked_prompts.tags", "visibility.tracked_prompts.generate", "visibility.tracked_prompts.save", "visibility.geo_queries_list"],
+      "required_executed_capability_ids": ["visibility.workspace_site_get", "visibility.tracked_prompts.status", "visibility.tracked_prompts.list", "visibility.tracked_prompts.generate", "visibility.tracked_prompts.save", "visibility.geo_queries_list"],
+      "required_concepts": ["prepare does not persist", "balanced intent taxonomy", "unbranded prompts", "source per prompt", "read back stable ids", "query-set revision"]
+    },
+    {
+      "id": "probe-uses-exact-denominators",
+      "expected_skill_ids": ["geo"],
+      "request": "Run a new GEO probe and tell me which prompts are weakest.",
+      "required_capability_ids": ["visibility.tracked_prompts.status", "visibility.probe.start", "visibility.probe.status", "visibility.probe.today", "visibility.probe.results", "visibility.prompt_metrics_list", "visibility.citations", "visibility.overview"],
+      "required_executed_capability_ids": ["visibility.tracked_prompts.status", "visibility.probe.start", "visibility.probe.status", "visibility.probe.results", "visibility.prompt_metrics_list"],
+      "required_concepts": ["explicit runtime authority", "completed versus expected runs", "run_count", "citation_count", "visibility_pct", "zero runs is unavailable", "worst prompts by name"]
+    },
+    {
+      "id": "refresh-is-not-a-probe",
+      "expected_skill_ids": ["geo"],
+      "request": "Refresh the dashboard metrics without asking the engines new questions.",
+      "required_capability_ids": ["visibility.refresh", "visibility.prompt_metrics_list", "visibility.sentiment_trend"],
+      "required_executed_capability_ids": ["visibility.refresh", "visibility.prompt_metrics_list"],
+      "required_concepts": ["recompute existing observations", "not a new probe", "preserve freshness and completeness"]
+    },
+    {
+      "id": "historical-trend-keeps-query-revisions-separate",
+      "expected_skill_ids": ["geo"],
+      "request": "Compare this quarter's GEO visibility with last quarter after we rewrote several tracked prompts.",
+      "required_capability_ids": ["visibility.tracked_prompts.list", "visibility.probe.runs_list", "visibility.probe.run_get", "visibility.probe.latest", "visibility.prompt_metrics_list"],
+      "required_executed_capability_ids": ["visibility.tracked_prompts.list", "visibility.probe.runs_list", "visibility.prompt_metrics_list"],
+      "required_concepts": ["changed measurement instrument", "unchanged prompt intersection", "new baseline", "do not splice retired wording into new history"]
+    },
+    {
+      "id": "single-prompt-edit-does-not-regenerate-set",
+      "expected_skill_ids": ["geo"],
+      "request": "Fix the locale and wording of one tracked prompt without replacing the rest.",
+      "required_capability_ids": ["visibility.tracked_prompts.list", "visibility.tracked_prompts.update", "visibility.tracked_prompts.create"],
+      "required_executed_capability_ids": ["visibility.tracked_prompts.list", "visibility.tracked_prompts.update"],
+      "required_concepts": ["exact prompt id", "single revision", "read back", "comparison break disclosed"]
+    }
+  ]
+}

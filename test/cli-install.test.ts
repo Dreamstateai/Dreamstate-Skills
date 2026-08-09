@@ -19,6 +19,14 @@ const GOVERNED_ADAPTER_SLUGS = new Set(
       .skills,
   ),
 );
+const OUTBOUND_ADAPTER_SLUGS = [
+  'workbooks',
+  'sourcing-enrichment',
+  'qualification',
+  'sequences',
+  'workflows',
+] as const;
+const RETIRED_ADAPTER_SLUGS = ['outreach', 'seo-geo'] as const;
 
 function seedInstalledSkills(skillsDir: string, slugs: string[]): void {
   for (const slug of slugs) {
@@ -51,15 +59,15 @@ function runInstall(home: string, args: string[]) {
 test('Claude installs the release-pinned hardened adapter bytes', () => {
   const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-claude-'));
   try {
-    const result = runInstall(home, ['skills', 'install', 'outreach', '--claude']);
+    const result = runInstall(home, ['skills', 'install', 'workbooks', '--claude']);
     assert.equal(result.status, 0, result.stderr || result.stdout);
     for (const file of ['SKILL.md', 'KERNEL.md', 'evals.json']) {
       assert.deepEqual(
-        readFileSync(join(home, '.claude', 'skills', 'outreach', file)),
-        readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', 'outreach', file)),
+        readFileSync(join(home, '.claude', 'skills', 'workbooks', file)),
+        readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', 'workbooks', file)),
       );
     }
-    const installed = readFileSync(join(home, '.claude', 'skills', 'outreach', 'SKILL.md'), 'utf8');
+    const installed = readFileSync(join(home, '.claude', 'skills', 'workbooks', 'SKILL.md'), 'utf8');
     assert.match(installed, /client: claude/);
     assert.match(installed, /mismatch_behavior: deny_run/);
   } finally {
@@ -117,7 +125,13 @@ test('Claude and Codex omit every generic executable or guided package from a fu
       assert.equal(existsSync(join(skillsDir, 'network-grow')), false);
       assert.equal(existsSync(join(skillsDir, 'reply-triage')), false);
       assert.equal(existsSync(join(skillsDir, safe.slug)), true, `${client} omitted safe knowledge package ${safe.slug}`);
-      assert.equal(existsSync(join(skillsDir, 'outreach', 'SKILL.md')), true, `${client} omitted governed outreach adapter`);
+      for (const skillId of GOVERNED_ADAPTER_SLUGS) {
+        assert.equal(
+          existsSync(join(skillsDir, skillId, 'SKILL.md')),
+          true,
+          `${client} omitted governed ${skillId} adapter`,
+        );
+      }
       assert.equal(existsSync(join(skillsDir, 'social', 'SKILL.md')), true, `${client} omitted governed social adapter`);
     } finally {
       rmSync(home, { recursive: true, force: true });
@@ -154,11 +168,14 @@ test('a full governed upgrade prunes stale Dreamstate unsafe packages but preser
     assert.equal(result.status, 0, result.stderr || result.stdout);
     assertNoUnsafeGenericSkills(skillsDir);
     assert.deepEqual(readFileSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), customBefore);
-    assert.deepEqual(
-      readFileSync(join(skillsDir, 'outreach', 'SKILL.md')),
-      readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', 'outreach', 'SKILL.md')),
-      'the governed adapter must replace any stale same-slug package',
-    );
+    assert.equal(existsSync(join(skillsDir, 'outreach')), false, 'the retired outreach package must be pruned');
+    for (const skillId of GOVERNED_ADAPTER_SLUGS) {
+      assert.deepEqual(
+        readFileSync(join(skillsDir, skillId, 'SKILL.md')),
+        readFileSync(join(ROOT, 'generated', 'client-adapters', 'claude', skillId, 'SKILL.md')),
+        `the current ${skillId} governed adapter must be installed`,
+      );
+    }
   } finally {
     rmSync(home, { recursive: true, force: true });
   }
@@ -168,14 +185,51 @@ test('a governed outbound bundle upgrade prunes every stale unsafe Dreamstate pa
   const home = mkdtempSync(join(tmpdir(), 'dreamstate-cli-governed-bundle-upgrade-'));
   const skillsDir = join(home, '.codex', 'skills');
   try {
-    seedInstalledSkills(skillsDir, [...UNSAFE_GENERIC_SLUGS, 'my-custom-skill']);
+    seedInstalledSkills(skillsDir, [
+      ...UNSAFE_GENERIC_SLUGS,
+      ...RETIRED_ADAPTER_SLUGS,
+      'my-custom-skill',
+    ]);
     const result = runInstall(home, ['skills', 'install', '--bundle', 'outbound', '--codex']);
     assert.equal(result.status, 0, result.stderr || result.stdout);
     assertNoUnsafeGenericSkills(skillsDir);
     assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
-    assert.equal(existsSync(join(skillsDir, 'outreach', 'SKILL.md')), true);
+    for (const retiredSlug of RETIRED_ADAPTER_SLUGS) {
+      assert.equal(existsSync(join(skillsDir, retiredSlug)), false);
+    }
+    for (const skillId of OUTBOUND_ADAPTER_SLUGS) {
+      assert.equal(existsSync(join(skillsDir, skillId, 'SKILL.md')), true);
+    }
+    for (const skillId of GOVERNED_ADAPTER_SLUGS) {
+      if (!OUTBOUND_ADAPTER_SLUGS.includes(skillId as typeof OUTBOUND_ADAPTER_SLUGS[number])) {
+        assert.equal(
+          existsSync(join(skillsDir, skillId, 'KERNEL.md')),
+          false,
+          `outbound bundle unexpectedly installed governed ${skillId}`,
+        );
+      }
+    }
   } finally {
     rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('retired governed adapter slugs are rejected without aliases and pruned', () => {
+  for (const client of ['claude', 'codex'] as const) {
+    for (const retiredSlug of RETIRED_ADAPTER_SLUGS) {
+      const home = mkdtempSync(join(tmpdir(), `dreamstate-cli-${client}-retired-`));
+      const skillsDir = join(home, `.${client}`, 'skills');
+      try {
+        seedInstalledSkills(skillsDir, [retiredSlug, 'my-custom-skill']);
+        const result = runInstall(home, ['skills', 'install', retiredSlug, `--${client}`]);
+        assert.notEqual(result.status, 0);
+        assert.match(result.stderr, /no skill named/i);
+        assert.equal(existsSync(join(skillsDir, retiredSlug)), false);
+        assert.equal(existsSync(join(skillsDir, 'my-custom-skill', 'SKILL.md')), true);
+      } finally {
+        rmSync(home, { recursive: true, force: true });
+      }
+    }
   }
 });
 

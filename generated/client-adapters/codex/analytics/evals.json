@@ -6,7 +6,8 @@
       ],
       "id": "measured-social-diagnosis",
       "must_not_load": [
-        "seo-geo"
+      "seo",
+      "geo"
       ],
       "request": "Can you figure out what caused our LinkedIn engagement to drop this month?",
       "required_capability_ids": [
@@ -363,6 +364,16 @@
         }
       ]
     }
+  ,
+    {
+      "id": "rate-keeps-exact-denominator-and-provenance",
+      "expected_skill_ids": ["analytics"],
+      "request": "Did our reply rate improve, and can we attribute the change to the workflow?",
+      "required_capability_ids": ["outreach.analytics_step_aggregate_get", "workflows.metrics_get", "analytics.attribution_health_get", "attribution.overview_get"],
+      "required_executed_capability_ids": ["outreach.analytics_step_aggregate_get", "workflows.metrics_get", "analytics.attribution_health_get"],
+      "required_concepts": ["numerator", "denominator", "eligibility exclusions", "equal-length windows", "attribution model", "lookback window", "unattributed share", "correlation is not causation", "zero over zero is unavailable"]
+    }
+  ,{"id":"outreach-activity-ledger-and-credit-snapshot","expected_skill_ids":["analytics"],"request":"Show recent completed outreach activity and how many outreach credits we actually used and have left.","required_capability_ids":["outreach.activity_list","outreach.credit_usage_get"],"required_executed_capability_ids":["outreach.activity_list","outreach.credit_usage_get"],"required_concepts":["paginated event ledger is not an aggregate","filters time window cursor and completeness","credit snapshot observation time","never infer credit spend from activity count"]}
   ],
   "schema_version": 1,
   "skill_id": "analytics"

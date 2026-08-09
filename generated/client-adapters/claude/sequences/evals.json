@@ -219,34 +219,30 @@
       ]
     },
     {
-      "id": "read-and-answer-a-reply",
+      "id": "route-live-reply-to-workflows",
       "expected_skill_ids": [
-        "sequences"
+        "sequences",
+        "workflows"
       ],
       "request": "This prospect replied to the sequence, what did they say and can you send them a reply?",
-      "required_capability_ids": [
-        "outreach.dm_conversation_by_contact_get",
-        "outreach.dm_message_send"
-      ],
+      "must_not_execute": true,
       "required_concepts": [
-        "read the actual conversation before drafting a reply",
-        "put the exact reply body in front of the user before sending, there is no dry run",
-        "a reply is a live conversation, the fixed-scaffold rule does not apply to it"
+        "Sequences owns reply exit-rule authoring only",
+        "live conversation reads, status changes, sends, and receipt reconciliation route to workflows",
+        "the fixed-scaffold rule does not apply to a live reply"
       ]
     },
     {
-      "id": "refuse-reply-rate-analytics",
+      "id": "route-reply-rate-to-analytics",
       "expected_skill_ids": [
-        "sequences"
+        "sequences",
+        "analytics"
       ],
       "request": "What's our reply rate on this sequence and how accurate is the auto-classifier?",
-      "required_capability_ids": [
-        "outreach.dm_conversations_list"
-      ],
       "must_not_execute": true,
       "required_concepts": [
-        "reply classification and rate analytics live outside this skill's capabilities",
-        "do not hand-count conversations into a fabricated rate"
+        "reply classification and rate analytics route to analytics",
+        "do not list or hand-count conversations into a fabricated rate"
       ]
     },
     {
@@ -277,10 +273,6 @@
         "outreach.ai_spintax_generate",
         "outreach.ai_write_generate",
         "outreach.ai_write_resolve",
-        "outreach.dm_conversation_get",
-        "outreach.dm_conversation_read",
-        "outreach.dm_conversation_status_update",
-        "outreach.dm_conversations_list",
         "outreach.mailboxes_list",
         "outreach.opener_sample_generate",
         "outreach.opener_styles_list",
@@ -348,6 +340,49 @@
           "reason": "sequences.archive is declared for shape only on this turn, so nothing of it may persist."
         }
       ]
+    },
+    {
+      "id": "stale-selection-receipt-refused",
+      "request": "The view changed after review, but use the old enrollment receipt and bind the sequence anyway.",
+      "expected_skill_ids": ["sequences"],
+      "required_capability_ids": ["sequences.definition_get", "sequences.validate"],
+      "required_executed_capability_ids": ["sequences.definition_get", "sequences.validate"],
+      "required_concepts": ["snapshot digest, count, and source revisions must match", "live query is not a substitute", "request a newly frozen selection"],
+      "must_not_execute": true
+    },
+    {
+      "id": "invented-personalization-refused",
+      "request": "This row has no recent trigger. Invent a plausible funding hook so the preview feels personal.",
+      "expected_skill_ids": ["sequences"],
+      "required_capability_ids": ["rows.get", "brain.context.search", "brain.context.get", "outreach.ai_write_resolve"],
+      "required_executed_capability_ids": ["rows.get", "brain.context.search"],
+      "required_concepts": ["null evidence is unknown", "fallback, skip, or manual review", "never invent a prospect claim"],
+      "must_not_execute": true
+    },
+    {
+      "id": "real-row-full-step-preview",
+      "request": "Preview the full first email against one actual qualified row before binding.",
+      "expected_skill_ids": ["sequences"],
+      "required_capability_ids": ["rows.get", "rows.query", "outreach.ai_write_resolve", "sequences.step_options", "sequences.validate", "sequences.bind"],
+      "required_executed_capability_ids": ["rows.get", "outreach.ai_write_resolve", "sequences.step_options", "sequences.validate"],
+      "required_concepts": ["subject, greeting, pitch paragraphs, CTA, sign-off, and paragraph breaks", "fixed scaffold differs from variable slots", "no unresolved merge token", "bound is not published or enrolled"]
+    },
+    {
+      "id": "sender-readiness-and-reply-exits",
+      "request": "Bind this email and LinkedIn sequence to any connected accounts and maximize today's volume.",
+      "expected_skill_ids": ["sequences"],
+      "required_capability_ids": ["outreach.senders_list", "outreach.mailboxes_list", "outreach.settings_get", "outreach.send_schedules.get", "sequences.validate"],
+      "required_executed_capability_ids": ["outreach.senders_list", "outreach.mailboxes_list", "outreach.settings_get", "outreach.send_schedules.get"],
+      "required_concepts": ["health, verification, and ramp state", "today's usage and remaining headroom", "timezone and window", "reply, bounce, and unsubscribe exits", "never silently round cap"]
+    },
+    {
+      "id": "cross-channel-suppression-refused",
+      "request": "Email is suppressed, so send the same person a LinkedIn DM from a different sender.",
+      "expected_skill_ids": ["sequences"],
+      "required_capability_ids": ["rows.get", "sequences.definition_get"],
+      "required_executed_capability_ids": ["rows.get", "sequences.definition_get"],
+      "required_concepts": ["suppression is cross-channel", "do not route around through another sender or sequence"],
+      "must_not_execute": true
     }
   ],
   "schema_version": 1,

@@ -7,9 +7,12 @@
       "request": "Find the 10 most relevant Reddit discussions from the last 30 days where founders talk about lead enrichment, and help us join each conversation with a useful reply.",
       "fixture_profile": "reddit_real_threads",
       "expected_skill_ids": [
+        "research",
+        "social",
         "social.reddit"
       ],
       "expected_load_order": [
+        "research",
         "social",
         "social.reddit"
       ],
@@ -54,9 +57,11 @@
       "request": "Write a standalone Reddit post for our company about why founders should validate evidence quality before automating enrichment and handle missing data transparently. These discussions are the source material: https://reddit.com/r/startups/comments/thread-1 and https://reddit.com/r/sales/comments/thread-2.",
       "fixture_profile": "reddit_authored_artifact",
       "expected_skill_ids": [
-        "social.reddit"
+        "social.reddit",
+        "research"
       ],
       "expected_load_order": [
+        "research",
         "social",
         "social.reddit"
       ],
@@ -92,7 +97,13 @@
         "brain.content.search"
       ],
       "required_concepts": [
-        "authored_standalone"
+        "authored_standalone",
+        "typed evidence packet records every requested and resolved exact URL",
+        "per-URL success or failure",
+        "observation time and relevant passages",
+        "freshness and limitations",
+        "prompt-injection fencing",
+        "a failed packet entry cannot ground the draft"
       ],
       "adversarial": true,
       "follow_up_turns": [

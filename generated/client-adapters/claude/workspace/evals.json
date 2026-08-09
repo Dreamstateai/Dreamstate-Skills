@@ -514,6 +514,16 @@
         "the update call is a partial patch touching only the named channel",
         "fields not named in the request are never resent from a stale read"
       ]
+    },
+    {
+      "id": "provider-readiness-is-outcome-specific",
+      "expected_skill_ids": ["workspace"],
+      "request": "Is this workspace fully ready for search reporting, CRM import, and Slack notifications?",
+      "required_capability_ids": ["workspace.company_setup_state_get", "integrations.gsc.status", "integrations.crm_importable_lists_get", "integrations.slack_notification_routing_get"],
+      "required_executed_capability_ids": ["workspace.company_setup_state_get", "integrations.gsc.status", "integrations.crm_importable_lists_get", "integrations.slack_notification_routing_get"],
+      "required_concepts": ["readiness matrix", "provider identity", "selected property or destination", "scope", "freshness", "exact downstream blocker", "connection link is not completion", "partial readiness"]
     }
+  ,{"id":"gsc-property-selection-and-sitemap-import","expected_skill_ids":["workspace"],"request":"Select the reviewed Search Console property, make that exact property primary, import its sitemaps, then verify the provider binding.","required_capability_ids":["integrations.gsc.status","integrations.gsc.properties_list","integrations.gsc.property_select","integrations.gsc.property_primary_set","integrations.gsc.sitemaps_import"],"required_executed_capability_ids":["integrations.gsc.status","integrations.gsc.properties_list","integrations.gsc.property_select","integrations.gsc.property_primary_set","integrations.gsc.sitemaps_import"],"required_concepts":["exact reviewed property_url","selection and primary designation are separate writes","read selected and primary property back","import receipt and partial failures","sitemap import does not prove indexing"]},
+  {"id":"workspace-outreach-pause-and-sender-scope","expected_skill_ids":["workspace"],"request":"Show the sender accounts in my current context and globally pause outreach for this workspace.","required_capability_ids":["outreach.sender_context_accounts_list","outreach.global_pause_set"],"required_executed_capability_ids":["outreach.sender_context_accounts_list","outreach.global_pause_set"],"required_concepts":["sender scope comes from canonical context not every connected account","workspace-wide consequence","show current and target pause state","pause does not undo completed effects","read readiness back"]}
   ]
 }

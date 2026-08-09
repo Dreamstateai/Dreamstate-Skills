@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "skill_id": "seo",
+  "cases": [
+    {
+      "id": "gsc-comparison-with-exact-denominators",
+      "expected_skill_ids": ["seo"],
+      "request": "Which search queries improved this month, and what should we update first?",
+      "required_capability_ids": ["visibility.workspace_site_get", "brain.context.search", "brain.context.get", "integrations.gsc.status", "integrations.gsc.search_analytics_get", "visibility.keywords_get"],
+      "required_executed_capability_ids": ["visibility.workspace_site_get", "integrations.gsc.status", "integrations.gsc.search_analytics_get"],
+      "required_concepts": ["exact property", "equal-length comparison windows", "CTR denominator is impressions", "average position is impression-weighted", "observation versus assumption"]
+    },
+    {
+      "id": "technical-audit-does-not-collapse-layers",
+      "expected_skill_ids": ["seo"],
+      "request": "Audit our site for traditional SEO and prioritize the root causes.",
+      "required_capability_ids": ["visibility.workspace_site_get", "seo.robots_audit", "visibility.sitemap_get", "visibility.site_files_get", "visibility.html_analysis_get", "visibility.pagespeed_get", "seo.agent_readiness_latest", "seo.agent_readiness_history"],
+      "required_executed_capability_ids": ["visibility.workspace_site_get", "seo.robots_audit", "visibility.sitemap_get", "visibility.html_analysis_get"],
+      "required_concepts": ["discovery", "crawl permission", "indexability", "URL-specific evidence", "root cause before symptom"]
+    },
+    {
+      "id": "fresh-serp-research-is-governed",
+      "expected_skill_ids": ["seo"],
+      "request": "Resolve a current SERP snapshot and refresh Search Console before we choose a page to revise.",
+      "required_capability_ids": ["seo.serp_spend_get", "seo.serp_snapshot_resolve", "integrations.gsc.search_analytics_refresh", "integrations.gsc.search_analytics_get"],
+      "required_executed_capability_ids": ["seo.serp_spend_get"],
+      "required_concepts": ["expected cost", "runtime approval", "queued is not terminal", "SERP snapshot and Search Console remain separate evidence"]
+    },
+    {
+      "id": "readiness-scan-terminal-evidence",
+      "expected_skill_ids": ["seo"],
+      "request": "Run a fresh agent-readiness and site scan, then report the findings.",
+      "required_capability_ids": ["seo.agent_readiness_scan", "seo.agent_readiness_latest", "visibility.site_scan", "seo.llms_txt_get", "visibility.pagespeed_refresh"],
+      "required_executed_capability_ids": ["seo.agent_readiness_scan", "visibility.site_scan"],
+      "required_concepts": ["approval boundary", "terminal run", "partial and errored findings stay explicit", "do not report from start receipt"]
+    }
+  ,{"id":"ai-crawler-traffic-recommendations-and-llms-proposal","expected_skill_ids":["seo"],"request":"Check whether AI bots fetched this site, show measured AI referral traffic, explain the latest probe recommendations, and generate an llms.txt proposal for the exact URL.","required_capability_ids":["visibility.ai_bot_fetch_get","visibility.ai_traffic","visibility.probe.recommendations","tools.llms_txt_generate"],"required_executed_capability_ids":["visibility.ai_bot_fetch_get","visibility.ai_traffic","visibility.probe.recommendations","tools.llms_txt_generate"],"required_concepts":["URL-scoped fetch evidence","absent fetch evidence is not proof of blocking","traffic observation time and completeness","recommendations are inference from exact batch_id","generated llms.txt is not installed or published","crawled pages skipped URLs and provider evidence"]}
+  ]
+}

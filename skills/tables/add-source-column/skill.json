@@ -39,7 +39,7 @@
     "tables:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "a7fafedeb45d2a7d",
+  "verified_capability_hash": "f897fa5a3240ddff",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/add-source-column/SKILL.md",
   "install_command": "dreamstate skills install add-source-column",

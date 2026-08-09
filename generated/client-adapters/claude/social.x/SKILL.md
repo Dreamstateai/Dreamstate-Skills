@@ -1,27 +1,27 @@
 ---
 id: social.x
 name: social.x
-description: "Research and analyze official X API content and determine truthful recent-search or full-archive coverage. Connection setup and repair belong to Integrations."
+description: "Research and analyze official X API content, determine truthful recent-search or full-archive coverage, and make X-specific authored-draft decisions. Connection setup and repair belong to Workspace."
 capability_domains: ["brain","social","tables"]
 capability_ids: ["brain.content.search","social.accounts_list"]
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"source_state","description":"X evidence source boundary.","allowed_values":["official_api","cache","unavailable","not_applicable"]},{"id":"search_window","description":"Official X search-window coverage state.","allowed_values":["recent","archive","outside_entitlement","unavailable"]},{"id":"archive_entitlement","description":"Full-archive X entitlement state.","allowed_values":["entitled","not_entitled","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   client: claude
   kernel_id: social.x
   kernel_file: KERNEL.md
-  kernel_sha256: 361813ed5499ce2ef7d6cc46888aa3beddec94a815071fa1b854faf89d25cd8d
+  kernel_sha256: 17e03e2bc86959aaf3101654c84834ab594c60c217835e06cd7c8275cd49f984
   adapter_sha256: 4216923d8f1bb051e7fa2edcfe2a6f75ee57af2a8878527275d478175e6d7b68
   evals_file: evals.json
   evals_sha256: 9992c3735014e6070b68c0514abd519ad1d4e8f945966901b01c0cb4e1f53982
@@ -56,7 +56,7 @@ These are derived from this skill's exact capability contract, so state them up 
 {"required_capability_ids":["brain.content.search","social.accounts_list"]}
 -->
 
-Own X-specific content research, analysis, publishing context, opportunities, and recent-versus-full-archive coverage under the Social parent. A coverage or entitlement question about X research stays here; route to Integrations only when the requested outcome is connection setup or repair.
+Own X-specific research and authored-draft decisions under the Social parent: punchy voice, weighted length, thread shape, opportunities, and truthful recent-versus-archive coverage. Social owns shared artifact persistence and outward lifecycle. A coverage or entitlement question stays here; provider connection setup or repair belongs to `workspace`.
 
 Use `x.posts.search` through the official API source contract. Recent search covers at most seven days. Full archive is available only when the configured entitlement explicitly supports it. Cached canonical X rows may provide older database results, but cached history is not proof of live full-archive entitlement.
 
@@ -65,5 +65,7 @@ When the request supplies a topic or query and time window, ranking and output f
 Preserve post id, URL aliases, author identity, source scope, observed time, rights policy, and nullable metric availability. Likes, replies, reposts, and quotes may be available; impressions and bookmarks can be entitlement-gated or provider-dependent. Missing is never zero. Generic web discovery may identify an X URL but cannot supply structured metrics.
 
 A single authored X post respects a weighted character limit, not a plain length count: ASCII characters count as 1 each, URLs always count as 23 regardless of actual length, and emoji, CJK, and other non-ASCII characters count as 2 each (twitter-text rules). The limit itself depends on the account: 280 weighted characters on a free account, 25,000 on a Premium (Blue) account. Count the drafted body against the weighted rule for the account's actual tier before proposing it, not a flat 280. When the content does not fit, say so and cut it down, or thread it explicitly with each part numbered and individually within the limit. Never propose an over-length single post, and never silently truncate one.
+
+Draft in the account's learned social voice: punchy, specific, and opinionated without manufacturing a stance. Product-document voice is only a disclosed fallback. Prepare account tier and evidence, compose and weighted-count internally, save and read back the artifact, and rewrite the current artifact in place on corrections.
 
 For analysis, use governed content reads, comparisons, benchmarks when privacy release allows, and bounded graph neighborhoods. Keep inference distinct from observation. For table handoff, return canonical rows and provider/run state. For drafting, scheduling, replying, or publishing, prepare a reviewable artifact and require explicit approval immediately before the external operation; revalidate account and entitlement after approval.

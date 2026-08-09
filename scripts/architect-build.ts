@@ -18,7 +18,7 @@ const MAX_SUPPORTING_FILES = 8;
 const TOOL_ACTION_NAME = /^[a-z][a-z0-9_]*$/;
 const ARCHITECT_SURFACE_TOOL_NAME = /^ds_[a-z_]+$/;
 const ANY_TOOL_NAME_PATTERN = /\b(?:ds_[a-z_]+|dreamstate_[a-z_]+)\b/;
-const ARCHITECT_TOOL_NAMES = new Set([
+const RETIRED_ARCHITECT_TOOL_NAMES = new Set([
   'load_skill',
   'ask_user',
   'tools_search',
@@ -37,21 +37,24 @@ const ARCHITECT_TOOL_NAMES = new Set([
 // not an instruction to call a nonexistent tool and must stay sayable; a
 // backtick-quoted `` `ask_user` `` naming it as something to invoke is the
 // actual retired-harness bug this gate exists to catch.
-const RETIRED_TOOL_NAME_PATTERN = new RegExp(`\`(?:${[...ARCHITECT_TOOL_NAMES].join('|')})\``);
+const RETIRED_TOOL_NAME_PATTERN = new RegExp(`\`(?:${[...RETIRED_ARCHITECT_TOOL_NAMES].join('|')})\``);
 const OPERATION_CONTRACT_START = '<!-- architect-operation-contract\n';
 const OPERATION_CONTRACT_END = '\n-->';
-// Both sets named the pre-consolidation packages. `outreach-list-builder`,
-// `tables`, `outreach-sequence-writer` and `outreach-workflow-builder` were
-// merged into `outreach` and `sequences`, so every id but `outreach` had
-// stopped matching anything and the campaign-terminology gate had silently
-// stopped covering the sequence-writing kernel entirely.
+// These packages jointly own canonical prospecting data and outreach
+// execution. Keep shortcut and retired-campaign vocabulary checks attached
+// to every active owner instead of relying on one monolithic coordinator.
 const OUTREACH_POLICY_IDS = new Set([
-  'outreach',
+  'workbooks',
+  'sourcing-enrichment',
+  'qualification',
   'sequences',
 ]);
 const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
-  'outreach',
+  'workbooks',
+  'sourcing-enrichment',
+  'qualification',
   'sequences',
+  'workflows',
 ]);
 const CODING_DRIFT_DENIED_OPERATIONS = [
   'dreamstate_tools_run',
@@ -297,6 +300,7 @@ function assertSourceManifest(value: ArchitectSourceManifest): void {
 }
 
 function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; skills: SourceSkill[]; sourceHash: string } {
+  const architectToolNames = new Set(loadArchitectToolContract().tools.map((tool) => tool.name));
   const manifestPath = join(sourceDir, 'skills.json');
   if (!lstatSync(manifestPath).isFile()) {
     throw new Error('architect-kernels/skills.json must be a regular file');
@@ -365,7 +369,7 @@ function loadSources(sourceDir: string): { manifest: ArchitectSourceManifest; sk
             throw new Error(`${skill.id}: required_tool_sequence step ${index} must be an object`);
           }
           const tool = (rawStep as { tool?: unknown }).tool;
-          if (typeof tool !== 'string' || !ARCHITECT_TOOL_NAMES.has(tool)) {
+          if (typeof tool !== 'string' || !architectToolNames.has(tool)) {
             const caseId = typeof evalCase.id === 'string' ? evalCase.id : '(unnamed)';
             throw new Error(
               `${skill.id}/${caseId}: required_tool_sequence names unsupported Architect tool ${String(tool)}`,

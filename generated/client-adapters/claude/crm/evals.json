@@ -816,7 +816,8 @@
       "id": "product-evidence-read-and-ingest",
       "request": "What product content do we currently have and where did it come from? Also bring the Dreamstate brief at workspace/products/dreamstate-brief.pdf and the page at https://trydreamstate.com/product into our product materials, refresh the saved page once it's stale, and archive the old content item once the new one is in. Keep the cost under 25 credits total.",
       "expected_skill_ids": [
-        "crm"
+        "crm",
+        "workspace"
       ],
       "required_capability_ids": [
         "products.get",
@@ -824,8 +825,6 @@
         "products.content_list",
         "products.og_meta_get",
         "products.document_process",
-        "products.website_scrape",
-        "products.website_refresh",
         "products.content_archive"
       ],
       "required_executed_capability_ids": [
@@ -845,6 +844,11 @@
           "artifact_kind": "website_content",
           "reason": "the scrape must land real fetched website content, so a narrated page summary cannot pass"
         }
+      ],
+      "required_concepts": [
+        "Workspace owns durable website scrape and refresh",
+        "CRM hands off exact product identity and URL then consumes Workspace's terminal evidence receipt",
+        "document processing and content archive remain CRM operations"
       ]
     },
     {
@@ -891,24 +895,23 @@
     {
       "id": "record-note-from-supplied-url",
       "expected_skill_ids": [
-        "crm"
+        "crm",
+        "research"
       ],
       "request": "Here's a news article about Acme Analytics raising a Series B: https://news.example/acme-analytics-series-b. Find their record and add a note with what it actually says before I call them.",
       "must_not_ask_user": true,
       "required_capability_ids": [
         "records.search",
         "records.get",
-        "research.urls_fetch",
         "records.note_add"
       ],
       "required_executed_capability_ids": [
         "records.search",
         "records.get",
-        "research.urls_fetch",
         "records.note_add"
       ],
       "required_concepts": [
-        "read the supplied URL with research.urls_fetch before writing the note; do not summarize the article from its headline or domain alone",
+        "load research first and consume its successful evidence packet before writing the note; do not summarize the article from its headline or domain alone",
         "the deliverable is a saved note on the resolved record, not a summary left only in the reply"
       ],
       "expected_workspace_outcome": [
@@ -920,6 +923,15 @@
           "reason": "records.note_add must leave behind the durable note it declared, or the turn only claimed to save the article's content."
         }
       ]
+    },
+    {
+      "id": "exact-record-identity-and-revision-on-correction",
+      "expected_skill_ids": ["crm"],
+      "request": "Correct Acme's employee count, but there are two Acme company records in search results.",
+      "required_capability_ids": ["records.search", "records.get", "records.field_set", "records.history_get"],
+      "required_executed_capability_ids": ["records.search", "records.get"],
+      "required_concepts": ["display name is not canonical identity", "exact record_id", "ambiguous candidates require selection", "current revision", "read back after mutation", "never create a duplicate to avoid ambiguity"]
     }
+  ,{"id":"canonical-graph-lifecycle-and-bounded-export","expected_skill_ids":["crm"],"request":"Inspect the current edges, create the reviewed company node and evidence-backed relationship, correct their labels, archive the stale relation and node, restore that same node, then export at most 500 graph objects.","required_capability_ids":["graph.edges_list","graph.create_node","graph.create_relation","graph.update_node","graph.update_relation","graph.archive_relation","graph.archive_node","graph.restore_node","graph.export"],"required_executed_capability_ids":["graph.edges_list","graph.create_node","graph.create_relation","graph.update_node","graph.update_relation","graph.archive_relation","graph.archive_node","graph.restore_node","graph.export"],"required_concepts":["inspect the bounded current edge set before relation mutation","exact canonical identities","evidence and reason on create","expected revision on every lifecycle mutation","archive is recoverable not deletion","restore the same node identity","bounded export completeness and truncation","never infer a relation from matching names"],"expected_workspace_outcome":[{"check":"capability_effect_persisted","capability_id":"graph.create_relation","min_count":1,"reason":"the reviewed graph relation must persist with its evidence and canonical endpoints"}]}
   ]
 }

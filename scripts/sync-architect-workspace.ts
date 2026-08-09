@@ -64,6 +64,11 @@ export interface SocialEvalOverlaySnapshot {
   files: Map<string, Buffer>;
 }
 
+export interface ArchitectToolContractSnapshot {
+  path: string;
+  bytes: Buffer;
+}
+
 function regularFile(path: string, label: string): void {
   if (!existsSync(path)) throw new Error(`${label} is missing: ${path}`);
   const stat = lstatSync(path);
@@ -151,6 +156,30 @@ export function projectSocialEvalOverlay(
 
 export function restoreSocialEvalOverlay(snapshot: SocialEvalOverlaySnapshot): void {
   for (const [path, bytes] of snapshot.files) writeFileSync(path, bytes);
+}
+
+export function projectArchitectToolContract(
+  influenceRoot: string,
+  sourceRoot: string,
+): ArchitectToolContractSnapshot {
+  const sourcePath = join(
+    resolve(influenceRoot),
+    'apps',
+    'backend',
+    'src',
+    'generated',
+    'architectToolContract.json',
+  );
+  const targetPath = join(resolve(sourceRoot), 'contracts', 'architect-tool-contract.json');
+  regularFile(sourcePath, 'canonical Influence Architect tool contract');
+  regularFile(targetPath, 'Dreamstate Architect tool contract');
+  const snapshot = { path: targetPath, bytes: readFileSync(targetPath) };
+  writeFileSync(targetPath, readFileSync(sourcePath));
+  return snapshot;
+}
+
+export function restoreArchitectToolContract(snapshot: ArchitectToolContractSnapshot): void {
+  writeFileSync(snapshot.path, snapshot.bytes);
 }
 
 function run(command: string, args: string[], cwd: string): string {
@@ -265,8 +294,12 @@ export function syncArchitectWorkspace(options: WorkspaceOptions): void {
   const temporary = mkdtempSync(join(tmpdir(), 'architect-capabilities-'));
   const capabilityPath = join(temporary, 'capabilities.json');
   let overlaySnapshot: SocialEvalOverlaySnapshot | null = null;
+  let toolContractSnapshot: ArchitectToolContractSnapshot | null = null;
   let synchronized = false;
   try {
+    run('npm', ['run', 'codegen:architect-tools'], backendRoot);
+    run('npm', ['run', 'codegen:architect-tools:check'], backendRoot);
+    toolContractSnapshot = projectArchitectToolContract(options.influenceRoot, sourceRoot);
     overlaySnapshot = projectSocialEvalOverlay(options.socialRoot, skillsRoot);
     run('npx', [
       'tsx',
@@ -293,7 +326,10 @@ export function syncArchitectWorkspace(options: WorkspaceOptions): void {
     ], backendRoot);
     synchronized = true;
   } finally {
-    if (!synchronized && overlaySnapshot) restoreSocialEvalOverlay(overlaySnapshot);
+    if (!synchronized) {
+      if (overlaySnapshot) restoreSocialEvalOverlay(overlaySnapshot);
+      if (toolContractSnapshot) restoreArchitectToolContract(toolContractSnapshot);
+    }
     rmSync(temporary, { recursive: true, force: true });
   }
 

@@ -38,7 +38,8 @@
     },
     {
       "expected_skill_ids": [
-        "context"
+        "context",
+        "research"
       ],
       "expected_workspace_outcome": [
         {
@@ -61,24 +62,23 @@
       "required_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
-        "research.urls_fetch",
         "brain.context.website_source_register",
         "brain.context.create_document"
       ],
       "required_executed_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
-        "research.urls_fetch",
         "brain.context.website_source_register",
         "brain.context.create_document"
       ],
       "required_concepts": [
-        "read the page with research.urls_fetch before drafting; registering a website source records provenance, it does not fetch content"
+        "load research first and consume its successful evidence packet before drafting; registering a website source records provenance, it does not fetch content"
       ]
     },
     {
       "expected_skill_ids": [
-        "context"
+        "context",
+        "research"
       ],
       "expected_workspace_outcome": [
         {
@@ -105,17 +105,15 @@
       "must_not_ask_user": true,
       "request": "Turn https://www.acme-analytics.example and the supplied investor-relations packet into Company Overview and Market Position pages in our wiki.",
       "required_capability_ids": [
-        "research.urls_fetch",
         "brain.context.website_source_register",
         "brain.context.register_source",
         "brain.context.create_document"
       ],
       "required_executed_capability_ids": [
-        "research.urls_fetch",
         "brain.context.create_document"
       ],
       "required_concepts": [
-        "read the URL with research.urls_fetch first; do not draft from the domain name or the registered source alone"
+        "load research first and preserve the supplied URL evidence packet before authoring; do not draft from the domain name or the registered source alone"
       ]
     },
     {

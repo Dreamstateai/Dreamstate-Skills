@@ -66,6 +66,30 @@
             ]
           ],
           "description": "Required when any path is https:// (costs credits and leaves the workspace). One short sentence. Optional and unused for free in-workspace reads."
+        },
+        {
+          "name": "max_credits",
+          "required": false,
+          "annotation": "Optional[float]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ]
+          ],
+          "description": "Required when any path is https://: a positive credit ceiling for that fetch (research.urls_fetch has no fixed price, so the gateway cannot bound its cost without one). Applies to every https:// path in this call, batched or not. Ignored and unused for free in-workspace reads."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "smoke_test validates paths and policy only. dry_run may perform real reads but cannot create an effect. live performs the requested read."
         }
       ],
       "actions": [
@@ -75,11 +99,32 @@
           "compilesTo": [
             "brain.context.get",
             "brain.context.browse",
+            "architect.job_snapshot_get",
             "records.get",
             "worksheet.viewport",
             "cells.read_page",
             "research.urls_fetch"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading source",
+            "completed_label": "Read source",
+            "request_subject_paths": [
+              "paths.0"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "brain.context.get",
+              "brain.context.browse",
+              "architect.job_snapshot_get",
+              "records.get",
+              "worksheet.viewport",
+              "cells.read_page",
+              "research.urls_fetch"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         }
       ]
     },
@@ -302,6 +347,50 @@
             ]
           ],
           "description": "One user-facing sentence on what this call is trying to obtain. Never a security input."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. dry_run previews without effect; only honoured when the resolved capability declares dry_run_supported. Otherwise expect preview_unsupported and use live after confirming the intended change."
+        },
+        {
+          "name": "idempotency_key",
+          "required": false,
+          "annotation": "Optional[str]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ],
+            [
+              "min_length",
+              "1"
+            ],
+            [
+              "max_length",
+              "255"
+            ]
+          ],
+          "description": "Optional idempotency key for a deliberate retry of the same mutation. Omit for a first call; dispatch derives a stable key from the resolved request so a retry collapses onto its predecessor. Supply your own only when two deliberately identical mutations must both run."
+        },
+        {
+          "name": "proposal",
+          "required": false,
+          "annotation": "Optional[Dict[str, Any]]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ]
+          ],
+          "description": "Architect discovery only: the complete typed proposal produced by this successful live write. Its chat_session_id must match the server-bound tool session. The turn/job layer persists it and owns job/release identity."
         }
       ],
       "actions": [
@@ -312,14 +401,52 @@
             "brain.context.create_document",
             "brain.context.save_and_publish",
             "brain.context.list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating document",
+            "completed_label": "Created document",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.create_document",
+              "brain.context.save_and_publish",
+              "brain.context.list"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "create_folder",
           "mutates": true,
           "compilesTo": [
             "brain.context.create_folder"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating folder",
+            "completed_label": "Created folder",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.create_folder"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "register_source",
@@ -327,7 +454,28 @@
           "compilesTo": [
             "brain.context.register_source",
             "brain.context.website_source_register"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Registering source",
+            "completed_label": "Registered source",
+            "request_subject_paths": [
+              "title",
+              "brand_url"
+            ],
+            "result_subject_paths": [
+              "data.title",
+              "data.url"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.register_source",
+              "brain.context.website_source_register"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         }
       ]
     },
@@ -358,7 +506,7 @@
             ],
             [
               "pattern",
-              "r\"^(context://.*|record://[a-z0-9_-]+/.+|workbook://[^/]+(/.+)?|sequence://.+|workflow://.+|post://[a-z]+/.+|skill://[a-z0-9_-]+(/.+)?|https://.+)$\""
+              "r\"^(context://.*|record://[a-z0-9_-]+/.+|workbook://[^/]+(/.+)?|skill://[a-z0-9]+(?:-[a-z0-9]+)*(?:\\\\.[a-z0-9]+(?:-[a-z0-9]+)*)*(/.+)?|https://.+)$\""
             ]
           ],
           "description": "context:// address of the document. Prefer the node_ref returned by ds_read, as context://brain:workspace:<ws>:document:<uuid>. Lifecycle actions (move/rename/archive/restore/delete) map this to document_id; replace and rebuild_links map it to node_ref."
@@ -474,7 +622,7 @@
             ],
             [
               "pattern",
-              "r\"^(context://.*|record://[a-z0-9_-]+/.+|workbook://[^/]+(/.+)?|sequence://.+|workflow://.+|post://[a-z]+/.+|skill://[a-z0-9_-]+(/.+)?|https://.+)$\""
+              "r\"^(context://.*|record://[a-z0-9_-]+/.+|workbook://[^/]+(/.+)?|skill://[a-z0-9]+(?:-[a-z0-9]+)*(?:\\\\.[a-z0-9]+(?:-[a-z0-9]+)*)*(/.+)?|https://.+)$\""
             ]
           ],
           "description": "move: REQUIRED. context:// address of the destination folder."
@@ -498,7 +646,7 @@
             ],
             [
               "pattern",
-              "r\"^(context://.*|record://[a-z0-9_-]+/.+|workbook://[^/]+(/.+)?|sequence://.+|workflow://.+|post://[a-z]+/.+|skill://[a-z0-9_-]+(/.+)?|https://.+)$\""
+              "r\"^(context://.*|record://[a-z0-9_-]+/.+|workbook://[^/]+(/.+)?|skill://[a-z0-9]+(?:-[a-z0-9]+)*(?:\\\\.[a-z0-9]+(?:-[a-z0-9]+)*)*(/.+)?|https://.+)$\""
             ]
           ],
           "description": "move: REQUIRED. context:// address of the folder the document is currently in (optimistic concurrency on folder_id)."
@@ -538,6 +686,38 @@
             ]
           ],
           "description": "One user-facing sentence on what this call is trying to obtain. Never a security input."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. dry_run previews without effect; only honoured when the resolved capability declares dry_run_supported. Otherwise expect preview_unsupported and use live after confirming the intended change."
+        },
+        {
+          "name": "idempotency_key",
+          "required": false,
+          "annotation": "Optional[str]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ],
+            [
+              "min_length",
+              "1"
+            ],
+            [
+              "max_length",
+              "255"
+            ]
+          ],
+          "description": "Optional idempotency key for a deliberate retry of the same mutation. Omit for a first call; dispatch derives a stable key from the resolved request so a retry collapses onto its predecessor. Supply your own only when two deliberately identical mutations must both run."
         }
       ],
       "actions": [
@@ -547,49 +727,154 @@
           "compilesTo": [
             "brain.context.save_draft",
             "brain.context.save_and_publish"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating document",
+            "completed_label": "Updated document",
+            "request_subject_paths": [],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.save_draft",
+              "brain.context.save_and_publish"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "move",
           "mutates": true,
           "compilesTo": [
             "brain.context.move_document"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Moving document",
+            "completed_label": "Moved document",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.move_document"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "rename",
           "mutates": true,
           "compilesTo": [
             "brain.context.rename_document"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Renaming document",
+            "completed_label": "Renamed document",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.rename_document"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "archive",
           "mutates": true,
           "compilesTo": [
             "brain.context.archive_document"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Archiving document",
+            "completed_label": "Archived document",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.archive_document"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "restore",
           "mutates": true,
           "compilesTo": [
             "brain.context.restore_document"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Restoring document",
+            "completed_label": "Restored document",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.restore_document"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "delete",
           "mutates": true,
           "compilesTo": [
             "brain.context.delete_document"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Deleting document",
+            "completed_label": "Deleted document",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.delete_document"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "rebuild_links",
           "mutates": true,
           "compilesTo": [
             "brain.context.rebuild_links"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Rebuilding document links",
+            "completed_label": "Rebuilt document links",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "brain.context.rebuild_links"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         }
       ]
     },
@@ -777,6 +1062,30 @@
             ]
           ],
           "description": "Required for scope=web (leaves the workspace and costs credits). Optional elsewhere. One user-facing sentence on what this call is for. Never a security input."
+        },
+        {
+          "name": "max_credits",
+          "required": false,
+          "annotation": "Optional[float]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ]
+          ],
+          "description": "Required for scope=web: a positive credit ceiling for this fetch. research.urls_fetch has no fixed price, so the gateway cannot bound its cost without one. Ignored elsewhere (those scopes are free reads)."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "smoke_test validates search shape and policy only. dry_run may read real data but cannot create an effect. live performs the requested search."
         }
       ],
       "actions": [
@@ -788,7 +1097,22 @@
             "brain.context.list",
             "brain.context.backlinks",
             "brain.context.graph"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Searching context",
+            "completed_label": "Searched context",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "brain.context.search",
+              "brain.context.list",
+              "brain.context.backlinks",
+              "brain.context.graph"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "records",
@@ -796,39 +1120,87 @@
           "compilesTo": [
             "records.search",
             "records.references_resolve"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Searching records",
+            "completed_label": "Searched records",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "records.search",
+              "records.references_resolve"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "web",
           "mutates": false,
           "compilesTo": [
             "research.urls_fetch"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Searching web",
+            "completed_label": "Searched web",
+            "request_subject_paths": [
+              "query",
+              "url"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "research.urls_fetch"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "capabilities",
           "mutates": false,
-          "compilesTo": []
+          "compilesTo": [],
+          "presentation": {
+            "running_label": "Searching capabilities",
+            "completed_label": "Searched capabilities",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "skills",
           "mutates": false,
-          "compilesTo": []
+          "compilesTo": [],
+          "presentation": {
+            "running_label": "Searching skills",
+            "completed_label": "Searched skills",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [],
+            "mutates": false,
+            "returns": "data"
+          }
         }
       ]
     },
     {
       "name": "ds_records",
-      "description": "The CRM. Read, create and update people, companies, deals and any custom object. The noun is person, never contact. Read a record before changing it and preserve fields a human authored. create requires a TOP-LEVEL display_name (example: display_name=\"Acme Corp\"), not only a name buried in values. get/history/memberships/update/note need a real record id from a prior list or search; do not pass null. `merge` is not casually reversible: it collapses two records and the undo is a separate unmerge that cannot always restore what was lost, so show what will be merged before doing it. `erase` is permanent and exists for privacy requests. Also owns follow-up tasks: work a human will do later, not a cadence the system runs on its own, which belongs to a sequence or workflow instead. And bulk file transfer in and out of the CRM: `import` for a file of records mapped onto real fields, `export` for a saved view sent out as a file.",
+      "description": "The CRM. Read, create and update people, companies, deals and any custom object. The noun is person, never contact. Read a record before changing it and preserve fields a human authored. create requires a TOP-LEVEL display_name (example: display_name=\"Acme Corp\"), not only a name buried in values. get/history/memberships/update/note need a real record id from a prior list or search; do not pass null. `merge` is not casually reversible: it collapses two records and the undo is a separate unmerge that cannot always restore what was lost, so show what will be merged before doing it. `erase` is permanent and exists for privacy requests; `archive` (deals only today) is recoverable and is the one to reach for otherwise. Also owns follow-up tasks: work a human will do later, not a cadence the system runs on its own, which belongs to a sequence or workflow instead. And bulk file transfer in and out of the CRM: `import` for a file of records mapped onto real fields, `export` for a saved view sent out as a file.",
       "purposeRequired": "mutations_only",
       "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
           "required": true,
-          "annotation": "Literal[\"get\", \"list\", \"history\", \"memberships\", \"create\", \"update\", \"note\", \"list_add\", \"list_remove\", \"merge\", \"unmerge\", \"erase\", \"task_create\", \"task_list\", \"task_update\", \"task_transition\", \"import\", \"import_status\", \"export\", \"export_status\"]",
+          "annotation": "Literal[\"get\", \"list\", \"history\", \"memberships\", \"create\", \"update\", \"note\", \"list_add\", \"list_remove\", \"archive\", \"merge\", \"unmerge\", \"erase\", \"task_create\", \"task_list\", \"task_update\", \"task_transition\", \"import\", \"import_status\", \"export\", \"export_status\", \"contact_list\", \"contact_get\", \"contact_save\", \"contact_archive\", \"contact_enrich\", \"compiled_record\"]",
           "constraints": [],
-          "description": "CRM verb. One of: get, list, history, memberships, create, update, note, list_add, list_remove, merge, unmerge, erase, task_create, task_list, task_update, task_transition, import, import_status, export, export_status."
+          "description": "CRM verb. Includes generic record/task/import/export actions plus contact_list, contact_get, contact_save, contact_archive, contact_enrich, and compiled_record."
         },
         {
           "name": "object",
@@ -848,7 +1220,7 @@
               "64"
             ]
           ],
-          "description": "The CRM object key, e.g. person, company, deal. Never contact. Required for create and for list of a typed object; get/update/erase/history/memberships use id instead (set object: deal to reach deal capabilities)."
+          "description": "The CRM object key, e.g. person, company, deal. Never contact. Required for create and for list of a typed object; get/update/erase/archive/history/memberships use id instead (set object: deal to reach deal capabilities). archive today only reaches a deal."
         },
         {
           "name": "id",
@@ -860,7 +1232,7 @@
               "None"
             ]
           ],
-          "description": "Required for get, history, memberships, update, note, list_add, list_remove, erase, and for single-task task_list/task_update/task_transition. A real CRM record id (or task id for task_*), formatted as a UUID. Never null and never a placeholder. If you do not already have one, call ds_records with action=list and object=person (or the relevant object) first, then use an id from that result. memberships/get/history without a known id: list first."
+          "description": "Required for get, history, memberships, update, note, list_add, list_remove, archive, erase, and for single-task task_list/task_update/task_transition. A real CRM record id (or task id for task_*), formatted as a UUID. Never null and never a placeholder. If you do not already have one, call ds_records with action=list and object=person (or the relevant object) first, then use an id from that result. memberships/get/history without a known id: list first."
         },
         {
           "name": "winner_id",
@@ -1169,6 +1541,18 @@
             ]
           ],
           "description": "Required by dispatch for every mutating action (create, update, note, list_add, list_remove, merge, unmerge, erase, task_*, import, export). One user-facing sentence. Never a security input."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "dry_run previews without effect; only honoured when the resolved capability declares dry_run_supported. Otherwise expect preview_unsupported and use live after confirming the intended change. merge already previews for free when confirm is omitted; mode is independent of that."
         }
       ],
       "actions": [
@@ -1178,7 +1562,22 @@
           "compilesTo": [
             "records.get",
             "deals.get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading record",
+            "completed_label": "Read record",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "records.get",
+              "deals.get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "list",
@@ -1188,7 +1587,22 @@
             "records.people_list",
             "records.companies_list",
             "deals.list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Listing records",
+            "completed_label": "Listed records",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "records.list",
+              "records.people_list",
+              "records.companies_list",
+              "deals.list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "history",
@@ -1197,7 +1611,23 @@
             "records.history_get",
             "records.wiki_get",
             "records.buyer_brief_get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading record history",
+            "completed_label": "Read record history",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "records.history_get",
+              "records.wiki_get",
+              "records.buyer_brief_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "memberships",
@@ -1205,7 +1635,22 @@
           "compilesTo": [
             "records.memberships_get",
             "records.lists_get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading record memberships",
+            "completed_label": "Read record memberships",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "records.memberships_get",
+              "records.lists_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "create",
@@ -1213,7 +1658,26 @@
           "compilesTo": [
             "record_objects.record_create",
             "deals.create"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating record",
+            "completed_label": "Created record",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [
+              "data.display_name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "record_objects.record_create",
+              "deals.create"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "update",
@@ -1222,42 +1686,165 @@
             "records.field_set",
             "deals.update",
             "deals.move"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating record",
+            "completed_label": "Updated record",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [
+              "data.display_name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.field_set",
+              "deals.update",
+              "deals.move"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "note",
           "mutates": true,
           "compilesTo": [
             "records.note_add"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Adding record note",
+            "completed_label": "Added record note",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.note_add"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "list_add",
           "mutates": true,
           "compilesTo": [
             "records.list_add"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Adding record to list",
+            "completed_label": "Added record to list",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.list_add"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "list_remove",
           "mutates": true,
           "compilesTo": [
             "records.list_remove"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Removing record from list",
+            "completed_label": "Removed record from list",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.list_remove"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "archive",
+          "mutates": true,
+          "compilesTo": [
+            "deals.archive"
+          ],
+          "presentation": {
+            "running_label": "Archiving record",
+            "completed_label": "Archived record",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "deals.archive"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "merge",
           "mutates": true,
           "compilesTo": [
             "records.merge"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Merging records",
+            "completed_label": "Merged records",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.merge"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "unmerge",
           "mutates": true,
           "compilesTo": [
             "records.unmerge"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Unmerging records",
+            "completed_label": "Unmerged records",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.unmerge"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "erase",
@@ -1265,14 +1852,50 @@
           "compilesTo": [
             "records.erase",
             "records.value_retire"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Erasing record",
+            "completed_label": "Erased record",
+            "request_subject_paths": [
+              "display_name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.erase",
+              "records.value_retire"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "task_create",
           "mutates": true,
           "compilesTo": [
             "tasks.create"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating task",
+            "completed_label": "Created task",
+            "request_subject_paths": [
+              "display_name",
+              "title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "tasks.create"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "task_list",
@@ -1281,7 +1904,21 @@
             "tasks.get",
             "tasks.list",
             "tasks.count"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Listing tasks",
+            "completed_label": "Listed tasks",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "tasks.get",
+              "tasks.list",
+              "tasks.count"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "task_update",
@@ -1289,7 +1926,26 @@
           "compilesTo": [
             "tasks.update",
             "tasks.reassign"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating task",
+            "completed_label": "Updated task",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "tasks.update",
+              "tasks.reassign"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "task_transition",
@@ -1299,7 +1955,28 @@
             "tasks.reopen",
             "tasks.cancel",
             "tasks.bulk"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Changing task status",
+            "completed_label": "Changed task status",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "tasks.complete",
+              "tasks.reopen",
+              "tasks.cancel",
+              "tasks.bulk"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "import",
@@ -1309,7 +1986,26 @@
             "record_imports.source_upload",
             "record_imports.rows_stage",
             "record_imports.control"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Importing records",
+            "completed_label": "Imported records",
+            "request_subject_paths": [
+              "name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "record_imports.create",
+              "record_imports.source_upload",
+              "record_imports.rows_stage",
+              "record_imports.control"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "import_status",
@@ -1318,7 +2014,23 @@
             "record_imports.get",
             "record_imports.list",
             "record_imports.errors_list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Checking record import",
+            "completed_label": "Checked record import",
+            "request_subject_paths": [
+              "name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "record_imports.get",
+              "record_imports.list",
+              "record_imports.errors_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "export",
@@ -1326,7 +2038,24 @@
           "compilesTo": [
             "record_exports.create",
             "record_exports.control"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Exporting records",
+            "completed_label": "Exported records",
+            "request_subject_paths": [
+              "name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "record_exports.create",
+              "record_exports.control"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "export_status",
@@ -1334,29 +2063,180 @@
           "compilesTo": [
             "record_exports.get",
             "record_exports.download"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Checking record export",
+            "completed_label": "Checked record export",
+            "request_subject_paths": [
+              "name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "record_exports.get",
+              "record_exports.download"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "contact_list",
+          "mutates": false,
+          "compilesTo": [
+            "contacts.list"
+          ],
+          "presentation": {
+            "running_label": "Listing contacts",
+            "completed_label": "Listed contacts",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "contacts.list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "contact_get",
+          "mutates": false,
+          "compilesTo": [
+            "contacts.get",
+            "contacts.lookup_by_email"
+          ],
+          "presentation": {
+            "running_label": "Reading contact",
+            "completed_label": "Read contact",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "contacts.get",
+              "contacts.lookup_by_email"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "contact_save",
+          "mutates": true,
+          "compilesTo": [
+            "contacts.upsert",
+            "contacts.bulk_upsert",
+            "contacts.update"
+          ],
+          "presentation": {
+            "running_label": "Saving contact",
+            "completed_label": "Saved contact",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "contacts.upsert",
+              "contacts.bulk_upsert",
+              "contacts.update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "contact_archive",
+          "mutates": true,
+          "compilesTo": [
+            "contacts.archive"
+          ],
+          "presentation": {
+            "running_label": "Archiving contact",
+            "completed_label": "Archived contact",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "contacts.archive"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "contact_enrich",
+          "mutates": true,
+          "compilesTo": [
+            "contacts.enrich",
+            "contacts.find_email",
+            "contacts.find_phone",
+            "contacts.draft_opener"
+          ],
+          "presentation": {
+            "running_label": "Enriching contact",
+            "completed_label": "Enriched contact",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "contacts.enrich",
+              "contacts.find_email",
+              "contacts.find_phone",
+              "contacts.draft_opener"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "compiled_record",
+          "mutates": false,
+          "compilesTo": [
+            "brain.people.get",
+            "brain.companies.get",
+            "brain.companies.answer"
+          ],
+          "presentation": {
+            "running_label": "Reading compiled record",
+            "completed_label": "Read compiled record",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "brain.people.get",
+              "brain.companies.get",
+              "brain.companies.answer"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         }
       ]
     },
     {
       "name": "ds_workbook",
-      "description": "Build and enrich a list of people or companies. This is the tool with the most ways to waste money, so load the workbook skill before using it beyond a simple read. In short: read the existing columns by their exact names, preview a source on a handful of rows BEFORE creating anything, build one column at a time, set run conditions as a separate call after the column exists, and treat the first real run as a sample to review rather than a finished deliverable. Every row is credits already spent, so archive rather than delete.",
+      "description": "Build and enrich a list of people or companies, and define the outreach sequence they get enrolled into. This is the tool with the most ways to waste money, so load the workbook skill before using it beyond a simple read. In short: read the existing columns by their exact names, preview a source on a handful of rows BEFORE creating anything, build one column at a time, set run conditions as a separate call after the column exists, and treat the first real run as a sample to review rather than a finished deliverable. Every row is credits already spent, so archive rather than delete. To write a multi-step outreach sequence (e.g. a 3-step LinkedIn + email cadence): validate the definition, bind it to get a version, publish that version, then enroll rows into it.",
       "purposeRequired": "mutations_only",
-      "generatedArgsModel": false,
+      "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
           "required": true,
-          "annotation": "Literal[\"get\", \"list\", \"list_columns\", \"read_cells\", \"inspect_cell\", \"preview\", \"preview_cost\", \"audit\", \"create\", \"update\", \"duplicate\", \"archive\", \"add_column\", \"edit_column\", \"remove_column\", \"reorder_columns\", \"set_run_condition\", \"attach_source\", \"detach_source\", \"run\", \"run_all\", \"cancel_run\", \"retry_run\", \"send_rows\", \"enroll\", \"transfer\"]",
+          "annotation": "Literal[\"get\", \"list\", \"list_columns\", \"read_cells\", \"inspect_cell\", \"preview\", \"preview_cost\", \"resolve_facets\", \"audit\", \"list_definitions\", \"list_functions\", \"create\", \"update\", \"duplicate\", \"archive\", \"add_column\", \"edit_column\", \"remove_column\", \"reorder_columns\", \"set_run_condition\", \"save_function\", \"publish_function\", \"attach_source\", \"detach_source\", \"run\", \"run_all\", \"cancel_run\", \"retry_run\", \"send_rows\", \"validate_sequence\", \"bind_sequence\", \"publish_sequence\", \"enroll\", \"transfer\"]",
           "constraints": [],
-          "description": "Workbook verb. 26 values including the free cost-guards preview and preview_cost (call those before add_column/run/run_all). One of: get, list, list_columns, read_cells, inspect_cell, preview, preview_cost, audit, create, update, duplicate, archive, add_column, edit_column, remove_column, reorder_columns, set_run_condition, attach_source, detach_source, run, run_all, cancel_run, retry_run, send_rows, enroll, transfer."
+          "description": "Workbook verb. 27 values including the free cost-guards preview and preview_cost (call those before add_column/run/run_all). One of: get, list, list_columns, read_cells, inspect_cell, preview, preview_cost, resolve_facets, audit, create, update, duplicate, archive, add_column, edit_column, remove_column, reorder_columns, set_run_condition, attach_source, detach_source, run, run_all, cancel_run, retry_run, send_rows, enroll, transfer."
         },
         {
           "name": "capability_id",
           "required": true,
-          "annotation": "Literal[\"audiences.preview\", \"cells.inspect\", \"cells.read_page\", \"columns.add\", \"columns.archive\", \"columns.list\", \"columns.run\", \"columns.run_all\", \"columns.update\", \"executables.run\", \"records.unbound_rows_enroll\", \"rows.count\", \"rows.get\", \"rows.query\", \"selection_snapshots.create\", \"sequences.enroll_selection\", \"sources.cold_outbound_preview\", \"table_runs.cancel\", \"table_runs.failure_report\", \"table_runs.get\", \"table_runs.list\", \"table_runs.preview_cost\", \"table_runs.reconcile_column\", \"table_runs.resume\", \"table_runs.retry\", \"table_sources.attach\", \"table_sources.detach\", \"table_sources.preview\", \"table_sources.preview_sync\", \"table_sources.run\", \"table_sources.update\", \"tables.archive\", \"tables.create\", \"tables.get\", \"tables.list\", \"tables.update\", \"workbooks.archive\", \"workbooks.create\", \"workbooks.duplicate\", \"workbooks.get\", \"workbooks.list\", \"workbooks.overview\", \"workbooks.update\", \"workflows.enroll_selection\", \"worksheet.bootstrap\", \"worksheet_exports.create\", \"worksheet_exports.enroll_sequence\", \"worksheets.archive\", \"worksheets.create\", \"worksheets.duplicate\", \"worksheets.list\", \"worksheets.reorder\", \"worksheets.update\"]",
+          "annotation": "Literal[\"audiences.preview\", \"cells.inspect\", \"cells.read_page\", \"columns.add\", \"columns.archive\", \"columns.list\", \"columns.run\", \"columns.run_all\", \"columns.update\", \"executable_definitions.list_resolved\", \"executables.run\", \"linkedin.search_parameters_list\", \"records.unbound_rows_enroll\", \"rows.count\", \"rows.get\", \"rows.query\", \"selection_snapshots.create\", \"sequences.bind\", \"sequences.enroll_selection\", \"sequences.publish\", \"sequences.validate\", \"sources.cold_outbound_preview\", \"table_runs.cancel\", \"table_runs.failure_report\", \"table_runs.get\", \"table_runs.list\", \"table_runs.preview_cost\", \"table_runs.reconcile_column\", \"table_runs.resume\", \"table_runs.retry\", \"table_sources.attach\", \"table_sources.detach\", \"table_sources.preview_sync\", \"table_sources.run\", \"table_sources.update\", \"tables.archive\", \"tables.create\", \"tables.get\", \"tables.list\", \"tables.update\", \"workbooks.archive\", \"workbooks.create\", \"workbooks.duplicate\", \"workbooks.get\", \"workbooks.list\", \"workbooks.overview\", \"workbooks.update\", \"workflows.enroll_selection\", \"worksheet.bootstrap\", \"worksheet_exports.create\", \"worksheet_exports.enroll_sequence\", \"worksheets.archive\", \"worksheets.create\", \"worksheets.duplicate\", \"worksheets.function_draft_save\", \"worksheets.function_publish\", \"worksheets.functions_list\", \"worksheets.list\", \"worksheets.reorder\", \"worksheets.update\"]",
           "constraints": [],
-          "description": "Which canonical capability this action compiles to. Always required, even when the action has only one legal value: list_columns pass columns.list, preview_cost pass table_runs.preview_cost, add_column pass columns.add, edit_column pass columns.update, remove_column pass columns.archive, reorder_columns pass worksheets.reorder, set_run_condition pass columns.update, detach_source pass table_sources.detach, cancel_run pass table_runs.cancel. For get, list, read_cells, inspect_cell, preview, audit, create, update, duplicate, archive, attach_source, run, run_all, retry_run, send_rows, enroll, transfer, the action can reach more than one capability, so name the one you mean."
+          "description": "Which canonical capability this action compiles to. Always required, even when the action has only one legal value: list_columns pass columns.list, preview_cost pass table_runs.preview_cost, resolve_facets pass linkedin.search_parameters_list, add_column pass columns.add, edit_column pass columns.update, remove_column pass columns.archive, reorder_columns pass worksheets.reorder, set_run_condition pass columns.update, detach_source pass table_sources.detach, cancel_run pass table_runs.cancel. For get, list, read_cells, inspect_cell, preview, audit, create, update, duplicate, archive, attach_source, run, run_all, retry_run, send_rows, enroll, transfer, the action can reach more than one capability, so name the one you mean."
         },
         {
           "name": "params",
@@ -1368,7 +2248,7 @@
               "dict"
             ]
           ],
-          "description": "Parameters for the resolved capability (table_id/workbook_id/worksheet_id, column_id, filters, source config, etc.). Opaque by design: list_columns for exact column names, then ds_search scope=capabilities or the workbook skill for the per-capability shape. preview/preview_cost params are samples and cost estimates only; they do not create columns."
+          "description": "Exact input fields for the resolved capability (table_id/workbook_id/worksheet_id, column_id, filters, source config, etc.). Every field below is declared by at least one reachable capability; each field's own description names which capability requires it. Use list_columns for exact column names, then ds_search scope=capabilities or the workbook skill for the per-capability shape. preview/preview_cost params are samples and cost estimates only; they do not create columns."
         },
         {
           "name": "expected_updated_at",
@@ -1421,14 +2301,14 @@
         {
           "name": "mode",
           "required": false,
-          "annotation": "Optional[Literal[\"dry_run\", \"live\"]]",
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
           "constraints": [
             [
               "default",
-              "None"
+              "\"live\""
             ]
           ],
-          "description": "Optional execution mode when the underlying capability supports it. Prefer dry_run before a costly live run when available."
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. dry_run previews without effect; only honoured when the resolved capability declares dry_run_supported. Otherwise expect preview_unsupported and use live (the default) after confirming the intended change. Prefer preview/preview_cost before a costly run/run_all regardless of mode."
         },
         {
           "name": "max_credits",
@@ -1472,7 +2352,24 @@
             "workbooks.overview",
             "tables.get",
             "worksheets.list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading workbook",
+            "completed_label": "Read workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "workbooks.get",
+              "workbooks.overview",
+              "tables.get",
+              "worksheets.list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "list",
@@ -1480,14 +2377,41 @@
           "compilesTo": [
             "workbooks.list",
             "tables.list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Listing workbooks",
+            "completed_label": "Listed workbooks",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "workbooks.list",
+              "tables.list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "list_columns",
           "mutates": false,
           "compilesTo": [
             "columns.list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Listing workbook columns",
+            "completed_label": "Listed workbook columns",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "columns.list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "read_cells",
@@ -1497,7 +2421,24 @@
             "rows.query",
             "rows.get",
             "rows.count"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading workbook cells",
+            "completed_label": "Read workbook cells",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "cells.read_page",
+              "rows.query",
+              "rows.get",
+              "rows.count"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "inspect_cell",
@@ -1505,24 +2446,89 @@
           "compilesTo": [
             "cells.inspect",
             "table_runs.failure_report"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Inspecting workbook cell",
+            "completed_label": "Inspected workbook cell",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "cells.inspect",
+              "table_runs.failure_report"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "preview",
           "mutates": false,
           "compilesTo": [
-            "table_sources.preview",
             "table_sources.preview_sync",
             "sources.cold_outbound_preview",
             "audiences.preview"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Previewing workbook run",
+            "completed_label": "Previewed workbook run",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "table_sources.preview_sync",
+              "sources.cold_outbound_preview",
+              "audiences.preview"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "preview_cost",
           "mutates": false,
           "compilesTo": [
             "table_runs.preview_cost"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Estimating workbook cost",
+            "completed_label": "Estimated workbook cost",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "table_runs.preview_cost"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "resolve_facets",
+          "mutates": false,
+          "compilesTo": [
+            "linkedin.search_parameters_list"
+          ],
+          "presentation": {
+            "running_label": "Resolving workbook facets",
+            "completed_label": "Resolved workbook facets",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "linkedin.search_parameters_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "audit",
@@ -1531,7 +2537,61 @@
             "table_runs.list",
             "table_runs.get",
             "rows.count"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Auditing workbook",
+            "completed_label": "Audited workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "table_runs.list",
+              "table_runs.get",
+              "rows.count"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "list_definitions",
+          "mutates": false,
+          "compilesTo": [
+            "executable_definitions.list_resolved"
+          ],
+          "presentation": {
+            "running_label": "Listing workbook definitions",
+            "completed_label": "Listed workbook definitions",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "executable_definitions.list_resolved"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "list_functions",
+          "mutates": false,
+          "compilesTo": [
+            "worksheets.functions_list"
+          ],
+          "presentation": {
+            "running_label": "Listing worksheet functions",
+            "completed_label": "Listed worksheet functions",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "worksheets.functions_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "create",
@@ -1541,7 +2601,30 @@
             "tables.create",
             "worksheets.create",
             "worksheet.bootstrap"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating workbook",
+            "completed_label": "Created workbook",
+            "request_subject_paths": [
+              "params.name",
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.name",
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "workbooks.create",
+              "tables.create",
+              "worksheets.create",
+              "worksheet.bootstrap"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "update",
@@ -1550,7 +2633,27 @@
             "workbooks.update",
             "tables.update",
             "worksheets.update"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating workbook",
+            "completed_label": "Updated workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "workbooks.update",
+              "tables.update",
+              "worksheets.update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "duplicate",
@@ -1558,7 +2661,26 @@
           "compilesTo": [
             "workbooks.duplicate",
             "worksheets.duplicate"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Duplicating workbook",
+            "completed_label": "Duplicated workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "workbooks.duplicate",
+              "worksheets.duplicate"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "archive",
@@ -1567,42 +2689,200 @@
             "workbooks.archive",
             "tables.archive",
             "worksheets.archive"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Archiving workbook",
+            "completed_label": "Archived workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "workbooks.archive",
+              "tables.archive",
+              "worksheets.archive"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "add_column",
           "mutates": true,
           "compilesTo": [
             "columns.add"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Adding column",
+            "completed_label": "Added column",
+            "request_subject_paths": [
+              "params.name",
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.name",
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "columns.add"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "edit_column",
           "mutates": true,
           "compilesTo": [
             "columns.update"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating column",
+            "completed_label": "Updated column",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "columns.update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "remove_column",
           "mutates": true,
           "compilesTo": [
             "columns.archive"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Removing column",
+            "completed_label": "Removed column",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "columns.archive"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "reorder_columns",
           "mutates": true,
           "compilesTo": [
             "worksheets.reorder"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reordering columns",
+            "completed_label": "Reordered columns",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "worksheets.reorder"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "set_run_condition",
           "mutates": true,
           "compilesTo": [
             "columns.update"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Setting run condition",
+            "completed_label": "Set run condition",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "columns.update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "save_function",
+          "mutates": true,
+          "compilesTo": [
+            "worksheets.function_draft_save"
+          ],
+          "presentation": {
+            "running_label": "Saving worksheet function",
+            "completed_label": "Saved worksheet function",
+            "request_subject_paths": [
+              "params.name",
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.name",
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "worksheets.function_draft_save"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "publish_function",
+          "mutates": true,
+          "compilesTo": [
+            "worksheets.function_publish"
+          ],
+          "presentation": {
+            "running_label": "Publishing worksheet function",
+            "completed_label": "Published worksheet function",
+            "request_subject_paths": [
+              "params.name",
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.name",
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "worksheets.function_publish"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "attach_source",
@@ -1610,14 +2890,47 @@
           "compilesTo": [
             "table_sources.attach",
             "table_sources.update"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Attaching workbook source",
+            "completed_label": "Attached workbook source",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "table_sources.attach",
+              "table_sources.update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "detach_source",
           "mutates": true,
           "compilesTo": [
             "table_sources.detach"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Detaching workbook source",
+            "completed_label": "Detached workbook source",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "table_sources.detach"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "run",
@@ -1625,7 +2938,24 @@
           "compilesTo": [
             "columns.run",
             "executables.run"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Running workbook",
+            "completed_label": "Ran workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "columns.run",
+              "executables.run"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "run_all",
@@ -1633,14 +2963,47 @@
           "compilesTo": [
             "columns.run_all",
             "table_sources.run"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Running workbook",
+            "completed_label": "Ran workbook",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "columns.run_all",
+              "table_sources.run"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "cancel_run",
           "mutates": true,
           "compilesTo": [
             "table_runs.cancel"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Canceling workbook run",
+            "completed_label": "Canceled workbook run",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "table_runs.cancel"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "retry_run",
@@ -1649,7 +3012,25 @@
             "table_runs.retry",
             "table_runs.resume",
             "table_runs.reconcile_column"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Retrying workbook run",
+            "completed_label": "Retried workbook run",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "table_runs.retry",
+              "table_runs.resume",
+              "table_runs.reconcile_column"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "send_rows",
@@ -1657,7 +3038,91 @@
           "compilesTo": [
             "worksheet_exports.create",
             "selection_snapshots.create"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Sending workbook rows",
+            "completed_label": "Sent workbook rows",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "worksheet_exports.create",
+              "selection_snapshots.create"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "validate_sequence",
+          "mutates": false,
+          "compilesTo": [
+            "sequences.validate"
+          ],
+          "presentation": {
+            "running_label": "Validating sequence",
+            "completed_label": "Validated sequence",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "sequences.validate"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "bind_sequence",
+          "mutates": true,
+          "compilesTo": [
+            "sequences.bind"
+          ],
+          "presentation": {
+            "running_label": "Binding sequence",
+            "completed_label": "Bound sequence",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "sequences.bind"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
+        },
+        {
+          "action": "publish_sequence",
+          "mutates": true,
+          "compilesTo": [
+            "sequences.publish"
+          ],
+          "presentation": {
+            "running_label": "Publishing sequence",
+            "completed_label": "Published sequence",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "sequences.publish"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "enroll",
@@ -1667,7 +3132,26 @@
             "workflows.enroll_selection",
             "records.unbound_rows_enroll",
             "worksheet_exports.enroll_sequence"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Enrolling workbook rows",
+            "completed_label": "Enrolled workbook rows",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "sequences.enroll_selection",
+              "workflows.enroll_selection",
+              "records.unbound_rows_enroll",
+              "worksheet_exports.enroll_sequence"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "transfer",
@@ -1675,15 +3159,32 @@
           "compilesTo": [
             "records.unbound_rows_enroll",
             "worksheet_exports.create"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Transferring workbook data",
+            "completed_label": "Transferred workbook data",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "records.unbound_rows_enroll",
+              "worksheet_exports.create"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         }
       ]
     },
     {
       "name": "ds_publish",
       "description": "The post lifecycle. A post is not a boolean: it moves draft, submit_review, approve, schedule, publish, and each transition is a separate act. Content approval moves an artifact through its lifecycle; it is NOT authorization to make something public, which is a different decision. Draft and iterate in chat before creating the artifact. Publishing is outward-facing and returns a receipt with the provider and external id, not a diff.",
-      "purposeRequired": "always",
-      "generatedArgsModel": false,
+      "purposeRequired": "mutations_only",
+      "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
@@ -1707,7 +3208,7 @@
         {
           "name": "capability_id",
           "required": true,
-          "annotation": "Literal[\"content.approval.authorize_publish\", \"content.approval.decide\", \"content.approval.submit\", \"content.approve\", \"content.article_create_schedule\", \"content.artifact_archive\", \"content.artifact_create\", \"content.artifact_generate\", \"content.artifact_get\", \"content.artifact_list\", \"content.artifact_update\", \"content.campaigns_list\", \"content.compose\", \"content.delete_republish_propose\", \"content.delivery_publish\", \"content.replacement_create\", \"content.schedule\", \"content.submit_review\", \"content.unschedule\", \"content.version_create\", \"content.version_get\", \"content.version_rollback\", \"content.versions_list\"]",
+          "annotation": "Literal[\"content.approval.authorize_publish\", \"content.approval.decide\", \"content.approval.submit\", \"content.approve\", \"content.article_create_schedule\", \"content.article_deliveries_list\", \"content.article_distribution_get\", \"content.article_get\", \"content.article_list\", \"content.article_update\", \"content.artifact_archive\", \"content.artifact_create\", \"content.artifact_generate\", \"content.artifact_get\", \"content.artifact_list\", \"content.artifact_update\", \"content.assist\", \"content.campaigns_list\", \"content.compose\", \"content.delete_republish_propose\", \"content.delivery_publish\", \"content.generate\", \"content.generate_hooks\", \"content.regenerate_hooks\", \"content.replacement_create\", \"content.schedule\", \"content.submit_review\", \"content.unschedule\", \"content.version_create\", \"content.version_get\", \"content.version_rollback\", \"content.versions_list\"]",
           "constraints": [],
           "description": "Canonical capability this action compiles to. Always required. For unschedule pass content.unschedule, for rollback pass content.version_rollback, for archive pass content.artifact_archive. For get, list, draft, update, submit_review, approve, schedule, post, republish the action can reach more than one capability, so name the one you mean; a wrong-but-valid selection is refused with the allowed ids listed in repair.expected. Search capabilities before inventing an id."
         },
@@ -1730,6 +3231,18 @@
             ]
           ],
           "description": "One user-facing sentence on what this call is for. Required by dispatch for every mutating action (draft through archive). Omit only for pure reads (get, list). Never a security input."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "smoke_test validates the selected capability and policy without reads, providers, credits, or effects. dry_run may read but cannot create an external effect. live executes."
         },
         {
           "name": "max_credits",
@@ -1771,16 +3284,53 @@
           "compilesTo": [
             "content.artifact_get",
             "content.version_get",
-            "content.versions_list"
-          ]
+            "content.versions_list",
+            "content.article_get",
+            "content.article_distribution_get"
+          ],
+          "presentation": {
+            "running_label": "Reading post",
+            "completed_label": "Read post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "content.artifact_get",
+              "content.version_get",
+              "content.versions_list",
+              "content.article_get",
+              "content.article_distribution_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "list",
           "mutates": false,
           "compilesTo": [
             "content.artifact_list",
-            "content.campaigns_list"
-          ]
+            "content.campaigns_list",
+            "content.article_list",
+            "content.article_deliveries_list"
+          ],
+          "presentation": {
+            "running_label": "Listing posts",
+            "completed_label": "Listed posts",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "content.artifact_list",
+              "content.campaigns_list",
+              "content.article_list",
+              "content.article_deliveries_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "draft",
@@ -1788,16 +3338,66 @@
           "compilesTo": [
             "content.artifact_create",
             "content.artifact_generate",
-            "content.compose"
-          ]
+            "content.compose",
+            "content.generate",
+            "content.assist",
+            "content.generate_hooks",
+            "content.regenerate_hooks"
+          ],
+          "presentation": {
+            "running_label": "Drafting post",
+            "completed_label": "Drafted post",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.artifact_create",
+              "content.artifact_generate",
+              "content.compose",
+              "content.generate",
+              "content.assist",
+              "content.generate_hooks",
+              "content.regenerate_hooks"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "update",
           "mutates": true,
           "compilesTo": [
             "content.artifact_update",
-            "content.version_create"
-          ]
+            "content.version_create",
+            "content.article_update"
+          ],
+          "presentation": {
+            "running_label": "Updating post",
+            "completed_label": "Updated post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.artifact_update",
+              "content.version_create",
+              "content.article_update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "submit_review",
@@ -1805,7 +3405,24 @@
           "compilesTo": [
             "content.submit_review",
             "content.approval.submit"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Submitting post for review",
+            "completed_label": "Submitted post for review",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.submit_review",
+              "content.approval.submit"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "approve",
@@ -1813,7 +3430,24 @@
           "compilesTo": [
             "content.approve",
             "content.approval.decide"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Approving post",
+            "completed_label": "Approved post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.approve",
+              "content.approval.decide"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "schedule",
@@ -1821,14 +3455,47 @@
           "compilesTo": [
             "content.schedule",
             "content.article_create_schedule"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Scheduling post",
+            "completed_label": "Scheduled post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.schedule",
+              "content.article_create_schedule"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "unschedule",
           "mutates": true,
           "compilesTo": [
             "content.unschedule"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Unscheduling post",
+            "completed_label": "Unscheduled post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.unschedule"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "post",
@@ -1836,7 +3503,24 @@
           "compilesTo": [
             "content.delivery_publish",
             "content.approval.authorize_publish"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Publishing post",
+            "completed_label": "Published post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.delivery_publish",
+              "content.approval.authorize_publish"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "republish",
@@ -1844,21 +3528,70 @@
           "compilesTo": [
             "content.replacement_create",
             "content.delete_republish_propose"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Republishing post",
+            "completed_label": "Republished post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.replacement_create",
+              "content.delete_republish_propose"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "rollback",
           "mutates": true,
           "compilesTo": [
             "content.version_rollback"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Rolling back post",
+            "completed_label": "Rolled back post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.version_rollback"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "archive",
           "mutates": true,
           "compilesTo": [
             "content.artifact_archive"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Archiving post",
+            "completed_label": "Archived post",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "content.artifact_archive"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         }
       ]
     },
@@ -1866,12 +3599,12 @@
       "name": "ds_plan",
       "description": "Content strategy and the weekly plan. This is the calendar of what will be written, which is a different job from writing it: plan here, write with ds_publish. Read the strategy overview and the archetype benchmarks before suggesting anything, so suggestions are anchored to what this workspace is actually trying to do. Materialize a plan item into an artifact before transitioning it.",
       "purposeRequired": "mutations_only",
-      "generatedArgsModel": false,
+      "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
           "required": true,
-          "annotation": "Literal[\"overview\", \"benchmarks\", \"calendar\", \"suggest\", \"update_strategy\", \"materialize\", \"item_create\", \"item_update\", \"item_transition\"]",
+          "annotation": "Literal[\"overview\", \"benchmarks\", \"calendar\", \"events\", \"event_create\", \"event_update\", \"event_delete\", \"calendar_sync\", \"suggest\", \"update_strategy\", \"materialize\", \"item_create\", \"item_update\", \"item_transition\"]",
           "constraints": [],
           "description": "Plan step: overview, benchmarks, calendar, suggest, update_strategy, materialize, item_create, item_update, item_transition. Materialize before item_transition when the item must become a real artifact first."
         },
@@ -1885,12 +3618,12 @@
               "dict"
             ]
           ],
-          "description": "Exact input fields for the selected capability_id. Shapes differ per capability (for example materialize takes item_id; strategy reads often take social_sender_profile_id). Fetch the capability contract first via ds_search scope=capabilities; do not invent field names."
+          "description": "Exact input fields for the selected capability_id. Shapes differ per capability (for example materialize takes item_id; strategy reads often take social_sender_profile_id). Every field below is declared by at least one reachable capability; each field's own description names which capability requires it. Fetch the capability contract first via ds_search scope=capabilities; do not invent field names outside this list."
         },
         {
           "name": "capability_id",
           "required": true,
-          "annotation": "Literal[\"social.analytics_goal_update\", \"social.post_format_hooks_list\", \"social.strategy_activity_calendar\", \"social.strategy_archetype_benchmark\", \"social.strategy_archetype_get\", \"social.strategy_archetype_inspiration\", \"social.strategy_format_targets_suggest\", \"social.strategy_overview\", \"social.strategy_plan_progress\", \"social.strategy_suggestions_generate\", \"social.strategy_update\", \"social.strategy_weekly_post_action\", \"social.strategy_weekly_post_materialize\", \"social.weekly_plan_item_create\", \"social.weekly_plan_item_transition\", \"social.weekly_plan_item_update\", \"social.weekly_plan_items_list\"]",
+          "annotation": "Literal[\"calendar.broadcasts_list\", \"calendar.events_create\", \"calendar.events_delete\", \"calendar.events_list\", \"calendar.events_update\", \"calendar.sync\", \"social.analytics_goal_update\", \"social.post_format_hooks_list\", \"social.strategy_activity_calendar\", \"social.strategy_archetype_benchmark\", \"social.strategy_archetype_get\", \"social.strategy_archetype_inspiration\", \"social.strategy_format_targets_suggest\", \"social.strategy_overview\", \"social.strategy_plan_progress\", \"social.strategy_suggestions_generate\", \"social.strategy_update\", \"social.strategy_weekly_post_action\", \"social.strategy_weekly_post_materialize\", \"social.weekly_plan_item_create\", \"social.weekly_plan_item_transition\", \"social.weekly_plan_item_update\", \"social.weekly_plan_items_list\"]",
           "constraints": [],
           "description": "Canonical capability this action compiles to. Always required. For materialize pass social.strategy_weekly_post_materialize, for item_create pass social.weekly_plan_item_create, for item_update pass social.weekly_plan_item_update. For overview, benchmarks, calendar, suggest, update_strategy, item_transition the action can reach more than one capability, so name the one you mean; a wrong-but-valid selection is refused with the allowed ids listed in repair.expected. Search capabilities before inventing an id."
         },
@@ -1917,14 +3650,14 @@
         {
           "name": "mode",
           "required": false,
-          "annotation": "Optional[Literal[\"dry_run\", \"live\"]]",
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
           "constraints": [
             [
               "default",
               "\"live\""
             ]
           ],
-          "description": "dry_run previews without effect only when the selected capability declares dry_run_supported. Otherwise expect preview_unsupported and use live after confirming the intended change."
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. dry_run previews without effect only when the selected capability declares dry_run_supported. Otherwise expect preview_unsupported and use live after confirming the intended change."
         },
         {
           "name": "max_credits",
@@ -1967,7 +3700,23 @@
             "social.strategy_overview",
             "social.strategy_archetype_get",
             "social.strategy_plan_progress"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading plan overview",
+            "completed_label": "Read plan overview",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.strategy_overview",
+              "social.strategy_archetype_get",
+              "social.strategy_plan_progress"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "benchmarks",
@@ -1976,7 +3725,23 @@
             "social.strategy_archetype_benchmark",
             "social.strategy_archetype_inspiration",
             "social.post_format_hooks_list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reviewing benchmarks",
+            "completed_label": "Reviewed benchmarks",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.strategy_archetype_benchmark",
+              "social.strategy_archetype_inspiration",
+              "social.post_format_hooks_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "calendar",
@@ -1984,7 +3749,146 @@
           "compilesTo": [
             "social.strategy_activity_calendar",
             "social.weekly_plan_items_list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading content calendar",
+            "completed_label": "Read content calendar",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.strategy_activity_calendar",
+              "social.weekly_plan_items_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "events",
+          "mutates": false,
+          "compilesTo": [
+            "calendar.events_list",
+            "calendar.broadcasts_list"
+          ],
+          "presentation": {
+            "running_label": "Reading calendar events",
+            "completed_label": "Read calendar events",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "calendar.events_list",
+              "calendar.broadcasts_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "event_create",
+          "mutates": true,
+          "compilesTo": [
+            "calendar.events_create"
+          ],
+          "presentation": {
+            "running_label": "Creating calendar event",
+            "completed_label": "Created calendar event",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.title",
+              "data.name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "calendar.events_create"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "event_update",
+          "mutates": true,
+          "compilesTo": [
+            "calendar.events_update"
+          ],
+          "presentation": {
+            "running_label": "Updating calendar event",
+            "completed_label": "Updated calendar event",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.title",
+              "data.name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "calendar.events_update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "event_delete",
+          "mutates": true,
+          "compilesTo": [
+            "calendar.events_delete"
+          ],
+          "presentation": {
+            "running_label": "Deleting calendar event",
+            "completed_label": "Deleted calendar event",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "calendar.events_delete"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
+        },
+        {
+          "action": "calendar_sync",
+          "mutates": true,
+          "compilesTo": [
+            "calendar.sync"
+          ],
+          "presentation": {
+            "running_label": "Synchronizing calendar",
+            "completed_label": "Synchronized calendar",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "calendar.sync"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "suggest",
@@ -1992,7 +3896,22 @@
           "compilesTo": [
             "social.strategy_suggestions_generate",
             "social.strategy_format_targets_suggest"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating plan suggestions",
+            "completed_label": "Created plan suggestions",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.strategy_suggestions_generate",
+              "social.strategy_format_targets_suggest"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "update_strategy",
@@ -2000,28 +3919,99 @@
           "compilesTo": [
             "social.strategy_update",
             "social.analytics_goal_update"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating strategy",
+            "completed_label": "Updated strategy",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.strategy_update",
+              "social.analytics_goal_update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "materialize",
           "mutates": true,
           "compilesTo": [
             "social.strategy_weekly_post_materialize"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating plan",
+            "completed_label": "Created plan",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.strategy_weekly_post_materialize"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "item_create",
           "mutates": true,
           "compilesTo": [
             "social.weekly_plan_item_create"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Creating plan item",
+            "completed_label": "Created plan item",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.weekly_plan_item_create"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "item_update",
           "mutates": true,
           "compilesTo": [
             "social.weekly_plan_item_update"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating plan item",
+            "completed_label": "Updated plan item",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.weekly_plan_item_update"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "item_transition",
@@ -2029,7 +4019,26 @@
           "compilesTo": [
             "social.weekly_plan_item_transition",
             "social.strategy_weekly_post_action"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Changing plan item status",
+            "completed_label": "Changed plan item status",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.weekly_plan_item_transition",
+              "social.strategy_weekly_post_action"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         }
       ]
     },
@@ -2037,12 +4046,12 @@
       "name": "ds_analytics",
       "description": "Reporting on what already happened: post performance, audience, sequence results and workspace usage. Read the metric definitions before querying, because a metric that sounds obvious here often is not. `refresh` costs credits and pulls from providers, so do not refresh reflexively before every read; the stored numbers carry the timestamp they were collected at and you should quote it.",
       "purposeRequired": "mutations_only",
-      "generatedArgsModel": false,
+      "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
           "required": true,
-          "annotation": "Literal[\"post\", \"audience\", \"query\", \"sequences\", \"workflows\", \"usage\", \"refresh\"]",
+          "annotation": "Literal[\"post\", \"audience\", \"query\", \"sequences\", \"workflows\", \"usage\", \"web_traffic\", \"brain_evidence\", \"brain_insights\", \"outreach_overview\", \"refresh\"]",
           "constraints": [],
           "description": "Analytics step: post, audience, query, sequences, workflows, usage, refresh. refresh costs credits and pulls from providers; prefer stored numbers with their collected_at first."
         },
@@ -2056,12 +4065,12 @@
               "dict"
             ]
           ],
-          "description": "Exact input fields for the selected capability_id. Shapes differ per capability (for example social.post_analytics requires platform, account_id, provider_post_id; usage.status_get takes no fields). Fetch the capability contract first via ds_search scope=capabilities; do not invent field names."
+          "description": "Exact input fields for the selected capability_id. Shapes differ per capability (for example social.post_analytics requires platform, account_id, provider_post_id; usage.status_get takes no fields). Every field below is declared by at least one reachable capability; each field's own description names which capability requires it. Fetch the capability contract first via ds_search scope=capabilities; do not invent field names outside this list."
         },
         {
           "name": "capability_id",
           "required": true,
-          "annotation": "Literal[\"outreach.analytics_framework_aggregate_get\", \"outreach.analytics_step_aggregate_get\", \"outreach.credit_usage_get\", \"outreach.reply_insights_get\", \"sequences.analytics_get\", \"social.analytics_query\", \"social.analytics_refresh\", \"social.analytics_rollup_get\", \"social.audience_analytics\", \"social.linkedin_analytics_import\", \"social.metric_definitions\", \"social.performance_analysis_get\", \"social.performance_snapshot_get\", \"social.post_analytics\", \"usage.action_costs_get\", \"usage.history_list\", \"usage.limits_get\", \"usage.status_get\", \"workflows.analytics_by_workflow\", \"workflows.analytics_overview\", \"workflows.metrics_get\"]",
+          "annotation": "Literal[\"analytics.ga4.attribution\", \"analytics.ga4.browsers\", \"analytics.ga4.devices\", \"analytics.ga4.geo\", \"analytics.ga4.hostnames\", \"analytics.ga4.operating_systems\", \"analytics.ga4.overview\", \"analytics.ga4.pages\", \"analytics.ga4.referrers\", \"analytics.ga4.utm\", \"brain.content.get\", \"brain.content.search\", \"brain.daily_update.get\", \"brain.daily_update.history\", \"brain.evidence.search\", \"brain.graph.neighborhood\", \"brain.knowledge.digest\", \"brain.knowledge.doc_map\", \"brain.knowledge.document\", \"brain.knowledge.index\", \"brain.learning.query_benchmarks\", \"brain.outreach.compare\", \"brain.social.benchmarks.query\", \"brain.social.patterns.compare\", \"integrations.ga4.referral_traffic\", \"outreach.analytics_framework_aggregate_get\", \"outreach.analytics_step_aggregate_get\", \"outreach.credit_usage_get\", \"outreach.monthly_rollup_get\", \"outreach.reply_insights_get\", \"outreach.workspace_stats_get\", \"sequences.analytics_get\", \"social.analytics_query\", \"social.analytics_refresh\", \"social.analytics_rollup_get\", \"social.audience_analytics\", \"social.linkedin_analytics_import\", \"social.metric_definitions\", \"social.performance_analysis_get\", \"social.performance_snapshot_get\", \"social.post_analytics\", \"usage.action_costs_get\", \"usage.history_list\", \"usage.limits_get\", \"usage.status_get\", \"workflows.analytics_by_workflow\", \"workflows.analytics_overview\", \"workflows.metrics_get\"]",
           "constraints": [],
           "description": "Canonical capability this action compiles to. Always required. For audience pass social.audience_analytics. For post, query, sequences, workflows, usage, refresh the action can reach more than one capability, so name the one you mean; a wrong-but-valid selection is refused with the allowed ids listed in repair.expected. Search capabilities before inventing an id."
         },
@@ -2088,14 +4097,14 @@
         {
           "name": "mode",
           "required": false,
-          "annotation": "Optional[Literal[\"dry_run\", \"live\"]]",
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
           "constraints": [
             [
               "default",
               "\"live\""
             ]
           ],
-          "description": "dry_run previews without effect only when the selected capability declares dry_run_supported. Otherwise expect preview_unsupported and use live."
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. dry_run previews without effect only when the selected capability declares dry_run_supported. Otherwise expect preview_unsupported and use live."
         },
         {
           "name": "max_credits",
@@ -2138,14 +4147,44 @@
             "social.post_analytics",
             "social.performance_snapshot_get",
             "social.performance_analysis_get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reviewing post analytics",
+            "completed_label": "Reviewed post analytics",
+            "request_subject_paths": [
+              "params.title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.post_analytics",
+              "social.performance_snapshot_get",
+              "social.performance_analysis_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "audience",
           "mutates": false,
           "compilesTo": [
             "social.audience_analytics"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reviewing audience analytics",
+            "completed_label": "Reviewed audience analytics",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.audience_analytics"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "query",
@@ -2154,7 +4193,21 @@
             "social.analytics_query",
             "social.analytics_rollup_get",
             "social.metric_definitions"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Querying analytics",
+            "completed_label": "Queried analytics",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.analytics_query",
+              "social.analytics_rollup_get",
+              "social.metric_definitions"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "sequences",
@@ -2164,7 +4217,24 @@
             "outreach.analytics_step_aggregate_get",
             "outreach.analytics_framework_aggregate_get",
             "outreach.reply_insights_get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reviewing sequence analytics",
+            "completed_label": "Reviewed sequence analytics",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "sequences.analytics_get",
+              "outreach.analytics_step_aggregate_get",
+              "outreach.analytics_framework_aggregate_get",
+              "outreach.reply_insights_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "workflows",
@@ -2173,7 +4243,23 @@
             "workflows.analytics_overview",
             "workflows.analytics_by_workflow",
             "workflows.metrics_get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reviewing workflow analytics",
+            "completed_label": "Reviewed workflow analytics",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "workflows.analytics_overview",
+              "workflows.analytics_by_workflow",
+              "workflows.metrics_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "usage",
@@ -2184,7 +4270,153 @@
             "usage.history_list",
             "usage.action_costs_get",
             "outreach.credit_usage_get"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reviewing usage",
+            "completed_label": "Reviewed usage",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "usage.status_get",
+              "usage.limits_get",
+              "usage.history_list",
+              "usage.action_costs_get",
+              "outreach.credit_usage_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "web_traffic",
+          "mutates": false,
+          "compilesTo": [
+            "analytics.ga4.overview",
+            "analytics.ga4.pages",
+            "analytics.ga4.geo",
+            "analytics.ga4.referrers",
+            "analytics.ga4.devices",
+            "analytics.ga4.hostnames",
+            "analytics.ga4.utm",
+            "analytics.ga4.browsers",
+            "analytics.ga4.operating_systems",
+            "analytics.ga4.attribution",
+            "integrations.ga4.referral_traffic"
+          ],
+          "presentation": {
+            "running_label": "Reviewing web traffic",
+            "completed_label": "Reviewed web traffic",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "analytics.ga4.overview",
+              "analytics.ga4.pages",
+              "analytics.ga4.geo",
+              "analytics.ga4.referrers",
+              "analytics.ga4.devices",
+              "analytics.ga4.hostnames",
+              "analytics.ga4.utm",
+              "analytics.ga4.browsers",
+              "analytics.ga4.operating_systems",
+              "analytics.ga4.attribution",
+              "integrations.ga4.referral_traffic"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "brain_evidence",
+          "mutates": false,
+          "compilesTo": [
+            "brain.evidence.search",
+            "brain.content.search",
+            "brain.content.get",
+            "brain.knowledge.digest",
+            "brain.knowledge.index",
+            "brain.knowledge.document",
+            "brain.knowledge.doc_map",
+            "brain.graph.neighborhood"
+          ],
+          "presentation": {
+            "running_label": "Searching evidence",
+            "completed_label": "Searched evidence",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "brain.evidence.search",
+              "brain.content.search",
+              "brain.content.get",
+              "brain.knowledge.digest",
+              "brain.knowledge.index",
+              "brain.knowledge.document",
+              "brain.knowledge.doc_map",
+              "brain.graph.neighborhood"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "brain_insights",
+          "mutates": false,
+          "compilesTo": [
+            "brain.outreach.compare",
+            "brain.learning.query_benchmarks",
+            "brain.social.patterns.compare",
+            "brain.social.benchmarks.query",
+            "brain.daily_update.get",
+            "brain.daily_update.history"
+          ],
+          "presentation": {
+            "running_label": "Reviewing insights",
+            "completed_label": "Reviewed insights",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "brain.outreach.compare",
+              "brain.learning.query_benchmarks",
+              "brain.social.patterns.compare",
+              "brain.social.benchmarks.query",
+              "brain.daily_update.get",
+              "brain.daily_update.history"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
+        },
+        {
+          "action": "outreach_overview",
+          "mutates": false,
+          "compilesTo": [
+            "outreach.workspace_stats_get",
+            "outreach.monthly_rollup_get"
+          ],
+          "presentation": {
+            "running_label": "Reviewing outreach performance",
+            "completed_label": "Reviewed outreach performance",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "outreach.workspace_stats_get",
+              "outreach.monthly_rollup_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "refresh",
@@ -2192,20 +4424,37 @@
           "compilesTo": [
             "social.analytics_refresh",
             "social.linkedin_analytics_import"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Refreshing analytics",
+            "completed_label": "Refreshed analytics",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.analytics_refresh",
+              "social.linkedin_analytics_import"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         }
       ]
     },
     {
       "name": "ds_engage",
       "description": "The inbox and the reply surface: notifications, engagement opportunities and comments. A comment is public the moment it posts, so draft it, show it, and only then publish. Notification pulls are paged and cost credits, so pull once and work through what came back rather than pulling repeatedly.",
-      "purposeRequired": "always",
-      "generatedArgsModel": false,
+      "purposeRequired": "mutations_only",
+      "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
           "required": true,
-          "annotation": "Literal[\"notifications\", \"opportunities\", \"conversations\", \"pull\", \"subscribe\", \"unsubscribe\", \"status_set\", \"comment\", \"reply\"]",
+          "annotation": "Literal[\"notifications\", \"opportunities\", \"conversations\", \"pull\", \"subscribe\", \"unsubscribe\", \"status_set\", \"comment\", \"reply\", \"draft_reply\", \"approval\"]",
           "constraints": []
         },
         {
@@ -2223,7 +4472,7 @@
         {
           "name": "capability_id",
           "required": true,
-          "annotation": "Literal[\"engagement.opportunities.counts\", \"engagement.opportunities.list\", \"engagement.opportunities.status_set\", \"engagement.people_engaged_n_times\", \"outreach.dm_conversation_by_contact_get\", \"outreach.dm_conversation_get\", \"outreach.dm_conversation_read\", \"outreach.dm_conversation_status_update\", \"outreach.dm_conversations_list\", \"outreach.dm_message_send\", \"social.comment_publish\", \"social.linkedin_notification_subscriptions_list\", \"social.linkedin_notifications_list\", \"social.linkedin_notifications_pull\", \"social.linkedin_notifications_subscribe\", \"social.linkedin_notifications_unsubscribe\", \"social.linkedin_post_notifications_list\", \"social.reddit_comment_publish\"]",
+          "annotation": "Literal[\"engagement.opportunities.counts\", \"engagement.opportunities.list\", \"engagement.opportunities.status_set\", \"engagement.people_engaged_n_times\", \"outreach.activity_list\", \"outreach.ai_spintax_generate\", \"outreach.ai_write_generate\", \"outreach.ai_write_resolve\", \"outreach.dm_conversation_by_contact_get\", \"outreach.dm_conversation_get\", \"outreach.dm_conversation_read\", \"outreach.dm_conversation_status_update\", \"outreach.dm_conversations_list\", \"outreach.dm_message_send\", \"outreach.meetings_list\", \"outreach.messaging_context_get\", \"outreach.pending_approval_approve\", \"outreach.pending_approval_reject\", \"outreach.personalization_generate\", \"social.comment_publish\", \"social.linkedin_notification_subscriptions_list\", \"social.linkedin_notifications_list\", \"social.linkedin_notifications_pull\", \"social.linkedin_notifications_subscribe\", \"social.linkedin_notifications_unsubscribe\", \"social.linkedin_post_notifications_list\", \"social.reddit_comment_publish\"]",
           "constraints": [],
           "description": "Always required, even when the action has only one legal value. notifications: social.linkedin_notifications_list | social.linkedin_post_notifications_list | social.linkedin_notification_subscriptions_list. opportunities: engagement.opportunities.list | engagement.opportunities.counts | engagement.people_engaged_n_times. conversations: outreach.dm_conversations_list | outreach.dm_conversation_get | outreach.dm_conversation_by_contact_get. status_set: engagement.opportunities.status_set | outreach.dm_conversation_status_update | outreach.dm_conversation_read. comment: social.comment_publish | social.reddit_comment_publish. pull pass social.linkedin_notifications_pull, subscribe pass social.linkedin_notifications_subscribe, unsubscribe pass social.linkedin_notifications_unsubscribe, reply pass outreach.dm_message_send."
         },
@@ -2250,14 +4499,14 @@
         {
           "name": "mode",
           "required": false,
-          "annotation": "Optional[Literal[\"dry_run\", \"live\"]]",
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
           "constraints": [
             [
               "default",
               "\"live\""
             ]
           ],
-          "description": "live executes. dry_run is refused for every capability this tool reaches today (none declare dry_run_supported). For comment and reply, put the exact body in front of the user before mode: live; do not call dry_run expecting a preview."
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. live executes. dry_run is refused for every capability this tool reaches today (none declare dry_run_supported). For comment and reply, put the exact body in front of the user before mode: live; do not call dry_run expecting a preview."
         },
         {
           "name": "max_credits",
@@ -2300,7 +4549,21 @@
             "social.linkedin_notifications_list",
             "social.linkedin_post_notifications_list",
             "social.linkedin_notification_subscriptions_list"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Reading notifications",
+            "completed_label": "Read notifications",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "social.linkedin_notifications_list",
+              "social.linkedin_post_notifications_list",
+              "social.linkedin_notification_subscriptions_list"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "opportunities",
@@ -2309,7 +4572,21 @@
             "engagement.opportunities.list",
             "engagement.opportunities.counts",
             "engagement.people_engaged_n_times"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Finding engagement opportunities",
+            "completed_label": "Found engagement opportunities",
+            "request_subject_paths": [],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "engagement.opportunities.list",
+              "engagement.opportunities.counts",
+              "engagement.people_engaged_n_times"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "conversations",
@@ -2317,29 +4594,99 @@
           "compilesTo": [
             "outreach.dm_conversations_list",
             "outreach.dm_conversation_get",
-            "outreach.dm_conversation_by_contact_get"
-          ]
+            "outreach.dm_conversation_by_contact_get",
+            "outreach.meetings_list",
+            "outreach.activity_list",
+            "outreach.messaging_context_get"
+          ],
+          "presentation": {
+            "running_label": "Reading conversations",
+            "completed_label": "Read conversations",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [
+              "outreach.dm_conversations_list",
+              "outreach.dm_conversation_get",
+              "outreach.dm_conversation_by_contact_get",
+              "outreach.meetings_list",
+              "outreach.activity_list",
+              "outreach.messaging_context_get"
+            ],
+            "mutates": false,
+            "returns": "data"
+          }
         },
         {
           "action": "pull",
           "mutates": true,
           "compilesTo": [
             "social.linkedin_notifications_pull"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Pulling conversations",
+            "completed_label": "Pulled conversations",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.linkedin_notifications_pull"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "subscribe",
           "mutates": true,
           "compilesTo": [
             "social.linkedin_notifications_subscribe"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Subscribing to engagement",
+            "completed_label": "Subscribed to engagement",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.linkedin_notifications_subscribe"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "unsubscribe",
           "mutates": true,
           "compilesTo": [
             "social.linkedin_notifications_unsubscribe"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Unsubscribing from engagement",
+            "completed_label": "Unsubscribed from engagement",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.linkedin_notifications_unsubscribe"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "status_set",
@@ -2348,7 +4695,25 @@
             "engagement.opportunities.status_set",
             "outreach.dm_conversation_status_update",
             "outreach.dm_conversation_read"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Updating engagement status",
+            "completed_label": "Updated engagement status",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "engagement.opportunities.status_set",
+              "outreach.dm_conversation_status_update",
+              "outreach.dm_conversation_read"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
         },
         {
           "action": "comment",
@@ -2356,14 +4721,107 @@
           "compilesTo": [
             "social.comment_publish",
             "social.reddit_comment_publish"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Posting comment",
+            "completed_label": "Posted comment",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "social.comment_publish",
+              "social.reddit_comment_publish"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         },
         {
           "action": "reply",
           "mutates": true,
           "compilesTo": [
             "outreach.dm_message_send"
-          ]
+          ],
+          "presentation": {
+            "running_label": "Posting reply",
+            "completed_label": "Posted reply",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "outreach.dm_message_send"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
+        },
+        {
+          "action": "draft_reply",
+          "mutates": true,
+          "compilesTo": [
+            "outreach.ai_write_generate",
+            "outreach.ai_spintax_generate",
+            "outreach.ai_write_resolve",
+            "outreach.personalization_generate"
+          ],
+          "presentation": {
+            "running_label": "Drafting reply",
+            "completed_label": "Drafted reply",
+            "request_subject_paths": [
+              "params.title",
+              "params.name"
+            ],
+            "result_subject_paths": [
+              "data.title",
+              "data.name"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "outreach.ai_write_generate",
+              "outreach.ai_spintax_generate",
+              "outreach.ai_write_resolve",
+              "outreach.personalization_generate"
+            ],
+            "mutates": true,
+            "returns": "diff"
+          }
+        },
+        {
+          "action": "approval",
+          "mutates": true,
+          "compilesTo": [
+            "outreach.pending_approval_approve",
+            "outreach.pending_approval_reject"
+          ],
+          "presentation": {
+            "running_label": "Updating outreach approval",
+            "completed_label": "Updated outreach approval",
+            "request_subject_paths": [
+              "params.name"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [
+              "outreach.pending_approval_approve",
+              "outreach.pending_approval_reject"
+            ],
+            "mutates": true,
+            "returns": "receipt"
+          }
         }
       ]
     },
@@ -2432,14 +4890,14 @@
         {
           "name": "mode",
           "required": false,
-          "annotation": "Optional[Literal[\"dry_run\", \"live\"]]",
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
           "constraints": [
             [
               "default",
               "\"live\""
             ]
           ],
-          "description": "live executes. dry_run is refused unless the RESOLVED capability declares dry_run_supported; most catalogue entries do not. This tool declares itself mutating as a conservative ceiling at authoring time; the dispatcher lowers the effect class to the resolved capability real class (a read stays reversible)."
+          "description": "smoke_test validates the selected request and policy without reads, providers, credits, or effects. live executes. dry_run is refused unless the RESOLVED capability declares dry_run_supported; most catalogue entries do not. This tool declares itself mutating as a conservative ceiling at authoring time; the dispatcher lowers the effect class to the resolved capability real class (a read stays reversible)."
         },
         {
           "name": "max_credits",
@@ -2478,7 +4936,25 @@
         {
           "action": "run",
           "mutates": true,
-          "compilesTo": []
+          "compilesTo": [],
+          "presentation": {
+            "running_label": "Running workspace capability",
+            "completed_label": "Ran workspace capability",
+            "request_subject_paths": [
+              "params.name",
+              "params.title"
+            ],
+            "result_subject_paths": [
+              "data.name",
+              "data.title"
+            ],
+            "commit_evidence_paths": [
+              "data.canonical_execution"
+            ],
+            "compiles_to": [],
+            "mutates": true,
+            "returns": "receipt"
+          }
         }
       ]
     },
@@ -2486,7 +4962,7 @@
       "name": "ds_ask",
       "description": "Ask the user something, or open a canvas. Ask only when the answer materially changes what you build AND you cannot derive it from the request, the context graph, the current surface or a live contract. A required parameter you can derive is not a missing answer. Never ask a question the work itself would answer, never ask the user to diagnose a failed tool call, and never ask permission to do the thing they already asked for. One consolidated popup carrying every remaining question, after the partial work exists. After it opens, stop: the answer resumes a new turn from durable state.",
       "purposeRequired": "always",
-      "generatedArgsModel": false,
+      "generatedArgsModel": true,
       "fields": [
         {
           "name": "action",
@@ -2509,6 +4985,18 @@
             ]
           ],
           "description": "One user-facing sentence on what this call is trying to obtain. Never a security input."
+        },
+        {
+          "name": "mode",
+          "required": false,
+          "annotation": "Optional[Literal[\"smoke_test\", \"dry_run\", \"live\"]]",
+          "constraints": [
+            [
+              "default",
+              "\"live\""
+            ]
+          ],
+          "description": "smoke_test validates this request only and opens no popup or canvas. dry_run is non-effecting validation for this tool. live opens the requested interaction."
         },
         {
           "name": "session_id",
@@ -2570,21 +5058,9 @@
           "description": "question: REQUIRED. One or more questions to put to the user in a single checkpoint. Maximum 13 questions per call, one per intake concept; split genuinely distinct checkpoints into separate calls instead of exceeding it."
         },
         {
-          "name": "workflow_state",
-          "required": false,
-          "annotation": "Optional[Dict[str, Any]]",
-          "constraints": [
-            [
-              "default",
-              "None"
-            ]
-          ],
-          "description": "Durable state the resumed turn reads back. Omitted means the popup carries nothing across."
-        },
-        {
           "name": "surface_kind",
           "required": false,
-          "annotation": "Optional[Literal[\"campaign\", \"table\", \"workflow\", \"sequence\", \"calendar\", \"page\", \"editor\"]]",
+          "annotation": "Optional[Literal[\"table\", \"workflow\", \"sequence\", \"calendar\", \"page\", \"editor\"]]",
           "constraints": [
             [
               "default",
@@ -2611,25 +5087,6 @@
             ]
           ],
           "description": "An id a live call returned. A synthesized id is refused."
-        },
-        {
-          "name": "path",
-          "required": false,
-          "annotation": "Optional[str]",
-          "constraints": [
-            [
-              "default",
-              "None"
-            ],
-            [
-              "min_length",
-              "1"
-            ],
-            [
-              "max_length",
-              "2048"
-            ]
-          ]
         },
         {
           "name": "artifact_revision",
@@ -2687,24 +5144,122 @@
               "200"
             ]
           ]
+        },
+        {
+          "name": "partial_outputs",
+          "required": false,
+          "annotation": "Optional[Dict[str, Any]]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ]
+          ]
+        },
+        {
+          "name": "next_transition",
+          "required": false,
+          "annotation": "Optional[str]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ],
+            [
+              "min_length",
+              "1"
+            ],
+            [
+              "max_length",
+              "200"
+            ]
+          ]
+        },
+        {
+          "name": "required_capability_ids",
+          "required": false,
+          "annotation": "Optional[List[str]]",
+          "constraints": [
+            [
+              "default",
+              "None"
+            ]
+          ]
         }
       ],
       "actions": [
         {
           "action": "question",
           "mutates": false,
-          "compilesTo": []
+          "compilesTo": [],
+          "presentation": {
+            "running_label": "Asking question",
+            "completed_label": "Asked question",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [],
+            "mutates": false,
+            "returns": "elicitation"
+          }
         },
         {
           "action": "canvas",
           "mutates": false,
-          "compilesTo": []
+          "compilesTo": [],
+          "presentation": {
+            "running_label": "Opening question on canvas",
+            "completed_label": "Opened question on canvas",
+            "request_subject_paths": [
+              "title"
+            ],
+            "result_subject_paths": [],
+            "commit_evidence_paths": [],
+            "compiles_to": [],
+            "mutates": false,
+            "returns": "elicitation"
+          }
         }
       ]
     }
   ],
   "capability_input_fields": {
+    "analytics.ga4.attribution": "date_range_days:n kind:s!",
+    "analytics.ga4.browsers": "date_range_days:n",
+    "analytics.ga4.devices": "date_range_days:n",
+    "analytics.ga4.geo": "date_range_days:n",
+    "analytics.ga4.hostnames": "date_range_days:n",
+    "analytics.ga4.operating_systems": "date_range_days:n",
+    "analytics.ga4.overview": "date_range_days:n",
+    "analytics.ga4.pages": "date_range_days:n",
+    "analytics.ga4.referrers": "date_range_days:n",
+    "analytics.ga4.utm": "date_range_days:n",
     "audiences.preview": "worksheet_id:s! view_id:s! predicate_ir:o! apply_global_exclusions:b disabled_exclusion_ids:a",
+    "brain.companies.answer": "company_id:s! question:s! evidence_cursor:s deal_cursor:s limit:n",
+    "brain.companies.get": "company_id:s! include:a relationship_cursor:s activity_cursor:s section_limit:n",
+    "brain.content.get": "identity:o!",
+    "brain.content.search": "query:s! platforms:a! author_subject_ids:a! topic_ids:a! time_range:o! limit:n! cursor:s!",
+    "brain.daily_update.get": "edition_date:s",
+    "brain.daily_update.history": "cursor:s limit:n",
+    "brain.evidence.search": "subject_kind:s subject_id:s field_keys:a query:s cursor:s limit:n",
+    "brain.graph.neighborhood": "root_subject_kind:s! root_subject_id:s! hops:n! node_limit:n! edge_limit:n! cursor:s!",
+    "brain.knowledge.digest": "rationale:s",
+    "brain.knowledge.doc_map": "role:s cursor:s limit:n rationale:s",
+    "brain.knowledge.document": "path:s! rationale:s",
+    "brain.knowledge.index": "cursor:s limit:n query:s paths:a rationale:s",
+    "brain.learning.query_benchmarks": "query_id:s! cohort_id:s! approved_cohorts_only:b! channel:s! motion:s! archetype_ids:a! metric_id:s! allowed_evidence_tiers:a! as_of:s!",
+    "brain.outreach.compare": "episode_ids:a! treatment_ids:a! outcomes:a! allowed_evidence_tiers:a!",
+    "brain.people.get": "person_id:s! include:a relationship_cursor:s activity_cursor:s section_limit:n",
+    "brain.social.benchmarks.query": "platform:s! metric:s! topic_id:s! format_id:s! post_age_window:s! follower_band:s! content_identity:o",
+    "brain.social.patterns.compare": "selection_snapshot_id:s! measures:a! metrics:a!",
+    "calendar.broadcasts_list": "from:s to:s limit:n cursor:s",
+    "calendar.events_create": "connection_id:s! event_id:s title:s! start_at:s! end_at:s! is_all_day:b description:s attendees:a add_meet:b",
+    "calendar.events_delete": "connection_id:s! event_id:s!",
+    "calendar.events_list": "from:s to:s limit:n cursor:s",
+    "calendar.events_update": "connection_id:s! event_id:s! title:s start_at:s end_at:s is_all_day:b description:s attendees:a add_meet:b",
+    "calendar.sync": "connection_ids:a",
     "cells.inspect": "table_id:s! row_id:s! column_id:s! run_id:s history_id:s",
     "cells.read_page": "table_id:s! row_ids:a! column_ids:a!",
     "columns.add": "table_id:s! column_id:s key:s! name:s! behavior:s! value_type:s! configuration:o! nullable:b! position:n! binding:o binding_spec:o",
@@ -2713,21 +5268,41 @@
     "columns.run": "table_id:s! column_id:s! selection_snapshot_id:s! max_rows:n! max_credits:n!",
     "columns.run_all": "table_id:s! column_ids:a! selection_snapshot_id:s! preview_id:s! preview_digest:s! pricing_digest:s! max_rows:n! max_credits:n! max_duration_seconds:n! max_concurrency:n",
     "columns.update": "table_id:s! column_id:s! expected_updated_at:s! expected_binding_revision:n key:s name:s behavior:s value_type:s configuration:o nullable:b position:n binding:o binding_spec:o",
+    "contacts.archive": "contact_id:s!",
+    "contacts.bulk_upsert": "contacts:a! client_request_id:s",
+    "contacts.draft_opener": "contact_id:s! framework_id:s!",
+    "contacts.enrich": "contact_id:s!",
+    "contacts.find_email": "contact_id:s!",
+    "contacts.find_phone": "contact_id:s!",
+    "contacts.get": "contact_id:s! include_enrichment:b",
+    "contacts.list": "limit:n cursor:s search:s prospect_status:s include_enrichment:b",
+    "contacts.lookup_by_email": "email:s domain:s limit:n",
+    "contacts.update": "external_id:s linkedin_url:s email:s name:s first_name:s last_name:s company:s title:s headline:s location:s industry:s profile_url:s avatar_url:s prospect_status:s prospect_notes:s prospect_tags:a extracted_at:s search_query:s match_on:a campaign_id:s do_not_contact:s contact_id:s!",
+    "contacts.upsert": "external_id:s linkedin_url:s email:s name:s first_name:s last_name:s company:s title:s headline:s location:s industry:s profile_url:s avatar_url:s prospect_status:s prospect_notes:s prospect_tags:a extracted_at:s search_query:s match_on:a campaign_id:s client_request_id:s",
     "content.approval.authorize_publish": "artifact_id:s! expected_revision:n! needed_by:s!",
     "content.approval.decide": "approval_ids:a! expected_revision:n! decision:s! reason:s",
     "content.approval.submit": "artifact_id:s! expected_revision:n! approvers:a! needed_by:s!",
     "content.approve": "artifact_id:s! expected_revision:n!",
     "content.article_create_schedule": "title:s target_platforms:a account_ids:a scheduled_date:s funnel_stage:s campaign_id:s label_ids:a",
+    "content.article_deliveries_list": "article_id:s! cursor:s limit:n status:s target_kind:s",
+    "content.article_distribution_get": "article_id:s!",
+    "content.article_get": "article_id:s!",
+    "content.article_list": "include_archived:b",
+    "content.article_update": "article_id:s! expected_revision:n! title:s! body_json:o! target_platforms:a publish_slug:s publish_metadata_json:o schema_json:o",
     "content.artifact_archive": "artifact_id:s! expected_revision:n!",
     "content.artifact_create": "artifact_id:s title:s content:s! channels:a! account_ids:a! media:a platform_payloads:o labels:a campaign_id:s status:s",
     "content.artifact_generate": "platform:s! topic:s! tone:s format:s account_ids:a approve_for_schedule:b",
     "content.artifact_get": "artifact_id:s!",
     "content.artifact_list": "limit:n cursor:s status:s",
     "content.artifact_update": "artifact_id:s! title:s content:s channels:a account_ids:a media:a platform_payloads:o labels:a campaign_id:s scheduled_at:s expected_revision:n!",
+    "content.assist": "user_request:s! platform:s mode:s current_post:s current_title:s conversation_history:a session_id:s post_id:s urls:a channel_bookmark_ids:a post_bookmark_ids:a channel_author_ids:a linkedin_post_ids:a inline_reference_posts:a mentioned_author_ids:a prompt_feature_flags:a routed_as_chat:b preferred_structure_type:s preferred_topic:s preferred_tone_register:s preferred_hook_pattern:s preferred_cta_pattern:s inspiration_seed:s social_sender_profile_id:s credential_account_id:s",
     "content.campaigns_list": "include_archived:b",
     "content.compose": "source_post:s! source_platform:s targets:a! user_request:s session_id:s",
     "content.delete_republish_propose": "artifact_id:s! expected_revision:n!",
     "content.delivery_publish": "delivery_id:s! trigger:s",
+    "content.generate": "batch_id:s! candidate_id:s! generation_version:n user_request:s post_id:s session_id:s channel_bookmark_ids:a post_bookmark_ids:a urls:a chosen_hook_text:s preferred_structure_type:s preferred_topic:s preferred_tone_register:s preferred_cta_pattern:s social_sender_profile_id:s credential_account_id:s",
+    "content.generate_hooks": "user_request:s! platform:s! preferred_structure_type:s preferred_topic:s preferred_tone_register:s preferred_hook_pattern:s preferred_cta_pattern:s inspiration_seed:s social_sender_profile_id:s credential_account_id:s channel_bookmark_ids:a post_bookmark_ids:a chat_history:a",
+    "content.regenerate_hooks": "batch_id:s! user_request:s! preferred_structure_type:s preferred_topic:s preferred_tone_register:s preferred_hook_pattern:s preferred_cta_pattern:s inspiration_seed:s social_sender_profile_id:s credential_account_id:s",
     "content.replacement_create": "artifact_id:s! expected_revision:n!",
     "content.schedule": "artifact_id:s! expected_revision:n! scheduled_at:s!",
     "content.submit_review": "artifact_id:s! expected_revision:n!",
@@ -2736,11 +5311,24 @@
     "content.version_get": "artifact_id:s! version:n!",
     "content.version_rollback": "artifact_id:s! expected_artifact_revision:n! version:n!",
     "content.versions_list": "artifact_id:s! limit:n cursor_version:n cursor_version_id:s",
+    "deals.archive": "deal_id:s!",
+    "deals.create": "name:s! company_id:s pipeline_id:s stage_id:s! amount:n currency:s close_date:o next_step:s owner_user_id:s source:o attributed_campaign_id:s custom_json:o position:o",
+    "deals.get": "deal_id:s!",
+    "deals.list": "pipeline_id:s! view_id:s! cursor:s limit:o",
+    "deals.move": "deal_id:s! to_stage_id:s! expected_version:o! position:o reason:s",
+    "deals.update": "deal_id:s! name:s company_id:s amount:n currency:s close_date:o next_step:s owner_user_id:s attributed_campaign_id:s custom_json:o position:o",
     "engagement.opportunities.counts": "",
     "engagement.opportunities.list": "source_domain:s status:s limit:n offset:n",
     "engagement.opportunities.status_set": "opportunity_id:s! expected_updated_at:s! status:s!",
     "engagement.people_engaged_n_times": "min_count:n! window_days:n kinds:a account_ids:a cursor:s",
-    "executables.run": "table_id:s! binding_id:s!",
+    "executable_definitions.list_resolved": "kind:s row_kind:s manual_run_only:b",
+    "executables.run": "table_id:s! binding_id:s! max_credits:s! max_units:s max_pages_per_provider:n max_provider_elapsed_ms:n max_rows:n dry_run:b selection_snapshot_id:s",
+    "integrations.ga4.referral_traffic": "",
+    "linkedin.search_parameters_list": "account_id:s! kind:s! query:s!",
+    "outreach.activity_list": "campaign_id:s contact_id:s search:s action_type:s step:s completion:s time:s limit:n cursor:s",
+    "outreach.ai_spintax_generate": "subject:s body:s! channel:s variants:n",
+    "outreach.ai_write_generate": "contact_id:s contact:o node_id:s! sender_account_id:s channel:s campaign_id:s prompt:s! subject_template:s message_template:s model_tier:s model_id:s context_docs:a signal_snapshot:o",
+    "outreach.ai_write_resolve": "contact_id:s contact:o node_id:s! sender_account_id:s channel:s campaign_id:s prompt:s! subject_template:s message_template:s model_tier:s model_id:s context_docs:a signal_snapshot:o",
     "outreach.analytics_framework_aggregate_get": "period:s",
     "outreach.analytics_step_aggregate_get": "period:s account_id:s summary:b",
     "outreach.credit_usage_get": "",
@@ -2750,14 +5338,53 @@
     "outreach.dm_conversation_status_update": "conversation_urn:s! status:s!",
     "outreach.dm_conversations_list": "source:s sort:s limit:n search:s",
     "outreach.dm_message_send": "conversation_urn:s! body:s client_request_id:s! attachments:a voice:o",
+    "outreach.meetings_list": "period:s scope:s limit:n cursor:s",
+    "outreach.messaging_context_get": "",
+    "outreach.monthly_rollup_get": "include_narrative:b",
+    "outreach.pending_approval_approve": "approval_id:s! text:s",
+    "outreach.pending_approval_reject": "approval_id:s!",
+    "outreach.personalization_generate": "task:s contact_id:s! signal_context:s node_id:s message_template:s",
     "outreach.reply_insights_get": "period:s",
+    "outreach.workspace_stats_get": "period:s summary:b",
+    "record_exports.control": "job_id:s! action:s!",
+    "record_exports.create": "saved_view_id:s! projection:o!",
+    "record_exports.download": "job_id:s!",
+    "record_exports.get": "job_id:s!",
+    "record_imports.control": "job_id:s! action:s!",
+    "record_imports.create": "object_definition_id:s! source_file:o! source_checksum:s! mapping:o! operation_mode:s! duplicate_mode:s! queue:b",
+    "record_imports.errors_list": "job_id:s! limit:n",
+    "record_imports.get": "job_id:s!",
+    "record_imports.list": "object_definition_id:s! limit:n",
+    "record_imports.rows_stage": "job_id:s! rows:a! queue:b",
+    "record_imports.source_upload": "object_definition_id:s! file_name:s! mime_type:s! base64:s!",
+    "record_objects.record_create": "object_key:s! display_name:s! values:o",
+    "records.buyer_brief_get": "record_id:s! include_public:b graph_depth:n",
+    "records.companies_list": "limit:n offset:n q:s",
+    "records.erase": "record_id:s! confirmation:s!",
+    "records.field_set": "record_id:s! attr_key:s! value:o!",
+    "records.get": "record_id:s!",
+    "records.history_get": "record_id:s! limit:n cursor:o",
+    "records.list": "limit:n offset:n q:s object_key:s view:s",
+    "records.list_add": "record_id:s! table_id:s!",
+    "records.list_remove": "record_id:s! table_id:s!",
+    "records.lists_get": "record_id:s!",
+    "records.memberships_get": "record_id:s!",
+    "records.merge": "winner_record_id:s! loser_record_id:s!",
+    "records.note_add": "record_id:s! body_md:s!",
+    "records.people_list": "limit:n offset:n q:s",
     "records.unbound_rows_enroll": "table_id:s limit:n profile_url_column_id:s email_column_id:s",
+    "records.unmerge": "snapshot_id:s!",
+    "records.value_retire": "record_id:s! value_id:s!",
+    "records.wiki_get": "record_id:s!",
     "rows.count": "table_id:s! filters:a search:s",
     "rows.get": "table_id:s! row_id:s!",
-    "rows.query": "table_id:s! source_run_id:s limit:n cursor:s visible_column_ids:a filters:a sorts:a grouping:o search:s include_cells:o include_count:b",
-    "selection_snapshots.create": "table_id:s!",
+    "rows.query": "table_id:s! source_run_id:s limit:n cursor:o visible_column_ids:a filters:a sorts:a grouping:o search:s include_cells:o include_count:b",
+    "selection_snapshots.create": "table_id:s! view_id:s! row_ids:a query:o max_rows:n",
     "sequences.analytics_get": "sequence_id:s! window_days:n",
-    "sequences.enroll_selection": "",
+    "sequences.bind": "sequence_id:s expected_version:n definition:o!",
+    "sequences.enroll_selection": "sequence_id:s workbook_id:s worksheet_id:s saved_view_id:s selection_snapshot_id:s enrollment_filter:o enrollment_priority:a enrollment_sort:o max_new_enrollments_per_day:n launch_authorization_id:s",
+    "sequences.publish": "sequence_id:s! sequence_version_id:s!",
+    "sequences.validate": "definition:o!",
     "social.analytics_goal_update": "metric:s!",
     "social.analytics_query": "platform:s! account_id:s! metric_scope:s! provider_post_id:s refresh:b refresh_retry_key:s",
     "social.analytics_refresh": "platform:s! account_id:s! metric_scope:s! provider_post_id:s",
@@ -2783,7 +5410,7 @@
     "social.strategy_archetype_inspiration": "social_sender_profile_id:s! limit:n",
     "social.strategy_format_targets_suggest": "social_sender_profile_id:s!",
     "social.strategy_overview": "platform:s social_sender_profile_id:s include_suggestions:b week_of:s connected_only:b",
-    "social.strategy_plan_progress": "social_sender_profile_id:s! window_days:s!",
+    "social.strategy_plan_progress": "social_sender_profile_id:s! window_days:n!",
     "social.strategy_suggestions_generate": "social_sender_profile_id:s! week_of:s force:b",
     "social.strategy_update": "social_sender_profile_id:s! purpose_statement:s core_pillars:a goals:a audience:a selected_post_formats:a format_targets:o cadence_per_week:n strategy_notes:s tone_register:s emoji_frequency:s post_language:s status:s metadata:o",
     "social.strategy_weekly_post_action": "item_id:s! action:s! reason:s",
@@ -2797,21 +5424,30 @@
     "table_runs.failure_report": "table_id:s! run_id:s! mode:s limit:n cursor:o include_skipped:b",
     "table_runs.get": "table_id:s! run_id:s!",
     "table_runs.list": "table_id:s! limit:n cursor:o",
-    "table_runs.preview_cost": "table_id:s! binding_ids:a! column_ids:a draft_bindings:a selection:s! caps:o!",
+    "table_runs.preview_cost": "table_id:s! binding_ids:a! column_ids:a draft_bindings:a selection:o! caps:o!",
     "table_runs.reconcile_column": "table_id:s! run_id:s! column_id:s! expected_state_version:n! outcome:s! failed_row_ids:a provider_receipt_id:s! observed_at:s! reason:s!",
     "table_runs.resume": "table_id:s! run_id:s! expected_state_version:n! checkpoint_token:s! max_rows:n max_credits:n",
     "table_runs.retry": "table_id:s! run_id:s! expected_state_version:n! reason:s max_rows:n! max_credits:n",
     "table_sources.attach": "table_id:s! source_id:s source_column_id:s! binding:o!",
     "table_sources.detach": "table_id:s! source_id:s!",
-    "table_sources.preview": "probe_id:s! source_definition_id:s! variants:a! required_criteria:a!",
     "table_sources.preview_sync": "table_id:s! source_id:s! expected_binding_revision:n! expected_frontier_revision:n! sample_limit:n caps:o!",
-    "table_sources.run": "table_id:s! source_id:s!",
+    "table_sources.run": "table_id:s! source_id:s! max_credits:s! max_units:s max_pages_per_provider:n max_provider_elapsed_ms:n max_rows:n dry_run:b",
     "table_sources.update": "table_id:s! source_id:s! expected_state:s! expected_binding_revision:n binding:o state:s",
     "tables.archive": "table_id:s!",
     "tables.create": "name:s! description:s row_kind:s! declared_mixed_row_kinds:a workbook_id:s! workbook_position:n!",
     "tables.get": "table_id:s!",
     "tables.list": "limit:n cursor:s include_archived:b",
     "tables.update": "table_id:s! name:s description:s",
+    "tasks.bulk": "action:s! task_ids:a! reason:s",
+    "tasks.cancel": "task_id:s reason:s create_idempotency_key:s",
+    "tasks.complete": "task_id:s!",
+    "tasks.count": "view:s status:s",
+    "tasks.create": "title:s! description:s priority:s assignee_user_id:s due_at:s due_all_day:b queue_id:s links:a",
+    "tasks.get": "task_id:s!",
+    "tasks.list": "view:s status:s type:s priority:s assignee_user_id:s queue_id:s source_kind:s source_id:s link_kind:s link_id:s workflow:s created_by:s due_before:s due_after:s sort:s dir:s limit:n cursor:s",
+    "tasks.reassign": "task_id:s! assignee_user_id:s!",
+    "tasks.reopen": "task_id:s!",
+    "tasks.update": "task_id:s! title:s description:s priority:s due_at:s due_all_day:b queue_id:s reminder_policy:o",
     "usage.action_costs_get": "",
     "usage.history_list": "limit:n cursor:s",
     "usage.limits_get": "",
@@ -2825,14 +5461,17 @@
     "workbooks.update": "workbook_id:s! name:s tags:a expected_updated_at:s!",
     "workflows.analytics_by_workflow": "period:s",
     "workflows.analytics_overview": "period:s",
-    "workflows.enroll_selection": "workflow_id:s! workbook_id:s! worksheet_id:s! saved_view_id:s! selection_snapshot_id:s! trigger_node_id:s audience_filter:s enrollment_priority:a enrollment_sort:o",
+    "workflows.enroll_selection": "workflow_id:s! workbook_id:s! worksheet_id:s! saved_view_id:s! selection_snapshot_id:s! trigger_node_id:s audience_filter:o enrollment_priority:a enrollment_sort:o",
     "workflows.metrics_get": "workflow_id:s! days:n period:s",
-    "worksheet_exports.create": "workbook_id:s! worksheet_id:s! scope:s! visible_column_ids:a! max_rows:n! expected_worksheet_updated_at:s! serialization:o! filename:s!",
+    "worksheet_exports.create": "workbook_id:s! worksheet_id:s! scope:o! visible_column_ids:a! max_rows:n! expected_worksheet_updated_at:s! serialization:o! filename:s!",
     "worksheet_exports.enroll_sequence": "workbook_id:s! worksheet_id:s! export_id:s! expected_export_revision:n! new_sequence:o!",
-    "worksheet.bootstrap": "workbook_id:s! worksheet_id:s! view_id:s visible_column_ids:a column_limit:n limit:n cursor:s if_revision:o",
+    "worksheet.bootstrap": "workbook_id:s! worksheet_id:s! view_id:s visible_column_ids:a column_limit:n limit:n cursor:o if_revision:o",
     "worksheets.archive": "workbook_id:s! worksheet_id:s! expected_updated_at:s! expected_workbook_updated_at:s!",
     "worksheets.create": "workbook_id:s! name:s! description:s row_kind:s! declared_mixed_row_kinds:a expected_workbook_updated_at:s!",
     "worksheets.duplicate": "workbook_id:s! worksheet_id:s! name:s expected_updated_at:s! expected_workbook_updated_at:s!",
+    "worksheets.function_draft_save": "revision:o!",
+    "worksheets.function_publish": "function_id:s! revision:n!",
+    "worksheets.functions_list": "",
     "worksheets.list": "workbook_id:s! limit:n cursor:o include_archived:b",
     "worksheets.reorder": "workbook_id:s! worksheet_ids:a! expected_workbook_updated_at:s!",
     "worksheets.update": "workbook_id:s! worksheet_id:s! name:s description:s expected_updated_at:s!"
@@ -4594,6 +7233,88 @@
         ]
       }
     },
+    "outreach.ai_write_generate": {
+      "contact": {
+        "properties": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "company",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "headline",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "location",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "industry",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "connection_degree",
+            "type": "number",
+            "required": false
+          }
+        ]
+      }
+    },
+    "outreach.ai_write_resolve": {
+      "contact": {
+        "properties": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "company",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "headline",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "location",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "industry",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "connection_degree",
+            "type": "number",
+            "required": false
+          }
+        ]
+      }
+    },
     "outreach.dm_message_send": {
       "voice": {
         "properties": [
@@ -4611,6 +7332,149 @@
             "name": "duration_ms",
             "type": "number",
             "required": false
+          }
+        ]
+      }
+    },
+    "record_exports.create": {
+      "projection": {
+        "properties": [
+          {
+            "name": "attribute_definition_ids",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "include_system_fields",
+            "type": "boolean",
+            "required": true
+          },
+          {
+            "name": "protected_attribute_definition_ids",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "license_policy",
+            "type": "string",
+            "required": true,
+            "enum": [
+              "export_allowed_only"
+            ]
+          }
+        ]
+      }
+    },
+    "record_imports.create": {
+      "source_file": {
+        "properties": [
+          {
+            "name": "provider",
+            "type": "string",
+            "required": true,
+            "enum": [
+              "supabase_storage",
+              "s3",
+              "gcs",
+              "azure_blob"
+            ]
+          },
+          {
+            "name": "locator",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "file_name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "size_bytes",
+            "type": "number",
+            "required": true
+          }
+        ]
+      },
+      "mapping": {
+        "properties": [
+          {
+            "name": "version",
+            "type": "string",
+            "required": true,
+            "enum": [
+              "record_import_mapping_v1"
+            ]
+          },
+          {
+            "name": "object_definition_id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "columns",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "identity",
+            "type": "object",
+            "required": true
+          },
+          {
+            "name": "company_resolution",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "enabled",
+                  "type": "boolean",
+                  "required": true
+                },
+                {
+                  "name": "person_email_attribute_definition_id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "company_domain_attribute_definition_id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "relationship_definition_id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "excluded_public_domains",
+                  "type": "array",
+                  "required": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "records.history_get": {
+      "cursor": {
+        "properties": [
+          {
+            "name": "revision_offset",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "timeline_offset",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "graph_offset",
+            "type": "number",
+            "required": true
           }
         ]
       }
@@ -4650,6 +7514,409 @@
             "name": "column_ids",
             "type": "array",
             "required": true
+          }
+        ]
+      }
+    },
+    "selection_snapshots.create": {
+      "query": {
+        "properties": [
+          {
+            "name": "filters",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "sorts",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "grouping",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "column_id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "direction",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "asc",
+                    "desc"
+                  ]
+                },
+                {
+                  "name": "collapsed_group_keys",
+                  "type": "array",
+                  "required": true
+                },
+                {
+                  "name": "null_group_label",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "type": "string",
+            "required": true
+          }
+        ]
+      }
+    },
+    "sequences.bind": {
+      "definition": {
+        "properties": [
+          {
+            "name": "schema_version",
+            "type": "string",
+            "required": true,
+            "enum": [
+              "sequence_definition_v1"
+            ]
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "timezone",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "enrollment_source",
+            "type": "object",
+            "required": false
+          },
+          {
+            "name": "enrollment_filter",
+            "type": "object",
+            "required": false
+          },
+          {
+            "name": "enrollment_priority",
+            "type": "array",
+            "required": false
+          },
+          {
+            "name": "enrollment_sort",
+            "type": "object",
+            "required": false,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "field",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "direction",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "asc",
+                    "desc"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "max_new_enrollments_per_day",
+            "type": "number",
+            "required": false
+          },
+          {
+            "name": "enrollment_receipt",
+            "type": "object",
+            "required": false,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "kind",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "worksheet_selection_enrollment"
+                  ]
+                },
+                {
+                  "name": "binding_id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "selection_snapshot_id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "selection_digest",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "contact_count",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "created",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "existing",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "replayed",
+                  "type": "boolean",
+                  "required": true
+                },
+                {
+                  "name": "settled_at",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          },
+          {
+            "name": "sender_policy",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "mode",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "fixed",
+                    "pool",
+                    "recipient_owner"
+                  ]
+                },
+                {
+                  "name": "mailbox_connection_ids",
+                  "type": "array",
+                  "required": false
+                },
+                {
+                  "name": "linkedin_account_ids",
+                  "type": "array",
+                  "required": false
+                }
+              ]
+            }
+          },
+          {
+            "name": "schedule_policy",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "business_days",
+                  "type": "array",
+                  "required": true
+                },
+                {
+                  "name": "delivery_window",
+                  "type": "object",
+                  "required": true,
+                  "object_shape": {
+                    "properties": [
+                      {
+                        "name": "start",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "end",
+                        "type": "string",
+                        "required": true
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "holiday_calendar",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          },
+          {
+            "name": "rate_policy",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "daily_cap",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "minimum_minutes_between_sends",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "retry_limit",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "action_caps",
+                  "type": "object",
+                  "required": false,
+                  "object_shape": {
+                    "properties": [
+                      {
+                        "name": "connections_sent",
+                        "type": "number",
+                        "required": true
+                      },
+                      {
+                        "name": "dms_sent",
+                        "type": "number",
+                        "required": true
+                      },
+                      {
+                        "name": "profiles_viewed",
+                        "type": "number",
+                        "required": true
+                      },
+                      {
+                        "name": "likes_sent",
+                        "type": "number",
+                        "required": true
+                      },
+                      {
+                        "name": "comments_sent",
+                        "type": "number",
+                        "required": true
+                      },
+                      {
+                        "name": "emails_sent",
+                        "type": "number",
+                        "required": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "message_policy",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "signature_mode",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "mailbox",
+                    "sequence",
+                    "none"
+                  ]
+                },
+                {
+                  "name": "signature_text",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "unsubscribe_mode",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "required",
+                    "transactional_only"
+                  ]
+                },
+                {
+                  "name": "thread_mode",
+                  "type": "string",
+                  "required": true,
+                  "enum": [
+                    "new",
+                    "reply"
+                  ]
+                },
+                {
+                  "name": "channel_fallback",
+                  "type": "array",
+                  "required": true,
+                  "itemEnum": [
+                    "email",
+                    "linkedin"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "exit_rules",
+            "type": "array",
+            "required": true,
+            "itemEnum": [
+              "reply",
+              "meeting",
+              "completion",
+              "bounce",
+              "unsubscribe",
+              "manual",
+              "failure"
+            ]
+          },
+          {
+            "name": "steps",
+            "type": "array",
+            "required": true
+          }
+        ]
+      }
+    },
+    "sequences.enroll_selection": {
+      "enrollment_sort": {
+        "properties": [
+          {
+            "name": "field",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "direction",
+            "type": "string",
+            "required": true,
+            "enum": [
+              "asc",
+              "desc"
+            ]
           }
         ]
       }
@@ -6377,6 +9644,85 @@
           },
           {
             "name": "etag",
+            "type": "string",
+            "required": true
+          }
+        ]
+      }
+    },
+    "worksheets.function_draft_save": {
+      "revision": {
+        "properties": [
+          {
+            "name": "function_id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "workspace_id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "revision",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "enum": [
+              "draft",
+              "published"
+            ]
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "inputs",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "steps",
+            "type": "array",
+            "required": true
+          },
+          {
+            "name": "output",
+            "type": "object",
+            "required": true,
+            "object_shape": {
+              "properties": [
+                {
+                  "name": "fields",
+                  "type": "array",
+                  "required": true
+                },
+                {
+                  "name": "bindings",
+                  "type": "object",
+                  "required": true
+                }
+              ]
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "published_at",
             "type": "string",
             "required": true
           }

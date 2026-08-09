@@ -5,28 +5,28 @@ description: Read and change people, companies, deals and custom objects, includ
 triggers: ["look up a person or company record","create or update a record","add a custom attribute or object","build a saved view","move a deal through pipeline stages","import a file of records or export a view","create a follow-up task"]
 dependencies: []
 capability_domains: ["brain","products","record_attributes","record_deals","record_definitions","record_exports","record_files","record_imports","record_objects","record_pipeline_stages","record_pipelines","record_relationships","record_templates","records","saved_views","tasks"]
-capability_ids: ["brain.context.graph","deals.create","deals.get","deals.list","deals.move","deals.update","products.content_archive","products.content_list","products.document_process","products.get","products.list","products.og_meta_get","products.website_refresh","products.website_scrape","record_attributes.create","record_attributes.list","record_deals.board_get","record_deals.create","record_deals.pipeline_transition","record_deals.stage_move","record_deals.update","record_definitions.impact_get","record_exports.control","record_exports.create","record_exports.download","record_exports.get","record_files.list","record_files.upload","record_imports.control","record_imports.create","record_imports.errors_list","record_imports.get","record_imports.list","record_imports.rows_stage","record_imports.source_upload","record_objects.attribute_create","record_objects.attribute_update","record_objects.attributes_list","record_objects.attributes_reorder","record_objects.create","record_objects.layout_get","record_objects.layout_update","record_objects.list","record_objects.notification_prefs_get","record_objects.notification_prefs_update","record_objects.permission_get","record_objects.permission_update","record_objects.record_create","record_objects.reorder","record_objects.update","record_pipeline_stages.create","record_pipeline_stages.impact_get","record_pipeline_stages.lifecycle_set","record_pipeline_stages.reorder","record_pipeline_stages.update","record_pipelines.create","record_pipelines.lifecycle_set","record_pipelines.list","record_pipelines.reorder","record_pipelines.update","record_relationships.create","record_relationships.list","record_relationships.reorder","record_relationships.update","record_templates.install","record_templates.list","record_templates.preview","records.buyer_brief_get","records.companies_list","records.create","records.erase","records.field_set","records.get","records.history_get","records.list","records.list_add","records.list_remove","records.lists_get","records.memberships_get","records.merge","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.playbook_get","records.references_resolve","records.search","records.source_lookup","records.unmerge","records.value_retire","records.wiki_get","research.urls_fetch","saved_views.create","saved_views.delete","saved_views.list","saved_views.results","saved_views.update","saved_views.v2_create","saved_views.v2_execute","saved_views.v2_list","saved_views.v2_runtime_upsert","tasks.bulk","tasks.cancel","tasks.complete","tasks.count","tasks.create","tasks.get","tasks.list","tasks.reassign","tasks.reopen","tasks.update"]
+capability_ids: ["brain.context.graph","deals.create","deals.get","deals.list","deals.move","deals.update","graph.archive_node","graph.archive_relation","graph.create_node","graph.create_relation","graph.edges_list","graph.export","graph.restore_node","graph.update_node","graph.update_relation","products.content_archive","products.content_list","products.document_process","products.get","products.list","products.og_meta_get","record_attributes.create","record_attributes.list","record_deals.board_get","record_deals.create","record_deals.pipeline_transition","record_deals.stage_move","record_deals.update","record_definitions.impact_get","record_exports.control","record_exports.create","record_exports.download","record_exports.get","record_files.list","record_files.upload","record_imports.control","record_imports.create","record_imports.errors_list","record_imports.get","record_imports.list","record_imports.rows_stage","record_imports.source_upload","record_objects.attribute_create","record_objects.attribute_update","record_objects.attributes_list","record_objects.attributes_reorder","record_objects.create","record_objects.layout_get","record_objects.layout_update","record_objects.list","record_objects.notification_prefs_get","record_objects.notification_prefs_update","record_objects.permission_get","record_objects.permission_update","record_objects.record_create","record_objects.reorder","record_objects.update","record_pipeline_stages.create","record_pipeline_stages.impact_get","record_pipeline_stages.lifecycle_set","record_pipeline_stages.reorder","record_pipeline_stages.update","record_pipelines.create","record_pipelines.lifecycle_set","record_pipelines.list","record_pipelines.reorder","record_pipelines.update","record_relationships.create","record_relationships.list","record_relationships.reorder","record_relationships.update","record_templates.install","record_templates.list","record_templates.preview","records.buyer_brief_get","records.companies_list","records.create","records.erase","records.field_set","records.get","records.history_get","records.list","records.list_add","records.list_remove","records.lists_get","records.memberships_get","records.merge","records.message_channels_get","records.message_send","records.note_add","records.people_list","records.playbook_get","records.references_resolve","records.search","records.source_lookup","records.unmerge","records.value_retire","records.wiki_get","saved_views.create","saved_views.delete","saved_views.list","saved_views.results","saved_views.update","saved_views.v2_create","saved_views.v2_execute","saved_views.v2_list","saved_views.v2_runtime_upsert","tasks.bulk","tasks.cancel","tasks.complete","tasks.count","tasks.create","tasks.get","tasks.list","tasks.reassign","tasks.reopen","tasks.update"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"object_schema_state","description":"Object, attribute, relationship, layout, and permission schema state.","allowed_values":["complete","partial","missing","not_applicable"]},{"id":"record_state","description":"Canonical record identity and revision state.","allowed_values":["exact_current","exact_historical","partial","missing","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: crm
   kernel_file: KERNEL.md
-  kernel_sha256: 810ec9a177b8f6d3d1bb9723c45f7f4e3c85a4a8837a7b94a912d0ded97d34cc
-  adapter_sha256: a0557ac81b1efd3986e404a177bfd3be7a2f0741dfc3278a1800d934c5400c5a
+  kernel_sha256: 0f975f2a7194e8122defdb2b7f47f01d7d155082dcc5fafa6397a69621722f58
+  adapter_sha256: a190101eeeb5a32ab953e9aaa22249cb0f644de5c5dcd4b9d2e19350d1c7fa51
   evals_file: evals.json
-  evals_sha256: 9f7c1f2cf5c8d30ef184350768da2dbb6a916af3fb980dbde4ec6f6b1f6dcc56
+  evals_sha256: 103b5bcae0283f9d306f5473a05490e48b6c49a6ac39f60850f6defcb134647f
 ---
 
 # Architect surface adapter
@@ -45,8 +45,8 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 111 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot infer execution authority from these 63 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
+- Cannot act outside this contract: exactly 117 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 68 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ## Capability routing
 
@@ -91,7 +91,6 @@ Each capability this skill grants is reached through one tool action. Call the t
 | records.unmerge | ds_records action=unmerge |
 | records.value_retire | ds_records action=erase |
 | records.wiki_get | ds_records action=history |
-| research.urls_fetch | ds_read, or ds_search action=web |
 | tasks.bulk | ds_records action=task_transition |
 | tasks.cancel | ds_records action=task_transition |
 | tasks.complete | ds_records action=task_transition |
@@ -107,14 +106,21 @@ Each capability this skill grants is reached through one tool action. Call the t
 
 These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.
 
+- graph.archive_node
+- graph.archive_relation
+- graph.create_node
+- graph.create_relation
+- graph.edges_list
+- graph.export
+- graph.restore_node
+- graph.update_node
+- graph.update_relation
 - products.content_archive
 - products.content_list
 - products.document_process
 - products.get
 - products.list
 - products.og_meta_get
-- products.website_refresh
-- products.website_scrape
 - record_attributes.create
 - record_attributes.list
 - record_deals.board_get

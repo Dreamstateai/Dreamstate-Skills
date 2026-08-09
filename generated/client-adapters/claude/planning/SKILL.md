@@ -3,28 +3,28 @@ id: planning
 name: planning
 description: "Decide what to do next, turning workspace evidence into a strategy, a weekly growth plan, the assets it needs, and experiments to test it."
 capability_domains: ["brain","calendar","command_center","content","growth","gtm","identity","outreach","record_files","records","sequences","social","tasks","visibility","workbooks","workflows"]
-capability_ids: ["brain.companies.answer","brain.companies.get","brain.context.browse","brain.context.get","brain.context.search","brain.evidence.search","brain.learning.query_benchmarks","brain.outreach.compare","calendar.events_create","calendar.events_list","command_center.action_items.list","command_center.assets.create","command_center.assets.list","command_center.feed.list","command_center.goals.get","command_center.overview.get","content.article_list","content.artifact_list","growth.governed_experiment_approve","growth.governed_experiment_conclude","growth.governed_experiment_create","growth.governed_experiment_get","growth.governed_experiment_list","growth.governed_experiment_measurement_record","growth.governed_experiment_publication_record","growth.governed_experiment_revise","growth.governed_experiment_stop","gtm.goals_list","gtm.tasks.counts","gtm.tasks.list","identity.content_pillars_generate","outreach.workspace_stats_get","record_files.list","record_files.upload","records.get","research.urls_fetch","sequences.list","social.analytics_query","social.strategy_activity_calendar","social.strategy_archetype_benchmark","social.strategy_archetype_get","social.strategy_format_targets_suggest","social.strategy_overview","social.strategy_plan_progress","social.strategy_update","social.weekly_plan_items_list","tasks.create","tasks.get","visibility.overview","workbooks.list","workflows.list"]
+capability_ids: ["brain.companies.answer","brain.companies.get","brain.context.browse","brain.context.get","brain.context.search","brain.evidence.search","brain.learning.query_benchmarks","brain.outreach.compare","calendar.events_create","calendar.events_list","command_center.action_items.list","command_center.assets.create","command_center.assets.list","command_center.feed.list","command_center.goals.get","command_center.overview.get","content.article_list","content.artifact_list","growth.governed_experiment_approve","growth.governed_experiment_conclude","growth.governed_experiment_create","growth.governed_experiment_get","growth.governed_experiment_list","growth.governed_experiment_measurement_record","growth.governed_experiment_publication_record","growth.governed_experiment_revise","growth.governed_experiment_stop","gtm.goals_list","gtm.tasks.counts","gtm.tasks.list","identity.content_pillars_generate","outreach.workspace_stats_get","record_files.list","record_files.upload","records.get","sequences.list","social.analytics_query","social.strategy_activity_calendar","social.strategy_archetype_benchmark","social.strategy_archetype_get","social.strategy_format_targets_suggest","social.strategy_overview","social.strategy_plan_progress","social.strategy_update","social.weekly_plan_items_list","tasks.create","tasks.get","visibility.overview","workbooks.list","workflows.list"]
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"plan_state","description":"Prioritized technical and content plan state.","allowed_values":["prioritized","partial","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   client: claude
   kernel_id: planning
   kernel_file: KERNEL.md
-  kernel_sha256: 5e24a9c5a27d0df1e4a401eefad87016cc5d0e75536460aa954628bf6ca21c7d
-  adapter_sha256: 7049d8387664536faaf4bb04e4afbd91dcbd57f97a1c328a062e615df9076f63
+  kernel_sha256: d53a49bb5b8b7313e251edc1ece8217886537382cb1e72294a4824031c039dd7
+  adapter_sha256: 74f175b52400d4d9a19a77b19f3d36d4f235b881af80cfe573b004fefd3df8eb
   evals_file: evals.json
-  evals_sha256: a078f155b2bbefa67d7b3dc9c55ef84c8c1cc5091a272c7e6735ba811a17b1ab
+  evals_sha256: 4156a82ccbe028e3224a1abf426ab91887c6c226840f6d5aeb0620baaf241d66
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -47,7 +47,7 @@ Respect proposal, approval, cost, idempotency, and asynchronous run gates. Retur
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 51 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot act outside this contract: exactly 50 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
 - Cannot infer execution authority from these 14 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ---
@@ -55,7 +55,7 @@ These are derived from this skill's exact capability contract, so state them up 
 # Growth planning
 
 <!-- architect-operation-contract
-{"required_capability_ids": ["brain.companies.answer", "brain.companies.get", "brain.context.browse", "brain.context.get", "brain.context.search", "brain.evidence.search", "brain.learning.query_benchmarks", "brain.outreach.compare", "calendar.events_create", "calendar.events_list", "command_center.action_items.list", "command_center.assets.create", "command_center.assets.list", "command_center.feed.list", "command_center.goals.get", "command_center.overview.get", "content.article_list", "content.artifact_list", "growth.governed_experiment_approve", "growth.governed_experiment_conclude", "growth.governed_experiment_create", "growth.governed_experiment_get", "growth.governed_experiment_list", "growth.governed_experiment_measurement_record", "growth.governed_experiment_publication_record", "growth.governed_experiment_revise", "growth.governed_experiment_stop", "gtm.goals_list", "gtm.tasks.counts", "gtm.tasks.list", "identity.content_pillars_generate", "outreach.workspace_stats_get", "record_files.list", "record_files.upload", "records.get", "research.urls_fetch", "sequences.list", "social.analytics_query", "social.strategy_activity_calendar", "social.strategy_archetype_benchmark", "social.strategy_archetype_get", "social.strategy_format_targets_suggest", "social.strategy_overview", "social.strategy_plan_progress", "social.strategy_update", "social.weekly_plan_items_list", "tasks.create", "tasks.get", "visibility.overview", "workbooks.list", "workflows.list"]}
+{"required_capability_ids":["brain.companies.answer","brain.companies.get","brain.context.browse","brain.context.get","brain.context.search","brain.evidence.search","brain.learning.query_benchmarks","brain.outreach.compare","calendar.events_create","calendar.events_list","command_center.action_items.list","command_center.assets.create","command_center.assets.list","command_center.feed.list","command_center.goals.get","command_center.overview.get","content.article_list","content.artifact_list","growth.governed_experiment_approve","growth.governed_experiment_conclude","growth.governed_experiment_create","growth.governed_experiment_get","growth.governed_experiment_list","growth.governed_experiment_measurement_record","growth.governed_experiment_publication_record","growth.governed_experiment_revise","growth.governed_experiment_stop","gtm.goals_list","gtm.tasks.counts","gtm.tasks.list","identity.content_pillars_generate","outreach.workspace_stats_get","record_files.list","record_files.upload","records.get","sequences.list","social.analytics_query","social.strategy_activity_calendar","social.strategy_archetype_benchmark","social.strategy_archetype_get","social.strategy_format_targets_suggest","social.strategy_overview","social.strategy_plan_progress","social.strategy_update","social.weekly_plan_items_list","tasks.create","tasks.get","visibility.overview","workbooks.list","workflows.list"]}
 -->
 
 Decide what to do next and make it concrete: durable strategy, a prioritized weekly plan, the buyer-facing assets the plan needs, and experiments that can tell you whether it worked. This job reads what the workspace already knows and what analytics already measured, then routes execution to the skill that owns it. It never executes the work itself.
@@ -67,7 +67,7 @@ Decide what to do next and make it concrete: durable strategy, a prioritized wee
 3. Turn strategy into 3 to 5 ranked weekly priorities, each with an owner, a deliverable, and a routed skill. See `weekly-plan.md`.
 4. Name the buyer-facing assets the plan depends on and check whether they can actually be created. See `assets.md`.
 5. Design experiments that can prove or disprove the plan worked. See `experiments.md` for the real approval and evidence mechanism.
-6. Hand off: outreach, social, seo-geo, and writing execute. This skill plans, it does not draft content, run a campaign, or send anything.
+6. Hand off execution to the current owner: `workbooks` for table structure, `sourcing-enrichment` for producers and row evidence, `qualification` for rubric and frozen cohort, `sequences` for author/validate/bind, `workflows` for publish/enroll/activate/run, plus `social`, `seo`, `geo`, `research`, and `writing` for their domains. Planning does not absorb execution.
 
 ## Evidence or it does not ship
 
@@ -83,7 +83,7 @@ Derive audience, objective, channel, and constraint from cited context and measu
 
 ## Route, do not absorb
 
-Every weekly-plan item names exactly one owning skill: `outreach` for sourcing and sequences, `social` for authored posts and the content calendar, `seo-geo` for organic and AI-search visibility work, `writing` for blog and long-form drafts. This skill never drafts the content, builds the workflow, or launches the send; it hands off the objective and the evidence so the owning skill does not re-derive it.
+Every weekly-plan item names exactly one current owner. Use `workbooks`, `sourcing-enrichment`, `qualification`, `sequences`, and `workflows` for the staged prospect-to-run lifecycle; use `social`, `seo`, `geo`, `research`, or `writing` for content and visibility work. Planning never drafts content, builds a workflow, publishes a sequence, enrolls a cohort, activates a run, or launches an external send.
 
 ## Governance moved to the server
 

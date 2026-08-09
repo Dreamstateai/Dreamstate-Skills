@@ -46,6 +46,7 @@ interface ParsedArgs {
 const GOVERNED_ADAPTER_CLIENTS = new Set(['claude', 'codex']);
 const SAFE_GENERIC_EXECUTION_MODES = new Set(['knowledge', 'planned']);
 const UNSAFE_GENERIC_EXECUTION_MODES = new Set(['executable', 'guided-execution']);
+const RETIRED_GOVERNED_ADAPTER_SLUGS = ['outreach', 'seo-geo'] as const;
 
 function parseArgs(argv: string[]): ParsedArgs {
   const raw = argv.slice(2);
@@ -234,6 +235,9 @@ async function main(): Promise<void> {
       for (const unsafeSlug of unsafeGenericSlugs) {
         rmSync(join(client.skillsDir, unsafeSlug), { recursive: true, force: true });
       }
+      for (const retiredSlug of RETIRED_GOVERNED_ADAPTER_SLUGS) {
+        rmSync(join(client.skillsDir, retiredSlug), { recursive: true, force: true });
+      }
     } catch (error) {
       console.error(pc.red(`  failed to remove unsafe generic skills: ${(error as Error).message}`));
       process.exit(1);
@@ -262,17 +266,14 @@ async function main(): Promise<void> {
     }
   } else {
     if (bundle && bundle !== 'all') {
-      const adapterDomains: Record<string, string[]> = {
+      const adapterSkillIds: Record<string, string[]> = {
         developer: [],
-        outbound: ['outreach'],
-        content: ['content'],
-        seo: ['visibility'],
+        outbound: ['workbooks', 'sourcing-enrichment', 'qualification', 'sequences', 'workflows'],
+        content: ['research', 'seo', 'geo', 'writing', 'social', 'social.linkedin', 'social.reddit', 'social.x'],
+        seo: ['research', 'seo', 'geo'],
       };
-      const allowed = adapterDomains[bundle] ?? [];
-      adapterSkills = adapterSkills.filter((skill) => (
-        skill.capability_domains?.some((domain) => allowed.includes(domain))
-        ?? allowed.includes(skill.domain ?? '')
-      ));
+      const allowed = new Set(adapterSkillIds[bundle] ?? []);
+      adapterSkills = adapterSkills.filter((skill) => allowed.has(skill.slug));
     }
     skills = [...skills, ...adapterSkills];
   }

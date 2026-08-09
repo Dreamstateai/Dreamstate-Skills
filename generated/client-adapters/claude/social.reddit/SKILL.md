@@ -6,25 +6,25 @@ capability_domains: ["brain","social","tables"]
 capability_ids: ["brain.content.search"]
 completion_contract: {"version":1,"fields":[{"id":"link_state","description":"Verified real-thread link retrieval state.","allowed_values":["verified_links","none_retrieved","unavailable"]},{"id":"evidence_trust","description":"Untrusted provider evidence handling state.","allowed_values":["fenced","none_retrieved","unavailable"]},{"id":"artifact_class","description":"Authored standalone artifact classification.","allowed_values":["authored_standalone","community_reply","none"]},{"id":"review_state","description":"Human-review readiness state.","allowed_values":["reviewable","not_created","not_applicable"]},{"id":"rights_state","description":"Workspace research rights state.","allowed_values":["workspace_authorized","unavailable","not_applicable"]},{"id":"reply_state","description":"External Reddit reply execution state.","allowed_values":["not_published","published_with_approval","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   client: claude
   kernel_id: social.reddit
   kernel_file: KERNEL.md
-  kernel_sha256: 1e0783bd031500ee8c99ac0403d2a5b9285ac2718502f57ad11c353151f37c77
+  kernel_sha256: 6891844a1d59076980716a1543b40f1d7ef591592ffa7fd774173d6f80a9f302
   adapter_sha256: 0ac851737d7b41541ee3f2e1c1686dbd71a35b0f2a79c3e3d3eecf3942edfb6c
   evals_file: evals.json
-  evals_sha256: d8e9e77e2acb387aba0ee6d87e6edf15080e70c86e0326fa1519dd8d02c0adbc
+  evals_sha256: 286481ed1e89b9e457b01f972e4642635e3c75742c396bc5cf1740c2f5bb81a3
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -66,6 +66,8 @@ Keep two artifact classes explicit:
 - Community research covers real subreddits, posts, comments, and thread-bound reply opportunities. Preserve exact URL, community, author when permitted, timestamps, retrieval evidence, rules, and risk. Never invent a thread, quote, author, score, or permission. Never publish a reply automatically.
 
 Authored Reddit content respects subreddit self-promotion norms. Read and preserve the target community rules with the draft, and treat a self-promotion restriction as binding. Never append a marketing call to action to a community reply: a reply earns its place by being useful on its own, and a product link belongs there only when the subreddit rules allow it and the draft says so.
+
+Use community-native helpfulness rather than a polished brand voice: answer first, disclose affiliation, follow the exact subreddit rules, and preserve uncertainty. Prepare the verified thread or community and its rules, compose internally, save and read back the reviewable artifact, and revise that artifact in place when corrected.
 
 Reddit content remains `workspace_research`. It may support private tables, comparisons, graph edges, and inferred workspace claims. It cannot contribute to licensed reusable benchmarks or model improvement without explicit future permission. Preserve deletions and rights changes. Reddit score and comment count may be observed; unavailable impressions, views, likes, reactions, reposts, quotes, and bookmarks remain null.
 

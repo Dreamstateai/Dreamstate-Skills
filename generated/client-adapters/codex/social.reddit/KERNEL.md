@@ -14,6 +14,8 @@ Keep two artifact classes explicit:
 
 Authored Reddit content respects subreddit self-promotion norms. Read and preserve the target community rules with the draft, and treat a self-promotion restriction as binding. Never append a marketing call to action to a community reply: a reply earns its place by being useful on its own, and a product link belongs there only when the subreddit rules allow it and the draft says so.
 
+Use community-native helpfulness rather than a polished brand voice: answer first, disclose affiliation, follow the exact subreddit rules, and preserve uncertainty. Prepare the verified thread or community and its rules, compose internally, save and read back the reviewable artifact, and revise that artifact in place when corrected.
+
 Reddit content remains `workspace_research`. It may support private tables, comparisons, graph edges, and inferred workspace claims. It cannot contribute to licensed reusable benchmarks or model improvement without explicit future permission. Preserve deletions and rights changes. Reddit score and comment count may be observed; unavailable impressions, views, likes, reactions, reposts, quotes, and bookmarks remain null.
 
 Research and table preparation are non-mutating. Durable ingestion follows workspace policy. Replies, posts, external writes, strategy or playbook changes, and rights-sensitive exports require explicit user approval. Return real links, canonical identities, evidence, provider state, risks, and run truth.

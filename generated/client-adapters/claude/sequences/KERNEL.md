@@ -1,7 +1,7 @@
 # Sequences
 
 <!-- architect-operation-contract
-{"required_capability_ids":["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","outreach.mailboxes_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.archive","sequences.bind","sequences.definition_get","sequences.delete","sequences.enrollment_owner_clear","sequences.list","sequences.step_options","sequences.validate"]}
+{"required_capability_ids":["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.mailboxes_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.archive","sequences.bind","sequences.definition_get","sequences.delete","sequences.enrollment_owner_clear","sequences.list","sequences.step_options","sequences.validate"]}
 -->
 
 Own everything that happens to qualified rows after a workbook has produced them: the sequence definition (email and LinkedIn steps in one sequence), timing, sending windows, sender binding, message copy quality, and the real-row preview shown before a build. Done well means a `sequence_version` that passes `sequences.validate` clean, previews correctly against one real qualified row with every variable resolved, and states plainly what still has to happen before anyone is contacted. This skill authors and validates draft definitions only. It does not enroll, publish, or activate a send: `sequences.publish`, `sequences.enroll_selection`, `sequences.orchestrate_selection_enrollment`, and workflow activation are not in this capability set and belong to whichever skill coordinates launch.
@@ -14,7 +14,8 @@ Own everything that happens to qualified rows after a workbook has produced them
 4. Draft the definition, call `sequences.validate`, fix every reported issue, then call `sequences.bind` to persist the draft version. See enrollment.md for exactly what `bind` does and does not do.
 5. Before proposing a build, render one full step against a real qualified row with the fixed scaffold intact, not a synthetic example. See message-copy.md.
 6. Treat `sequences.list`, `sequences.definition_get`, `sequences.archive`, `sequences.delete`, `sequences.enrollment_owner_clear` as separate, explicit, single-target actions, never a batch pattern. See enrollment.md.
-7. Suppression, cooldowns, and reply-triggered stops on the sequence itself are enforced automatically below this skill. Reading and answering an actual reply is a separate, in-scope conversation action, not a sequence-definition edit. See replies.md.
+7. Author `reply` as an exit rule for every sequence that must stop after a response. Suppression, cooldowns, reply detection, live conversation reads, status changes, and outbound replies execute below this skill and route to `workflows`. See replies.md.
+8. Bind an enrollment source only from the exact frozen-selection receipt handed in by `workbooks`: snapshot id, digest, count, workbook/worksheet/view revisions. `sequences.validate` must reject any mismatch. See preview-and-handoff.md.
 
 ## The fixed scaffold is not optional
 
@@ -24,9 +25,13 @@ The greeting, pitch paragraphs, CTA, sign-off, and paragraph breaks are owned by
 
 None of this skill's write capabilities (`sequences.bind`, `.archive`, `.delete`, `.enrollment_owner_clear`) support a dry run. There is no sandbox copy to throw away. The one substitute for rehearsal is the real-row preview in step 5: assemble the actual message with actual row data and put it in front of the user before calling `sequences.bind`. A preview built from placeholder or invented prospect data is not a preview.
 
+Personalization is evidence constrained: every dynamic claim maps to one cited real-row field or published workspace claim. `null`, stale, conflicting, or absent evidence routes to fallback, skip, or manual review; it never licenses a plausible invention. Show which words are fixed scaffold and which slots vary.
+
 ## Never invent what you cannot verify
 
 Only the capability ids in this kernel's contract exist. Never invent a step kind, LinkedIn action, or schedule field: read `sequences.step_options` and the definition schema live. If a required input, a sender's readiness, or a cap value cannot be confirmed through a capability read, say so and stop rather than assuming a default.
+
+Suppression is cross-channel. Never route a suppressed or replied contact around the stop through another sender, channel, or sequence. A healthy sender read is necessary but not sufficient: also inspect ramp status, live usage/headroom, schedule window, and reply/unsubscribe/bounce exits before binding.
 
 ## One target, never a pattern
 

@@ -2,14 +2,39 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   activeCaseCounts,
   assertNoCaseLoss,
   authoredCaseCounts,
+  projectArchitectToolContract,
   projectSocialEvalOverlay,
+  restoreArchitectToolContract,
   restoreSocialEvalOverlay,
 } from '../scripts/sync-architect-workspace.js';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const ARCHITECT_PACKAGE_IDS = [
+  'analytics',
+  'context',
+  'crm',
+  'workbooks',
+  'sourcing-enrichment',
+  'qualification',
+  'planning',
+  'research',
+  'seo',
+  'geo',
+  'sequences',
+  'workflows',
+  'social',
+  'social.linkedin',
+  'social.reddit',
+  'social.x',
+  'workspace',
+  'writing',
+] as const;
 
 function evals(skillId: string, count: number): string {
   return `${JSON.stringify({
@@ -26,6 +51,10 @@ test('cross-worktree case guard rejects per-skill loss even when the total stays
   );
 });
 
+test('authored case census contains exactly the 18 active Architect packages', () => {
+  assert.deepEqual(Object.keys(authoredCaseCounts(ROOT)).sort(), [...ARCHITECT_PACKAGE_IDS].sort());
+});
+
 test('case census reads authored packages and active Social overlay projection', () => {
   const root = mkdtempSync(join(tmpdir(), 'architect-workspace-counts-'));
   try {
@@ -39,6 +68,51 @@ test('case census reads authored packages and active Social overlay projection',
     writeFileSync(join(skills, 'social', 'evals.json'), evals('social', 1));
     writeFileSync(join(skills, '_social_runtime', 'social', 'evals.json'), evals('social', 2));
     assert.deepEqual(activeCaseCounts(skills), { social: 2 });
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('tool-contract projection copies canonical Influence bytes and restores Dreamstate bytes', () => {
+  const root = mkdtempSync(join(tmpdir(), 'architect-tool-contract-'));
+  try {
+    const influenceRoot = join(root, 'influence');
+    const sourceRoot = join(root, 'dreamstate-skills');
+    const canonicalPath = join(
+      influenceRoot,
+      'apps',
+      'backend',
+      'src',
+      'generated',
+      'architectToolContract.json',
+    );
+    const targetPath = join(sourceRoot, 'contracts', 'architect-tool-contract.json');
+    mkdirSync(dirname(canonicalPath), { recursive: true });
+    mkdirSync(dirname(targetPath), { recursive: true });
+    const canonical = Buffer.from('{"canonical":true}\n');
+    const prior = Buffer.from('{"prior":true}\n');
+    writeFileSync(canonicalPath, canonical);
+    writeFileSync(targetPath, prior);
+
+    const snapshot = projectArchitectToolContract(influenceRoot, sourceRoot);
+    assert.deepEqual(readFileSync(targetPath), canonical);
+    restoreArchitectToolContract(snapshot);
+    assert.deepEqual(readFileSync(targetPath), prior);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('tool-contract projection refuses a missing canonical generated contract', () => {
+  const root = mkdtempSync(join(tmpdir(), 'architect-tool-contract-missing-'));
+  try {
+    const sourceRoot = join(root, 'dreamstate-skills');
+    mkdirSync(join(sourceRoot, 'contracts'), { recursive: true });
+    writeFileSync(join(sourceRoot, 'contracts', 'architect-tool-contract.json'), '{}\n');
+    assert.throws(
+      () => projectArchitectToolContract(join(root, 'influence'), sourceRoot),
+      /canonical Influence Architect tool contract is missing/,
+    );
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

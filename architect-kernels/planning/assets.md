@@ -1,6 +1,6 @@
 # Buyer-facing assets: what the plan needs, and what can actually be built
 
-A weekly priority that depends on a lead magnet, checklist, playbook, audit, SOP, or resource hub needs that asset named and scoped before the priority can be executed. This file plans the asset. It does not write the asset's prose (that is `writing` or `social`) and it does not build a dataset (that is `tables`, see below).
+A weekly priority that depends on a lead magnet, checklist, playbook, audit, SOP, or resource hub needs that asset named and scoped before the priority can be executed. This file plans the asset. It does not write the asset's prose (that is `writing` or `social`) and it does not build a dataset (that is `workbooks`, see below).
 
 ## The real capability, verified against the backend
 
@@ -16,7 +16,7 @@ The proposal itself contains: a one-line positioning statement, 2 to 3 title opt
 
 ## Boundaries with adjacent skills
 
-An operating plan for the week belongs to `weekly-plan.md`, not here. A blog draft ready for editorial review belongs to `writing`. A workbook, worksheet, table, view, column, or row, no matter which buyer or cohort it is named after, belongs to `tables`: this skill produces something a person reads, never a durable dataset, even when the request uses words like "playbook" or "worksheet" that overlap both.
+An operating plan for the week belongs to `weekly-plan.md`, not here. A blog draft ready for editorial review belongs to `writing`. A workbook, worksheet, table, view, column, or row, no matter which buyer or cohort it is named after, belongs to `workbooks`: this skill produces something a person reads, never a durable dataset, even when the request uses words like "playbook" or "worksheet" that overlap both.
 
 ## Traps
 

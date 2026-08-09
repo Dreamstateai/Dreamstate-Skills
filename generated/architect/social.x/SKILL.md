@@ -1,30 +1,30 @@
 ---
 id: social.x
 name: X Intelligence
-description: Research and analyze official X API content and determine truthful recent-search or full-archive coverage. Connection setup and repair belong to Integrations.
-triggers: ["X post research","X recent-search coverage","X full-archive entitlement check","Twitter pattern analysis","X content opportunities"]
+description: Research and analyze official X API content, determine truthful recent-search or full-archive coverage, and make X-specific authored-draft decisions. Connection setup and repair belong to Workspace.
+triggers: ["X post research","X recent-search coverage","X full-archive entitlement check","Twitter pattern analysis","X content opportunities","draft an X post"]
 dependencies: ["social"]
 capability_domains: ["brain","social","tables"]
 capability_ids: ["brain.content.search","social.accounts_list"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"source_state","description":"X evidence source boundary.","allowed_values":["official_api","cache","unavailable","not_applicable"]},{"id":"search_window","description":"Official X search-window coverage state.","allowed_values":["recent","archive","outside_entitlement","unavailable"]},{"id":"archive_entitlement","description":"Full-archive X entitlement state.","allowed_values":["entitled","not_entitled","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: social.x
   kernel_file: KERNEL.md
-  kernel_sha256: 361813ed5499ce2ef7d6cc46888aa3beddec94a815071fa1b854faf89d25cd8d
-  adapter_sha256: be8958728ba0d2f35f867dbfa9182ab7f5d59db7c5dbe59752fb7241c1714ced
+  kernel_sha256: 17e03e2bc86959aaf3101654c84834ab594c60c217835e06cd7c8275cd49f984
+  adapter_sha256: 72bb893c37fddaf1dcc1bac839f08003216d178d105b73a4a2f0cb38cab3918f
   evals_file: evals.json
   evals_sha256: 9992c3735014e6070b68c0514abd519ad1d4e8f945966901b01c0cb4e1f53982
 ---
@@ -53,10 +53,10 @@ Each capability this skill grants is reached through one tool action. Call the t
 
 | capability | call |
 |---|---|
+| brain.content.search | ds_analytics action=brain_evidence |
 
 ### Reachable only through the capability catalogue
 
 These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.
 
-- brain.content.search
 - social.accounts_list

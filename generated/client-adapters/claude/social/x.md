@@ -32,4 +32,6 @@ Preserve post id, author identity, source scope, observed time and rights policy
 
 ## Brand voice and scoring before saving
 
+X voice is punchy and opinionated, but the opinion must be one the account actually holds. Prefer one clear claim, concrete language, and a first line that can stand alone in the feed. Match learned cadence, casing, punctuation, humor, and vocabulary before applying hook formulas. A neutral source can support an assertive synthesis, but it cannot justify inventing certainty, outrage, or personal experience. Use the social voice profile before product-document voice, and disclose the fallback when no current social voice exists.
+
 Check brand voice freshness before drafting from scratch for a connected account; a `stale` or `no_data` state means there is no learned style to match and that should be disclosed. Score a draft before saving when scoring is reachable, and disclose a `heuristic_only` fallback level or low confidence rather than presenting the estimate as strong.

@@ -5,28 +5,28 @@ description: Onboard a site, connect providers and mailboxes, and wire webhooks 
 triggers: ["onboard a new website","connect an integration or provider","connect a sending mailbox","set up a webhook","configure notifications","find out why a provider is disconnected"]
 dependencies: ["context"]
 capability_domains: ["brain","integrations","mailboxes","notifications","outreach","products","seo","visibility","webhooks","workspace"]
-capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","integrations.attribution_status_get","integrations.crm_import_job_get","integrations.crm_importable_lists_get","integrations.ga4.connect_start","integrations.ga4.properties","integrations.ga4.status","integrations.github_repositories_list","integrations.gsc.connect_start","integrations.gsc.properties","integrations.gsc.properties_list","integrations.gsc.status","integrations.hubspot_deal_rule_get","integrations.linkedin_parameters_search","integrations.outreach_connectors_list","integrations.scheduler_connections_list","integrations.scheduler_event_types_list","integrations.scheduler_status_get","integrations.slack_channels_list","integrations.slack_notification_routing_get","integrations.stripe_status_get","integrations.unipile_status_get","mailboxes.deliverability_get","notifications.archive","notifications.get","notifications.list","notifications.mark_all_read","notifications.mark_read","notifications.preferences_get","notifications.preferences_update","notifications.type_preferences_get","notifications.type_preferences_reset","notifications.type_preferences_update","notifications.unread_counts_get","notifications.workspace_type_preferences_get","notifications.workspace_type_preferences_reset","notifications.workspace_type_preferences_update","outreach.access_get","outreach.mailboxes_list","outreach.pr_mailboxes_list","outreach.senders_list","outreach.settings_get","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update","webhooks.create","webhooks.delete","webhooks.deliveries_list","webhooks.delivery_get","webhooks.list","webhooks.test_delivery","workspace.company_setup_dismiss","workspace.company_setup_handoff_set","workspace.company_setup_state_get"]
+capability_ids: ["brain.context.browse","brain.context.get","brain.context.propose","brain.context.propose_document","brain.context.search","brain.context.website_source_register","integrations.attribution_status_get","integrations.crm_import_job_get","integrations.crm_importable_lists_get","integrations.ga4.connect_start","integrations.ga4.properties","integrations.ga4.status","integrations.github_repositories_list","integrations.gsc.connect_start","integrations.gsc.properties","integrations.gsc.properties_list","integrations.gsc.property_primary_set","integrations.gsc.property_select","integrations.gsc.sitemaps_import","integrations.gsc.status","integrations.hubspot_deal_rule_get","integrations.linkedin_parameters_search","integrations.outreach_connectors_list","integrations.scheduler_connections_list","integrations.scheduler_event_types_list","integrations.scheduler_status_get","integrations.slack_channels_list","integrations.slack_notification_routing_get","integrations.stripe_status_get","integrations.unipile_status_get","mailboxes.deliverability_get","notifications.archive","notifications.get","notifications.list","notifications.mark_all_read","notifications.mark_read","notifications.preferences_get","notifications.preferences_update","notifications.type_preferences_get","notifications.type_preferences_reset","notifications.type_preferences_update","notifications.unread_counts_get","notifications.workspace_type_preferences_get","notifications.workspace_type_preferences_reset","notifications.workspace_type_preferences_update","outreach.access_get","outreach.global_pause_set","outreach.mailboxes_list","outreach.pr_mailboxes_list","outreach.sender_context_accounts_list","outreach.senders_list","outreach.settings_get","products.website_refresh","products.website_scrape","seo.agent_readiness_scan","seo.llms_txt_generate","seo.llms_txt_get","seo.robots_audit","visibility.site_files_get","visibility.site_scan","visibility.sitemap_get","visibility.workspace_site_ensure","visibility.workspace_site_get","visibility.workspace_site_update","webhooks.create","webhooks.delete","webhooks.deliveries_list","webhooks.delivery_get","webhooks.list","webhooks.test_delivery","workspace.company_setup_dismiss","workspace.company_setup_handoff_set","workspace.company_setup_state_get"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"site_state","description":"Canonical site identity, crawl, and file state.","allowed_values":["ready","partial","stale","missing","blocked","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: workspace
   kernel_file: KERNEL.md
-  kernel_sha256: 881c464754c7b842dfd4724f12e1685193d7bc9de1221e9908aa489bc763e798
-  adapter_sha256: cf1485e6cbea9f73b3c7111183a161ebefa300224879e849c26786c80ebb14e1
+  kernel_sha256: a459cdfd8dd67e233c9e236bbe95567fc5bf8c50a13afb1968bbdd8290a019bb
+  adapter_sha256: 41aaba2187c9d4070a226dc3510c1d43473b3eeb952fd7f57bed9efbdc4d843f
   evals_file: evals.json
-  evals_sha256: 2649c7c25c65770664e66a32bd0c6d5505ef1502c531cb88991c9713c063f3cf
+  evals_sha256: 37cb35a39c6e882b267b42b1a17d3b159e6193987d4c87cfd595e111de7c43f3
 ---
 
 # Architect surface adapter
@@ -45,8 +45,8 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 68 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot infer execution authority from these 25 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
+- Cannot act outside this contract: exactly 73 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 29 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ## Capability routing
 
@@ -75,6 +75,9 @@ These capability ids have no fixed tool route in this release. Find the exact co
 - integrations.gsc.connect_start
 - integrations.gsc.properties
 - integrations.gsc.properties_list
+- integrations.gsc.property_primary_set
+- integrations.gsc.property_select
+- integrations.gsc.sitemaps_import
 - integrations.gsc.status
 - integrations.hubspot_deal_rule_get
 - integrations.linkedin_parameters_search
@@ -102,8 +105,10 @@ These capability ids have no fixed tool route in this release. Find the exact co
 - notifications.workspace_type_preferences_reset
 - notifications.workspace_type_preferences_update
 - outreach.access_get
+- outreach.global_pause_set
 - outreach.mailboxes_list
 - outreach.pr_mailboxes_list
+- outreach.sender_context_accounts_list
 - outreach.senders_list
 - outreach.settings_get
 - products.website_refresh

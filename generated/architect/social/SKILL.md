@@ -1,7 +1,7 @@
 ---
 id: social
 name: Social
-description: Plan, write, schedule and publish posts across LinkedIn, X and Reddit, and read back how they performed.
+description: Coordinate shared social artifact persistence, review, scheduling, publishing, engagement, and measurement while platform specialists own platform-specific research and authoring decisions.
 triggers: ["write a LinkedIn post","schedule a week of social content","publish or reschedule a post","reply in a Reddit community","check how recent posts performed","find what to post about"]
 dependencies: []
 capability_domains: ["brain","content","social","tools"]
@@ -9,24 +9,24 @@ capability_ids: ["brain.content.get","brain.content.search","brain.context.get",
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_class","description":"Authored standalone artifact classification.","allowed_values":["authored_standalone","community_reply","none"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"evidence_trust","description":"Untrusted provider evidence handling state.","allowed_values":["fenced","none_retrieved","unavailable"]},{"id":"link_state","description":"Verified real-thread link retrieval state.","allowed_values":["verified_links","none_retrieved","unavailable"]},{"id":"provider_status","description":"Social provider connection or availability status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"reply_state","description":"External Reddit reply execution state.","allowed_values":["not_published","published_with_approval","not_applicable"]},{"id":"review_state","description":"Human-review readiness state.","allowed_values":["reviewable","not_created","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: social
   kernel_file: KERNEL.md
-  kernel_sha256: e4a01828d613981bdcbd2820edb6a3b9bac842888511ec0a417bd5e1557caf3b
-  adapter_sha256: d3ee7cbe7cca6267050747e71bec41cac28bcf21973430f90b7cc64c9c13dcbb
+  kernel_sha256: df87adee1d7c57983cc6d48d8294554a975fa2a20b4b6a9561ef769fb4d636ad
+  adapter_sha256: 38fbbc0328b42dc81c8691eaa9ade500b806efc9b31016f0e0561ccea9726d9d
   evals_file: evals.json
-  evals_sha256: f5d6098c9df55c34d9c390eeb5dbafb8e0acfa348caa6f189ae7d7475ea6882b
+  evals_sha256: 25e20ecce7a95c251c8b3c1f2ee8cbba9cb1afdbf6873dd884a8838f29ca15f3
 ---
 
 # Architect surface adapter
@@ -54,8 +54,13 @@ Each capability this skill grants is reached through one tool action. Call the t
 
 | capability | call |
 |---|---|
+| brain.content.get | ds_analytics action=brain_evidence |
+| brain.content.search | ds_analytics action=brain_evidence |
 | brain.context.get | ds_read |
 | brain.context.search | ds_search action=context |
+| brain.learning.query_benchmarks | ds_analytics action=brain_insights |
+| brain.social.benchmarks.query | ds_analytics action=brain_insights |
+| brain.social.patterns.compare | ds_analytics action=brain_insights |
 | content.approval.authorize_publish | ds_publish action=post |
 | content.approval.decide | ds_publish action=approve |
 | content.approval.submit | ds_publish action=submit_review |
@@ -66,10 +71,14 @@ Each capability this skill grants is reached through one tool action. Call the t
 | content.artifact_get | ds_publish action=get |
 | content.artifact_list | ds_publish action=list |
 | content.artifact_update | ds_publish action=update |
+| content.assist | ds_publish action=draft |
 | content.campaigns_list | ds_publish action=list |
 | content.compose | ds_publish action=draft |
 | content.delete_republish_propose | ds_publish action=republish |
 | content.delivery_publish | ds_publish action=post |
+| content.generate | ds_publish action=draft |
+| content.generate_hooks | ds_publish action=draft |
+| content.regenerate_hooks | ds_publish action=draft |
 | content.replacement_create | ds_publish action=republish |
 | content.schedule | ds_publish action=schedule |
 | content.submit_review | ds_publish action=submit_review |
@@ -115,20 +124,11 @@ Each capability this skill grants is reached through one tool action. Call the t
 
 These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.
 
-- brain.content.get
-- brain.content.search
-- brain.learning.query_benchmarks
-- brain.social.benchmarks.query
-- brain.social.patterns.compare
-- content.assist
 - content.destination_test
 - content.destinations_list
-- content.generate
-- content.generate_hooks
 - content.hook_batch_get
 - content.labels_get
 - content.labels_list
-- content.regenerate_hooks
 - content.version_diff_get
 - social.accounts_list
 - social.brand_voice_get

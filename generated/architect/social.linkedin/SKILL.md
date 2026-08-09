@@ -1,30 +1,30 @@
 ---
 id: social.linkedin
 name: LinkedIn Intelligence
-description: Research and analyze supported connected-account LinkedIn content with truthful metrics and approval-gated publishing context.
-triggers: ["LinkedIn post research","LinkedIn pattern analysis","LinkedIn content opportunities"]
+description: Research and analyze supported connected-account LinkedIn content and make LinkedIn-specific authored-draft decisions with truthful metrics and approval-gated publishing context.
+triggers: ["LinkedIn post research","LinkedIn pattern analysis","LinkedIn content opportunities","draft a LinkedIn post"]
 dependencies: ["social"]
 capability_domains: ["brain","social","tables"]
 capability_ids: ["brain.content.search","social.accounts_list"]
 max_context_tokens: 3000
 completion_contract: {"version":1,"fields":[{"id":"connection_status","description":"Provider connection readiness status.","allowed_values":["connected","disconnected","unavailable","not_applicable"]},{"id":"cache_state","description":"Cached provider evidence freshness state.","allowed_values":["fresh","stale","unavailable","not_applicable"]},{"id":"metric_state","description":"Whether metrics are measured, nullable, or unavailable.","allowed_values":["measured_nullable","measured_complete","unavailable","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: social.linkedin
   kernel_file: KERNEL.md
-  kernel_sha256: 5dfd1c05a8e9277e25afe6a0876025e052cfffa3a60099b3d2754a830b25bf49
-  adapter_sha256: be8958728ba0d2f35f867dbfa9182ab7f5d59db7c5dbe59752fb7241c1714ced
+  kernel_sha256: 569d5adb6c9955025ba1491ea10f46cfe9809b4f22238a97892876db96dd6924
+  adapter_sha256: 72bb893c37fddaf1dcc1bac839f08003216d178d105b73a4a2f0cb38cab3918f
   evals_file: evals.json
   evals_sha256: 4f4839bd9ae78c297f29b049216a8d2c3f0962acec1f9936053383a74a3a88cd
 ---
@@ -53,10 +53,10 @@ Each capability this skill grants is reached through one tool action. Call the t
 
 | capability | call |
 |---|---|
+| brain.content.search | ds_analytics action=brain_evidence |
 
 ### Reachable only through the capability catalogue
 
 These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.
 
-- brain.content.search
 - social.accounts_list

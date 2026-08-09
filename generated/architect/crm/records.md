@@ -12,6 +12,8 @@ Canonical people, companies, deals, and custom-object records: the durable truth
 
 None of these substitute for `records.get` before a write: a search result can be stale by the time you act on it.
 
+Identity resolution must reach exactly one canonical record. A matching display name, email string, company name, provider id, or source row is evidence toward identity, not identity itself. Preserve the object definition, canonical `record_id`, source identities, merge lineage, and current revision returned by the exact read. If two candidates remain plausible, stop and ask the user to choose between the exact candidates; never pick the first result or create a duplicate to avoid the ambiguity.
+
 ## Read the record
 
 - `records.get`: `{record_id}`, current entity.
@@ -35,6 +37,8 @@ Two creation paths exist and use different capabilities, but both require a top-
 Deal creation is separate: see pipelines.md for `record_deals.create`.
 
 ## Update one field at a time
+
+Immediately before any field, relationship, pipeline, merge, erase, task, note, or message mutation, read the current canonical record and use the revision or concurrency token the selected capability contract requires. After the mutation, read the same `record_id` back and report its returned revision. A success receipt tied to a source row or display label does not prove the intended canonical record changed. On revision conflict, re-read, reapply the user's intent to the new state, and never retry the stale payload unchanged.
 
 `records.field_set`: `{record_id, attr_key, value}`. Sets exactly one field per call. Read the record first, confirm `attr_key` is the field the user meant (not a similarly-named one), and confirm the value type matches the attribute's `attr_type` (see objects-and-attributes.md for the type enum). Do not batch multiple field changes into one call by inventing a batched capability; make one `field_set` call per field.
 

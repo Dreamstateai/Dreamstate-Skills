@@ -3,14 +3,17 @@
     {
       "id": "grounded-draft-to-publish",
       "expected_skill_ids": [
-        "writing"
+        "writing",
+        "research"
       ],
-      "request": "Write a cited article on our onboarding benchmarks using the seo-geo brief, get it through review, and publish it.",
+      "request": "Write a cited article on our onboarding benchmarks using the SEO and GEO brief, get it through review, and publish it.",
+      "required_concepts": [
+        "article platform values are 'linkedin' or 'twitter', not 'x'"
+      ],
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
         "brain.evidence.search",
-        "research.urls_fetch",
         "content.article_create_schedule",
         "content.article_update",
         "content.submit_review",
@@ -364,19 +367,19 @@
     {
       "id": "geo-track-citation-discipline",
       "expected_skill_ids": [
-        "writing"
+        "writing",
+        "research"
       ],
-      "request": "Write the AI-visibility piece seo-geo flagged as a GEO opportunity, with real citations, not just keyword placement.",
+      "request": "Write the AI-visibility piece GEO flagged as an opportunity, with real citations, not just keyword placement.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
-        "research.urls_fetch",
         "content.article_create_schedule",
         "content.article_update"
       ],
       "required_concepts": [
         "a GEO/AEO-track brief needs direct quotable statements, concrete statistics, and inline citations, not keyword density",
-        "do not cite a research.urls_fetch result that came back with success: false"
+        "cite only successful entries from the research evidence packet, preserving URL and observation date"
       ]
     },
     {
@@ -522,6 +525,23 @@
           "reason": "content.delete_republish_propose must leave behind the durable proposal it declared."
         }
       ]
+    }
+  ,
+    {
+      "id": "research-novelty-and-rewrite-in-place",
+      "expected_skill_ids": ["writing", "research"],
+      "request": "Try a different angle on our saved AI visibility article and update it with current research; do not create another draft.",
+      "required_capability_ids": ["brain.content.search", "brain.content.get", "brain.context.search", "brain.context.get", "content.article_get", "content.article_selection_edit", "content.article_update"],
+      "required_executed_capability_ids": ["brain.content.search", "brain.content.get", "content.article_get", "content.article_update"],
+      "required_concepts": ["thesis-level novelty", "existing article id", "current revision", "prepare compose save", "selection edit is not persistence", "rewrite in place", "read back"]
+    },
+    {
+      "id": "scheduled-long-form-generation-stops-at-draft",
+      "expected_skill_ids": ["writing"],
+      "request": "Generate one researched article every week and publish each automatically when ready.",
+      "required_capability_ids": ["content.article_create_schedule", "content.article_get", "content.schedule", "content.delivery_publish"],
+      "required_executed_capability_ids": ["content.article_create_schedule", "content.article_get"],
+      "required_concepts": ["recurring generation creates reviewable drafts only", "workflow setup is not future publish authority", "exact final revision and destination", "explicit runtime authority"]
     }
   ],
   "schema_version": 1,

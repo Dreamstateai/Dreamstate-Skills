@@ -20,6 +20,8 @@ Before writing a first sentence, read 3-5 recently published pieces via `brain.c
 3. Persist with `content.article_update`, passing the article's current `expected_revision`. A stale revision throws `article_revision_conflict`; re-fetch with `content.article_get` and reapply the edit rather than retrying blind.
 4. Only after the draft passes the checklist and the fact check, move to `content.submit_review` (see publishing.md).
 
+"Rewrite," "try a different angle," "fix this claim," and other corrections to a monitor-backed article mean update the existing article unless the user explicitly asks for a separate piece. Read its exact current revision, preserve stable identity and unaffected metadata, apply the change, save with `content.article_update`, and read it back. Do not call create or duplicate merely to avoid revision handling: that leaves stale drafts visible and breaks review history.
+
 ## Landing copy specifics
 
 Landing copy earns its keep on a single reader action, not on reading well in isolation. Every section should either build the case for that action or remove a reason not to take it; a section that does neither is padding, even if it is well written. State the target conversion from the brief explicitly before drafting, and check each section against it during revision.

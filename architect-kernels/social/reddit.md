@@ -20,6 +20,8 @@ Never append a marketing call to action to a community reply. A reply earns its 
 
 ## What makes a post survive
 
+Reddit voice is community-native helpfulness: answer the thread's actual question first, use the vocabulary and detail level of that subreddit, disclose relevant affiliation, and avoid brand-polished slogans. A product voice guide never outranks community rules or the author's duty to be transparent. Sound like a knowledgeable participant, not a campaign asset. Preserve uncertainty and lived limits rather than converting every answer into a confident framework.
+
 Title quality determines survival more than body quality: a reader has a couple of seconds of attention before scrolling past. Use a specific number or outcome in the title rather than a vague promise, and never inflate a number, since this audience fact-checks and an exaggeration destroys credibility for the account going forward. Structure the body to be scanned, not read top to bottom: short paragraphs, bullets, a summary near the top for skimmers. Never post the same content unchanged across multiple subreddits in the same window; adapt title and framing per community, and space submissions out rather than posting simultaneously.
 
 ## Reply and account-standing discipline

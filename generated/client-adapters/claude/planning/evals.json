@@ -224,7 +224,9 @@
       "id": "workbook-is-not-asset-planning",
       "request": "Build a worksheet of qualified ICP prospects we can run an audit against.",
       "expected_skill_ids": [
-        "outreach"
+        "workbooks",
+        "sourcing-enrichment",
+        "qualification"
       ],
       "must_not_load": [
         "planning"
@@ -306,12 +308,14 @@
       "expected_skill_ids": [
         "planning",
         "context",
-        "seo-geo"
+        "seo",
+        "geo"
       ],
       "expected_load_order": [
         "planning",
         "context",
-        "seo-geo"
+        "seo",
+        "geo"
       ],
       "allowed_consequence_levels": [
         "draft_write"
@@ -540,7 +544,8 @@
     {
       "id": "competitor-page-grounds-positioning",
       "expected_skill_ids": [
-        "planning"
+        "planning",
+        "research"
       ],
       "request": "Read https://rival-saas.example/pricing and tell me if our positioning still holds up against them.",
       "must_not_ask_user": true,
@@ -548,17 +553,24 @@
         "brain.context.browse",
         "brain.context.search",
         "brain.context.get",
-        "research.urls_fetch",
         "visibility.overview"
       ],
       "required_executed_capability_ids": [
-        "brain.context.get",
-        "research.urls_fetch"
+        "brain.context.get"
       ],
       "required_concepts": [
-        "read the competitor's page with research.urls_fetch before comparing; do not infer their pricing or positioning from the domain name or prior training knowledge",
+        "load research first and consume its successful evidence packet before comparing",
+        "do not infer pricing or positioning from the domain name or prior training knowledge",
         "separate the fetched competitor claim, the workspace's cited positioning, and the measured metric into distinct labeled statements"
       ]
+    },
+    {
+      "id": "assumption-becomes-falsifiable-experiment",
+      "expected_skill_ids": ["planning"],
+      "request": "Turn our assumption that a clearer comparison page will improve qualified organic clicks into an experiment, including what would prove us wrong.",
+      "required_capability_ids": ["brain.context.search", "brain.context.get", "visibility.overview", "growth.governed_experiment_list", "growth.governed_experiment_get", "growth.governed_experiment_create", "growth.governed_experiment_measurement_record", "growth.governed_experiment_conclude"],
+      "required_executed_capability_ids": ["brain.context.get", "growth.governed_experiment_list", "growth.governed_experiment_create", "growth.governed_experiment_get"],
+      "required_concepts": ["explicit assumption", "baseline", "minimum detectable effect", "falsifying result", "guardrail", "inconclusive is valid", "read back exact revision and design digest"]
     }
   ]
 }

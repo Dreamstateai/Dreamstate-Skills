@@ -1,32 +1,32 @@
 ---
 id: sequences
 name: Outreach sequences
-description: Write and run paced multi-channel sequences covering steps, timing, caps, deliverability, suppression and reply handling, for rows a workbook already qualified.
-triggers: ["write a cold email sequence","add a LinkedIn step to a sequence","enroll qualified rows into a sequence","change sending pace or daily caps","check why a sequence is not sending","handle replies and stop a sequence for someone"]
-dependencies: ["outreach"]
+description: Author, preview, validate, and bind draft multi-channel sequence definitions for rows a workbook already qualified.
+triggers: ["write a cold email sequence","add a LinkedIn step to a sequence","edit sequence copy or add a step","preview a sequence against a qualified row","validate a sequence definition","bind a reviewed sequence draft"]
+dependencies: ["qualification"]
 capability_domains: ["brain","outreach","rows","sequences"]
-capability_ids: ["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","outreach.mailboxes_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.archive","sequences.bind","sequences.definition_get","sequences.delete","sequences.enrollment_owner_clear","sequences.list","sequences.step_options","sequences.validate"]
+capability_ids: ["brain.context.get","brain.context.search","outreach.ai_spintax_generate","outreach.ai_write_generate","outreach.ai_write_resolve","outreach.mailboxes_list","outreach.opener_sample_generate","outreach.opener_styles_list","outreach.personalization_generate","outreach.send_schedules.get","outreach.send_schedules.list","outreach.senders_list","outreach.settings_get","rows.get","rows.query","sequences.archive","sequences.bind","sequences.definition_get","sequences.delete","sequences.enrollment_owner_clear","sequences.list","sequences.step_options","sequences.validate"]
 max_context_tokens: 3000
-completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
+completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]}]}
 compatibility:
-  playbook_kernel_version: 1.0.0
-  playbook_kernel_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  playbook_kernel_version: 2.0.0
+  playbook_kernel_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: a7fafedeb45d2a7d
-  manifest_digest: 128d6ae0b4f5fd6d10d7a6e5e08a42587040dce1aea6c5a8bf7be5a2a30271b7
+  capability_hash: f897fa5a3240ddff
+  manifest_digest: e811f42af747d39d754f5cd6ba78592d178882d8163be6c3773cb7bf70f1aa3e
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
-  source_release: 0.6.0
-  source_release_hash: a577b099209814dd67d7ed4f750ba19636362a70b6881b9616b1753d2f54b241
+  source_release: 0.7.0
+  source_release_hash: 68c0478f1ad01fb5227d18e52ed6f3733c766ab258ac16fe89b55fea3e8c20e6
   generator_version: 1.0.0
   kernel_id: sequences
   kernel_file: KERNEL.md
-  kernel_sha256: ee366933a2fb592f3267b7f78e84889dc81a9ee28ec7c3604226549215fe3602
-  adapter_sha256: 0621b4d6f1e63b1896ab7d0251af5fc505da18db19e7abd9dd3fd56635a7643b
+  kernel_sha256: 77e81304eb5e942b29027341016b110bccf5f8fa79917130c9664ef96d39971d
+  adapter_sha256: aa0b926a546b37054238953798cb34165e16e702de6b03dc80d6b40fbe7cef05
   evals_file: evals.json
-  evals_sha256: 98113e311081c03833aa6a387ee1ed640448501cc4dff4254af334e4f1fdd37a
+  evals_sha256: bbae0ff0dcb14ff65cb6dfba0aefb776d898d5d0ed5bb901e1f472b7b2ac0416
 ---
 
 # Architect surface adapter
@@ -45,8 +45,8 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 29 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot infer execution authority from these 11 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
+- Cannot act outside this contract: exactly 23 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 8 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 
 ## Capability routing
 
@@ -56,35 +56,29 @@ Each capability this skill grants is reached through one tool action. Call the t
 |---|---|
 | brain.context.get | ds_read |
 | brain.context.search | ds_search action=context |
-| outreach.dm_conversation_by_contact_get | ds_engage action=conversations |
-| outreach.dm_conversation_get | ds_engage action=conversations |
-| outreach.dm_conversation_read | ds_engage action=status_set |
-| outreach.dm_conversation_status_update | ds_engage action=status_set |
-| outreach.dm_conversations_list | ds_engage action=conversations |
-| outreach.dm_message_send | ds_engage action=reply |
+| outreach.ai_spintax_generate | ds_engage action=draft_reply |
+| outreach.ai_write_generate | ds_engage action=draft_reply |
+| outreach.ai_write_resolve | ds_engage action=draft_reply |
+| outreach.personalization_generate | ds_engage action=draft_reply |
 | rows.get | ds_workbook action=read_cells |
 | rows.query | ds_workbook action=read_cells |
+| sequences.bind | ds_workbook action=bind_sequence |
+| sequences.validate | ds_workbook action=validate_sequence |
 
 ### Reachable only through the capability catalogue
 
 These capability ids have no fixed tool route in this release. Find the exact contract with `ds_search scope=capabilities`, then call it through `ds_api`.
 
-- outreach.ai_spintax_generate
-- outreach.ai_write_generate
-- outreach.ai_write_resolve
 - outreach.mailboxes_list
 - outreach.opener_sample_generate
 - outreach.opener_styles_list
-- outreach.personalization_generate
 - outreach.send_schedules.get
 - outreach.send_schedules.list
 - outreach.senders_list
 - outreach.settings_get
 - sequences.archive
-- sequences.bind
 - sequences.definition_get
 - sequences.delete
 - sequences.enrollment_owner_clear
 - sequences.list
 - sequences.step_options
-- sequences.validate

@@ -36,4 +36,6 @@ Reach LinkedIn research only through the sanctioned connected-account source; th
 
 ## Brand voice and scoring before saving
 
+LinkedIn voice is insight-led: lead with a non-obvious observation, counter-intuitive finding, or concrete framework that earns saves and substantive comments. Match the account's learned sentence rhythm, person, vocabulary, and disclosure style before applying format conventions. The social brand-voice profile takes precedence over generic product-document voice because it reflects how this author actually writes; product voice is a disclosed fallback when social voice is absent or stale. Never manufacture a contrarian belief the author has not expressed.
+
 Before drafting from scratch for a connected account, check whether a brand voice profile exists and is fresh: a `stale` or `no_data` state means the draft has no learned style to match against and that should be disclosed, not silently papered over. Score a draft before saving it when scoring is reachable: treat a `heuristic_only` or low-confidence fallback level as a reason to say the estimate is weak, not to drop the caveat. `setup_required` in a score result means the account lacks enough history for a grounded estimate, not that scoring failed.
