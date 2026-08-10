@@ -2,15 +2,15 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.7.0",
-  "source_release_hash": "5f19726d9ff1b9b4130cc34528bf3010656ba794e0eb13a22c084ec7555bc74d",
+  "source_release_hash": "ad47803ff1d673f073770b62b270039e8edbb47772df4a1d53a7d7149131e4f9",
   "generator_version": "1.0.0",
   "compatibility": {
     "playbook_kernel_version": "2.0.0",
-    "playbook_kernel_hash": "5f19726d9ff1b9b4130cc34528bf3010656ba794e0eb13a22c084ec7555bc74d",
+    "playbook_kernel_hash": "ad47803ff1d673f073770b62b270039e8edbb47772df4a1d53a7d7149131e4f9",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "1e9226731ba13833",
-    "manifest_digest": "e7a6dbb512ea50558f882039ef98819211053e99b9ade8b808879ae0c93f7c09",
+    "capability_hash": "8dd426c45ca54821",
+    "manifest_digest": "aa60da4f7e4a780950abcdc70e096fd2118441dc6fc512a2f1e644262bc703dd",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -90,7 +90,6 @@
         "brain"
       ],
       "capability_ids": [
-        "brain.context.archive_document",
         "brain.context.backlinks",
         "brain.context.browse",
         "brain.context.create_document",
@@ -99,8 +98,8 @@
         "brain.context.get",
         "brain.context.graph",
         "brain.context.history",
-        "brain.context.list",
         "brain.context.move_document",
+        "brain.context.remove_document",
         "brain.context.rename_document",
         "brain.context.restore_document",
         "brain.context.save_revision",
@@ -112,13 +111,13 @@
         "brain.knowledge.document",
         "brain.knowledge.index"
       ],
-      "kernel_sha256": "90d4ea0b273bee856cd6f5b6eda8c3e9d659f0974c752640dc590f3216925364",
-      "adapter_sha256": "03f6730055c827683305a901b932508545b89200ef07543228a15b5f1f78cda7",
-      "evals_sha256": "dfa806d2f6417f06ec117af0e03648c4bd4d5740918295af6578f802513fbdb8",
+      "kernel_sha256": "9972c8989386f6b4e010611b2ff42269d479ae9b2d0ad6c6e50e73d64e2980d6",
+      "adapter_sha256": "a840f757e4f14d109d6a5f68d88d1a0e2cbd0cdf18b3fb3b4c13926d02313c1d",
+      "evals_sha256": "9a3863303fbd32b7c05f21c55f50165a332e8b30ddf7ba89d514b7dbf01d68c5",
       "supporting_sha256": {
-        "lifecycle.md": "db73933c6feab762b303d70df8de0727c4266f78f255173364744aa1387a65b8",
+        "lifecycle.md": "eaf09550a4dc8954d1b0ee0161cb9bf829deb7cfb5dbcfb9aa974b3ec65dbc6a",
         "retrieval.md": "7ebdfc7da1841ddf10b1728014b980e5cdd7cce39eb162ba9034b088360345e5",
-        "writing.md": "f4120f327a65c794ebcb2907568d99d6fbc99717a5c19c2998ca04a349010517"
+        "writing.md": "6dadcda81c020fd03045ff07dfa3630df711ef9cf2b1d7148d71e3f0bdc5a759"
       }
     },
     "crm": {
