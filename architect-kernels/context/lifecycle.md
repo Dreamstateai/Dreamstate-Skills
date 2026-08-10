@@ -4,7 +4,7 @@ Moving, renaming, archiving, restoring, rebuilding links, and permanently deleti
 
 ## Move and rename
 
-Bind the move to the exact current folder id and the exact target folder id; bind the rename to the exact current `document_id` and revision. Read the document back after the committed change to confirm the new path and title before reporting success.
+Bind the move to the exact current folder id and the exact target folder id; bind the rename to the exact current `document_id` and revision. Read the document back after the committed change to confirm the new path and title before reporting success. `index` and `log` are reserved titles the platform refuses for a rename target the same as it does for creation; see `writing.md`.
 
 ## Rebuild links
 

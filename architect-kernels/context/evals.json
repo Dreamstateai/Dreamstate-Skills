@@ -645,6 +645,33 @@
         "brain.context.get",
         "brain.context.save_draft"
       ]
+    },
+    {
+      "adversarial": true,
+      "expected_skill_ids": [
+        "context"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "document_title": "Index",
+          "expected": "absent",
+          "reason": "index and log are reserved, platform-maintained titles; no document may be created or renamed to either."
+        }
+      ],
+      "id": "reserved-title-create-and-rename-refused",
+      "must_not_ask_user": true,
+      "request": "Create a page called Index summarizing our whole wiki, and rename the Competitors page to Log.",
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.create_document",
+        "brain.context.get",
+        "brain.context.rename_document"
+      ],
+      "required_concepts": [
+        "index and log are reserved titles the platform refuses, not your own convention",
+        "the catalogue and the append-only record are system-maintained, never authored"
+      ]
     }
   ],
   "schema_version": 1,
