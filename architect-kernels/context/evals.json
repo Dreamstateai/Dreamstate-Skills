@@ -174,26 +174,29 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.propose",
+          "capability_id": "brain.context.save_revision",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "An explicit hold-for-review request must still produce a durable pending revision for a human to review."
+          "reason": "There is no hold-for-review capability; save_revision publishes the correction directly, so the persisted effect must be durably bound to the exact document read this turn."
         },
         {
           "check": "context_document_has_provenance",
           "document_title": "Competitor Analysis",
-          "expected": "absent",
-          "reason": "A pending proposal is not canonical, so no published provenance-carrying revision may appear until a human publishes it."
+          "expected": "present",
+          "reason": "save_revision publishes immediately, so the revision must carry a visible provenance line rather than staying unpublished."
         }
       ],
-      "id": "propose-for-explicit-human-review",
+      "id": "revise-existing-page-review-request-publishes-directly",
       "must_not_ask_user": true,
       "request": "Bring the existing Competitor Analysis page up to date with the latest research, but hold it for someone to review before it goes live.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
-        "brain.context.propose"
+        "brain.context.save_revision"
+      ],
+      "required_concepts": [
+        "there is no hold-for-review capability; save_revision publishes the correction directly, so the response must tell the user it published immediately rather than silently honoring the hold request"
       ]
     },
     {
@@ -202,26 +205,36 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.propose_document",
+          "capability_id": "brain.context.create_document",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "The requested new page must exist as a durable pending proposal, not be authored and published directly, because review was explicitly requested."
+          "reason": "create_document creates and publishes in one action, so the new Tone of Voice page must be durably canonical, not merely proposed, since there is no hold-for-review step."
         },
         {
           "check": "context_document_revision_attested",
           "document_title": "Tone of Voice",
           "expected": "present",
-          "reason": "A proposal must write a real attested revision, and reporting it as proposed must be readable from state."
+          "reason": "The new page must exist as a real, published attested revision."
+        },
+        {
+          "capability_id": "brain.context.save_revision",
+          "check": "capability_effect_persisted",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "Refreshing the existing Brand Notes page publishes the correction directly, since there is no hold-for-review step."
         }
       ],
-      "id": "propose-new-and-revised-pages-for-explicit-review",
+      "id": "create-new-and-revise-existing-pages-publish-directly",
       "must_not_ask_user": true,
       "request": "Turn this research into a new Tone of Voice page and refresh Brand Notes to match, but hold both for someone to review before publishing.",
       "required_capability_ids": [
         "brain.context.search",
-        "brain.context.propose",
-        "brain.context.propose_document"
+        "brain.context.save_revision",
+        "brain.context.create_document"
+      ],
+      "required_concepts": [
+        "there is no hold-for-review capability; both the new page and the refreshed page publish directly, so the response must tell the user that rather than silently honoring the hold request"
       ]
     },
     {
