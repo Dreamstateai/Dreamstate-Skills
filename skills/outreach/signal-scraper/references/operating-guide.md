@@ -8,7 +8,7 @@ Find in-market leads by buying signal and pull them into a Dreamstate list, one 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `contacts.list`, `outreach.triggers_supported_list`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`
 

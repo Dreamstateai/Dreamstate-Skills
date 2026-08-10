@@ -8,7 +8,7 @@ Install Dreamstate skills, authenticate the client, and verify the connection en
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `ping`, `dreamstate_tools_search`, `dreamstate_tools_get`
+Declared tools: `ds_search`
 
 Declared capabilities: `social.accounts_list`, `tools.get`, `tools.search`
 

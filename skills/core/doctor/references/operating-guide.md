@@ -8,7 +8,7 @@ Diagnose authentication, workspace, scope, billing, provider, and connected-acco
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `ping`, `dreamstate_tools_search`, `dreamstate_tools_get`
+Declared tools: `ds_search`
 
 Declared capabilities: `integrations.unipile_status_get`, `social.accounts_list`, `tools.get`, `tools.search`, `usage.status_get`
 

@@ -8,7 +8,7 @@ Design and operate signed Dreamstate webhook subscriptions with replay-safe even
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `webhooks.create`, `webhooks.delete`, `webhooks.list`, `webhooks.test_delivery`
 

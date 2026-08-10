@@ -16,9 +16,7 @@
     "codex"
   ],
   "related_skills": [],
-  "requires_human_approval": [
-    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-  ],
+  "requires_human_approval": [],
   "capability_ids": [
     "content.article_create_schedule",
     "content.article_delivery_create",
@@ -27,10 +25,8 @@
     "content.article_update"
   ],
   "mcp_tools": [
-    "dreamstate_tools_search",
-    "dreamstate_tools_get",
-    "dreamstate_tools_run",
-    "dreamstate_get_run"
+    "ds_search",
+    "ds_api"
   ],
   "run_intents": [],
   "resources": [],
@@ -40,7 +36,7 @@
     "content:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f897fa5a3240ddff",
+  "verified_capability_hash": "43bd7ae6fcd1b522",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/seo/blog-writer/SKILL.md",
   "install_command": "dreamstate skills install blog-writer",

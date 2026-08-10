@@ -8,7 +8,7 @@ Choose and configure schedule, event, webhook, and manual workflow triggers safe
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `workflows.trigger_create`, `workflows.trigger_delete`, `workflows.triggers_list`
 

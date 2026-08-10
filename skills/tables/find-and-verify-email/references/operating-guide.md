@@ -8,7 +8,7 @@ Find and verify work emails through a cost-aware waterfall with confidence label
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `columns.add`, `columns.run`, `contacts.find_email`, `runs.column_get`
 

@@ -16,9 +16,7 @@
     "codex"
   ],
   "related_skills": [],
-  "requires_human_approval": [
-    "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-  ],
+  "requires_human_approval": [],
   "capability_ids": [
     "outreach.analytics_step_aggregate_get",
     "outreach.dm_conversation_status_update",
@@ -35,10 +33,8 @@
     "workflows.validate_graph"
   ],
   "mcp_tools": [
-    "dreamstate_tools_search",
-    "dreamstate_tools_get",
-    "dreamstate_tools_run",
-    "dreamstate_get_run"
+    "ds_search",
+    "ds_api"
   ],
   "run_intents": [],
   "resources": [],
@@ -50,7 +46,7 @@
     "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f897fa5a3240ddff",
+  "verified_capability_hash": "43bd7ae6fcd1b522",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/campaign-optimizer/SKILL.md",
   "install_command": "dreamstate skills install campaign-optimizer",

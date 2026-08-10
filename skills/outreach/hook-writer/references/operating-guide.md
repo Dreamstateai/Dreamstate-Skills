@@ -8,7 +8,7 @@ Write a personalized opening line for each row in a Dreamstate list and save it 
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `cells.settle`, `columns.add`, `contacts.draft_opener`, `contacts.get`, `contacts.list`, `rows.query`, `sequences.step_options`, `tables.list`
 

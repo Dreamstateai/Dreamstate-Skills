@@ -32,8 +32,7 @@
       },
       "expected": {
         "allowed_tools": [
-          "dreamstate_tools_search",
-          "dreamstate_tools_get"
+          "ds_search"
         ],
         "allowed_capability_ids": [
           "tools.get",

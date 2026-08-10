@@ -8,7 +8,7 @@ Score and tier the rows in a Dreamstate list against an ICP, and write the score
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `cells.settle`, `columns.add`, `contacts.get`, `contacts.list`, `rows.query`, `tables.list`
 

@@ -14,8 +14,8 @@ Run `/connect` first if unsure. Works best after `/enrich-list` and `/lead-prior
 so you write openers for real, ranked people.
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Pick the framework and voice
 

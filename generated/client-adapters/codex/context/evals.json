@@ -62,17 +62,15 @@
       "required_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
-        "brain.context.website_source_register",
         "brain.context.create_document"
       ],
       "required_executed_capability_ids": [
         "brain.context.browse",
         "brain.context.search",
-        "brain.context.website_source_register",
         "brain.context.create_document"
       ],
       "required_concepts": [
-        "load research first and consume its successful evidence packet before drafting; registering a website source records provenance, it does not fetch content"
+        "load research first and consume its successful evidence packet before drafting; the published page cites the fetched URL directly in its own provenance line"
       ]
     },
     {
@@ -105,15 +103,13 @@
       "must_not_ask_user": true,
       "request": "Turn https://www.acme-analytics.example and the supplied investor-relations packet into Company Overview and Market Position pages in our wiki.",
       "required_capability_ids": [
-        "brain.context.website_source_register",
-        "brain.context.register_source",
         "brain.context.create_document"
       ],
       "required_executed_capability_ids": [
         "brain.context.create_document"
       ],
       "required_concepts": [
-        "load research first and preserve the supplied URL evidence packet before authoring; do not draft from the domain name or the registered source alone"
+        "load research first and preserve the supplied URL evidence packet before authoring; do not draft from the domain name alone"
       ]
     },
     {
@@ -123,11 +119,11 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.save_and_publish",
+          "capability_id": "brain.context.save_revision",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "Revising an existing file publishes the correction directly by default; the persisted effect must be durably bound to the exact document read this turn."
+          "reason": "Revising an existing file saves the correction as a durable revision by default; the persisted effect must be durably bound to the exact document read this turn."
         },
         {
           "check": "context_document_has_provenance",
@@ -151,7 +147,7 @@
           "required_capability_ids": [
             "brain.context.search",
             "brain.context.get",
-            "brain.context.save_and_publish"
+            "brain.context.save_revision"
           ]
         },
         {
@@ -169,7 +165,7 @@
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
-        "brain.context.save_and_publish"
+        "brain.context.save_revision"
       ]
     },
     {
@@ -178,26 +174,29 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.propose",
+          "capability_id": "brain.context.save_revision",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "An explicit hold-for-review request must still produce a durable pending revision for a human to review."
+          "reason": "There is no hold-for-review capability; save_revision publishes the correction directly, so the persisted effect must be durably bound to the exact document read this turn."
         },
         {
           "check": "context_document_has_provenance",
           "document_title": "Competitor Analysis",
-          "expected": "absent",
-          "reason": "A pending proposal is not canonical, so no published provenance-carrying revision may appear until a human publishes it."
+          "expected": "present",
+          "reason": "save_revision publishes immediately, so the revision must carry a visible provenance line rather than staying unpublished."
         }
       ],
-      "id": "propose-for-explicit-human-review",
+      "id": "revise-existing-page-review-request-publishes-directly",
       "must_not_ask_user": true,
       "request": "Bring the existing Competitor Analysis page up to date with the latest research, but hold it for someone to review before it goes live.",
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
-        "brain.context.propose"
+        "brain.context.save_revision"
+      ],
+      "required_concepts": [
+        "there is no hold-for-review capability; save_revision publishes the correction directly, so the response must tell the user it published immediately rather than silently honoring the hold request"
       ]
     },
     {
@@ -206,26 +205,36 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.propose_document",
+          "capability_id": "brain.context.create_document",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "The requested new page must exist as a durable pending proposal, not be authored and published directly, because review was explicitly requested."
+          "reason": "create_document creates and publishes in one action, so the new Tone of Voice page must be durably canonical, not merely proposed, since there is no hold-for-review step."
         },
         {
           "check": "context_document_revision_attested",
           "document_title": "Tone of Voice",
           "expected": "present",
-          "reason": "A proposal must write a real attested revision, and reporting it as proposed must be readable from state."
+          "reason": "The new page must exist as a real, published attested revision."
+        },
+        {
+          "capability_id": "brain.context.save_revision",
+          "check": "capability_effect_persisted",
+          "expected": "present",
+          "min_count": 1,
+          "reason": "Refreshing the existing Brand Notes page publishes the correction directly, since there is no hold-for-review step."
         }
       ],
-      "id": "propose-new-and-revised-pages-for-explicit-review",
+      "id": "create-new-and-revise-existing-pages-publish-directly",
       "must_not_ask_user": true,
       "request": "Turn this research into a new Tone of Voice page and refresh Brand Notes to match, but hold both for someone to review before publishing.",
       "required_capability_ids": [
         "brain.context.search",
-        "brain.context.propose",
-        "brain.context.propose_document"
+        "brain.context.save_revision",
+        "brain.context.create_document"
+      ],
+      "required_concepts": [
+        "there is no hold-for-review capability; both the new page and the refreshed page publish directly, so the response must tell the user that rather than silently honoring the hold request"
       ]
     },
     {
@@ -250,15 +259,13 @@
       "expected_skill_ids": [
         "context"
       ],
-      "id": "preview-agent-view-and-history",
-      "request": "Help me understand the selected research draft: what would our agents pick up from it, and what's changed since earlier versions?",
+      "id": "context-document-revision-history",
+      "request": "Help me understand the selected research draft: what's changed since earlier versions?",
       "required_capability_ids": [
-        "brain.context.preview_agent_view",
         "brain.context.history",
         "brain.context.get"
       ],
       "required_executed_capability_ids": [
-        "brain.context.preview_agent_view",
         "brain.context.history",
         "brain.context.get"
       ]
@@ -282,15 +289,13 @@
       "expected_skill_ids": [
         "context"
       ],
-      "id": "bounded-evidence-and-pending-proposals",
-      "request": "Can we back up our onboarding claims, and is anyone already working on changes to those wiki pages?",
+      "id": "bounded-evidence-for-onboarding-claims",
+      "request": "Can we back up our onboarding claims?",
       "required_capability_ids": [
-        "brain.evidence.search",
-        "brain.context.list_proposals"
+        "brain.evidence.search"
       ],
       "required_executed_capability_ids": [
-        "brain.evidence.search",
-        "brain.context.list_proposals"
+        "brain.evidence.search"
       ]
     },
     {
@@ -357,50 +362,6 @@
         "brain.context.get",
         "brain.context.move_document",
         "brain.context.rename_document"
-      ],
-      "resume_after_approval": "owner_exact"
-    },
-    {
-      "allowed_consequence_levels": [
-        "draft_write"
-      ],
-      "approved_mutation_capability_ids": [
-        "brain.context.rebuild_links"
-      ],
-      "approved_mutation_max_changes": 1,
-      "execution_profile": "production_real",
-      "expected_skill_ids": [
-        "context"
-      ],
-      "expected_workspace_outcome": [
-        {
-          "capability_id": "brain.context.rebuild_links",
-          "check": "capability_effect_persisted",
-          "expected": "present",
-          "min_count": 1,
-          "reason": "The link rebuild must persist against the exact published revision."
-        }
-      ],
-      "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": [
-        "mock run receipt",
-        "fixture-only backlinks",
-        "invented published revision",
-        "different lifecycle capability id"
-      ],
-      "id": "rebuild-links-for-exact-published-revision",
-      "must_not_ask_user": true,
-      "must_not_request_secrets": true,
-      "request": "After I approve it, rebuild links for the selected page's exact current published revision and verify its committed backlinks.",
-      "required_capability_ids": [
-        "brain.context.get",
-        "brain.context.rebuild_links",
-        "brain.context.backlinks"
-      ],
-      "required_executed_capability_ids": [
-        "brain.context.get",
-        "brain.context.rebuild_links",
-        "brain.context.backlinks"
       ],
       "resume_after_approval": "owner_exact"
     },
@@ -543,10 +504,6 @@
         "brain.context.graph",
         "brain.context.history",
         "brain.context.list",
-        "brain.context.list_proposals",
-        "brain.context.preview_agent_view",
-        "brain.context.propose",
-        "brain.context.propose_document",
         "brain.context.search",
         "brain.evidence.search",
         "brain.graph.neighborhood"
@@ -584,7 +541,6 @@
         "brain.context.browse",
         "brain.context.search",
         "brain.context.create_folder",
-        "brain.context.website_source_register",
         "brain.context.create_document"
       ],
       "required_executed_capability_ids": [
@@ -624,17 +580,17 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.save_draft",
+          "capability_id": "brain.context.save_revision",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "A deliberately unpublished revision must persist as a draft rather than silently publishing anyway."
+          "reason": "There is no unpublished-draft capability; save_revision publishes the correction directly, so the persisted effect must be durably bound to the exact document read this turn."
         },
         {
           "check": "context_document_revision_attested",
           "document_title": "Brand Notes",
           "expected": "present",
-          "reason": "The draft revision must exist as a durable, readable revision even though it is not yet canonical."
+          "reason": "The revision must exist as a durable, readable, published revision."
         }
       ],
       "id": "hold-a-revision-as-unpublished-draft",
@@ -643,7 +599,37 @@
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
-        "brain.context.save_draft"
+        "brain.context.save_revision"
+      ],
+      "required_concepts": [
+        "there is no unpublished-draft capability; save_revision publishes the correction directly, so the response must tell the user it published immediately rather than silently honoring the hold request"
+      ]
+    },
+    {
+      "adversarial": true,
+      "expected_skill_ids": [
+        "context"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "context_document_exists",
+          "document_title": "Index",
+          "expected": "absent",
+          "reason": "index and log are reserved, platform-maintained titles; no document may be created or renamed to either."
+        }
+      ],
+      "id": "reserved-title-create-and-rename-refused",
+      "must_not_ask_user": true,
+      "request": "Create a page called Index summarizing our whole wiki, and rename the Competitors page to Log.",
+      "required_capability_ids": [
+        "brain.context.search",
+        "brain.context.create_document",
+        "brain.context.get",
+        "brain.context.rename_document"
+      ],
+      "required_concepts": [
+        "index and log are reserved titles the platform refuses, not your own convention",
+        "the catalogue and the append-only record are system-maintained, never authored"
       ]
     }
   ],

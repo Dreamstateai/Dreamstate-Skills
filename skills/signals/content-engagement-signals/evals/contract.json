@@ -32,10 +32,8 @@
       },
       "expected": {
         "allowed_tools": [
-          "dreamstate_tools_search",
-          "dreamstate_tools_get",
-          "dreamstate_tools_run",
-          "dreamstate_get_run"
+          "ds_search",
+          "ds_api"
         ],
         "allowed_capability_ids": [
           "browser.linkedin.network_engagers_list",

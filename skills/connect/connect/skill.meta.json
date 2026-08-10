@@ -18,15 +18,13 @@
   "execution_mode": "executable",
   "maturity": "stable",
   "tools_used": [
-    "ping",
-    "dreamstate_tools_search",
-    "dreamstate_tools_get",
-    "dreamstate_tools_run"
+    "ds_search",
+    "ds_api"
   ],
   "required_scopes": [
     "content:read",
     "tables:read"
   ],
-  "capability_hash": "f897fa5a3240ddff",
+  "capability_hash": "43bd7ae6fcd1b522",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

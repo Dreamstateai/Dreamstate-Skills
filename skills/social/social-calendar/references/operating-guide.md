@@ -8,7 +8,7 @@ Plan, draft, and schedule a batch of LinkedIn and X posts through Dreamstate. Us
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `content.artifact_generate`, `content.artifact_get`, `content.artifact_list`, `content.artifact_update`, `content.delivery_publish`, `content.schedule`, `social.accounts_list`, `social.post_analytics`
 

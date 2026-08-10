@@ -32,9 +32,7 @@
       },
       "expected": {
         "allowed_tools": [
-          "ping",
-          "dreamstate_tools_search",
-          "dreamstate_tools_get"
+          "ds_search"
         ],
         "allowed_capability_ids": [
           "integrations.unipile_status_get",

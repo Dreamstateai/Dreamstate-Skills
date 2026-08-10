@@ -13,8 +13,8 @@ Dreamstate holds the graph and tells you when it is sound.
 Run `/connect` first if unsure. Create or reuse the workflow that will own the sequence.
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Get or create the sending motion
 

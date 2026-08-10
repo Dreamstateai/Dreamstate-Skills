@@ -8,7 +8,7 @@ Build a multi-step LinkedIn sequence: connection request, waits, and DMs wired i
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `outreach.triggers_supported_list`, `sequences.definition_get`, `sequences.list`, `sequences.step_options`, `sequences.validate`, `workflows.create`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 

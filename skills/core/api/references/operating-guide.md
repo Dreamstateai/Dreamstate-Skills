@@ -8,7 +8,7 @@ Call Dreamstate API resources and typed capability runs with idempotency and asy
 
 Mode: **guided-execution**. Dreamstate can execute part of the outcome, while operator judgment or an external step remains required.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `runs.get`, `tools.get`, `tools.run`
 

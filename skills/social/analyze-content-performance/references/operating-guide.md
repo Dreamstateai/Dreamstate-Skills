@@ -8,7 +8,7 @@ Interpret content performance using reach, engagement quality, conversion, and c
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `social.performance_analysis_get`, `social.performance_snapshot_get`, `social.post_analytics`
 

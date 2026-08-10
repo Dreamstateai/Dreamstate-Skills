@@ -8,7 +8,7 @@ Track keyword movement with stable locations, devices, dates, and comparable sna
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `seo.serp_snapshot_resolve`, `seo.serp_spend_get`, `visibility.keywords_get`
 

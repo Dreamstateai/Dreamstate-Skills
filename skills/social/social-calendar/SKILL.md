@@ -13,8 +13,8 @@ Run `/connect` first if unsure. Confirm there is a healthy connected account for
 platform you plan to post on.
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Accounts and cadence
 
@@ -57,7 +57,7 @@ per-account slot under the same daily cap as publishing.
 
 For anything the user wants out immediately, create/inspect its delivery and use
 `content.delivery_publish` only after explicit approval (same account gates). Pass an
-idempotency key to `dreamstate_tools_run` so a retry never double-posts.
+idempotency key to `ds_api` (`action: 'run'`) so a retry never double-posts.
 
 ## Step 5: Confirm and (later) measure
 

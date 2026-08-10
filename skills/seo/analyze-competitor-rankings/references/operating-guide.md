@@ -8,7 +8,7 @@ Compare ranking coverage and page intent without treating correlation as strateg
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `radar.competitor_posts_list`, `radar.competitors_list`, `visibility.keywords_get`
 

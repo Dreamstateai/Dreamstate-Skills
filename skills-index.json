@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "catalog_version": "1.0.0",
-  "capability_hash": "f897fa5a3240ddff",
+  "capability_hash": "43bd7ae6fcd1b522",
   "generated_from": "skill blueprints + authored playbooks + contracts/capability-manifest.json",
   "skills": [
     {
@@ -34,16 +34,14 @@
         "tools.search"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/dreamstate/SKILL.md",
       "install_command": "dreamstate skills install dreamstate",
@@ -61,10 +59,8 @@
       ],
       "path": "skills/core/dreamstate",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -96,9 +92,7 @@
         "tools.search"
       ],
       "mcp_tools": [
-        "ping",
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ],
       "run_intents": [],
       "resources": [],
@@ -106,7 +100,7 @@
         "content:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/setup/SKILL.md",
       "install_command": "dreamstate skills install setup",
@@ -124,9 +118,7 @@
       ],
       "path": "skills/core/setup",
       "tools_used": [
-        "ping",
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ]
     },
     {
@@ -160,9 +152,7 @@
         "usage.status_get"
       ],
       "mcp_tools": [
-        "ping",
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ],
       "run_intents": [],
       "resources": [],
@@ -171,7 +161,7 @@
         "outreach:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/doctor/SKILL.md",
       "install_command": "dreamstate skills install doctor",
@@ -189,9 +179,7 @@
       ],
       "path": "skills/core/doctor",
       "tools_used": [
-        "ping",
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ]
     },
     {
@@ -221,7 +209,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/cli/SKILL.md",
       "install_command": "dreamstate skills install cli",
@@ -267,7 +255,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/mcp/SKILL.md",
       "install_command": "dreamstate skills install mcp",
@@ -315,16 +303,14 @@
         "tools.run"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/api/SKILL.md",
       "install_command": "dreamstate skills install api",
@@ -342,10 +328,8 @@
       ],
       "path": "skills/core/api",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -376,14 +360,13 @@
         "tools.search"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ],
       "run_intents": [],
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/capabilities/SKILL.md",
       "install_command": "dreamstate skills install capabilities",
@@ -401,8 +384,7 @@
       ],
       "path": "skills/core/capabilities",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ]
     },
     {
@@ -432,7 +414,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/usage-and-credits/SKILL.md",
       "install_command": "dreamstate skills install usage-and-credits",
@@ -481,10 +463,8 @@
         "webhooks.test_delivery"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -493,7 +473,7 @@
         "outreach:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/webhooks/SKILL.md",
       "install_command": "dreamstate skills install webhooks",
@@ -511,10 +491,8 @@
       ],
       "path": "skills/core/webhooks",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -544,7 +522,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/audit-log/SKILL.md",
       "install_command": "dreamstate skills install audit-log",
@@ -590,7 +568,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/safe-bulk-operations/SKILL.md",
       "install_command": "dreamstate skills install safe-bulk-operations",
@@ -636,7 +614,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/update-skills/SKILL.md",
       "install_command": "dreamstate skills install update-skills",
@@ -682,7 +660,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/report-product-feedback/SKILL.md",
       "install_command": "dreamstate skills install report-product-feedback",
@@ -728,7 +706,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/core/run-function-or-routine/SKILL.md",
       "install_command": "dreamstate skills install run-function-or-routine",
@@ -774,7 +752,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/define-icp/SKILL.md",
       "install_command": "dreamstate skills install define-icp",
@@ -820,7 +798,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/select-accounts/SKILL.md",
       "install_command": "dreamstate skills install select-accounts",
@@ -866,7 +844,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/map-buying-committee/SKILL.md",
       "install_command": "dreamstate skills install map-buying-committee",
@@ -912,7 +890,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/source-companies/SKILL.md",
       "install_command": "dreamstate skills install source-companies",
@@ -959,13 +937,8 @@
         "sources.find_leads"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -974,7 +947,7 @@
         "outreach:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/source-people/SKILL.md",
       "install_command": "dreamstate skills install source-people",
@@ -992,13 +965,8 @@
       ],
       "path": "skills/prospecting/source-people",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -1031,13 +999,8 @@
         "runs.bulk_upsert_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -1047,7 +1010,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/import-and-map-list/SKILL.md",
       "install_command": "dreamstate skills install import-and-map-list",
@@ -1065,13 +1028,8 @@
       ],
       "path": "skills/prospecting/import-and-map-list",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -1101,7 +1059,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/deduplicate-list/SKILL.md",
       "install_command": "dreamstate skills install deduplicate-list",
@@ -1147,7 +1105,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/validate-list/SKILL.md",
       "install_command": "dreamstate skills install validate-list",
@@ -1195,13 +1153,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -1210,7 +1163,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/score-and-tier-leads/SKILL.md",
       "install_command": "dreamstate skills install score-and-tier-leads",
@@ -1228,13 +1181,8 @@
       ],
       "path": "skills/prospecting/score-and-tier-leads",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -1264,7 +1212,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/territory-planning/SKILL.md",
       "install_command": "dreamstate skills install territory-planning",
@@ -1310,7 +1258,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/total-addressable-market/SKILL.md",
       "install_command": "dreamstate skills install total-addressable-market",
@@ -1356,7 +1304,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/account-research/SKILL.md",
       "install_command": "dreamstate skills install account-research",
@@ -1402,7 +1350,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/persona-research/SKILL.md",
       "install_command": "dreamstate skills install persona-research",
@@ -1448,7 +1396,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/lead-routing/SKILL.md",
       "install_command": "dreamstate skills install lead-routing",
@@ -1494,7 +1442,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/build-lookalike-audience/SKILL.md",
       "install_command": "dreamstate skills install build-lookalike-audience",
@@ -1540,7 +1488,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/map-market/SKILL.md",
       "install_command": "dreamstate skills install map-market",
@@ -1586,7 +1534,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/map-account-stakeholders/SKILL.md",
       "install_command": "dreamstate skills install map-account-stakeholders",
@@ -1632,7 +1580,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/find-account-whitespace/SKILL.md",
       "install_command": "dreamstate skills install find-account-whitespace",
@@ -1678,7 +1626,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/audit-deal-contact-gaps/SKILL.md",
       "install_command": "dreamstate skills install audit-deal-contact-gaps",
@@ -1724,7 +1672,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/review-pipeline-account/SKILL.md",
       "install_command": "dreamstate skills install review-pipeline-account",
@@ -1770,7 +1718,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/prepare-sales-call/SKILL.md",
       "install_command": "dreamstate skills install prepare-sales-call",
@@ -1816,7 +1764,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/prospecting/conference-prospecting/SKILL.md",
       "install_command": "dreamstate skills install conference-prospecting",
@@ -1862,7 +1810,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/signal-sourcing/SKILL.md",
       "install_command": "dreamstate skills install signal-sourcing",
@@ -1912,13 +1860,8 @@
         "table_sources.run"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -1927,7 +1870,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/funding-signals/SKILL.md",
       "install_command": "dreamstate skills install funding-signals",
@@ -1945,13 +1888,8 @@
       ],
       "path": "skills/signals/funding-signals",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -1984,13 +1922,8 @@
         "sources.list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -1999,7 +1932,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/hiring-signals/SKILL.md",
       "install_command": "dreamstate skills install hiring-signals",
@@ -2017,13 +1950,8 @@
       ],
       "path": "skills/signals/hiring-signals",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2053,7 +1981,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/job-change-signals/SKILL.md",
       "install_command": "dreamstate skills install job-change-signals",
@@ -2102,13 +2030,8 @@
         "sources.list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2117,7 +2040,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/technology-signals/SKILL.md",
       "install_command": "dreamstate skills install technology-signals",
@@ -2135,13 +2058,8 @@
       ],
       "path": "skills/signals/technology-signals",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2175,13 +2093,8 @@
         "table_sources.run"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2190,7 +2103,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/company-event-signals/SKILL.md",
       "install_command": "dreamstate skills install company-event-signals",
@@ -2208,13 +2121,8 @@
       ],
       "path": "skills/signals/company-event-signals",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2247,10 +2155,8 @@
         "radar.engagement_posts_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2259,7 +2165,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/content-engagement-signals/SKILL.md",
       "install_command": "dreamstate skills install content-engagement-signals",
@@ -2277,10 +2183,8 @@
       ],
       "path": "skills/signals/content-engagement-signals",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2310,7 +2214,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/competitor-signals/SKILL.md",
       "install_command": "dreamstate skills install competitor-signals",
@@ -2356,7 +2260,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/website-intent-signals/SKILL.md",
       "install_command": "dreamstate skills install website-intent-signals",
@@ -2405,13 +2309,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2420,7 +2319,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/multi-signal-scoring/SKILL.md",
       "install_command": "dreamstate skills install multi-signal-scoring",
@@ -2438,13 +2337,8 @@
       ],
       "path": "skills/signals/multi-signal-scoring",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2474,7 +2368,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/product-usage-signals/SKILL.md",
       "install_command": "dreamstate skills install product-usage-signals",
@@ -2520,7 +2414,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/relationship-signals/SKILL.md",
       "install_command": "dreamstate skills install relationship-signals",
@@ -2566,7 +2460,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/renewal-signals/SKILL.md",
       "install_command": "dreamstate skills install renewal-signals",
@@ -2612,7 +2506,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/signals/signal-monitoring/SKILL.md",
       "install_command": "dreamstate skills install signal-monitoring",
@@ -2658,7 +2552,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/tables/SKILL.md",
       "install_command": "dreamstate skills install tables",
@@ -2706,10 +2600,8 @@
         "tables.get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2718,7 +2610,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/build-table/SKILL.md",
       "install_command": "dreamstate skills install build-table",
@@ -2736,10 +2628,8 @@
       ],
       "path": "skills/tables/build-table",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2771,10 +2661,8 @@
         "table_sources.attach"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2783,7 +2671,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/add-source-column/SKILL.md",
       "install_command": "dreamstate skills install add-source-column",
@@ -2801,10 +2689,8 @@
       ],
       "path": "skills/tables/add-source-column",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2837,13 +2723,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2853,7 +2734,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/enrich-company/SKILL.md",
       "install_command": "dreamstate skills install enrich-company",
@@ -2871,13 +2752,8 @@
       ],
       "path": "skills/tables/enrich-company",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2910,13 +2786,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2926,7 +2797,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/enrich-person/SKILL.md",
       "install_command": "dreamstate skills install enrich-person",
@@ -2944,13 +2815,8 @@
       ],
       "path": "skills/tables/enrich-person",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -2983,13 +2849,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -2999,7 +2860,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/find-and-verify-email/SKILL.md",
       "install_command": "dreamstate skills install find-and-verify-email",
@@ -3017,13 +2878,8 @@
       ],
       "path": "skills/tables/find-and-verify-email",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3056,13 +2912,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3072,7 +2923,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/find-phone/SKILL.md",
       "install_command": "dreamstate skills install find-phone",
@@ -3090,13 +2941,8 @@
       ],
       "path": "skills/tables/find-phone",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3128,13 +2974,8 @@
         "runs.column_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3143,7 +2984,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/build-waterfall/SKILL.md",
       "install_command": "dreamstate skills install build-waterfall",
@@ -3161,13 +3002,8 @@
       ],
       "path": "skills/tables/build-waterfall",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3199,10 +3035,8 @@
         "columns.update"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3210,7 +3044,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/formula-and-conditions/SKILL.md",
       "install_command": "dreamstate skills install formula-and-conditions",
@@ -3228,10 +3062,8 @@
       ],
       "path": "skills/tables/formula-and-conditions",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3263,10 +3095,8 @@
         "columns.update"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3274,7 +3104,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/merge-columns/SKILL.md",
       "install_command": "dreamstate skills install merge-columns",
@@ -3292,10 +3122,8 @@
       ],
       "path": "skills/tables/merge-columns",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3325,7 +3153,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/run-table-safely/SKILL.md",
       "install_command": "dreamstate skills install run-table-safely",
@@ -3371,7 +3199,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/trace-table-value/SKILL.md",
       "install_command": "dreamstate skills install trace-table-value",
@@ -3417,7 +3245,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/sweep-table-errors/SKILL.md",
       "install_command": "dreamstate skills install sweep-table-errors",
@@ -3463,7 +3291,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/optimize-table-cost/SKILL.md",
       "install_command": "dreamstate skills install optimize-table-cost",
@@ -3509,7 +3337,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/analyze-table-capacity/SKILL.md",
       "install_command": "dreamstate skills install analyze-table-capacity",
@@ -3555,7 +3383,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/normalize-table-data/SKILL.md",
       "install_command": "dreamstate skills install normalize-table-data",
@@ -3601,7 +3429,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/table-quality-gate/SKILL.md",
       "install_command": "dreamstate skills install table-quality-gate",
@@ -3647,7 +3475,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/tables/analyze-table/SKILL.md",
       "install_command": "dreamstate skills install analyze-table",
@@ -3693,7 +3521,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/workflows/SKILL.md",
       "install_command": "dreamstate skills install workflows",
@@ -3742,10 +3570,8 @@
         "workflows.validate_graph"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3754,7 +3580,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/build-workflow/SKILL.md",
       "install_command": "dreamstate skills install build-workflow",
@@ -3772,10 +3598,8 @@
       ],
       "path": "skills/workflows/build-workflow",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3807,8 +3631,7 @@
         "workflows.node_options"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ],
       "run_intents": [],
       "resources": [],
@@ -3816,7 +3639,7 @@
         "workflows:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/discover-workflow-actions/SKILL.md",
       "install_command": "dreamstate skills install discover-workflow-actions",
@@ -3834,8 +3657,7 @@
       ],
       "path": "skills/workflows/discover-workflow-actions",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get"
+        "ds_search"
       ]
     },
     {
@@ -3865,7 +3687,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/validate-workflow/SKILL.md",
       "install_command": "dreamstate skills install validate-workflow",
@@ -3913,13 +3735,8 @@
         "workflows.runs_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3927,7 +3744,7 @@
         "workflows:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/run-workflow/SKILL.md",
       "install_command": "dreamstate skills install run-workflow",
@@ -3945,13 +3762,8 @@
       ],
       "path": "skills/workflows/run-workflow",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -3982,10 +3794,8 @@
         "workflows.runs_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -3993,7 +3803,7 @@
         "workflows:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/trace-workflow/SKILL.md",
       "install_command": "dreamstate skills install trace-workflow",
@@ -4011,10 +3821,8 @@
       ],
       "path": "skills/workflows/trace-workflow",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -4046,10 +3854,8 @@
         "workflows.triggers_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -4058,7 +3864,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/workflow-triggers/SKILL.md",
       "install_command": "dreamstate skills install workflow-triggers",
@@ -4076,10 +3882,8 @@
       ],
       "path": "skills/workflows/workflow-triggers",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -4109,7 +3913,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/optimize-workflow/SKILL.md",
       "install_command": "dreamstate skills install optimize-workflow",
@@ -4155,7 +3959,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/snapshot-and-restore-workflow/SKILL.md",
       "install_command": "dreamstate skills install snapshot-and-restore-workflow",
@@ -4201,7 +4005,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/workflow-error-recovery/SKILL.md",
       "install_command": "dreamstate skills install workflow-error-recovery",
@@ -4247,7 +4051,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/workflow-observability/SKILL.md",
       "install_command": "dreamstate skills install workflow-observability",
@@ -4293,7 +4097,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/workflows/workflow-change-review/SKILL.md",
       "install_command": "dreamstate skills install workflow-change-review",
@@ -4330,9 +4134,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "cells.settle",
         "columns.add",
@@ -4359,10 +4161,8 @@
         "workflows.validate_graph"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -4376,7 +4176,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/outbound/SKILL.md",
       "install_command": "dreamstate skills install outbound",
@@ -4394,10 +4194,8 @@
       ],
       "path": "skills/outreach/outbound",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -4427,7 +4225,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/write-personalized-opener/SKILL.md",
       "install_command": "dreamstate skills install write-personalized-opener",
@@ -4473,7 +4271,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/build-linkedin-sequence/SKILL.md",
       "install_command": "dreamstate skills install build-linkedin-sequence",
@@ -4519,7 +4317,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/build-email-sequence/SKILL.md",
       "install_command": "dreamstate skills install build-email-sequence",
@@ -4565,7 +4363,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/build-multichannel-sequence/SKILL.md",
       "install_command": "dreamstate skills install build-multichannel-sequence",
@@ -4611,7 +4409,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/validate-sequence/SKILL.md",
       "install_command": "dreamstate skills install validate-sequence",
@@ -4657,7 +4455,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/launch-campaign/SKILL.md",
       "install_command": "dreamstate skills install launch-campaign",
@@ -4703,7 +4501,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/grow-linkedin-network/SKILL.md",
       "install_command": "dreamstate skills install grow-linkedin-network",
@@ -4749,7 +4547,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/classify-replies/SKILL.md",
       "install_command": "dreamstate skills install classify-replies",
@@ -4795,7 +4593,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/triage-inbox/SKILL.md",
       "install_command": "dreamstate skills install triage-inbox",
@@ -4841,7 +4639,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/optimize-campaign/SKILL.md",
       "install_command": "dreamstate skills install optimize-campaign",
@@ -4887,7 +4685,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/campaign-qa/SKILL.md",
       "install_command": "dreamstate skills install campaign-qa",
@@ -4933,7 +4731,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/sender-health/SKILL.md",
       "install_command": "dreamstate skills install sender-health",
@@ -4979,7 +4777,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/reply-routing/SKILL.md",
       "install_command": "dreamstate skills install reply-routing",
@@ -5025,7 +4823,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/meeting-handoff/SKILL.md",
       "install_command": "dreamstate skills install meeting-handoff",
@@ -5071,7 +4869,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/reengage-prospects/SKILL.md",
       "install_command": "dreamstate skills install reengage-prospects",
@@ -5117,7 +4915,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/campaign-experiment/SKILL.md",
       "install_command": "dreamstate skills install campaign-experiment",
@@ -5163,7 +4961,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/revive-closed-lost/SKILL.md",
       "install_command": "dreamstate skills install revive-closed-lost",
@@ -5209,7 +5007,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/revive-stale-opportunity/SKILL.md",
       "install_command": "dreamstate skills install revive-stale-opportunity",
@@ -5255,7 +5053,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/deliverability-health-check/SKILL.md",
       "install_command": "dreamstate skills install deliverability-health-check",
@@ -5301,7 +5099,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/monitor-deliverability/SKILL.md",
       "install_command": "dreamstate skills install monitor-deliverability",
@@ -5347,7 +5145,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/email-deliverability-setup/SKILL.md",
       "install_command": "dreamstate skills install email-deliverability-setup",
@@ -5393,7 +5191,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/linkedin-sending-safety/SKILL.md",
       "install_command": "dreamstate skills install linkedin-sending-safety",
@@ -5439,7 +5237,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/email-compliance/SKILL.md",
       "install_command": "dreamstate skills install email-compliance",
@@ -5485,7 +5283,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/analyze-outreach-activity/SKILL.md",
       "install_command": "dreamstate skills install analyze-outreach-activity",
@@ -5531,7 +5329,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/compare-sequence-performance/SKILL.md",
       "install_command": "dreamstate skills install compare-sequence-performance",
@@ -5577,7 +5375,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/competitive-displacement-play/SKILL.md",
       "install_command": "dreamstate skills install competitive-displacement-play",
@@ -5623,7 +5421,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/warm-path-selling/SKILL.md",
       "install_command": "dreamstate skills install warm-path-selling",
@@ -5669,7 +5467,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/inbound-follow-up/SKILL.md",
       "install_command": "dreamstate skills install inbound-follow-up",
@@ -5715,7 +5513,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/champion-tracking/SKILL.md",
       "install_command": "dreamstate skills install champion-tracking",
@@ -5761,7 +5559,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/cold-calling/SKILL.md",
       "install_command": "dreamstate skills install cold-calling",
@@ -5807,7 +5605,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/messaging-strategy/SKILL.md",
       "install_command": "dreamstate skills install messaging-strategy",
@@ -5853,7 +5651,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/first-touch-email/SKILL.md",
       "install_command": "dreamstate skills install first-touch-email",
@@ -5899,7 +5697,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/follow-up-email/SKILL.md",
       "install_command": "dreamstate skills install follow-up-email",
@@ -5945,7 +5743,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/reengagement-email/SKILL.md",
       "install_command": "dreamstate skills install reengagement-email",
@@ -5991,7 +5789,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/subject-lines/SKILL.md",
       "install_command": "dreamstate skills install subject-lines",
@@ -6037,7 +5835,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/personalization-strategy/SKILL.md",
       "install_command": "dreamstate skills install personalization-strategy",
@@ -6083,7 +5881,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/executive-vs-practitioner-messaging/SKILL.md",
       "install_command": "dreamstate skills install executive-vs-practitioner-messaging",
@@ -6129,7 +5927,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/value-proposition/SKILL.md",
       "install_command": "dreamstate skills install value-proposition",
@@ -6175,7 +5973,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/objection-handling/SKILL.md",
       "install_command": "dreamstate skills install objection-handling",
@@ -6221,7 +6019,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/call-to-action/SKILL.md",
       "install_command": "dreamstate skills install call-to-action",
@@ -6267,7 +6065,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/message-quality-review/SKILL.md",
       "install_command": "dreamstate skills install message-quality-review",
@@ -6313,7 +6111,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/messaging/voice-and-tone/SKILL.md",
       "install_command": "dreamstate skills install voice-and-tone",
@@ -6359,7 +6157,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/social-content/SKILL.md",
       "install_command": "dreamstate skills install social-content",
@@ -6408,13 +6206,8 @@
         "content.artifact_update"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -6423,7 +6216,7 @@
         "content:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/linkedin-post/SKILL.md",
       "install_command": "dreamstate skills install linkedin-post",
@@ -6441,13 +6234,8 @@
       ],
       "path": "skills/social/linkedin-post",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -6480,13 +6268,8 @@
         "content.artifact_update"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -6495,7 +6278,7 @@
         "content:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/x-post/SKILL.md",
       "install_command": "dreamstate skills install x-post",
@@ -6513,13 +6296,8 @@
       ],
       "path": "skills/social/x-post",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -6549,7 +6327,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/content-hooks/SKILL.md",
       "install_command": "dreamstate skills install content-hooks",
@@ -6595,7 +6373,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/storytelling-structures/SKILL.md",
       "install_command": "dreamstate skills install storytelling-structures",
@@ -6641,7 +6419,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/content-calendar/SKILL.md",
       "install_command": "dreamstate skills install content-calendar",
@@ -6687,7 +6465,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/repurpose-content/SKILL.md",
       "install_command": "dreamstate skills install repurpose-content",
@@ -6736,13 +6514,8 @@
         "social.accounts_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -6751,7 +6524,7 @@
         "content:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/schedule-content/SKILL.md",
       "install_command": "dreamstate skills install schedule-content",
@@ -6769,13 +6542,8 @@
       ],
       "path": "skills/social/schedule-content",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -6807,13 +6575,8 @@
         "social.accounts_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -6822,7 +6585,7 @@
         "content:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/publish-content/SKILL.md",
       "install_command": "dreamstate skills install publish-content",
@@ -6840,13 +6603,8 @@
       ],
       "path": "skills/social/publish-content",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -6878,10 +6636,8 @@
         "social.post_analytics"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -6889,7 +6645,7 @@
         "content:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/analyze-content-performance/SKILL.md",
       "install_command": "dreamstate skills install analyze-content-performance",
@@ -6907,10 +6663,8 @@
       ],
       "path": "skills/social/analyze-content-performance",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -6940,7 +6694,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/thought-leadership/SKILL.md",
       "install_command": "dreamstate skills install thought-leadership",
@@ -6986,7 +6740,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/social-engagement/SKILL.md",
       "install_command": "dreamstate skills install social-engagement",
@@ -7032,7 +6786,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/employee-advocacy/SKILL.md",
       "install_command": "dreamstate skills install employee-advocacy",
@@ -7083,13 +6837,8 @@
         "content.artifact_generate"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7099,7 +6848,7 @@
         "content:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/blog-content/SKILL.md",
       "install_command": "dreamstate skills install blog-content",
@@ -7117,13 +6866,8 @@
       ],
       "path": "skills/seo/blog-content",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7153,7 +6897,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/keyword-research/SKILL.md",
       "install_command": "dreamstate skills install keyword-research",
@@ -7201,10 +6945,8 @@
         "visibility.keywords_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7213,7 +6955,7 @@
         "visibility:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/track-keyword-rankings/SKILL.md",
       "install_command": "dreamstate skills install track-keyword-rankings",
@@ -7231,10 +6973,8 @@
       ],
       "path": "skills/seo/track-keyword-rankings",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7266,10 +7006,8 @@
         "visibility.keywords_get"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7278,7 +7016,7 @@
         "visibility:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/analyze-competitor-rankings/SKILL.md",
       "install_command": "dreamstate skills install analyze-competitor-rankings",
@@ -7296,10 +7034,8 @@
       ],
       "path": "skills/seo/analyze-competitor-rankings",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7329,10 +7065,8 @@
         "visibility.overview"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7340,7 +7074,7 @@
         "visibility:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/ai-visibility-audit/SKILL.md",
       "install_command": "dreamstate skills install ai-visibility-audit",
@@ -7358,10 +7092,8 @@
       ],
       "path": "skills/seo/ai-visibility-audit",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7391,10 +7123,8 @@
         "visibility.citations"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7402,7 +7132,7 @@
         "visibility:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/citation-gap-analysis/SKILL.md",
       "install_command": "dreamstate skills install citation-gap-analysis",
@@ -7420,10 +7150,8 @@
       ],
       "path": "skills/seo/citation-gap-analysis",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7453,10 +7181,8 @@
         "visibility.ai_traffic"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7464,7 +7190,7 @@
         "visibility:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/ai-traffic-analysis/SKILL.md",
       "install_command": "dreamstate skills install ai-traffic-analysis",
@@ -7482,10 +7208,8 @@
       ],
       "path": "skills/seo/ai-traffic-analysis",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7515,13 +7239,8 @@
         "visibility.refresh"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -7529,7 +7248,7 @@
         "visibility:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/refresh-visibility-measurement/SKILL.md",
       "install_command": "dreamstate skills install refresh-visibility-measurement",
@@ -7547,13 +7266,8 @@
       ],
       "path": "skills/seo/refresh-visibility-measurement",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -7583,7 +7297,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/content-brief/SKILL.md",
       "install_command": "dreamstate skills install content-brief",
@@ -7629,7 +7343,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/content-refresh/SKILL.md",
       "install_command": "dreamstate skills install content-refresh",
@@ -7675,7 +7389,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/internal-linking/SKILL.md",
       "install_command": "dreamstate skills install internal-linking",
@@ -7721,7 +7435,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/schema-markup/SKILL.md",
       "install_command": "dreamstate skills install schema-markup",
@@ -7767,7 +7481,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/technical-seo-audit/SKILL.md",
       "install_command": "dreamstate skills install technical-seo-audit",
@@ -7813,7 +7527,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/answer-engine-content/SKILL.md",
       "install_command": "dreamstate skills install answer-engine-content",
@@ -7859,7 +7573,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/brand-mention-monitoring/SKILL.md",
       "install_command": "dreamstate skills install brand-mention-monitoring",
@@ -7905,7 +7619,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/crm/SKILL.md",
       "install_command": "dreamstate skills install crm",
@@ -7951,7 +7665,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/configure-crm-fields/SKILL.md",
       "install_command": "dreamstate skills install configure-crm-fields",
@@ -7999,13 +7713,8 @@
         "crm.sync"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -8014,7 +7723,7 @@
         "outreach:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/sync-contact-to-crm/SKILL.md",
       "install_command": "dreamstate skills install sync-contact-to-crm",
@@ -8032,13 +7741,8 @@
       ],
       "path": "skills/crm/sync-contact-to-crm",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run",
-        "dreamstate_list_runs",
-        "dreamstate_cancel_run",
-        "dreamstate_resume_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -8068,7 +7772,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/configure-crm-automation/SKILL.md",
       "install_command": "dreamstate skills install configure-crm-automation",
@@ -8114,7 +7818,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/crm-health-check/SKILL.md",
       "install_command": "dreamstate skills install crm-health-check",
@@ -8161,10 +7865,8 @@
         "records.field_set"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -8172,7 +7874,7 @@
         "outreach:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/route-and-assign-leads/SKILL.md",
       "install_command": "dreamstate skills install route-and-assign-leads",
@@ -8190,10 +7892,8 @@
       ],
       "path": "skills/crm/route-and-assign-leads",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -8223,7 +7923,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/lifecycle-management/SKILL.md",
       "install_command": "dreamstate skills install lifecycle-management",
@@ -8269,7 +7969,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/pipeline-hygiene/SKILL.md",
       "install_command": "dreamstate skills install pipeline-hygiene",
@@ -8315,7 +8015,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/crm-deduplication/SKILL.md",
       "install_command": "dreamstate skills install crm-deduplication",
@@ -8361,7 +8061,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/revenue-reporting/SKILL.md",
       "install_command": "dreamstate skills install revenue-reporting",
@@ -8407,7 +8107,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/customer-expansion/SKILL.md",
       "install_command": "dreamstate skills install customer-expansion",
@@ -8453,7 +8153,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/crm/churn-risk/SKILL.md",
       "install_command": "dreamstate skills install churn-risk",
@@ -8499,7 +8199,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads",
@@ -8545,7 +8245,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-abm-strategy/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-abm-strategy",
@@ -8591,7 +8291,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-audiences/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-audiences",
@@ -8637,7 +8337,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-campaign-setup/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-campaign-setup",
@@ -8683,7 +8383,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-bidding/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-bidding",
@@ -8729,7 +8429,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-copy/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-copy",
@@ -8775,7 +8475,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-creative/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-creative",
@@ -8821,7 +8521,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-measurement/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-measurement",
@@ -8867,7 +8567,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-optimization/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-optimization",
@@ -8913,7 +8613,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/ads/linkedin-ads-outbound-sync/SKILL.md",
       "install_command": "dreamstate skills install linkedin-ads-outbound-sync",
@@ -8959,7 +8659,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/automation/external-automation/SKILL.md",
       "install_command": "dreamstate skills install external-automation",
@@ -9005,7 +8705,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/automation/n8n-interoperability/SKILL.md",
       "install_command": "dreamstate skills install n8n-interoperability",
@@ -9051,7 +8751,7 @@
       "resources": [],
       "required_scopes": [],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/automation/automation-error-handling/SKILL.md",
       "install_command": "dreamstate skills install automation-error-handling",
@@ -9088,9 +8788,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "content.article_create_schedule",
         "content.article_delivery_create",
@@ -9103,10 +8801,8 @@
         "visibility.refresh"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9118,7 +8814,7 @@
         "visibility:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/ai-visibility/SKILL.md",
       "install_command": "dreamstate skills install ai-visibility",
@@ -9136,10 +8832,8 @@
       ],
       "path": "skills/seo/ai-visibility",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9160,9 +8854,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "content.article_create_schedule",
         "content.article_delivery_create",
@@ -9171,10 +8863,8 @@
         "content.article_update"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9184,7 +8874,7 @@
         "content:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/seo/blog-writer/SKILL.md",
       "install_command": "dreamstate skills install blog-writer",
@@ -9202,10 +8892,8 @@
       ],
       "path": "skills/seo/blog-writer",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9226,9 +8914,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "outreach.analytics_step_aggregate_get",
         "outreach.dm_conversation_status_update",
@@ -9245,10 +8931,8 @@
         "workflows.validate_graph"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9260,7 +8944,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/campaign-optimizer/SKILL.md",
       "install_command": "dreamstate skills install campaign-optimizer",
@@ -9278,10 +8962,8 @@
       ],
       "path": "skills/outreach/campaign-optimizer",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9302,18 +8984,14 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "social.accounts_list",
         "tables.list"
       ],
       "mcp_tools": [
-        "ping",
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9322,7 +9000,7 @@
         "tables:read"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/connect/connect/SKILL.md",
       "install_command": "dreamstate skills install connect",
@@ -9340,10 +9018,8 @@
       ],
       "path": "skills/connect/connect",
       "tools_used": [
-        "ping",
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9364,9 +9040,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "cells.settle",
         "columns.add",
@@ -9385,10 +9059,8 @@
         "workbooks.list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9400,7 +9072,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/enrich-list/SKILL.md",
       "install_command": "dreamstate skills install enrich-list",
@@ -9418,10 +9090,8 @@
       ],
       "path": "skills/outreach/enrich-list",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9442,9 +9112,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "cells.settle",
         "columns.add",
@@ -9456,10 +9124,8 @@
         "tables.list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9470,7 +9136,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/hook-writer/SKILL.md",
       "install_command": "dreamstate skills install hook-writer",
@@ -9488,10 +9154,8 @@
       ],
       "path": "skills/outreach/hook-writer",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9512,9 +9176,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "cells.settle",
         "columns.add",
@@ -9524,10 +9186,8 @@
         "tables.list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9537,7 +9197,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/lead-prioritizer/SKILL.md",
       "install_command": "dreamstate skills install lead-prioritizer",
@@ -9555,10 +9215,8 @@
       ],
       "path": "skills/outreach/lead-prioritizer",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9579,9 +9237,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "contacts.enrich",
         "content.artifact_generate",
@@ -9600,10 +9256,8 @@
         "workflows.validate_graph"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9617,7 +9271,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/multichannel/SKILL.md",
       "install_command": "dreamstate skills install multichannel",
@@ -9635,10 +9289,8 @@
       ],
       "path": "skills/outreach/multichannel",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9659,9 +9311,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "contacts.draft_opener",
         "contacts.enrich",
@@ -9684,10 +9334,8 @@
         "workflows.validate_graph"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9701,7 +9349,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/network-grow/SKILL.md",
       "install_command": "dreamstate skills install network-grow",
@@ -9719,10 +9367,8 @@
       ],
       "path": "skills/outreach/network-grow",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9743,9 +9389,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "outreach.dm_conversation_get",
         "outreach.dm_conversation_read",
@@ -9755,10 +9399,8 @@
         "sequences.list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9767,7 +9409,7 @@
         "outreach:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/reply-classifier/SKILL.md",
       "install_command": "dreamstate skills install reply-classifier",
@@ -9785,10 +9427,8 @@
       ],
       "path": "skills/outreach/reply-classifier",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9809,9 +9449,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "outreach.dm_conversation_assign",
         "outreach.dm_conversation_get",
@@ -9824,10 +9462,8 @@
         "social.accounts_list"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9837,7 +9473,7 @@
         "outreach:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/reply-triage/SKILL.md",
       "install_command": "dreamstate skills install reply-triage",
@@ -9855,10 +9491,8 @@
       ],
       "path": "skills/outreach/reply-triage",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9879,9 +9513,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "outreach.triggers_supported_list",
         "sequences.definition_get",
@@ -9895,10 +9527,8 @@
         "workflows.validate_graph"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9908,7 +9538,7 @@
         "workflows:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/sequence-builder/SKILL.md",
       "install_command": "dreamstate skills install sequence-builder",
@@ -9926,10 +9556,8 @@
       ],
       "path": "skills/outreach/sequence-builder",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -9950,9 +9578,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "contacts.list",
         "outreach.triggers_supported_list",
@@ -9963,10 +9589,8 @@
         "workbooks.create"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -9978,7 +9602,7 @@
         "tables:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/outreach/signal-scraper/SKILL.md",
       "install_command": "dreamstate skills install signal-scraper",
@@ -9996,10 +9620,8 @@
       ],
       "path": "skills/outreach/signal-scraper",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     },
     {
@@ -10020,9 +9642,7 @@
         "codex"
       ],
       "related_skills": [],
-      "requires_human_approval": [
-        "Before sending, publishing, activating, deleting, or starting a paid bulk run."
-      ],
+      "requires_human_approval": [],
       "capability_ids": [
         "content.artifact_generate",
         "content.artifact_get",
@@ -10034,10 +9654,8 @@
         "social.post_analytics"
       ],
       "mcp_tools": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ],
       "run_intents": [],
       "resources": [],
@@ -10047,7 +9665,7 @@
         "content:write"
       ],
       "minimum_api_version": "v1",
-      "verified_capability_hash": "f897fa5a3240ddff",
+      "verified_capability_hash": "43bd7ae6fcd1b522",
       "last_verified_at": "2026-07-12",
       "github_path": "skills/social/social-calendar/SKILL.md",
       "install_command": "dreamstate skills install social-calendar",
@@ -10065,10 +9683,8 @@
       ],
       "path": "skills/social/social-calendar",
       "tools_used": [
-        "dreamstate_tools_search",
-        "dreamstate_tools_get",
-        "dreamstate_tools_run",
-        "dreamstate_get_run"
+        "ds_search",
+        "ds_api"
       ]
     }
   ]

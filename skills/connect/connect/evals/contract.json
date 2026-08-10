@@ -32,10 +32,8 @@
       },
       "expected": {
         "allowed_tools": [
-          "ping",
-          "dreamstate_tools_search",
-          "dreamstate_tools_get",
-          "dreamstate_tools_run"
+          "ds_search",
+          "ds_api"
         ],
         "allowed_capability_ids": [
           "social.accounts_list",

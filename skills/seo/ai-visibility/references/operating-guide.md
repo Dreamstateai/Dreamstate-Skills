@@ -8,7 +8,7 @@ Audit and improve how a brand shows up in AI search (ChatGPT, Perplexity, Gemini
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `content.article_create_schedule`, `content.article_delivery_create`, `content.article_get`, `content.article_list`, `content.article_update`, `visibility.ai_traffic`, `visibility.citations`, `visibility.overview`, `visibility.refresh`
 

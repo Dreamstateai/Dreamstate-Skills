@@ -14,8 +14,8 @@ Dreamstate measures and publishes.
 Run `/connect` first if unsure.
 
 The dotted names below are canonical capability IDs. Inspect each live contract with
-`dreamstate_tools_get`, invoke it with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke it with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Read the current standing
 

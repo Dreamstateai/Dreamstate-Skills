@@ -8,7 +8,7 @@ Connect this agent to Dreamstate and verify it can act. Use this FIRST, before a
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `ping`, `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `social.accounts_list`, `tables.list`
 

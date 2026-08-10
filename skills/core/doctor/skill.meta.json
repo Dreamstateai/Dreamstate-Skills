@@ -22,14 +22,12 @@
   "execution_mode": "guided-execution",
   "maturity": "beta",
   "tools_used": [
-    "ping",
-    "dreamstate_tools_search",
-    "dreamstate_tools_get"
+    "ds_search"
   ],
   "required_scopes": [
     "content:read",
     "outreach:read"
   ],
-  "capability_hash": "f897fa5a3240ddff",
+  "capability_hash": "43bd7ae6fcd1b522",
   "mcp_url": "https://mcp.trydreamstate.com/mcp"
 }

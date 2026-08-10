@@ -8,7 +8,7 @@ Diagnose and tune a running outreach sequence: read its analytics, find what's u
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `outreach.analytics_step_aggregate_get`, `outreach.dm_conversation_status_update`, `outreach.global_pause_set`, `outreach.workspace_stats_get`, `rows.query`, `sequences.analytics_get`, `sequences.definition_get`, `sequences.list`, `sequences.step_options`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 

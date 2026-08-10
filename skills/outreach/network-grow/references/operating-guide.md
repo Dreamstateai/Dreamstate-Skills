@@ -8,7 +8,7 @@ Grow a LinkedIn network with the right people: source or take a targeted list, w
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `contacts.draft_opener`, `contacts.enrich`, `contacts.get`, `contacts.list`, `sequences.enroll_selection`, `sequences.step_options`, `sequences.validate`, `social.accounts_list`, `sources.find_leads`, `tables.create`, `tables.list`, `workbooks.create`, `workflows.activate`, `workflows.create`, `workflows.draft_publish`, `workflows.get`, `workflows.graph_apply`, `workflows.node_registry`, `workflows.validate_graph`
 

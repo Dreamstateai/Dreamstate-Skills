@@ -8,7 +8,7 @@ Own the durable, reviewable data plane: Workbook, worksheet, saved view, exact r
 ## Inspect before act
 
 1. Resolve an existing target with `workbooks.list`/`get`/`overview`; never infer an id from a name.
-2. Open a worksheet with `worksheet.bootstrap`. Preserve its `workbook_id`, `worksheet_id`, revision/etag, schema, source bindings, active view, and row identity fields.
+2. Open a worksheet with `worksheet.bootstrap`. Preserve its `workbook_id`, `worksheet_id`, revision/etag, schema, source bindings, active view, and row identity fields. A completed run's state carries a deterministic `audit` (qualification rate, cost per qualified row, and, below threshold, the single worst-failing Required column) computed by the platform, not by you; relay it, never recompute it. The thresholds and what the audit means belong to `qualification`.
 3. Use `worksheet.viewport` only for later windows. A page is evidence about that page, never an estimate of the whole table.
 4. Before a write, re-read the exact object and pass its current revision when supported. On conflict, stop and show drift.
 

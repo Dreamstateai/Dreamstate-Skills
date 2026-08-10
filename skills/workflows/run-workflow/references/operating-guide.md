@@ -8,7 +8,7 @@ Execute a workflow with bounded inputs and verify the durable run rather than th
 
 Mode: **executable**. The central outcome is supported by released Dreamstate contracts.
 
-Declared tools: `dreamstate_tools_search`, `dreamstate_tools_get`, `dreamstate_tools_run`, `dreamstate_get_run`, `dreamstate_list_runs`, `dreamstate_cancel_run`, `dreamstate_resume_run`
+Declared tools: `ds_search`, `ds_api`
 
 Declared capabilities: `workflows.get`, `workflows.run_trace_get`, `workflows.runs_list`
 
