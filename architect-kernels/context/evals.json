@@ -504,10 +504,6 @@
         "brain.context.graph",
         "brain.context.history",
         "brain.context.list",
-        "brain.context.list_proposals",
-        "brain.context.preview_agent_view",
-        "brain.context.propose",
-        "brain.context.propose_document",
         "brain.context.search",
         "brain.evidence.search",
         "brain.graph.neighborhood"
@@ -545,7 +541,6 @@
         "brain.context.browse",
         "brain.context.search",
         "brain.context.create_folder",
-        "brain.context.website_source_register",
         "brain.context.create_document"
       ],
       "required_executed_capability_ids": [
@@ -585,17 +580,17 @@
       ],
       "expected_workspace_outcome": [
         {
-          "capability_id": "brain.context.save_draft",
+          "capability_id": "brain.context.save_revision",
           "check": "capability_effect_persisted",
           "expected": "present",
           "min_count": 1,
-          "reason": "A deliberately unpublished revision must persist as a draft rather than silently publishing anyway."
+          "reason": "There is no unpublished-draft capability; save_revision publishes the correction directly, so the persisted effect must be durably bound to the exact document read this turn."
         },
         {
           "check": "context_document_revision_attested",
           "document_title": "Brand Notes",
           "expected": "present",
-          "reason": "The draft revision must exist as a durable, readable revision even though it is not yet canonical."
+          "reason": "The revision must exist as a durable, readable, published revision."
         }
       ],
       "id": "hold-a-revision-as-unpublished-draft",
@@ -604,7 +599,10 @@
       "required_capability_ids": [
         "brain.context.search",
         "brain.context.get",
-        "brain.context.save_draft"
+        "brain.context.save_revision"
+      ],
+      "required_concepts": [
+        "there is no unpublished-draft capability; save_revision publishes the correction directly, so the response must tell the user it published immediately rather than silently honoring the hold request"
       ]
     },
     {
