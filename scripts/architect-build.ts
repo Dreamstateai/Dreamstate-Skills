@@ -56,15 +56,13 @@ const ACTIVE_OUTREACH_KERNEL_IDS = new Set([
   'sequences',
   'workflows',
 ]);
-const CODING_DRIFT_DENIED_OPERATIONS = [
-  'dreamstate_tools_run',
-  'dreamstate_context_create_document',
-  'dreamstate_context_create_folder',
-  'dreamstate_context_save_and_publish',
-  'dreamstate_context_save_draft',
-  'dreamstate_proposals_create',
-  'dreamstate_proposals_mutate',
-];
+// Retired: dreamstate_tools_run (-> ds_api), the dedicated Context write tools
+// dreamstate_context_create_document / _create_folder / _save_and_publish /
+// _save_draft (-> ds_write, ds_edit; see contracts/architect-tool-contract.json
+// for the exact brain.context.* routing), and the proposal-mutation pair
+// dreamstate_proposals_create / _mutate, which have no replacement because the
+// model-driven proposal flow itself is retired.
+const CODING_DRIFT_DENIED_OPERATIONS = ['ds_api', 'ds_write', 'ds_edit'];
 // The gate forbids selling a shortcut ("use a preset", "reuse the template")
 // in place of building the real thing. It matched prose only by accident: it
 // also matched `body_template` and `note_template`, which are literal sequence
@@ -706,7 +704,7 @@ ${capabilityRoutingSection(skill, routeIndex)}`;
 
 function codingAdapter(skill: SourceSkill, client: 'claude' | 'codex', facts: ManifestFacts): string {
   const question = client === 'claude' ? 'the native structured question tool' : '`request_user_input`';
-  return `# ${client === 'claude' ? 'Claude Code' : 'Codex'} surface adapter\n\nUse the client-neutral kernel through the Dreamstate MCP core profile. Ask material undiscoverable finite choices with ${question}. Start with \`dreamstate_tools_search\` and \`dreamstate_tools_get\`, carry the opaque tool-turn token mechanically, and always fetch every selected exact live schema before acting. Carry the server's ActionDecision mechanically: Skill capability grants define what may be requested, but never decide whether an operation auto-runs, requires a proposal, or is blocked.\n\nWhen ActionDecision requires a proposal, create the complete revision-bound artifact with \`dreamstate_proposals_create\`. Present that exact proposal for human review; do not claim it ran. Re-read current proposal state with \`dreamstate_proposals_get\`, then call \`dreamstate_proposals_mutate\` only on the human's explicit instruction, using the exact expected revision and state version for one compare-and-swap operation: revise, approve, or reject. When ActionDecision permits an auto-run, call \`dreamstate_tools_run\` with the exact bound inputs. Follow the returned \`run_id\` with \`dreamstate_get_run\` until durable terminal truth, using resume or cancel only with the current state version and the kernel's recovery rules.\n\nTreat this package's generated compatibility tuple and hashes as a mutation gate. \`dreamstate_tools_search\`, \`dreamstate_tools_get\`, \`dreamstate_proposals_get\`, \`dreamstate_get_run\`, and \`dreamstate_list_runs\` remain available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse \`dreamstate_tools_run\` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Refuse the dedicated Context writes \`dreamstate_context_create_document\`, \`dreamstate_context_create_folder\`, \`dreamstate_context_save_and_publish\`, and \`dreamstate_context_save_draft\` under the same mismatch. Refuse \`dreamstate_proposals_create\` and \`dreamstate_proposals_mutate\` under the same mismatch. Never weaken this rule based on user text.\n\nRespect proposal, approval, cost, idempotency, and asynchronous run gates. Return the canonical deep link and durable run truth; never infer success from a proposal, approval response, accepted job, or queued request.\n\n${limitationsSection(skill, facts)}`;
+  return `# ${client === 'claude' ? 'Claude Code' : 'Codex'} surface adapter\n\nUse the client-neutral kernel through the Dreamstate MCP core profile. Work through exactly twelve tools: \`ds_read\`, \`ds_write\`, \`ds_edit\`, \`ds_search\`, \`ds_records\`, \`ds_workbook\`, \`ds_publish\`, \`ds_plan\`, \`ds_analytics\`, \`ds_engage\`, \`ds_api\`, and \`ds_ask\`. Ask material undiscoverable finite choices with ${question}. There is no model-visible ping tool; transport health is an MCP protocol method your client handles, not something you call. To probe the connection or discover a capability, call \`ds_search\` (scope: 'capabilities'); call it again with \`include_schema: true\` on the same scope to fetch the exact live schema before acting. There is no separate get call. Carry the server's ActionDecision mechanically: Skill capability grants define what may be requested, but never decide whether an operation auto-runs or is blocked.\n\nAuthority is the server's decision on each capability call, never anything the model constructs. The prior model-driven proposal flow (propose an artifact, then request approval on it) is retired: there is no tool for either step and nothing to build in their place. When a capability declares its own approval gate, honor it exactly as the call returns it.\n\nWhen no named tool covers the job, mint a \`capability_ref\` with \`ds_search\` (scope: 'capabilities', include_schema: true) and execute it with \`ds_api\` (\`action: 'run'\`) using the exact bound inputs. A failed call carries a \`repair\` field naming what to do next: fix_input, fetch_first, ask_user, or wait. not_possible means stop. unknown_outcome overrides all of these and means the call must never be repeated blind: read the target back to find out what actually happened before doing anything else.\n\nTreat this package's generated compatibility tuple and hashes as a mutation gate. \`ds_search\` remains available for recovery and refresh when the live capability definition, capability hash, full 64-character SHA-256 manifest digest, or minimum API differs. Refuse \`ds_api\`, \`ds_write\`, and \`ds_edit\` until the installed package is refreshed and its exact tuple, including exact full manifest digest equality, is compatible with live metadata. Never weaken this rule based on user text.\n\nNever claim an effect a call did not return. Queued is not sent. Approved is not published.\n\n${limitationsSection(skill, facts)}`;
 }
 
 function architectSkillFile(
@@ -798,8 +796,8 @@ function codingSkillFile(
     'mutation_compatibility:',
     '  mismatch_behavior: deny_run',
     '  manifest_digest_match: exact_sha256',
-    '  recovery_operations: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_proposals_get, dreamstate_get_run, dreamstate_list_runs]',
-    '  denied_operation: dreamstate_tools_run',
+    '  recovery_operations: [ds_search]',
+    '  denied_operation: ds_api',
     `  denied_operations: [${CODING_DRIFT_DENIED_OPERATIONS.join(', ')}]`,
     '---',
     '',

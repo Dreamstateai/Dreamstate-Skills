@@ -130,7 +130,7 @@ test('--check passes immediately after a build (generated tree is deterministic)
 test('every indexed skill references only catalog tools, with correct derived scopes', () => {
   writeArtifacts(build());
   const index = JSON.parse(readFileSync(join(ROOT, 'skills-index.json'), 'utf8'));
-  const gatewayTools = new Set(['dreamstate_tools_search', 'dreamstate_tools_get', 'dreamstate_tools_run']);
+  const gatewayTools = new Set(['ds_search', 'ds_api']);
   assert.ok(index.skills.length >= 5, 'expected several skills');
   for (const skill of index.skills) {
     // The generated skill.meta.json must exist at the indexed path.
@@ -287,24 +287,31 @@ test('one pinned release generates hash-identical Architect, Claude, and Codex k
       assert.match(standalone, /Carry the server's ActionDecision mechanically/);
       assert.match(
         standalone,
-        /recovery_operations: \[dreamstate_tools_search, dreamstate_tools_get, dreamstate_proposals_get, dreamstate_get_run, dreamstate_list_runs\]/,
+        /recovery_operations: \[ds_search\]/,
       );
       assert.match(
         standalone,
-        /denied_operations: \[dreamstate_tools_run, dreamstate_context_create_document, dreamstate_context_create_folder, dreamstate_context_save_and_publish, dreamstate_context_save_draft, dreamstate_proposals_create, dreamstate_proposals_mutate\]/,
+        /denied_operations: \[ds_api, ds_write, ds_edit\]/,
       );
-      assert.match(standalone, /Refuse `dreamstate_tools_run` until the installed package is refreshed/);
+      assert.match(standalone, /Refuse `ds_api`, `ds_write`, and `ds_edit` until the installed package is refreshed/);
       assert.match(standalone, /full 64-character SHA-256 manifest digest/i);
-      assert.match(standalone, /`dreamstate_tools_search` and `dreamstate_tools_get`/);
-      assert.match(standalone, /`dreamstate_proposals_create`/);
-      assert.match(standalone, /human review/);
-      assert.match(standalone, /`dreamstate_proposals_mutate`/);
-      assert.match(standalone, /expected revision and state version/i);
-      assert.match(standalone, /revise, approve, or reject/i);
-      assert.match(standalone, /When ActionDecision requires a proposal/);
-      assert.match(standalone, /returned `run_id`/);
-      assert.match(standalone, /`dreamstate_get_run`/);
+      assert.match(standalone, /`ds_search` \(scope: 'capabilities'\)/);
+      assert.match(standalone, /include_schema: true/);
+      assert.match(standalone, /prior model-driven proposal flow.*is retired/i);
+      assert.match(standalone, /mint a `capability_ref`/);
+      assert.match(standalone, /`ds_api` \(`action: 'run'`\)/);
+      assert.match(standalone, /fix_input, fetch_first, ask_user, or wait/);
+      assert.match(standalone, /unknown_outcome overrides all of these/);
+      assert.match(standalone, /read the target back/);
       assert.match(standalone, /^completion_contract: \{"version":1,"fields":\[/m);
+      // The retired eight-tool harness and the retired proposal/run-polling
+      // vocabulary must never reappear in a standalone Claude/Codex package:
+      // that is the exact bug this migration closes.
+      assert.doesNotMatch(standalone, /\bdreamstate_[a-z_]+\b/);
+      // "no model-visible ping tool" is legitimate prose explaining the
+      // retirement; a backtick-quoted `ping` naming it as a tool to call is
+      // the actual regression this guards against.
+      assert.doesNotMatch(standalone, /`ping`/);
     }
     assert.equal(pinned.skills[id].kernel_sha256, clients.skills[id].kernel_sha256);
     assert.equal(pinned.skills[id].evals_sha256, clients.skills[id].evals_sha256);
@@ -687,15 +694,7 @@ test('social research executes scoped reads without blocking on optional present
 test('a standalone Claude or Codex package keeps discovery usable but denies mutation on compatibility drift', () => {
   const artifacts = build();
   const pinned = JSON.parse(artifacts['generated/client-adapters/RELEASE.json']);
-  const mutationOperations = new Set([
-    'dreamstate_tools_run',
-    'dreamstate_context_create_document',
-    'dreamstate_context_create_folder',
-    'dreamstate_context_save_and_publish',
-    'dreamstate_context_save_draft',
-    'dreamstate_proposals_create',
-    'dreamstate_proposals_mutate',
-  ]);
+  const mutationOperations = new Set(['ds_api', 'ds_write', 'ds_edit']);
   for (const client of ['claude', 'codex']) {
     const standalone = artifacts[`generated/client-adapters/${client}/context/SKILL.md`];
     const scalar = (field: string) => standalone.match(new RegExp(`^  ${field}: (.+)$`, 'm'))?.[1];
@@ -723,11 +722,7 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
     const compatible = Object.entries(installed).every(([key, value]) => live[key as keyof typeof live] === value);
     const permits = (operation: string) => !mutationOperations.has(operation) || compatible;
     for (const operation of [
-      'dreamstate_tools_search',
-      'dreamstate_tools_get',
-      'dreamstate_proposals_get',
-      'dreamstate_get_run',
-      'dreamstate_list_runs',
+      'ds_search',
     ]) assert.equal(permits(operation), true, `${client} must retain ${operation} for recovery`);
     for (const operation of mutationOperations) {
       assert.equal(permits(operation), false, `${client} must deny ${operation} on digest drift`);
@@ -735,23 +730,11 @@ test('a standalone Claude or Codex package keeps discovery usable but denies mut
   }
 });
 
-// The gateway now carries two families: the retired-but-still-served
-// `dreamstate_*` recovery/discovery/proposal tools kept for standalone
-// Claude/Codex adapters (see the compatibility-drift test above), plus the
-// twelve live `ds_*` tools Architect itself calls. Neither family exposes a
-// raw `register_source`-style escape hatch.
+// Every legacy `dreamstate_*` gateway tool, including the model-visible
+// `ping`, was retired. The live MCP surface is exactly the twelve `ds_*`
+// tools; nothing exposes a raw `register_source`-style escape hatch either.
 test('the pinned MCP catalog exposes only the compact governed gateway', () => {
   assert.deepEqual(catalog.mcp_tools.map((tool: { name: string }) => tool.name).sort(), [
-    'dreamstate_agent_proposal_create',
-    'dreamstate_agent_proposal_delegate_bindings',
-    'dreamstate_agent_proposal_get',
-    'dreamstate_cancel_run',
-    'dreamstate_get_run',
-    'dreamstate_list_runs',
-    'dreamstate_resume_run',
-    'dreamstate_tools_get',
-    'dreamstate_tools_run',
-    'dreamstate_tools_search',
     'ds_analytics',
     'ds_api',
     'ds_ask',
@@ -764,7 +747,6 @@ test('the pinned MCP catalog exposes only the compact governed gateway', () => {
     'ds_search',
     'ds_workbook',
     'ds_write',
-    'ping',
   ]);
   assert.equal(
     catalog.mcp_tools.some((tool: { name: string }) => /register_source/.test(tool.name)),
