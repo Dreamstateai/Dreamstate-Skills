@@ -29,9 +29,8 @@ const VALID_CLIENTS = ['claude', 'cursor', 'codex', 'gemini', 'opencode'];
 const VALID_MODES: ExecutionMode[] = ['executable', 'guided-execution', 'knowledge', 'planned'];
 const VALID_MATURITY: Maturity[] = ['stable', 'beta', 'experimental'];
 const NON_DERIVING_ROUTER_TOOLS = new Set([
-  'dreamstate_tools_search',
-  'dreamstate_tools_get',
-  'dreamstate_tools_run',
+  'ds_search',
+  'ds_api',
 ]);
 const DOMAIN_CATEGORY: Record<string, string> = {
   connect: 'Core', core: 'Core', developer: 'Core', outreach: 'Outreach', prospecting: 'Prospecting', signals: 'Signals',
@@ -90,7 +89,7 @@ function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest,
   if ((mode === 'executable' || mode === 'guided-execution') && tools.length === 0) throw new Error(`${file}: ${mode} skills require tools_used`);
   const explicitCapabilities = strings(meta, 'capability_ids'); const knownIds = new Set(capabilityManifest.capabilities.map((capability) => capability.id));
   for (const id of explicitCapabilities) if (!knownIds.has(id)) throw new Error(`${file}: unknown capability ${id}`);
-  const broadRouterTools = new Set(['dreamstate_tools_run', 'dreamstate_tools_search', 'dreamstate_tools_get']);
+  const broadRouterTools = new Set(['ds_search', 'ds_api']);
   const implicitCapabilities = capabilityManifest.capabilities.filter((capability) => capability.mcp_tools.some((tool) => tools.includes(tool) && !broadRouterTools.has(tool)));
   const capabilityIds = [...new Set([...explicitCapabilities, ...implicitCapabilities.map((capability) => capability.id)])].sort();
   if ((mode === 'executable' || mode === 'guided-execution') && tools.some((tool) => broadRouterTools.has(tool)) && explicitCapabilities.length === 0) {
@@ -117,14 +116,27 @@ function skillFromPlaybook(file: string, capabilityManifest: CapabilityManifest,
   };
 }
 
-const DISCOVERY_TOOLS = ['dreamstate_tools_search', 'dreamstate_tools_get'];
-const EXECUTION_TOOLS = [...DISCOVERY_TOOLS, 'dreamstate_tools_run', 'dreamstate_get_run'];
-const DURABLE_EXECUTION_TOOLS = [...EXECUTION_TOOLS, 'dreamstate_list_runs', 'dreamstate_cancel_run', 'dreamstate_resume_run'];
+// The retired three-tool gateway (search / get / run) and the four-tool run-
+// lifecycle surface (get_run / list_runs / cancel_run / resume_run) are gone.
+// The live MCP surface reaches every capability, including run status,
+// listing, cancellation, and resumption, through the same two tools:
+// `ds_search` (discovery and schema) and `ds_api` (run, including durable
+// run-status capabilities such as runs.column_get, runs.list, runs.cancel,
+// runs.resume, which blueprints below already name in their capabilityIds).
+// So discovery, one-shot execution, and durable execution now share one
+// tool pair; only the capability_ids distinguish them.
+const DISCOVERY_TOOLS = ['ds_search'];
+const EXECUTION_TOOLS = [...DISCOVERY_TOOLS, 'ds_api'];
+const DURABLE_EXECUTION_TOOLS = EXECUTION_TOOLS;
 
 const BLUEPRINT_EXECUTION: Record<string, { mode: ExecutionMode; tools?: string[]; capabilityIds?: string[] }> = {
   dreamstate: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'tools.run', 'runs.get'] },
-  setup: { mode: 'guided-execution', tools: ['ping', ...DISCOVERY_TOOLS], capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list'] },
-  doctor: { mode: 'guided-execution', tools: ['ping', ...DISCOVERY_TOOLS], capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list', 'usage.status_get', 'integrations.unipile_status_get'] },
+  // There is no model-visible ping tool any more; transport health is an MCP
+  // protocol method the client handles. `ds_search` (already in
+  // DISCOVERY_TOOLS) is the real, cheap liveness probe: it proves transport,
+  // auth, and workspace identity at once, same pattern as playbooks/connect.md.
+  setup: { mode: 'guided-execution', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list'] },
+  doctor: { mode: 'guided-execution', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list', 'usage.status_get', 'integrations.unipile_status_get'] },
   api: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.get', 'tools.run', 'runs.get'] },
   capabilities: { mode: 'executable', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get'] },
   webhooks: { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['webhooks.create', 'webhooks.list', 'webhooks.test_delivery', 'webhooks.delete'] },
@@ -213,7 +225,7 @@ function skillFromBlueprint(blueprint: SkillBlueprint, capabilityManifest: Capab
   for (const tool of tools) if (!toolRegistry.has(tool)) throw new Error(`${blueprint.slug}: unknown MCP tool ${tool}`);
   const knownCapabilities = new Map(capabilityManifest.capabilities.map((capability) => [capability.id, capability]));
   for (const id of contract.capabilityIds ?? []) if (!knownCapabilities.has(id)) throw new Error(`${blueprint.slug}: unknown capability ${id}`);
-  const broadRouterTools = new Set(['dreamstate_tools_run', 'dreamstate_tools_search', 'dreamstate_tools_get']);
+  const broadRouterTools = new Set(['ds_search', 'ds_api']);
   if ((contract.mode === 'executable' || contract.mode === 'guided-execution') && tools.some((tool) => broadRouterTools.has(tool)) && !contract.capabilityIds?.length) {
     throw new Error(`${blueprint.slug}: compact gateway skills require explicit capabilityIds`);
   }

@@ -14,7 +14,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach                  # connect | outreach | seo | social | email
 tier: playbook                    # capability | composite | playbook
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [campaigns.create, columns.add, columns.run, sequences.enroll_selection]
 ---
 
