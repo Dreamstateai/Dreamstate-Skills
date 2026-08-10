@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: connect
 tier: composite
-tools_used: [ping, ds_search, ds_api]
+tools_used: [ds_search, ds_api]
 capability_ids: [social.accounts_list, tables.list]
 ---
 
@@ -20,8 +20,8 @@ mid-task "couldn't connect" into a clean check up front.
 
 ## When the MCP server is not configured yet
 
-If you have no Dreamstate tools available at all (no `ping` or the
-`ds_search` / `ds_api` gateway), the MCP server has not been added to this agent. Tell the user to run, in their terminal:
+If you have no Dreamstate tools available at all (no `ds_search` / `ds_api`
+gateway), the MCP server has not been added to this agent. Tell the user to run, in their terminal:
 
 ```
 npx dreamstate-skills install
@@ -34,15 +34,18 @@ paste a key.
 
 ## Step 1: Is the connection alive?
 
-Call `ping` (optionally with `message`). A `pong` reply means the transport works
-and tells you which workspace the key resolves to. Report that workspace name back
-to the user so they know which account they are acting in.
+There is no model-visible ping tool. Transport health is an MCP protocol method
+your client handles, not something you call. Probe the connection with real work
+instead: `ds_search` with `scope: 'capabilities'` and a short query. A normal
+result means the transport works and the key resolved, and the returned cards
+tell you which workspace you are acting in. Report that workspace name back to
+the user so they know which account they are in.
 
-If `ping` returns an authentication error, the agent client needs to sign in. The
-Dreamstate server uses OAuth, so your client will surface a sign-in link or prompt
-on the next call. Tell the user: "Dreamstate needs you to sign in. Approve the
-sign-in popup your agent shows, then ask me to continue." Do not ask the user to
-paste an API key into the chat. Once they have approved, retry `ping`.
+If that call returns an authentication error, the agent client needs to sign in.
+The Dreamstate server uses OAuth, so your client will surface a sign-in link or
+prompt on the next call. Tell the user: "Dreamstate needs you to sign in. Approve
+the sign-in popup your agent shows, then ask me to continue." Do not ask the user
+to paste an API key into the chat. Once they have approved, retry the search.
 
 ## Step 2: What can you actually do?
 
