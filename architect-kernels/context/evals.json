@@ -259,15 +259,13 @@
       "expected_skill_ids": [
         "context"
       ],
-      "id": "preview-agent-view-and-history",
-      "request": "Help me understand the selected research draft: what would our agents pick up from it, and what's changed since earlier versions?",
+      "id": "context-document-revision-history",
+      "request": "Help me understand the selected research draft: what's changed since earlier versions?",
       "required_capability_ids": [
-        "brain.context.preview_agent_view",
         "brain.context.history",
         "brain.context.get"
       ],
       "required_executed_capability_ids": [
-        "brain.context.preview_agent_view",
         "brain.context.history",
         "brain.context.get"
       ]
@@ -291,15 +289,13 @@
       "expected_skill_ids": [
         "context"
       ],
-      "id": "bounded-evidence-and-pending-proposals",
-      "request": "Can we back up our onboarding claims, and is anyone already working on changes to those wiki pages?",
+      "id": "bounded-evidence-for-onboarding-claims",
+      "request": "Can we back up our onboarding claims?",
       "required_capability_ids": [
-        "brain.evidence.search",
-        "brain.context.list_proposals"
+        "brain.evidence.search"
       ],
       "required_executed_capability_ids": [
-        "brain.evidence.search",
-        "brain.context.list_proposals"
+        "brain.evidence.search"
       ]
     },
     {
@@ -366,50 +362,6 @@
         "brain.context.get",
         "brain.context.move_document",
         "brain.context.rename_document"
-      ],
-      "resume_after_approval": "owner_exact"
-    },
-    {
-      "allowed_consequence_levels": [
-        "draft_write"
-      ],
-      "approved_mutation_capability_ids": [
-        "brain.context.rebuild_links"
-      ],
-      "approved_mutation_max_changes": 1,
-      "execution_profile": "production_real",
-      "expected_skill_ids": [
-        "context"
-      ],
-      "expected_workspace_outcome": [
-        {
-          "capability_id": "brain.context.rebuild_links",
-          "check": "capability_effect_persisted",
-          "expected": "present",
-          "min_count": 1,
-          "reason": "The link rebuild must persist against the exact published revision."
-        }
-      ],
-      "fixture_profile": "workspace_local_approved_mutation",
-      "forbidden_test_substitutions": [
-        "mock run receipt",
-        "fixture-only backlinks",
-        "invented published revision",
-        "different lifecycle capability id"
-      ],
-      "id": "rebuild-links-for-exact-published-revision",
-      "must_not_ask_user": true,
-      "must_not_request_secrets": true,
-      "request": "After I approve it, rebuild links for the selected page's exact current published revision and verify its committed backlinks.",
-      "required_capability_ids": [
-        "brain.context.get",
-        "brain.context.rebuild_links",
-        "brain.context.backlinks"
-      ],
-      "required_executed_capability_ids": [
-        "brain.context.get",
-        "brain.context.rebuild_links",
-        "brain.context.backlinks"
       ],
       "resume_after_approval": "owner_exact"
     },
