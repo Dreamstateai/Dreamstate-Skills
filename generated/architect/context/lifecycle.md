@@ -6,9 +6,9 @@ Moving, renaming, archiving, restoring, rebuilding links, and permanently deleti
 
 Bind the move to the exact current folder id and the exact target folder id; bind the rename to the exact current `document_id` and revision. Read the document back after the committed change to confirm the new path and title before reporting success. `index` and `log` are reserved titles the platform refuses for a rename target the same as it does for creation; see `writing.md`.
 
-## Rebuild links
+## Broken links after a move or rename
 
-Use `brain.context.rebuild_links` only for the exact current published `node_ref` and `revision_id`. A stale or unpublished revision will rebuild links against content that is no longer canonical. Verify backlinks from canonical state with `brain.context.backlinks` after the rebuild, not before.
+There is no `rebuild_links` capability; the platform does not automatically repair references after a move or rename. Use `brain.context.backlinks` on the exact current `node_ref` to find every document that links to it, open each one with `brain.context.get`, and update the stale reference directly, saving with `brain.context.save_revision`. Verify backlinks from canonical state again afterward to confirm nothing was missed.
 
 ## Archive, restore, and delete are separate
 

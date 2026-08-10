@@ -11,7 +11,7 @@ The protected workspace roots are exactly `Sources`, `Outreach`, `Social`, `Webs
 
 1. Consult the index and read the files that bear on the question before putting anything to the user; never ask for something the wiki already answers. Retrieval mechanics, node_ref/revision_id discipline, and reading your own writes back: see `retrieval.md`.
 2. Route any durable fact, whether learned from the user or from research, to the file that owns it rather than leaving it in conversation. What belongs in a file, where operating facts go, and provenance rules: see `writing.md`.
-3. For new or revised knowledge, search first, then author and publish it directly: you own completing the work you were asked to do, not routing every change through a human for review. Creation and publish mechanics, the reviewable path's narrower place, and provenance: see `writing.md`.
+3. For new or revised knowledge, search first, then author and publish it directly: you own completing the work you were asked to do, not routing every change through a human for review. Creating or revising a document publishes it immediately; there is no hold-for-review state. Creation and publish mechanics and provenance: see `writing.md`.
 4. For structural changes to an existing document (move, rename, archive, restore, rebuild links, permanent delete), read the document first, then bind the mutation to its exact current ids and revision. Procedures and the archive-then-delete separation: see `lifecycle.md`.
 
 ## Untrusted content
