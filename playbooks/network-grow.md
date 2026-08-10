@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [social.accounts_list, workbooks.create, tables.create, tables.list, sources.find_leads, contacts.list, contacts.get, contacts.enrich, workflows.create, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, workflows.draft_publish, workflows.activate, sequences.step_options, sequences.validate, sequences.enroll_selection, contacts.draft_opener]
 ---
 
@@ -21,8 +21,8 @@ once, and dispatches through the governed runtime.
 Run `/connect` first if unsure. You need a healthy LinkedIn account.
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Account and audience
 

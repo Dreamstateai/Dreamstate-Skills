@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: playbook
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [workbooks.create, tables.create, sources.find_leads, contacts.enrich, workflows.create, workflows.get, workflows.node_registry, workflows.graph_apply, workflows.validate_graph, sequences.enroll_selection, workflows.activate, content.artifact_generate, content.schedule, social.accounts_list, outreach.workspace_stats_get]
 ---
 
@@ -20,8 +20,8 @@ Run `/connect` first if unsure. You need a healthy LinkedIn account (and an X ac
 you want content there too).
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## How it fits together
 

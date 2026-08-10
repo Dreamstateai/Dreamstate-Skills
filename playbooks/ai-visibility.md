@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: seo
 tier: playbook
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [visibility.overview, visibility.citations, visibility.ai_traffic, visibility.refresh, content.article_list, content.article_create_schedule, content.article_get, content.article_update, content.article_delivery_create]
 ---
 
@@ -20,8 +20,8 @@ Dreamstate measures and publishes.
 Run `/connect` first if unsure.
 
 The dotted names below are canonical capability IDs. Inspect each live contract with
-`dreamstate_tools_get`, invoke it with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke it with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Read the current standing
 

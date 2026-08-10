@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: seo
 tier: playbook
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [content.article_list, content.article_create_schedule, content.article_get, content.article_update, content.article_delivery_create]
 ---
 
@@ -19,8 +19,8 @@ Run `/connect` first if unsure. (If the user wants you to *choose* topics from w
 cites competitors instead, use `/ai-visibility` for the gap analysis, then come here to write.)
 
 The dotted names below are canonical capability IDs. Inspect each live contract with
-`dreamstate_tools_get`, invoke it with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke it with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Pin the angle, and avoid duplicates
 
@@ -37,8 +37,9 @@ label context. Keep the returned article id and revision.
 ## Step 3: Generate the full draft (async)
 
 Draft the article body from the approved angle, then persist it with `content.article_update`
-using the exact `expected_revision`. If a supporting run is asynchronous, follow its returned
-run id with `dreamstate_get_run`; never infer completion from elapsed time.
+using the exact `expected_revision`. If a supporting write is still processing, confirm it
+finished by reading the article back with `content.article_get` before treating it as done;
+never infer completion from elapsed time.
 
 ## Step 4: Review before publishing
 

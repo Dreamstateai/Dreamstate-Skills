@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: connect
 tier: composite
-tools_used: [ping, dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run]
+tools_used: [ping, ds_search, ds_api]
 capability_ids: [social.accounts_list, tables.list]
 ---
 
@@ -20,9 +20,8 @@ mid-task "couldn't connect" into a clean check up front.
 
 ## When the MCP server is not configured yet
 
-If you have no Dreamstate tools available at all (no `ping` or compact
-`dreamstate_tools_search` / `dreamstate_tools_get` / `dreamstate_tools_run` gateway), the
-MCP server has not been added to this agent. Tell the user to run, in their terminal:
+If you have no Dreamstate tools available at all (no `ping` or the
+`ds_search` / `ds_api` gateway), the MCP server has not been added to this agent. Tell the user to run, in their terminal:
 
 ```
 npx dreamstate-skills install

@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [tables.list, contacts.list, contacts.get, rows.query, sequences.step_options, contacts.draft_opener, columns.add, cells.settle]
 ---
 
@@ -20,8 +20,8 @@ Run `/connect` first if unsure. Works best after `/enrich-list` and `/lead-prior
 so you write openers for real, ranked people.
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Pick the framework and voice
 

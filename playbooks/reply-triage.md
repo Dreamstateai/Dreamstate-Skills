@@ -5,7 +5,7 @@ platforms: [claude, cursor, codex]
 min_mcp_version: "1.0.0"
 domain: outreach
 tier: composite
-tools_used: [dreamstate_tools_search, dreamstate_tools_get, dreamstate_tools_run, dreamstate_get_run]
+tools_used: [ds_search, ds_api]
 capability_ids: [sequences.list, outreach.dm_conversations_list, outreach.dm_conversation_get, social.accounts_list, outreach.dm_message_send, outreach.dm_conversation_status_update, outreach.dm_conversation_assign, outreach.dm_conversation_read, outreach.workspace_stats_get]
 ---
 
@@ -21,8 +21,8 @@ If you only want to label the inbox without sending, use `/reply-classifier` ins
 skill goes all the way through to the response.
 
 The dotted names below are canonical capability IDs. Inspect their live contracts with
-`dreamstate_tools_get`, invoke them with `dreamstate_tools_run`, and follow asynchronous work
-with `dreamstate_get_run`.
+`ds_search` (`scope: 'capabilities', include_schema: true`) and invoke them with `ds_api`
+(`action: 'run'`) using the minted `capability_ref`.
 
 ## Step 1: Find the live conversations
 
