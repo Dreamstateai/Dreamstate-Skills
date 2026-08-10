@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "43bd7ae6fcd1b522",
+  "capability_hash": "dff0a5ad10480b6f",
   "api_version": "v1",
   "capabilities": [
     {
@@ -20624,7 +20624,8 @@
                         },
                         "content_digest": {
                           "type": "string",
-                          "pattern": "^[a-f0-9]{64}$"
+                          "pattern": "^[a-f0-9]{64}$",
+                          "nullable": true
                         },
                         "source_count": {
                           "type": "integer",
@@ -21575,43 +21576,780 @@
           "data": {
             "type": "object",
             "properties": {
-              "document_id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "node_ref": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 512
-              },
-              "logical_path": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 2048
-              },
-              "title": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 300
-              },
-              "revision_id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "revision_number": {
-                "type": "number",
-                "enum": [
-                  1
+              "node": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "node_ref": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512
+                      },
+                      "workspace_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "parent_node_ref": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512,
+                        "nullable": true
+                      },
+                      "root_node_ref": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512
+                      },
+                      "system_root_key": {
+                        "type": "string",
+                        "enum": [
+                          "sources",
+                          "outreach",
+                          "social",
+                          "website",
+                          "records"
+                        ],
+                        "nullable": true
+                      },
+                      "logical_path": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 2048
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "empty",
+                          "active",
+                          "draft",
+                          "proposed",
+                          "published",
+                          "conflict",
+                          "stale",
+                          "failed",
+                          "archived"
+                        ]
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 300
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 2000,
+                        "nullable": true
+                      },
+                      "subject_user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                      },
+                      "revision_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                      },
+                      "content_digest": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$",
+                        "nullable": true
+                      },
+                      "source_count": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "citation_count": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "deep_link": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 2048
+                      },
+                      "publication": {
+                        "type": "object",
+                        "properties": {
+                          "state": {
+                            "type": "string",
+                            "enum": [
+                              "empty",
+                              "draft",
+                              "proposed",
+                              "published",
+                              "conflict",
+                              "archived"
+                            ]
+                          },
+                          "published_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "state",
+                          "published_at"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "policy": {
+                        "type": "object",
+                        "properties": {
+                          "access_scope": {
+                            "type": "string",
+                            "enum": [
+                              "workspace",
+                              "personal",
+                              "restricted"
+                            ]
+                          },
+                          "visibility": {
+                            "type": "string",
+                            "enum": [
+                              "workspace",
+                              "subject",
+                              "private"
+                            ]
+                          },
+                          "sensitivity": {
+                            "type": "string",
+                            "enum": [
+                              "public",
+                              "internal",
+                              "confidential",
+                              "restricted"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "access_scope",
+                          "visibility",
+                          "sensitivity"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "observed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                      },
+                      "node_type": {
+                        "type": "string",
+                        "enum": [
+                          "system_root"
+                        ]
+                      },
+                      "mutability": {
+                        "type": "string",
+                        "enum": [
+                          "read_only"
+                        ]
+                      },
+                      "folder_identity": {
+                        "type": "object",
+                        "properties": {
+                          "folder_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        },
+                        "required": [
+                          "folder_id"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "node_ref",
+                      "workspace_id",
+                      "parent_node_ref",
+                      "root_node_ref",
+                      "system_root_key",
+                      "logical_path",
+                      "state",
+                      "title",
+                      "description",
+                      "subject_user_id",
+                      "revision_id",
+                      "content_digest",
+                      "source_count",
+                      "citation_count",
+                      "deep_link",
+                      "publication",
+                      "policy",
+                      "created_at",
+                      "updated_at",
+                      "observed_at",
+                      "node_type",
+                      "mutability"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/node_ref"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/workspace_id"
+                      },
+                      "parent_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/parent_node_ref"
+                      },
+                      "root_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/root_node_ref"
+                      },
+                      "system_root_key": {
+                        "$ref": "#/properties/node/anyOf/0/properties/system_root_key"
+                      },
+                      "logical_path": {
+                        "$ref": "#/properties/node/anyOf/0/properties/logical_path"
+                      },
+                      "state": {
+                        "$ref": "#/properties/node/anyOf/0/properties/state"
+                      },
+                      "title": {
+                        "$ref": "#/properties/node/anyOf/0/properties/title"
+                      },
+                      "description": {
+                        "$ref": "#/properties/node/anyOf/0/properties/description"
+                      },
+                      "subject_user_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/subject_user_id"
+                      },
+                      "revision_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/revision_id"
+                      },
+                      "content_digest": {
+                        "$ref": "#/properties/node/anyOf/0/properties/content_digest"
+                      },
+                      "source_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/source_count"
+                      },
+                      "citation_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/citation_count"
+                      },
+                      "deep_link": {
+                        "$ref": "#/properties/node/anyOf/0/properties/deep_link"
+                      },
+                      "publication": {
+                        "$ref": "#/properties/node/anyOf/0/properties/publication"
+                      },
+                      "policy": {
+                        "$ref": "#/properties/node/anyOf/0/properties/policy"
+                      },
+                      "created_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/created_at"
+                      },
+                      "updated_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/updated_at"
+                      },
+                      "observed_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/observed_at"
+                      },
+                      "node_type": {
+                        "type": "string",
+                        "enum": [
+                          "custom_folder"
+                        ]
+                      },
+                      "mutability": {
+                        "type": "string",
+                        "enum": [
+                          "full",
+                          "read_only"
+                        ]
+                      },
+                      "folder_identity": {
+                        "$ref": "#/properties/node/anyOf/0/properties/folder_identity"
+                      }
+                    },
+                    "required": [
+                      "node_ref",
+                      "workspace_id",
+                      "parent_node_ref",
+                      "root_node_ref",
+                      "system_root_key",
+                      "logical_path",
+                      "state",
+                      "title",
+                      "description",
+                      "subject_user_id",
+                      "revision_id",
+                      "content_digest",
+                      "source_count",
+                      "citation_count",
+                      "deep_link",
+                      "publication",
+                      "policy",
+                      "created_at",
+                      "updated_at",
+                      "observed_at",
+                      "node_type",
+                      "mutability"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/node_ref"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/workspace_id"
+                      },
+                      "parent_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/parent_node_ref"
+                      },
+                      "root_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/root_node_ref"
+                      },
+                      "system_root_key": {
+                        "$ref": "#/properties/node/anyOf/0/properties/system_root_key"
+                      },
+                      "logical_path": {
+                        "$ref": "#/properties/node/anyOf/0/properties/logical_path"
+                      },
+                      "state": {
+                        "$ref": "#/properties/node/anyOf/0/properties/state"
+                      },
+                      "title": {
+                        "$ref": "#/properties/node/anyOf/0/properties/title"
+                      },
+                      "description": {
+                        "$ref": "#/properties/node/anyOf/0/properties/description"
+                      },
+                      "subject_user_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/subject_user_id"
+                      },
+                      "revision_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/revision_id"
+                      },
+                      "content_digest": {
+                        "$ref": "#/properties/node/anyOf/0/properties/content_digest"
+                      },
+                      "source_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/source_count"
+                      },
+                      "citation_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/citation_count"
+                      },
+                      "deep_link": {
+                        "$ref": "#/properties/node/anyOf/0/properties/deep_link"
+                      },
+                      "publication": {
+                        "$ref": "#/properties/node/anyOf/0/properties/publication"
+                      },
+                      "policy": {
+                        "$ref": "#/properties/node/anyOf/0/properties/policy"
+                      },
+                      "created_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/created_at"
+                      },
+                      "updated_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/updated_at"
+                      },
+                      "observed_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/observed_at"
+                      },
+                      "node_type": {
+                        "type": "string",
+                        "enum": [
+                          "document"
+                        ]
+                      },
+                      "mutability": {
+                        "type": "string",
+                        "enum": [
+                          "full",
+                          "draft_only",
+                          "read_only"
+                        ]
+                      },
+                      "lifecycle": {
+                        "type": "object",
+                        "properties": {
+                          "folder_id": {
+                            "$ref": "#/properties/node/anyOf/0/properties/folder_identity/properties/folder_id"
+                          },
+                          "document_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "revision_counter": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "folder_id",
+                          "document_id",
+                          "revision_counter"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "node_ref",
+                      "workspace_id",
+                      "parent_node_ref",
+                      "root_node_ref",
+                      "system_root_key",
+                      "logical_path",
+                      "state",
+                      "title",
+                      "description",
+                      "subject_user_id",
+                      "revision_id",
+                      "content_digest",
+                      "source_count",
+                      "citation_count",
+                      "deep_link",
+                      "publication",
+                      "policy",
+                      "created_at",
+                      "updated_at",
+                      "observed_at",
+                      "node_type",
+                      "mutability"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/node_ref"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/workspace_id"
+                      },
+                      "parent_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/parent_node_ref"
+                      },
+                      "root_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/root_node_ref"
+                      },
+                      "system_root_key": {
+                        "$ref": "#/properties/node/anyOf/0/properties/system_root_key"
+                      },
+                      "logical_path": {
+                        "$ref": "#/properties/node/anyOf/0/properties/logical_path"
+                      },
+                      "state": {
+                        "$ref": "#/properties/node/anyOf/0/properties/state"
+                      },
+                      "title": {
+                        "$ref": "#/properties/node/anyOf/0/properties/title"
+                      },
+                      "description": {
+                        "$ref": "#/properties/node/anyOf/0/properties/description"
+                      },
+                      "subject_user_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/subject_user_id"
+                      },
+                      "revision_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/revision_id"
+                      },
+                      "content_digest": {
+                        "$ref": "#/properties/node/anyOf/0/properties/content_digest"
+                      },
+                      "source_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/source_count"
+                      },
+                      "citation_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/citation_count"
+                      },
+                      "deep_link": {
+                        "$ref": "#/properties/node/anyOf/0/properties/deep_link"
+                      },
+                      "publication": {
+                        "$ref": "#/properties/node/anyOf/0/properties/publication"
+                      },
+                      "policy": {
+                        "$ref": "#/properties/node/anyOf/0/properties/policy"
+                      },
+                      "created_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/created_at"
+                      },
+                      "updated_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/updated_at"
+                      },
+                      "observed_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/observed_at"
+                      },
+                      "node_type": {
+                        "type": "string",
+                        "enum": [
+                          "source"
+                        ]
+                      },
+                      "mutability": {
+                        "type": "string",
+                        "enum": [
+                          "read_only"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "node_ref",
+                      "workspace_id",
+                      "parent_node_ref",
+                      "root_node_ref",
+                      "system_root_key",
+                      "logical_path",
+                      "state",
+                      "title",
+                      "description",
+                      "subject_user_id",
+                      "revision_id",
+                      "content_digest",
+                      "source_count",
+                      "citation_count",
+                      "deep_link",
+                      "publication",
+                      "policy",
+                      "created_at",
+                      "updated_at",
+                      "observed_at",
+                      "node_type",
+                      "mutability"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/node_ref"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/workspace_id"
+                      },
+                      "parent_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/parent_node_ref"
+                      },
+                      "root_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/root_node_ref"
+                      },
+                      "system_root_key": {
+                        "$ref": "#/properties/node/anyOf/0/properties/system_root_key"
+                      },
+                      "logical_path": {
+                        "$ref": "#/properties/node/anyOf/0/properties/logical_path"
+                      },
+                      "state": {
+                        "$ref": "#/properties/node/anyOf/0/properties/state"
+                      },
+                      "title": {
+                        "$ref": "#/properties/node/anyOf/0/properties/title"
+                      },
+                      "description": {
+                        "$ref": "#/properties/node/anyOf/0/properties/description"
+                      },
+                      "subject_user_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/subject_user_id"
+                      },
+                      "revision_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/revision_id"
+                      },
+                      "content_digest": {
+                        "$ref": "#/properties/node/anyOf/0/properties/content_digest"
+                      },
+                      "source_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/source_count"
+                      },
+                      "citation_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/citation_count"
+                      },
+                      "deep_link": {
+                        "$ref": "#/properties/node/anyOf/0/properties/deep_link"
+                      },
+                      "publication": {
+                        "$ref": "#/properties/node/anyOf/0/properties/publication"
+                      },
+                      "policy": {
+                        "$ref": "#/properties/node/anyOf/0/properties/policy"
+                      },
+                      "created_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/created_at"
+                      },
+                      "updated_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/updated_at"
+                      },
+                      "observed_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/observed_at"
+                      },
+                      "node_type": {
+                        "type": "string",
+                        "enum": [
+                          "resource"
+                        ]
+                      },
+                      "mutability": {
+                        "type": "string",
+                        "enum": [
+                          "read_only"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "node_ref",
+                      "workspace_id",
+                      "parent_node_ref",
+                      "root_node_ref",
+                      "system_root_key",
+                      "logical_path",
+                      "state",
+                      "title",
+                      "description",
+                      "subject_user_id",
+                      "revision_id",
+                      "content_digest",
+                      "source_count",
+                      "citation_count",
+                      "deep_link",
+                      "publication",
+                      "policy",
+                      "created_at",
+                      "updated_at",
+                      "observed_at",
+                      "node_type",
+                      "mutability"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/node_ref"
+                      },
+                      "workspace_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/workspace_id"
+                      },
+                      "parent_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/parent_node_ref"
+                      },
+                      "root_node_ref": {
+                        "$ref": "#/properties/node/anyOf/0/properties/root_node_ref"
+                      },
+                      "system_root_key": {
+                        "$ref": "#/properties/node/anyOf/0/properties/system_root_key"
+                      },
+                      "logical_path": {
+                        "$ref": "#/properties/node/anyOf/0/properties/logical_path"
+                      },
+                      "state": {
+                        "$ref": "#/properties/node/anyOf/0/properties/state"
+                      },
+                      "title": {
+                        "$ref": "#/properties/node/anyOf/0/properties/title"
+                      },
+                      "description": {
+                        "$ref": "#/properties/node/anyOf/0/properties/description"
+                      },
+                      "subject_user_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/subject_user_id"
+                      },
+                      "revision_id": {
+                        "$ref": "#/properties/node/anyOf/0/properties/revision_id"
+                      },
+                      "content_digest": {
+                        "$ref": "#/properties/node/anyOf/0/properties/content_digest"
+                      },
+                      "source_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/source_count"
+                      },
+                      "citation_count": {
+                        "$ref": "#/properties/node/anyOf/0/properties/citation_count"
+                      },
+                      "deep_link": {
+                        "$ref": "#/properties/node/anyOf/0/properties/deep_link"
+                      },
+                      "publication": {
+                        "$ref": "#/properties/node/anyOf/0/properties/publication"
+                      },
+                      "policy": {
+                        "$ref": "#/properties/node/anyOf/0/properties/policy"
+                      },
+                      "created_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/created_at"
+                      },
+                      "updated_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/updated_at"
+                      },
+                      "observed_at": {
+                        "$ref": "#/properties/node/anyOf/0/properties/observed_at"
+                      },
+                      "node_type": {
+                        "type": "string",
+                        "enum": [
+                          "evidence"
+                        ]
+                      },
+                      "mutability": {
+                        "type": "string",
+                        "enum": [
+                          "read_only"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "node_ref",
+                      "workspace_id",
+                      "parent_node_ref",
+                      "root_node_ref",
+                      "system_root_key",
+                      "logical_path",
+                      "state",
+                      "title",
+                      "description",
+                      "subject_user_id",
+                      "revision_id",
+                      "content_digest",
+                      "source_count",
+                      "citation_count",
+                      "deep_link",
+                      "publication",
+                      "policy",
+                      "created_at",
+                      "updated_at",
+                      "observed_at",
+                      "node_type",
+                      "mutability"
+                    ],
+                    "additionalProperties": false
+                  }
                 ]
+              },
+              "draft_revision_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expected_revision_id": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
               }
             },
             "required": [
-              "document_id",
-              "node_ref",
-              "logical_path",
-              "title",
-              "revision_id",
-              "revision_number"
+              "node",
+              "draft_revision_id",
+              "expected_revision_id"
             ],
             "additionalProperties": false
           },
@@ -21969,7 +22707,8 @@
                       },
                       "content_digest": {
                         "type": "string",
-                        "pattern": "^[a-f0-9]{64}$"
+                        "pattern": "^[a-f0-9]{64}$",
+                        "nullable": true
                       },
                       "source_count": {
                         "type": "integer",
@@ -23411,7 +24150,8 @@
                       },
                       "content_digest": {
                         "type": "string",
-                        "pattern": "^[a-f0-9]{64}$"
+                        "pattern": "^[a-f0-9]{64}$",
+                        "nullable": true
                       },
                       "source_count": {
                         "type": "integer",
@@ -24632,7 +25372,8 @@
                         },
                         "content_digest": {
                           "type": "string",
-                          "pattern": "^[a-f0-9]{64}$"
+                          "pattern": "^[a-f0-9]{64}$",
+                          "nullable": true
                         },
                         "source_count": {
                           "type": "integer",
@@ -25685,7 +26426,8 @@
                       },
                       "content_digest": {
                         "type": "string",
-                        "pattern": "^[a-f0-9]{64}$"
+                        "pattern": "^[a-f0-9]{64}$",
+                        "nullable": true
                       },
                       "source_count": {
                         "type": "integer",
@@ -28214,7 +28956,8 @@
                         },
                         "content_digest": {
                           "type": "string",
-                          "pattern": "^[a-f0-9]{64}$"
+                          "pattern": "^[a-f0-9]{64}$",
+                          "nullable": true
                         },
                         "source_count": {
                           "type": "integer",
@@ -49599,6 +50342,16 @@
               ]
             },
             {
+              "name": "qualification_requirement",
+              "type": "string",
+              "required": false,
+              "description": "qualification_requirement",
+              "enum": [
+                "required",
+                "nice_to_have"
+              ]
+            },
+            {
               "name": "output_schema",
               "type": "object",
               "required": false,
@@ -49844,6 +50597,16 @@
               "enum": [
                 "generic",
                 "fit_score"
+              ]
+            },
+            {
+              "name": "qualification_requirement",
+              "type": "string",
+              "required": false,
+              "description": "qualification_requirement",
+              "enum": [
+                "required",
+                "nice_to_have"
               ]
             },
             {
@@ -50682,6 +51445,13 @@
                 "enum": [
                   "generic",
                   "fit_score"
+                ]
+              },
+              "qualification_requirement": {
+                "type": "string",
+                "enum": [
+                  "required",
+                  "nice_to_have"
                 ]
               },
               "output_schema": {
@@ -52400,6 +53170,13 @@
                     "enum": [
                       "generic",
                       "fit_score"
+                    ]
+                  },
+                  "qualification_requirement": {
+                    "type": "string",
+                    "enum": [
+                      "required",
+                      "nice_to_have"
                     ]
                   },
                   "output_schema": {
@@ -54421,6 +55198,13 @@
                           "enum": [
                             "generic",
                             "fit_score"
+                          ]
+                        },
+                        "qualification_requirement": {
+                          "type": "string",
+                          "enum": [
+                            "required",
+                            "nice_to_have"
                           ]
                         },
                         "output_schema": {
@@ -56989,6 +57773,16 @@
               ]
             },
             {
+              "name": "qualification_requirement",
+              "type": "string",
+              "required": false,
+              "description": "qualification_requirement",
+              "enum": [
+                "required",
+                "nice_to_have"
+              ]
+            },
+            {
               "name": "output_schema",
               "type": "object",
               "required": false,
@@ -57829,6 +58623,13 @@
                 "enum": [
                   "generic",
                   "fit_score"
+                ]
+              },
+              "qualification_requirement": {
+                "type": "string",
+                "enum": [
+                  "required",
+                  "nice_to_have"
                 ]
               },
               "output_schema": {
@@ -59545,6 +60346,13 @@
                     "enum": [
                       "generic",
                       "fit_score"
+                    ]
+                  },
+                  "qualification_requirement": {
+                    "type": "string",
+                    "enum": [
+                      "required",
+                      "nice_to_have"
                     ]
                   },
                   "output_schema": {
@@ -157004,6 +157812,13 @@
                         "enum": [
                           "generic",
                           "fit_score"
+                        ]
+                      },
+                      "qualification_requirement": {
+                        "type": "string",
+                        "enum": [
+                          "required",
+                          "nice_to_have"
                         ]
                       },
                       "output_schema": {
@@ -303343,12 +304158,6 @@
           "type": "string",
           "required": false,
           "description": "subject"
-        },
-        {
-          "name": "to",
-          "type": "string",
-          "required": false,
-          "description": "to"
         }
       ],
       "input_json_schema": {
@@ -303377,11 +304186,6 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 998
-          },
-          "to": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 500
           }
         },
         "required": [
@@ -373821,6 +374625,13 @@
                           "enum": [
                             "generic",
                             "fit_score"
+                          ]
+                        },
+                        "qualification_requirement": {
+                          "type": "string",
+                          "enum": [
+                            "required",
+                            "nice_to_have"
                           ]
                         },
                         "output_schema": {
@@ -447957,6 +448768,13 @@
                                 "fit_score"
                               ]
                             },
+                            "qualification_requirement": {
+                              "type": "string",
+                              "enum": [
+                                "required",
+                                "nice_to_have"
+                              ]
+                            },
                             "output_schema": {
                               "type": "object",
                               "additionalProperties": {
@@ -450246,6 +451064,13 @@
                           "enum": [
                             "generic",
                             "fit_score"
+                          ]
+                        },
+                        "qualification_requirement": {
+                          "type": "string",
+                          "enum": [
+                            "required",
+                            "nice_to_have"
                           ]
                         },
                         "output_schema": {
@@ -462757,7 +463582,7 @@
     {
       "name": "ds_workbook",
       "scope": null,
-      "description": "Build and enrich a list of people or companies. Highest real-money risk of the twelve tools: load the outreach skill before anything beyond a simple read. Cost-guards first: call action=preview (sample a source on a handful of rows, never creates a column; requires capability_id) and action=preview_cost (what a run will cost; single capability table_runs.preview_cost) BEFORE add_column, run, or run_all. Then list_columns for exact names, build one column at a time, set_run_condition as a separate call after the column exists, and treat the first real run as a ~30-row sample. Multi-capability actions need capability_id. Every row is credits already spent, so archive rather than delete.",
+      "description": "Build and enrich a list of people or companies. Highest real-money risk of the twelve tools: load the sourcing-enrichment skill before anything beyond a simple read. Cost-guards first: call action=preview (sample a source on a handful of rows, never creates a column; requires capability_id) and action=preview_cost (what a run will cost; single capability table_runs.preview_cost) BEFORE add_column, run, or run_all. Then list_columns for exact names, build one column at a time, set_run_condition as a separate call after the column exists, and treat the first real run as a ~30-row sample. Multi-capability actions need capability_id. Every row is credits already spent, so archive rather than delete.",
       "billing_exempt": false
     },
     {
@@ -463151,5 +463976,5 @@
     "capabilities": 1157,
     "mcp_tools": 12
   },
-  "manifest_digest": "8fe3b3889098ec17a3c5c55a791b88c9e62d0ae90dc087e0451c6ea0bcebfee0"
+  "manifest_digest": "b04b46bde0e31e3d2af11ce11af8a2a1af733820093743cfdad830c84e27566c"
 }

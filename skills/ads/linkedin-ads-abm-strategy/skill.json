@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "43bd7ae6fcd1b522",
+  "verified_capability_hash": "dff0a5ad10480b6f",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/ads/linkedin-ads-abm-strategy/SKILL.md",
   "install_command": "dreamstate skills install linkedin-ads-abm-strategy",
