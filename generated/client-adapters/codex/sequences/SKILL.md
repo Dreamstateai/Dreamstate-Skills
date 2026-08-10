@@ -7,16 +7,16 @@ capability_ids: ["brain.context.get","brain.context.search","outreach.ai_spintax
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]}]}
 compatibility:
   playbook_kernel_version: 2.0.0
-  playbook_kernel_hash: 95ffa2e1dc791c732fdccb53b69598648d500b23f9c8a73db3a018b97484d73e
+  playbook_kernel_hash: 5f19726d9ff1b9b4130cc34528bf3010656ba794e0eb13a22c084ec7555bc74d
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: dff0a5ad10480b6f
-  manifest_digest: b04b46bde0e31e3d2af11ce11af8a2a1af733820093743cfdad830c84e27566c
+  capability_hash: 1e9226731ba13833
+  manifest_digest: e7a6dbb512ea50558f882039ef98819211053e99b9ade8b808879ae0c93f7c09
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.7.0
-  source_release_hash: 95ffa2e1dc791c732fdccb53b69598648d500b23f9c8a73db3a018b97484d73e
+  source_release_hash: 5f19726d9ff1b9b4130cc34528bf3010656ba794e0eb13a22c084ec7555bc74d
   generator_version: 1.0.0
   client: codex
   kernel_id: sequences

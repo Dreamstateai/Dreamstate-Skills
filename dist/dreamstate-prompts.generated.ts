@@ -1,6 +1,6 @@
 // GENERATED. Source: Dreamstate-Skills playbooks and runtime capability manifest.
 export interface DreamstatePrompt { name: string; title: string; description: string; requiredScopes: string[]; executionMode: string; body: string }
-export const DREAMSTATE_SKILLS_CAPABILITY_HASH = "dff0a5ad10480b6f";
+export const DREAMSTATE_SKILLS_CAPABILITY_HASH = "1e9226731ba13833";
 export const DREAMSTATE_PROMPTS: DreamstatePrompt[] = [
   {
     "name": "dreamstate",

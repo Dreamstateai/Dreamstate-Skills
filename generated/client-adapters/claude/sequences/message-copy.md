@@ -19,6 +19,8 @@ Two ways a step carries copy, and a step must use one of them or it fails valida
 
 Every personalization variable maps to exactly one upstream source: a row attribute or relation (via `rows.get`/`rows.query`), or an AI-derived value tied to a specific prompt reference. There is no "leave it blank and hope" path. If a variable cannot be resolved for a given row, that is a missing-input case the definition must declare a behavior for (skip the row, use a fallback value, or route to `manual_review`), not something to paper over with a generic phrase. Never display a preview with an unresolved `{{token}}` still in it; that is not a draft, it is a bug.
 
+A token is `{{column_key}}` or `{{column_slug}}`, matched against the exact worksheet column that produced the value; a row published both names for the same cell, so either resolves, but the token itself must name a column that exists on the exact enrolled worksheet, never a column from a different table or a remembered field name from a past sequence. A step referencing a column the current worksheet does not have is a definition error to surface before `sequences.bind`, not a token to leave for send time to fail on.
+
 ## Content rules, non-negotiable
 
 - No "reaching out", "hope this finds you well", "just wanted to", or any other opener that reads as templated mail-merge filler.

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "dff0a5ad10480b6f",
+  "capability_hash": "1e9226731ba13833",
   "api_version": "v1",
   "capabilities": [
     {
@@ -50342,16 +50342,6 @@
               ]
             },
             {
-              "name": "qualification_requirement",
-              "type": "string",
-              "required": false,
-              "description": "qualification_requirement",
-              "enum": [
-                "required",
-                "nice_to_have"
-              ]
-            },
-            {
               "name": "output_schema",
               "type": "object",
               "required": false,
@@ -50509,6 +50499,16 @@
                   "required": true,
                   "description": "path"
                 }
+              ]
+            },
+            {
+              "name": "qualification_requirement",
+              "type": "string",
+              "required": false,
+              "description": "qualification_requirement",
+              "enum": [
+                "required",
+                "nice_to_have"
               ]
             }
           ]
@@ -50600,16 +50600,6 @@
               ]
             },
             {
-              "name": "qualification_requirement",
-              "type": "string",
-              "required": false,
-              "description": "qualification_requirement",
-              "enum": [
-                "required",
-                "nice_to_have"
-              ]
-            },
-            {
               "name": "output_schema",
               "type": "object",
               "required": false,
@@ -50767,6 +50757,16 @@
                   "required": true,
                   "description": "path"
                 }
+              ]
+            },
+            {
+              "name": "qualification_requirement",
+              "type": "string",
+              "required": false,
+              "description": "qualification_requirement",
+              "enum": [
+                "required",
+                "nice_to_have"
               ]
             }
           ]
@@ -51447,13 +51447,6 @@
                   "fit_score"
                 ]
               },
-              "qualification_requirement": {
-                "type": "string",
-                "enum": [
-                  "required",
-                  "nice_to_have"
-                ]
-              },
               "output_schema": {
                 "type": "object",
                 "additionalProperties": {
@@ -51631,6 +51624,13 @@
                   "path"
                 ],
                 "additionalProperties": false
+              },
+              "qualification_requirement": {
+                "type": "string",
+                "enum": [
+                  "required",
+                  "nice_to_have"
+                ]
               }
             },
             "additionalProperties": false
@@ -53172,13 +53172,6 @@
                       "fit_score"
                     ]
                   },
-                  "qualification_requirement": {
-                    "type": "string",
-                    "enum": [
-                      "required",
-                      "nice_to_have"
-                    ]
-                  },
                   "output_schema": {
                     "type": "object",
                     "additionalProperties": {
@@ -53355,6 +53348,13 @@
                       "path"
                     ],
                     "additionalProperties": false
+                  },
+                  "qualification_requirement": {
+                    "type": "string",
+                    "enum": [
+                      "required",
+                      "nice_to_have"
+                    ]
                   }
                 },
                 "additionalProperties": false
@@ -55200,13 +55200,6 @@
                             "fit_score"
                           ]
                         },
-                        "qualification_requirement": {
-                          "type": "string",
-                          "enum": [
-                            "required",
-                            "nice_to_have"
-                          ]
-                        },
                         "output_schema": {
                           "type": "object",
                           "additionalProperties": {
@@ -55383,6 +55376,13 @@
                             "path"
                           ],
                           "additionalProperties": false
+                        },
+                        "qualification_requirement": {
+                          "type": "string",
+                          "enum": [
+                            "required",
+                            "nice_to_have"
+                          ]
                         }
                       },
                       "additionalProperties": false
@@ -57773,16 +57773,6 @@
               ]
             },
             {
-              "name": "qualification_requirement",
-              "type": "string",
-              "required": false,
-              "description": "qualification_requirement",
-              "enum": [
-                "required",
-                "nice_to_have"
-              ]
-            },
-            {
               "name": "output_schema",
               "type": "object",
               "required": false,
@@ -57940,6 +57930,16 @@
                   "required": true,
                   "description": "path"
                 }
+              ]
+            },
+            {
+              "name": "qualification_requirement",
+              "type": "string",
+              "required": false,
+              "description": "qualification_requirement",
+              "enum": [
+                "required",
+                "nice_to_have"
               ]
             }
           ]
@@ -58625,13 +58625,6 @@
                   "fit_score"
                 ]
               },
-              "qualification_requirement": {
-                "type": "string",
-                "enum": [
-                  "required",
-                  "nice_to_have"
-                ]
-              },
               "output_schema": {
                 "type": "object",
                 "additionalProperties": {
@@ -58809,6 +58802,13 @@
                   "path"
                 ],
                 "additionalProperties": false
+              },
+              "qualification_requirement": {
+                "type": "string",
+                "enum": [
+                  "required",
+                  "nice_to_have"
+                ]
               }
             },
             "additionalProperties": false
@@ -60348,13 +60348,6 @@
                       "fit_score"
                     ]
                   },
-                  "qualification_requirement": {
-                    "type": "string",
-                    "enum": [
-                      "required",
-                      "nice_to_have"
-                    ]
-                  },
                   "output_schema": {
                     "type": "object",
                     "additionalProperties": {
@@ -60531,6 +60524,13 @@
                       "path"
                     ],
                     "additionalProperties": false
+                  },
+                  "qualification_requirement": {
+                    "type": "string",
+                    "enum": [
+                      "required",
+                      "nice_to_have"
+                    ]
                   }
                 },
                 "additionalProperties": false
@@ -157814,13 +157814,6 @@
                           "fit_score"
                         ]
                       },
-                      "qualification_requirement": {
-                        "type": "string",
-                        "enum": [
-                          "required",
-                          "nice_to_have"
-                        ]
-                      },
                       "output_schema": {
                         "type": "object",
                         "additionalProperties": {
@@ -157997,6 +157990,13 @@
                           "path"
                         ],
                         "additionalProperties": false
+                      },
+                      "qualification_requirement": {
+                        "type": "string",
+                        "enum": [
+                          "required",
+                          "nice_to_have"
+                        ]
                       }
                     },
                     "additionalProperties": false
@@ -374627,13 +374627,6 @@
                             "fit_score"
                           ]
                         },
-                        "qualification_requirement": {
-                          "type": "string",
-                          "enum": [
-                            "required",
-                            "nice_to_have"
-                          ]
-                        },
                         "output_schema": {
                           "type": "object",
                           "additionalProperties": {
@@ -374810,6 +374803,13 @@
                             "path"
                           ],
                           "additionalProperties": false
+                        },
+                        "qualification_requirement": {
+                          "type": "string",
+                          "enum": [
+                            "required",
+                            "nice_to_have"
+                          ]
                         }
                       },
                       "additionalProperties": false
@@ -448768,13 +448768,6 @@
                                 "fit_score"
                               ]
                             },
-                            "qualification_requirement": {
-                              "type": "string",
-                              "enum": [
-                                "required",
-                                "nice_to_have"
-                              ]
-                            },
                             "output_schema": {
                               "type": "object",
                               "additionalProperties": {
@@ -448920,6 +448913,13 @@
                                 "path"
                               ],
                               "additionalProperties": false
+                            },
+                            "qualification_requirement": {
+                              "type": "string",
+                              "enum": [
+                                "required",
+                                "nice_to_have"
+                              ]
                             }
                           },
                           "additionalProperties": false
@@ -451066,13 +451066,6 @@
                             "fit_score"
                           ]
                         },
-                        "qualification_requirement": {
-                          "type": "string",
-                          "enum": [
-                            "required",
-                            "nice_to_have"
-                          ]
-                        },
                         "output_schema": {
                           "type": "object",
                           "additionalProperties": {
@@ -451249,6 +451242,13 @@
                             "path"
                           ],
                           "additionalProperties": false
+                        },
+                        "qualification_requirement": {
+                          "type": "string",
+                          "enum": [
+                            "required",
+                            "nice_to_have"
+                          ]
                         }
                       },
                       "additionalProperties": false
@@ -463976,5 +463976,5 @@
     "capabilities": 1157,
     "mcp_tools": 12
   },
-  "manifest_digest": "b04b46bde0e31e3d2af11ce11af8a2a1af733820093743cfdad830c84e27566c"
+  "manifest_digest": "e7a6dbb512ea50558f882039ef98819211053e99b9ade8b808879ae0c93f7c09"
 }

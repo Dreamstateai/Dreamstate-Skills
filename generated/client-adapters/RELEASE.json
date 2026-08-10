@@ -2,14 +2,14 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.7.0",
-  "source_release_hash": "95ffa2e1dc791c732fdccb53b69598648d500b23f9c8a73db3a018b97484d73e",
+  "source_release_hash": "5f19726d9ff1b9b4130cc34528bf3010656ba794e0eb13a22c084ec7555bc74d",
   "compatibility": {
     "playbook_kernel_version": "2.0.0",
-    "playbook_kernel_hash": "95ffa2e1dc791c732fdccb53b69598648d500b23f9c8a73db3a018b97484d73e",
+    "playbook_kernel_hash": "5f19726d9ff1b9b4130cc34528bf3010656ba794e0eb13a22c084ec7555bc74d",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "dff0a5ad10480b6f",
-    "manifest_digest": "b04b46bde0e31e3d2af11ce11af8a2a1af733820093743cfdad830c84e27566c",
+    "capability_hash": "1e9226731ba13833",
+    "manifest_digest": "e7a6dbb512ea50558f882039ef98819211053e99b9ade8b808879ae0c93f7c09",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -116,7 +116,7 @@
         "brain.knowledge.index"
       ],
       "kernel_sha256": "90d4ea0b273bee856cd6f5b6eda8c3e9d659f0974c752640dc590f3216925364",
-      "evals_sha256": "5f2a458db81b5d9c1f9eec9579a4746b58e0e8c473bebcdb3467dd62c52c93dc",
+      "evals_sha256": "dfa806d2f6417f06ec117af0e03648c4bd4d5740918295af6578f802513fbdb8",
       "supporting_sha256": {
         "lifecycle.md": "db73933c6feab762b303d70df8de0727c4266f78f255173364744aa1387a65b8",
         "retrieval.md": "7ebdfc7da1841ddf10b1728014b980e5cdd7cce39eb162ba9034b088360345e5",
@@ -583,7 +583,7 @@
       "supporting_sha256": {
         "deliverability-and-caps.md": "c7c9b04673dc60edab3acd159a6c04d87d32acdc29e89865f607054eed57f31d",
         "enrollment.md": "a60501aafe23333334dddcfa30e31e4585e981f2ee0ccc5c50aa681f450767e8",
-        "message-copy.md": "3659d6c10d1c49b376902381d01a4f7c52160f093b5723389a482e39b5b02a18",
+        "message-copy.md": "7385bd9bf544d357b70a8f19797ab5b1521ad720bd20bbe314724a043317181d",
         "preview-and-handoff.md": "284478ffc7713463f8bbf8802479bafea5a28ba0f8abc27c5fbaad457d87072a",
         "replies.md": "ed12337018c286ad74d63751f0ad4f56580d71ce469ca925f39fa198cdb44acb",
         "steps-and-timing.md": "dce5a7b2fe95a0b00b10b27d230417f58452e3d03b925bdbe0f0fcd982262b13"
@@ -827,7 +827,7 @@
       "kernel_sha256": "a50844c9de6e211a43f23388f7ff8d873e4e0d18c3bb4e9a481043bcaad641bd",
       "evals_sha256": "3e20eafe6a5c2852e44379bf09c1669e37619e70728b4a55bda0854753dc3fb2",
       "supporting_sha256": {
-        "enrichment-columns.md": "5845a8a3c3395f2926a0a5abfcd46df4101e9218a86b85bab11ce0acfff6fd87",
+        "enrichment-columns.md": "d7b2ac010b248b68c0b898b73b9f061a4e58f605a9c497f148537f5958ae5e84",
         "runs-and-economics.md": "eccdda8e0c6ecae6b43456104064a3faf82e42c7fad79254c0c216be7a561074",
         "signal-sources.md": "aabbb64a29f3de7cae7c1a0dc666e597f679b19e2d6dd5364f5a291d41ab9ca9",
         "source-testing.md": "2faa69e10954f2835bcb99ecf433c4a76ef6241a5cd7fdfe59bc40fc203ff64e"
