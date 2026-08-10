@@ -37,7 +37,7 @@
     "workflows:write"
   ],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "8dd426c45ca54821",
+  "verified_capability_hash": "08ed48ef74a7ed26",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/workflows/workflow-triggers/SKILL.md",
   "install_command": "dreamstate skills install workflow-triggers",
