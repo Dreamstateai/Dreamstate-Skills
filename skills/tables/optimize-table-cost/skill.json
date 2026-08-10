@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "08ed48ef74a7ed26",
+  "verified_capability_hash": "f19b39263ce95636",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/tables/optimize-table-cost/SKILL.md",
   "install_command": "dreamstate skills install optimize-table-cost",

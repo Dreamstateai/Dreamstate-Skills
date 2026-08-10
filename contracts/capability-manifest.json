@@ -2,7 +2,7 @@
   "schema_version": 1,
   "generated_from": "dreamstate-runtime-registries",
   "definition_version": "dreamstate-capabilities-v1",
-  "capability_hash": "08ed48ef74a7ed26",
+  "capability_hash": "f19b39263ce95636",
   "api_version": "v1",
   "capabilities": [
     {
@@ -139480,8 +139480,7 @@
                                   "required": [
                                     "id",
                                     "kind",
-                                    "duration_minutes",
-                                    "business_days_only"
+                                    "duration_minutes"
                                   ],
                                   "additionalProperties": false
                                 },
@@ -139735,8 +139734,7 @@
                                           ]
                                         },
                                         "channel_id": {
-                                          "type": "string",
-                                          "minLength": 1
+                                          "type": "string"
                                         },
                                         "body_template": {
                                           "type": "string",
@@ -140129,7 +140127,6 @@
                           "name",
                           "timezone",
                           "sender_policy",
-                          "schedule_policy",
                           "rate_policy",
                           "message_policy",
                           "exit_rules",
@@ -322677,7 +322674,7 @@
             {
               "name": "schedule_policy",
               "type": "object",
-              "required": true,
+              "required": false,
               "description": "schedule_policy",
               "properties": [
                 {
@@ -323056,7 +323053,7 @@
             {
               "name": "schedule_policy",
               "type": "object",
-              "required": true,
+              "required": false,
               "description": "schedule_policy",
               "properties": [
                 {
@@ -324058,8 +324055,7 @@
                       "required": [
                         "id",
                         "kind",
-                        "duration_minutes",
-                        "business_days_only"
+                        "duration_minutes"
                       ],
                       "additionalProperties": false
                     },
@@ -324313,8 +324309,7 @@
                               ]
                             },
                             "channel_id": {
-                              "type": "string",
-                              "minLength": 1
+                              "type": "string"
                             },
                             "body_template": {
                               "type": "string",
@@ -324707,7 +324702,6 @@
               "name",
               "timezone",
               "sender_policy",
-              "schedule_policy",
               "rate_policy",
               "message_policy",
               "exit_rules",
@@ -326784,7 +326778,7 @@
             {
               "name": "schedule_policy",
               "type": "object",
-              "required": true,
+              "required": false,
               "description": "schedule_policy",
               "properties": [
                 {
@@ -327175,7 +327169,7 @@
             {
               "name": "schedule_policy",
               "type": "object",
-              "required": true,
+              "required": false,
               "description": "schedule_policy",
               "properties": [
                 {
@@ -328188,8 +328182,7 @@
                       "required": [
                         "id",
                         "kind",
-                        "duration_minutes",
-                        "business_days_only"
+                        "duration_minutes"
                       ],
                       "additionalProperties": false
                     },
@@ -328443,8 +328436,7 @@
                               ]
                             },
                             "channel_id": {
-                              "type": "string",
-                              "minLength": 1
+                              "type": "string"
                             },
                             "body_template": {
                               "type": "string",
@@ -328837,7 +328829,6 @@
               "name",
               "timezone",
               "sender_policy",
-              "schedule_policy",
               "rate_policy",
               "message_policy",
               "exit_rules",
@@ -459923,5 +459914,5 @@
     "capabilities": 1162,
     "mcp_tools": 12
   },
-  "manifest_digest": "581ca82dd84b68dc8dfe91bc8052e253182ee248d1a009d80ecb1d927ab30805"
+  "manifest_digest": "e114f71e1d253179cc463545863d84b51e9d49e06e1317734a868fd8d9f33814"
 }
