@@ -2,14 +2,14 @@
   "schema_version": 2,
   "source_repository": "dreamstate-skills",
   "source_release": "0.7.0",
-  "source_release_hash": "ad47803ff1d673f073770b62b270039e8edbb47772df4a1d53a7d7149131e4f9",
+  "source_release_hash": "c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c",
   "compatibility": {
     "playbook_kernel_version": "2.0.0",
-    "playbook_kernel_hash": "ad47803ff1d673f073770b62b270039e8edbb47772df4a1d53a7d7149131e4f9",
+    "playbook_kernel_hash": "c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c",
     "client_adapter_version": "1.0.0",
     "capability_definition_version": "dreamstate-capabilities-v1",
-    "capability_hash": "f19b39263ce95636",
-    "manifest_digest": "e114f71e1d253179cc463545863d84b51e9d49e06e1317734a868fd8d9f33814",
+    "capability_hash": "716adbb5ed64c723",
+    "manifest_digest": "f5b9ee699625895a51b9ec8855290a25452c341bab2c0ecddabb4e7478d63021",
     "minimum_api_version": "v1"
   },
   "skills": {
@@ -644,6 +644,7 @@
         "engagement.opportunities.list",
         "engagement.opportunities.status_set",
         "engagement.people_engaged_n_times",
+        "posts.comment_publish",
         "social.accounts_list",
         "social.analytics_goal_update",
         "social.analytics_query",
@@ -651,7 +652,6 @@
         "social.analytics_rollup_get",
         "social.audience_analytics",
         "social.brand_voice_get",
-        "social.comment_publish",
         "social.draft_score",
         "social.linkedin_analytics_import",
         "social.linkedin_notification_subscriptions_list",
@@ -666,7 +666,6 @@
         "social.post_analysis_job_create",
         "social.post_analytics",
         "social.post_format_hooks_list",
-        "social.reddit_comment_publish",
         "social.strategy_activity_calendar",
         "social.strategy_archetype_inspiration",
         "social.strategy_suggestions_generate",
@@ -682,8 +681,8 @@
         "tools.x_hook_generate",
         "tools.x_post_generate"
       ],
-      "kernel_sha256": "df87adee1d7c57983cc6d48d8294554a975fa2a20b4b6a9561ef769fb4d636ad",
-      "evals_sha256": "25e20ecce7a95c251c8b3c1f2ee8cbba9cb1afdbf6873dd884a8838f29ca15f3",
+      "kernel_sha256": "847fa666b6649edb9724befd6dcfabc749b108c38387c97c9c35ea22874c24e8",
+      "evals_sha256": "6c457ed849d4a73288d2463c012264aff8e0e568f0587ff2782b5c25b84b035c",
       "supporting_sha256": {
         "engagement.md": "f02a9f3065819c52923067d31c3c38d9425364de287e4bdb91943ab370ea4358",
         "hooks.md": "43b53ca910c9dcb62e162554e6209d6cd934a4c8adca17dff410a9c13c53986e",
@@ -692,9 +691,9 @@
         "x.md": "e70d4eee79e6dc5e4e3832be87090a00b881b8ab12955f0105134eb88ea2f846"
       },
       "adapter_sha256": {
-        "architect": "38fbbc0328b42dc81c8691eaa9ade500b806efc9b31016f0e0561ccea9726d9d",
-        "claude": "31e1a720ad8b06acd1147bc88346f10b1cbc482fdced568554dc5f8c36021421",
-        "codex": "1ccdf60718736b66d95abf6fe8deb933d705988e17f8d3313bc719ccb9d3787e"
+        "architect": "d52d42e1a0cd4c53898db9f55ed91f37004eb1e826ac205aa45bda28990c8884",
+        "claude": "3ae9b17c023c43aa53dd6b51b2668e68da709d91d5052b5a30e4f95ce1656959",
+        "codex": "be7ca3cd75c612ad6bfdf867ba5735dbcfd0a0051ceedcc47d6e7ccc465e72ff"
       }
     },
     "social.linkedin": {
@@ -785,6 +784,17 @@
         "columns.run",
         "columns.run_all",
         "columns.update",
+        "contacts.archive",
+        "contacts.bulk_upsert",
+        "contacts.draft_opener",
+        "contacts.enrich",
+        "contacts.find_email",
+        "contacts.find_phone",
+        "contacts.get",
+        "contacts.list",
+        "contacts.lookup_by_email",
+        "contacts.update",
+        "contacts.upsert",
         "executable_definitions.list_resolved",
         "executables.run",
         "executables.save",
@@ -823,8 +833,8 @@
         "usage.limits_get",
         "usage.status_get"
       ],
-      "kernel_sha256": "a50844c9de6e211a43f23388f7ff8d873e4e0d18c3bb4e9a481043bcaad641bd",
-      "evals_sha256": "3e20eafe6a5c2852e44379bf09c1669e37619e70728b4a55bda0854753dc3fb2",
+      "kernel_sha256": "dd5264c2ded8bcc0ff068fe54960949b30d9c2c5133e4862c3b2501af36a479e",
+      "evals_sha256": "0e425cd89b98231dcc625e5ebcc84d0ea13cf72ebd9f7fdb17b27a9b1b9e0d91",
       "supporting_sha256": {
         "enrichment-columns.md": "d7b2ac010b248b68c0b898b73b9f061a4e58f605a9c497f148537f5958ae5e84",
         "runs-and-economics.md": "eccdda8e0c6ecae6b43456104064a3faf82e42c7fad79254c0c216be7a561074",
@@ -832,9 +842,9 @@
         "source-testing.md": "2faa69e10954f2835bcb99ecf433c4a76ef6241a5cd7fdfe59bc40fc203ff64e"
       },
       "adapter_sha256": {
-        "architect": "d4e60e1bc205d45c70de08861450c011752f1c150eff7f4df6c58d839a40e19b",
-        "claude": "2befb342fb1782e79019bc4e959f120e1f873846e9cbe430808f14263a27dc0e",
-        "codex": "4031339023e817403cfaaa41d97076c1e7e087d6511e996b0479b6b31669abb2"
+        "architect": "f9c2319c1fa510026d66c162a9c4788a2c3fedc120833051b59cdde655f2d365",
+        "claude": "ff965aa479011055809c442399f2170f65a02fe0905137f368db9eeaf7ea1acc",
+        "codex": "5910c6891c4a08f2fd0d8d02953f82b2711cc1ef8f2c2ba7dc39babc6001b1a9"
       }
     },
     "workbooks": {

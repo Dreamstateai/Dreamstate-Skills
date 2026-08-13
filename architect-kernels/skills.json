@@ -331,7 +331,7 @@
         "workbooks",
         "worksheets"
       ],
-      "max_context_tokens": 2200,
+      "max_context_tokens": 2600,
       "completion_contract": {
         "version": 1,
         "fields": [

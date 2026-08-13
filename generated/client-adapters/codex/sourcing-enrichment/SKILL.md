@@ -3,28 +3,28 @@ id: sourcing-enrichment
 name: sourcing-enrichment
 description: "Choose reliable sources, test scarce-signal search variants, attach compatible producers, enrich dependency-ready rows, preserve evidence, price runs, and expand only after a representative sample passes."
 capability_domains: ["attachments","audiences","brain","cells","columns","evidence","executable_definitions","executables","outreach","record_enrichment","rows","signal_sources","sources","table_runs","table_sources","tables","workbooks","worksheets"]
-capability_ids: ["browser.linkedin.network_engagers_list","cells.inspect","cells.read_page","cells.settle","columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.update","executable_definitions.list_resolved","executables.run","executables.save","linkedin.search_parameters_list","outreach.enrichment_sequence_get","radar.signal_suggestions_get","record_enrichment.create","record_enrichment.get","signal_sources.capture_key_set","signal_sources.create","signal_sources.delete","signal_sources.events_list","signal_sources.get","signal_sources.list","signal_sources.test_event","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.list","table_runs.cancel","table_runs.failure_report","table_runs.get","table_runs.list","table_runs.preview_cost","table_runs.reconcile_column","table_runs.resume","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.preview_sync","table_sources.reset_frontier","table_sources.restore_frontier","table_sources.run","table_sources.update","usage.action_costs_get","usage.limits_get","usage.status_get"]
+capability_ids: ["browser.linkedin.network_engagers_list","cells.inspect","cells.read_page","cells.settle","columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.update","contacts.archive","contacts.bulk_upsert","contacts.draft_opener","contacts.enrich","contacts.find_email","contacts.find_phone","contacts.get","contacts.list","contacts.lookup_by_email","contacts.update","contacts.upsert","executable_definitions.list_resolved","executables.run","executables.save","linkedin.search_parameters_list","outreach.enrichment_sequence_get","radar.signal_suggestions_get","record_enrichment.create","record_enrichment.get","signal_sources.capture_key_set","signal_sources.create","signal_sources.delete","signal_sources.events_list","signal_sources.get","signal_sources.list","signal_sources.test_event","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.list","table_runs.cancel","table_runs.failure_report","table_runs.get","table_runs.list","table_runs.preview_cost","table_runs.reconcile_column","table_runs.resume","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.preview_sync","table_sources.reset_frontier","table_sources.restore_frontier","table_sources.run","table_sources.update","usage.action_costs_get","usage.limits_get","usage.status_get"]
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"cell_state","description":"Canonical settled-cell outcome state.","allowed_values":["settled","partial","failed","blocked","not_applicable"]},{"id":"evidence_state","description":"Evidence availability and provenance status.","allowed_values":["verified","partial","unavailable","not_applicable"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]},{"id":"selection_state","description":"Paid-run selection boundary state.","allowed_values":["representative","exact","missing","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 2.0.0
-  playbook_kernel_hash: ad47803ff1d673f073770b62b270039e8edbb47772df4a1d53a7d7149131e4f9
+  playbook_kernel_hash: c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: f19b39263ce95636
-  manifest_digest: e114f71e1d253179cc463545863d84b51e9d49e06e1317734a868fd8d9f33814
+  capability_hash: 716adbb5ed64c723
+  manifest_digest: f5b9ee699625895a51b9ec8855290a25452c341bab2c0ecddabb4e7478d63021
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.7.0
-  source_release_hash: ad47803ff1d673f073770b62b270039e8edbb47772df4a1d53a7d7149131e4f9
+  source_release_hash: c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c
   generator_version: 1.0.0
   client: codex
   kernel_id: sourcing-enrichment
   kernel_file: KERNEL.md
-  kernel_sha256: a50844c9de6e211a43f23388f7ff8d873e4e0d18c3bb4e9a481043bcaad641bd
-  adapter_sha256: 4031339023e817403cfaaa41d97076c1e7e087d6511e996b0479b6b31669abb2
+  kernel_sha256: dd5264c2ded8bcc0ff068fe54960949b30d9c2c5133e4862c3b2501af36a479e
+  adapter_sha256: 5910c6891c4a08f2fd0d8d02953f82b2711cc1ef8f2c2ba7dc39babc6001b1a9
   evals_file: evals.json
-  evals_sha256: 3e20eafe6a5c2852e44379bf09c1669e37619e70728b4a55bda0854753dc3fb2
+  evals_sha256: 0e425cd89b98231dcc625e5ebcc84d0ea13cf72ebd9f7fdb17b27a9b1b9e0d91
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -49,8 +49,8 @@ Never claim an effect a call did not return. Queued is not sent. Approved is not
 
 These are derived from this skill's exact capability contract, so state them up front instead of discovering them by failing a run.
 
-- Cannot act outside this contract: exactly 47 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
-- Cannot infer execution authority from these 25 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
+- Cannot act outside this contract: exactly 58 capability ids resolve here and nothing else does. Say which skill owns the request and hand it over, rather than attempting it and reporting a failure.
+- Cannot infer execution authority from these 33 mutating capability grants. The server's ActionDecision determines whether each exact operation auto-runs, requires a proposal, or is blocked. Preserve and report that durable decision and never claim an effect ran from Skill text alone.
 - Cannot hold a source definition as a capability grant: all 20 source definitions in the pinned manifest are discovery-only and carry no executor id, so granting one would be a no-op. Say the source is reached by attaching it to a worksheet and acting on that attachment.
 - Cannot start 11 of the 20 source definitions with `table_sources.run`: their runtime is a canonical producer that lands rows when its authenticated producer sends them, so a manual run is refused with a typed reason instead of queued. Those definitions are source.api_import, source.company_page, source.csv, source.data_provider, source.engaged_with_account, source.engaged_with_company, source.engaged_with_team, source.form_submission, source.keyword_commented, source.product_event, source.webhook_source. Say the source is attached and waiting on its producer.
 - Cannot schedule or subscribe a source run: the pinned manifest exposes no scheduling or subscription capability for sources, so a manual `table_sources.run` is the only start. Say scheduled and event-driven source runs are not available in this release.
@@ -59,32 +59,36 @@ These are derived from this skill's exact capability contract, so state them up 
 
 # Sourcing and enrichment
 <!-- architect-operation-contract
-{"required_capability_ids":["browser.linkedin.network_engagers_list","cells.inspect","cells.read_page","cells.settle","columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.update","executable_definitions.list_resolved","executables.run","executables.save","linkedin.search_parameters_list","outreach.enrichment_sequence_get","radar.signal_suggestions_get","record_enrichment.create","record_enrichment.get","signal_sources.capture_key_set","signal_sources.create","signal_sources.delete","signal_sources.events_list","signal_sources.get","signal_sources.list","signal_sources.test_event","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.list","table_runs.cancel","table_runs.failure_report","table_runs.get","table_runs.list","table_runs.preview_cost","table_runs.reconcile_column","table_runs.resume","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.preview_sync","table_sources.reset_frontier","table_sources.restore_frontier","table_sources.run","table_sources.update","usage.action_costs_get","usage.limits_get","usage.status_get"]}
+{"required_capability_ids":["browser.linkedin.network_engagers_list","cells.inspect","cells.read_page","cells.settle","columns.add","columns.archive","columns.list","columns.run","columns.run_all","columns.update","contacts.archive","contacts.bulk_upsert","contacts.draft_opener","contacts.enrich","contacts.find_email","contacts.find_phone","contacts.get","contacts.list","contacts.lookup_by_email","contacts.update","contacts.upsert","executable_definitions.list_resolved","executables.run","executables.save","linkedin.search_parameters_list","outreach.enrichment_sequence_get","radar.signal_suggestions_get","record_enrichment.create","record_enrichment.get","signal_sources.capture_key_set","signal_sources.create","signal_sources.delete","signal_sources.events_list","signal_sources.get","signal_sources.list","signal_sources.test_event","sources.cold_outbound_expand","sources.cold_outbound_preview","sources.list","table_runs.cancel","table_runs.failure_report","table_runs.get","table_runs.list","table_runs.preview_cost","table_runs.reconcile_column","table_runs.resume","table_runs.retry","table_sources.attach","table_sources.detach","table_sources.list","table_sources.preview_sync","table_sources.reset_frontier","table_sources.restore_frontier","table_sources.run","table_sources.update","usage.action_costs_get","usage.limits_get","usage.status_get"]}
 -->
 
-Own how rows enter a worksheet and how external evidence is added to them. Done means a tested source with preserved provenance, a dependency-safe enrichment plan, a bounded settled sample, and an honest cost/coverage receipt. `qualification` decides fit; `workbooks` owns durable row selection.
+Own worksheet intake and evidence. Done means provenance, safe enrichment, bounded sample, and cost receipt. `qualification` decides fit.
 
 ## Procedure
 
-1. Inspect the worksheet schema and existing source/column catalog before proposing anything. Never duplicate a source or field already present.
-2. Start from the scarcest observable signal, not the broadest demographic filter.
-3. Preview 2-3 source variants, each capped at 10. Compare each variant separately on stable identities, provenance, freshness, completeness, cost, and decided precision. See source-testing.md.
-4. Attach only the winning reviewed variant. Preserve its exact parameters and preview receipt. First expansion is bounded and explicitly framed as a sample.
-5. Search `executable_definitions.list_resolved` using wanted outputs and available inputs before building a column. Add one column at a time in dependency order. See enrichment-columns.md.
-6. Price the exact planned run with `table_runs.preview_cost`. Run 5-10 stable rows with a credit ceiling, settle cells, then inspect evidence and yield before expanding.
-7. Audit low yield and failures. Do not replay completed rows. See runs-and-economics.md.
-8. For direct record enrichment jobs, create one exact record/attribute job and poll that job id to terminal state. See enrichment-columns.md.
+1. Inspect schema and catalogs; avoid duplicates.
+2. Start with the scarcest signal.
+3. Preview 2-3 variants capped at 10. Compare identity, provenance, freshness, completeness, cost, and precision. See source-testing.md.
+4. Attach the reviewed winner. Preserve parameters and receipt; bound first expansion.
+5. Search `executable_definitions.list_resolved` by outputs and inputs first. Add columns in dependency order. See enrichment-columns.md.
+6. Price with `table_runs.preview_cost`. Run 5-10 stable rows under a credit ceiling, settle, then inspect yield.
+7. Audit low yield and failures; never replay completed rows. See runs-and-economics.md.
+8. Create an exact record/attribute job and poll until terminal. See enrichment-columns.md.
 
 ## Source evidence
 
-Every source row carries stable row identity, source id, source-specific record/event key, provider record id where present, raw evidence reference, parameters/revision, fetched-at time, and cost. Ten results that contain duplicates are not a ten-row preview. Never synthesize rows to fill a sample.
+Preserve row identity, source id, source record/event key, provider id, raw evidence, parameters/revision, fetched-at time, and cost. Duplicates do not count. Never synthesize.
 
-`null` evidence means unknown. It never becomes a negative fact and never borrows a value from a similarly named person or company. Conflicting identities route to review.
+`null` means unknown, never negative or borrowed. Review conflicts.
 
 ## Boundaries
 
-A preview never creates a source, lands a row, adds a column, or spends credits. A source attach is not a run. A settled enrichment result is not qualification. A canonical producer source lands only when its producer sends an event; do not claim a manual run caused it.
+Preview never creates, lands, adds, or spends. Attach is not run; enrichment is not qualification. Producer sources land only on events.
 
 Use signal-sources.md for producer-owned sources. Never expose capture keys in prose.
 
-The outreach enrichment sequence is a workspace-level provider policy, not a qualification rubric. Read it with `outreach.enrichment_sequence_get`, preserve its field ordering and returned revision, and report it as configured policy rather than proof any row was enriched. This skill does not change that workspace policy through an undeclared mutation.
+## Individual contact records
+
+Resolve contacts with get, list, or `lookup_by_email` before writes. Upserts resolve identity, never blindly insert; `update` changes only requested fields; `archive` preserves history. Find email/phone writes bounded evidence for one exact contact, never guesses. `draft_opener` drafts for one contact and never sends. This sole contact grantor must not route writes through `record_enrichment.*`, `table_sources.*`, CRM/records, or duplicate person objects. Contacts feed `qualification` and `workflows`.
+
+`outreach.enrichment_sequence_get` reads workspace provider policy. Preserve field order and revision. Configured policy is not completed enrichment, and this skill has no policy mutation.

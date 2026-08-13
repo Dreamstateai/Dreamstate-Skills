@@ -25,7 +25,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "f19b39263ce95636",
+  "verified_capability_hash": "716adbb5ed64c723",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/outreach/inbound-follow-up/SKILL.md",
   "install_command": "dreamstate skills install inbound-follow-up",
