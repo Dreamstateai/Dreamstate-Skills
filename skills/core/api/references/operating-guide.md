@@ -10,7 +10,7 @@ Mode: **guided-execution**. Dreamstate can execute part of the outcome, while op
 
 Declared tools: `ds_search`, `ds_api`
 
-Declared capabilities: `runs.get`, `tools.get`, `tools.run`
+Declared capabilities: `runs.inspect`, `tools.get`, `tools.run`
 
 Required scopes: none
 

@@ -5,28 +5,28 @@ description: Publish, enroll, activate, run, observe, recover, and safely repair
 triggers: ["build a workflow or automation","schedule a recurring process","inspect or edit a workflow graph","validate a workflow","resume or repair a failed workflow run","publish enroll or activate a reviewed sequence or workflow","handle or reply to a live outbound conversation"]
 dependencies: []
 capability_domains: ["brain","executable_definitions","executables","runs","selection_snapshots","sequences","table_runs","tables","workflows"]
-capability_ids: ["outreach.demand_plan_get","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","runs.cancel","runs.get","runs.pause","runs.resume","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.analytics_by_workflow","workflows.analytics_overview","workflows.archive","workflows.call_child","workflows.create","workflows.deactivate","workflows.delete","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.enroll_selection","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.sequence_event_ingest","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheet_exports.enroll_sequence"]
+capability_ids: ["outreach.demand_plan_get","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","runs.cancel","runs.inspect","runs.pause","runs.resume","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.analytics_by_workflow","workflows.analytics_overview","workflows.archive","workflows.call_child","workflows.create","workflows.deactivate","workflows.delete","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.enroll_selection","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.sequence_event_ingest","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheet_exports.enroll_sequence"]
 max_context_tokens: 2400
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 2.0.0
-  playbook_kernel_hash: c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c
+  playbook_kernel_hash: 2f83c9c7cac1d3091e0ff4ecffedecfd66e468bea64cfd5707827e3ec0bb0bc4
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 716adbb5ed64c723
-  manifest_digest: f5b9ee699625895a51b9ec8855290a25452c341bab2c0ecddabb4e7478d63021
+  capability_hash: d6fc2612e52e9806
+  manifest_digest: 650e0747782817398b643af2b6a15bf0f3b42af4300a93d428c6db8aa96f659f
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.7.0
-  source_release_hash: c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c
+  source_release_hash: 2f83c9c7cac1d3091e0ff4ecffedecfd66e468bea64cfd5707827e3ec0bb0bc4
   generator_version: 1.0.0
   kernel_id: workflows
   kernel_file: KERNEL.md
-  kernel_sha256: 63f681bd0e2c12cf22886b8cbf2df29130af440c2c6c7783a4a174edf7c2ab3a
-  adapter_sha256: 6d5d17c2ff0881dd950d7a2bd703989a3371882faad710202b93e4f48d861ef8
+  kernel_sha256: 4f1cb239df00c48b4dfb62f2daf1ad9c7ad4468705a5bb31c866f2c23ac52d5c
+  adapter_sha256: 56658cdd0b346a315bc5f3d4fc8758de6a478391a4accec1e9e018ccf1981520
   evals_file: evals.json
-  evals_sha256: 6f99ac9b16ac9b3144bdecbf805ca9a082f53a621196f0fc6fc19b8e03dc34e0
+  evals_sha256: 270b1371d6b3a10eef098ce4340c8d1d314781a740ee588032449d20eaf24ab6
 ---
 
 # Architect surface adapter
@@ -74,7 +74,7 @@ These capability ids have no fixed tool route in this release. Find the exact co
 
 - outreach.demand_plan_get
 - runs.cancel
-- runs.get
+- runs.inspect
 - runs.pause
 - runs.resume
 - selection_snapshots.get

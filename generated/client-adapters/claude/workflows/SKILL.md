@@ -3,28 +3,28 @@ id: workflows
 name: workflows
 description: "Publish, enroll, activate, run, observe, recover, and safely repair durable workflow graphs; own sequence launch closure and the external-send and live-reply lifecycle."
 capability_domains: ["brain","executable_definitions","executables","runs","selection_snapshots","sequences","table_runs","tables","workflows"]
-capability_ids: ["outreach.demand_plan_get","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","runs.cancel","runs.get","runs.pause","runs.resume","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.analytics_by_workflow","workflows.analytics_overview","workflows.archive","workflows.call_child","workflows.create","workflows.deactivate","workflows.delete","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.enroll_selection","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.sequence_event_ingest","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheet_exports.enroll_sequence"]
+capability_ids: ["outreach.demand_plan_get","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","runs.cancel","runs.inspect","runs.pause","runs.resume","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.analytics_by_workflow","workflows.analytics_overview","workflows.archive","workflows.call_child","workflows.create","workflows.deactivate","workflows.delete","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.enroll_selection","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.sequence_event_ingest","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheet_exports.enroll_sequence"]
 completion_contract: {"version":1,"fields":[{"id":"approval_state","description":"Exact approval state without bypass inference.","allowed_values":["required","approved","not_applicable"]},{"id":"artifact_state","description":"Durable artifact or reviewable proposal state.","allowed_values":["reviewable_proposal_required","proposal_saved","existing","none","draft_saved","not_created"]},{"id":"execution_bounds_state","description":"Selection, row-cap, and credit-ceiling boundary state.","allowed_values":["representative_capped_credits","exact_capped_credits","missing","not_applicable"]},{"id":"external_send_state","description":"External-send authorization and pacing state.","allowed_values":["not_authorized","authorized_capped_paced","completed","partial","blocked","not_applicable"]},{"id":"run_state","description":"Canonical durable run terminal or blocked state.","allowed_values":["terminal","queued","blocked","unavailable","not_applicable"]}]}
 compatibility:
   playbook_kernel_version: 2.0.0
-  playbook_kernel_hash: c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c
+  playbook_kernel_hash: 2f83c9c7cac1d3091e0ff4ecffedecfd66e468bea64cfd5707827e3ec0bb0bc4
   client_adapter_version: 1.0.0
   capability_definition_version: dreamstate-capabilities-v1
-  capability_hash: 716adbb5ed64c723
-  manifest_digest: f5b9ee699625895a51b9ec8855290a25452c341bab2c0ecddabb4e7478d63021
+  capability_hash: d6fc2612e52e9806
+  manifest_digest: 650e0747782817398b643af2b6a15bf0f3b42af4300a93d428c6db8aa96f659f
   minimum_api_version: v1
 generated:
   source_repository: dreamstate-skills
   source_release: 0.7.0
-  source_release_hash: c4490c547bbd4a08a91e8df1d620033bc8dc623f44ebe7bd0d9f7275060bb68c
+  source_release_hash: 2f83c9c7cac1d3091e0ff4ecffedecfd66e468bea64cfd5707827e3ec0bb0bc4
   generator_version: 1.0.0
   client: claude
   kernel_id: workflows
   kernel_file: KERNEL.md
-  kernel_sha256: 63f681bd0e2c12cf22886b8cbf2df29130af440c2c6c7783a4a174edf7c2ab3a
+  kernel_sha256: 4f1cb239df00c48b4dfb62f2daf1ad9c7ad4468705a5bb31c866f2c23ac52d5c
   adapter_sha256: 7895cd92eb9889454870eaed9e9ddb8307b4013e7964ba41dfc93f7a8d63b882
   evals_file: evals.json
-  evals_sha256: 6f99ac9b16ac9b3144bdecbf805ca9a082f53a621196f0fc6fc19b8e03dc34e0
+  evals_sha256: 270b1371d6b3a10eef098ce4340c8d1d314781a740ee588032449d20eaf24ab6
 mutation_compatibility:
   mismatch_behavior: deny_run
   manifest_digest_match: exact_sha256
@@ -56,7 +56,7 @@ These are derived from this skill's exact capability contract, so state them up 
 
 # Workflows
 <!-- architect-operation-contract
-{"required_capability_ids":["outreach.demand_plan_get","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","runs.cancel","runs.get","runs.pause","runs.resume","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.analytics_by_workflow","workflows.analytics_overview","workflows.archive","workflows.call_child","workflows.create","workflows.deactivate","workflows.delete","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.enroll_selection","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.sequence_event_ingest","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheet_exports.enroll_sequence"]}
+{"required_capability_ids":["outreach.demand_plan_get","outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send","runs.cancel","runs.inspect","runs.pause","runs.resume","selection_snapshots.get","sequences.enroll_selection","sequences.publish","workflows.activate","workflows.analytics_by_workflow","workflows.analytics_overview","workflows.archive","workflows.call_child","workflows.create","workflows.deactivate","workflows.delete","workflows.delivery_binding_get","workflows.draft_publish","workflows.draft_save","workflows.enroll_selection","workflows.get","workflows.graph_apply","workflows.list","workflows.metrics_get","workflows.node_inspect","workflows.node_options","workflows.node_registry","workflows.run_retry","workflows.run_trace_get","workflows.runs_list","workflows.sequence_event_ingest","workflows.trigger_create","workflows.trigger_delete","workflows.triggers_list","workflows.validate_graph","worksheet_exports.enroll_sequence"]}
 -->
 
 Own reusable semantic recipes, typed workflow graphs, versioned drafts, sequence and workflow launch closure, triggers, enrollment, activation, external sends and replies, and durable run recovery. Do not source rows, decide the qualification rubric, author sequence definitions, or substitute a live query for a selection snapshot.
@@ -95,7 +95,7 @@ Enrollment uses an inspected `selection_snapshots.get` receipt: exact snapshot i
 
 Every run has stable `run_id`, workflow version, trigger event id, subject identity, node checkpoints, attempts, effect receipts, and terminal state. Unknown outcomes are inspected, never blindly retried. Read durable-runs.md.
 
-For canonical generic runs, call `runs.get` before `runs.pause`, `runs.resume`, or `runs.cancel`. Pass the exact `expected_state_version`; stale state blocks the mutation. Pause only an active pausable run, resume only a paused resumable run, and cancel only the exact nonterminal run. Re-read after mutation and never replay completed effects.
+For canonical generic runs, call `runs.inspect` before `runs.pause`, `runs.resume`, or `runs.cancel`. Pass the exact `expected_state_version`; stale state blocks the mutation. Pause only an active pausable run, resume only a paused resumable run, and cancel only the exact nonterminal run. Re-read after mutation and never replay completed effects.
 
 ## Live replies and external sends
 

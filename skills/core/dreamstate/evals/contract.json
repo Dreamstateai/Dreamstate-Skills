@@ -36,7 +36,7 @@
           "ds_api"
         ],
         "allowed_capability_ids": [
-          "runs.get",
+          "runs.inspect",
           "tools.get",
           "tools.run",
           "tools.search"

@@ -130,14 +130,14 @@ const EXECUTION_TOOLS = [...DISCOVERY_TOOLS, 'ds_api'];
 const DURABLE_EXECUTION_TOOLS = EXECUTION_TOOLS;
 
 const BLUEPRINT_EXECUTION: Record<string, { mode: ExecutionMode; tools?: string[]; capabilityIds?: string[] }> = {
-  dreamstate: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'tools.run', 'runs.get'] },
+  dreamstate: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'tools.run', 'runs.inspect'] },
   // There is no model-visible ping tool any more; transport health is an MCP
   // protocol method the client handles. `ds_search` (already in
   // DISCOVERY_TOOLS) is the real, cheap liveness probe: it proves transport,
   // auth, and workspace identity at once, same pattern as playbooks/connect.md.
   setup: { mode: 'guided-execution', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list'] },
   doctor: { mode: 'guided-execution', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get', 'social.accounts_list', 'usage.status_get', 'integrations.unipile_status_get'] },
-  api: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.get', 'tools.run', 'runs.get'] },
+  api: { mode: 'guided-execution', tools: EXECUTION_TOOLS, capabilityIds: ['tools.get', 'tools.run', 'runs.inspect'] },
   capabilities: { mode: 'executable', tools: DISCOVERY_TOOLS, capabilityIds: ['tools.search', 'tools.get'] },
   webhooks: { mode: 'executable', tools: EXECUTION_TOOLS, capabilityIds: ['webhooks.create', 'webhooks.list', 'webhooks.test_delivery', 'webhooks.delete'] },
   'source-people': { mode: 'executable', tools: DURABLE_EXECUTION_TOOLS, capabilityIds: ['sources.find_leads', 'runs.find_leads_get'] },

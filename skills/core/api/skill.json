@@ -22,7 +22,7 @@
     "Before sending, publishing, activating, deleting, or starting a paid bulk run."
   ],
   "capability_ids": [
-    "runs.get",
+    "runs.inspect",
     "tools.get",
     "tools.run"
   ],
@@ -34,7 +34,7 @@
   "resources": [],
   "required_scopes": [],
   "minimum_api_version": "v1",
-  "verified_capability_hash": "716adbb5ed64c723",
+  "verified_capability_hash": "d6fc2612e52e9806",
   "last_verified_at": "2026-07-12",
   "github_path": "skills/core/api/SKILL.md",
   "install_command": "dreamstate skills install api",

@@ -1,15 +1,306 @@
-{"schema_version":1,"skill_id":"workflows","cases":[
-{"id":"semantic-recipe-routing","request":"Every morning watch new replies and create a review task for interested prospects.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.list","workflows.node_registry","workflows.node_options","workflows.node_inspect"],"required_executed_capability_ids":["workflows.list","workflows.node_registry","workflows.node_inspect"],"required_concepts":["route by outcome, subject, trigger, effects, and exits","reuse exact existing recipe","not keyword detection"]},
-{"id":"ambiguous-daily-semantics","request":"Set up the daily follow-up workflow.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.list","workflows.get"],"required_executed_capability_ids":["workflows.list"],"max_intake_checkpoints":1,"required_concepts":["monitoring replies differs from sending follow-ups","ask only after live inspection leaves two material recipes"]},
-{"id":"typed-graph-validation","request":"Build a workflow that excludes customers, enriches the rest, branches on fit, and creates a manual review task for unknowns.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.create","workflows.draft_save","workflows.graph_apply","workflows.validate_graph","workflows.node_inspect"],"required_executed_capability_ids":["workflows.node_inspect","workflows.create","workflows.draft_save","workflows.validate_graph"],"required_concepts":["hard exclusions before paid effects","explicit unknown path","typed upstream outputs","every path terminates","retry cannot duplicate an effect"]},
-{"id":"reject-null-as-false-branch","request":"If company size is missing, send it down the not-qualified branch.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.node_inspect","workflows.validate_graph"],"required_executed_capability_ids":["workflows.node_inspect"],"required_concepts":["null is unknown","manual-review path","do not silently treat null as false"],"must_not_execute":true},
-{"id":"snapshot-enrollment-and-activation","request":"Enroll the exact reviewed selection into this workflow and activate it.","expected_skill_ids":["workflows"],"required_capability_ids":["selection_snapshots.get","workflows.get","workflows.delivery_binding_get","workflows.enroll_selection","workflows.draft_publish","workflows.activate"],"required_executed_capability_ids":["selection_snapshots.get","workflows.get","workflows.delivery_binding_get"],"required_concepts":["snapshot id, digest, count, and source revisions","eligibility differs from enrollment","enrollment differs from activation","drift blocks activation"]},
-{"id":"trigger-create-verify","request":"Schedule the workflow for weekdays at 09:00 Pacific and verify it.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.trigger_create","workflows.triggers_list","workflows.trigger_delete"],"required_executed_capability_ids":["workflows.trigger_create","workflows.triggers_list"],"required_concepts":["verify exact cadence, timezone, and status after create"]},
-{"id":"unknown-outcome-recovery","request":"The run timed out while creating a task. Retry the whole workflow.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.runs_list","workflows.run_trace_get","workflows.run_retry"],"required_executed_capability_ids":["workflows.runs_list","workflows.run_trace_get"],"required_concepts":["unknown_outcome","inspect effect receipt before retry","completed effects never replay","non-idempotent unresolved effect requires manual review"]},
-{"id":"child-and-sequence-event","request":"Call the reusable enrichment child and ingest the sequence reply event into this run.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.call_child","workflows.sequence_event_ingest"],"required_executed_capability_ids":["workflows.call_child","workflows.sequence_event_ingest"],"required_concepts":["versioned child contract","stable event identity","deduplicate event"]},
-{"id":"workflow-observability-and-lifecycle","request":"Show workflow and overall analytics, inspect metrics, deactivate and archive this exact workflow; delete only after I explicitly confirm.","expected_skill_ids":["workflows"],"required_capability_ids":["workflows.analytics_by_workflow","workflows.analytics_overview","workflows.metrics_get","workflows.deactivate","workflows.archive","workflows.delete"],"required_executed_capability_ids":["workflows.analytics_by_workflow","workflows.analytics_overview","workflows.metrics_get","workflows.deactivate","workflows.archive"],"required_concepts":["metrics summarize receipts but do not prove one effect","deactivate before archive","delete is irreversible"]},
-{"id":"live-reply-external-send-lifecycle","request":"A prospect replied to our sequence. Read the conversation, show me the exact response, send the approved reply, then mark it handled.","expected_skill_ids":["workflows"],"required_capability_ids":["outreach.dm_conversation_by_contact_get","outreach.dm_conversation_get","outreach.dm_conversation_read","outreach.dm_conversation_status_update","outreach.dm_conversations_list","outreach.dm_message_send"],"required_executed_capability_ids":["outreach.dm_conversations_list","outreach.dm_conversation_get","outreach.dm_message_send","outreach.dm_conversation_read","outreach.dm_conversation_status_update"],"required_concepts":["read the complete current conversation before drafting","approve the exact outbound body","fresh client_request_id for the one intended send","terminal external-effect receipt before marking complete","unknown outcome is reconciled before retry"],"expected_workspace_outcome":[{"check":"capability_effect_persisted","capability_id":"outreach.dm_message_send","min_count":1,"reason":"the approved reply must have a durable external-send receipt"}]},
-{"id":"sequence-launch-closure-frozen-cohort","request":"The workflow and sequence drafts are approved. Publish, enroll the exact qualified cohort, and activate sending.","expected_skill_ids":["workflows"],"required_capability_ids":["selection_snapshots.get","workflows.get","workflows.delivery_binding_get","workflows.draft_publish","sequences.publish","sequences.enroll_selection","workflows.activate"],"required_executed_capability_ids":["selection_snapshots.get","workflows.get","workflows.delivery_binding_get","workflows.draft_publish","sequences.publish","sequences.enroll_selection","workflows.activate"],"required_concepts":["explicit launch approval","snapshot digest, exact count, rubric and source revisions","publish exact reviewed sequence version only if still draft","one enrollment path","re-read snapshot and binding after approval","terminal enrollment receipt before activation","unknown outcome never double-enrolls","enrolled is not sent"]},
-{"id":"generic-run-pause-resume-cancel","request":"Inspect this run, pause it at the current version, resume it after review, then cancel only if it is still nonterminal.","expected_skill_ids":["workflows"],"required_capability_ids":["runs.get","runs.pause","runs.resume","runs.cancel"],"required_executed_capability_ids":["runs.get","runs.pause","runs.resume","runs.cancel"],"required_concepts":["exact run_id","expected_state_version on every mutation","stale version blocks mutation","pause active resume paused cancel nonterminal","re-read after each transition","completed effects never replay"]},
-{"id":"demand-revalidation-and-export-launch-bridge","request":"Revalidate demand for the approved launch binding, then enroll this exact reviewed worksheet export into a new draft sequence.","expected_skill_ids":["workflows"],"required_capability_ids":["outreach.demand_plan_get","worksheet_exports.enroll_sequence"],"required_executed_capability_ids":["outreach.demand_plan_get","worksheet_exports.enroll_sequence"],"required_concepts":["phase launch_revalidation","exact sequence workflow worksheet selection ICP column graph and credit digests","binding or headroom drift blocks launch","exact export revision","eligible and skipped rows","sequence_created is draft_ready not active or sent"],"expected_workspace_outcome":[{"check":"capability_effect_persisted","capability_id":"worksheet_exports.enroll_sequence","min_count":1,"reason":"the export-to-sequence bridge must persist its exact revision and enrollment receipt"}]}
-]}
+{
+  "schema_version": 1,
+  "skill_id": "workflows",
+  "cases": [
+    {
+      "id": "semantic-recipe-routing",
+      "request": "Every morning watch new replies and create a review task for interested prospects.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.list",
+        "workflows.node_registry",
+        "workflows.node_options",
+        "workflows.node_inspect"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.list",
+        "workflows.node_registry",
+        "workflows.node_inspect"
+      ],
+      "required_concepts": [
+        "route by outcome, subject, trigger, effects, and exits",
+        "reuse exact existing recipe",
+        "not keyword detection"
+      ]
+    },
+    {
+      "id": "ambiguous-daily-semantics",
+      "request": "Set up the daily follow-up workflow.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": ["workflows.list", "workflows.get"],
+      "required_executed_capability_ids": ["workflows.list"],
+      "max_intake_checkpoints": 1,
+      "required_concepts": [
+        "monitoring replies differs from sending follow-ups",
+        "ask only after live inspection leaves two material recipes"
+      ]
+    },
+    {
+      "id": "typed-graph-validation",
+      "request": "Build a workflow that excludes customers, enriches the rest, branches on fit, and creates a manual review task for unknowns.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.create",
+        "workflows.draft_save",
+        "workflows.graph_apply",
+        "workflows.validate_graph",
+        "workflows.node_inspect"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.node_inspect",
+        "workflows.create",
+        "workflows.draft_save",
+        "workflows.validate_graph"
+      ],
+      "required_concepts": [
+        "hard exclusions before paid effects",
+        "explicit unknown path",
+        "typed upstream outputs",
+        "every path terminates",
+        "retry cannot duplicate an effect"
+      ]
+    },
+    {
+      "id": "reject-null-as-false-branch",
+      "request": "If company size is missing, send it down the not-qualified branch.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.node_inspect",
+        "workflows.validate_graph"
+      ],
+      "required_executed_capability_ids": ["workflows.node_inspect"],
+      "required_concepts": [
+        "null is unknown",
+        "manual-review path",
+        "do not silently treat null as false"
+      ],
+      "must_not_execute": true
+    },
+    {
+      "id": "snapshot-enrollment-and-activation",
+      "request": "Enroll the exact reviewed selection into this workflow and activate it.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "selection_snapshots.get",
+        "workflows.get",
+        "workflows.delivery_binding_get",
+        "workflows.enroll_selection",
+        "workflows.draft_publish",
+        "workflows.activate"
+      ],
+      "required_executed_capability_ids": [
+        "selection_snapshots.get",
+        "workflows.get",
+        "workflows.delivery_binding_get"
+      ],
+      "required_concepts": [
+        "snapshot id, digest, count, and source revisions",
+        "eligibility differs from enrollment",
+        "enrollment differs from activation",
+        "drift blocks activation"
+      ]
+    },
+    {
+      "id": "trigger-create-verify",
+      "request": "Schedule the workflow for weekdays at 09:00 Pacific and verify it.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.trigger_create",
+        "workflows.triggers_list",
+        "workflows.trigger_delete"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.trigger_create",
+        "workflows.triggers_list"
+      ],
+      "required_concepts": [
+        "verify exact cadence, timezone, and status after create"
+      ]
+    },
+    {
+      "id": "unknown-outcome-recovery",
+      "request": "The run timed out while creating a task. Retry the whole workflow.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.runs_list",
+        "workflows.run_trace_get",
+        "workflows.run_retry"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.runs_list",
+        "workflows.run_trace_get"
+      ],
+      "required_concepts": [
+        "unknown_outcome",
+        "inspect effect receipt before retry",
+        "completed effects never replay",
+        "non-idempotent unresolved effect requires manual review"
+      ]
+    },
+    {
+      "id": "child-and-sequence-event",
+      "request": "Call the reusable enrichment child and ingest the sequence reply event into this run.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.call_child",
+        "workflows.sequence_event_ingest"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.call_child",
+        "workflows.sequence_event_ingest"
+      ],
+      "required_concepts": [
+        "versioned child contract",
+        "stable event identity",
+        "deduplicate event"
+      ]
+    },
+    {
+      "id": "workflow-observability-and-lifecycle",
+      "request": "Show workflow and overall analytics, inspect metrics, deactivate and archive this exact workflow; delete only after I explicitly confirm.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "workflows.analytics_by_workflow",
+        "workflows.analytics_overview",
+        "workflows.metrics_get",
+        "workflows.deactivate",
+        "workflows.archive",
+        "workflows.delete"
+      ],
+      "required_executed_capability_ids": [
+        "workflows.analytics_by_workflow",
+        "workflows.analytics_overview",
+        "workflows.metrics_get",
+        "workflows.deactivate",
+        "workflows.archive"
+      ],
+      "required_concepts": [
+        "metrics summarize receipts but do not prove one effect",
+        "deactivate before archive",
+        "delete is irreversible"
+      ]
+    },
+    {
+      "id": "live-reply-external-send-lifecycle",
+      "request": "A prospect replied to our sequence. Read the conversation, show me the exact response, send the approved reply, then mark it handled.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "outreach.dm_conversation_by_contact_get",
+        "outreach.dm_conversation_get",
+        "outreach.dm_conversation_read",
+        "outreach.dm_conversation_status_update",
+        "outreach.dm_conversations_list",
+        "outreach.dm_message_send"
+      ],
+      "required_executed_capability_ids": [
+        "outreach.dm_conversations_list",
+        "outreach.dm_conversation_get",
+        "outreach.dm_message_send",
+        "outreach.dm_conversation_read",
+        "outreach.dm_conversation_status_update"
+      ],
+      "required_concepts": [
+        "read the complete current conversation before drafting",
+        "approve the exact outbound body",
+        "fresh client_request_id for the one intended send",
+        "terminal external-effect receipt before marking complete",
+        "unknown outcome is reconciled before retry"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "outreach.dm_message_send",
+          "min_count": 1,
+          "reason": "the approved reply must have a durable external-send receipt"
+        }
+      ]
+    },
+    {
+      "id": "sequence-launch-closure-frozen-cohort",
+      "request": "The workflow and sequence drafts are approved. Publish, enroll the exact qualified cohort, and activate sending.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "selection_snapshots.get",
+        "workflows.get",
+        "workflows.delivery_binding_get",
+        "workflows.draft_publish",
+        "sequences.publish",
+        "sequences.enroll_selection",
+        "workflows.activate"
+      ],
+      "required_executed_capability_ids": [
+        "selection_snapshots.get",
+        "workflows.get",
+        "workflows.delivery_binding_get",
+        "workflows.draft_publish",
+        "sequences.publish",
+        "sequences.enroll_selection",
+        "workflows.activate"
+      ],
+      "required_concepts": [
+        "explicit launch approval",
+        "snapshot digest, exact count, rubric and source revisions",
+        "publish exact reviewed sequence version only if still draft",
+        "one enrollment path",
+        "re-read snapshot and binding after approval",
+        "terminal enrollment receipt before activation",
+        "unknown outcome never double-enrolls",
+        "enrolled is not sent"
+      ]
+    },
+    {
+      "id": "generic-run-pause-resume-cancel",
+      "request": "Inspect this run, pause it at the current version, resume it after review, then cancel only if it is still nonterminal.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "runs.inspect",
+        "runs.pause",
+        "runs.resume",
+        "runs.cancel"
+      ],
+      "required_executed_capability_ids": [
+        "runs.inspect",
+        "runs.pause",
+        "runs.resume",
+        "runs.cancel"
+      ],
+      "required_concepts": [
+        "exact run_id",
+        "expected_state_version on every mutation",
+        "stale version blocks mutation",
+        "pause active resume paused cancel nonterminal",
+        "re-read after each transition",
+        "completed effects never replay"
+      ]
+    },
+    {
+      "id": "demand-revalidation-and-export-launch-bridge",
+      "request": "Revalidate demand for the approved launch binding, then enroll this exact reviewed worksheet export into a new draft sequence.",
+      "expected_skill_ids": ["workflows"],
+      "required_capability_ids": [
+        "outreach.demand_plan_get",
+        "worksheet_exports.enroll_sequence"
+      ],
+      "required_executed_capability_ids": [
+        "outreach.demand_plan_get",
+        "worksheet_exports.enroll_sequence"
+      ],
+      "required_concepts": [
+        "phase launch_revalidation",
+        "exact sequence workflow worksheet selection ICP column graph and credit digests",
+        "binding or headroom drift blocks launch",
+        "exact export revision",
+        "eligible and skipped rows",
+        "sequence_created is draft_ready not active or sent"
+      ],
+      "expected_workspace_outcome": [
+        {
+          "check": "capability_effect_persisted",
+          "capability_id": "worksheet_exports.enroll_sequence",
+          "min_count": 1,
+          "reason": "the export-to-sequence bridge must persist its exact revision and enrollment receipt"
+        }
+      ]
+    }
+  ]
+}
