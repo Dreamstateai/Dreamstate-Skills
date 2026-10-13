@@ -1,3 +1,20 @@
+> # DEPRECATED: this repository is no longer the Dreamstate skills library
+>
+> This repo is archived in spirit and receives no further updates. Its skills use
+> a retired taxonomy and call tools that no longer exist (`ds_search`, `ds_api`),
+> and many of its capability references are dead. Do not install or copy from it.
+>
+> **Use these instead:**
+>
+> - The published plugin: <https://github.com/luisfigueroavale/dreamstate-plugins>
+> - The Dreamstate CLI: `npx @trydreamstate/cli skills install`
+>   (or `dreamstate skills install` once the CLI is installed)
+>
+> See [DEPRECATED.md](DEPRECATED.md) for details. The content below is kept for
+> history only and describes the old library.
+
+---
+
 # Dreamstate Skills
 
 **Give your coding agent hands.** Claude, Cursor, and Codex can already think and
